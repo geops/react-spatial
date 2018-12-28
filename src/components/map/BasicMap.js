@@ -2,20 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { defaults as defaultInteractions } from 'ol/interaction';
 
-import proj4 from 'proj4';
-import { register } from 'ol/proj/proj4';
-
 import OLMap from 'ol/Map';
 import OLCollection from 'ol/Collection';
 import View from 'ol/View';
 import Interaction from 'ol/interaction/Interaction';
 import Layer from '../../Layer';
-
-proj4.defs('EPSG:21781', '+proj=somerc +lat_0=46.95240555555556 '
-  + '+lon_0=7.439583333333333 +k_0=1 +x_0=600000 +y_0=200000 +ellps=bessel '
-  + '+towgs84=674.4,15.1,405.3,0,0,0,0 +units=m +no_defs');
-
-register(proj4);
 
 const propTypes = {
   /** Map animation options */
@@ -41,6 +32,8 @@ const propTypes = {
   layers: PropTypes.arrayOf(PropTypes.instanceOf(Layer)),
   /** An existing [ol/Map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html). */
   map: PropTypes.instanceOf(OLMap),
+  /** Map minimum zoom */
+  minZoom: PropTypes.number,
   /**
    * Callback when a [ol/Feature](https://openlayers.org/en/latest/apidoc/module-ol_Feature-Feature.html) is clicked.
    * @param {OLFeature[]} features An array of [ol/Feature](https://openlayers.org/en/latest/apidoc/module-ol_Feature-Feature.html).
@@ -56,6 +49,8 @@ const propTypes = {
    * @param {ol.MapEvent} [evt](https://openlayers.org/en/latest/apidoc/module-ol_MapEvent-MapEvent.html).
    */
   onMapMoved: PropTypes.func,
+  /** Map projections */
+  projections: PropTypes.string,
   /** Map resolution */
   resolution: PropTypes.number,
   /** Map zoom level */
@@ -79,18 +74,11 @@ const defaultProps = {
   onFeaturesHover: undefined,
   onMapMoved: () => {},
   resolution: undefined,
-  zoom: 19,
+  zoom: 0,
 };
 
 /**
  * Display an OpenLayers Map.
- *
- * The map's view is created with the following parameters for the view:
- *  - projection: 'EPSG:21781'
- *  - zoom: 19
- *  - minZoom: 16
- *  - maxZoom: 22
- *
  */
 class BasicMap extends Component {
   constructor(props) {
@@ -99,9 +87,11 @@ class BasicMap extends Component {
       center,
       extent,
       map,
+      minZoom,
       interactions,
       layers,
       onMapMoved,
+      projection,
       resolution,
       zoom,
     } = this.props;
@@ -112,9 +102,9 @@ class BasicMap extends Component {
     });
     const view = new View({
       center,
-      minZoom: 16,
+      minZoom,
       maxZoom: 22,
-      projection: 'EPSG:21781',
+      projection,
     });
 
     this.map.setView(view);
