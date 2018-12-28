@@ -1,0 +1,42 @@
+$tm-search-bt-width: 50px;
+
+.tm-search-input {
+  width: calc(100% - 4px);
+  height: calc(100% - 4px);
+  position: absolute;
+  display: flex;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+
+  input[type='search'],
+  button,
+  svg {
+    border: none;
+  }
+
+  input[type='search'] {
+    padding: 0px 15px;
+    appearance: none;
+    flex-grow: 2;
+
+    // FOR IE:
+    &::-ms-clear {
+      cursor: pointer;
+    }
+
+    &::-webkit-search-cancel-button {
+      cursor: pointer;
+      position: relative;
+      right: 10px;
+      margin-left: 20px;
+      font-size: 1.3em;
+    }
+  }
+
+  button {
+    width: $tm-search-bt-width;
+    padding: 8px 12px;
+    height: 100%;
+  }
+}

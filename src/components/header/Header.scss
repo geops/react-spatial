@@ -1,0 +1,20 @@
+@import '../../Globals.scss';
+
+.tm-header {
+  position: absolute;
+  padding: 0 20px;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: $tm-header-height;
+  background: white;
+  border-bottom: 1px solid #aaa;
+  z-index: 2;
+}
+
+.tm-header-left {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  max-width: 50%;
+}

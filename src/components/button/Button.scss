@@ -1,0 +1,21 @@
+@import '../../Globals.scss';
+
+.tm-button {
+  border: 1px solid #aaa;
+  cursor: pointer;
+  color: white;
+  height: $large-button-size;
+  width: $large-button-size;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tm-zoom {
+  background: $tm-color-blue;
+  border-radius: 50%;
+}
+
+.out {
+  margin-top: 20px;
+}

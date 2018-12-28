@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListItem when no properties are set matches snapshot 1`] = `
+<li
+  className="tm-list-item"
+  onClick={[Function]}
+  onKeyDown={[Function]}
+  onKeyPress={[Function]}
+  role="menuitem"
+  tabIndex="0"
+/>
+`;
+
+exports[`ListItem when properties are set matches snapshot 1`] = `
+<li
+  className="tm-list-item"
+  onClick={[Function]}
+  onKeyDown={[Function]}
+  onKeyPress={[Function]}
+  role="menuitem"
+  tabIndex="0"
+>
+  <p>
+    bar
+  </p>
+</li>
+`;

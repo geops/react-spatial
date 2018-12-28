@@ -1,0 +1,26 @@
+@import '../../Globals.scss';
+
+.tm-menu {
+  background-color: white;
+  border-right: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  max-height: calc((var(--tm-vh, 1vh) * 100) - 82px);
+  max-width: 300px;
+
+  .tm-menu-item-title {
+    padding: 0 20px;
+    line-height: $large-button-size;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+}
+
+.tm-w-xs {
+  .tm-menu {
+    max-width: 100vw;
+    width: 100vw;
+  }
+}

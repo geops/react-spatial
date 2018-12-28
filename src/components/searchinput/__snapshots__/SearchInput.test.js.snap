@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchInput when no properties are set matches snapshot 1`] = `
+<div
+  className="tm-search-input "
+>
+  <input
+    onBlur={[Function]}
+    onChange={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    placeholder=""
+    tabIndex="0"
+    type="search"
+    value=""
+  />
+  <button
+    className="tm-bt"
+    onKeyPress={[Function]}
+    onMouseDown={[Function]}
+    tabIndex="0"
+    title=""
+    type="button"
+  >
+    <svg>
+      search.svg
+    </svg>
+  </button>
+</div>
+`;
+
+exports[`SearchInput when properties are set matches snapshot  1`] = `
+<div
+  className="tm-search-input tm-foo"
+>
+  <input
+    onBlur={[Function]}
+    onChange={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    placeholder="gux"
+    tabIndex="0"
+    type="search"
+    value="bar"
+  />
+  <button
+    className="tm-bt"
+    onKeyPress={[Function]}
+    onMouseDown={[Function]}
+    tabIndex="0"
+    title="gux"
+    type="button"
+  >
+    <svg>
+      search.svg
+    </svg>
+  </button>
+</div>
+`;
+
+exports[`SearchInput when properties are set matches snapshot  2`] = `
+<div
+  className="tm-search-input tm-foo tm-focus"
+>
+  <input
+    onBlur={[Function]}
+    onChange={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    placeholder="gux"
+    tabIndex="0"
+    type="search"
+    value="bar"
+  />
+  <button
+    className="tm-bt"
+    onKeyPress={[Function]}
+    onMouseDown={[Function]}
+    tabIndex="0"
+    title="gux"
+    type="button"
+  >
+    <svg>
+      search.svg
+    </svg>
+  </button>
+</div>
+`;
