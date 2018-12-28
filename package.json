@@ -11,7 +11,11 @@
   },
   "dependencies": {
     "lodash": "^4.17.11",
-    "remove": "^0.1.5",
     "resize-observer-polyfill": "^1.5.1"
+  },
+  "scripts": {
+    "prebuild": "rm -rf build/",
+    "build": "buble --no modules -i src -o build --objectAssign true",
+    "postbuild": "cp package.json build/ && cd src && find .  -name '*.scss' | cpio -pdm ../build"
   }
 }
