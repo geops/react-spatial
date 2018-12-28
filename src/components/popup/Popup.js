@@ -1,7 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { withNamespaces } from 'react-i18next';
-import { compose } from 'lodash/fp';
 
 import { MdClose } from 'react-icons/md';
 import Feature from 'ol/Feature';
@@ -70,4 +68,4 @@ class Popup extends PureComponent {
 Popup.propTypes = propTypes;
 Popup.defaultProps = defaultProps;
 
-export default compose(withNamespaces())(Popup);
+export default Popup;
