@@ -2,11 +2,15 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import StopEvents from '../stopevents/StopEvents';
-import { ReactComponent as SearchIcon } from '../../img/icons/search.svg';
 
 import './SearchInput.scss';
 
 const propTypes = {
+  /**
+   * Content for submit button.
+   */
+  button: PropTypes.any,
+
   /**
    * Value of the input
    */
@@ -44,6 +48,7 @@ const propTypes = {
 };
 
 const defaultProps = {
+  button: 'search',
   value: '',
   className: null,
   placeholder: '',
@@ -120,7 +125,7 @@ class SearchInput extends PureComponent {
   }
 
   render() {
-    const { value, placeholder } = this.props;
+    const { button, value, placeholder } = this.props;
     const className = this.getClassName();
     return (
       <div className={className}>
@@ -146,7 +151,7 @@ class SearchInput extends PureComponent {
           }}
           onKeyPress={e => (this.onKeyUp(e))}
         >
-          <SearchIcon />
+          {button}
         </button>
       </div>
     );

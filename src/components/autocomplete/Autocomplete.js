@@ -9,6 +9,11 @@ import './Autocomplete.scss';
 
 const propTypes = {
   /**
+   * Content for submit button.
+   */
+  button: PropTypes.any,
+
+  /**
    * Value of the input.
    */
   value: PropTypes.string,
@@ -56,6 +61,7 @@ const propTypes = {
 };
 
 const defaultProps = {
+  button: 'go',
   value: '',
   placeholder: '',
   items: [],
@@ -164,7 +170,7 @@ class Autocomplete extends PureComponent {
 
   render() {
     const {
-      value, placeholder, items, defaultItems, renderTitle, renderItem,
+      button, value, placeholder, items, defaultItems, renderTitle, renderItem,
       getItemKey,
     } = this.props;
     const { showList, refList } = this.state;
@@ -175,6 +181,7 @@ class Autocomplete extends PureComponent {
     return (
       <>
         <SearchInput
+          button={button}
           value={value}
           placeholder={placeholder}
           onChange={(e, val) => (this.onChange(e, val))}
