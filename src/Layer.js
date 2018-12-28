@@ -29,6 +29,10 @@ export default class Layer {
     this.olLayer.changed();
   }
 
+  setStyle(style) {
+    this.olLayer.setStyle(style);
+  }
+
   setVisible(visible) {
     this.visible = visible;
     this.olLayer.setVisible(visible);
