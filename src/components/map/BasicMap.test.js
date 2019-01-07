@@ -63,6 +63,7 @@ test('Map should be rendered with layers and an extent', () => {
     map={olMap}
     layers={olLayers}
     extent={extent}
+    projection="EPSG:21781"
   />);
   const inst = wrapper.instance();
   expect(inst.map).toBeDefined();

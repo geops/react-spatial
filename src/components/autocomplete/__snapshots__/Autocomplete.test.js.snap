@@ -24,9 +24,7 @@ Array [
       title=""
       type="button"
     >
-      <svg>
-        search.svg
-      </svg>
+      go
     </button>
   </div>,
   <div
@@ -59,9 +57,7 @@ Array [
       title=""
       type="button"
     >
-      <svg>
-        search.svg
-      </svg>
+      go
     </button>
   </div>,
   <div
@@ -167,9 +163,7 @@ Array [
       title=""
       type="button"
     >
-      <svg>
-        search.svg
-      </svg>
+      go
     </button>
   </div>,
   <div
@@ -275,9 +269,7 @@ Array [
       title=""
       type="button"
     >
-      <svg>
-        search.svg
-      </svg>
+      go
     </button>
   </div>,
   <div
@@ -347,9 +339,7 @@ Array [
       title=""
       type="button"
     >
-      <svg>
-        search.svg
-      </svg>
+      go
     </button>
   </div>,
   <div
@@ -419,9 +409,7 @@ Array [
       title=""
       type="button"
     >
-      <svg>
-        search.svg
-      </svg>
+      go
     </button>
   </div>,
   <div

@@ -23,9 +23,7 @@ exports[`SearchInput when no properties are set matches snapshot 1`] = `
     title=""
     type="button"
   >
-    <svg>
-      search.svg
-    </svg>
+    search
   </button>
 </div>
 `;
@@ -53,9 +51,7 @@ exports[`SearchInput when properties are set matches snapshot  1`] = `
     title="gux"
     type="button"
   >
-    <svg>
-      search.svg
-    </svg>
+    search
   </button>
 </div>
 `;
@@ -83,9 +79,7 @@ exports[`SearchInput when properties are set matches snapshot  2`] = `
     title="gux"
     type="button"
   >
-    <svg>
-      search.svg
-    </svg>
+    search
   </button>
 </div>
 `;
