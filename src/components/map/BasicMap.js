@@ -49,8 +49,8 @@ const propTypes = {
    * @param {ol.MapEvent} [evt](https://openlayers.org/en/latest/apidoc/module-ol_MapEvent-MapEvent.html).
    */
   onMapMoved: PropTypes.func,
-  /** Map projections */
-  projections: PropTypes.string,
+  /** Map projection */
+  projection: PropTypes.string,
   /** Map resolution */
   resolution: PropTypes.number,
   /** Map zoom level */
@@ -70,9 +70,11 @@ const defaultProps = {
   interactions: null,
   layers: [],
   map: null,
+  minZoom: 0,
   onFeaturesClick: () => {},
   onFeaturesHover: undefined,
   onMapMoved: () => {},
+  projection: 'EPSG:3857',
   resolution: undefined,
   zoom: 0,
 };
