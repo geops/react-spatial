@@ -1,9 +1,6 @@
 module.exports = {
-  "presets": [
-    "@babel/preset-env",
-    "@babel/preset-react"
-  ],
-  "ignore": [
-    "*.scss"
-  ]
-}
+  presets: [
+    '@babel/preset-env',
+    '@babel/preset-react'],
+  ignore: ['*.scss'],
+};
