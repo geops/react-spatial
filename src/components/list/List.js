@@ -20,7 +20,6 @@ const defaultProps = {
   onKeyDownItem: () => {},
 };
 
-
 /**
  * This component displays a <ul> HMTL tag element.
  *
@@ -30,7 +29,11 @@ const defaultProps = {
 class List extends PureComponent {
   render() {
     const {
-      items, renderItem, onSelect, onKeyDownItem, getItemKey,
+      items,
+      renderItem,
+      onSelect,
+      onKeyDownItem,
+      getItemKey,
     } = this.props;
 
     if (!items.length) {
@@ -43,10 +46,14 @@ class List extends PureComponent {
           <ListItem
             key={getItemKey(item)}
             item={item}
-            onSelect={(e, itm) => { onSelect(e, itm); }}
-            onKeyDown={(e) => { onKeyDownItem(e); }}
+            onSelect={(e, itm) => {
+              onSelect(e, itm);
+            }}
+            onKeyDown={e => {
+              onKeyDownItem(e);
+            }}
           >
-            { renderItem(item) }
+            {renderItem(item)}
           </ListItem>
         ))}
       </ul>

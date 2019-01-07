@@ -35,7 +35,6 @@ class PopupHandler extends Component {
     this.showPopup(props.feature);
   }
 
-
   componentDidUpdate(prevProps) {
     const { feature } = this.props;
     if (feature !== prevProps.feature) {
@@ -74,15 +73,18 @@ class PopupHandler extends Component {
       this.overlay.setElement(this.popupElement);
       map.addOverlay(this.overlay);
 
-      ReactDOM.render(<Popup
-        feature={feature}
-        ref={this.popupComponentRef}
-        className={className}
-        ContentComponent={ContentComponent}
-        onCloseClick={() => this.onCloseClick()}
-        showCloseButton={showCloseButton}
-        store={store}
-      />, this.popupElement);
+      ReactDOM.render(
+        <Popup
+          feature={feature}
+          ref={this.popupComponentRef}
+          className={className}
+          ContentComponent={ContentComponent}
+          onCloseClick={() => this.onCloseClick()}
+          showCloseButton={showCloseButton}
+          store={store}
+        />,
+        this.popupElement,
+      );
     }
   }
 

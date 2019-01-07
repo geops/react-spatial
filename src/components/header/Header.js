@@ -4,10 +4,7 @@ import PropTypes from 'prop-types';
 import './Header.scss';
 
 const propTypes = {
-  left: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.element,
-  ]),
+  left: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
 
   /**
    * Children content of the button.

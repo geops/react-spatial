@@ -8,7 +8,7 @@ configure({ adapter: new Adapter() });
 
 describe('Footer', () => {
   test('matches snapshot', () => {
-    const right = 'I\'m the left component';
+    const right = "I'm the left component";
     const component = renderer.create(<Footer right={right} />);
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();

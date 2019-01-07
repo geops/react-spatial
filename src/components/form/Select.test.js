@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  configure, shallow,
-} from 'enzyme';
+import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import renderer from 'react-test-renderer';
 import Select from './Select';
@@ -34,27 +32,28 @@ describe('Select', () => {
     });
   });
 
-
   describe('when properties are set', () => {
-    const options = [{
-      value: 'foo',
-      label: 'qux',
-    }, {
-      value: 'bar',
-      label: 'quux',
-    }, {
-      value: 'baz',
-      label: 'corge',
-    }];
+    const options = [
+      {
+        value: 'foo',
+        label: 'qux',
+      },
+      {
+        value: 'bar',
+        label: 'quux',
+      },
+      {
+        value: 'baz',
+        label: 'corge',
+      },
+    ];
 
     const onChange = () => {};
 
     test('matches snapshot', () => {
-      const component = renderer.create(<Select
-        options={options}
-        value="bar"
-        onChange={() => {}}
-      />);
+      const component = renderer.create(
+        <Select options={options} value="bar" onChange={() => {}} />,
+      );
 
       const tree = component.toJSON();
       expect(tree).toMatchSnapshot();
@@ -62,11 +61,9 @@ describe('Select', () => {
 
     test('executes onChange property function', () => {
       const onChangeMock = jest.fn(onChange);
-      const wrapper = shallow(<Select
-        options={options}
-        value="baz"
-        onChange={onChangeMock}
-      />);
+      const wrapper = shallow(
+        <Select options={options} value="baz" onChange={onChangeMock} />,
+      );
       expect(onChangeMock).toHaveBeenCalledTimes(0);
       wrapper.find('select').simulate('change', { target: { value: 'foo' } });
       expect(onChangeMock).toHaveBeenCalledTimes(1);

@@ -5,8 +5,8 @@ import Header from './Header';
 
 configure({ adapter: new Adapter() });
 
-test('Header should display it\'s left component', () => {
-  const left = 'I\'m the left component';
+test("Header should display it's left component", () => {
+  const left = "I'm the left component";
   const header = shallow(<Header left={left} />);
   expect(header.first('left').text()).toEqual(left);
 });

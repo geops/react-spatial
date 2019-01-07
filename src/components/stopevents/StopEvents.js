@@ -76,8 +76,8 @@ class StopEvents extends PureComponent {
       return;
     }
 
-    this.nodes.forEach((node) => {
-      events.forEach((evt) => {
+    this.nodes.forEach(node => {
+      events.forEach(evt => {
         node.addEventListener(evt, StopEvents.stop);
       });
     });
@@ -89,8 +89,8 @@ class StopEvents extends PureComponent {
       return;
     }
 
-    this.nodes.forEach((node) => {
-      events.forEach((evt) => {
+    this.nodes.forEach(node => {
+      events.forEach(evt => {
         node.removeEventListener(evt, StopEvents.stop);
       });
     });

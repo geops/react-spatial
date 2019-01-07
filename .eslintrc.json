@@ -6,7 +6,7 @@
     "jest": true
   },
   "parser": "babel-eslint",
-  "extends": "airbnb",
+  "extends": ["airbnb", "prettier"],
   "rules": {
     "import/no-extraneous-dependencies": ["error", {"devDependencies": true }],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],

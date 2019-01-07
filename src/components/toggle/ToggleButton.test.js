@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  configure, shallow, mount,
-} from 'enzyme';
+import { configure, shallow, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import renderer from 'react-test-renderer';
 import { MdMenu, MdClose } from 'react-icons/md';
@@ -51,10 +49,7 @@ describe('ToggleButton', () => {
       expect(tree).toMatchSnapshot();
     });
 
-    [
-      ['click', {}],
-      ['keypress', { which: 13 }],
-    ].forEach((evt) => {
+    [['click', {}], ['keypress', { which: 13 }]].forEach(evt => {
       test(`toggles on ${evt[0]} event`, () => {
         jest.useFakeTimers();
         let open = false;
@@ -66,7 +61,7 @@ describe('ToggleButton', () => {
             ariaLabel="aria-label"
             openComponent={<MdMenu focusable={false} />}
             closeComponent={<MdClose focusable={false} />}
-            onToggle={(toggle) => {
+            onToggle={toggle => {
               open = toggle;
             }}
           />,
@@ -101,7 +96,6 @@ describe('ToggleButton', () => {
 
         expect(wrapper.find(MdMenu)).toHaveLength(0);
         expect(wrapper.find(MdClose)).toHaveLength(1);
-
 
         // Hide the target on click
         wrapper.find('.tm-toggle-button').simulate(...evt);

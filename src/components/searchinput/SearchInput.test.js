@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  configure, shallow,
-} from 'enzyme';
+import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import renderer from 'react-test-renderer';
 import SearchInput from './SearchInput';
@@ -34,17 +32,18 @@ describe('SearchInput', () => {
     });
   });
 
-
   describe('when properties are set', () => {
     test('matches snapshot ', () => {
-      const component = renderer.create(<SearchInput
-        value="bar"
-        className="tm-foo"
-        placeholder="gux"
-        onBlur={() => {}}
-        onKeyPress={() => {}}
-        onChange={() => {}}
-      />);
+      const component = renderer.create(
+        <SearchInput
+          value="bar"
+          className="tm-foo"
+          placeholder="gux"
+          onBlur={() => {}}
+          onKeyPress={() => {}}
+          onChange={() => {}}
+        />,
+      );
       expect(component.getInstance().state.focus).toBe(false);
       expect(component.toJSON()).toMatchSnapshot();
       component.getInstance().setState({ focus: true });

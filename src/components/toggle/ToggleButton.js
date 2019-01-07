@@ -54,7 +54,6 @@ const defaultProps = {
   focusTarget: null,
 };
 
-
 /**
  * This component displays a simple a button that toggle the display of an HTML
  * element.
@@ -103,8 +102,7 @@ class ToggleButton extends PureComponent {
             // eslint-disable-next-line react/no-find-dom-node
             node = ReactDOM.findDOMNode(node);
           }
-          if (node instanceof HTMLElement
-              && node.querySelector(focusTarget)) {
+          if (node instanceof HTMLElement && node.querySelector(focusTarget)) {
             // Focus automatically first element
             node.querySelector(focusTarget).focus();
           }
@@ -120,7 +118,11 @@ class ToggleButton extends PureComponent {
 
   render() {
     const {
-      openComponent, closeComponent, ariaLabel, open, onToggle,
+      openComponent,
+      closeComponent,
+      ariaLabel,
+      open,
+      onToggle,
     } = this.props;
     const menuButton = open ? closeComponent : openComponent;
 
@@ -133,7 +135,7 @@ class ToggleButton extends PureComponent {
         onClick={() => onToggle(!open)}
         onKeyPress={e => e.which === 13 && onToggle(!open)}
       >
-        { menuButton }
+        {menuButton}
       </div>
     );
   }

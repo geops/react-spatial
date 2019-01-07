@@ -98,10 +98,12 @@ class BasicMap extends Component {
       zoom,
     } = this.props;
 
-    this.map = map || new OLMap({
-      controls: [],
-      interactions: interactions || defaultInteractions(),
-    });
+    this.map =
+      map ||
+      new OLMap({
+        controls: [],
+        interactions: interactions || defaultInteractions(),
+      });
     const view = new View({
       center,
       minZoom,
@@ -136,13 +138,13 @@ class BasicMap extends Component {
     const { onFeaturesClick, onFeaturesHover } = this.props;
     this.map.setTarget(this.node.current);
 
-    this.map.on('singleclick', (evt) => {
+    this.map.on('singleclick', evt => {
       const features = evt.map.getFeaturesAtPixel(evt.pixel);
       onFeaturesClick(features || []);
     });
 
     if (onFeaturesHover) {
-      this.map.on('pointermove', (evt) => {
+      this.map.on('pointermove', evt => {
         const features = this.map.getFeaturesAtPixel(evt.pixel);
         onFeaturesHover(features || []);
       });
@@ -160,8 +162,7 @@ class BasicMap extends Component {
       zoom,
     } = this.props;
 
-    if (animationOptions
-      && prevProps.animationOptions !== animationOptions) {
+    if (animationOptions && prevProps.animationOptions !== animationOptions) {
       this.map.getView().animate(animationOptions);
     }
 
@@ -181,8 +182,10 @@ class BasicMap extends Component {
       this.map.getView().setZoom(zoom);
     }
 
-    if (prevProps.resolution !== resolution
-      && this.map.getView().getResolution() !== resolution) {
+    if (
+      prevProps.resolution !== resolution &&
+      this.map.getView().getResolution() !== resolution
+    ) {
       this.map.getView().setResolution(resolution);
     }
   }

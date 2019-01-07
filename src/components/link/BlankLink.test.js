@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  configure, shallow,
-} from 'enzyme';
+import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import renderer from 'react-test-renderer';
 import BlankLink from './BlankLink';
@@ -34,7 +32,6 @@ describe('BlankLink', () => {
     });
   });
 
-
   describe('when properties are set', () => {
     const href = 'http://google.com';
     const label = 'foo';
@@ -42,12 +39,14 @@ describe('BlankLink', () => {
     const className = 'qux';
 
     test('matches snapshot', () => {
-      const component = renderer.create(<BlankLink
-        href={href}
-        label={label}
-        title={title}
-        className={className}
-      />);
+      const component = renderer.create(
+        <BlankLink
+          href={href}
+          label={label}
+          title={title}
+          className={className}
+        />,
+      );
       const tree = component.toJSON();
       expect(tree).toMatchSnapshot();
     });

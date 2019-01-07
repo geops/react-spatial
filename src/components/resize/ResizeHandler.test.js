@@ -88,46 +88,56 @@ describe('ResizeHandler', () => {
 
       // The mock class set the onResize property, we just have to run it to
       // simulate a resize
-      ResizeObserver.onResize([{
-        target: basic,
-        contentRect: {
-          width: 200,
-          height: 200,
+      ResizeObserver.onResize([
+        {
+          target: basic,
+          contentRect: {
+            width: 200,
+            height: 200,
+          },
         },
-      }]);
+      ]);
       expect(basic.className).toBe('tm-w-xs tm-h-xs');
 
-      ResizeObserver.onResize([{
-        target: basic,
-        contentRect: {
-          width: 577,
-          height: 577,
+      ResizeObserver.onResize([
+        {
+          target: basic,
+          contentRect: {
+            width: 577,
+            height: 577,
+          },
         },
-      }]);
+      ]);
       expect(basic.className).toBe('tm-w-s tm-h-s');
-      ResizeObserver.onResize([{
-        target: basic,
-        contentRect: {
-          width: 769,
-          height: 769,
+      ResizeObserver.onResize([
+        {
+          target: basic,
+          contentRect: {
+            width: 769,
+            height: 769,
+          },
         },
-      }]);
+      ]);
       expect(basic.className).toBe('tm-w-m tm-h-m');
-      ResizeObserver.onResize([{
-        target: basic,
-        contentRect: {
-          width: 993,
-          height: 993,
+      ResizeObserver.onResize([
+        {
+          target: basic,
+          contentRect: {
+            width: 993,
+            height: 993,
+          },
         },
-      }]);
+      ]);
       expect(basic.className).toBe('tm-w-l tm-h-l');
-      ResizeObserver.onResize([{
-        target: basic,
-        contentRect: {
-          width: 1201,
-          height: 1201,
+      ResizeObserver.onResize([
+        {
+          target: basic,
+          contentRect: {
+            width: 1201,
+            height: 1201,
+          },
         },
-      }]);
+      ]);
       expect(basic.className).toBe('tm-w-xl tm-h-xl');
     });
 
@@ -137,31 +147,35 @@ describe('ResizeHandler', () => {
 
       // The mock class set the onResize property, we just have to run it to
       // simulate a resize
-      ResizeObserver.onResize([{
-        target: basic,
-        contentRect: {
-          width: 100,
-          height: 100,
+      ResizeObserver.onResize([
+        {
+          target: basic,
+          contentRect: {
+            width: 100,
+            height: 100,
+          },
         },
-      }]);
+      ]);
       expect(basic.className).toBe('tm-w-schmal tm-h-niedrig');
 
-      ResizeObserver.onResize([{
-        target: basic,
-        contentRect: {
-          width: 1000,
-          height: 1000,
+      ResizeObserver.onResize([
+        {
+          target: basic,
+          contentRect: {
+            width: 1000,
+            height: 1000,
+          },
         },
-      }]);
+      ]);
       expect(basic.className).toBe('tm-w-breit tm-h-hoch');
     });
   });
 
-
   describe('when observe property is set to a query selector', () => {
     test('(un)observes it on (un)mount', () => {
-      document.querySelectorAll = jest.fn().mockImplementation(() => ['1',
-        '2']);
+      document.querySelectorAll = jest
+        .fn()
+        .mockImplementation(() => ['1', '2']);
       const spy = jest.spyOn(ResizeObserver.prototype, 'observe');
       const spy2 = jest.spyOn(ResizeObserver.prototype, 'unobserve');
       expect(spy).toHaveBeenCalledTimes(0);

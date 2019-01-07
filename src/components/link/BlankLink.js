@@ -9,10 +9,7 @@ const propTypes = {
   /**
    * Elt to display: a text or an image.
    */
-  label: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.object,
-  ]).isRequired,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
   /**
    * Title attribute.
    */
@@ -33,9 +30,7 @@ const defaultProps = {
  */
 class BlankLink extends PureComponent {
   render() {
-    const {
-      href, label, title, className,
-    } = this.props;
+    const { href, label, title, className } = this.props;
     return (
       <a
         href={href}

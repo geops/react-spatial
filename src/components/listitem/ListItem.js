@@ -1,9 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-
 const propTypes = {
-
   /**
    * Item of the list.
    */
@@ -30,23 +28,24 @@ const defaultProps = {
   onKeyDown: () => {},
 };
 
-
 /**
  * This component  displays a <li> tag.
  */
 class ListItem extends PureComponent {
   render() {
-    const {
-      children, item, onSelect, onKeyDown,
-    } = this.props;
+    const { children, item, onSelect, onKeyDown } = this.props;
     return (
       <li
         className="tm-list-item"
         role="menuitem"
         tabIndex="0"
-        onClick={(e) => { onSelect(e, item); }}
+        onClick={e => {
+          onSelect(e, item);
+        }}
         onKeyPress={e => e.which === 13 && onSelect(e, item)}
-        onKeyDown={(e) => { onKeyDown(e); }}
+        onKeyDown={e => {
+          onKeyDown(e);
+        }}
       >
         {children}
       </li>

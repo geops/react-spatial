@@ -6,7 +6,6 @@ import Feature from 'ol/Feature';
 import StopEvents from '../stopevents/StopEvents';
 import Button from '../button/Button';
 
-
 import './Popup.scss';
 
 const propTypes = {
@@ -23,7 +22,7 @@ const propTypes = {
 const defaultProps = {
   className: '',
   store: null,
-  t: p => (p),
+  t: p => p,
 };
 
 class Popup extends PureComponent {
@@ -58,7 +57,7 @@ class Popup extends PureComponent {
         tabIndex={className === 'tm-tooltip' ? '0' : ''}
       >
         <StopEvents observe={this} events={['pointerdown', 'pointermove']} />
-        { closeButton }
+        {closeButton}
         <ContentComponent store={store} feature={feature} />
       </div>
     );

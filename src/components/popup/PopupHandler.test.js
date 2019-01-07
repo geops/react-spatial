@@ -13,9 +13,12 @@ import Point from 'ol/geom/Point';
 
 import PopupHandler from './PopupHandler';
 
-proj4.defs('EPSG:21781', '+proj=somerc +lat_0=46.95240555555556 '
-  + '+lon_0=7.439583333333333 +k_0=1 +x_0=600000 +y_0=200000 +ellps=bessel '
-  + '+towgs84=674.4,15.1,405.3,0,0,0,0 +units=m +no_defs');
+proj4.defs(
+  'EPSG:21781',
+  '+proj=somerc +lat_0=46.95240555555556 ' +
+    '+lon_0=7.439583333333333 +k_0=1 +x_0=600000 +y_0=200000 +ellps=bessel ' +
+    '+towgs84=674.4,15.1,405.3,0,0,0,0 +units=m +no_defs',
+);
 
 register(proj4);
 
@@ -41,10 +44,9 @@ PopupComponent.propTypes = {
 };
 
 test('PopupHandler should render popup', () => {
-  const handler = shallow(<PopupHandler
-    ContentComponent={PopupComponent}
-    map={olMap}
-  />);
+  const handler = shallow(
+    <PopupHandler ContentComponent={PopupComponent} map={olMap} />,
+  );
 
   const spy = jest.spyOn(handler.instance(), 'showPopup');
   handler.setProps({ feature });
@@ -52,10 +54,9 @@ test('PopupHandler should render popup', () => {
 });
 
 test('PopupHandler should render popup only once', () => {
-  const handler = shallow(<PopupHandler
-    ContentComponent={PopupComponent}
-    map={olMap}
-  />);
+  const handler = shallow(
+    <PopupHandler ContentComponent={PopupComponent} map={olMap} />,
+  );
 
   const spy = jest.spyOn(handler.instance(), 'showPopup');
   const spy2 = jest.spyOn(handler.instance(), 'componentDidUpdate');
@@ -68,11 +69,10 @@ test('PopupHandler should render popup only once', () => {
   expect(spy2).toHaveBeenCalledTimes(2);
 });
 
-test('PopupHandler should/n\'t unmount popupElement', () => {
-  const handler = shallow(<PopupHandler
-    ContentComponent={PopupComponent}
-    map={olMap}
-  />);
+test("PopupHandler should/n't unmount popupElement", () => {
+  const handler = shallow(
+    <PopupHandler ContentComponent={PopupComponent} map={olMap} />,
+  );
   const inst = handler.instance();
   const spy = jest.spyOn(ReactDOM, 'unmountComponentAtNode');
   inst.closePopup();

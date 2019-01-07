@@ -2,15 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ActionLink from '../link/ActionLink';
 
-
 const propTypes = {
   /**
    * Values of links.
    */
-  options: PropTypes.arrayOf(PropTypes.shape({
-    label: PropTypes.string,
-    title: PropTypes.string,
-  })).isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string,
+      title: PropTypes.string,
+    }),
+  ).isRequired,
 
   /**
    * Returns the href attribute.
@@ -43,7 +44,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  getHref: () => ('#'),
+  getHref: () => '#',
   getLabel: option => option.label,
   getTitle: option => option.title,
 };
@@ -53,7 +54,12 @@ const defaultProps = {
  * behaves like a select element.
  */
 const SelectLinks = ({
-  options, getHref, getLabel, getTitle, isSelected, onClick,
+  options,
+  getHref,
+  getLabel,
+  getTitle,
+  isSelected,
+  onClick,
 }) => (
   <>
     {(options || []).map(option => (

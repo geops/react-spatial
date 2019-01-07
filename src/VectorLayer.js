@@ -12,15 +12,15 @@ export default class VectorLayer extends Layer {
    * @param {ol.style.Style} [options.style] Layer style
    */
   constructor(options) {
-    const {
-      style, features, source, declutter,
-    } = options;
+    const { style, features, source, declutter } = options;
     const olLayer = new OLVectorLayer({
       declutter,
       style,
-      source: source || new VectorSource({
-        features: features || [],
-      }),
+      source:
+        source ||
+        new VectorSource({
+          features: features || [],
+        }),
     });
 
     super({ ...options, olLayer });

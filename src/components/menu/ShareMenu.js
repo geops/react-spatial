@@ -68,11 +68,7 @@ const ShareMenu = ({ socialShareConfig, extraSocialShareConfig, t }) => {
           className={`share-menu-icon ${conf.className || ''}`}
           key={conf.title}
         >
-          <BlankLink
-            href={conf.url}
-            label={conf.icon}
-            title={t(conf.title)}
-          />
+          <BlankLink href={conf.url} label={conf.icon} title={t(conf.title)} />
         </div>
       ))}
     </div>

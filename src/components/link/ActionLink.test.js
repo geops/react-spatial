@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  configure, shallow,
-} from 'enzyme';
+import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import renderer from 'react-test-renderer';
 import ActionLink from './ActionLink';
@@ -34,20 +32,21 @@ describe('ActionLink', () => {
     });
   });
 
-
   describe('when properties are set', () => {
     const label = 'foo';
     const title = ['bar'];
     const className = ['qux'];
-    const onClick = () => { };
+    const onClick = () => {};
 
     test('matches snapshot', () => {
-      const component = renderer.create(<ActionLink
-        label={label}
-        title={title}
-        className={className}
-        onClick={onClick}
-      />);
+      const component = renderer.create(
+        <ActionLink
+          label={label}
+          title={title}
+          className={className}
+          onClick={onClick}
+        />,
+      );
       const tree = component.toJSON();
       expect(tree).toMatchSnapshot();
     });
@@ -59,12 +58,14 @@ describe('ActionLink', () => {
         preventDefault: fn2,
         stopPropagation: fn2,
       };
-      const wrapper = shallow(<ActionLink
-        label={label}
-        title={title}
-        className={className}
-        onClick={fn}
-      />);
+      const wrapper = shallow(
+        <ActionLink
+          label={label}
+          title={title}
+          className={className}
+          onClick={fn}
+        />,
+      );
       wrapper.simulate('click', evt);
       expect(fn2).toHaveBeenCalledTimes(2);
       expect(fn.mock.calls[0][0]).toBe(evt);

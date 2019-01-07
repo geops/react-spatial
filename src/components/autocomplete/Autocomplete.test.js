@@ -6,21 +6,29 @@ import Autocomplete from './Autocomplete';
 
 configure({ adapter: new Adapter() });
 
-const defaultItems = [{
-  label: 'foo',
-}, {
-  label: 'bar',
-}, {
-  label: 'foo2',
-}];
+const defaultItems = [
+  {
+    label: 'foo',
+  },
+  {
+    label: 'bar',
+  },
+  {
+    label: 'foo2',
+  },
+];
 
-const items = [{
-  label: 'qux',
-}, {
-  label: 'quux',
-}, {
-  label: 'corge',
-}];
+const items = [
+  {
+    label: 'qux',
+  },
+  {
+    label: 'quux',
+  },
+  {
+    label: 'corge',
+  },
+];
 
 const state = {
   showList: false,
@@ -54,13 +62,15 @@ describe('Autocomplete', () => {
 
   describe('when properties are set', () => {
     test('should match snapshot without items and defaultItems', () => {
-      const component = renderer.create(<Autocomplete
-        value="fooval"
-        renderTitle={() => ('my_foo_title')}
-        renderItem={item => (item.label)}
-        getItemKey={() => Math.random()}
-        onSelect={() => {}}
-      />);
+      const component = renderer.create(
+        <Autocomplete
+          value="fooval"
+          renderTitle={() => 'my_foo_title'}
+          renderItem={item => item.label}
+          getItemKey={() => Math.random()}
+          onSelect={() => {}}
+        />,
+      );
       state.showList = true;
       component.root.instance.setState(state);
       const tree = component.toJSON();
@@ -68,14 +78,16 @@ describe('Autocomplete', () => {
     });
 
     test('should match snapshot without defaultItems', () => {
-      const component = renderer.create(<Autocomplete
-        value="fooval"
-        items={items}
-        renderTitle={() => ('my_foo_title')}
-        renderItem={item => (item.label)}
-        getItemKey={() => Math.random()}
-        onSelect={() => {}}
-      />);
+      const component = renderer.create(
+        <Autocomplete
+          value="fooval"
+          items={items}
+          renderTitle={() => 'my_foo_title'}
+          renderItem={item => item.label}
+          getItemKey={() => Math.random()}
+          onSelect={() => {}}
+        />,
+      );
       state.showList = true;
       component.root.instance.setState(state);
       const tree = component.toJSON();
@@ -83,14 +95,16 @@ describe('Autocomplete', () => {
     });
 
     test('should match snapshot without items', () => {
-      const component = renderer.create(<Autocomplete
-        value="fooval"
-        defaultItems={defaultItems}
-        renderTitle={() => ('my_foo_title')}
-        renderItem={item => (item.label)}
-        getItemKey={() => Math.random()}
-        onSelect={() => {}}
-      />);
+      const component = renderer.create(
+        <Autocomplete
+          value="fooval"
+          defaultItems={defaultItems}
+          renderTitle={() => 'my_foo_title'}
+          renderItem={item => item.label}
+          getItemKey={() => Math.random()}
+          onSelect={() => {}}
+        />,
+      );
       state.showList = true;
       component.root.instance.setState(state);
       const tree = component.toJSON();
@@ -98,30 +112,34 @@ describe('Autocomplete', () => {
     });
 
     test('should match snapshot', () => {
-      const component = renderer.create(<Autocomplete
-        value="fooval"
-        defaultItems={defaultItems}
-        items={items}
-        renderTitle={() => ('my_foo_title')}
-        renderItem={item => (item.label)}
-        getItemKey={() => Math.random()}
-        onSelect={() => {}}
-      />);
+      const component = renderer.create(
+        <Autocomplete
+          value="fooval"
+          defaultItems={defaultItems}
+          items={items}
+          renderTitle={() => 'my_foo_title'}
+          renderItem={item => item.label}
+          getItemKey={() => Math.random()}
+          onSelect={() => {}}
+        />,
+      );
       component.root.instance.setState(state);
       const tree = component.toJSON();
       expect(tree).toMatchSnapshot();
     });
 
     test('should match snapshot showing list', () => {
-      const component = renderer.create(<Autocomplete
-        value="fooval"
-        defaultItems={defaultItems}
-        items={items}
-        renderTitle={() => ('my_foo_title')}
-        renderItem={item => (item.label)}
-        getItemKey={() => Math.random()}
-        onSelect={() => {}}
-      />);
+      const component = renderer.create(
+        <Autocomplete
+          value="fooval"
+          defaultItems={defaultItems}
+          items={items}
+          renderTitle={() => 'my_foo_title'}
+          renderItem={item => item.label}
+          getItemKey={() => Math.random()}
+          onSelect={() => {}}
+        />,
+      );
       state.showList = true;
       component.root.instance.setState(state);
       const tree = component.toJSON();
@@ -130,16 +148,18 @@ describe('Autocomplete', () => {
 
     describe('#onFocus()', () => {
       test('updates set showList state property to true', () => {
-        const component = mount(<Autocomplete
-          value="fooval"
-          defaultItems={defaultItems}
-          items={items}
-          renderTitle={() => ('my_foo_title')}
-          renderItem={item => (item.label)}
-          getItemKey={item => (item.label)}
-          onChange={() => {}}
-          onSelect={() => {}}
-        />);
+        const component = mount(
+          <Autocomplete
+            value="fooval"
+            defaultItems={defaultItems}
+            items={items}
+            renderTitle={() => 'my_foo_title'}
+            renderItem={item => item.label}
+            getItemKey={item => item.label}
+            onChange={() => {}}
+            onSelect={() => {}}
+          />,
+        );
         expect(component.state('showList')).toBe(false);
         component.instance().onFocus({ target: { value: '' } });
         expect(component.state('showList')).toBe(true);
@@ -159,16 +179,18 @@ describe('Autocomplete', () => {
 
     describe('#onKeyPress()', () => {
       test('gives focus to the first element of the list', () => {
-        const component = mount(<Autocomplete
-          value="fooval"
-          defaultItems={defaultItems}
-          items={items}
-          renderTitle={() => ('my_foo_title')}
-          renderItem={item => (item.label)}
-          getItemKey={item => (item.label)}
-          onChange={() => {}}
-          onSelect={() => {}}
-        />);
+        const component = mount(
+          <Autocomplete
+            value="fooval"
+            defaultItems={defaultItems}
+            items={items}
+            renderTitle={() => 'my_foo_title'}
+            renderItem={item => item.label}
+            getItemKey={item => item.label}
+            onChange={() => {}}
+            onSelect={() => {}}
+          />,
+        );
         component.find('input').simulate('keyUp', { which: 40 });
         const li = component.find('li').at(0);
         expect(li.getDOMNode()).toBe(document.activeElement);

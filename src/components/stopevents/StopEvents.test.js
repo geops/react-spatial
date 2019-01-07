@@ -32,10 +32,7 @@ class BasicComponent3 extends React.Component {
   render() {
     return (
       <div id="basic">
-        <StopEvents
-          observe={this}
-          events={['contextmenu']}
-        />
+        <StopEvents observe={this} events={['contextmenu']} />
       </div>
     );
   }
@@ -56,7 +53,7 @@ class BasicComponent4 extends React.Component {
     return (
       <div
         id="basic4"
-        ref={(node) => {
+        ref={node => {
           if (node && !ref) {
             this.setState({ ref: node });
           }

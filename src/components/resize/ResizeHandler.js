@@ -37,7 +37,7 @@ const defaultProps = {
 class ResizeHandler extends Component {
   static applyBreakpoints(entry, breakpoints, size, direction) {
     let found = false;
-    Object.entries(breakpoints).forEach((brkpt) => {
+    Object.entries(breakpoints).forEach(brkpt => {
       const cssClass = `tm-${direction}-${brkpt[0]}`;
       entry.target.classList.remove(cssClass);
       if (!found && size <= brkpt[1]) {

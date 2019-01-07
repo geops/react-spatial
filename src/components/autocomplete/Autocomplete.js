@@ -72,7 +72,6 @@ const defaultProps = {
   onSelect: () => {},
 };
 
-
 /**
  * This component displays a search input with a list of suggestions.
  */
@@ -149,7 +148,9 @@ class Autocomplete extends PureComponent {
     if (nextIndex < 0) {
       // Move focus to input search
       // eslint-disable-next-line react/no-find-dom-node
-      ReactDOM.findDOMNode(this.refSearchInput).querySelector('input').focus();
+      ReactDOM.findDOMNode(this.refSearchInput)
+        .querySelector('input')
+        .focus();
       nextIndex = lis.length - 1;
       return;
     }
@@ -170,13 +171,19 @@ class Autocomplete extends PureComponent {
 
   render() {
     const {
-      button, value, placeholder, items, defaultItems, renderTitle, renderItem,
+      button,
+      value,
+      placeholder,
+      items,
+      defaultItems,
+      renderTitle,
+      renderItem,
       getItemKey,
     } = this.props;
     const { showList, refList } = this.state;
-    const className = !showList
-        || (!items.length && !defaultItems.length) ? ' tm-hidden' : '';
-    const hr = (items.length && defaultItems.length) ? <hr /> : null;
+    const className =
+      !showList || (!items.length && !defaultItems.length) ? ' tm-hidden' : '';
+    const hr = items.length && defaultItems.length ? <hr /> : null;
 
     return (
       <>
@@ -184,14 +191,16 @@ class Autocomplete extends PureComponent {
           button={button}
           value={value}
           placeholder={placeholder}
-          onChange={(e, val) => (this.onChange(e, val))}
-          onFocus={e => (this.onFocus(e))}
-          onKeyPress={e => (this.onKeyPress(e))}
-          onBlurInput={(e, keyPress) => (this.onBlurInput(e, keyPress))}
-          ref={(node) => { this.refSearchInput = node; }}
+          onChange={(e, val) => this.onChange(e, val)}
+          onFocus={e => this.onFocus(e)}
+          onKeyPress={e => this.onKeyPress(e)}
+          onBlurInput={(e, keyPress) => this.onBlurInput(e, keyPress)}
+          ref={node => {
+            this.refSearchInput = node;
+          }}
         />
         <div
-          ref={(node) => {
+          ref={node => {
             if (node && !refList) {
               this.setState({ refList: node });
             }
@@ -202,17 +211,25 @@ class Autocomplete extends PureComponent {
             items={items}
             renderItem={item => renderItem(item)}
             getItemKey={item => getItemKey(item)}
-            onSelect={(e, item) => { this.onSelect(e, item); }}
-            onKeyDownItem={(e) => { this.onKeyPressItem(e); }}
+            onSelect={(e, item) => {
+              this.onSelect(e, item);
+            }}
+            onKeyDownItem={e => {
+              this.onKeyPressItem(e);
+            }}
           />
-          { hr }
-          { renderTitle() }
+          {hr}
+          {renderTitle()}
           <List
             items={defaultItems}
             renderItem={item => renderItem(item)}
             getItemKey={item => getItemKey(item)}
-            onSelect={(e, item) => { this.onSelect(e, item); }}
-            onKeyDownItem={(e) => { this.onKeyPressItem(e); }}
+            onSelect={(e, item) => {
+              this.onSelect(e, item);
+            }}
+            onKeyDownItem={e => {
+              this.onKeyPressItem(e);
+            }}
           />
         </div>
       </>

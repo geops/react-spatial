@@ -38,7 +38,11 @@ test('Button should update.', () => {
     </Button>,
   );
 
-  bt.find('.tm-class').first().simulate('click');
-  bt.find('.tm-class').first().simulate('keypress', { which: 13 });
+  bt.find('.tm-class')
+    .first()
+    .simulate('click');
+  bt.find('.tm-class')
+    .first()
+    .simulate('keypress', { which: 13 });
   expect(spy).toHaveBeenCalledTimes(2);
 });

@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  configure, shallow,
-} from 'enzyme';
+import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import renderer from 'react-test-renderer';
 import SelectLinks from './SelectLinks';
@@ -34,28 +32,32 @@ describe('SelectLinks', () => {
     });
   });
 
-
   describe('when properties are set', () => {
-    const onClick = () => { };
+    const onClick = () => {};
 
-    const options = [{
-      title: 'foo',
-      label: 'qux',
-    }, {
-      title: 'bar',
-      label: 'quux',
-    }, {
-      title: 'baz',
-      label: 'corge',
-    }];
-
+    const options = [
+      {
+        title: 'foo',
+        label: 'qux',
+      },
+      {
+        title: 'bar',
+        label: 'quux',
+      },
+      {
+        title: 'baz',
+        label: 'corge',
+      },
+    ];
 
     test('matches snapshot', () => {
-      const component = renderer.create(<SelectLinks
-        isSelected={() => false}
-        options={options}
-        onClick={onClick}
-      />);
+      const component = renderer.create(
+        <SelectLinks
+          isSelected={() => false}
+          options={options}
+          onClick={onClick}
+        />,
+      );
       const tree = component.toJSON();
       expect(tree).toMatchSnapshot();
     });

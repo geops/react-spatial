@@ -11,10 +11,12 @@ import OLView from 'ol/View';
 import BasicMap from './BasicMap';
 import Layer from '../../Layer';
 
-
-proj4.defs('EPSG:21781', '+proj=somerc +lat_0=46.95240555555556 '
-  + '+lon_0=7.439583333333333 +k_0=1 +x_0=600000 +y_0=200000 +ellps=bessel '
-  + '+towgs84=674.4,15.1,405.3,0,0,0,0 +units=m +no_defs');
+proj4.defs(
+  'EPSG:21781',
+  '+proj=somerc +lat_0=46.95240555555556 ' +
+    '+lon_0=7.439583333333333 +k_0=1 +x_0=600000 +y_0=200000 +ellps=bessel ' +
+    '+towgs84=674.4,15.1,405.3,0,0,0,0 +units=m +no_defs',
+);
 
 register(proj4);
 
@@ -23,11 +25,13 @@ configure({ adapter: new Adapter() });
 const extent = [0, 0, 0, 0];
 const olView = new OLView();
 const olMap = new OLMap({ view: olView });
-const olLayers = [new Layer({
-  name: 'foo',
-  olLayer: new OLLayer({}),
-  visible: true,
-})];
+const olLayers = [
+  new Layer({
+    name: 'foo',
+    olLayer: new OLLayer({}),
+    visible: true,
+  }),
+];
 
 test('Map should be rendered', () => {
   const setTarget = jest.spyOn(olMap, 'setTarget');
@@ -51,35 +55,39 @@ test('Map uses onFeaturesClick function', () => {
   wrapper.unmount();
 });
 
-
 test('Map should be rendered with a default map', () => {
   const wrapper = shallow(<BasicMap />);
   expect(wrapper.instance().map).toBeDefined();
 });
 
-
 test('Map should be rendered with layers and an extent', () => {
-  const wrapper = shallow(<BasicMap
-    map={olMap}
-    layers={olLayers}
-    extent={extent}
-    projection="EPSG:21781"
-  />);
+  const wrapper = shallow(
+    <BasicMap
+      map={olMap}
+      layers={olLayers}
+      extent={extent}
+      projection="EPSG:21781"
+    />,
+  );
   const inst = wrapper.instance();
   expect(inst.map).toBeDefined();
   expect(inst.map.getLayers().getLength()).toBe(1);
-  expect(inst.map.getView().calculateExtent()).toEqual([-1.8640493388513675,
-    -1.8640493388513675, 1.8640493388513675, 1.8640493388513675]);
+  expect(inst.map.getView().calculateExtent()).toEqual([
+    -1.8640493388513675,
+    -1.8640493388513675,
+    1.8640493388513675,
+    1.8640493388513675,
+  ]);
 });
 
-test('Map\'s center shoud be set', () => {
+test("Map's center shoud be set", () => {
   const map = shallow(<BasicMap map={olMap} />);
   const setCenter = jest.spyOn(olMap.getView(), 'setCenter');
   map.setProps({ center: [0, 0] }).update();
   expect(setCenter).toHaveBeenCalled();
 });
 
-test('Map\'s layers shoud be updated', () => {
+test("Map's layers shoud be updated", () => {
   const addLayer = jest.spyOn(olMap, 'addLayer');
   const map = shallow(<BasicMap map={olMap} />);
   const layer = new Layer({ name: 'test', olLayer: new OLLayer() });

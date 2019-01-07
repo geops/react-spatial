@@ -26,11 +26,7 @@ const MenuItem = ({ defaultMenuName, element }) => {
       elem = element;
   }
 
-  return (
-    <div className="tm-menu-item">
-      { elem }
-    </div>
-  );
+  return <div className="tm-menu-item">{elem}</div>;
 };
 
 MenuItem.propTypes = propTypes;

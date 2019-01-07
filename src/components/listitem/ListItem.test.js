@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  configure, shallow,
-} from 'enzyme';
+import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import renderer from 'react-test-renderer';
 import ListItem from './ListItem';
@@ -34,7 +32,6 @@ describe('ListItem', () => {
     });
   });
 
-
   describe('when properties are set', () => {
     const item = {
       label: 'foo',
@@ -44,10 +41,7 @@ describe('ListItem', () => {
 
     test('matches snapshot', () => {
       const component = renderer.create(
-        <ListItem
-          item={item}
-          onSelect={() => {}}
-        >
+        <ListItem item={item} onSelect={() => {}}>
           {children}
         </ListItem>,
       );

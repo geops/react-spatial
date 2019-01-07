@@ -30,12 +30,7 @@ const propTypes = {
  */
 class Button extends PureComponent {
   render() {
-    const {
-      onClick,
-      children,
-      className,
-      title,
-    } = this.props;
+    const { onClick, children, className, title } = this.props;
 
     return (
       <div

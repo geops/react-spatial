@@ -8,16 +8,21 @@ import MenuItem from './MenuItem';
 configure({ adapter: new Adapter() });
 
 test('Menu should match snapshot.', () => {
-  const component = renderer.create(<Menu
-    menuVisible
-    menuItems={[{
-      title: 'Teilen',
-      element: <MenuItem defaultMenuName="share" />,
-    }, {
-      title: 'Test',
-      element: <MenuItem element={(<div>test</div>)} />,
-    }]}
-  />);
+  const component = renderer.create(
+    <Menu
+      menuVisible
+      menuItems={[
+        {
+          title: 'Teilen',
+          element: <MenuItem defaultMenuName="share" />,
+        },
+        {
+          title: 'Test',
+          element: <MenuItem element={<div>test</div>} />,
+        },
+      ]}
+    />,
+  );
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });

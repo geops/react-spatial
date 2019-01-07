@@ -58,7 +58,6 @@ const defaultProps = {
   onChange: () => {},
 };
 
-
 /**
  * This component displays a search input
  */
@@ -135,21 +134,21 @@ class SearchInput extends PureComponent {
           type="search"
           tabIndex="0"
           placeholder={placeholder}
-          onChange={e => (this.onChange(e))}
-          onBlur={e => (this.onBlur(e))}
-          onFocus={e => (this.onFocus(e))}
-          onKeyDown={e => (this.onKeyDown(e))}
-          onKeyUp={e => (this.onKeyUp(e))}
+          onChange={e => this.onChange(e)}
+          onBlur={e => this.onBlur(e)}
+          onFocus={e => this.onFocus(e)}
+          onKeyDown={e => this.onKeyDown(e)}
+          onKeyUp={e => this.onKeyUp(e)}
         />
         <button
           type="button"
           className="tm-bt"
           tabIndex="0"
           title={placeholder}
-          onMouseDown={(e) => {
+          onMouseDown={e => {
             this.search(e);
           }}
-          onKeyPress={e => (this.onKeyUp(e))}
+          onKeyPress={e => this.onKeyUp(e)}
         >
           {button}
         </button>

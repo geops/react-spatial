@@ -4,10 +4,7 @@ import PropTypes from 'prop-types';
 import './Footer.scss';
 
 const propTypes = {
-  right: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.element,
-  ]),
+  right: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
 };
 
 const defaultProps = {
@@ -18,11 +15,7 @@ class Footer extends PureComponent {
   render() {
     const { right } = this.props;
 
-    return (
-      <div className="tm-footer">
-        {right}
-      </div>
-    );
+    return <div className="tm-footer">{right}</div>;
   }
 }
 
