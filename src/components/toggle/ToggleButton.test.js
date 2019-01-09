@@ -3,6 +3,8 @@ import { configure, shallow, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import renderer from 'react-test-renderer';
 import { MdMenu, MdClose } from 'react-icons/md';
+
+import Button from '../button/Button';
 import ToggleButton from './ToggleButton';
 
 configure({ adapter: new Adapter() });
@@ -23,7 +25,7 @@ describe('ToggleButton', () => {
     });
 
     test('no errors in the console', () => {
-      shallow(<ToggleButton ariaLabel="aria-label" />);
+      shallow(<ToggleButton title="title" />);
       expect(spy).toHaveBeenCalledTimes(0);
     });
 
@@ -35,12 +37,12 @@ describe('ToggleButton', () => {
   });
 
   describe('when properties are set', () => {
-    test('matches snapshot1', () => {
+    test('matches snapshot', () => {
       const target = document.createElement('div');
       const component = renderer.create(
         <ToggleButton
           target={target}
-          ariaLabel="aria-label"
+          title="title"
           openComponent={<MdMenu focusable={false} />}
           closeComponent={<MdClose focusable={false} />}
         />,
@@ -58,7 +60,7 @@ describe('ToggleButton', () => {
           <ToggleButton
             open={open}
             target={target}
-            ariaLabel="aria-label"
+            title="title"
             openComponent={<MdMenu focusable={false} />}
             closeComponent={<MdClose focusable={false} />}
             onToggle={toggle => {
@@ -77,7 +79,7 @@ describe('ToggleButton', () => {
         expect(target.classList.contains('tm-hidden')).toBe(true);
 
         // Show the target on click
-        wrapper.find('.tm-toggle-button').simulate(...evt);
+        wrapper.find(Button).simulate(...evt);
 
         expect(open).toBe(true);
         wrapper.setProps({ open });
@@ -98,7 +100,7 @@ describe('ToggleButton', () => {
         expect(wrapper.find(MdClose)).toHaveLength(1);
 
         // Hide the target on click
-        wrapper.find('.tm-toggle-button').simulate(...evt);
+        wrapper.find(Button).simulate(...evt);
 
         expect(open).toBe(false);
         wrapper.setProps({ open });
@@ -116,6 +118,7 @@ describe('ToggleButton', () => {
 
         expect(wrapper.find(MdMenu)).toHaveLength(1);
         expect(wrapper.find(MdClose)).toHaveLength(0);
+        wrapper.unmount();
       });
     });
   });

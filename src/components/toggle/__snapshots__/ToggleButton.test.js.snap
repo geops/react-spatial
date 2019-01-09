@@ -2,7 +2,7 @@
 
 exports[`ToggleButton when no properties are set matches snapshot 1`] = `
 <div
-  className="tm-toggle-button"
+  className="tm-button tm-toggle-button"
   onClick={[Function]}
   onKeyPress={[Function]}
   role="button"
@@ -29,14 +29,15 @@ exports[`ToggleButton when no properties are set matches snapshot 1`] = `
 </div>
 `;
 
-exports[`ToggleButton when properties are set matches snapshot1 1`] = `
+exports[`ToggleButton when properties are set matches snapshot 1`] = `
 <div
-  aria-label="aria-label"
-  className="tm-toggle-button"
+  aria-label="title"
+  className="tm-button tm-toggle-button"
   onClick={[Function]}
   onKeyPress={[Function]}
   role="button"
   tabIndex="0"
+  title="title"
 >
   <svg
     fill="currentColor"

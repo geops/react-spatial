@@ -42,6 +42,9 @@ class AutocompleteExample extends React.Component {
             this.updateSuggestions(val);
           }}
           onSelect={item => {
+            if (!item) {
+              return;
+            }
             this.setState({ value: item });
           }}
         />

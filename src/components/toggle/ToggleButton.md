@@ -10,7 +10,7 @@ require('./ToggleButton.md.css');
 class ToggleButtonExample extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { ref: null };
+    this.state = { ref: null, open: true };
 
     // You could also use a simple class property but it will not force the
     // render a the component:
@@ -23,8 +23,13 @@ class ToggleButtonExample extends React.Component {
       <>
         <ToggleButton
           target={this.state.ref}
+          open={this.state.open}
+          title={'Toggle'}
           openComponent=<button>Show the red rectangle</button>
           closeComponent=<button>Hide the red rectangle</button>
+          onToggle={() => {
+            this.setState({ open: !this.state.open });
+          }}
         />
         <div
           className="tm-toggle"

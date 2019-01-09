@@ -16,7 +16,7 @@ class ActionLinkExample extends React.Component {
     this.className = 'baz';
     this.onClick = (evt, val) => {
       this.ref.current.innerHTML =
-        `The action link has been clicked: ` + `${this.cpt++} times`;
+        `The action link has been clicked: ` + `${++this.cpt} times`;
     };
   }
 

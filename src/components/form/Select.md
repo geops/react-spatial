@@ -22,7 +22,7 @@ class SelectExample extends React.Component {
 
     this.onChange = evt => {
       this.setState({
-        selected: evt.target.value,
+        value: evt.target.value,
       });
 
       this.ref.current.innerHTML = `Value selected: ${evt.target.value}`;

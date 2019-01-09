@@ -21,7 +21,7 @@ const defaultProps = {
 };
 
 /**
- * This component displays a <ul> HMTL tag element.
+ * This component displays a `<ul>` HMTL tag element.
  *
  * This component also add keyboard navigation (arrow up/down, w/s) between list
  * items.

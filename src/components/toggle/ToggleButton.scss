@@ -1,6 +1,8 @@
 .tm-toggle-button {
   display: inline-block;
   position: relative;
+  border: none;
+  color: black;
 
   > svg {
     position: absolute;

@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 
 import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
 
+import Button from '../button/Button';
+
 import './ToggleButton.scss';
 
 const propTypes = {
@@ -39,10 +41,10 @@ const propTypes = {
   focusTarget: PropTypes.string,
 
   /**
-   * String that is passed to aria-label param.
+   * String that is passed to title and aria-label param.
    * https://www.w3.org/TR/wai-aria/#aria-label
    */
-  ariaLabel: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 const defaultProps = {
@@ -117,26 +119,17 @@ class ToggleButton extends PureComponent {
   }
 
   render() {
-    const {
-      openComponent,
-      closeComponent,
-      ariaLabel,
-      open,
-      onToggle,
-    } = this.props;
+    const { openComponent, closeComponent, title, open, onToggle } = this.props;
     const menuButton = open ? closeComponent : openComponent;
 
     return (
-      <div
+      <Button
         className="tm-toggle-button"
-        role="button"
-        tabIndex="0"
-        aria-label={ariaLabel}
+        title={title}
         onClick={() => onToggle(!open)}
-        onKeyPress={e => e.which === 13 && onToggle(!open)}
       >
         {menuButton}
-      </div>
+      </Button>
     );
   }
 }

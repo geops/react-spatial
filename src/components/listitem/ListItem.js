@@ -29,7 +29,7 @@ const defaultProps = {
 };
 
 /**
- * This component  displays a <li> tag.
+ * This component displays a `<li>` tag.
  */
 class ListItem extends PureComponent {
   render() {

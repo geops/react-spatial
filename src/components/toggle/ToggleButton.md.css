@@ -11,6 +11,13 @@
   height: 0;
 }
 
+.tm-toggle-button {
+  position: relative;
+  width: auto;
+  height: auto;
+  cursor: pointer;
+}
+
 button {
   cursor: pointer;
 }
