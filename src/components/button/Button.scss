@@ -9,13 +9,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: background-color 0.5s ease;
 }
 
-.tm-zoom {
+.tm-round-blue {
   background: $tm-color-blue;
   border-radius: 50%;
 }
 
-.out {
-  margin-top: 20px;
+.tm-square-white {
+  background: white;
+  color: #aaa;
+
+  &.tm-active {
+    background-color: $tm-color-blue;
+  }
 }
