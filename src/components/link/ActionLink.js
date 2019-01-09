@@ -7,9 +7,9 @@ const propTypes = {
    */
   href: PropTypes.string,
   /**
-   * Text displayed.
+   * Children content of the link.
    */
-  label: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
   /**
    * Title attribute.
    */
@@ -34,7 +34,7 @@ const defaultProps = {
  */
 class ActionLink extends PureComponent {
   render() {
-    const { href, label, title, className, onClick } = this.props;
+    const { href, children, title, className, onClick } = this.props;
 
     return (
       // eslint-disable-next-line jsx-a11y/anchor-is-valid
@@ -49,7 +49,7 @@ class ActionLink extends PureComponent {
           onClick(evt);
         }}
       >
-        {label}
+        {children}
       </a>
     );
   }

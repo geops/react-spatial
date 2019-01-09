@@ -21,10 +21,11 @@ class BlankLinkExample extends React.Component {
       <div>
         <BlankLink
           href={this.href}
-          label={this.label}
           title={this.title}
           className={this.className}
-        />
+        >
+          {this.label}
+        </BlankLink>
       </div>
     );
   }

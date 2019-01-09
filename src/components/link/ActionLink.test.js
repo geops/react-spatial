@@ -40,12 +40,9 @@ describe('ActionLink', () => {
 
     test('matches snapshot', () => {
       const component = renderer.create(
-        <ActionLink
-          label={label}
-          title={title}
-          className={className}
-          onClick={onClick}
-        />,
+        <ActionLink title={title} className={className} onClick={onClick}>
+          {label}
+        </ActionLink>,
       );
       const tree = component.toJSON();
       expect(tree).toMatchSnapshot();
@@ -59,12 +56,9 @@ describe('ActionLink', () => {
         stopPropagation: fn2,
       };
       const wrapper = shallow(
-        <ActionLink
-          label={label}
-          title={title}
-          className={className}
-          onClick={fn}
-        />,
+        <ActionLink title={title} className={className} onClick={fn}>
+          {label}
+        </ActionLink>,
       );
       wrapper.simulate('click', evt);
       expect(fn2).toHaveBeenCalledTimes(2);

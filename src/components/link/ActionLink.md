@@ -24,11 +24,12 @@ class ActionLinkExample extends React.Component {
     return (
       <div>
         <ActionLink
-          label={this.label}
           title={this.title}
           className={this.className}
           onClick={this.onClick}
-        />
+        >
+          {this.label}
+        </ActionLink>
         <div ref={this.ref} />
       </div>
     );

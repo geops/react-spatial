@@ -66,12 +66,13 @@ const SelectLinks = ({
       <ActionLink
         key={getLabel(option)}
         href={getHref(option)}
-        label={getLabel(option)}
         title={getTitle(option)}
         tabIndex="0"
         className={isSelected(option) ? 'tm-selected' : null}
         onClick={evt => onClick(evt, option)}
-      />
+      >
+        {getLabel(option)}
+      </ActionLink>
     ))}
   </>
 );

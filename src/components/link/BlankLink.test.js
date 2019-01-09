@@ -40,12 +40,9 @@ describe('BlankLink', () => {
 
     test('matches snapshot', () => {
       const component = renderer.create(
-        <BlankLink
-          href={href}
-          label={label}
-          title={title}
-          className={className}
-        />,
+        <BlankLink href={href} title={title} className={className}>
+          {label}
+        </BlankLink>,
       );
       const tree = component.toJSON();
       expect(tree).toMatchSnapshot();

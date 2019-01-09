@@ -7,9 +7,9 @@ const propTypes = {
    */
   href: PropTypes.string.isRequired,
   /**
-   * Elt to display: a text or an image.
+   * Children content of the link.
    */
-  label: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+  children: PropTypes.node.isRequired,
   /**
    * Title attribute.
    */
@@ -30,7 +30,7 @@ const defaultProps = {
  */
 class BlankLink extends PureComponent {
   render() {
-    const { href, label, title, className } = this.props;
+    const { href, children, title, className } = this.props;
     return (
       <a
         href={href}
@@ -40,7 +40,7 @@ class BlankLink extends PureComponent {
         rel="noopener noreferrer"
         tabIndex="0"
       >
-        {label}
+        {children}
       </a>
     );
   }
