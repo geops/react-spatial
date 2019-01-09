@@ -15,44 +15,59 @@ const propTypes = {
     resolution: PropTypes.number,
     zoom: PropTypes.number,
   }),
+
   /** Center of the ol.View. */
   center: PropTypes.arrayOf(PropTypes.number),
+
   /** Class name of the map container */
   className: PropTypes.string,
+
   /** Map extent */
   extent: PropTypes.arrayOf(PropTypes.number),
+
   /** Openlayers fit options (https://openlayers.org/en/latest/apidoc/module-ol_View-View.html#fit) when extent is updated */
   fitOptions: PropTypes.shape(),
+
   /** Array of [ol/interaction]. */
   interactions: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.instanceOf(Interaction)),
     PropTypes.instanceOf(OLCollection),
   ]),
+
   /** Array of Layer to display. */
   layers: PropTypes.arrayOf(PropTypes.instanceOf(Layer)),
+
   /** An existing [ol/Map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html). */
   map: PropTypes.instanceOf(OLMap),
-  /** Map minimum zoom */
-  minZoom: PropTypes.number,
+
   /**
    * Callback when a [ol/Feature](https://openlayers.org/en/latest/apidoc/module-ol_Feature-Feature.html) is clicked.
    * @param {OLFeature[]} features An array of [ol/Feature](https://openlayers.org/en/latest/apidoc/module-ol_Feature-Feature.html).
    */
   onFeaturesClick: PropTypes.func,
+
   /**
    * Callback when a [ol/Feature](https://openlayers.org/en/latest/apidoc/module-ol_Feature-Feature.html) is hovered.
    * @param {OLFeature[]} features An array of [ol/Feature](https://openlayers.org/en/latest/apidoc/module-ol_Feature-Feature.html).
    */
   onFeaturesHover: PropTypes.func,
+
   /**
    * Callback when the map was moved.
    * @param {ol.MapEvent} [evt](https://openlayers.org/en/latest/apidoc/module-ol_MapEvent-MapEvent.html).
    */
   onMapMoved: PropTypes.func,
-  /** Map projection */
-  projection: PropTypes.string,
+
   /** Map resolution */
   resolution: PropTypes.number,
+
+  /** View constructor options */
+  viewOptions: PropTypes.shape({
+    minZoom: PropTypes.number,
+    maxZoom: PropTypes.number,
+    projection: PropTypes.string,
+  }),
+
   /** Map zoom level */
   zoom: PropTypes.number,
 };
@@ -70,17 +85,29 @@ const defaultProps = {
   interactions: null,
   layers: [],
   map: null,
-  minZoom: 0,
   onFeaturesClick: () => {},
   onFeaturesHover: undefined,
   onMapMoved: () => {},
-  projection: 'EPSG:3857',
   resolution: undefined,
+  viewOptions: {
+    minZoom: 0,
+    maxZoom: 22,
+    projection: 'EPSG:3857',
+  },
   zoom: 0,
 };
 
 /**
  * Display an OpenLayers Map.
+ *
+ * The map's view is created with the following parameters for the view:
+ *  - projection: 'EPSG:3857'
+ *  - zoom: 0
+ *  - minZoom: 0
+ *  - maxZoom: 22
+ *
+ * These options can be overrided by the viewOptions property.
+ *
  */
 class BasicMap extends Component {
   constructor(props) {
@@ -89,12 +116,11 @@ class BasicMap extends Component {
       center,
       extent,
       map,
-      minZoom,
       interactions,
       layers,
       onMapMoved,
-      projection,
       resolution,
+      viewOptions,
       zoom,
     } = this.props;
 
@@ -104,12 +130,7 @@ class BasicMap extends Component {
         controls: [],
         interactions: interactions || defaultInteractions(),
       });
-    const view = new View({
-      center,
-      minZoom,
-      maxZoom: 22,
-      projection,
-    });
+    const view = new View({ ...viewOptions, ...{ center } });
 
     this.map.setView(view);
 

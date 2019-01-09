@@ -66,7 +66,11 @@ test('Map should be rendered with layers and an extent', () => {
       map={olMap}
       layers={olLayers}
       extent={extent}
-      projection="EPSG:21781"
+      viewOptions={{
+        minZoom: 16,
+        maxZoom: 22,
+        projection: 'EPSG:21781',
+      }}
     />,
   );
   const inst = wrapper.instance();
