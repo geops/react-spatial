@@ -143,7 +143,7 @@ class Autocomplete extends PureComponent {
     if (!lis.length) {
       return;
     }
-    const idxItemFocused = [...lis].indexOf(liFocused);
+    const idxItemFocused = Array.prototype.slice.call(lis).indexOf(liFocused);
     let nextIndex = idxItemFocused + delta;
     if (nextIndex < 0) {
       // Move focus to input search
