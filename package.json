@@ -52,7 +52,7 @@
   },
   "scripts": {
     "prebuild": "rm -rf build/",
-    "build": "buble --no modules -i src -o build --objectAssign true",
+    "build": "buble --no modules -i src -o build --objectAssign Object.assign",
     "postbuild": "cp package.json build/ && cd src && find .  -name '*.scss' | cpio -pdm ../build",
     "format": "prettier --write src/**/*.js",
     "lint": "eslint src/",
