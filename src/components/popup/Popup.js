@@ -56,7 +56,10 @@ class Popup extends PureComponent {
         role="button"
         tabIndex={className === 'tm-tooltip' ? '0' : ''}
       >
-        <StopEvents observe={this} events={['pointerdown', 'pointermove']} />
+        <StopEvents
+          observe={this}
+          events={['pointerdown', 'pointermove', 'touchstart', 'touchmove']}
+        />
         {closeButton}
         <ContentComponent store={store} feature={feature} />
       </div>
