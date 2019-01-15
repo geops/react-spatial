@@ -63,7 +63,7 @@
     "format": "prettier --write src/**/*.js",
     "lint": "eslint src/",
     "test": "jest",
-    "doc": "npx styleguidist build",
-    "doc:run": "npx styleguidist server"
+    "doc": "styleguidist build",
+    "doc:server": "styleguidist server"
   }
 }
