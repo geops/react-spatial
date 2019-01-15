@@ -3,6 +3,10 @@ option {
   cursor: pointer;
 }
 
+.tm-select-example {
+  width: 300px;
+}
+
 .tm-select-example select {
   padding: 10px;
 }

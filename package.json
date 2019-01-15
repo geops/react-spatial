@@ -10,8 +10,10 @@
     "babel-core": "^7.0.0-0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
+    "babel-loader": "^8.0.5",
     "buble": "^0.19.6",
     "canvas": "^2.2.0",
+    "css-loader": "^2.1.0",
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.7.1",
     "eslint": "^5.12.0",
@@ -23,6 +25,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^23.6.0",
     "jest-canvas-mock": "^1.1.0",
+    "node-sass": "^4.11.0",
     "ol": "^5.3.0",
     "prettier": "^1.15.3",
     "proj4": "^2.5.0",
@@ -30,7 +33,10 @@
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-i18next": "^9.0.2",
-    "react-test-renderer": "^16.7.0"
+    "react-styleguidist": "^8.0.6",
+    "react-test-renderer": "^16.7.0",
+    "sass-loader": "^7.1.0",
+    "webpack": "^4.28.4"
   },
   "peerDependency": {
     "ol": "^5.3.0"
@@ -56,6 +62,8 @@
     "postbuild": "cp package.json build/ && cd src && find .  -name '*.scss' | cpio -pdm ../build",
     "format": "prettier --write src/**/*.js",
     "lint": "eslint src/",
-    "test": "jest"
+    "test": "jest",
+    "doc": "npx styleguidist build",
+    "doc:run": "npx styleguidist server"
   }
 }

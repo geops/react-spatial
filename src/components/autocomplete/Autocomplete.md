@@ -30,7 +30,7 @@ class AutocompleteExample extends React.Component {
   render() {
     const { value, suggestions } = this.state;
     return (
-      <div className="tm-autocomplete-container">
+      <div className="tm-autocomplete-example">
         <Autocomplete
           value={value}
           items={suggestions}
