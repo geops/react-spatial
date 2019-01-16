@@ -1,5 +1,7 @@
 # React Spatial
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/geops/react-spatial.svg)](https://greenkeeper.io/)
+
 This library provides React components to build web applications based on [OpenLayers](https://openlayers.org/).
 
 ## Getting Started
