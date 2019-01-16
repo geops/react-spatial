@@ -11,7 +11,7 @@ class ButtonExample extends React.Component {
   constructor(props) {
     super(props);
     this.ref = React.createRef();
-    this.className = 'tm-button-class';
+    this.className = 'tm-button-example';
     this.title = 'this is a simple button';
     this.children = 'click';
     this.onClick = () => {
