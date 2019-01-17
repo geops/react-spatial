@@ -193,7 +193,6 @@ class SearchInput extends PureComponent {
           className="tm-bt-search"
           onClick={e => {
             this.search(e);
-            this.setState({ focus: true });
           }}
         >
           {button}

@@ -5,17 +5,6 @@
     color: $tm-color-darkgrey;
   }
 
-  .tm-search-input {
-    button {
-      background-color: $tm-color-sbb-red;
-      color: white;
-
-      &:hover {
-        background-color: $tm-color-sbb-red-hover;
-      }
-    }
-  }
-
   .tm-list-container,
   .tm-search-input {
     border: 2px solid $tm-color-grey;

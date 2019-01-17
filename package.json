@@ -12,7 +12,7 @@
     "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.5",
     "buble": "^0.19.6",
-    "canvas": "^2.2.0",
+    "canvas": "^1.6.3",
     "css-loader": "^2.1.0",
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.7.1",
@@ -58,11 +58,12 @@
   },
   "scripts": {
     "prebuild": "rm -rf build/",
-    "build": "buble --no modules -i src -o build --objectAssign Object.assign",
+    "build": "buble --no modules -i src -o build --objectAssign Object.assign --sourcemap",
     "postbuild": "cp package.json build/ && cd src && find .  -name '*.scss' | cpio -pdm ../build",
     "format": "prettier --write src/**/*.js",
     "lint": "eslint src/",
-    "test": "jest",
+    "test": "jest src",
+    "test:watch": "jest src --watch",
     "doc": "styleguidist build",
     "doc:server": "styleguidist server",
     "symlink": "yarn build && cd build && yarn link"
