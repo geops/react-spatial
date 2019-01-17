@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { MdClose } from 'react-icons/md';
-import StopEvents from '../stopevents/StopEvents';
 import Button from '../button/Button';
 
 import './SearchInput.scss';
