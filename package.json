@@ -12,7 +12,7 @@
     "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.5",
     "buble": "^0.19.6",
-    "canvas": "^1.6.3",
+    "canvas": "^2.2.0",
     "css-loader": "^2.1.0",
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.7.1",
