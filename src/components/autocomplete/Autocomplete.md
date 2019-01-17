@@ -34,6 +34,7 @@ class AutocompleteExample extends React.Component {
         <Autocomplete
           value={value}
           items={suggestions}
+          placeholder="Search ..."
           renderTitle={() => ''}
           renderItem={item => item}
           getItemKey={item => item}

@@ -1,9 +1,7 @@
 @import '../../Globals.scss';
 
 .tm-button {
-  border: 1px solid #aaa;
   cursor: pointer;
-  color: white;
   height: $large-button-size;
   width: $large-button-size;
   display: flex;
@@ -15,9 +13,11 @@
 .tm-round-blue {
   background: $tm-color-blue;
   border-radius: 50%;
+  color: white;
 }
 
 .tm-square-white {
+  border: 1px solid #aaa;
   background: white;
   color: #aaa;
 

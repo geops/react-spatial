@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Autocomplete when no properties are set matches snapshot 1`] = `
-Array [
+<div
+  className="tm-autocomplete"
+>
   <div
     className="tm-search-input "
   >
@@ -13,28 +15,60 @@ Array [
       onKeyUp={[Function]}
       placeholder=""
       tabIndex="0"
-      type="search"
+      title=""
+      type="text"
       value=""
     />
-    <button
-      className="tm-bt"
+    <div
+      aria-label=""
+      className="tm-button tm-hidden"
+      onClick={[Function]}
       onKeyPress={[Function]}
-      onMouseDown={[Function]}
+      role="button"
       tabIndex="0"
       title=""
-      type="button"
+    >
+      <svg
+        fill="currentColor"
+        focusable={false}
+        height="1em"
+        stroke="currentColor"
+        strokeWidth="0"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+        />
+      </svg>
+    </div>
+    <div
+      aria-label=""
+      className="tm-button tm-bt-search"
+      onClick={[Function]}
+      onKeyPress={[Function]}
+      role="button"
+      tabIndex="0"
+      title=""
     >
       go
-    </button>
-  </div>,
+    </div>
+  </div>
   <div
     className="tm-list-container tm-hidden"
-  />,
-]
+  />
+</div>
 `;
 
 exports[`Autocomplete when properties are set should match snapshot 1`] = `
-Array [
+<div
+  className="tm-autocomplete"
+>
   <div
     className="tm-search-input "
   >
@@ -46,20 +80,50 @@ Array [
       onKeyUp={[Function]}
       placeholder=""
       tabIndex="0"
-      type="search"
+      title=""
+      type="text"
       value="fooval"
     />
-    <button
-      className="tm-bt"
+    <div
+      aria-label=""
+      className="tm-button "
+      onClick={[Function]}
       onKeyPress={[Function]}
-      onMouseDown={[Function]}
+      role="button"
       tabIndex="0"
       title=""
-      type="button"
+    >
+      <svg
+        fill="currentColor"
+        focusable={false}
+        height="1em"
+        stroke="currentColor"
+        strokeWidth="0"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+        />
+      </svg>
+    </div>
+    <div
+      aria-label=""
+      className="tm-button tm-bt-search"
+      onClick={[Function]}
+      onKeyPress={[Function]}
+      role="button"
+      tabIndex="0"
+      title=""
     >
       go
-    </button>
-  </div>,
+    </div>
+  </div>
   <div
     className="tm-list-container"
   >
@@ -135,12 +199,14 @@ Array [
         foo2
       </li>
     </ul>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Autocomplete when properties are set should match snapshot showing list 1`] = `
-Array [
+<div
+  className="tm-autocomplete"
+>
   <div
     className="tm-search-input "
   >
@@ -152,20 +218,50 @@ Array [
       onKeyUp={[Function]}
       placeholder=""
       tabIndex="0"
-      type="search"
+      title=""
+      type="text"
       value="fooval"
     />
-    <button
-      className="tm-bt"
+    <div
+      aria-label=""
+      className="tm-button "
+      onClick={[Function]}
       onKeyPress={[Function]}
-      onMouseDown={[Function]}
+      role="button"
       tabIndex="0"
       title=""
-      type="button"
+    >
+      <svg
+        fill="currentColor"
+        focusable={false}
+        height="1em"
+        stroke="currentColor"
+        strokeWidth="0"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+        />
+      </svg>
+    </div>
+    <div
+      aria-label=""
+      className="tm-button tm-bt-search"
+      onClick={[Function]}
+      onKeyPress={[Function]}
+      role="button"
+      tabIndex="0"
+      title=""
     >
       go
-    </button>
-  </div>,
+    </div>
+  </div>
   <div
     className="tm-list-container"
   >
@@ -241,12 +337,14 @@ Array [
         foo2
       </li>
     </ul>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Autocomplete when properties are set should match snapshot without defaultItems 1`] = `
-Array [
+<div
+  className="tm-autocomplete"
+>
   <div
     className="tm-search-input "
   >
@@ -258,20 +356,50 @@ Array [
       onKeyUp={[Function]}
       placeholder=""
       tabIndex="0"
-      type="search"
+      title=""
+      type="text"
       value="fooval"
     />
-    <button
-      className="tm-bt"
+    <div
+      aria-label=""
+      className="tm-button "
+      onClick={[Function]}
       onKeyPress={[Function]}
-      onMouseDown={[Function]}
+      role="button"
       tabIndex="0"
       title=""
-      type="button"
+    >
+      <svg
+        fill="currentColor"
+        focusable={false}
+        height="1em"
+        stroke="currentColor"
+        strokeWidth="0"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+        />
+      </svg>
+    </div>
+    <div
+      aria-label=""
+      className="tm-button tm-bt-search"
+      onClick={[Function]}
+      onKeyPress={[Function]}
+      role="button"
+      tabIndex="0"
+      title=""
     >
       go
-    </button>
-  </div>,
+    </div>
+  </div>
   <div
     className="tm-list-container"
   >
@@ -311,12 +439,14 @@ Array [
       </li>
     </ul>
     my_foo_title
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Autocomplete when properties are set should match snapshot without items 1`] = `
-Array [
+<div
+  className="tm-autocomplete"
+>
   <div
     className="tm-search-input "
   >
@@ -328,20 +458,50 @@ Array [
       onKeyUp={[Function]}
       placeholder=""
       tabIndex="0"
-      type="search"
+      title=""
+      type="text"
       value="fooval"
     />
-    <button
-      className="tm-bt"
+    <div
+      aria-label=""
+      className="tm-button "
+      onClick={[Function]}
       onKeyPress={[Function]}
-      onMouseDown={[Function]}
+      role="button"
       tabIndex="0"
       title=""
-      type="button"
+    >
+      <svg
+        fill="currentColor"
+        focusable={false}
+        height="1em"
+        stroke="currentColor"
+        strokeWidth="0"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+        />
+      </svg>
+    </div>
+    <div
+      aria-label=""
+      className="tm-button tm-bt-search"
+      onClick={[Function]}
+      onKeyPress={[Function]}
+      role="button"
+      tabIndex="0"
+      title=""
     >
       go
-    </button>
-  </div>,
+    </div>
+  </div>
   <div
     className="tm-list-container"
   >
@@ -381,12 +541,14 @@ Array [
         foo2
       </li>
     </ul>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Autocomplete when properties are set should match snapshot without items and defaultItems 1`] = `
-Array [
+<div
+  className="tm-autocomplete"
+>
   <div
     className="tm-search-input "
   >
@@ -398,24 +560,54 @@ Array [
       onKeyUp={[Function]}
       placeholder=""
       tabIndex="0"
-      type="search"
+      title=""
+      type="text"
       value="fooval"
     />
-    <button
-      className="tm-bt"
+    <div
+      aria-label=""
+      className="tm-button "
+      onClick={[Function]}
       onKeyPress={[Function]}
-      onMouseDown={[Function]}
+      role="button"
       tabIndex="0"
       title=""
-      type="button"
+    >
+      <svg
+        fill="currentColor"
+        focusable={false}
+        height="1em"
+        stroke="currentColor"
+        strokeWidth="0"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+        />
+      </svg>
+    </div>
+    <div
+      aria-label=""
+      className="tm-button tm-bt-search"
+      onClick={[Function]}
+      onKeyPress={[Function]}
+      role="button"
+      tabIndex="0"
+      title=""
     >
       go
-    </button>
-  </div>,
+    </div>
+  </div>
   <div
     className="tm-list-container tm-hidden"
   >
     my_foo_title
-  </div>,
-]
+  </div>
+</div>
 `;
