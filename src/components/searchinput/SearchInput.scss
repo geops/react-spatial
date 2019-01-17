@@ -1,3 +1,4 @@
+@import '../../Globals.scss';
 $tm-search-bt-width: 50px;
 
 .tm-search-input {
@@ -8,35 +9,28 @@ $tm-search-bt-width: 50px;
   top: 0;
   bottom: 0;
   margin: auto;
+  border: 1px solid $tm-color-grey;
 
-  input[type='search'],
+  input,
   button,
   svg {
     border: none;
   }
 
-  input[type='search'] {
+  input {
     padding: 0px 15px;
-    appearance: none;
     flex-grow: 2;
-
-    // FOR IE:
-    &::-ms-clear {
-      cursor: pointer;
-    }
-
-    &::-webkit-search-cancel-button {
-      cursor: pointer;
-      position: relative;
-      right: 10px;
-      margin-left: 20px;
-      font-size: 1.3em;
-    }
   }
 
-  button {
-    width: $tm-search-bt-width;
-    padding: 8px 12px;
+  .tm-button {
     height: 100%;
+  }
+
+  .tm-bt-search {
+    background-color: $tm-color-grey;
+  }
+
+  .tm-hidden {
+    display: none;
   }
 }

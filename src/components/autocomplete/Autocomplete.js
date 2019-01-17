@@ -83,6 +83,8 @@ class Autocomplete extends PureComponent {
       refList: null,
     };
     this.onDocClick = this.onDocClick.bind(this);
+    this.ref = null;
+    this.refSearchInput = null;
   }
 
   componentDidMount() {
@@ -94,10 +96,12 @@ class Autocomplete extends PureComponent {
     document.removeEventListener('click', this.onDocClick);
   }
 
-  onDocClick() {
-    const { onSelect } = this.props;
+  onDocClick(e) {
+    // If the click comes from an element of Autocomplete, don't close the list.
+    if (this.ref && this.ref.contains(e.target)) {
+      return;
+    }
     this.setState({ showList: false });
-    onSelect();
   }
 
   onChange(evt, val) {
@@ -163,10 +167,8 @@ class Autocomplete extends PureComponent {
 
   onSelect(evt, item) {
     const { onSelect } = this.props;
-    if (evt.which === 13) {
-      this.setState({ showList: false });
-    }
     onSelect(item);
+    this.setState({ showList: false });
   }
 
   render() {
@@ -186,7 +188,12 @@ class Autocomplete extends PureComponent {
     const hr = items.length && defaultItems.length ? <hr /> : null;
 
     return (
-      <>
+      <div
+        className="tm-autocomplete"
+        ref={node => {
+          this.ref = node;
+        }}
+      >
         <SearchInput
           button={button}
           value={value}
@@ -232,7 +239,7 @@ class Autocomplete extends PureComponent {
             }}
           />
         </div>
-      </>
+      </div>
     );
   }
 }

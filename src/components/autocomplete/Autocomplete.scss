@@ -1,56 +1,58 @@
 @import '../../Globals.scss';
 
-.tm-search {
-  color: $tm-color-darkgrey;
-}
+.tm-autocomplete {
+  .tm-search {
+    color: $tm-color-darkgrey;
+  }
 
-.tm-search-input {
-  button {
-    background-color: $tm-color-sbb-red;
-    color: white;
+  .tm-search-input {
+    button {
+      background-color: $tm-color-sbb-red;
+      color: white;
 
-    &:hover {
-      background-color: $tm-color-sbb-red-hover;
+      &:hover {
+        background-color: $tm-color-sbb-red-hover;
+      }
     }
   }
-}
 
-.tm-list-container,
-.tm-search-input {
-  border: 2px solid $tm-color-grey;
-}
-
-.tm-list-container {
-  position: absolute;
-  margin: auto;
-  border-top: none;
-  top: calc(100% - 1px);
-  left: 0;
-  right: 0;
-  background-color: white;
-  overflow: auto;
-  max-height: 400px;
-
-  &.tm-hidden {
-    display: none;
+  .tm-list-container,
+  .tm-search-input {
+    border: 2px solid $tm-color-grey;
   }
 
-  p {
-    font-size: 0.9em;
-    font-weight: bold;
-    color: $tm-color-lightgrey;
-    padding: 5px 15px 2px 15px;
-    margin: 0;
-  }
+  .tm-list-container {
+    position: absolute;
+    margin: auto;
+    border-top: none;
+    top: calc(100% - 1px);
+    left: 0;
+    right: 0;
+    background-color: white;
+    overflow: auto;
+    max-height: 400px;
 
-  ul:first-child {
-    margin-top: 8px;
-  }
+    &.tm-hidden {
+      display: none;
+    }
 
-  li {
-    &:hover,
-    &:focus {
-      color: $tm-color-sbb-red;
+    p {
+      font-size: 0.9em;
+      font-weight: bold;
+      color: $tm-color-lightgrey;
+      padding: 5px 15px 2px 15px;
+      margin: 0;
+    }
+
+    ul:first-child {
+      margin-top: 8px;
+    }
+
+    li {
+      &:hover,
+      &:focus {
+        color: $tm-color-sbb-red;
+      }
     }
   }
 }

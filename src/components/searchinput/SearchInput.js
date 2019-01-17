@@ -1,15 +1,12 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-
+import { MdClose } from 'react-icons/md';
 import StopEvents from '../stopevents/StopEvents';
+import Button from '../button/Button';
 
 import './SearchInput.scss';
 
 const propTypes = {
-  /**
-   * Content for submit button.
-   */
-  button: PropTypes.any,
 
   /**
    * Value of the input
@@ -37,7 +34,7 @@ const propTypes = {
   onBlurInput: PropTypes.func,
 
   /**
-   * Function launched when the user press a key on the input and the bottom.
+   * Function launched when the user press a key on the input and the list.
    */
   onKeyPress: PropTypes.func,
 
@@ -45,6 +42,26 @@ const propTypes = {
    * Function launched when the user change the content of the input.
    */
   onChange: PropTypes.func,
+
+  /**
+   * Content for submit button.
+   */
+  button: PropTypes.any,
+
+  /**
+   * Title for the clear button.
+   */
+  titleClearBt: PropTypes.string,
+
+  /**
+   * Title for the search button.
+   */
+  titleSearchBt: PropTypes.string,
+
+  /**
+   * Title for the input text.
+   */
+  titleSearchInput: PropTypes.string,
 };
 
 const defaultProps = {
@@ -52,6 +69,9 @@ const defaultProps = {
   value: '',
   className: null,
   placeholder: '',
+  titleClearBt: '',
+  titleSearchBt: '',
+  titleSearchInput: '',
   onFocus: () => {},
   onBlurInput: () => {},
   onKeyPress: () => {},
@@ -67,6 +87,14 @@ class SearchInput extends PureComponent {
     this.state = {
       focus: false,
     };
+    this.refInput = null;
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { focus } = this.state;
+    if (this.refInput && focus && focus !== prevState.focus) {
+      this.refInput.focus();
+    }
   }
 
   onFocus(evt) {
@@ -95,14 +123,6 @@ class SearchInput extends PureComponent {
   }
 
   /**
-   * Function triggered when the value of the input change.
-   */
-  onChange(evt) {
-    const { onChange } = this.props;
-    onChange(evt, evt.target.value);
-  }
-
-  /**
    * Get the className to use for the container.
    */
   getClassName() {
@@ -116,42 +136,68 @@ class SearchInput extends PureComponent {
   }
 
   /**
-   * Trigger the onChange function with the current value of the input.
+   * Trigger the onChange function with a new value or the current value of
+   * the input.
    */
-  search(evt) {
+  search(evt, newVal) {
     const { value, onChange } = this.props;
-    onChange(evt, value);
+    if (newVal !== undefined && newVal !== null) {
+      onChange(evt, newVal);
+    } else {
+      onChange(evt, value);
+    }
   }
 
   render() {
-    const { button, value, placeholder } = this.props;
+    const {
+      button, value, placeholder, titleClearBt, titleSearchBt, titleSearchInput
+    } = this.props;
+
     const className = this.getClassName();
+
+    // Hide clear button
+    let hiddenClass = 'tm-hidden';
+    if (value) {
+      hiddenClass = ''
+    }
+
     return (
       <div className={className}>
-        <StopEvents observe={this} events={['click']} />
         <input
           value={value}
-          type="search"
+          type="text"
           tabIndex="0"
           placeholder={placeholder}
-          onChange={e => this.onChange(e)}
+          title={titleSearchInput}
+          onChange={e => this.search(e, e.target.value)}
           onBlur={e => this.onBlur(e)}
           onFocus={e => this.onFocus(e)}
           onKeyDown={e => this.onKeyDown(e)}
           onKeyUp={e => this.onKeyUp(e)}
-        />
-        <button
-          type="button"
-          className="tm-bt"
-          tabIndex="0"
-          title={placeholder}
-          onMouseDown={e => {
-            this.search(e);
+          ref={node => {
+            this.refInput = node;
           }}
-          onKeyPress={e => this.onKeyUp(e)}
+        />
+        <Button
+          title={titleClearBt}
+          className={hiddenClass}
+          onClick={e => {
+            this.search(e, '');
+            this.setState({ focus: true });
+          }}
+        >
+          <MdClose focusable={false} />
+        </Button>
+        <Button
+          title={titleSearchBt}
+          className="tm-bt-search"
+          onClick={e => {
+            this.search(e);
+            this.setState({ focus: true });
+          }}
         >
           {button}
-        </button>
+        </Button>
       </div>
     );
   }
