@@ -35,11 +35,6 @@ const defaultProps = {
       icon: <TiSocialFacebook focusable={false} />,
     },
     {
-      url: '//plus.google.com/share?url={url}',
-      title: 'Auf Google+ teilen.',
-      icon: <TiSocialGooglePlus focusable={false} />,
-    },
-    {
       url: '//twitter.com/intent/tweet?url={url}',
       title: 'Twittern.',
       icon: <TiSocialTwitter focusable={false} />,
