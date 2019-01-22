@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   TiSocialFacebook,
-  TiSocialGooglePlus,
   TiSocialTwitter,
 } from 'react-icons/ti';
 import { FiMail } from 'react-icons/fi';
@@ -33,11 +32,6 @@ const defaultProps = {
       url: '//www.facebook.com/sharer.php?u={url}',
       title: 'Auf Facebook teilen.',
       icon: <TiSocialFacebook focusable={false} />,
-    },
-    {
-      url: '//plus.google.com/share?url={url}',
-      title: 'Auf Google+ teilen.',
-      icon: <TiSocialGooglePlus focusable={false} />,
     },
     {
       url: '//twitter.com/intent/tweet?url={url}',
