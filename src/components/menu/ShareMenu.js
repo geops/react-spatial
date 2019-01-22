@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   TiSocialFacebook,
-  TiSocialGooglePlus,
   TiSocialTwitter,
 } from 'react-icons/ti';
 import { FiMail } from 'react-icons/fi';
