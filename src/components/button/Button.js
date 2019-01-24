@@ -40,7 +40,7 @@ class Button extends PureComponent {
         title={title}
         aria-label={title}
         onKeyPress={e => e.which === 13 && onClick()}
-        onClick={(e) => onClick(e)}
+        onClick={e => onClick(e)}
       >
         {children}
       </div>

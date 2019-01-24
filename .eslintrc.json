@@ -7,11 +7,11 @@
   },
   "parser": "babel-eslint",
   "extends": ["airbnb", "prettier"],
+  "plugins": ["prettier"],
   "rules": {
     "import/no-extraneous-dependencies": ["error", {"devDependencies": true }],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/forbid-prop-types": "Off",
-    "max-len": ["error", { "code": 80, "ignoreComments": true }],
-    "react/jsx-curly-spacing": ["error", { "when": "never" }]
+    "prettier/prettier": "error"
   }
 }
