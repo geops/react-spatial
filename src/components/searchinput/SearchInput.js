@@ -6,7 +6,6 @@ import Button from '../button/Button';
 import './SearchInput.scss';
 
 const propTypes = {
-
   /**
    * Value of the input
    */
@@ -149,7 +148,12 @@ class SearchInput extends PureComponent {
 
   render() {
     const {
-      button, value, placeholder, titleClearBt, titleSearchBt, titleSearchInput
+      button,
+      value,
+      placeholder,
+      titleClearBt,
+      titleSearchBt,
+      titleSearchInput,
     } = this.props;
 
     const className = this.getClassName();
@@ -157,7 +161,7 @@ class SearchInput extends PureComponent {
     // Hide clear button
     let hiddenClass = 'tm-hidden';
     if (value) {
-      hiddenClass = ''
+      hiddenClass = '';
     }
 
     return (

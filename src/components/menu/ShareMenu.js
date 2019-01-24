@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  TiSocialFacebook,
-  TiSocialTwitter,
-} from 'react-icons/ti';
+import { TiSocialFacebook, TiSocialTwitter } from 'react-icons/ti';
 import { FiMail } from 'react-icons/fi';
 import { withNamespaces } from 'react-i18next';
 import BlankLink from '../link/BlankLink';
