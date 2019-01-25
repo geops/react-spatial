@@ -19,11 +19,13 @@ class AutocompleteExample extends React.Component {
 
   updateSuggestions(value) {
     if (!value) {
-      this.setState({ suggestions: this.items });
+      this.setState({ suggestions: this.items, value });
       return;
     }
+
     this.setState({
       suggestions: this.items.filter(item => item.indexOf(value) !== -1),
+      value,
     });
   }
 
@@ -35,19 +37,8 @@ class AutocompleteExample extends React.Component {
           value={value}
           items={suggestions}
           placeholder="Search ..."
-          renderTitle={() => ''}
-          renderItem={item => item}
-          getItemKey={item => item}
-          onChange={val => {
-            this.setState({ value: val });
-            this.updateSuggestions(val);
-          }}
-          onSelect={item => {
-            if (!item) {
-              return;
-            }
-            this.setState({ value: item });
-          }}
+          onChange={val => this.updateSuggestions(val)}
+          onSelect={val => val && this.setState({ value: val })}
         />
       </div>
     );

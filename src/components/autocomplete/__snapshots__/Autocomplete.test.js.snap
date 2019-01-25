@@ -56,7 +56,7 @@ exports[`Autocomplete when no properties are set matches snapshot 1`] = `
       tabIndex="0"
       title=""
     >
-      go
+      submit
     </div>
   </div>
   <div
@@ -121,7 +121,7 @@ exports[`Autocomplete when properties are set should match snapshot 1`] = `
       tabIndex="0"
       title=""
     >
-      go
+      submit
     </div>
   </div>
   <div
@@ -259,7 +259,7 @@ exports[`Autocomplete when properties are set should match snapshot showing list
       tabIndex="0"
       title=""
     >
-      go
+      submit
     </div>
   </div>
   <div
@@ -397,7 +397,7 @@ exports[`Autocomplete when properties are set should match snapshot without defa
       tabIndex="0"
       title=""
     >
-      go
+      submit
     </div>
   </div>
   <div
@@ -499,7 +499,7 @@ exports[`Autocomplete when properties are set should match snapshot without item
       tabIndex="0"
       title=""
     >
-      go
+      submit
     </div>
   </div>
   <div
@@ -601,7 +601,7 @@ exports[`Autocomplete when properties are set should match snapshot without item
       tabIndex="0"
       title=""
     >
-      go
+      submit
     </div>
   </div>
   <div

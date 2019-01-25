@@ -57,17 +57,18 @@ const propTypes = {
   /**
    * Get the key for each item used when react creates the list.
    */
-  getItemKey: PropTypes.func.isRequired,
+  getItemKey: PropTypes.func,
 };
 
 const defaultProps = {
-  button: 'go',
+  button: 'submit',
   value: '',
   placeholder: '',
   items: [],
   defaultItems: [],
-  renderTitle: () => {},
-  renderItem: () => {},
+  renderTitle: t => t,
+  renderItem: i => i,
+  getItemKey: k => k,
   onChange: () => {},
   onSelect: () => {},
 };
