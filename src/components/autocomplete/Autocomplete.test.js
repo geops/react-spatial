@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { configure, mount, shallow } from 'enzyme';
+import { configure, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import Autocomplete from './Autocomplete';
 
@@ -46,11 +46,6 @@ describe('Autocomplete', () => {
     afterEach(() => {
       spy.mockRestore();
       window.console.error.mockRestore();
-    });
-
-    test('displays 1 error for required property ', () => {
-      shallow(<Autocomplete />);
-      expect(spy).toHaveBeenCalledTimes(1);
     });
 
     test('matches snapshot', () => {

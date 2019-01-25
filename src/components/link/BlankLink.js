@@ -13,7 +13,7 @@ const propTypes = {
   /**
    * Title attribute.
    */
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   /**
    * CSS class.
    */
@@ -21,7 +21,8 @@ const propTypes = {
 };
 
 const defaultProps = {
-  className: null,
+  className: undefined,
+  title: undefined,
 };
 
 /**

@@ -2,7 +2,6 @@
 
 exports[`ActionLink when no properties are set matches snapshot 1`] = `
 <a
-  className={null}
   href="#"
   onClick={[Function]}
 />

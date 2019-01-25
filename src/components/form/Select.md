@@ -10,34 +10,27 @@ require('./Select.md.css');
 class SelectExample extends React.Component {
   constructor(props) {
     super(props);
-    this.ref = React.createRef();
-
-    this.options = [
-      { label: 'foo', value: 'foo' },
-      { label: 'bar', value: 'bar' },
-      { label: 'baz', value: 'baz' },
-    ];
-
     this.state = { value: 'foo' };
-
-    this.onChange = evt => {
-      this.setState({
-        value: evt.target.value,
-      });
-
-      this.ref.current.innerHTML = `Value selected: ${evt.target.value}`;
-    };
   }
 
   render() {
     return (
       <div className="tm-select-example">
         <Select
-          options={this.options}
+          options={[
+            { label: 'foo', value: 'foo' },
+            { label: 'bar', value: 'bar' },
+            { label: 'baz', value: 'baz' },
+          ]}
           value={this.state.value}
-          onChange={this.onChange}
+          onChange={(e) => {
+            this.setState({ value: e.target.value });
+
+          }}
         />
-        <div ref={this.ref} />
+        <div>
+          You selected "{ this.state.value }".
+        </div>
       </div>
     );
   }

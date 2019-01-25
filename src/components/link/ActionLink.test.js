@@ -20,9 +20,9 @@ describe('ActionLink', () => {
       window.console.error.mockRestore();
     });
 
-    test('displays 4 errors in the console', () => {
+    test('displays 2 errors in the console', () => {
       shallow(<ActionLink />);
-      expect(spy).toHaveBeenCalledTimes(3);
+      expect(spy).toHaveBeenCalledTimes(2);
     });
 
     test('matches snapshot', () => {
