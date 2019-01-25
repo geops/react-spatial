@@ -23,7 +23,6 @@ exports[`Menu should match snapshot. 1`] = `
             className="share-menu-icon "
           >
             <a
-              className={null}
               href="//www.facebook.com/sharer.php?u=http://localhost/"
               rel="noopener noreferrer"
               tabIndex="0"
@@ -56,7 +55,6 @@ exports[`Menu should match snapshot. 1`] = `
             className="share-menu-icon "
           >
             <a
-              className={null}
               href="//twitter.com/intent/tweet?url=http://localhost/"
               rel="noopener noreferrer"
               tabIndex="0"
@@ -89,7 +87,6 @@ exports[`Menu should match snapshot. 1`] = `
             className="share-menu-icon ta-mail-icon"
           >
             <a
-              className={null}
               href="mailto:?body=http://localhost/"
               rel="noopener noreferrer"
               tabIndex="0"

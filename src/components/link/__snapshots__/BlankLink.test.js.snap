@@ -2,7 +2,6 @@
 
 exports[`BlankLink when no properties are set matches snapshot 1`] = `
 <a
-  className={null}
   rel="noopener noreferrer"
   tabIndex="0"
   target="_blank"
