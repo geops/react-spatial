@@ -9,32 +9,30 @@ const ActionLink = require('./ActionLink').default;
 class ActionLinkExample extends React.Component {
   constructor(props) {
     super(props);
-    this.ref = React.createRef();
-    this.cpt = 0;
-    this.label = 'Click me';
-    this.title = 'foo';
-    this.className = 'baz';
+    this.state = {
+      count: 0,
+    };
+
     this.onClick = (evt, val) => {
-      this.ref.current.innerHTML =
         `The action link has been clicked: ` + `${++this.cpt} times`;
     };
   }
 
   render() {
+    const { count } = this.state;
+
     return (
       <div>
-        <ActionLink
-          title={this.title}
-          className={this.className}
-          onClick={this.onClick}
-        >
-          {this.label}
+        <ActionLink onClick={() => this.setState({ count: count + 1})}>
+          Click me!
         </ActionLink>
-        <div ref={this.ref} />
+        <div>
+          The action link has been clicked { count } times.
+        </div>
       </div>
     );
   }
 }
 
-<ActionLinkExample />;
+<ActionLinkExample />
 ```
