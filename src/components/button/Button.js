@@ -17,12 +17,17 @@ const propTypes = {
   /**
    * CSS Class of the button.
    */
-  className: PropTypes.string.isRequired,
+  className: PropTypes.string,
 
   /**
    * Title of the button.
    */
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
+};
+
+const defaultProps = {
+  className: undefined,
+  title: undefined,
 };
 
 /**
@@ -49,5 +54,6 @@ class Button extends PureComponent {
 }
 
 Button.propTypes = propTypes;
+Button.defaultProps = defaultProps;
 
 export default Button;
