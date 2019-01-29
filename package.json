@@ -26,6 +26,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^23.6.0",
     "jest-canvas-mock": "^1.1.0",
+    "coveralls": "^3.0.2",
     "node-sass": "^4.11.0",
     "ol": "^5.3.0",
     "prettier": "^1.16.1",
@@ -69,7 +70,7 @@
     "lint": "eslint 'src/**/*.js' && stylelint 'src/**/*.css' 'src/**/*.scss'",
     "test": "jest src",
     "test:watch": "jest src --watch",
-    "coverage": "yarn test --coverage --coverageDirectory=coverage",
+    "coverage": "yarn test --coverage --coverageDirectory=coverage && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
     "doc": "styleguidist build",
     "doc:server": "styleguidist server",
     "symlink": "yarn build && cd build && yarn link"
