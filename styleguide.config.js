@@ -15,8 +15,8 @@ module.exports = {
       content: 'README.md',
     },
     {
-      name: ' ',
-      content: 'src/components/README.md',
+      name: 'UI components',
+      description: 'A collection of react components.',
       components: 'src/components/**/*.js',
       exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
       usageMode: 'expand', // 'hide' | 'collapse' | 'expand'
