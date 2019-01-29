@@ -1,30 +1,24 @@
 # React Spatial
 
+[![npm](https://img.shields.io/npm/v/react-spatial.svg?style=flat-square)](https://www.npmjs.com/package/react-spatial)
 [![Greenkeeper badge](https://badges.greenkeeper.io/geops/react-spatial.svg)](https://greenkeeper.io/)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 This library provides React components to build web applications based on [OpenLayers](https://openlayers.org/).
 
 ## Getting Started
 
-Install the [`react-spatial` package](https://www.npmjs.com/package/react-spatial):
+Install the [react-spatial package](https://www.npmjs.com/package/react-spatial):
 
 ```bash
 yarn add ol react-spatial
-```
-
-Import components you need for your application:
-
-```js
-import BasicMap from 'react-spatial/components/map/BasicMap'
-
-<BasicMap map={this.map} layers={[this.layers]} />
 ```
 
 Your build pipeline needs to support ES6 modules and SASS.
 
 ## Documentation
 
-Documentation is available running `yarn doc:server` then open [`http://locahost:6060/`]
+Documentation is available running `yarn doc:server` then open [`http://locahost:6060/`](http://locahost:6060/)
 
 ## How to use `npm link`
 
