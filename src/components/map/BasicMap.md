@@ -47,7 +47,7 @@ class BasicMapExample extends React.Component {
   }
 
   render() {
-    return <BasicMap center={this.center} layers={this.layers} />;
+    return <BasicMap center={this.center} zoom={17} layers={this.layers} />;
   }
 }
 
