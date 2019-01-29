@@ -1,6 +1,7 @@
 # React Spatial
 
 [![npm](https://img.shields.io/npm/v/react-spatial.svg?style=flat-square)](https://www.npmjs.com/package/react-spatial)
+[![build](https://travis-ci.com/geops/react-spatial.svg?branch=master)](https://travis-ci.com/geops/react-spatial)
 [![Greenkeeper badge](https://badges.greenkeeper.io/geops/react-spatial.svg)](https://greenkeeper.io/)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
