@@ -32,6 +32,12 @@ const propTypes = {
   onBlurInput: PropTypes.func,
 
   /**
+   * Function triggered when the search button is clicked.
+   * element.
+   */
+  onClickSearchButton: PropTypes.func,
+
+  /**
    * Function launched when the user press a key on the input and the list.
    */
   onKeyPress: PropTypes.func,
@@ -72,6 +78,7 @@ const defaultProps = {
   titleSearchInput: '',
   onFocus: () => {},
   onBlurInput: () => {},
+  onClickSearchButton: () => {},
   onKeyPress: () => {},
   onChange: () => {},
 };
@@ -154,12 +161,13 @@ class SearchInput extends PureComponent {
       titleClearBt,
       titleSearchBt,
       titleSearchInput,
+      onClickSearchButton,
     } = this.props;
 
     const className = this.getClassName();
 
     // Hide clear button
-    let hiddenClass = 'tm-hidden';
+    let hiddenClass = ' tm-hidden';
     if (value) {
       hiddenClass = '';
     }
@@ -183,7 +191,7 @@ class SearchInput extends PureComponent {
         />
         <Button
           title={titleClearBt}
-          className={hiddenClass}
+          className={`tm-bt-clear${hiddenClass}`}
           onClick={e => {
             this.search(e, '');
             this.setState({ focus: true });
@@ -196,6 +204,7 @@ class SearchInput extends PureComponent {
           className="tm-bt-search"
           onClick={e => {
             this.search(e);
+            onClickSearchButton(e);
           }}
         >
           {button}

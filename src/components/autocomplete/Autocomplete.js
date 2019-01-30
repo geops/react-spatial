@@ -55,6 +55,18 @@ const propTypes = {
   onSelect: PropTypes.func,
 
   /**
+   * Function triggered when the autocomplete component (input, buttons and list) get the focus.
+   * element.
+   */
+  onFocus: PropTypes.func,
+
+  /**
+   * Function triggered when the autocomplete component (input, buttons and list) loose the focus.
+   * element.
+   */
+  onBlur: PropTypes.func,
+
+  /**
    * Get the key for each item used when react creates the list.
    */
   getItemKey: PropTypes.func,
@@ -69,7 +81,9 @@ const defaultProps = {
   renderTitle: t => t,
   renderItem: i => i,
   getItemKey: k => k,
+  onBlur: () => {},
   onChange: () => {},
+  onFocus: () => {},
   onSelect: () => {},
 };
 
@@ -82,6 +96,7 @@ class Autocomplete extends PureComponent {
     this.state = {
       showList: false,
       refList: null,
+      focus: false,
     };
     this.onDocClick = this.onDocClick.bind(this);
     this.ref = null;
@@ -93,6 +108,20 @@ class Autocomplete extends PureComponent {
     document.addEventListener('click', this.onDocClick);
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    // Close the list when clicking outside the list or the input
+    document.addEventListener('click', this.onDocClick);
+
+    // Trigger onFocus and onBlur event
+    const { focus } = this.state;
+    const { onBlur, onFocus } = this.props;
+    if (prevState.focus && !focus) {
+      onBlur();
+    } else if (!prevState.focus && focus) {
+      onFocus();
+    }
+  }
+
   componentWillUnmount() {
     document.removeEventListener('click', this.onDocClick);
   }
@@ -102,22 +131,22 @@ class Autocomplete extends PureComponent {
     if (this.ref && this.ref.contains(e.target)) {
       return;
     }
-    this.setState({ showList: false });
+    this.setState({ showList: false, focus: false });
   }
 
   onChange(evt, val) {
     const { onChange } = this.props;
-    this.setState({ showList: true });
+    this.setState({ showList: true, focus: true });
     onChange(val);
   }
 
   onFocus() {
-    this.setState({ showList: true });
+    this.setState({ showList: true, focus: true });
   }
 
   onBlurInput(evt, lastKeyPress) {
     if (lastKeyPress && lastKeyPress.which !== 40) {
-      this.setState({ showList: false });
+      this.setState({ showList: false, focus: false });
     }
   }
 
@@ -169,7 +198,7 @@ class Autocomplete extends PureComponent {
   onSelect(evt, item) {
     const { onSelect } = this.props;
     onSelect(item);
-    this.setState({ showList: false });
+    this.setState({ showList: false, focus: false });
   }
 
   render() {
@@ -183,14 +212,15 @@ class Autocomplete extends PureComponent {
       renderItem,
       getItemKey,
     } = this.props;
-    const { showList, refList } = this.state;
-    const className =
+    const { showList, refList, focus } = this.state;
+    const className = focus ? ' tm-focus' : '';
+    const classNameList =
       !showList || (!items.length && !defaultItems.length) ? ' tm-hidden' : '';
     const hr = items.length && defaultItems.length ? <hr /> : null;
 
     return (
       <div
-        className="tm-autocomplete"
+        className={`tm-autocomplete${className}`}
         ref={node => {
           this.ref = node;
         }}
@@ -203,6 +233,11 @@ class Autocomplete extends PureComponent {
           onFocus={e => this.onFocus(e)}
           onKeyPress={e => this.onKeyPress(e)}
           onBlurInput={(e, keyPress) => this.onBlurInput(e, keyPress)}
+          onClickSearchButton={() => {
+            if (showList) {
+              this.setState({ showList: false, focus: false });
+            }
+          }}
           ref={node => {
             this.refSearchInput = node;
           }}
@@ -213,7 +248,7 @@ class Autocomplete extends PureComponent {
               this.setState({ refList: node });
             }
           }}
-          className={`tm-list-container${className}`}
+          className={`tm-list-container${classNameList}`}
         >
           <List
             items={items}
