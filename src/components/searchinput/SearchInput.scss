@@ -10,6 +10,8 @@ $tm-search-bt-width: 50px;
   bottom: 0;
   margin: auto;
   border: 1px solid $tm-color-grey;
+  background-color: white;
+  justify-content: flex-end;
 
   input,
   button,
@@ -18,8 +20,10 @@ $tm-search-bt-width: 50px;
   }
 
   input {
-    padding: 0 15px;
+    padding: 0 0 0 15px;
     flex-grow: 2;
+    text-overflow: ellipsis;
+    min-width: 0;
 
     &::-ms-clear {
       display: none;
@@ -28,6 +32,7 @@ $tm-search-bt-width: 50px;
 
   .tm-button {
     height: 100%;
+    flex-shrink: 0;
   }
 
   .tm-bt-search {
