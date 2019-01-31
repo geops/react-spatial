@@ -19,7 +19,8 @@ Your build pipeline needs to support ES6 modules and SASS.
 
 ## Documentation
 
-Documentation is available running `yarn doc:server` then open [`http://locahost:6060/`](http://locahost:6060/)
+Documentation and examples are available [here](https://react-spatial.netlify.com/).
+For a local version, run `yarn doc:server` then open [`http://locahost:6060/`](http://locahost:6060/).
 
 ## How to use `npm link`
 
