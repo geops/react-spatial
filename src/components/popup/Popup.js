@@ -13,6 +13,7 @@ const propTypes = {
   ContentComponent: PropTypes.func.isRequired,
   feature: PropTypes.instanceOf(Feature).isRequired,
   onCloseClick: PropTypes.func.isRequired,
+  onMouseUp: PropTypes.func,
   showCloseButton: PropTypes.bool.isRequired,
   store: PropTypes.shape(),
 
@@ -22,6 +23,7 @@ const propTypes = {
 const defaultProps = {
   className: '',
   store: null,
+  onMouseUp: () => {},
   t: p => p,
 };
 
@@ -35,6 +37,7 @@ class Popup extends PureComponent {
       showCloseButton,
       store,
       onCloseClick,
+      onMouseUp,
     } = this.props;
     let closeButton = null;
 
@@ -55,6 +58,7 @@ class Popup extends PureComponent {
         className={`tm-popup ${className}`}
         role="button"
         tabIndex={className === 'tm-tooltip' ? '0' : ''}
+        onMouseUp={e => onMouseUp(e)}
       >
         <StopEvents
           observe={this}

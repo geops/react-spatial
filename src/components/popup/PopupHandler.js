@@ -28,10 +28,15 @@ const defaultProps = {
 };
 
 class PopupHandler extends Component {
+  static convertToClick(e) {
+    const evt = new MouseEvent('click', { bubbles: true });
+    evt.stopPropagation = () => {};
+    e.target.dispatchEvent(evt);
+  }
+
   constructor(props) {
     super(props);
-
-    this.overlay = new Overlay({ stopEvent: false });
+    this.overlay = new Overlay({ stopEvent: true });
     this.showPopup(props.feature);
   }
 
@@ -80,6 +85,7 @@ class PopupHandler extends Component {
           className={className}
           ContentComponent={ContentComponent}
           onCloseClick={() => this.onCloseClick()}
+          onMouseUp={e => PopupHandler.convertToClick(e)}
           showCloseButton={showCloseButton}
           store={store}
         />,
