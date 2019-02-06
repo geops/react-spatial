@@ -220,12 +220,8 @@ class BasicMap extends Component {
 
   render() {
     const { className } = this.props;
-    /**
-     * Negative tabindex allows to set an element’s focus with script,
-     * but does not put it in the tab order of the page.
-     */
     return (
-      <div tabIndex="-1" role="menu" ref={this.node} className={className} />
+      <div tabIndex="0" role="menu" ref={this.node} className={className} />
     );
   }
 }
