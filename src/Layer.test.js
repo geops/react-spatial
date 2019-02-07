@@ -1,7 +1,7 @@
+import 'jest-canvas-mock';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import Layer from './Layer';
-import 'jest-canvas-mock';
 
 const olLayer = new VectorLayer({ source: new VectorSource() });
 

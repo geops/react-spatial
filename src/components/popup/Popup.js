@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { MdClose } from 'react-icons/md';
 import OLMap from 'ol/Map';
 import Feature from 'ol/Feature';
+import Point from 'ol/geom/Point';
 import { getCenter } from 'ol/extent';
 import { unByKey } from 'ol/Observable';
 import Button from '../button/Button';
@@ -41,10 +42,9 @@ class Popup extends PureComponent {
 
   componentDidMount() {
     const { map } = this.props;
-    this.postrenderKey = map.on(
-      'postrender',
-      this.updatePixelPosition.bind(this),
-    );
+    this.postrenderKey = map.on('postrender', () => {
+      this.updatePixelPosition();
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -62,8 +62,14 @@ class Popup extends PureComponent {
   updatePixelPosition() {
     const { map, feature } = this.props;
     if (feature) {
-      const ext = feature.getGeometry().getExtent();
-      const pos = map.getPixelFromCoordinate(getCenter(ext));
+      let coord;
+      const geom = feature.getGeometry();
+      if (geom instanceof Point) {
+        coord = geom.getCoordinates();
+      } else {
+        coord = getCenter(geom.getExtent());
+      }
+      const pos = map.getPixelFromCoordinate(coord);
       this.setState({
         left: pos[0],
         top: pos[1],

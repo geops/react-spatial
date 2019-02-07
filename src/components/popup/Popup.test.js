@@ -1,31 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import renderer from 'react-test-renderer';
-import { configure, mount } from 'enzyme';
+import { configure, mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import 'jest-canvas-mock';
 
 import OLMap from 'ol/Map';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
+import Line from 'ol/geom/LineString';
 import Popup from './Popup';
 
-const map = new OLMap();
+const map = new OLMap({
+  target: document.body,
+});
 
 configure({ adapter: new Adapter() });
 
 const feat = new Feature({
   geometry: new Point(0, 0),
-  field_name: 'K Kiosk',
-  location_details: 'Bahnebene',
-  link_url: 'https://geops.ch',
 });
 
-const PopupComponent = ({ feature }) => <div>{feature.get('field_name')}</div>;
-
-PopupComponent.propTypes = {
-  feature: PropTypes.instanceOf(Feature).isRequired,
-};
+const featLine = new Feature({
+  geometry: new Line([[0, 0], [1, 1]]),
+});
 
 describe('Popup', () => {
   describe('should match snapshot', () => {
@@ -96,5 +94,72 @@ describe('Popup', () => {
 
       expect(spy).toHaveBeenCalled();
     });
+
+    test(`should trigger default onCloseClick function on ${
+      evt[0]
+    } event without errors.`, () => {
+      const component = mount(
+        <Popup map={map} feature={feat} n>
+          <div id="gux" />
+        </Popup>,
+      );
+      // test if no js error triggered by the default value
+      try {
+        component
+          .find('.tm-popup-close-button')
+          .at(1)
+          .simulate(...evt);
+        expect(true).toBe(true);
+      } catch (e) {
+        expect(false).toBe(true);
+      }
+    });
+  });
+
+  describe(`updates position`, () => {
+    [feat, featLine].forEach(f => {
+      test(`on feature's update.`, () => {
+        map.getPixelFromCoordinate = jest.fn(() => [10, 200]);
+        const component = shallow(
+          <Popup map={map}>
+            <div id="gux" />
+          </Popup>,
+        );
+        const spy = jest.spyOn(component.instance(), 'updatePixelPosition');
+
+        component.setProps({
+          feature: f,
+        });
+
+        expect(spy).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    test(`on map postrender event.`, () => {
+      map.getPixelFromCoordinate = jest.fn(() => [10, 200]);
+      const component = shallow(
+        <Popup map={map} feature={feat}>
+          <div id="gux" />
+        </Popup>,
+      );
+      const spy = jest.spyOn(component.instance(), 'updatePixelPosition');
+      map.dispatchEvent({ type: 'postrender' });
+      expect(spy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  test(`deregisters postrender on unmount.`, () => {
+    map.getPixelFromCoordinate = jest.fn(() => [10, 200]);
+    const component = shallow(
+      <Popup map={map} feature={feat}>
+        <div id="gux" />
+      </Popup>,
+    );
+    const spy = jest.spyOn(component.instance(), 'updatePixelPosition');
+    map.dispatchEvent({ type: 'postrender' });
+    expect(spy).toHaveBeenCalledTimes(1);
+    component.unmount();
+    map.dispatchEvent({ type: 'postrender' });
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 });
