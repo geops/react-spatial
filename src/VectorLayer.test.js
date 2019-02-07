@@ -1,5 +1,6 @@
 import Feature from 'ol/Feature';
 import VectorLayer from './VectorLayer';
+import 'jest-canvas-mock';
 
 const features = [
   new Feature({ foo: 'bar' }),
