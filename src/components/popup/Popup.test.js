@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import renderer from 'react-test-renderer';
 import { configure, mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
@@ -11,9 +10,7 @@ import Point from 'ol/geom/Point';
 import Line from 'ol/geom/LineString';
 import Popup from './Popup';
 
-const map = new OLMap({
-  target: document.body,
-});
+const map = new OLMap({});
 
 configure({ adapter: new Adapter() });
 
