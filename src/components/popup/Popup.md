@@ -72,6 +72,7 @@ class PopupExample extends React.Component {
     this.layers = [layer, vectorLayer];
     this.map = new OLMap();
     this.onFeaturesClick = this.onFeaturesClick.bind(this);
+    this.onCloseClick = this.onCloseClick.bind(this);
 
     this.state = {
       featureClicked: null,
@@ -82,6 +83,10 @@ class PopupExample extends React.Component {
     this.setState({
       featureClicked: features.length ? features[0] : null,
     });
+  }
+
+  onCloseClick() {
+    this.setState({ featureClicked: null });
   }
 
   render() {
@@ -105,9 +110,7 @@ class PopupExample extends React.Component {
         <Popup
           map={this.map}
           feature={featureClicked}
-          onCloseClick={() => {
-            this.setState({ featureClicked: null });
-          }}
+          onCloseClick={this.onCloseClick}
         >
           <div>Geometry:</div>
           <div>{content}</div>
