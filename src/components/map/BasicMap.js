@@ -61,6 +61,9 @@ const propTypes = {
   /** Map resolution */
   resolution: PropTypes.number,
 
+  /** The tabIndex of the map. */
+  tabIndex: PropTypes.number,
+
   /** View constructor options */
   viewOptions: PropTypes.shape({
     minZoom: PropTypes.number,
@@ -89,6 +92,7 @@ const defaultProps = {
   onFeaturesHover: undefined,
   onMapMoved: () => {},
   resolution: undefined,
+  tabIndex: 0,
   viewOptions: {
     minZoom: 0,
     maxZoom: 22,
@@ -219,9 +223,14 @@ class BasicMap extends Component {
   }
 
   render() {
-    const { className } = this.props;
+    const { className, tabIndex } = this.props;
     return (
-      <div tabIndex="0" role="menu" ref={this.node} className={className} />
+      <div
+        className={className}
+        ref={this.node}
+        role="menu"
+        tabIndex={tabIndex}
+      />
     );
   }
 }
