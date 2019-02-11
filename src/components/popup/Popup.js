@@ -17,6 +17,7 @@ const propTypes = {
   feature: PropTypes.instanceOf(Feature),
   className: PropTypes.string,
   onCloseClick: PropTypes.func,
+  onKeyUp: PropTypes.func,
   showCloseButton: PropTypes.bool,
 
   t: PropTypes.func,
@@ -26,6 +27,7 @@ const defaultProps = {
   feature: null,
   className: '',
   showCloseButton: true,
+  onKeyUp: () => {},
   onCloseClick: () => {},
   t: p => p,
 };
@@ -47,9 +49,9 @@ class Popup extends PureComponent {
     });
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     const { feature } = this.props;
-    if (!prevProps.feature && feature) {
+    if (feature) {
       // Initialize the position.
       this.updatePixelPosition();
     }
@@ -96,7 +98,7 @@ class Popup extends PureComponent {
   }
 
   render() {
-    const { feature, className, children } = this.props;
+    const { feature, className, children, onKeyUp } = this.props;
 
     if (!feature) {
       return null;
@@ -117,6 +119,9 @@ class Popup extends PureComponent {
           className={`tm-popup ${className}`}
           role="button"
           tabIndex={className === 'tm-tooltip' ? '0' : ''}
+          onKeyUp={e => {
+            onKeyUp(e);
+          }}
         >
           {this.renderCloseButton()}
           {children}
