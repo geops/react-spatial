@@ -1,3 +1,4 @@
+import 'jest-canvas-mock';
 import Feature from 'ol/Feature';
 import VectorLayer from './VectorLayer';
 

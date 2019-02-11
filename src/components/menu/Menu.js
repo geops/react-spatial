@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import './Menu.scss';
 
@@ -30,4 +30,4 @@ const Menu = ({ menuItems, t }) => (
 
 Menu.propTypes = propTypes;
 
-export default withNamespaces()(Menu);
+export default withTranslation()(Menu);

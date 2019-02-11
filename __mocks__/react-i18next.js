@@ -38,7 +38,7 @@ const renderNodes = (reactNodes) => {
 module.exports = {
   // this mock makes sure any components using the translate HoC receive the t
   // function as a prop
-  withNamespaces: () => (Component) => {
+  withTranslation: () => (Component) => {
     Component.defaultProps = { ...Component.defaultProps, t: (key) => key };
     return Component;
   },
