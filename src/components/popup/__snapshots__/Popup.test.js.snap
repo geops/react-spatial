@@ -13,6 +13,7 @@ exports[`Popup should match snapshot with default values. 1`] = `
 >
   <div
     className="tm-popup "
+    onKeyUp={[Function]}
     role="button"
     tabIndex=""
   >
@@ -64,6 +65,7 @@ exports[`Popup should match snapshot with tm-tooltip class. 1`] = `
 >
   <div
     className="tm-popup tm-tooltip"
+    onKeyUp={[Function]}
     role="button"
     tabIndex="0"
   >
@@ -115,6 +117,7 @@ exports[`Popup should match snapshot without close button. 1`] = `
 >
   <div
     className="tm-popup "
+    onKeyUp={[Function]}
     role="button"
     tabIndex=""
   >

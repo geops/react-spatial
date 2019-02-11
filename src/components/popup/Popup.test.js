@@ -128,7 +128,7 @@ describe('Popup', () => {
           feature: f,
         });
 
-        expect(spy).toHaveBeenCalledTimes(1);
+        expect(spy).toHaveBeenCalledTimes(2);
       });
     });
 
@@ -141,7 +141,7 @@ describe('Popup', () => {
       );
       const spy = jest.spyOn(component.instance(), 'updatePixelPosition');
       map.dispatchEvent({ type: 'postrender' });
-      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledTimes(2);
     });
   });
 
@@ -154,9 +154,9 @@ describe('Popup', () => {
     );
     const spy = jest.spyOn(component.instance(), 'updatePixelPosition');
     map.dispatchEvent({ type: 'postrender' });
-    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledTimes(2);
     component.unmount();
     map.dispatchEvent({ type: 'postrender' });
-    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledTimes(2);
   });
 });
