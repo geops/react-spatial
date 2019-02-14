@@ -255,7 +255,11 @@ class LayerTree extends PureComponent {
             if (!item.hasChildren) {
               return;
             }
-            item.isExpanded ? onCollapse(item) : onExpand(item);
+            if (item.isExpanded) {
+              onCollapse(item);
+            } else {
+              onExpand(item);
+            }
           }}
         >
           {item.data.title}
