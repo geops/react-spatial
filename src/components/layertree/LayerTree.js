@@ -24,6 +24,10 @@ const propTypes = {
         data: PropTypes.shape({
           title: PropTypes.string.isRequired,
         }).isRequired,
+        defaults: PropTypes.shape({
+          isChecked: PropTypes.string,
+          isExpanded: PropTypes.string,
+        }),
       }),
     ).isRequired,
   }),
@@ -40,7 +44,7 @@ const propTypes = {
 
 const defaultProps = {
   tree: null,
-  padding: 16,
+  padding: 30,
   onItemChange: () => {},
 };
 
@@ -59,21 +63,22 @@ class LayerTree extends PureComponent {
     };
   }
 
-  onExpand(item) {
+  onToggle(item) {
     const { tree } = this.state;
     this.setState({
-      tree: this.mutateTree(tree, item.id, { isExpanded: true }),
+      tree: this.mutateTree(tree, item.id, { isExpanded: !item.isExpanded }),
     });
   }
 
-  onCollapse(item) {
-    const { tree } = this.state;
-    this.setState({
-      tree: this.mutateTree(tree, item.id, { isExpanded: false }),
-    });
+  onClick(item) {
+    if (item.type === 'radio' && item.isChecked) {
+      this.onInputClick(item, false);
+    } else {
+      this.onInputClick(item, !item.isChecked);
+    }
   }
 
-  onChecked(item, value) {
+  onInputClick(item, value) {
     const { tree } = this.state;
     let newTree = tree;
 
@@ -210,41 +215,61 @@ class LayerTree extends PureComponent {
     return newTree;
   }
 
-  renderItem({ item, onExpand, onCollapse, provided }) {
+  renderInput(item) {
     return (
-      <div
-        ref={provided.innerRef}
-        {...provided.draggableProps}
-        {...provided.dragHandleProps}
+      <label // eslint-disable-line
+        className={`tm-layertree-input-${item.type}`}
+        tabIndex="0"
+        onKeyPress={e => {
+          if (e.which === 13) {
+            this.onClick(item);
+          }
+        }}
       >
         <input
           type={item.type}
           name={item.parentId}
           checked={item.isChecked}
           onChange={() => {}}
-          onClick={evt => {
-            if (item.type === 'radio' && item.isChecked) {
-              this.onChecked(item, false);
-            } else {
-              this.onChecked(item, evt.target.checked);
-            }
+          onClick={() => {
+            this.onClick(item);
           }}
         />
-        <button
-          type="button"
-          onClick={() => {
-            if (!item.hasChildren) {
-              return;
-            }
-            if (item.isExpanded) {
-              onCollapse(item);
-            } else {
-              onExpand(item);
-            }
-          }}
-        >
-          {item.data.title}
-        </button>
+        <span />
+      </label>
+    );
+  }
+
+  renderToggleButton(item) {
+    if (!item.hasChildren) {
+      return null;
+    }
+    return (
+      <button
+        className={`tm-arrow ${
+          item.isExpanded ? 'tm-arrow-up' : 'tm-arrow-down'
+        }`}
+        type="button"
+        onClick={() => {
+          this.onToggle(item);
+        }}
+      />
+    );
+  }
+
+  renderItem({ item, provided }) {
+    return (
+      <div
+        className="tm-layertree"
+        ref={provided.innerRef}
+        {...provided.draggableProps}
+        {...provided.dragHandleProps}
+      >
+        {this.renderInput(item)}
+
+        <div>{item.data.title}</div>
+
+        {this.renderToggleButton(item)}
       </div>
     );
   }
@@ -256,10 +281,8 @@ class LayerTree extends PureComponent {
       <Tree
         tree={tree}
         renderItem={(item, onExpand, onCollapse, provided) =>
-          this.renderItem(item, onExpand, onCollapse, provided)
+          this.renderItem(item, provided)
         }
-        onExpand={item => this.onExpand(item)}
-        onCollapse={item => this.onCollapse(item)}
         offsetPerLevel={padding}
       />
     );

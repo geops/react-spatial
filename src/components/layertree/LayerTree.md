@@ -79,8 +79,8 @@ class LayerTreeExample extends React.Component {
       featureClicked: null,
     };
   }
+
   applyStyle(item) {
-    console.log(this.layers[1]);
     this.layers[1].olLayer.getStyle().setText(
       new Text({
         font: '20px sans-serif',

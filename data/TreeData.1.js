@@ -7,17 +7,12 @@
  *     isChecked: false,
  *     isChildrenLoading: false,
  *     type: 'checkbox',
- *     default: {
- *        isExpanded: true,
- *        isChecked: false
- *     },
  *     data: {
  *       title: 'root',
  *     },
  *
  *     // experimental
- *     useDefaults: true,
- *     default: {
+ *     defaults: {
  *        isExpanded: true,
  *        isChecked: false
  *     },
