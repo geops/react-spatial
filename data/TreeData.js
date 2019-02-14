@@ -26,6 +26,7 @@ const data = {
     },
     ovnetzkarteschweiz: {
       id: 'ovnetzkarteschweiz',
+      isExpanded: true,
       children: ['bahnhofplane', 'passagierfrequenzen'],
       type: 'radio',
       data: {
@@ -41,6 +42,7 @@ const data = {
     },
     bahnhofplane: {
       id: 'bahnhofplane',
+      isExpanded: true,
       children: ['interaktivbahnhoplan', 'printprodukte'],
       type: 'checkbox',
       data: {
@@ -79,39 +81,44 @@ const data = {
 };
 
 const applyDefaultValues = id => {
-  if (!data.items[id]) {
+  const item = data.items[id];
+  if (!item) {
+    // eslint-disable-next-line no-console
     console.error(`No item with id  ${id}`);
     return;
   }
-  data.items[id].id = data.items[id].id || id;
-  data.items[id].type = data.items[id].type || 'checkbox';
-  data.items[id].data = data.items[id].data || {};
-  data.items[id].data.title = data.items[id].data.title || id;
-  data.items[id].hasChildren = !!(
-    data.items[id].children && data.items[id].children.length
-  );
-  data.items[id].hasParent = data.items[id].hasParent || false;
-  data.items[id].parentId = data.items[id].parentId || null;
-  data.items[id].isExpanded = data.items[id].isExpanded || false;
-  data.items[id].isChecked = data.items[id].isChecked || false;
-  data.items[id].isChildrenLoading = data.items[id].isChildrenLoading || false;
+  item.id = item.id || id;
+  item.type = item.type || 'checkbox';
+  item.data = item.data || {};
+  item.data.title = item.data.title || id;
+  item.hasChildren = !!(item.children && item.children.length);
+  item.hasParent = item.hasParent || false;
+  item.parentId = item.parentId || null;
+  item.isExpanded = item.isExpanded || false;
+  item.isChecked = item.isChecked || false;
+  item.isChildrenLoading = item.isChildrenLoading || false;
 };
 
 // Fill the data tree with some helpers properties
 Object.keys(data.items).forEach(id => {
   applyDefaultValues(id);
-
-  if (data.items[id].hasChildren) {
-    data.items[id].hasChildren = true;
-    data.items[id].children.forEach(childId => {
+  const item = data.items[id];
+  if (item.hasChildren) {
+    item.hasChildren = true;
+    item.children.forEach(childId => {
       applyDefaultValues(childId);
       data.items[childId].parentId = id;
       data.items[childId].hasParent = true;
     });
   } else {
-    data.items[id].children = [];
+    item.children = [];
   }
 });
 
-// See styleguide.config.js
-module.exports = data;
+// For styleguidist, see styleguide.config.js
+if (module.exports) {
+  module.exports = data;
+}
+
+// For tests
+// export default data;
