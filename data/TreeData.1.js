@@ -140,4 +140,4 @@ const applyDefaultValues = dat => {
 
 // For tests
 export { applyDefaultValues };
-export default data;
+export default applyDefaultValues(data);

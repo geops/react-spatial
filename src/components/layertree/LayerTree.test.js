@@ -6,6 +6,9 @@ import data, { applyDefaultValues } from '../../../data/TreeData.1';
 
 configure({ adapter: new Adapter() });
 
+const inputSelector = 'input';
+const expandButtonSelector = 'button';
+
 describe('LayerTree', () => {
   let mutations;
   beforeEach(() => {
@@ -49,7 +52,7 @@ describe('LayerTree', () => {
       };
       const component = mountLayerTree(data2);
       component
-        .find('input')
+        .find(inputSelector)
         .first()
         .simulate('click', { target: { checked: true } });
       expect(mutations.length).toBe(5);
@@ -86,7 +89,7 @@ describe('LayerTree', () => {
         };
         const component = mountLayerTree(data2);
         component
-          .find('input')
+          .find(inputSelector)
           .at(4) // 1-2-1
           .simulate('click', { target: { checked: true } });
         expect(mutations.length).toBe(4);
@@ -133,7 +136,7 @@ describe('LayerTree', () => {
       };
       const component = mountLayerTree(data2);
       component
-        .find('input')
+        .find(inputSelector)
         .first()
         .simulate('click', { target: { checked: true } });
       expect(mutations.length).toBe(3);
@@ -188,7 +191,7 @@ describe('LayerTree', () => {
       };
       const component = mountLayerTree(data2);
       component
-        .find('input')
+        .find(inputSelector)
         .first()
         .simulate('click', { target: { checked: true } });
       expect(mutations.length).toBe(3);
@@ -229,7 +232,7 @@ describe('LayerTree', () => {
         };
         const component = mountLayerTree(data2);
         component
-          .find('input')
+          .find(inputSelector)
           .at(2) // 1-2
           .simulate('click', { target: { checked: true } });
         expect(mutations.length).toBe(2);
@@ -280,7 +283,7 @@ describe('LayerTree', () => {
       };
       const component = mountLayerTree(data2);
       component
-        .find('input')
+        .find(inputSelector)
         .first()
         .simulate('click', { target: { checked: false } });
       expect(mutations.length).toBe(4);
@@ -319,7 +322,7 @@ describe('LayerTree', () => {
         };
         const component = mountLayerTree(data2);
         component
-          .find('input')
+          .find(inputSelector)
           .at(2) // 1-2
           .simulate('click', { target: { checked: false } });
         expect(mutations.length).toBe(2);
@@ -328,6 +331,117 @@ describe('LayerTree', () => {
           expect(lastItems[id].isChecked).toBe(false);
         });
       });
+    });
+  });
+
+  describe('expands', () => {
+    test('a radio item', () => {
+      const data2 = {
+        rootId: 'root',
+        items: {
+          root: {
+            children: ['1'],
+          },
+          '1': {
+            type: 'radio',
+            children: ['1-1'],
+          },
+          '1-1': {},
+        },
+      };
+      const component = mountLayerTree(data2);
+      component
+        .find(expandButtonSelector)
+        .first()
+        .simulate('click');
+      expect(mutations.length).toBe(1);
+      const lastItems = mutations.pop().tree.items;
+      expect(lastItems['1'].isExpanded).toBe(true);
+      expect(lastItems['1'].isChecked).toBe(false);
+    });
+
+    test('a checkboy item', () => {
+      const data2 = {
+        rootId: 'root',
+        items: {
+          root: {
+            children: ['1'],
+          },
+          '1': {
+            children: ['1-1'],
+          },
+          '1-1': {},
+        },
+      };
+      const component = mountLayerTree(data2);
+      component
+        .find(expandButtonSelector)
+        .first()
+        .simulate('click');
+      expect(mutations.length).toBe(1);
+      const lastItems = mutations.pop().tree.items;
+      expect(lastItems['1'].isExpanded).toBe(true);
+      expect(lastItems['1'].isChecked).toBe(false);
+    });
+  });
+
+  describe('collapse', () => {
+    test('a radio item', () => {
+      const data2 = {
+        rootId: 'root',
+        items: {
+          root: {
+            children: ['1'],
+          },
+          '1': {
+            type: 'radio',
+            isExpanded: true,
+            isChecked: true,
+            children: ['1-1'],
+          },
+          '1-1': {
+            isChecked: true,
+          },
+        },
+      };
+      const component = mountLayerTree(data2);
+      component
+        .find(expandButtonSelector)
+        .first()
+        .simulate('click');
+      expect(mutations.length).toBe(1);
+      const lastItems = mutations.pop().tree.items;
+      expect(lastItems['1'].isExpanded).toBe(false);
+      expect(lastItems['1'].isChecked).toBe(true);
+    });
+
+    test('a checkboy item', () => {
+      const data2 = {
+        rootId: 'root',
+        items: {
+          root: {
+            children: ['1'],
+          },
+          '1': {
+            isExpanded: true,
+            isChecked: true,
+            children: ['1-1'],
+          },
+          '1-1': {
+            isChecked: true,
+          },
+        },
+      };
+      const component = mountLayerTree(data2);
+      component
+        .find(expandButtonSelector)
+        .first()
+        .simulate('click');
+      expect(mutations.length).toBe(1);
+      const lastItems = mutations.pop().tree.items;
+      expect(lastItems['1'].isExpanded).toBe(false);
+      expect(lastItems['1'].isChecked).toBe(true);
+      expect(lastItems['1-1'].isChecked).toBe(true);
     });
   });
 });

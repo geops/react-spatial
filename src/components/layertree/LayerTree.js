@@ -45,26 +45,11 @@ const defaultProps = {
 };
 
 class LayerTree extends PureComponent {
-  static isFirstLevel(tree, item) {
-    return item.parendId === tree.rootId;
-  }
-
   static areOthersSiblingsUncheck(tree, item) {
     const parent = tree.items[item.parentId];
-    if (!parent) {
-      return false;
-    }
     return !parent.children
       .filter(id => id !== item.id)
       .find(id => tree.items[id].isChecked);
-  }
-
-  static areAllSiblingsUncheck(tree, item) {
-    const parent = tree.items[item.parentId];
-    if (!parent) {
-      return false;
-    }
-    return !parent.children.find(id => tree.items[id].isChecked);
   }
 
   constructor(props) {
@@ -76,44 +61,8 @@ class LayerTree extends PureComponent {
 
   onExpand(item) {
     const { tree } = this.state;
-    let newTree = tree;
-
-    if (item.type === 'radio') {
-      newTree = this.mutateTree(newTree, item.id, {
-        isExpanded: true,
-        isChecked: true,
-      });
-
-      if (item.parentId) {
-        newTree = this.mutateTree(newTree, item.parentId, {
-          isChecked: true,
-        });
-        tree.items[item.parentId].children.forEach(childId => {
-          const child = tree.items[childId];
-
-          if (child.id === item.id) {
-            return;
-          }
-
-          const val = false;
-          if (child.isChecked === val || child.isExpanded === val) {
-            return;
-          }
-
-          newTree = this.mutateTree(newTree, childId, {
-            isExpanded: val,
-            isChecked: val,
-          });
-        });
-      }
-    } else {
-      newTree = this.mutateTree(newTree, item.id, {
-        isExpanded: true,
-      });
-    }
-
     this.setState({
-      tree: newTree,
+      tree: this.mutateTree(tree, item.id, { isExpanded: true }),
     });
   }
 
