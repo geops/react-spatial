@@ -45,6 +45,10 @@ const defaultProps = {
 };
 
 class LayerTree extends PureComponent {
+  static isFirstLevel(tree, item) {
+    return item.parendId === tree.rootId;
+  }
+
   static areOthersSiblingsUncheck(tree, item) {
     const parent = tree.items[item.parentId];
     if (!parent) {
@@ -124,29 +128,41 @@ class LayerTree extends PureComponent {
     const { tree } = this.state;
     let newTree = tree;
 
-    // If input radio change the state of others linked radio input
-    // An input radio can only be checked by a user click.
-    if (item.type === 'radio' && value) {
+    if (item.type === 'radio') {
+      // An input radio automatically expand/collapse on check.
       newTree = this.mutateTree(newTree, item.id, {
         isChecked: value,
         isExpanded: item.hasChildren,
       });
 
-      // Check  parents if it is not checked.
+      // Apply to parents if all the others siblings are uncheck.
       newTree = this.applyToParents(newTree, item, {
         isChecked: value,
       });
 
-      // Uncheck all the radio inputs of the same group.
-      newTree = this.applyToChildren(
-        newTree,
-        newTree.items[item.parentId],
-        {
-          isChecked: !value,
-          isExpanded: !value,
-        },
-        item,
-      );
+      // On check
+      if (value) {
+        // Apply the default values of children.
+        newTree = this.applyToChildren(newTree, item);
+
+        // Uncheck all the radio inputs of the same group.
+        newTree = this.applyToChildren(
+          newTree,
+          newTree.items[item.parentId],
+          {
+            isChecked: !value,
+            isExpanded: !value,
+          },
+          item,
+        );
+
+        // On uncheck
+      } else {
+        // Uncheck all the children.
+        newTree = this.applyToChildren(newTree, item, {
+          isChecked: value,
+        });
+      }
     } else if (item.type === 'checkbox') {
       const mutation = { isChecked: value };
       newTree = this.mutateTree(newTree, item.id, mutation);
@@ -154,8 +170,7 @@ class LayerTree extends PureComponent {
       // Apply to parents if all the others siblings are uncheck.
       newTree = this.applyToParents(newTree, item, mutation);
 
-      // On check, check all the childrens
-      // On uncheck, uncheck all the childrens
+      // On check/uncheck, check/uncheck all the childrens.
       newTree = this.applyToChildren(newTree, item, mutation);
     }
 
@@ -208,6 +223,7 @@ class LayerTree extends PureComponent {
    */
   applyToChildren(tree, item, mutation, itemIgnored) {
     let newTree = tree;
+    let newMutation = { ...mutation };
 
     // Go through all the children.
     tree.items[item.id].children.forEach(childId => {
@@ -215,10 +231,24 @@ class LayerTree extends PureComponent {
       if (itemIgnored && child.id === itemIgnored.id) {
         return;
       }
-      newTree = this.applyToItem(newTree, child, mutation);
+
+      // If no mutation provided we apply the default values.
+      if (!mutation && child.defaults) {
+        newMutation = { ...child.defaults };
+      } else if (!mutation) {
+        // If no mutation provided, we do nothing.
+        return;
+      }
+
+      newTree = this.applyToItem(newTree, child, newMutation);
 
       if (child.hasChildren) {
-        newTree = this.applyToChildren(newTree, child, mutation, itemIgnored);
+        newTree = this.applyToChildren(
+          newTree,
+          child,
+          newMutation,
+          itemIgnored,
+        );
       }
     });
     return newTree;
@@ -242,11 +272,13 @@ class LayerTree extends PureComponent {
           type={item.type}
           name={item.parentId}
           checked={item.isChecked}
-          onChange={() => {
-            // this.onChecked(item, evt.target.checked);
-          }}
+          onChange={() => {}}
           onClick={evt => {
-            this.onChecked(item, evt.target.checked);
+            if (item.type === 'radio' && item.isChecked) {
+              this.onChecked(item, false);
+            } else {
+              this.onChecked(item, evt.target.checked);
+            }
           }}
         />
         <button
