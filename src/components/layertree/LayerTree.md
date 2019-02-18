@@ -72,11 +72,8 @@ class LayerTreeExample extends React.Component {
     this.center = getCenter(extent);
     this.layers = [layer, vectorLayer];
     this.map = new OLMap();
-    this.onFeaturesClick = this.onFeaturesClick.bind(this);
-    this.onCloseClick = this.onCloseClick.bind(this);
 
     this.state = {
-      featureClicked: null,
       treeData: { ...treeData },
     };
   }
@@ -91,25 +88,8 @@ class LayerTreeExample extends React.Component {
     this.layers[1].olLayer.changed();
   }
 
-  onFeaturesClick(features) {
-    this.setState({
-      featureClicked: features.length ? features[0] : null,
-    });
-  }
-
-  onCloseClick() {
-    this.setState({ featureClicked: null });
-  }
-
   render() {
     const { featureClicked, treeData } = this.state;
-    console.log('render', treeData);
-    const content =
-      featureClicked &&
-      featureClicked
-        .getGeometry()
-        .getCoordinates()
-        .toString();
 
     return (
       <div className="tm-container">
@@ -118,19 +98,6 @@ class LayerTreeExample extends React.Component {
           center={this.center}
           zoom={17}
           layers={this.layers}
-          onFeaturesClick={this.onFeaturesClick}
-        />
-        <div> Open the console F12 to see the mutations of the tree.</div>
-        <LayerTree
-          tree={treeData}
-          onUpdate={newTreeData => {
-            this.setState({
-              treeData: newTreeData,
-            });
-          }}
-          onItemChange={item => {
-            this.applyStyle(item);
-          }}
         />
         <LayerTree
           tree={treeData}
