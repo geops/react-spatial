@@ -11,6 +11,7 @@ const expandButtonSelector = 'button';
 
 describe('LayerTree', () => {
   let mutations;
+
   beforeEach(() => {
     mutations = [];
   });
