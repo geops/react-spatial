@@ -367,18 +367,16 @@ class LayerTree extends PureComponent {
     return (
       <Tree
         tree={tree}
-        renderItem={({ item, provided }) => {
-          return (
-            <div
-              className={classNameItem}
-              ref={provided.innerRef}
-              {...provided.draggableProps}
-              {...provided.dragHandleProps}
-            >
-              {this.renderItem(item)}
-            </div>
-          );
-        }}
+        renderItem={({ item, provided }) => (
+          <div
+            className={classNameItem}
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+          >
+            {this.renderItem(item)}
+          </div>
+        )}
         offsetPerLevel={padding}
       />
     );

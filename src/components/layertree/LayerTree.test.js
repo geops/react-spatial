@@ -44,12 +44,7 @@ describe('LayerTree', () => {
     test('when an item is hidden.', () => {
       // Test-renderer cannot be use because of th DnD functionnality which needs an existing Html element
       const component = mount(
-        <LayerTree
-          tree={data}
-          isItemHidden={item => {
-            return !!item.children.length;
-          }}
-        />,
+        <LayerTree tree={data} isItemHidden={item => !!item.children.length} />,
       );
       expect(component.html()).toMatchSnapshot();
     });
