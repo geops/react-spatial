@@ -32,6 +32,25 @@ describe('LayerTree', () => {
     expect(component.html()).toMatchSnapshot();
   });
 
+  test('matches snapshots when renderItem is used', () => {
+    // Test-renderer cannot be use because of th DnD functionnality which needs an existing Html element
+    const component = mount(
+      <LayerTree
+        tree={data}
+        renderItem={(item, provided) => (
+          <div
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+          >
+            foo
+          </div>
+        )}
+      />,
+    );
+    expect(component.html()).toMatchSnapshot();
+  });
+
   describe('when an checkbox item is checked', () => {
     test('check all children', () => {
       const data2 = {

@@ -57,6 +57,14 @@ const propTypes = {
    * @param {object} tree The current tree.
    */
   onUpdate: PropTypes.func,
+
+  /**
+   * Custom function to render an item in the tree.
+   *
+   * @param {object} item The item to render.
+   * @param {object} provided The option provided by @atlaskit/tree.
+   */
+  renderItem: PropTypes.func,
 };
 
 const defaultProps = {
@@ -65,6 +73,7 @@ const defaultProps = {
   controlled: true,
   onItemChange: () => {},
   onUpdate: () => {},
+  renderItem: null,
 };
 
 class LayerTree extends PureComponent {
@@ -315,6 +324,12 @@ class LayerTree extends PureComponent {
   }
 
   renderItem({ item, provided }) {
+    const { renderItem } = this.props;
+
+    if (renderItem) {
+      return renderItem(item, provided);
+    }
+
     return (
       <div
         className="tm-layertree"
