@@ -35,7 +35,7 @@ module.exports = {
         // Load css and scss files.
         {
           test: /\.s?css$/,
-          loader: 'style-loader!css-loader!sass-loader?modules',
+          use: ['style-loader', 'css-loader', 'sass-loader?modules'],
         },
       ],
     },

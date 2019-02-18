@@ -2,7 +2,7 @@ import React from 'react';
 import { configure, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import LayerTree from './LayerTree';
-import data, { applyDefaultValues } from '../../../data/TreeData.1';
+import data, { applyDefaultValues } from '../../../data/TreeData.esm';
 
 configure({ adapter: new Adapter() });
 
@@ -54,7 +54,7 @@ describe('LayerTree', () => {
       component
         .find(inputSelector)
         .first()
-        .simulate('click', { target: { checked: true } });
+        .simulate('click');
       expect(mutations.length).toBe(5);
       const lastItems = mutations.pop().tree.items;
       ['1', '1-1', '1-2', '1-2-1'].forEach(id => {
@@ -91,7 +91,7 @@ describe('LayerTree', () => {
         component
           .find(inputSelector)
           .at(4) // 1-2-1
-          .simulate('click', { target: { checked: true } });
+          .simulate('click');
         expect(mutations.length).toBe(4);
         const lastItems = mutations.pop().tree.items;
         ['root', '1', '1-2', '1-2-2'].forEach(id => {
@@ -105,7 +105,7 @@ describe('LayerTree', () => {
   });
 
   describe('when a radio item is checked', () => {
-    test('expands the item, uncheck and collapse all the siblings, and apply defaults velue to the children.', () => {
+    test('expands the item, uncheck and collapse all the siblings, and apply defaults value to the children.', () => {
       const data2 = {
         rootId: 'root',
         items: {
@@ -138,7 +138,7 @@ describe('LayerTree', () => {
       component
         .find(inputSelector)
         .first()
-        .simulate('click', { target: { checked: true } });
+        .simulate('click');
       expect(mutations.length).toBe(3);
       const lastItems = mutations.pop().tree.items;
       ['1', '1-1'].forEach(id => {
@@ -193,7 +193,7 @@ describe('LayerTree', () => {
       component
         .find(inputSelector)
         .first()
-        .simulate('click', { target: { checked: true } });
+        .simulate('click');
       expect(mutations.length).toBe(3);
       const lastItems = mutations.pop().tree.items;
       ['1', '1-1', '1-2', '1-3', '1-2-1', '2', '3'].forEach(id => {
@@ -234,7 +234,7 @@ describe('LayerTree', () => {
         component
           .find(inputSelector)
           .at(2) // 1-2
-          .simulate('click', { target: { checked: true } });
+          .simulate('click');
         expect(mutations.length).toBe(2);
         const lastItems = mutations.pop().tree.items;
         ['1', '1-2'].forEach(id => {
@@ -285,7 +285,7 @@ describe('LayerTree', () => {
       component
         .find(inputSelector)
         .first()
-        .simulate('click', { target: { checked: false } });
+        .simulate('click');
       expect(mutations.length).toBe(4);
       const lastItems = mutations.pop().tree.items;
       ['root', '1', '1-2-1', '1-3'].forEach(id => {
@@ -324,7 +324,7 @@ describe('LayerTree', () => {
         component
           .find(inputSelector)
           .at(2) // 1-2
-          .simulate('click', { target: { checked: false } });
+          .simulate('click');
         expect(mutations.length).toBe(2);
         const lastItems = mutations.pop().tree.items;
         ['1', '1-2'].forEach(id => {

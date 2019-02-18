@@ -11,12 +11,6 @@
  *       title: 'root',
  *     },
  *
- *     // experimental
- *     defaults: {
- *        isExpanded: true,
- *        isChecked: false
- *     },
- *
  */
 
 const data = {
@@ -53,6 +47,10 @@ const data = {
       type: 'checkbox',
       data: {
         title: 'bahnhofplane',
+      },
+      defaults: {
+        isChecked: true,
+        isExpanded: true,
       },
     },
     passagierfrequenzen: {
@@ -124,14 +122,6 @@ const applyDefaultValues = dat => {
   });
   return d;
 };
-
-// For styleguidist, see styleguide.config.js
-/* if (module.exports) {
-  module.exports = {
-    data: applyDefaultValues(data),
-    applyDefaultValues,
-  };
-} */
 
 // For tests
 export { applyDefaultValues };

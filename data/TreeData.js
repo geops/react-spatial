@@ -48,6 +48,10 @@ const data = {
       data: {
         title: 'bahnhofplane',
       },
+      defaults: {
+        isChecked: true,
+        isExpanded: true,
+      },
     },
     passagierfrequenzen: {
       id: 'passagierfrequenzen',
@@ -80,8 +84,8 @@ const data = {
   },
 };
 
-const applyDefaultValues = id => {
-  const item = data.items[id];
+const applyDefaultValuesOnItem = (d, id) => {
+  const item = d.items[id];
   if (!item) {
     // eslint-disable-next-line no-console
     console.error(`No item with id  ${id}`);
@@ -100,25 +104,26 @@ const applyDefaultValues = id => {
 };
 
 // Fill the data tree with some helpers properties
-Object.keys(data.items).forEach(id => {
-  applyDefaultValues(id);
-  const item = data.items[id];
-  if (item.hasChildren) {
-    item.hasChildren = true;
-    item.children.forEach(childId => {
-      applyDefaultValues(childId);
-      data.items[childId].parentId = id;
-      data.items[childId].hasParent = true;
-    });
-  } else {
-    item.children = [];
-  }
-});
+const applyDefaultValues = dat => {
+  const d = { ...dat };
+  Object.keys(d.items).forEach(id => {
+    applyDefaultValuesOnItem(d, id);
+    const item = d.items[id];
+    if (item.hasChildren) {
+      item.hasChildren = true;
+      item.children.forEach(childId => {
+        applyDefaultValuesOnItem(d, childId);
+        d.items[childId].parentId = id;
+        d.items[childId].hasParent = true;
+      });
+    } else {
+      item.children = [];
+    }
+  });
+  return d;
+};
 
 // For styleguidist, see styleguide.config.js
 if (module.exports) {
-  module.exports = data;
+  module.exports = applyDefaultValues(data);
 }
-
-// For tests
-// export default data;
