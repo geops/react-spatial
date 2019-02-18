@@ -20,7 +20,7 @@ const Style = require('ol/style/Style').default;
 const Circle = require('ol/style/Circle').default;
 const Fill = require('ol/style/Fill').default;
 const Text = require('ol/style/Text').default;
-require('./LayerTree.md.css');
+require('./LayerTree.md.scss');
 
 class LayerTreeExample extends React.Component {
   constructor(props) {
@@ -77,6 +77,7 @@ class LayerTreeExample extends React.Component {
 
     this.state = {
       featureClicked: null,
+      treeData: { ...treeData },
     };
   }
 
@@ -101,7 +102,8 @@ class LayerTreeExample extends React.Component {
   }
 
   render() {
-    const { featureClicked } = this.state;
+    const { featureClicked, treeData } = this.state;
+    console.log('render', treeData);
     const content =
       featureClicked &&
       featureClicked
@@ -121,8 +123,23 @@ class LayerTreeExample extends React.Component {
         <div> Open the console F12 to see the mutations of the tree.</div>
         <LayerTree
           tree={treeData}
-          onItemChange={(item, tree) => {
-            console.log(item, tree);
+          onUpdate={newTreeData => {
+            this.setState({
+              treeData: newTreeData,
+            });
+          }}
+          onItemChange={item => {
+            this.applyStyle(item);
+          }}
+        />
+        <LayerTree
+          tree={treeData}
+          onUpdate={newTreeData => {
+            this.setState({
+              treeData: newTreeData,
+            });
+          }}
+          onItemChange={item => {
             this.applyStyle(item);
           }}
         />

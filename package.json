@@ -49,7 +49,8 @@
     "@atlaskit/tree": "^4.1.10",
     "node-sass": "^4.11.0",
     "react-icons": "^3.2.2",
-    "resize-observer-polyfill": "^1.5.1"
+    "resize-observer-polyfill": "^1.5.1",
+    "shortid": "^2.2.14"
   },
   "jest": {
     "transform": {

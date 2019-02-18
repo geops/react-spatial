@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Tree, { mutateTree } from '@atlaskit/tree';
+import shortid from 'shortid';
 
 const propTypes = {
   /**
@@ -25,13 +26,22 @@ const propTypes = {
           title: PropTypes.string.isRequired,
         }).isRequired,
         defaults: PropTypes.shape({
-          isChecked: PropTypes.string,
-          isExpanded: PropTypes.string,
+          isChecked: PropTypes.bool,
+          isExpanded: PropTypes.bool,
         }),
       }),
     ).isRequired,
   }),
+
+  /**
+   * Padding left to apply on each level.
+   */
   padding: PropTypes.number,
+
+  /**
+   * Determine if the component's state is controlled by the parent via props or internally.
+   */
+  controlled: PropTypes.bool,
 
   /**
    * Callback called on each modification of an item.
@@ -40,12 +50,21 @@ const propTypes = {
    * @param {object} tree The current tree.
    */
   onItemChange: PropTypes.func,
+
+  /**
+   * Callback called after a set of item's change events were triggered.
+   *
+   * @param {object} tree The current tree.
+   */
+  onUpdate: PropTypes.func,
 };
 
 const defaultProps = {
   tree: null,
   padding: 30,
+  controlled: true,
   onItemChange: () => {},
+  onUpdate: () => {},
 };
 
 class LayerTree extends PureComponent {
@@ -58,28 +77,27 @@ class LayerTree extends PureComponent {
 
   constructor(props) {
     super(props);
-    this.state = {
-      tree: { ...props.tree },
-    };
+    const { tree, controlled } = this.props;
+    if (!controlled) {
+      this.state = {
+        tree: { ...tree },
+      };
+    }
+
+    // Prefix used for the name of inputs. This allows multiple LayerTree on the same page.
+    this.prefixInput = shortid.generate();
   }
 
   onToggle(item) {
-    const { tree } = this.state;
-    this.setState({
-      tree: this.mutateTree(tree, item.id, { isExpanded: !item.isExpanded }),
-    });
+    const tree = this.getTree();
+    this.setTree(
+      this.mutateTree(tree, item.id, { isExpanded: !item.isExpanded }),
+    );
   }
 
-  onClick(item) {
-    if (item.type === 'radio' && item.isChecked) {
-      this.onInputClick(item, false);
-    } else {
-      this.onInputClick(item, !item.isChecked);
-    }
-  }
-
-  onInputClick(item, value) {
-    const { tree } = this.state;
+  onInputClick(item) {
+    const tree = this.getTree();
+    const value = !item.isChecked;
     let newTree = tree;
 
     if (item.type === 'radio') {
@@ -124,8 +142,30 @@ class LayerTree extends PureComponent {
       // Apply to parents if all the others siblings are uncheck.
       newTree = this.applyToParents(newTree, item, mutation);
 
-      // On check/uncheck, check/uncheck all the childrens.
+      // On check/uncheck:
+      //   - for input checkbox -> check/uncheck all the children.
+      //   - for input radio -> check/uncheck only one of the children.
       newTree = this.applyToChildren(newTree, item, mutation);
+    }
+
+    this.setTree(newTree);
+  }
+
+  getTree() {
+    const { controlled } = this.props;
+    if (controlled) {
+      const { tree } = this.props;
+      return tree;
+    }
+    const { tree } = this.state;
+    return tree;
+  }
+
+  setTree(newTree) {
+    const { controlled, onUpdate } = this.props;
+    if (controlled) {
+      onUpdate(newTree);
+      return;
     }
 
     this.setState({
@@ -173,15 +213,17 @@ class LayerTree extends PureComponent {
   }
 
   /**
-   * Apply a mutation to all the chidlren recursively.
+   * Apply a mutation to all the children recursively.
    */
   applyToChildren(tree, item, mutation, itemIgnored) {
     let newTree = tree;
     let newMutation = { ...mutation };
+    let firstRadioInput;
 
     // Go through all the children.
     tree.items[item.id].children.forEach(childId => {
       const child = newTree.items[childId];
+
       if (itemIgnored && child.id === itemIgnored.id) {
         return;
       }
@@ -194,7 +236,22 @@ class LayerTree extends PureComponent {
         return;
       }
 
+      // if a radio input is going to be checked, uncheck all the other member of the group.
+      if (firstRadioInput && newMutation.isChecked && child.type === 'radio') {
+        // Uncheck all the radio inputs of the same group.
+        newTree = this.applyToItem(newTree, child, {
+          isChecked: false,
+          isExpanded: false,
+        });
+        return;
+      }
+
       newTree = this.applyToItem(newTree, child, newMutation);
+
+      // Set isRadioInput to true will ignore the other member of radio group.
+      if (!firstRadioInput && child.type === 'radio') {
+        firstRadioInput = child;
+      }
 
       if (child.hasChildren) {
         newTree = this.applyToChildren(
@@ -222,17 +279,17 @@ class LayerTree extends PureComponent {
         tabIndex="0"
         onKeyPress={e => {
           if (e.which === 13) {
-            this.onClick(item);
+            this.onInputClick(item);
           }
         }}
       >
         <input
           type={item.type}
-          name={item.parentId}
+          name={this.prefixInput + item.parentId}
           checked={item.isChecked}
           onChange={() => {}}
           onClick={() => {
-            this.onClick(item);
+            this.onInputClick(item);
           }}
         />
         <span />
@@ -275,7 +332,7 @@ class LayerTree extends PureComponent {
   }
 
   render() {
-    const { tree } = this.state;
+    const tree = this.getTree();
     const { padding } = this.props;
     return (
       <Tree
