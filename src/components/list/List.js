@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 
 import ListItem from '../listitem/ListItem';
 
-import './List.scss';
-
 const propTypes = {
   items: PropTypes.array,
   renderItem: PropTypes.func,

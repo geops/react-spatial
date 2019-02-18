@@ -6,8 +6,6 @@ import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
 
 import Button from '../button/Button';
 
-import './ToggleButton.scss';
-
 const propTypes = {
   /**
    * Define the status of the toggle open or not.

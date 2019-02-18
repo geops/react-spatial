@@ -5,8 +5,6 @@ import PropTypes from 'prop-types';
 import SearchInput from '../searchinput/SearchInput';
 import List from '../list/List';
 
-import './Autocomplete.scss';
-
 const propTypes = {
   /**
    * Content for submit button.

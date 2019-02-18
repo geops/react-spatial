@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 
 import ShareMenu from './ShareMenu';
 
-import './MenuItem.scss';
-
 const propTypes = {
   defaultMenuName: PropTypes.oneOf(['share']),
   element: PropTypes.element,

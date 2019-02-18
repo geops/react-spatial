@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { MdClose } from 'react-icons/md';
 import Button from '../button/Button';
 
-import './SearchInput.scss';
-
 const propTypes = {
   /**
    * Value of the input

@@ -9,8 +9,6 @@ import { getCenter } from 'ol/extent';
 import { unByKey } from 'ol/Observable';
 import Button from '../button/Button';
 
-import './Popup.scss';
-
 const propTypes = {
   children: PropTypes.node.isRequired,
   map: PropTypes.instanceOf(OLMap).isRequired,

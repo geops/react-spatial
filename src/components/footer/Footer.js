@@ -1,8 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import './Footer.scss';
-
 const propTypes = {
   right: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
 };

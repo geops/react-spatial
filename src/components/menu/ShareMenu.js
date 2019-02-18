@@ -5,8 +5,6 @@ import { FiMail } from 'react-icons/fi';
 import { withTranslation } from 'react-i18next';
 import BlankLink from '../link/BlankLink';
 
-import './ShareMenu.scss';
-
 const configPropType = PropTypes.arrayOf(
   PropTypes.shape({
     title: PropTypes.string,
