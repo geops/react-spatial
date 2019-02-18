@@ -34,6 +34,11 @@ const propTypes = {
   }),
 
   /**
+   * CSS class to apply on each item.
+   */
+  classNameItem: PropTypes.string,
+
+  /**
    * Padding left to apply on each level.
    */
   padding: PropTypes.number,
@@ -42,6 +47,15 @@ const propTypes = {
    * Determine if the component's state is controlled by the parent via props or internally.
    */
   controlled: PropTypes.bool,
+
+  /**
+   * Determine if the item is hidden in the tree or not.
+   *
+   * @param {object} item The item to hide or not.
+   *
+   * @return {bool} true if the item is not displayed in the tree
+   */
+  isItemHidden: PropTypes.func,
 
   /**
    * Callback called on each modification of an item.
@@ -63,14 +77,18 @@ const propTypes = {
    *
    * @param {object} item The item to render.
    * @param {object} provided The option provided by @atlaskit/tree.
+   *
+   * @return {object} jsx code.
    */
   renderItem: PropTypes.func,
 };
 
 const defaultProps = {
   tree: null,
+  classNameItem: 'tm-layertree-item',
   padding: 30,
   controlled: true,
+  isItemHidden: () => false,
   onItemChange: () => {},
   onUpdate: () => {},
   renderItem: null,
@@ -323,38 +341,44 @@ class LayerTree extends PureComponent {
     );
   }
 
-  renderItem({ item, provided }) {
-    const { renderItem } = this.props;
+  renderItem(item) {
+    const { renderItem, isItemHidden } = this.props;
+    if (isItemHidden(item)) {
+      return null;
+    }
 
     if (renderItem) {
-      return renderItem(item, provided);
+      return renderItem(item);
     }
 
     return (
-      <div
-        className="tm-layertree"
-        ref={provided.innerRef}
-        {...provided.draggableProps}
-        {...provided.dragHandleProps}
-      >
+      <>
         {this.renderInput(item)}
-
         <div>{item.data.title}</div>
-
         {this.renderToggleButton(item)}
-      </div>
+      </>
     );
   }
 
   render() {
     const tree = this.getTree();
-    const { padding } = this.props;
+    const { padding, classNameItem } = this.props;
+
     return (
       <Tree
         tree={tree}
-        renderItem={(item, onExpand, onCollapse, provided) =>
-          this.renderItem(item, provided)
-        }
+        renderItem={({ item, provided }) => {
+          return (
+            <div
+              className={classNameItem}
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+            >
+              {this.renderItem(item)}
+            </div>
+          );
+        }}
         offsetPerLevel={padding}
       />
     );

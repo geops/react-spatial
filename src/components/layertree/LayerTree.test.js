@@ -26,29 +26,33 @@ describe('LayerTree', () => {
       />,
     );
 
-  test('matches snapshots', () => {
-    // Test-renderer cannot be use because of th DnD functionnality which needs an existing Html element
-    const component = mount(<LayerTree tree={data} />);
-    expect(component.html()).toMatchSnapshot();
-  });
+  describe('matches snapshots', () => {
+    test('using default properties.', () => {
+      // Test-renderer cannot be use because of th DnD functionnality which needs an existing Html element
+      const component = mount(<LayerTree tree={data} />);
+      expect(component.html()).toMatchSnapshot();
+    });
 
-  test('matches snapshots when renderItem is used', () => {
-    // Test-renderer cannot be use because of th DnD functionnality which needs an existing Html element
-    const component = mount(
-      <LayerTree
-        tree={data}
-        renderItem={(item, provided) => (
-          <div
-            ref={provided.innerRef}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-          >
-            foo
-          </div>
-        )}
-      />,
-    );
-    expect(component.html()).toMatchSnapshot();
+    test('when renderItem is used.', () => {
+      // Test-renderer cannot be use because of th DnD functionnality which needs an existing Html element
+      const component = mount(
+        <LayerTree tree={data} renderItem={item => <div>{item.title}</div>} />,
+      );
+      expect(component.html()).toMatchSnapshot();
+    });
+
+    test('when an item is hidden.', () => {
+      // Test-renderer cannot be use because of th DnD functionnality which needs an existing Html element
+      const component = mount(
+        <LayerTree
+          tree={data}
+          isItemHidden={item => {
+            return !!item.children.length;
+          }}
+        />,
+      );
+      expect(component.html()).toMatchSnapshot();
+    });
   });
 
   describe('when an checkbox item is checked', () => {
