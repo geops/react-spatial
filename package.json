@@ -25,7 +25,7 @@
     "eslint-plugin-react": "^7.12.3",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^23.6.0",
-    "jest-canvas-mock": "^1.1.0",
+    "jest-canvas-mock": "^2.0.0-alpha.3",
     "ol": "^5.3.0",
     "prettier": "^1.16.1",
     "proj4": "^2.5.0",
@@ -49,7 +49,8 @@
     "@atlaskit/tree": "^4.1.10",
     "node-sass": "^4.11.0",
     "react-icons": "^3.2.2",
-    "resize-observer-polyfill": "^1.5.1"
+    "resize-observer-polyfill": "^1.5.1",
+    "shortid": "^2.2.14"
   },
   "jest": {
     "transform": {

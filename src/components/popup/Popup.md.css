@@ -3,3 +3,8 @@
   height: 300px;
   width: 100%;
 }
+
+.tm-container {
+  position: relative;
+  overflow: hidden;
+}

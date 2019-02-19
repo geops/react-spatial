@@ -2,7 +2,7 @@
  *  Node definition:
  *
  *     id: 'root',
- *     children: ['node1', 'node2'],
+ *     children: ['ovnetzkarteschweiz', 'bauprojekte'],
  *     isExpanded: true,
  *     isChecked: false,
  *     isChildrenLoading: false,
@@ -18,100 +18,69 @@ const data = {
   items: {
     root: {
       id: 'root',
-      children: ['node1'],
+      children: ['ovnetzkarteschweiz', 'bauprojekte'],
       type: 'checkbox',
       data: {
         title: 'root',
       },
     },
-    node1: {
-      id: 'node1',
-      isChecked: true,
+    ovnetzkarteschweiz: {
+      id: 'ovnetzkarteschweiz',
       isExpanded: true,
+      children: ['bahnhofplane', 'passagierfrequenzen'],
       type: 'radio',
-      children: ['baselayer1', 'child1', 'node2'],
       data: {
-        title: 'Topic 1',
+        title: 'ovnetzkarteschweiz',
       },
     },
-    baselayer1: {
-      id: 'baselayer1',
-      type: 'checkbox',
-      isChecked: true,
-      defaults: {
-        isChecked: true,
-      },
+    bauprojekte: {
+      id: 'bauprojekte',
+      type: 'radio',
       data: {
-        title: 'OSM Baselayer',
-        type: 'xyz',
-        url: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        title: 'bauprojekte',
       },
     },
-    child1: {
-      id: 'child1',
+    bahnhofplane: {
+      id: 'bahnhofplane',
+      isExpanded: true,
+      children: ['interaktivbahnhoplan', 'printprodukte'],
       type: 'checkbox',
-      isChecked: true,
-      defaults: {
-        isChecked: true,
-      },
       data: {
-        title: 'USA Population Density',
-        styleId: 'child1',
-        type: 'wmts',
-        url:
-          'https://services.arcgisonline.com/arcgis/rest/services/' +
-          'Demographics/USA_Population_Density/MapServer/WMTS/?layer=0' +
-          '&style=default&tilematrixset=EPSG%3A3857&Service=WMTS&' +
-          'Request=GetTile&Version=1.0.0&Format=image%2Fpng&',
+        title: 'bahnhofplane',
       },
       defaults: {
         isChecked: true,
         isExpanded: true,
       },
     },
-    node2: {
-      id: 'node2',
-      isChecked: true,
-      isExpanded: true,
+    passagierfrequenzen: {
+      id: 'passagierfrequenzen',
+      children: ['interaktivbahnhoplan2', 'printprodukte2'],
       type: 'checkbox',
-      children: ['child21', 'child22'],
       data: {
-        title: 'Sub-Layers',
+        title: 'passagierfrequenzen',
       },
     },
-    child21: {
-      id: 'child21',
+    interaktivbahnhoplan: {
+      id: 'interaktivbahnhoplan',
       type: 'radio',
-      isChecked: true,
-      defaults: {
-        isChecked: true,
-      },
       data: {
-        title: 'Countries Borders',
-        styleId: 'child21',
-        type: 'vectorLayer',
-        url:
-          'https://openlayers.org/en/latest/examples/data/geojson/' +
-          'countries.geojson',
+        title: 'interaktivbahnhoplan',
       },
     },
-    child22: {
-      id: 'child22',
+    printprodukte: {
+      id: 'printprodukte',
       type: 'radio',
-      isChecked: false,
-      defaults: {
-        isChecked: false,
-      },
       data: {
-        title: 'Points Samples',
-        styleId: 'child22',
-        type: 'vectorLayer',
-        url:
-          'https://raw.githubusercontent.com/openlayers/openlayers/' +
-          '3c64018b3754cf605ea19cbbe4c8813304da2539/examples/data/geojson/' +
-          'point-samples.geojson',
+        title: 'printprodukte',
       },
     },
+    interaktivbahnhoplan2: {
+      children: ['interaktivbahnhoplan3', 'printprodukte3'],
+    },
+    printprodukte2: {},
+    interaktivbahnhoplan3: {},
+    printprodukte3: {},
   },
 };
 
@@ -154,7 +123,6 @@ const applyDefaultValues = dat => {
   return d;
 };
 
-// For styleguidist, see styleguide.config.js
-if (module.exports) {
-  module.exports = applyDefaultValues(data);
-}
+// For tests
+export { applyDefaultValues };
+export default applyDefaultValues(data);

@@ -16,7 +16,7 @@ const Style = require('ol/style/Style').default;
 const Circle = require('ol/style/Circle').default;
 const Fill = require('ol/style/Fill').default;
 const Text = require('ol/style/Text').default;
-require('./LayerTree.md.css');
+require('./LayerTree.md.scss');
 
 class LayerTreeExample extends React.Component {
   constructor(props) {
@@ -24,12 +24,6 @@ class LayerTreeExample extends React.Component {
 
     this.center = [-10997148, 4569099];
     this.map = new OLMap();
-    this.onFeaturesClick = this.onFeaturesClick.bind(this);
-    this.onCloseClick = this.onCloseClick.bind(this);
-
-    this.state = {
-      featureClicked: null,
-    };
 
     const vectorLayer = new VectorLayer({
       source: new VectorSource({
@@ -49,6 +43,10 @@ class LayerTreeExample extends React.Component {
       }),
     });
     this.layers = [vectorLayer];
+
+    this.state = {
+      treeData: { ...treeData },
+    };
   }
 
   componentDidMount() {
@@ -69,24 +67,8 @@ class LayerTreeExample extends React.Component {
     this.layers[0].olLayer.changed();
   }
 
-  onFeaturesClick(features) {
-    this.setState({
-      featureClicked: features.length ? features[0] : null,
-    });
-  }
-
-  onCloseClick() {
-    this.setState({ featureClicked: null });
-  }
-
   render() {
-    const { featureClicked } = this.state;
-    const content =
-      featureClicked &&
-      featureClicked
-        .getGeometry()
-        .getCoordinates()
-        .toString();
+    const { featureClicked, treeData } = this.state;
 
     return (
       <div className="tm-container">
@@ -95,11 +77,14 @@ class LayerTreeExample extends React.Component {
           center={this.center}
           zoom={3}
           layers={this.layers}
-          onFeaturesClick={this.onFeaturesClick}
         />
-        <div> Open the console F12 to see the mutations of the tree.</div>
         <LayerTree
           tree={treeData}
+          onUpdate={newTreeData => {
+            this.setState({
+              treeData: newTreeData,
+            });
+          }}
           onItemChange={(item, tree) => {
             this.layerService.onItemChange(this.map, item);
             this.applyStyle(item);
