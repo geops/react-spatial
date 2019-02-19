@@ -1,16 +1,18 @@
-@import '../../Globals.scss';
-
 .tm-autocomplete {
   .tm-search {
-    color: $tm-color-darkgrey;
+    color: $gray-dark;
   }
 
-  .tm-list-container,
+  .tm-autocomplete-results,
   .tm-search-input {
-    border: 2px solid $tm-color-grey;
+    border: 2px solid $gray-lighter;
   }
 
-  .tm-list-container {
+  .tm-bt-clear {
+    color: black;
+  }
+
+  .tm-autocomplete-results {
     position: absolute;
     margin: auto;
     border-top: none;
@@ -20,15 +22,12 @@
     background-color: white;
     overflow: auto;
     max-height: 400px;
-
-    &.tm-hidden {
-      display: none;
-    }
+    z-index: $zindex-higher;
 
     p {
       font-size: 0.9em;
       font-weight: bold;
-      color: $tm-color-lightgrey;
+      color: $gray-light;
       padding: 5px 15px 2px 15px;
       margin: 0;
     }
@@ -40,7 +39,7 @@
     li {
       &:hover,
       &:focus {
-        color: $tm-color-sbb-red;
+        color: $btn-primary-color;
       }
     }
   }

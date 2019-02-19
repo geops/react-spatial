@@ -68,6 +68,16 @@ const propTypes = {
    * Get the key for each item used when react creates the list.
    */
   getItemKey: PropTypes.func,
+
+  /**
+   * CSS class added to container.
+   */
+  className: PropTypes.string,
+
+  /**
+   * CSS class added to container of the results list.
+   */
+  classNameResults: PropTypes.string,
 };
 
 const defaultProps = {
@@ -83,6 +93,8 @@ const defaultProps = {
   onChange: () => {},
   onFocus: () => {},
   onSelect: () => {},
+  className: 'tm-autocomplete',
+  classNameResults: 'tm-autocomplete-results',
 };
 
 /**
@@ -209,16 +221,17 @@ class Autocomplete extends PureComponent {
       renderTitle,
       renderItem,
       getItemKey,
+      className,
+      classNameResults,
     } = this.props;
-    const { showList, refList, focus } = this.state;
-    const className = focus ? ' tm-focus' : '';
-    const classNameList =
-      !showList || (!items.length && !defaultItems.length) ? ' tm-hidden' : '';
+    const { showList, refList } = this.state;
+    const display =
+      !showList || (!items.length && !defaultItems.length) ? 'none' : null;
     const hr = items.length && defaultItems.length ? <hr /> : null;
 
     return (
       <div
-        className={`tm-autocomplete${className}`}
+        className={className}
         ref={node => {
           this.ref = node;
         }}
@@ -246,7 +259,12 @@ class Autocomplete extends PureComponent {
               this.setState({ refList: node });
             }
           }}
-          className={`tm-list-container${classNameList}`}
+          style={
+            display && {
+              display,
+            }
+          }
+          className={classNameResults}
         >
           <List
             items={items}

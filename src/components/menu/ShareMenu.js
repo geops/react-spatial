@@ -14,6 +14,8 @@ const configPropType = PropTypes.arrayOf(
 );
 
 const propTypes = {
+  className: PropTypes.string,
+  classNameIcon: PropTypes.string,
   socialShareConfig: configPropType,
   extraSocialShareConfig: configPropType,
 
@@ -22,6 +24,8 @@ const propTypes = {
 };
 
 const defaultProps = {
+  className: 'tm-share-menu',
+  classNameIcon: 'tm-share-menu-icon',
   socialShareConfig: [
     {
       url: '//www.facebook.com/sharer.php?u={url}',
@@ -43,7 +47,13 @@ const defaultProps = {
   extraSocialShareConfig: [],
 };
 
-const ShareMenu = ({ socialShareConfig, extraSocialShareConfig, t }) => {
+const ShareMenu = ({
+  className,
+  classNameIcon,
+  socialShareConfig,
+  extraSocialShareConfig,
+  t,
+}) => {
   const config = [...socialShareConfig, ...extraSocialShareConfig];
 
   for (let i = 0; i < config.length; i += 1) {
@@ -51,10 +61,10 @@ const ShareMenu = ({ socialShareConfig, extraSocialShareConfig, t }) => {
   }
 
   return (
-    <div id="share-menu">
+    <div className={className}>
       {config.map(conf => (
         <div
-          className={`share-menu-icon ${conf.className || ''}`}
+          className={`${classNameIcon} ${conf.className || ''}`}
           key={conf.title}
         >
           <BlankLink href={conf.url} title={t(conf.title)}>

@@ -8,6 +8,11 @@ import Button from '../button/Button';
 
 const propTypes = {
   /**
+   * Css class of the container.
+   */
+  className: PropTypes.string,
+
+  /**
    * Define the status of the toggle open or not.
    */
   open: PropTypes.bool,
@@ -46,6 +51,7 @@ const propTypes = {
 };
 
 const defaultProps = {
+  className: 'tm-toggle-button',
   target: null,
   open: false,
   onToggle: () => {},
@@ -117,12 +123,19 @@ class ToggleButton extends PureComponent {
   }
 
   render() {
-    const { openComponent, closeComponent, title, open, onToggle } = this.props;
+    const {
+      className,
+      openComponent,
+      closeComponent,
+      title,
+      open,
+      onToggle,
+    } = this.props;
     const menuButton = open ? closeComponent : openComponent;
 
     return (
       <Button
-        className="tm-toggle-button"
+        className={className}
         title={title}
         onClick={() => onToggle(!open)}
       >

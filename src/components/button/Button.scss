@@ -1,9 +1,7 @@
-@import '../../Globals.scss';
-
 .tm-button {
   cursor: pointer;
-  height: $large-button-size;
-  width: $large-button-size;
+  height: $btn-size-base;
+  width: $btn-size-base;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,7 +9,7 @@
 }
 
 .tm-round-blue {
-  background: $tm-color-blue;
+  background: $btn-secondary-color;
   border-radius: 50%;
   color: white;
 }
@@ -22,6 +20,6 @@
   color: #aaa;
 
   &.tm-active {
-    background-color: $tm-color-blue;
+    background-color: $btn-secondary-color-active;
   }
 }

@@ -1,5 +1,3 @@
-@import '../../Globals.scss';
-
 .tm-header {
   position: absolute;
   padding: 0 20px;
@@ -9,12 +7,11 @@
   height: $tm-header-height;
   background: white;
   border-bottom: 1px solid #aaa;
-  z-index: 2;
-}
 
-.tm-header-left {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  max-width: 50%;
+  .tm-header-left {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    max-width: 50%;
+  }
 }

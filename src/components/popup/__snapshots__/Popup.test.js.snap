@@ -19,7 +19,7 @@ exports[`Popup should match snapshot with default values. 1`] = `
   >
     <div
       aria-label="Popup Schliessen"
-      className="tm-button tm-popup-close-button"
+      className="tm-popup-close-button"
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
@@ -71,7 +71,7 @@ exports[`Popup should match snapshot with tm-tooltip class. 1`] = `
   >
     <div
       aria-label="Popup Schliessen"
-      className="tm-button tm-popup-close-button"
+      className="tm-popup-close-button"
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"

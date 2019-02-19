@@ -2,6 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const propTypes = {
+  /**
+   * CSS class of the container.
+   */
+  className: PropTypes.string,
+
+  /**
+   * CSS class of the container using float: left.
+   */
+  classNameLeft: PropTypes.string,
+
+  /**
+   * Element to display in a container using float:left
+   */
   left: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
 
   /**
@@ -13,11 +26,13 @@ const propTypes = {
 const defaultProps = {
   left: null,
   children: [],
+  className: 'tm-header',
+  classNameLeft: 'tm-header-left',
 };
 
-const Header = ({ left, children }) => (
-  <div className="tm-header">
-    <div className="tm-header-left">{left}</div>
+const Header = ({ className, classNameLeft, left, children }) => (
+  <div className={className}>
+    <div className={classNameLeft}>{left}</div>
     {children}
   </div>
 );

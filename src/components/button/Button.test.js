@@ -15,7 +15,6 @@ test('Menu should match snapshot.', () => {
     <Button
       className="tm-zoom in"
       title="Zoom in"
-      ariaLabel="aria-label"
       onClick={() => funcs.onClick()}
     >
       +
@@ -28,12 +27,7 @@ test('Menu should match snapshot.', () => {
 test('Button should update.', () => {
   const spy = jest.spyOn(funcs, 'onClick');
   const bt = shallow(
-    <Button
-      className="tm-class"
-      title="Zoom"
-      ariaLabel="aria-label"
-      onClick={() => funcs.onClick()}
-    >
+    <Button className="tm-class" title="Zoom" onClick={() => funcs.onClick()}>
       +
     </Button>,
   );

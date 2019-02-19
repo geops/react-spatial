@@ -5,16 +5,15 @@ This demonstrates the use of SelectLinks.
 ```jsx
 const React = require('react');
 const SelectLinks = require('./SelectLinks').default;
-require('./SelectLinks.md.css');
 
 class SelectLinksExample extends React.Component {
   constructor(props) {
     super(props);
 
     this.options = [
-      { label: 'foo', title: 'Foo' },
-      { label: 'bar', title: 'Bar' },
-      { label: 'baz', title: 'Baz' },
+      { label: 'New york', value: 'ny' },
+      { label: 'Los angeles', value: 'ls' },
+      { label: 'Orlando', value: 'orl' },
     ];
 
     this.state = { selected: this.options[0] };
@@ -30,11 +29,11 @@ class SelectLinksExample extends React.Component {
             this.setState({ selected: opt });
           }}
         />
-        <div>You selected: { this.state.selected.title }</div>
+        <div>You selected: {this.state.selected.label}</div>
       </div>
     );
   }
 }
 
-<SelectLinksExample t="(a)=>(a)" />;
+<SelectLinksExample />;
 ```

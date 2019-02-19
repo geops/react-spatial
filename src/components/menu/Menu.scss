@@ -1,5 +1,3 @@
-@import '../../Globals.scss';
-
 .tm-menu {
   background-color: white;
   border-right: 1px solid #eee;
@@ -12,7 +10,7 @@
 
   .tm-menu-item-title {
     padding: 0 20px;
-    line-height: $large-button-size;
+    line-height: $btn-size-base;
     font-weight: bold;
     white-space: nowrap;
   }

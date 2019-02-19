@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 
 const propTypes = {
   /**
+   * Css class of the li tag.
+   */
+  className: PropTypes.string,
+  /**
    * Item of the list.
    */
   item: PropTypes.any.isRequired,
@@ -24,6 +28,7 @@ const propTypes = {
 };
 
 const defaultProps = {
+  className: 'tm-list-item',
   onSelect: () => {},
   onKeyDown: () => {},
 };
@@ -33,10 +38,10 @@ const defaultProps = {
  */
 class ListItem extends PureComponent {
   render() {
-    const { children, item, onSelect, onKeyDown } = this.props;
+    const { className, children, item, onSelect, onKeyDown } = this.props;
     return (
       <li
-        className="tm-list-item"
+        className={className}
         role="menuitem"
         tabIndex="0"
         onClick={e => {

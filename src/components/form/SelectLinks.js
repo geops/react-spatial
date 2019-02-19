@@ -4,6 +4,16 @@ import ActionLink from '../link/ActionLink';
 
 const propTypes = {
   /**
+   * CSS class of the container.
+   */
+  className: PropTypes.string,
+
+  /**
+   * CSS class of the current slected link.
+   */
+  classNameSelected: PropTypes.string,
+
+  /**
    * Values of links.
    */
   options: PropTypes.arrayOf(
@@ -44,6 +54,8 @@ const propTypes = {
 };
 
 const defaultProps = {
+  className: 'tm-select-links',
+  classNameSelected: 'tm-selected',
   getHref: () => '#',
   getLabel: option => option.label,
   getTitle: option => option.title,
@@ -54,28 +66,35 @@ const defaultProps = {
  * behaves like a select element.
  */
 const SelectLinks = ({
+  className,
+  classNameSelected,
   options,
   getHref,
   getLabel,
   getTitle,
   isSelected,
   onClick,
-}) => (
-  <>
-    {(options || []).map(option => (
-      <ActionLink
-        key={getLabel(option)}
-        href={getHref(option)}
-        title={getTitle(option)}
-        tabIndex="0"
-        className={isSelected(option) ? 'tm-selected' : null}
-        onClick={evt => onClick(evt, option)}
-      >
-        {getLabel(option)}
-      </ActionLink>
-    ))}
-  </>
-);
+}) => {
+  if (!options) {
+    return null;
+  }
+  return (
+    <div className={className}>
+      {(options || []).map(option => (
+        <ActionLink
+          key={getLabel(option)}
+          href={getHref(option)}
+          title={getTitle(option)}
+          tabIndex="0"
+          className={isSelected(option) ? classNameSelected : undefined}
+          onClick={evt => onClick(evt, option)}
+        >
+          {getLabel(option)}
+        </ActionLink>
+      ))}
+    </div>
+  );
+};
 
 SelectLinks.propTypes = propTypes;
 SelectLinks.defaultProps = defaultProps;

@@ -14,6 +14,7 @@ const propTypes = {
   map: PropTypes.instanceOf(OLMap).isRequired,
   feature: PropTypes.instanceOf(Feature),
   className: PropTypes.string,
+  classNameCloseBt: PropTypes.string,
   onCloseClick: PropTypes.func,
   onKeyUp: PropTypes.func,
   showCloseButton: PropTypes.bool,
@@ -23,7 +24,8 @@ const propTypes = {
 
 const defaultProps = {
   feature: null,
-  className: '',
+  className: 'tm-popup',
+  classNameCloseBt: 'tm-popup-close-bt',
   showCloseButton: true,
   onKeyUp: () => {},
   onCloseClick: () => {},
@@ -78,7 +80,7 @@ class Popup extends PureComponent {
   }
 
   renderCloseButton() {
-    const { t, showCloseButton, onCloseClick } = this.props;
+    const { t, showCloseButton, onCloseClick, classNameCloseBt } = this.props;
 
     if (!showCloseButton) {
       return null;
@@ -86,7 +88,7 @@ class Popup extends PureComponent {
 
     return (
       <Button
-        className="tm-popup-close-button"
+        className={classNameCloseBt}
         title={`Popup ${t('Schliessen')}`}
         onClick={() => onCloseClick()}
       >
@@ -106,7 +108,7 @@ class Popup extends PureComponent {
 
     return (
       <div
-        className="tm-popup-container"
+        className={className}
         style={{
           position: 'absolute',
           left,
@@ -114,7 +116,6 @@ class Popup extends PureComponent {
         }}
       >
         <div
-          className={`tm-popup ${className}`}
           role="button"
           tabIndex={className === 'tm-tooltip' ? '0' : ''}
           onKeyUp={e => {

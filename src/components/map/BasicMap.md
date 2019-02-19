@@ -10,7 +10,6 @@ const TileLayer = require('ol/layer/Tile').default;
 const TileGrid = require('ol/tilegrid/TileGrid').default;
 const TileImageSource = require('ol/source/TileImage').default;
 const getCenter = require('ol/extent').getCenter;
-require('./BasicMap.md.css');
 
 class BasicMapExample extends React.Component {
   constructor(props) {

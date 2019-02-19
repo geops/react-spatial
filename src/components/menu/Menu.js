@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
 
 const propTypes = {
+  className: PropTypes.string,
+  classNameContent: PropTypes.string,
+  classNameTitle: PropTypes.string,
   menuItems: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string,
@@ -12,13 +15,24 @@ const propTypes = {
   // react-i18next
   t: PropTypes.func.isRequired,
 };
+const defaultProps = {
+  className: 'tm-menu',
+  classNameContent: 'tm-menu-content',
+  classNameTitle: 'tm-menu-item-title',
+};
 
-const Menu = ({ menuItems, t }) => (
-  <div className="tm-menu">
-    <div className="tm-menu-content">
+const Menu = ({
+  className,
+  classNameContent,
+  classNameTitle,
+  menuItems,
+  t,
+}) => (
+  <div className={className}>
+    <div className={classNameContent}>
       {menuItems.map(item => (
         <div key={item.title}>
-          <div className="tm-menu-item-title">{t(item.title)}</div>
+          <div className={classNameTitle}>{t(item.title)}</div>
           {item.element}
         </div>
       ))}
@@ -27,5 +41,6 @@ const Menu = ({ menuItems, t }) => (
 );
 
 Menu.propTypes = propTypes;
+Menu.defaultProps = defaultProps;
 
 export default withTranslation()(Menu);

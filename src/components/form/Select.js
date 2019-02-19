@@ -1,16 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const optionPropType = PropTypes.shape({
-  value: PropTypes.string,
-  label: PropTypes.string,
-});
-
 const propTypes = {
+  /**
+   * CSS class of the select.
+   */
+  className: PropTypes.string,
+
   /**
    * Array of values to use in the select element.
    */
-  options: PropTypes.arrayOf(optionPropType).isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string,
+      label: PropTypes.string,
+    }),
+  ).isRequired,
 
   /**
    * Selected option object.
@@ -26,24 +31,28 @@ const propTypes = {
 
 const defaultProps = {
   value: undefined,
+  className: 'tm-select',
 };
 
 /**
  * This component displays a simple select HTML element.
  */
-const Select = ({ options, value, onChange }) => (
-  <select
-    className="tm-select"
-    value={value}
-    onChange={evt => onChange(evt, evt.target.value)}
-  >
-    {(options || []).map(o => (
-      <option key={o.value} value={o.value}>
-        {o.label}
-      </option>
-    ))}
-  </select>
-);
+const Select = props => {
+  const { value, className, options, onChange } = props;
+  return (
+    <select
+      className={className}
+      value={value}
+      onChange={evt => onChange(evt, evt.target.value)}
+    >
+      {(options || []).map(o => (
+        <option key={o.value} value={o.value}>
+          {o.label}
+        </option>
+      ))}
+    </select>
+  );
+};
 
 Select.propTypes = propTypes;
 Select.defaultProps = defaultProps;

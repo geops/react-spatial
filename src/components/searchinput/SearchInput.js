@@ -10,7 +10,7 @@ const propTypes = {
   value: PropTypes.string,
 
   /**
-   * CSS Class of the container (input+button).
+   * CSS class of the container (input+button).
    */
   className: PropTypes.string,
 
@@ -69,7 +69,7 @@ const propTypes = {
 const defaultProps = {
   button: 'search',
   value: '',
-  className: null,
+  className: 'tm-search-input',
   placeholder: '',
   titleClearBt: '',
   titleSearchBt: '',
@@ -126,19 +126,6 @@ class SearchInput extends PureComponent {
   }
 
   /**
-   * Get the className to use for the container.
-   */
-  getClassName() {
-    const { focus } = this.state;
-    const { className } = this.props;
-    const newClassName = `tm-search-input ${className || ''}`;
-    if (focus) {
-      return `${newClassName} tm-focus`;
-    }
-    return newClassName;
-  }
-
-  /**
    * Trigger the onChange function with a new value or the current value of
    * the input.
    */
@@ -154,6 +141,7 @@ class SearchInput extends PureComponent {
   render() {
     const {
       button,
+      className,
       value,
       placeholder,
       titleClearBt,
@@ -161,17 +149,18 @@ class SearchInput extends PureComponent {
       titleSearchInput,
       onClickSearchButton,
     } = this.props;
-
-    const className = this.getClassName();
+    const { focus } = this.state;
 
     // Hide clear button
-    let hiddenClass = ' tm-hidden';
-    if (value) {
-      hiddenClass = '';
+    const display = !value ? 'none' : undefined;
+
+    let newClassName = className || '';
+    if (focus) {
+      newClassName = `${newClassName} tm-focus`;
     }
 
     return (
-      <div className={className}>
+      <div className={newClassName}>
         <input
           value={value}
           type="text"
@@ -189,7 +178,11 @@ class SearchInput extends PureComponent {
         />
         <Button
           title={titleClearBt}
-          className={`tm-bt-clear${hiddenClass}`}
+          style={
+            display && {
+              display,
+            }
+          }
           onClick={e => {
             this.search(e, '');
             this.setState({ focus: true });
@@ -199,7 +192,6 @@ class SearchInput extends PureComponent {
         </Button>
         <Button
           title={titleSearchBt}
-          className="tm-bt-search"
           onClick={e => {
             this.search(e);
             onClickSearchButton(e);

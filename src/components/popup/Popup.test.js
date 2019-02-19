@@ -85,7 +85,7 @@ describe('Popup', () => {
       );
 
       component
-        .find('.tm-popup-close-button')
+        .find('.tm-popup-close-bt')
         .at(1)
         .simulate(...evt);
 
@@ -103,7 +103,7 @@ describe('Popup', () => {
       // test if no js error triggered by the default value
       try {
         component
-          .find('.tm-popup-close-button')
+          .find('.tm-popup-close-bt')
           .at(1)
           .simulate(...evt);
         expect(true).toBe(true);

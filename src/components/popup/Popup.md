@@ -19,7 +19,6 @@ const getCenter = require('ol/extent').getCenter;
 const Style = require('ol/style/Style').default;
 const Circle = require('ol/style/Circle').default;
 const Fill = require('ol/style/Fill').default;
-require('./Popup.md.css');
 
 class PopupExample extends React.Component {
   constructor(props) {
@@ -99,7 +98,7 @@ class PopupExample extends React.Component {
         .toString();
 
     return (
-      <div className="tm-container">
+      <div className="tm-popup-example">
         <BasicMap
           map={this.map}
           center={this.center}

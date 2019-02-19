@@ -1,0 +1,8 @@
+.tm-action-link-example {
+  @include a();
+
+  a {
+    display: block;
+    padding: 10px;
+  }
+}

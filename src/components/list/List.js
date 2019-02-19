@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import ListItem from '../listitem/ListItem';
 
 const propTypes = {
+  className: PropTypes.string,
   items: PropTypes.array,
   renderItem: PropTypes.func,
   onSelect: PropTypes.func,
@@ -12,6 +13,7 @@ const propTypes = {
 };
 
 const defaultProps = {
+  className: 'tm-list',
   items: [],
   renderItem: () => {},
   onSelect: () => {},
@@ -27,6 +29,7 @@ const defaultProps = {
 class List extends PureComponent {
   render() {
     const {
+      className,
       items,
       renderItem,
       onSelect,
@@ -39,7 +42,7 @@ class List extends PureComponent {
     }
 
     return (
-      <ul role="menu" className="tm-list">
+      <ul role="menu" className={className}>
         {items.map(item => (
           <ListItem
             key={getItemKey(item)}

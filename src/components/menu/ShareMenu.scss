@@ -1,10 +1,8 @@
-@import '../../Globals.scss';
-
-#share-menu {
+.tm-share-menu {
   display: flex;
   padding-left: 20px;
 
-  .share-menu-icon {
+  .tm-share-menu-icon {
     background-color: #666;
     border-radius: 50%;
     cursor: pointer;
@@ -35,7 +33,7 @@
     }
 
     &:hover {
-      background-color: $tm-color-red;
+      background-color: $btn-primary-color-hover;
       color: white;
 
       a {

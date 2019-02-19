@@ -3,7 +3,7 @@
 exports[`Menu should match snapshot. 1`] = `
 <div
   aria-label="Zoom in"
-  className="tm-button tm-zoom in"
+  className="tm-zoom in"
   onClick={[Function]}
   onKeyPress={[Function]}
   role="button"

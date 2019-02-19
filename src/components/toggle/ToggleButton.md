@@ -5,7 +5,6 @@ This demonstrates the use of ToggleButton.
 ```jsx
 const React = require('react');
 const ToggleButton = require('./ToggleButton').default;
-require('./ToggleButton.md.css');
 
 class ToggleButtonExample extends React.Component {
   constructor(props) {
@@ -20,7 +19,7 @@ class ToggleButtonExample extends React.Component {
   render() {
     const { ref } = this.state;
     return (
-      <>
+      <div className="tm-toggle-button-example">
         <ToggleButton
           target={this.state.ref}
           open={this.state.open}
@@ -39,7 +38,7 @@ class ToggleButtonExample extends React.Component {
             }
           }}
         />
-      </>
+      </div>
     );
   }
 }

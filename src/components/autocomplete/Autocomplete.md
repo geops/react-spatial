@@ -5,9 +5,8 @@ This demonstrates the use of Autocomplete.
 ```jsx
 const React = require('react');
 const Autocomplete = require('./Autocomplete').default;
-require('./Autocomplete.md.css');
 
-class AutocompleteExample extends React.Component {
+class AutocompleteExample extends React.PureComponent {
   constructor(props) {
     super(props);
     this.items = ['New York', 'New England', 'Old England', 'Old York'];

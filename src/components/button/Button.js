@@ -13,7 +13,7 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 
   /**
-   * CSS Class of the button.
+   * CSS class of the button.
    */
   className: PropTypes.string,
 
@@ -21,11 +21,17 @@ const propTypes = {
    * Title of the button.
    */
   title: PropTypes.string,
+
+  /**
+   * Inline style.
+   */
+  style: PropTypes.object,
 };
 
 const defaultProps = {
-  className: undefined,
+  className: 'tm-button',
   title: undefined,
+  style: undefined,
 };
 
 /**
@@ -33,17 +39,18 @@ const defaultProps = {
  */
 class Button extends PureComponent {
   render() {
-    const { onClick, children, className, title } = this.props;
+    const { className, style, title, onClick, children } = this.props;
 
     return (
       <div
-        className={`tm-button ${className}`}
         role="button"
         tabIndex="0"
+        className={className}
         title={title}
+        style={style}
         aria-label={title}
-        onKeyPress={e => e.which === 13 && onClick()}
         onClick={e => onClick(e)}
+        onKeyPress={e => e.which === 13 && onClick(e)}
       >
         {children}
       </div>
