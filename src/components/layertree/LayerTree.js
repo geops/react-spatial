@@ -152,7 +152,12 @@ class LayerTree extends PureComponent {
             isChecked: !value,
             isExpanded: !value,
           },
-          item,
+          child => {
+            if (child.id === item.id || child.type === 'checkbox') {
+              return true;
+            }
+            return false;
+          },
         );
 
         // On uncheck
@@ -242,7 +247,7 @@ class LayerTree extends PureComponent {
   /**
    * Apply a mutation to all the children recursively.
    */
-  applyToChildren(tree, item, mutation, itemIgnored) {
+  applyToChildren(tree, item, mutation, isIgnored) {
     let newTree = tree;
     let newMutation = { ...mutation };
     let firstRadioInput;
@@ -251,7 +256,7 @@ class LayerTree extends PureComponent {
     tree.items[item.id].children.forEach(childId => {
       const child = newTree.items[childId];
 
-      if (itemIgnored && child.id === itemIgnored.id) {
+      if (isIgnored !== undefined && isIgnored(child)) {
         return;
       }
 
@@ -281,12 +286,7 @@ class LayerTree extends PureComponent {
       }
 
       if (child.hasChildren) {
-        newTree = this.applyToChildren(
-          newTree,
-          child,
-          newMutation,
-          itemIgnored,
-        );
+        newTree = this.applyToChildren(newTree, child, newMutation, isIgnored);
       }
     });
     return newTree;
@@ -312,7 +312,7 @@ class LayerTree extends PureComponent {
       >
         <input
           type={item.type}
-          name={this.prefixInput + item.parentId}
+          name={this.prefixInput + item.parentId + item.type}
           checked={item.isChecked}
           onChange={() => {}}
           onClick={() => {

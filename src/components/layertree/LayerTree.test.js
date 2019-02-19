@@ -129,7 +129,7 @@ describe('LayerTree', () => {
         rootId: 'root',
         items: {
           root: {
-            children: ['1', '2', '3'],
+            children: ['1', '2', '3', '4'],
           },
           '1': {
             type: 'radio',
@@ -140,6 +140,10 @@ describe('LayerTree', () => {
             isChecked: true,
             isExpanded: true,
             type: 'radio',
+          },
+          '4': {
+            isChecked: true,
+            isExpanded: true,
           },
           '1-1': {
             defaults: {
@@ -160,7 +164,7 @@ describe('LayerTree', () => {
         .simulate('click');
       expect(mutations.length).toBe(3);
       const lastItems = mutations.pop().tree.items;
-      ['1', '1-1'].forEach(id => {
+      ['1', '1-1', '4'].forEach(id => {
         expect(lastItems[id].isChecked).toBe(true);
         expect(lastItems[id].isExpanded).toBe(true);
       });

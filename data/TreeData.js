@@ -49,7 +49,7 @@ const data = {
     },
     child1: {
       id: 'child1',
-      type: 'checkbox',
+      type: 'radio',
       isChecked: true,
       defaults: {
         isChecked: true,
@@ -64,16 +64,12 @@ const data = {
           '&style=default&tilematrixset=EPSG%3A3857&Service=WMTS&' +
           'Request=GetTile&Version=1.0.0&Format=image%2Fpng&',
       },
-      defaults: {
-        isChecked: true,
-        isExpanded: true,
-      },
     },
     node2: {
       id: 'node2',
-      isChecked: true,
+      isChecked: false,
       isExpanded: true,
-      type: 'checkbox',
+      type: 'radio',
       children: ['child21', 'child22'],
       data: {
         title: 'Sub-Layers',
@@ -82,7 +78,7 @@ const data = {
     child21: {
       id: 'child21',
       type: 'radio',
-      isChecked: true,
+      isChecked: false,
       defaults: {
         isChecked: true,
       },
