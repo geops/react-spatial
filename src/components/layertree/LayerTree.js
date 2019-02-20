@@ -305,7 +305,7 @@ class LayerTree extends PureComponent {
         return;
       }
 
-      newTree = this.applyToItem(newTree, child, newMutation, isIgnoredFunc);
+      newTree = this.applyToItem(newTree, child, newMutation);
 
       // Set isRadioInput to true will ignore the other member of radio group.
       if (!firstRadioInput && child.type === 'radio') {
@@ -313,7 +313,12 @@ class LayerTree extends PureComponent {
       }
 
       if (child.hasChildren) {
-        newTree = this.applyToChildren(newTree, child, newMutation);
+        newTree = this.applyToChildren(
+          newTree,
+          child,
+          newMutation,
+          isIgnoredFunc,
+        );
       }
     });
     return newTree;
