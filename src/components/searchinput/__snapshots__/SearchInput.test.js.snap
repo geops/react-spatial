@@ -2,7 +2,7 @@
 
 exports[`SearchInput when no properties are set matches snapshot 1`] = `
 <div
-  className="tm-search-input "
+  className="tm-search-input"
 >
   <input
     onBlur={[Function]}
@@ -18,10 +18,15 @@ exports[`SearchInput when no properties are set matches snapshot 1`] = `
   />
   <div
     aria-label=""
-    className="tm-bt-clear tm-hidden"
+    className="tm-button tm-bt-clear"
     onClick={[Function]}
     onKeyPress={[Function]}
     role="button"
+    style={
+      Object {
+        "display": "none",
+      }
+    }
     tabIndex="0"
     title=""
   >
@@ -46,7 +51,7 @@ exports[`SearchInput when no properties are set matches snapshot 1`] = `
   </div>
   <div
     aria-label=""
-    className="tm-bt-search"
+    className="tm-button tm-bt-search"
     onClick={[Function]}
     onKeyPress={[Function]}
     role="button"
@@ -60,7 +65,7 @@ exports[`SearchInput when no properties are set matches snapshot 1`] = `
 
 exports[`SearchInput when properties are set matches snapshot  1`] = `
 <div
-  className="tm-search-input tm-foo"
+  className="tm-foo"
 >
   <input
     onBlur={[Function]}
@@ -76,7 +81,7 @@ exports[`SearchInput when properties are set matches snapshot  1`] = `
   />
   <div
     aria-label=""
-    className="tm-bt-clear"
+    className="tm-button tm-bt-clear"
     onClick={[Function]}
     onKeyPress={[Function]}
     role="button"
@@ -104,7 +109,7 @@ exports[`SearchInput when properties are set matches snapshot  1`] = `
   </div>
   <div
     aria-label=""
-    className="tm-bt-search"
+    className="tm-button tm-bt-search"
     onClick={[Function]}
     onKeyPress={[Function]}
     role="button"
@@ -118,7 +123,7 @@ exports[`SearchInput when properties are set matches snapshot  1`] = `
 
 exports[`SearchInput when properties are set matches snapshot  2`] = `
 <div
-  className="tm-search-input tm-foo tm-focus"
+  className="tm-foo tm-focus"
 >
   <input
     onBlur={[Function]}
@@ -134,7 +139,7 @@ exports[`SearchInput when properties are set matches snapshot  2`] = `
   />
   <div
     aria-label=""
-    className="tm-bt-clear"
+    className="tm-button tm-bt-clear"
     onClick={[Function]}
     onKeyPress={[Function]}
     role="button"
@@ -162,7 +167,7 @@ exports[`SearchInput when properties are set matches snapshot  2`] = `
   </div>
   <div
     aria-label=""
-    className="tm-bt-search"
+    className="tm-button tm-bt-search"
     onClick={[Function]}
     onKeyPress={[Function]}
     role="button"

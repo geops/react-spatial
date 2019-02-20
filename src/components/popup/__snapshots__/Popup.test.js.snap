@@ -2,7 +2,7 @@
 
 exports[`Popup should match snapshot with default values. 1`] = `
 <div
-  className="tm-popup-container"
+  className="tm-popup"
   style={
     Object {
       "left": 0,
@@ -12,14 +12,13 @@ exports[`Popup should match snapshot with default values. 1`] = `
   }
 >
   <div
-    className="tm-popup "
     onKeyUp={[Function]}
     role="button"
     tabIndex=""
   >
     <div
       aria-label="Popup Schliessen"
-      className="tm-popup-close-button"
+      className="tm-button tm-popup-close-bt"
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
@@ -54,7 +53,7 @@ exports[`Popup should match snapshot with default values. 1`] = `
 
 exports[`Popup should match snapshot with tm-tooltip class. 1`] = `
 <div
-  className="tm-popup-container"
+  className="tm-tooltip"
   style={
     Object {
       "left": 0,
@@ -64,14 +63,13 @@ exports[`Popup should match snapshot with tm-tooltip class. 1`] = `
   }
 >
   <div
-    className="tm-popup tm-tooltip"
     onKeyUp={[Function]}
     role="button"
     tabIndex="0"
   >
     <div
       aria-label="Popup Schliessen"
-      className="tm-popup-close-button"
+      className="tm-button tm-popup-close-bt"
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
@@ -106,7 +104,7 @@ exports[`Popup should match snapshot with tm-tooltip class. 1`] = `
 
 exports[`Popup should match snapshot without close button. 1`] = `
 <div
-  className="tm-popup-container"
+  className="tm-popup"
   style={
     Object {
       "left": 0,
@@ -116,7 +114,6 @@ exports[`Popup should match snapshot without close button. 1`] = `
   }
 >
   <div
-    className="tm-popup "
     onKeyUp={[Function]}
     role="button"
     tabIndex=""

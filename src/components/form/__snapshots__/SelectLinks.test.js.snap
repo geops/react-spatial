@@ -3,33 +3,32 @@
 exports[`SelectLinks when no properties are set matches snapshot 1`] = `null`;
 
 exports[`SelectLinks when properties are set matches snapshot 1`] = `
-Array [
+<div
+  className="tm-select-links"
+>
   <a
     aria-label="foo"
-    className={null}
     href="#"
     onClick={[Function]}
     title="foo"
   >
     qux
-  </a>,
+  </a>
   <a
     aria-label="bar"
-    className={null}
     href="#"
     onClick={[Function]}
     title="bar"
   >
     quux
-  </a>,
+  </a>
   <a
     aria-label="baz"
-    className={null}
     href="#"
     onClick={[Function]}
     title="baz"
   >
     corge
-  </a>,
-]
+  </a>
+</div>
 `;

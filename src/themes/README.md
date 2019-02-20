@@ -8,7 +8,7 @@ We provide a set of CSS variables and classes to help you start using `react-spa
 To use it just import the `index.scss` file of the `default` theme in your application:
 
 ```js
-import  'react-spatial/themes/default/index.scss`;
+import  'react-spatial/themes/default/index.scss';
 ```
 
 If you want to override variables just import the `default/variables.css` and the default CSS files you want, there is one CSS file by component.

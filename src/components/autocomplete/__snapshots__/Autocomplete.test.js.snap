@@ -5,7 +5,7 @@ exports[`Autocomplete when no properties are set matches snapshot 1`] = `
   className="tm-autocomplete"
 >
   <div
-    className="tm-search-input "
+    className="tm-search-input"
   >
     <input
       onBlur={[Function]}
@@ -21,10 +21,15 @@ exports[`Autocomplete when no properties are set matches snapshot 1`] = `
     />
     <div
       aria-label=""
-      className="tm-bt-clear tm-hidden"
+      className="tm-button tm-bt-clear"
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
+      style={
+        Object {
+          "display": "none",
+        }
+      }
       tabIndex="0"
       title=""
     >
@@ -49,7 +54,7 @@ exports[`Autocomplete when no properties are set matches snapshot 1`] = `
     </div>
     <div
       aria-label=""
-      className="tm-bt-search"
+      className="tm-button tm-bt-search"
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
@@ -75,7 +80,7 @@ exports[`Autocomplete when properties are set should match snapshot 1`] = `
   className="tm-autocomplete"
 >
   <div
-    className="tm-search-input "
+    className="tm-search-input"
   >
     <input
       onBlur={[Function]}
@@ -91,7 +96,7 @@ exports[`Autocomplete when properties are set should match snapshot 1`] = `
     />
     <div
       aria-label=""
-      className="tm-bt-clear"
+      className="tm-button tm-bt-clear"
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
@@ -119,7 +124,7 @@ exports[`Autocomplete when properties are set should match snapshot 1`] = `
     </div>
     <div
       aria-label=""
-      className="tm-bt-search"
+      className="tm-button tm-bt-search"
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
@@ -214,7 +219,7 @@ exports[`Autocomplete when properties are set should match snapshot showing list
   className="tm-autocomplete"
 >
   <div
-    className="tm-search-input "
+    className="tm-search-input"
   >
     <input
       onBlur={[Function]}
@@ -230,7 +235,7 @@ exports[`Autocomplete when properties are set should match snapshot showing list
     />
     <div
       aria-label=""
-      className="tm-bt-clear"
+      className="tm-button tm-bt-clear"
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
@@ -258,7 +263,7 @@ exports[`Autocomplete when properties are set should match snapshot showing list
     </div>
     <div
       aria-label=""
-      className="tm-bt-search"
+      className="tm-button tm-bt-search"
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
@@ -353,7 +358,7 @@ exports[`Autocomplete when properties are set should match snapshot without defa
   className="tm-autocomplete"
 >
   <div
-    className="tm-search-input "
+    className="tm-search-input"
   >
     <input
       onBlur={[Function]}
@@ -369,7 +374,7 @@ exports[`Autocomplete when properties are set should match snapshot without defa
     />
     <div
       aria-label=""
-      className="tm-bt-clear"
+      className="tm-button tm-bt-clear"
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
@@ -397,7 +402,7 @@ exports[`Autocomplete when properties are set should match snapshot without defa
     </div>
     <div
       aria-label=""
-      className="tm-bt-search"
+      className="tm-button tm-bt-search"
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
@@ -456,7 +461,7 @@ exports[`Autocomplete when properties are set should match snapshot without item
   className="tm-autocomplete"
 >
   <div
-    className="tm-search-input "
+    className="tm-search-input"
   >
     <input
       onBlur={[Function]}
@@ -472,7 +477,7 @@ exports[`Autocomplete when properties are set should match snapshot without item
     />
     <div
       aria-label=""
-      className="tm-bt-clear"
+      className="tm-button tm-bt-clear"
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
@@ -500,7 +505,7 @@ exports[`Autocomplete when properties are set should match snapshot without item
     </div>
     <div
       aria-label=""
-      className="tm-bt-search"
+      className="tm-button tm-bt-search"
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
@@ -559,7 +564,7 @@ exports[`Autocomplete when properties are set should match snapshot without item
   className="tm-autocomplete"
 >
   <div
-    className="tm-search-input "
+    className="tm-search-input"
   >
     <input
       onBlur={[Function]}
@@ -575,7 +580,7 @@ exports[`Autocomplete when properties are set should match snapshot without item
     />
     <div
       aria-label=""
-      className="tm-bt-clear"
+      className="tm-button tm-bt-clear"
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
@@ -603,7 +608,7 @@ exports[`Autocomplete when properties are set should match snapshot without item
     </div>
     <div
       aria-label=""
-      className="tm-bt-search"
+      className="tm-button tm-bt-search"
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"

@@ -6,7 +6,7 @@ exports[`List when properties are set matches snapshot with defaultItems 1`] = `
 
 exports[`List when properties are set matches snapshot with items 1`] = `
 <ul
-  className="tm-list"
+  className="tm-foo"
   role="menu"
 >
   <li

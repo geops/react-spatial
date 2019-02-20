@@ -17,10 +17,10 @@ exports[`Menu should match snapshot. 1`] = `
         className="tm-menu-item"
       >
         <div
-          id="share-menu"
+          className="tm-share-menu"
         >
           <div
-            className="share-menu-icon "
+            className="tm-share-menu-icon "
           >
             <a
               href="//www.facebook.com/sharer.php?u=http://localhost/"
@@ -52,7 +52,7 @@ exports[`Menu should match snapshot. 1`] = `
             </a>
           </div>
           <div
-            className="share-menu-icon "
+            className="tm-share-menu-icon "
           >
             <a
               href="//twitter.com/intent/tweet?url=http://localhost/"
@@ -84,7 +84,7 @@ exports[`Menu should match snapshot. 1`] = `
             </a>
           </div>
           <div
-            className="share-menu-icon ta-mail-icon"
+            className="tm-share-menu-icon ta-mail-icon"
           >
             <a
               href="mailto:?body=http://localhost/"
