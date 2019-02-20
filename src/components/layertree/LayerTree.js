@@ -236,6 +236,34 @@ class LayerTree extends PureComponent {
       return newTree;
     }
 
+    // if parent is radio input going to be checked
+    if (parent.type === 'radio') {
+      const radioSiblings = parent.children.filter(
+        id =>
+          id !== item.id &&
+          tree.items[id].type === 'radio' &&
+          tree.items[id].isChecked === true,
+      );
+      // Uncheck all radio siblings and their children.
+      const newMutation = {
+        isChecked: false,
+        isExpanded: false,
+      };
+
+      for (let i = 0; i < radioSiblings.length; i += 1) {
+        newTree = this.applyToItem(
+          newTree,
+          newTree.items[radioSiblings[i]],
+          newMutation,
+        );
+        newTree = this.applyToChildren(
+          newTree,
+          newTree.items[radioSiblings[i]],
+          newMutation,
+        );
+      }
+    }
+
     // Apply to parents if all the others siblings are uncheck.
     if (LayerTree.areOthersSiblingsUncheck(newTree, item)) {
       newTree = this.applyToItem(newTree, parent, mutation);
@@ -286,7 +314,7 @@ class LayerTree extends PureComponent {
       }
 
       if (child.hasChildren) {
-        newTree = this.applyToChildren(newTree, child, newMutation, isIgnored);
+        newTree = this.applyToChildren(newTree, child, newMutation);
       }
     });
     return newTree;
