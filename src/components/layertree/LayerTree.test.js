@@ -28,13 +28,19 @@ describe('LayerTree', () => {
 
   describe('matches snapshots', () => {
     test('using default properties.', () => {
-      // Test-renderer cannot be use because of th DnD functionnality which needs an existing Html element
+      /*
+      Test-renderer cannot be use because of th DnD functionnality
+      which needs an existing Html element
+      */
       const component = mount(<LayerTree tree={data} />);
       expect(component.html()).toMatchSnapshot();
     });
 
     test('when renderItem is used.', () => {
-      // Test-renderer cannot be use because of th DnD functionnality which needs an existing Html element
+      /*
+      Test-renderer cannot be use because of th DnD functionnality
+      which needs an existing Html element
+      */
       const component = mount(
         <LayerTree tree={data} renderItem={item => <div>{item.title}</div>} />,
       );
@@ -42,7 +48,10 @@ describe('LayerTree', () => {
     });
 
     test('when an item is hidden.', () => {
-      // Test-renderer cannot be use because of th DnD functionnality which needs an existing Html element
+      /*
+      Test-renderer cannot be use because of th DnD functionnality
+      which needs an existing Html element
+      */
       const component = mount(
         <LayerTree tree={data} isItemHidden={item => !!item.children.length} />,
       );
@@ -124,55 +133,77 @@ describe('LayerTree', () => {
   });
 
   describe('when a radio item is checked', () => {
-    test('expands the item, uncheck and collapse all the siblings, and apply defaults value to the children.', () => {
-      const data2 = {
-        rootId: 'root',
-        items: {
-          root: {
-            children: ['1', '2', '3', '4'],
-          },
-          '1': {
-            type: 'radio',
-            children: ['1-1', '1-2'],
-          },
-          '2': {},
-          '3': {
-            isChecked: true,
-            isExpanded: true,
-            type: 'radio',
-          },
-          '4': {
-            isChecked: true,
-            isExpanded: true,
-          },
-          '1-1': {
-            defaults: {
+    test(
+      'expands the item, uncheck and collapse all the siblings and their ' +
+        'radio siblings children, and apply defaults value to the children.',
+      () => {
+        const data2 = {
+          rootId: 'root',
+          items: {
+            root: {
+              children: ['1', '2', '3', '4'],
+            },
+            '1': {
+              type: 'radio',
+              children: ['1-1', '1-2', '1-3'],
+            },
+            '2': {},
+            '3': {
+              isChecked: true,
+              isExpanded: true,
+              type: 'radio',
+              children: ['3-1', '3-2', '3-3'],
+            },
+            '4': {
               isChecked: true,
               isExpanded: true,
             },
+            '1-1': {
+              defaults: {
+                isChecked: true,
+                isExpanded: true,
+              },
+            },
+            '1-2': {
+              children: ['1-2-1'],
+            },
+            '1-3': {
+              defaults: {
+                isChecked: true,
+                isExpanded: true,
+              },
+            },
+            '1-2-1': {},
+            '3-1': {
+              type: 'radio',
+              isChecked: true,
+            },
+            '3-2': {
+              type: 'radio',
+              isChecked: false,
+            },
+            '3-3': {
+              isChecked: true,
+            },
           },
-          '1-2': {
-            children: ['1-2-1'],
-          },
-          '1-2-1': {},
-        },
-      };
-      const component = mountLayerTree(data2);
-      component
-        .find(inputSelector)
-        .first()
-        .simulate('click');
-      expect(mutations.length).toBe(3);
-      const lastItems = mutations.pop().tree.items;
-      ['1', '1-1', '4'].forEach(id => {
-        expect(lastItems[id].isChecked).toBe(true);
-        expect(lastItems[id].isExpanded).toBe(true);
-      });
-      ['2', '3', '1-2', '1-2-1'].forEach(id => {
-        expect(lastItems[id].isChecked).toBe(false);
-        expect(lastItems[id].isExpanded).toBe(false);
-      });
-    });
+        };
+        const component = mountLayerTree(data2);
+        component
+          .find(inputSelector)
+          .first()
+          .simulate('click');
+        expect(mutations.length).toBe(6);
+        const lastItems = mutations.pop().tree.items;
+        ['1', '1-1', '1-3', '4'].forEach(id => {
+          expect(lastItems[id].isChecked).toBe(true);
+          expect(lastItems[id].isExpanded).toBe(true);
+        });
+        ['2', '3', '1-2', '1-2-1', '3-1', '3-2', '3-3'].forEach(id => {
+          expect(lastItems[id].isChecked).toBe(false);
+          expect(lastItems[id].isExpanded).toBe(false);
+        });
+      },
+    );
   });
 
   describe('when an radio item is unchecked', () => {
@@ -193,16 +224,17 @@ describe('LayerTree', () => {
             type: 'radio',
           },
           '1-2': {
-            isExpanded: true,
-            children: ['1-2-1'],
-          },
-          '1-2-1': {
             isChecked: true,
+            isExpanded: true,
+            type: 'radio',
           },
           '1-3': {
             isChecked: true,
             isExpanded: true,
-            type: 'radio',
+            children: ['1-3-1'],
+          },
+          '1-3-1': {
+            isChecked: true,
           },
           '2': {},
           '3': {
@@ -217,9 +249,9 @@ describe('LayerTree', () => {
         .find(inputSelector)
         .first()
         .simulate('click');
-      expect(mutations.length).toBe(3);
+      expect(mutations.length).toBe(4);
       const lastItems = mutations.pop().tree.items;
-      ['1', '1-1', '1-2', '1-3', '1-2-1', '2', '3'].forEach(id => {
+      ['1', '1-1', '1-2', '1-3', '1-3-1', '2', '3'].forEach(id => {
         expect(lastItems[id].isChecked).toBe(false);
       });
     });
