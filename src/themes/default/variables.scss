@@ -1,3 +1,7 @@
+/**
+* This file defines variables.
+*/
+
 // Color
 $brand-primary: #eb0000;
 $brand-secondary: #003d85;
@@ -10,6 +14,7 @@ $gray-darker: lighten($gray-base, 13.5%);
 
 // Text
 $font-family: Arial, sans-serif;
+$font-family-bold: Arial, sans-serif;
 $font-size-base: 15px;
 $font-size-small: ceil($font-size-base * 0.85);
 $font-size-large: ceil($font-size-base * 1.25);
@@ -33,7 +38,7 @@ $btn-primary-color-active: darken($brand-primary, 5%);
 $btn-secondary-color: $brand-secondary;
 $btn-secondary-color-hover: darken($btn-secondary-color, 10%);
 $btn-secondary-color-active: darken($btn-secondary-color, 5%);
-$btn-size-base: 44px;
+$btn-size-base: 50px;
 $btn-size-small: ceil($btn-size-base * 0.85);
 $btn-size-large: ceil($btn-size-base * 1.25);
 
@@ -45,4 +50,5 @@ $zindex-high: 600;
 $zindex-higher: 800;
 
 // Others
-$tm-header-height: 55px;
+$header-height: 55px;
+$footer-height: 25px;

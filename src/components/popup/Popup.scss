@@ -1,4 +1,4 @@
-.tm-popup {
+.tm-popup > div {
   position: absolute;
   background-color: white;
   filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
@@ -38,8 +38,8 @@
     right: 0;
     top: 0;
     color: black;
-    height: 44px;
-    width: 44px;
+    height: $btn-size-base;
+    width: $btn-size-base;
   }
 
   .tm-popup-title {

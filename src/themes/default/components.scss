@@ -1,5 +1,6 @@
-@import './mixins.scss';
-@import './variables.scss';
+/**
+* This file load the css of components.
+*/
 @import '../../components/popup/Popup.scss';
 @import '../../components/button/Button.scss';
 @import '../../components/footer/Footer.scss';

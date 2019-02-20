@@ -2,7 +2,7 @@
 
 This folder contains all the components.
 
-## How to develop new component
+## Create a new component
 
 Each component must have this structure:
 

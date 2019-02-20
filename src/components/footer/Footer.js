@@ -10,11 +10,11 @@ const propTypes = {
   /**
    * Element to display in a container.
    */
-  children: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  children: PropTypes.node,
 };
 
 const defaultProps = {
-  children: null,
+  children: undefined,
   className: 'tm-footer',
 };
 
@@ -23,9 +23,9 @@ const defaultProps = {
  */
 class Footer extends PureComponent {
   render() {
-    const { children } = this.props;
+    const { children, className } = this.props;
 
-    return <div {...this.props}>{children}</div>;
+    return <div className={className}>{children}</div>;
   }
 }
 

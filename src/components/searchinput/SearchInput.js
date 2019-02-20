@@ -15,6 +15,16 @@ const propTypes = {
   className: PropTypes.string,
 
   /**
+   * CSS class of the clear button .
+   */
+  classNameClearBt: PropTypes.string,
+
+  /**
+   * CSS class of the search button.
+   */
+  classNameSearchBt: PropTypes.string,
+
+  /**
    * Placeholder of the input.
    */
   placeholder: PropTypes.string,
@@ -70,6 +80,8 @@ const defaultProps = {
   button: 'search',
   value: '',
   className: 'tm-search-input',
+  classNameClearBt: 'tm-button tm-bt-clear',
+  classNameSearchBt: 'tm-button tm-bt-search',
   placeholder: '',
   titleClearBt: '',
   titleSearchBt: '',
@@ -142,6 +154,8 @@ class SearchInput extends PureComponent {
     const {
       button,
       className,
+      classNameClearBt,
+      classNameSearchBt,
       value,
       placeholder,
       titleClearBt,
@@ -177,6 +191,7 @@ class SearchInput extends PureComponent {
           }}
         />
         <Button
+          className={classNameClearBt}
           title={titleClearBt}
           style={
             display && {
@@ -191,6 +206,7 @@ class SearchInput extends PureComponent {
           <MdClose focusable={false} />
         </Button>
         <Button
+          className={classNameSearchBt}
           title={titleSearchBt}
           onClick={e => {
             this.search(e);

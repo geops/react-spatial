@@ -25,7 +25,7 @@ const propTypes = {
 const defaultProps = {
   feature: null,
   className: 'tm-popup',
-  classNameCloseBt: 'tm-popup-close-bt',
+  classNameCloseBt: 'tm-button tm-popup-close-bt',
   showCloseButton: true,
   onKeyUp: () => {},
   onCloseClick: () => {},
