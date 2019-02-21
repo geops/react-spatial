@@ -4,7 +4,7 @@ import Stroke from 'ol/style/Stroke';
 import Fill from 'ol/style/Fill';
 
 const data = {
-  child31: new Style({
+  pointLayer: new Style({
     image: new Circle({
       radius: 5,
       fill: new Fill({
@@ -12,13 +12,13 @@ const data = {
       }),
     }),
   }),
-  child32: new Style({
+  lineLayer: new Style({
     stroke: new Stroke({
       color: '#ffcc33',
       width: 2,
     }),
   }),
-  child33: new Style({
+  polygonLayer: new Style({
     stroke: new Stroke({
       color: '#7dff8f',
       width: 3,
