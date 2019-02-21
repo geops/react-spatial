@@ -271,7 +271,7 @@ class LayerTree extends PureComponent {
   /**
    * Apply a mutation to all the children recursively.
    */
-  applyToChildren(tree, item, mutation, isIgnoredFunc, isCheckboxFunc) {
+  applyToChildren(tree, item, mutation, isIgnoredFunc, isTypeIgnoredFunction) {
     let newTree = tree;
     let newMutation = { ...mutation };
     let firstRadioInput;
@@ -281,7 +281,7 @@ class LayerTree extends PureComponent {
       const child = newTree.items[childId];
 
       if (
-        (isCheckboxFunc && isCheckboxFunc(child)) ||
+        (isTypeIgnoredFunction && isTypeIgnoredFunction(child)) ||
         (isIgnoredFunc && isIgnoredFunc(child))
       ) {
         return;
