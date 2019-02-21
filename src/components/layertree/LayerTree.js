@@ -152,7 +152,8 @@ class LayerTree extends PureComponent {
             isChecked: !value,
             isExpanded: !value,
           },
-          item,
+          child => child.id === item.id,
+          child => child.type === 'checkbox',
         );
 
         // On uncheck
@@ -231,6 +232,34 @@ class LayerTree extends PureComponent {
       return newTree;
     }
 
+    // if parent is radio input going to be checked
+    if (parent.type === 'radio') {
+      const radioSiblings = parent.children.filter(
+        id =>
+          id !== item.id &&
+          tree.items[id].type === 'radio' &&
+          tree.items[id].isChecked === true,
+      );
+      // Uncheck all radio siblings and their children.
+      const newMutation = {
+        isChecked: false,
+        isExpanded: false,
+      };
+
+      for (let i = 0; i < radioSiblings.length; i += 1) {
+        newTree = this.applyToItem(
+          newTree,
+          newTree.items[radioSiblings[i]],
+          newMutation,
+        );
+        newTree = this.applyToChildren(
+          newTree,
+          newTree.items[radioSiblings[i]],
+          newMutation,
+        );
+      }
+    }
+
     // Apply to parents if all the others siblings are uncheck.
     if (LayerTree.areOthersSiblingsUncheck(newTree, item)) {
       newTree = this.applyToItem(newTree, parent, mutation);
@@ -242,7 +271,7 @@ class LayerTree extends PureComponent {
   /**
    * Apply a mutation to all the children recursively.
    */
-  applyToChildren(tree, item, mutation, itemIgnored) {
+  applyToChildren(tree, item, mutation, isIgnoredFunc, isTypeIgnoredFunction) {
     let newTree = tree;
     let newMutation = { ...mutation };
     let firstRadioInput;
@@ -251,7 +280,10 @@ class LayerTree extends PureComponent {
     tree.items[item.id].children.forEach(childId => {
       const child = newTree.items[childId];
 
-      if (itemIgnored && child.id === itemIgnored.id) {
+      if (
+        (isTypeIgnoredFunction && isTypeIgnoredFunction(child)) ||
+        (isIgnoredFunc && isIgnoredFunc(child))
+      ) {
         return;
       }
 
@@ -285,7 +317,7 @@ class LayerTree extends PureComponent {
           newTree,
           child,
           newMutation,
-          itemIgnored,
+          isIgnoredFunc,
         );
       }
     });
@@ -312,7 +344,7 @@ class LayerTree extends PureComponent {
       >
         <input
           type={item.type}
-          name={this.prefixInput + item.parentId}
+          name={this.prefixInput + item.parentId + item.type}
           checked={item.isChecked}
           onChange={() => {}}
           onClick={() => {

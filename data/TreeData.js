@@ -29,7 +29,7 @@ const data = {
       isChecked: true,
       isExpanded: true,
       type: 'radio',
-      children: ['baselayer1', 'child1', 'node2'],
+      children: ['baselayer1', 'node2', 'node3'],
       data: {
         title: 'Topic 1',
       },
@@ -47,8 +47,18 @@ const data = {
         url: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
       },
     },
-    child1: {
-      id: 'child1',
+    node2: {
+      id: 'node2',
+      isChecked: true,
+      isExpanded: true,
+      type: 'radio',
+      children: ['child21', 'child22'],
+      data: {
+        title: 'Sub-Layers 1',
+      },
+    },
+    child21: {
+      id: 'child21',
       type: 'checkbox',
       isChecked: true,
       defaults: {
@@ -56,7 +66,7 @@ const data = {
       },
       data: {
         title: 'USA Population Density',
-        styleId: 'child1',
+        styleId: 'child21',
         type: 'wmts',
         url:
           'https://services.arcgisonline.com/arcgis/rest/services/' +
@@ -64,52 +74,82 @@ const data = {
           '&style=default&tilematrixset=EPSG%3A3857&Service=WMTS&' +
           'Request=GetTile&Version=1.0.0&Format=image%2Fpng&',
       },
-      defaults: {
-        isChecked: true,
-        isExpanded: true,
-      },
     },
-    node2: {
-      id: 'node2',
-      isChecked: true,
-      isExpanded: true,
+    child22: {
+      id: 'child22',
       type: 'checkbox',
-      children: ['child21', 'child22'],
-      data: {
-        title: 'Sub-Layers',
-      },
-    },
-    child21: {
-      id: 'child21',
-      type: 'radio',
-      isChecked: true,
+      isChecked: false,
       defaults: {
-        isChecked: true,
+        isChecked: false,
       },
       data: {
         title: 'Countries Borders',
-        styleId: 'child21',
+        styleId: 'child22',
         type: 'vectorLayer',
         url:
           'https://openlayers.org/en/latest/examples/data/geojson/' +
           'countries.geojson',
       },
     },
-    child22: {
-      id: 'child22',
+    node3: {
+      id: 'node3',
+      isChecked: false,
+      isExpanded: true,
+      type: 'radio',
+      children: ['child31', 'child32', 'child33'],
+      data: {
+        title: 'Sub-Layers 2',
+      },
+    },
+    child31: {
+      id: 'child31',
+      type: 'radio',
+      isChecked: false,
+      defaults: {
+        isChecked: true,
+      },
+      data: {
+        title: 'Points Samples',
+        styleId: 'child31',
+        type: 'vectorLayer',
+        url:
+          'https://raw.githubusercontent.com/openlayers/openlayers/' +
+          '3c64018b3754cf605ea19cbbe4c8813304da2539/examples/data/geojson/' +
+          'point-samples.geojson',
+      },
+    },
+    child32: {
+      id: 'child32',
       type: 'radio',
       isChecked: false,
       defaults: {
         isChecked: false,
       },
       data: {
-        title: 'Points Samples',
-        styleId: 'child22',
+        title: 'Lines Samples',
+        styleId: 'child32',
         type: 'vectorLayer',
         url:
           'https://raw.githubusercontent.com/openlayers/openlayers/' +
           '3c64018b3754cf605ea19cbbe4c8813304da2539/examples/data/geojson/' +
-          'point-samples.geojson',
+          'line-samples.geojson',
+      },
+    },
+    child33: {
+      id: 'child33',
+      type: 'radio',
+      isChecked: false,
+      defaults: {
+        isChecked: false,
+      },
+      data: {
+        title: 'Polygons Samples',
+        styleId: 'child33',
+        type: 'vectorLayer',
+        url:
+          'https://raw.githubusercontent.com/openlayers/openlayers/' +
+          '3c64018b3754cf605ea19cbbe4c8813304da2539/examples/data/geojson/' +
+          'polygon-samples.geojson',
       },
     },
   },
