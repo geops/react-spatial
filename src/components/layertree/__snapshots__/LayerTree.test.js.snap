@@ -15,7 +15,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
            tabindex="0"
       >
       </div>
-      <label class="tm-layertree-input-radio"
+      <label class="tm-layer-tree-input tm-layer-tree-input-radio"
              tabindex="-1"
       >
         <input type="radio"
@@ -25,7 +25,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <span>
         </span>
       </label>
-      <div class="tm-button "
+      <div class="tm-button tm-layer-tree-toggle"
            role="button"
            style="display: flex;"
            tabindex="-1"
@@ -33,7 +33,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <div>
           ovnetzkarteschweiz
         </div>
-        <div class="tm-arrow tm-arrow-up">
+        <div class="tm-layer-tree-arrow tm-layer-tree-arrow-expanded">
         </div>
       </div>
     </div>
@@ -41,7 +41,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
          data-react-beautiful-dnd-draggable="0"
          style="padding-left: 30px;"
     >
-      <label class="tm-layertree-input-checkbox"
+      <label class="tm-layer-tree-input tm-layer-tree-input-checkbox"
              tabindex="0"
       >
         <input type="checkbox"
@@ -51,7 +51,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <span>
         </span>
       </label>
-      <div class="tm-button "
+      <div class="tm-button tm-layer-tree-toggle"
            role="button"
            style="display: flex;"
            tabindex="0"
@@ -59,7 +59,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <div>
           bahnhofplane
         </div>
-        <div class="tm-arrow tm-arrow-up">
+        <div class="tm-layer-tree-arrow tm-layer-tree-arrow-expanded">
         </div>
       </div>
     </div>
@@ -67,7 +67,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
          data-react-beautiful-dnd-draggable="0"
          style="padding-left: 60px;"
     >
-      <label class="tm-layertree-input-radio"
+      <label class="tm-layer-tree-input tm-layer-tree-input-radio"
              tabindex="-1"
       >
         <input type="radio"
@@ -77,7 +77,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <span>
         </span>
       </label>
-      <div class="tm-button "
+      <div class="tm-button tm-layer-tree-toggle"
            role="button"
            style="display: flex;"
            tabindex="0"
@@ -91,7 +91,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
          data-react-beautiful-dnd-draggable="0"
          style="padding-left: 60px;"
     >
-      <label class="tm-layertree-input-radio"
+      <label class="tm-layer-tree-input tm-layer-tree-input-radio"
              tabindex="-1"
       >
         <input type="radio"
@@ -101,7 +101,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <span>
         </span>
       </label>
-      <div class="tm-button "
+      <div class="tm-button tm-layer-tree-toggle"
            role="button"
            style="display: flex;"
            tabindex="0"
@@ -115,7 +115,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
          data-react-beautiful-dnd-draggable="0"
          style="padding-left: 30px;"
     >
-      <label class="tm-layertree-input-checkbox"
+      <label class="tm-layer-tree-input tm-layer-tree-input-checkbox"
              tabindex="0"
       >
         <input type="checkbox"
@@ -125,7 +125,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <span>
         </span>
       </label>
-      <div class="tm-button "
+      <div class="tm-button tm-layer-tree-toggle"
            role="button"
            style="display: flex;"
            tabindex="0"
@@ -133,7 +133,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <div>
           passagierfrequenzen
         </div>
-        <div class="tm-arrow tm-arrow-down">
+        <div class="tm-layer-tree-arrow tm-layer-tree-arrow-collapsed">
         </div>
       </div>
     </div>
@@ -146,7 +146,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
            tabindex="0"
       >
       </div>
-      <label class="tm-layertree-input-radio"
+      <label class="tm-layer-tree-input tm-layer-tree-input-radio"
              tabindex="-1"
       >
         <input type="radio"
@@ -156,7 +156,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <span>
         </span>
       </label>
-      <div class="tm-button "
+      <div class="tm-button tm-layer-tree-toggle"
            role="button"
            style="display: flex;"
            tabindex="-1"
@@ -175,23 +175,23 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
 
 <div class="tm-layer-tree">
   <div style="pointer-events: auto;"
-       data-react-beautiful-dnd-droppable="2"
+       data-react-beautiful-dnd-droppable="3"
   >
     <div class="tm-layer-tree-item"
-         data-react-beautiful-dnd-draggable="2"
+         data-react-beautiful-dnd-draggable="3"
          style="padding-left: 0px;"
     >
     </div>
     <div class="tm-layer-tree-item"
-         data-react-beautiful-dnd-draggable="2"
+         data-react-beautiful-dnd-draggable="3"
          style="padding-left: 30px;"
     >
     </div>
     <div class="tm-layer-tree-item"
-         data-react-beautiful-dnd-draggable="2"
+         data-react-beautiful-dnd-draggable="3"
          style="padding-left: 60px;"
     >
-      <label class="tm-layertree-input-radio"
+      <label class="tm-layer-tree-input tm-layer-tree-input-radio"
              tabindex="-1"
       >
         <input type="radio"
@@ -201,7 +201,7 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
         <span>
         </span>
       </label>
-      <div class="tm-button "
+      <div class="tm-button tm-layer-tree-toggle"
            role="button"
            style="display: flex;"
            tabindex="0"
@@ -212,10 +212,10 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
       </div>
     </div>
     <div class="tm-layer-tree-item"
-         data-react-beautiful-dnd-draggable="2"
+         data-react-beautiful-dnd-draggable="3"
          style="padding-left: 60px;"
     >
-      <label class="tm-layertree-input-radio"
+      <label class="tm-layer-tree-input tm-layer-tree-input-radio"
              tabindex="-1"
       >
         <input type="radio"
@@ -225,7 +225,7 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
         <span>
         </span>
       </label>
-      <div class="tm-button "
+      <div class="tm-button tm-layer-tree-toggle"
            role="button"
            style="display: flex;"
            tabindex="0"
@@ -236,12 +236,12 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
       </div>
     </div>
     <div class="tm-layer-tree-item"
-         data-react-beautiful-dnd-draggable="2"
+         data-react-beautiful-dnd-draggable="3"
          style="padding-left: 30px;"
     >
     </div>
     <div class="tm-layer-tree-item"
-         data-react-beautiful-dnd-draggable="2"
+         data-react-beautiful-dnd-draggable="3"
          style="padding-left: 0px;"
     >
       <div style="position: absolute; margin: auto; top: 0px; left: 0px; bottom: 0px; right: 0px;"
@@ -249,7 +249,7 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
            tabindex="0"
       >
       </div>
-      <label class="tm-layertree-input-radio"
+      <label class="tm-layer-tree-input tm-layer-tree-input-radio"
              tabindex="-1"
       >
         <input type="radio"
@@ -259,7 +259,178 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
         <span>
         </span>
       </label>
-      <div class="tm-button "
+      <div class="tm-button tm-layer-tree-toggle"
+           role="button"
+           style="display: flex;"
+           tabindex="-1"
+      >
+        <div>
+          bauprojekte
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+`;
+
+exports[`LayerTree matches snapshots when classNames are used. 1`] = `
+
+<div class="foo">
+  <div style="pointer-events: auto;"
+       data-react-beautiful-dnd-droppable="2"
+  >
+    <div class="bar"
+         data-react-beautiful-dnd-draggable="2"
+         style="padding-left: 0px;"
+    >
+      <div style="position: absolute; margin: auto; top: 0px; left: 0px; bottom: 0px; right: 0px;"
+           role="button"
+           tabindex="0"
+      >
+      </div>
+      <label class="qux qux-radio"
+             tabindex="-1"
+      >
+        <input type="radio"
+               tabindex="-1"
+               name="shortid.generaterootradio"
+        >
+        <span>
+        </span>
+      </label>
+      <div class="tm-button quux"
+           role="button"
+           style="display: flex;"
+           tabindex="-1"
+      >
+        <div>
+          ovnetzkarteschweiz
+        </div>
+        <div class="ged ged-expanded">
+        </div>
+      </div>
+    </div>
+    <div class="bar"
+         data-react-beautiful-dnd-draggable="2"
+         style="padding-left: 30px;"
+    >
+      <label class="qux qux-checkbox"
+             tabindex="0"
+      >
+        <input type="checkbox"
+               tabindex="-1"
+               name="shortid.generateovnetzkarteschweizcheckbox"
+        >
+        <span>
+        </span>
+      </label>
+      <div class="tm-button quux"
+           role="button"
+           style="display: flex;"
+           tabindex="0"
+      >
+        <div>
+          bahnhofplane
+        </div>
+        <div class="ged ged-expanded">
+        </div>
+      </div>
+    </div>
+    <div class="bar"
+         data-react-beautiful-dnd-draggable="2"
+         style="padding-left: 60px;"
+    >
+      <label class="qux qux-radio"
+             tabindex="-1"
+      >
+        <input type="radio"
+               tabindex="-1"
+               name="shortid.generatebahnhofplaneradio"
+        >
+        <span>
+        </span>
+      </label>
+      <div class="tm-button quux"
+           role="button"
+           style="display: flex;"
+           tabindex="0"
+      >
+        <div>
+          interaktivbahnhoplan
+        </div>
+      </div>
+    </div>
+    <div class="bar"
+         data-react-beautiful-dnd-draggable="2"
+         style="padding-left: 60px;"
+    >
+      <label class="qux qux-radio"
+             tabindex="-1"
+      >
+        <input type="radio"
+               tabindex="-1"
+               name="shortid.generatebahnhofplaneradio"
+        >
+        <span>
+        </span>
+      </label>
+      <div class="tm-button quux"
+           role="button"
+           style="display: flex;"
+           tabindex="0"
+      >
+        <div>
+          printprodukte
+        </div>
+      </div>
+    </div>
+    <div class="bar"
+         data-react-beautiful-dnd-draggable="2"
+         style="padding-left: 30px;"
+    >
+      <label class="qux qux-checkbox"
+             tabindex="0"
+      >
+        <input type="checkbox"
+               tabindex="-1"
+               name="shortid.generateovnetzkarteschweizcheckbox"
+        >
+        <span>
+        </span>
+      </label>
+      <div class="tm-button quux"
+           role="button"
+           style="display: flex;"
+           tabindex="0"
+      >
+        <div>
+          passagierfrequenzen
+        </div>
+        <div class="ged ged-collapsed">
+        </div>
+      </div>
+    </div>
+    <div class="bar"
+         data-react-beautiful-dnd-draggable="2"
+         style="padding-left: 0px;"
+    >
+      <div style="position: absolute; margin: auto; top: 0px; left: 0px; bottom: 0px; right: 0px;"
+           role="button"
+           tabindex="0"
+      >
+      </div>
+      <label class="qux qux-radio"
+             tabindex="-1"
+      >
+        <input type="radio"
+               tabindex="-1"
+               name="shortid.generaterootradio"
+        >
+        <span>
+        </span>
+      </label>
+      <div class="tm-button quux"
            role="button"
            style="display: flex;"
            tabindex="-1"

@@ -34,6 +34,24 @@ describe('LayerTree', () => {
       expect(wrapper.html()).toMatchSnapshot();
     });
 
+    test('when classNames are used.', () => {
+      /*
+      Test-renderer cannot be use because of th DnD functionnality
+      which needs an existing Html element
+      */
+      const wrapper = mount(
+        <LayerTree
+          tree={data}
+          className="foo"
+          classNameItem="bar"
+          classNameInput="qux"
+          classNameToggle="quux"
+          classNameArrow="ged"
+        />,
+      );
+      expect(wrapper.html()).toMatchSnapshot();
+    });
+
     test('when an item is hidden.', () => {
       /*
       Test-renderer cannot be use because of th DnD functionnality
