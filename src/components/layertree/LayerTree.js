@@ -45,14 +45,27 @@ const propTypes = {
   classNameItem: PropTypes.string,
 
   /**
+   * CSS class to apply to the label element which contains the input.
+   * Unused if you use `renderItem` property.
+   */
+  classNameInput: PropTypes.string,
+
+  /**
+   * CSS class to apply to the toggle button which contains the title and the arrow.
+   * Unused if you use `renderItem` property.
+   */
+  classNameToggle: PropTypes.string,
+
+  /**
+   * CSS class to apply to the arrow.
+   * Unused if you use `renderItem` property.
+   */
+  classNameArrow: PropTypes.string,
+
+  /**
    * Padding left to apply on each level.
    */
   padding: PropTypes.number,
-
-  /**
-   * Determine if the component's state is controlled by the parent via props or internally.
-   */
-  controlled: PropTypes.bool,
 
   /**
    * Determine if the item is hidden in the tree or not.
@@ -70,13 +83,6 @@ const propTypes = {
    * @param {object} tree The current tree.
    */
   onItemChange: PropTypes.func,
-
-  /**
-   * Callback called after a set of item's change events were triggered.
-   *
-   * @param {object} tree The current tree.
-   */
-  onUpdate: PropTypes.func,
 
   /**
    * Custom function to render an item in the tree.
@@ -100,12 +106,13 @@ const defaultProps = {
   tree: null,
   className: 'tm-layer-tree',
   classNameItem: 'tm-layer-tree-item',
+  classNameInput: 'tm-layer-tree-input',
+  classNameToggle: 'tm-layer-tree-toggle',
+  classNameArrow: 'tm-layer-tree-arrow',
   padding: 30,
-  controlled: true,
   isItemHidden: () => false,
   onItemChange: () => {},
   onItemToggle: () => {},
-  onUpdate: () => {},
   renderItem: null,
 };
 
@@ -116,12 +123,6 @@ class LayerTree extends PureComponent {
 
   constructor(props) {
     super(props);
-    const { tree, controlled } = this.props;
-    if (!controlled) {
-      this.state = {
-        tree: { ...tree },
-      };
-    }
 
     // Prefix used for the name of inputs. This allows multiple LayerTree on the same page.
     this.prefixInput = shortid.generate();
@@ -137,17 +138,8 @@ class LayerTree extends PureComponent {
     onItemChange(item.id);
   }
 
-  getTree() {
-    const { controlled } = this.props;
-    if (controlled) {
-      const { tree } = this.props;
-      return tree;
-    }
-    const { tree } = this.state;
-    return tree;
-  }
-
   renderInput(item) {
+    const { classNameInput } = this.props;
     let tabIndex = 0;
 
     if (!item.hasChildren || LayerTree.isFirstLevel(item)) {
@@ -157,7 +149,7 @@ class LayerTree extends PureComponent {
 
     return (
       <label // eslint-disable-line
-        className={`tm-layertree-input-${item.type}`}
+        className={`${classNameInput} ${classNameInput}-${item.type}`}
         tabIndex={tabIndex}
         onKeyPress={e => e.which === 13 && this.onInputClick(item)}
       >
@@ -176,14 +168,15 @@ class LayerTree extends PureComponent {
     );
   }
 
-  static renderArrow(item) {
+  renderArrow(item) {
+    const { classNameArrow } = this.props;
     if (!item.hasChildren) {
       return null;
     }
     return (
       <div
-        className={`tm-arrow ${
-          item.isExpanded ? 'tm-arrow-up' : 'tm-arrow-down'
+        className={`${classNameArrow} ${classNameArrow}${
+          item.isExpanded ? '-expanded' : '-collapsed'
         }`}
       />
     );
@@ -214,16 +207,12 @@ class LayerTree extends PureComponent {
   // Render a button which expands/collapse the item if there is children
   // or simulate a click on the input otherwise.
   renderToggleButton(item) {
+    const { classNameToggle } = this.props;
     let tabIndex = 0;
-    let onClick = this.onToggle.bind(this);
 
     if (LayerTree.isFirstLevel(item)) {
       // We forbid focus on the first level items using keypress.
       tabIndex = -1;
-    }
-
-    if (!item.hasChildren) {
-      onClick = this.onInputClick.bind(this);
     }
 
     return (
@@ -231,13 +220,17 @@ class LayerTree extends PureComponent {
         role="button"
         style={{ display: 'flex' }}
         tabIndex={tabIndex}
-        className=""
+        className={classNameToggle}
         onClick={() => {
-          onClick(item);
+          if (!item.hasChildren) {
+            this.onInputClick(item);
+          } else {
+            this.onToggle(item);
+          }
         }}
       >
         <div>{item.data.title}</div>
-        {LayerTree.renderArrow(item)}
+        {this.renderArrow(item)}
       </Button>
     );
   }
@@ -259,8 +252,13 @@ class LayerTree extends PureComponent {
   }
 
   render() {
-    const tree = this.getTree();
-    const { padding, className, classNameItem, isItemHidden } = this.props;
+    const {
+      tree,
+      padding,
+      className,
+      classNameItem,
+      isItemHidden,
+    } = this.props;
 
     return (
       <div className={className}>

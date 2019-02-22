@@ -14,7 +14,7 @@
     flex-grow: 1;
   }
 
-  .tm-arrow {
+  .tm-layer-tree-arrow {
     border: solid lightgray;
     border-width: 0 3px 3px 0;
     display: inline-block;
@@ -24,12 +24,12 @@
     height: 10px;
   }
 
-  .tm-arrow-down {
+  .tm-layer-tree-arrow-collapsed {
     transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
   }
 
-  .tm-arrow-up {
+  .tm-layer-tree-arrow-expanded {
     transform: rotate(-135deg);
     -webkit-transform: rotate(-135deg);
   }
@@ -41,7 +41,7 @@
     overflow-y: auto;
   }
 
-  .tm-layertree-item {
+  .tm-layer-tree-item {
     display: flex;
     align-items: center;
     padding: 10px;
@@ -63,7 +63,7 @@
     }
 
     /* CSS for the toggle div */
-    & > [role='button'] {
+    .tm-layer-tree-toggle {
       width: auto;
       height: auto;
       flex-grow: 1;
@@ -109,7 +109,7 @@
       height: calc(100% - 2px);
     }
 
-    .tm-layertree-input-radio span {
+    .tm-layer-tree-input-radio span {
       border-radius: 50%;
     }
 
@@ -126,7 +126,7 @@
     }
 
     /* Style the checkmark/indicator */
-    .tm-layertree-input-checkbox span::after {
+    .tm-layer-tree-input-checkbox span::after {
       left: 5px;
       top: 1px;
       width: 5px;
@@ -139,7 +139,7 @@
     }
 
     /* Style the  (dot/circle) */
-    .tm-layertree-input-radio span::after {
+    .tm-layer-tree-input-radio span::after {
       top: 2px;
       left: 2px;
       width: 12px;
