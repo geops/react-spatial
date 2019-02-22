@@ -388,8 +388,10 @@ export default class LayerService {
 
   onItemToggle(item) {
     const tree = this.getTree();
-    return this.mutateTree(tree, item.id, {
+    const newTree = this.mutateTree(tree, item.id, {
       isExpanded: !item.isExpanded,
     });
+    this.setTree(newTree);
+    return this.treeData;
   }
 }

@@ -454,4 +454,116 @@ describe('LayerService', () => {
       });
     });
   });
+
+  describe('onItemToggle', () => {
+    describe('expands', () => {
+      test('a radio item', () => {
+        const layerServiceInstance = instantiateLayerService({
+          rootId: 'root',
+          items: {
+            root: {
+              children: ['1'],
+            },
+            '1': {
+              type: 'radio',
+              children: ['1-1'],
+            },
+            '1-1': {},
+          },
+        });
+        const spy = jest.spyOn(layerServiceInstance, 'mutateTree');
+        layerServiceInstance.onItemToggle(
+          layerServiceInstance.treeData.items['1'],
+        );
+        const updatedItems = layerServiceInstance.treeData.items;
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(updatedItems['1'].isChecked).toBe(false);
+        expect(updatedItems['1'].isExpanded).toBe(true);
+      });
+
+      test('a checkbox item', () => {
+        const layerServiceInstance = instantiateLayerService({
+          rootId: 'root',
+          items: {
+            root: {
+              children: ['1'],
+            },
+            '1': {
+              children: ['1-1'],
+            },
+            '1-1': {},
+          },
+        });
+        const spy = jest.spyOn(layerServiceInstance, 'mutateTree');
+        layerServiceInstance.onItemToggle(
+          layerServiceInstance.treeData.items['1'],
+        );
+        const updatedItems = layerServiceInstance.treeData.items;
+
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(updatedItems['1'].isChecked).toBe(false);
+        expect(updatedItems['1'].isExpanded).toBe(true);
+      });
+    });
+
+    describe('collapse', () => {
+      test('a radio item', () => {
+        const layerServiceInstance = instantiateLayerService({
+          rootId: 'root',
+          items: {
+            root: {
+              children: ['1'],
+            },
+            '1': {
+              type: 'radio',
+              isExpanded: true,
+              isChecked: true,
+              children: ['1-1'],
+            },
+            '1-1': {
+              isChecked: true,
+            },
+          },
+        });
+        const spy = jest.spyOn(layerServiceInstance, 'mutateTree');
+        layerServiceInstance.onItemToggle(
+          layerServiceInstance.treeData.items['1'],
+        );
+        const updatedItems = layerServiceInstance.treeData.items;
+
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(updatedItems['1'].isChecked).toBe(true);
+        expect(updatedItems['1'].isExpanded).toBe(false);
+      });
+
+      test.only('a checkbox item', () => {
+        const layerServiceInstance = instantiateLayerService({
+          rootId: 'root',
+          items: {
+            root: {
+              children: ['1'],
+            },
+            '1': {
+              isExpanded: true,
+              isChecked: true,
+              children: ['1-1'],
+            },
+            '1-1': {
+              isChecked: true,
+            },
+          },
+        });
+        const spy = jest.spyOn(layerServiceInstance, 'mutateTree');
+        layerServiceInstance.onItemToggle(
+          layerServiceInstance.treeData.items['1'],
+        );
+        const updatedItems = layerServiceInstance.treeData.items;
+
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(updatedItems['1'].isChecked).toBe(true);
+        expect(updatedItems['1'].isExpanded).toBe(false);
+        expect(updatedItems['1-1-'].isChecked).toBe(true);
+      });
+    });
+  });
 });
