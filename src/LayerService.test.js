@@ -141,6 +141,54 @@ describe('LayerService', () => {
       });
     });
 
+    describe('when an checkbox item is unchecked', () => {
+      test('uncheck all children', () => {
+        const layerServiceInstance = instantiateLayerService({
+          rootId: 'root',
+          items: {
+            root: {
+              isChecked: true,
+              children: ['1', '2', '3'],
+            },
+            '1': {
+              isChecked: true,
+              isExpanded: true,
+              children: ['1-1', '1-2', '1-3'],
+            },
+            '1-1': {
+              type: 'radio',
+            },
+            '1-2': {
+              isExpanded: true,
+              children: ['1-2-1'],
+            },
+            '1-2-1': {
+              isChecked: true,
+            },
+            '1-3': {
+              isChecked: true,
+              isExpanded: true,
+              type: 'radio',
+            },
+            '2': {},
+            '3': {
+              isChecked: false,
+              isExpanded: false,
+              type: 'radio',
+            },
+          },
+        });
+        const spy = jest.spyOn(layerServiceInstance, 'mutateTree');
+        layerServiceInstance.onItemChange('1');
+        const updatedItems = layerServiceInstance.treeData.items;
+
+        expect(spy).toHaveBeenCalledTimes(5);
+        ['root', '1', '1-2-1', '1-3'].forEach(id => {
+          expect(updatedItems[id].isChecked).toBe(false);
+        });
+      });
+    });
+
     describe('when an radio item is checked', () => {
       test(`expands the item, uncheck and collapse all the radio siblings and
       their children, then apply defaults to the item's children.`, () => {
@@ -328,7 +376,7 @@ describe('LayerService', () => {
       });
     });
 
-    describe('when siblings are uncheck', () => {
+    describe('when radio child is uncheck', () => {
       test('uncheck all parents.', () => {
         const layerServiceInstance = instantiateLayerService({
           rootId: 'root',
@@ -367,90 +415,42 @@ describe('LayerService', () => {
         });
       });
     });
-  });
 
-  describe('when an checkbox item is unchecked', () => {
-    test('uncheck all children', () => {
-      const layerServiceInstance = instantiateLayerService({
-        rootId: 'root',
-        items: {
-          root: {
-            isChecked: true,
-            children: ['1', '2', '3'],
+    describe('when checkbox child is uncheck', () => {
+      test('uncheck all parents.', () => {
+        const layerServiceInstance = instantiateLayerService({
+          rootId: 'root',
+          items: {
+            root: {
+              children: ['1', '2'],
+            },
+            '1': {
+              type: 'radio',
+              isChecked: true,
+              isExpanded: true,
+              children: ['1-1', '1-2'],
+            },
+            '1-1': {
+              type: 'radio',
+            },
+            '1-2': {
+              isChecked: true,
+              isExpanded: true,
+              children: ['1-2-1', '1-2-2'],
+            },
+            '1-2-1': {},
+            '1-2-2': {},
+            '2': {},
           },
-          '1': {
-            isChecked: true,
-            isExpanded: true,
-            children: ['1-1', '1-2', '1-3'],
-          },
-          '1-1': {
-            type: 'radio',
-          },
-          '1-2': {
-            isExpanded: true,
-            children: ['1-2-1'],
-          },
-          '1-2-1': {
-            isChecked: true,
-          },
-          '1-3': {
-            isChecked: true,
-            isExpanded: true,
-            type: 'radio',
-          },
-          '2': {},
-          '3': {
-            isChecked: false,
-            isExpanded: false,
-            type: 'radio',
-          },
-        },
-      });
-      const spy = jest.spyOn(layerServiceInstance, 'mutateTree');
-      layerServiceInstance.onItemChange('1');
-      const updatedItems = layerServiceInstance.treeData.items;
+        });
+        const spy = jest.spyOn(layerServiceInstance, 'mutateTree');
+        layerServiceInstance.onItemChange('1-2');
+        const updatedItems = layerServiceInstance.treeData.items;
 
-      expect(spy).toHaveBeenCalledTimes(5);
-      ['root', '1', '1-2-1', '1-3'].forEach(id => {
-        expect(updatedItems[id].isChecked).toBe(false);
-      });
-    });
-  });
-
-  describe('when siblings are uncheck', () => {
-    test('uncheck all parents.', () => {
-      const layerServiceInstance = instantiateLayerService({
-        rootId: 'root',
-        items: {
-          root: {
-            children: ['1', '2'],
-          },
-          '1': {
-            type: 'radio',
-            isChecked: true,
-            isExpanded: true,
-            children: ['1-1', '1-2'],
-          },
-          '1-1': {
-            type: 'radio',
-          },
-          '1-2': {
-            isChecked: true,
-            isExpanded: true,
-            children: ['1-2-1', '1-2-2'],
-          },
-          '1-2-1': {},
-          '1-2-2': {},
-          '2': {},
-        },
-      });
-      const spy = jest.spyOn(layerServiceInstance, 'mutateTree');
-      layerServiceInstance.onItemChange('1-2');
-      const updatedItems = layerServiceInstance.treeData.items;
-
-      expect(spy).toHaveBeenCalledTimes(5);
-      ['1', '1-2'].forEach(id => {
-        expect(updatedItems[id].isChecked).toBe(false);
+        expect(spy).toHaveBeenCalledTimes(5);
+        ['1', '1-2'].forEach(id => {
+          expect(updatedItems[id].isChecked).toBe(false);
+        });
       });
     });
   });
