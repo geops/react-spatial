@@ -25,7 +25,6 @@ exports[`Autocomplete when no properties are set matches snapshot 1`] = `
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
-      tabIndex="0"
       title=""
     >
       <svg
@@ -53,7 +52,6 @@ exports[`Autocomplete when no properties are set matches snapshot 1`] = `
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
-      tabIndex="0"
       title=""
     >
       submit
@@ -90,7 +88,6 @@ exports[`Autocomplete when properties are set should match snapshot 1`] = `
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
-      tabIndex="0"
       title=""
     >
       <svg
@@ -118,7 +115,6 @@ exports[`Autocomplete when properties are set should match snapshot 1`] = `
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
-      tabIndex="0"
       title=""
     >
       submit
@@ -228,7 +224,6 @@ exports[`Autocomplete when properties are set should match snapshot showing list
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
-      tabIndex="0"
       title=""
     >
       <svg
@@ -256,7 +251,6 @@ exports[`Autocomplete when properties are set should match snapshot showing list
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
-      tabIndex="0"
       title=""
     >
       submit
@@ -366,7 +360,6 @@ exports[`Autocomplete when properties are set should match snapshot without defa
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
-      tabIndex="0"
       title=""
     >
       <svg
@@ -394,7 +387,6 @@ exports[`Autocomplete when properties are set should match snapshot without defa
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
-      tabIndex="0"
       title=""
     >
       submit
@@ -468,7 +460,6 @@ exports[`Autocomplete when properties are set should match snapshot without item
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
-      tabIndex="0"
       title=""
     >
       <svg
@@ -496,7 +487,6 @@ exports[`Autocomplete when properties are set should match snapshot without item
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
-      tabIndex="0"
       title=""
     >
       submit
@@ -570,7 +560,6 @@ exports[`Autocomplete when properties are set should match snapshot without item
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
-      tabIndex="0"
       title=""
     >
       <svg
@@ -598,7 +587,6 @@ exports[`Autocomplete when properties are set should match snapshot without item
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
-      tabIndex="0"
       title=""
     >
       submit
