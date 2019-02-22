@@ -52,16 +52,16 @@ class LayerTreeExample extends React.Component {
   componentDidMount() {
     this.layerService = new LayerService({
       map: this.map,
-      layerData: treeData,
-      dataStyle: dataStyle,
+      treeData,
+      dataStyle,
     });
   }
 
-  applyStyle(item) {
+  applyStyle(itemId) {
     this.layers[0].olLayer.getStyle().setText(
       new Text({
         font: '20px sans-serif',
-        text: 'Last item modified is : ' + item.data.title,
+        text: 'Last item modified is : ' + itemId,
       }),
     );
     this.layers[0].olLayer.changed();
@@ -74,14 +74,16 @@ class LayerTreeExample extends React.Component {
       <div className="tm-layer-tree-example">
         <LayerTree
           tree={treeData}
-          onUpdate={newTreeData => {
+          onItemToggle={(item) => {
             this.setState({
-              treeData: newTreeData,
+              treeData: this.layerService.onItemToggle(item),
             });
           }}
-          onItemChange={(item, tree) => {
-            this.layerService.onItemChange(this.map, item);
-            this.applyStyle(item);
+          onItemChange={(itemId) => {
+            this.setState({
+              treeData: this.layerService.onItemChange(itemId),
+            });
+            this.applyStyle(itemId);
           }}
         />
         <BasicMap

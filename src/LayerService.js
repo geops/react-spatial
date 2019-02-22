@@ -1,6 +1,7 @@
 /**
  * A layer service class to handle layer adding, removing and visiblity.
  */
+import { mutateTree } from '@atlaskit/tree';
 import TileLayer from 'ol/layer/Tile';
 import XYZ from 'ol/source/XYZ';
 import VectorSource from 'ol/source/Vector';
@@ -12,6 +13,13 @@ import Layer from './Layer';
 import VectorLayer from './VectorLayer';
 
 export default class LayerService {
+  static areOthersSiblingsUncheck(tree, item) {
+    const parent = tree.items[item.parentId];
+    return !parent.children
+      .filter(id => id !== item.id)
+      .find(id => tree.items[id].isChecked);
+  }
+
   static isNotTopic(data) {
     return !(
       Object.keys(data).length === 1 &&
@@ -31,7 +39,7 @@ export default class LayerService {
     });
   }
 
-  constructor({ map, layerData, dataStyle }) {
+  constructor({ map, treeData, dataStyle }) {
     this.wmtsResolutions = [
       156543.033928,
       78271.516964,
@@ -66,16 +74,27 @@ export default class LayerService {
 
     this.projection = map.getView().getProjection();
     this.dataStyle = dataStyle;
-    const { items } = layerData;
+
+    const { items } = treeData;
+    this.treeData = treeData;
+    this.map = map;
+
     this.layers = [];
 
     Object.keys(items).forEach(layer => {
       if (LayerService.isNotTopic(items[layer].data)) {
         if (items[layer].isChecked === true) {
-          this.addLayer(map, items[layer].data);
+          this.addLayer(this.map, items[layer].data);
         }
       }
     });
+  }
+
+  getStyle(styleId) {
+    if (Object.prototype.hasOwnProperty.call(this.dataStyle.default, styleId)) {
+      return this.dataStyle.default[styleId];
+    }
+    return undefined;
   }
 
   createWMTSLayer(data) {
@@ -93,13 +112,6 @@ export default class LayerService {
         }),
       }),
     });
-  }
-
-  getStyle(styleId) {
-    if (Object.prototype.hasOwnProperty.call(this.dataStyle.default, styleId)) {
-      return this.dataStyle.default[styleId];
-    }
-    return undefined;
   }
 
   createVectorLayer(data) {
@@ -159,17 +171,227 @@ export default class LayerService {
     this.layers.unshift(layer);
   }
 
-  onItemChange(map, item) {
-    const { data } = item;
+  applyMutationToMap(layerId, mutation) {
+    const { data } = this.treeData.items[layerId];
     if (LayerService.isNotTopic(data)) {
-      if (item.isChecked) {
+      if (mutation.isChecked) {
         if (!this.doesLayerExist(data.title)) {
-          this.addLayer(map, data);
+          this.addLayer(this.map, data);
         }
         this.getLayer(data.title).olLayer.setVisible(true);
       } else {
         this.getLayer(data.title).olLayer.setVisible(false);
       }
     }
+  }
+
+  applyToItem(tree, item, mutation) {
+    let newTree = tree;
+    const newMutation = { ...mutation };
+    // We remove all the unecessary mutations.
+    Object.keys({ ...mutation }).forEach(key => {
+      if (item[key] === mutation[key]) {
+        delete newMutation[key];
+      }
+    });
+
+    // No mutation to apply
+    if (!Object.keys(newMutation).length) {
+      return newTree;
+    }
+    newTree = this.mutateTree(newTree, item.id, newMutation);
+    this.applyMutationToMap(item.id, newMutation);
+    return newTree;
+  }
+
+  /**
+   * Apply a mutation to all the parents recursively.
+   */
+  applyToParents(tree, item, mutation) {
+    let newTree = tree;
+    const parent = newTree.items[item.parentId];
+
+    if (!parent) {
+      return newTree;
+    }
+
+    // if parent is radio input going to be checked
+    if (parent.type === 'radio') {
+      const radioSiblings = parent.children.filter(
+        id =>
+          id !== item.id &&
+          tree.items[id].type === 'radio' &&
+          tree.items[id].isChecked === true,
+      );
+      // Uncheck all radio siblings and their children.
+      const newMutation = {
+        isChecked: false,
+        isExpanded: false,
+      };
+
+      for (let i = 0; i < radioSiblings.length; i += 1) {
+        newTree = this.applyToItem(
+          newTree,
+          newTree.items[radioSiblings[i]],
+          newMutation,
+        );
+        newTree = this.applyToChildren(
+          newTree,
+          newTree.items[radioSiblings[i]],
+          newMutation,
+        );
+      }
+    }
+
+    // Apply to parents if all the others siblings are uncheck.
+    if (LayerService.areOthersSiblingsUncheck(newTree, item)) {
+      newTree = this.applyToItem(newTree, parent, mutation);
+      newTree = this.applyToParents(newTree, parent, mutation);
+    }
+    return newTree;
+  }
+
+  /**
+   * Apply a mutation to all the children recursively.
+   */
+  applyToChildren(tree, item, mutation, isIgnoredFunc, isTypeIgnoredFunction) {
+    let newTree = tree;
+    let newMutation = { ...mutation };
+    let firstRadioInput;
+
+    // Go through all the children.
+    tree.items[item.id].children.forEach(childId => {
+      const child = newTree.items[childId];
+
+      if (
+        (isTypeIgnoredFunction && isTypeIgnoredFunction(child)) ||
+        (isIgnoredFunc && isIgnoredFunc(child))
+      ) {
+        return;
+      }
+
+      // If no mutation provided we apply the default values.
+      if (!mutation && child.defaults) {
+        newMutation = { ...child.defaults };
+      } else if (!mutation) {
+        // If no mutation provided, we do nothing.
+        return;
+      }
+
+      // if a radio input is going to be checked, uncheck all the other member of the group.
+      if (firstRadioInput && newMutation.isChecked && child.type === 'radio') {
+        // Uncheck all the radio inputs of the same group.
+        newTree = this.applyToItem(newTree, child, {
+          isChecked: false,
+          isExpanded: false,
+        });
+        return;
+      }
+
+      newTree = this.applyToItem(newTree, child, newMutation);
+
+      // Set isRadioInput to true will ignore the other member of radio group.
+      if (!firstRadioInput && child.type === 'radio') {
+        firstRadioInput = child;
+      }
+
+      if (child.hasChildren) {
+        newTree = this.applyToChildren(
+          newTree,
+          child,
+          newMutation,
+          isIgnoredFunc,
+        );
+      }
+    });
+    return newTree;
+  }
+
+  getTree() {
+    return this.treeData;
+  }
+
+  setTree(newTree) {
+    this.treeData = newTree;
+  }
+
+  mutateTree(tree, itemId, mutation) {
+    const newTree = mutateTree(tree, itemId, mutation);
+    this.applyMutationToMap(itemId, mutation);
+    return newTree;
+  }
+
+  updateTree(item) {
+    const tree = this.getTree();
+    const value = !item.isChecked;
+    let newTree = tree;
+    if (item.type === 'radio') {
+      // An input radio automatically expand/collapse on check.
+      newTree = this.mutateTree(newTree, item.id, {
+        isChecked: value,
+        isExpanded: value,
+      });
+      // Apply to parents if all the others siblings are uncheck.
+      newTree = this.applyToParents(newTree, item, {
+        isChecked: value,
+        isExpanded: newTree.items[item.parentId].hasChildren,
+      });
+
+      // On check
+      if (value) {
+        // Apply the default values of children.
+        newTree = this.applyToChildren(newTree, item);
+
+        // Uncheck all the radio inputs of the same group.
+        newTree = this.applyToChildren(
+          newTree,
+          newTree.items[item.parentId],
+          {
+            isChecked: !value,
+            isExpanded: !value,
+          },
+          child => child.id === item.id,
+          child => child.type === 'checkbox',
+        );
+
+        // On uncheck
+      } else {
+        // Uncheck all the children.
+        newTree = this.applyToChildren(newTree, item, {
+          isChecked: value,
+          isExpanded: value,
+        });
+      }
+    } else if (item.type === 'checkbox') {
+      const mutation = {
+        isChecked: value,
+        isExpanded: newTree.items[item.parentId].hasChildren,
+      };
+      newTree = this.mutateTree(newTree, item.id, mutation);
+
+      // Apply to parents if all the others siblings are uncheck.
+      newTree = this.applyToParents(newTree, item, mutation);
+
+      // On check/uncheck:
+      //   - for input checkbox -> check/uncheck all the children.
+      //   - for input radio -> check/uncheck only one of the children.
+      newTree = this.applyToChildren(newTree, item, mutation);
+    }
+    this.setTree(newTree);
+  }
+
+  onItemChange(itemId) {
+    const item = this.getTree().items[itemId];
+    this.updateTree(item);
+    return this.treeData;
+  }
+
+  onItemToggle(item) {
+    const tree = this.getTree();
+    const newTree = this.mutateTree(tree, item.id, {
+      isExpanded: !item.isExpanded,
+    });
+    this.setTree(newTree);
+    return this.treeData;
   }
 }
