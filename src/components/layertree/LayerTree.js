@@ -243,10 +243,7 @@ class LayerTree extends PureComponent {
   }
 
   renderItem(item) {
-    const { renderItem, isItemHidden } = this.props;
-    if (isItemHidden(item)) {
-      return null;
-    }
+    const { renderItem } = this.props;
 
     if (renderItem) {
       return renderItem(item);
@@ -263,7 +260,7 @@ class LayerTree extends PureComponent {
 
   render() {
     const tree = this.getTree();
-    const { padding, className, classNameItem } = this.props;
+    const { padding, className, classNameItem, isItemHidden } = this.props;
 
     return (
       <div className={className}>
@@ -276,7 +273,7 @@ class LayerTree extends PureComponent {
               {...provided.draggableProps}
               {...provided.dragHandleProps}
             >
-              {this.renderItem(item)}
+              {isItemHidden(item) ? null : this.renderItem(item)}
             </div>
           )}
           offsetPerLevel={padding}

@@ -326,3 +326,45 @@ exports[`LayerTree matches snapshots when renderItem is used. 1`] = `
 </div>
 
 `;
+
+exports[`LayerTree triggers onInputClick when we click on toggle button (label+arrow) of an item without children. 1`] = `
+
+<div class="tm-layer-tree">
+  <div style="pointer-events: auto;"
+       data-react-beautiful-dnd-droppable="1"
+  >
+    <div class="tm-layer-tree-item"
+         data-react-beautiful-dnd-draggable="1"
+         style="padding-left: 0px;"
+    >
+      <div style="position: absolute; margin: auto; top: 0px; left: 0px; bottom: 0px; right: 0px;"
+           role="button"
+           tabindex="0"
+      >
+      </div>
+      <label class="tm-layertree-input-radio"
+             tabindex="-1"
+      >
+        <input type="radio"
+               tabindex="-1"
+               name="shortid.generaterootradio"
+        >
+        <span>
+        </span>
+      </label>
+      <div class="tm-button "
+           role="button"
+           style="display: flex;"
+           tabindex="-1"
+      >
+        <div>
+          1
+        </div>
+        <div class="tm-arrow tm-arrow-down">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+`;

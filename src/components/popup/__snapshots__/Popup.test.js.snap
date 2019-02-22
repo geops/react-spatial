@@ -23,7 +23,6 @@ exports[`Popup should match snapshot with default values. 1`] = `
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
-      tabIndex="0"
       title="Popup Schliessen"
     >
       <svg
@@ -75,7 +74,6 @@ exports[`Popup should match snapshot with tm-tooltip class. 1`] = `
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
-      tabIndex="0"
       title="Popup Schliessen"
     >
       <svg
