@@ -20,14 +20,26 @@ const propTypes = {
   className: PropTypes.string,
 
   /**
+   * HTML tabIndex attribute
+   */
+  tabIndex: PropTypes.number,
+
+  /**
    * Title of the button.
    */
   title: PropTypes.string,
+
+  /**
+   * HTML style attribute
+   */
+  style: PropTypes.object,
 };
 
 const defaultProps = {
   className: undefined,
   title: undefined,
+  tabIndex: undefined,
+  style: undefined,
 };
 
 /**
