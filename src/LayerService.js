@@ -326,10 +326,11 @@ export default class LayerService {
     const value = !item.isChecked;
     let newTree = tree;
     if (item.type === 'radio') {
-      // An input radio automatically expand/collapse on check.
+      // Input radio automatically expand/collapse if is a Topic (parent=root).
+      const isExpanded = item.parentId === 'root' ? value : item.hasChildren;
       newTree = this.mutateTree(newTree, item.id, {
         isChecked: value,
-        isExpanded: value,
+        isExpanded,
       });
       // Apply to parents if all the others siblings are uncheck.
       newTree = this.applyToParents(newTree, item, {
