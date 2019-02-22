@@ -72,13 +72,6 @@ const propTypes = {
   onItemChange: PropTypes.func,
 
   /**
-   * Callback called after a set of item's change events were triggered.
-   *
-   * @param {object} tree The current tree.
-   */
-  onUpdate: PropTypes.func,
-
-  /**
    * Custom function to render an item in the tree.
    *
    * @param {object} item The item to render.
@@ -101,11 +94,9 @@ const defaultProps = {
   className: 'tm-layer-tree',
   classNameItem: 'tm-layer-tree-item',
   padding: 30,
-  controlled: true,
   isItemHidden: () => false,
   onItemChange: () => {},
   onItemToggle: () => {},
-  onUpdate: () => {},
   renderItem: null,
 };
 
@@ -116,12 +107,6 @@ class LayerTree extends PureComponent {
 
   constructor(props) {
     super(props);
-    const { tree, controlled } = this.props;
-    if (!controlled) {
-      this.state = {
-        tree: { ...tree },
-      };
-    }
 
     // Prefix used for the name of inputs. This allows multiple LayerTree on the same page.
     this.prefixInput = shortid.generate();
@@ -135,16 +120,6 @@ class LayerTree extends PureComponent {
   onInputClick(item) {
     const { onItemChange } = this.props;
     onItemChange(item.id);
-  }
-
-  getTree() {
-    const { controlled } = this.props;
-    if (controlled) {
-      const { tree } = this.props;
-      return tree;
-    }
-    const { tree } = this.state;
-    return tree;
   }
 
   renderInput(item) {
@@ -165,8 +140,8 @@ class LayerTree extends PureComponent {
           type={item.type}
           tabIndex={-1}
           name={this.prefixInput + item.parentId + item.type}
+          onChange={() => {}} // Make PropTypes happy
           checked={item.isChecked}
-          onChange={() => {}}
           onClick={() => {
             this.onInputClick(item);
           }}
@@ -215,15 +190,10 @@ class LayerTree extends PureComponent {
   // or simulate a click on the input otherwise.
   renderToggleButton(item) {
     let tabIndex = 0;
-    let onClick = this.onToggle.bind(this);
 
     if (LayerTree.isFirstLevel(item)) {
       // We forbid focus on the first level items using keypress.
       tabIndex = -1;
-    }
-
-    if (!item.hasChildren) {
-      onClick = this.onInputClick.bind(this);
     }
 
     return (
@@ -233,7 +203,11 @@ class LayerTree extends PureComponent {
         tabIndex={tabIndex}
         className=""
         onClick={() => {
-          onClick(item);
+          if (!item.hasChildren) {
+            this.onInputClick(item);
+          } else {
+            this.onToggle(item);
+          }
         }}
       >
         <div>{item.data.title}</div>
@@ -259,8 +233,13 @@ class LayerTree extends PureComponent {
   }
 
   render() {
-    const tree = this.getTree();
-    const { padding, className, classNameItem, isItemHidden } = this.props;
+    const {
+      tree,
+      padding,
+      className,
+      classNameItem,
+      isItemHidden,
+    } = this.props;
 
     return (
       <div className={className}>
