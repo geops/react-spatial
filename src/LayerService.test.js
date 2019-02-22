@@ -2,11 +2,12 @@ import 'jest-canvas-mock';
 import OLMap from 'ol/Map';
 import LayerService from './LayerService';
 import { applyDefaultValues } from '../data/TreeData.esm';
+import testData from '../data/TestData.esm';
 
 describe('LayerService', () => {
-  const instantiateLayerService = data => {
+  const instantiateLayerService = initData => {
     const map = new OLMap();
-    const treeData = applyDefaultValues(data);
+    const treeData = applyDefaultValues(initData);
     return new LayerService({
       map,
       treeData,
@@ -14,37 +15,7 @@ describe('LayerService', () => {
     });
   };
 
-  test('should instantiate LayerService class correctly.', () => {
-    const layerServiceInstance = instantiateLayerService({
-      rootId: 'root',
-      items: {
-        root: {
-          type: 'radio',
-          children: ['1', '2'],
-        },
-        '1': {
-          type: 'radio',
-          isChecked: true,
-          isExpanded: true,
-          children: ['1-1', '1-2'],
-        },
-        '1-1': {
-          type: 'radio',
-        },
-        '1-2': {
-          type: 'radio',
-          isChecked: true,
-          isExpanded: true,
-          children: ['1-2-1', '1-2-2'],
-        },
-        '1-2-1': {},
-        '1-2-2': {},
-        '2': {},
-      },
-    });
-
-    expect(Object.keys(layerServiceInstance.treeData.items).length).toBe(7);
-  });
+  const getLayers = wrapper => wrapper.map.getLayers().getArray();
 
   describe('onItemChange', () => {
     describe('when an checkbox item is checked,', () => {
@@ -563,6 +534,167 @@ describe('LayerService', () => {
         expect(updatedItems['1'].isChecked).toBe(true);
         expect(updatedItems['1'].isExpanded).toBe(false);
         expect(updatedItems['1-1'].isChecked).toBe(true);
+      });
+    });
+  });
+
+  describe('when layerService initialized,', () => {
+    let spy = null;
+
+    afterEach(() => {
+      if (spy) {
+        spy.mockRestore();
+      }
+    });
+
+    test('should instantiate LayerService class correctly.', () => {
+      const layerServiceInstance = instantiateLayerService({
+        rootId: 'root',
+        items: {
+          root: {
+            type: 'radio',
+            children: ['1', '2'],
+          },
+          '1': {
+            type: 'radio',
+            isChecked: true,
+            isExpanded: true,
+            children: ['1-1', '1-2'],
+          },
+          '1-1': {
+            type: 'radio',
+          },
+          '1-2': {
+            type: 'radio',
+            isChecked: true,
+            isExpanded: true,
+            children: ['1-2-1', '1-2-2'],
+          },
+          '1-2-1': {},
+          '1-2-2': {},
+          '2': {},
+        },
+      });
+      expect(Object.keys(layerServiceInstance.treeData.items).length).toBe(7);
+    });
+
+    test('should initial layers be displayed.', () => {
+      spy = jest.spyOn(LayerService.prototype, 'addLayer');
+      const layerServiceInstance = instantiateLayerService(testData);
+      const layers = getLayers(layerServiceInstance);
+
+      expect(spy).toHaveBeenCalledTimes(2);
+      expect(layers.length).toBe(2);
+    });
+
+    test('should initialy create a vector layer.', () => {
+      spy = jest.spyOn(LayerService.prototype, 'createVectorLayer');
+      const layerServiceInstance = instantiateLayerService({
+        rootId: 'root',
+        items: {
+          root: {
+            id: 'root',
+            children: ['topic'],
+          },
+          topic: {
+            id: 'topic',
+            isChecked: true,
+            isExpanded: true,
+            type: 'radio',
+            children: ['vectorLayer'],
+          },
+          vectorLayer: {
+            id: 'vectorLayer',
+            isChecked: true,
+            data: {
+              type: 'vectorLayer',
+            },
+          },
+        },
+      });
+      const layers = getLayers(layerServiceInstance);
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(layers.length).toBe(1);
+    });
+
+    test('should initialy create a wmts layer.', () => {
+      spy = jest.spyOn(LayerService.prototype, 'createWMTSLayer');
+      const layerServiceInstance = instantiateLayerService({
+        rootId: 'root',
+        items: {
+          root: {
+            id: 'root',
+            children: ['topic'],
+          },
+          topic: {
+            id: 'topic',
+            isChecked: true,
+            isExpanded: true,
+            type: 'radio',
+            children: ['wmtsLayer'],
+          },
+          wmtsLayer: {
+            id: 'wmtsLayer',
+            isChecked: true,
+            data: {
+              type: 'wmts',
+            },
+          },
+        },
+      });
+      const layers = getLayers(layerServiceInstance);
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(layers.length).toBe(1);
+    });
+  });
+
+  describe('on layertree interaction,', () => {
+    let spy = null;
+
+    afterEach(() => {
+      spy.mockRestore();
+    });
+
+    describe('on unselected layer click,', () => {
+      test('should add this layer to the map.', () => {
+        const layerServiceInstance = instantiateLayerService({
+          rootId: 'root',
+          items: {
+            root: {
+              id: 'root',
+              children: ['topic'],
+            },
+            topic: {
+              id: 'topic',
+              isChecked: true,
+              isExpanded: true,
+              children: ['vectorLayer1', 'vectorLayer2'],
+            },
+            vectorLayer1: {
+              id: 'vectorLayer1',
+              isChecked: true,
+              data: {
+                type: 'vectorLayer',
+              },
+            },
+            vectorLayer2: {
+              id: 'vectorLayer2',
+              isChecked: false,
+              data: {
+                type: 'vectorLayer',
+              },
+            },
+          },
+        });
+        const layers = getLayers(layerServiceInstance);
+        expect(layers.length).toBe(1);
+        spy = jest.spyOn(layerServiceInstance, 'addLayer');
+        layerServiceInstance.onItemChange('vectorLayer2');
+
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(layers.length).toBe(2);
       });
     });
   });
