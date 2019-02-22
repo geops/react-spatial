@@ -1,107 +1,155 @@
 @import '../../Globals.scss';
 
-.tm-arrow {
-  border: solid lightgray;
-  border-width: 0 3px 3px 0;
-  display: inline-block;
-  padding: 0;
-  background: transparent;
-  width: 10px;
-  height: 10px;
-}
-
-.tm-arrow-down {
-  transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
-}
-
-.tm-arrow-up {
-  transform: rotate(-135deg);
-  -webkit-transform: rotate(-135deg);
-}
-
-.tm-layertree-item {
+.tm-layer-tree-example {
+  width: 100%;
+  height: 300px;
+  background: white;
   display: flex;
-  align-items: center;
-  padding: 10px;
+  overflow: hidden;
+  border: 1px solid lightgray;
 
-  & > * {
-    margin-right: 10px;
-    align-items: center;
+  .tm-map {
+    width: auto;
+    height: auto;
+    flex-grow: 1;
   }
 
-  /* Customize the label (the container) */
-  label {
+  .tm-arrow {
+    border: solid lightgray;
+    border-width: 0 3px 3px 0;
     display: inline-block;
-    position: relative;
-    cursor: pointer;
-  }
-
-  label,
-  label input,
-  label span {
-    height: 18px;
-    width: 18px;
-  }
-
-  label input,
-  label span {
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin: 0;
-  }
-
-  label input {
-    display: none;
-  }
-
-  /* Create a custom checkbox */
-  label span {
-    background-color: white;
-    border: 1px solid lightgray;
-  }
-
-  .tm-layertree-input-radio span {
-    border-radius: 50%;
-  }
-
-  /* On mouse-over, add a grey background color */
-  label:hover input ~ span {
-    background-color: #ccc;
-  }
-
-  /* Create the checkmark/indicator (hidden when not checked) */
-  label span::after {
-    content: '';
-    position: absolute;
-    display: none;
-  }
-
-  /* Style the checkmark/indicator */
-  .tm-layertree-input-checkbox span::after {
-    left: 6px;
-    top: 2px;
-    width: 5px;
+    padding: 0;
+    background: transparent;
+    width: 10px;
     height: 10px;
-    border: solid $tm-color-sbb-red;
-    border-width: 0 1px 1px 0;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
+  }
+
+  .tm-arrow-down {
     transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
   }
 
-  /* Style the  (dot/circle) */
-  .tm-layertree-input-radio span::after {
-    top: 3px;
-    left: 3px;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: #eb0000;
+  .tm-arrow-up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
   }
 
-  label input:checked ~ span::after {
-    display: block;
+  .tm-layer-tree {
+    width: 300px;
+    padding: 10px;
+    border-right: 1px solid lightgray;
+    overflow-y: auto;
+  }
+
+  .tm-layertree-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    position: relative;
+
+    & > * {
+      margin-right: 10px;
+      align-items: center;
+
+      &:focus {
+        outline: 2px solid black !important;
+        outline-offset: 5px;
+      }
+    }
+
+    div {
+      /* HACK: Without this it breaks the click on the label (Chrome) */
+      position: relative;
+    }
+
+    /* CSS for the toggle div */
+    & > [role='button'] {
+      width: auto;
+      height: auto;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: left;
+
+      div:first-child {
+        margin-right: 10px;
+      }
+    }
+
+    /* Customize the label (the container) */
+    label {
+      display: inline-block;
+      position: relative;
+      cursor: pointer;
+    }
+
+    label,
+    label input {
+      height: 18px;
+      width: 18px;
+    }
+
+    label input,
+    label span {
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin: 0;
+    }
+
+    label input {
+      display: none;
+    }
+
+    /* Create a custom checkbox */
+    label span {
+      background-color: white;
+      border: 1px solid lightgray;
+      width: calc(100% - 2px);
+      height: calc(100% - 2px);
+    }
+
+    .tm-layertree-input-radio span {
+      border-radius: 50%;
+    }
+
+    /* On mouse-over, add a grey background color */
+    label:hover input ~ span {
+      background-color: #ccc;
+    }
+
+    /* Create the checkmark/indicator (hidden when not checked) */
+    label span::after {
+      content: '';
+      position: absolute;
+      display: none;
+    }
+
+    /* Style the checkmark/indicator */
+    .tm-layertree-input-checkbox span::after {
+      left: 5px;
+      top: 1px;
+      width: 5px;
+      height: 10px;
+      border: solid $tm-color-sbb-red;
+      border-width: 0 1px 1px 0;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+
+    /* Style the  (dot/circle) */
+    .tm-layertree-input-radio span::after {
+      top: 2px;
+      left: 2px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #eb0000;
+    }
+
+    label input:checked ~ span::after {
+      display: block;
+    }
   }
 }

@@ -23,7 +23,7 @@ class LayerTreeExample extends React.Component {
     super(props);
 
     this.center = [-10997148, 4569099];
-    this.map = new OLMap();
+    this.map = new OLMap({controls:[]});
 
     const vectorLayer = new VectorLayer({
       source: new VectorSource({
@@ -71,13 +71,7 @@ class LayerTreeExample extends React.Component {
     const { featureClicked, treeData } = this.state;
 
     return (
-      <div className="tm-container">
-        <BasicMap
-          map={this.map}
-          center={this.center}
-          zoom={3}
-          layers={this.layers}
-        />
+      <div className="tm-layer-tree-example">
         <LayerTree
           tree={treeData}
           onUpdate={newTreeData => {
@@ -89,6 +83,12 @@ class LayerTreeExample extends React.Component {
             this.layerService.onItemChange(this.map, item);
             this.applyStyle(item);
           }}
+        />
+        <BasicMap
+          map={this.map}
+          center={this.center}
+          zoom={3}
+          layers={this.layers}
         />
       </div>
     );

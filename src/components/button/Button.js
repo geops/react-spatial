@@ -35,13 +35,14 @@ const defaultProps = {
  */
 class Button extends PureComponent {
   render() {
-    const { onClick, children, className, title } = this.props;
+    const { onClick, children, className, title, tabIndex, style } = this.props;
 
     return (
       <div
         className={`tm-button ${className}`}
         role="button"
-        tabIndex="0"
+        style={style}
+        tabIndex={tabIndex}
         title={title}
         aria-label={title}
         onKeyPress={e => e.which === 13 && onClick()}

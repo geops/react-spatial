@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Tree, { mutateTree } from '@atlaskit/tree';
 import shortid from 'shortid';
+import Button from '../button/Button';
 
 const propTypes = {
   /**
@@ -32,6 +33,11 @@ const propTypes = {
       }),
     ).isRequired,
   }),
+
+  /**
+   * CSS class to apply on the container.
+   */
+  className: PropTypes.string,
 
   /**
    * CSS class to apply on each item.
@@ -78,14 +84,15 @@ const propTypes = {
    * @param {object} item The item to render.
    * @param {object} provided The option provided by @atlaskit/tree.
    *
-   * @return {object} jsx code.
+   * @return {node} A jsx node.
    */
   renderItem: PropTypes.func,
 };
 
 const defaultProps = {
   tree: null,
-  classNameItem: 'tm-layertree-item',
+  className: 'tm-layer-tree',
+  classNameItem: 'tm-layer-tree-item',
   padding: 30,
   controlled: true,
   isItemHidden: () => false,
@@ -100,6 +107,10 @@ class LayerTree extends PureComponent {
     return !parent.children
       .filter(id => id !== item.id)
       .find(id => tree.items[id].isChecked);
+  }
+
+  static isFirstLevel(item) {
+    return item.parentId === 'root';
   }
 
   constructor(props) {
@@ -131,7 +142,7 @@ class LayerTree extends PureComponent {
       // An input radio automatically expand/collapse on check.
       newTree = this.mutateTree(newTree, item.id, {
         isChecked: value,
-        isExpanded: item.hasChildren,
+        isExpanded: value,
       });
 
       // Apply to parents if all the others siblings are uncheck.
@@ -332,18 +343,22 @@ class LayerTree extends PureComponent {
   }
 
   renderInput(item) {
+    let tabIndex = 0;
+
+    if (!item.hasChildren || LayerTree.isFirstLevel(item)) {
+      // We forbid focus on keypress event for first level items and items without children.
+      tabIndex = -1;
+    }
+
     return (
       <label // eslint-disable-line
         className={`tm-layertree-input-${item.type}`}
-        tabIndex="0"
-        onKeyPress={e => {
-          if (e.which === 13) {
-            this.onInputClick(item);
-          }
-        }}
+        tabIndex={tabIndex}
+        onKeyPress={e => e.which === 13 && this.onInputClick(item)}
       >
         <input
           type={item.type}
+          tabIndex={-1}
           name={this.prefixInput + item.parentId + item.type}
           checked={item.isChecked}
           onChange={() => {}}
@@ -356,20 +371,69 @@ class LayerTree extends PureComponent {
     );
   }
 
-  renderToggleButton(item) {
+  static renderArrow(item) {
     if (!item.hasChildren) {
       return null;
     }
     return (
-      <button
+      <div
         className={`tm-arrow ${
           item.isExpanded ? 'tm-arrow-up' : 'tm-arrow-down'
         }`}
-        type="button"
-        onClick={() => {
-          this.onToggle(item);
-        }}
       />
+    );
+  }
+
+  // This function is only used to display an outline on focus around all the item of the first level.
+  renderBarrierFreeDiv(item) {
+    if (!LayerTree.isFirstLevel(item)) {
+      return null;
+    }
+    return (
+      <div
+        style={{
+          position: 'absolute',
+          margin: 'auto',
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,
+        }}
+        role="button"
+        tabIndex={0}
+        onKeyPress={e => e.which === 13 && this.onInputClick(item)}
+      />
+    );
+  }
+
+  // Render a button which expands/collapse the item if there is children
+  // or simulate a click on the input otherwise.
+  renderToggleButton(item) {
+    let tabIndex = 0;
+    let onClick = this.onToggle.bind(this);
+
+    if (LayerTree.isFirstLevel(item)) {
+      // We forbid focus on the first level items using keypress.
+      tabIndex = -1;
+    }
+
+    if (!item.hasChildren) {
+      onClick = this.onInputClick.bind(this);
+    }
+
+    return (
+      <Button
+        role="button"
+        style={{ display: 'flex' }}
+        tabIndex={tabIndex}
+        className=""
+        onClick={() => {
+          onClick(item);
+        }}
+      >
+        <div>{item.data.title}</div>
+        {LayerTree.renderArrow(item)}
+      </Button>
     );
   }
 
@@ -385,8 +449,8 @@ class LayerTree extends PureComponent {
 
     return (
       <>
+        {this.renderBarrierFreeDiv(item)}
         {this.renderInput(item)}
-        <div>{item.data.title}</div>
         {this.renderToggleButton(item)}
       </>
     );
@@ -394,23 +458,25 @@ class LayerTree extends PureComponent {
 
   render() {
     const tree = this.getTree();
-    const { padding, classNameItem } = this.props;
+    const { padding, className, classNameItem } = this.props;
 
     return (
-      <Tree
-        tree={tree}
-        renderItem={({ item, provided }) => (
-          <div
-            className={classNameItem}
-            ref={provided.innerRef}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-          >
-            {this.renderItem(item)}
-          </div>
-        )}
-        offsetPerLevel={padding}
-      />
+      <div className={className}>
+        <Tree
+          tree={tree}
+          renderItem={({ item, provided }) => (
+            <div
+              className={classNameItem}
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+            >
+              {this.renderItem(item)}
+            </div>
+          )}
+          offsetPerLevel={padding}
+        />
+      </div>
     );
   }
 }

@@ -1,7 +1,328 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LayerTree matches snapshots using default properties. 1`] = `"<div style=\\"pointer-events: auto;\\" data-react-beautiful-dnd-droppable=\\"0\\"><div class=\\"tm-layertree-item\\" data-react-beautiful-dnd-draggable=\\"0\\" style=\\"padding-left: 0px;\\"><label class=\\"tm-layertree-input-radio\\" tabindex=\\"0\\"><input type=\\"radio\\" name=\\"shortid.generaterootradio\\"><span></span></label><div>ovnetzkarteschweiz</div><button class=\\"tm-arrow tm-arrow-up\\" type=\\"button\\"></button></div><div class=\\"tm-layertree-item\\" data-react-beautiful-dnd-draggable=\\"0\\" style=\\"padding-left: 30px;\\"><label class=\\"tm-layertree-input-checkbox\\" tabindex=\\"0\\"><input type=\\"checkbox\\" name=\\"shortid.generateovnetzkarteschweizcheckbox\\"><span></span></label><div>bahnhofplane</div><button class=\\"tm-arrow tm-arrow-up\\" type=\\"button\\"></button></div><div class=\\"tm-layertree-item\\" data-react-beautiful-dnd-draggable=\\"0\\" style=\\"padding-left: 60px;\\"><label class=\\"tm-layertree-input-radio\\" tabindex=\\"0\\"><input type=\\"radio\\" name=\\"shortid.generatebahnhofplaneradio\\"><span></span></label><div>interaktivbahnhoplan</div></div><div class=\\"tm-layertree-item\\" data-react-beautiful-dnd-draggable=\\"0\\" style=\\"padding-left: 60px;\\"><label class=\\"tm-layertree-input-radio\\" tabindex=\\"0\\"><input type=\\"radio\\" name=\\"shortid.generatebahnhofplaneradio\\"><span></span></label><div>printprodukte</div></div><div class=\\"tm-layertree-item\\" data-react-beautiful-dnd-draggable=\\"0\\" style=\\"padding-left: 30px;\\"><label class=\\"tm-layertree-input-checkbox\\" tabindex=\\"0\\"><input type=\\"checkbox\\" name=\\"shortid.generateovnetzkarteschweizcheckbox\\"><span></span></label><div>passagierfrequenzen</div><button class=\\"tm-arrow tm-arrow-down\\" type=\\"button\\"></button></div><div class=\\"tm-layertree-item\\" data-react-beautiful-dnd-draggable=\\"0\\" style=\\"padding-left: 0px;\\"><label class=\\"tm-layertree-input-radio\\" tabindex=\\"0\\"><input type=\\"radio\\" name=\\"shortid.generaterootradio\\"><span></span></label><div>bauprojekte</div></div></div>"`;
+exports[`LayerTree matches snapshots using default properties. 1`] = `
 
-exports[`LayerTree matches snapshots when an item is hidden. 1`] = `"<div style=\\"pointer-events: auto;\\" data-react-beautiful-dnd-droppable=\\"2\\"><div class=\\"tm-layertree-item\\" data-react-beautiful-dnd-draggable=\\"2\\" style=\\"padding-left: 0px;\\"></div><div class=\\"tm-layertree-item\\" data-react-beautiful-dnd-draggable=\\"2\\" style=\\"padding-left: 30px;\\"></div><div class=\\"tm-layertree-item\\" data-react-beautiful-dnd-draggable=\\"2\\" style=\\"padding-left: 60px;\\"><label class=\\"tm-layertree-input-radio\\" tabindex=\\"0\\"><input type=\\"radio\\" name=\\"shortid.generatebahnhofplaneradio\\"><span></span></label><div>interaktivbahnhoplan</div></div><div class=\\"tm-layertree-item\\" data-react-beautiful-dnd-draggable=\\"2\\" style=\\"padding-left: 60px;\\"><label class=\\"tm-layertree-input-radio\\" tabindex=\\"0\\"><input type=\\"radio\\" name=\\"shortid.generatebahnhofplaneradio\\"><span></span></label><div>printprodukte</div></div><div class=\\"tm-layertree-item\\" data-react-beautiful-dnd-draggable=\\"2\\" style=\\"padding-left: 30px;\\"></div><div class=\\"tm-layertree-item\\" data-react-beautiful-dnd-draggable=\\"2\\" style=\\"padding-left: 0px;\\"><label class=\\"tm-layertree-input-radio\\" tabindex=\\"0\\"><input type=\\"radio\\" name=\\"shortid.generaterootradio\\"><span></span></label><div>bauprojekte</div></div></div>"`;
+<div class="tm-layer-tree">
+  <div style="pointer-events: auto;"
+       data-react-beautiful-dnd-droppable="0"
+  >
+    <div class="tm-layer-tree-item"
+         data-react-beautiful-dnd-draggable="0"
+         style="padding-left: 0px;"
+    >
+      <div style="position: absolute; margin: auto; top: 0px; left: 0px; bottom: 0px; right: 0px;"
+           role="button"
+           tabindex="0"
+      >
+      </div>
+      <label class="tm-layertree-input-radio"
+             tabindex="-1"
+      >
+        <input type="radio"
+               tabindex="-1"
+               name="shortid.generaterootradio"
+        >
+        <span>
+        </span>
+      </label>
+      <div class="tm-button "
+           role="button"
+           style="display: flex;"
+           tabindex="-1"
+      >
+        <div>
+          ovnetzkarteschweiz
+        </div>
+        <div class="tm-arrow tm-arrow-up">
+        </div>
+      </div>
+    </div>
+    <div class="tm-layer-tree-item"
+         data-react-beautiful-dnd-draggable="0"
+         style="padding-left: 30px;"
+    >
+      <label class="tm-layertree-input-checkbox"
+             tabindex="0"
+      >
+        <input type="checkbox"
+               tabindex="-1"
+               name="shortid.generateovnetzkarteschweizcheckbox"
+        >
+        <span>
+        </span>
+      </label>
+      <div class="tm-button "
+           role="button"
+           style="display: flex;"
+           tabindex="0"
+      >
+        <div>
+          bahnhofplane
+        </div>
+        <div class="tm-arrow tm-arrow-up">
+        </div>
+      </div>
+    </div>
+    <div class="tm-layer-tree-item"
+         data-react-beautiful-dnd-draggable="0"
+         style="padding-left: 60px;"
+    >
+      <label class="tm-layertree-input-radio"
+             tabindex="-1"
+      >
+        <input type="radio"
+               tabindex="-1"
+               name="shortid.generatebahnhofplaneradio"
+        >
+        <span>
+        </span>
+      </label>
+      <div class="tm-button "
+           role="button"
+           style="display: flex;"
+           tabindex="0"
+      >
+        <div>
+          interaktivbahnhoplan
+        </div>
+      </div>
+    </div>
+    <div class="tm-layer-tree-item"
+         data-react-beautiful-dnd-draggable="0"
+         style="padding-left: 60px;"
+    >
+      <label class="tm-layertree-input-radio"
+             tabindex="-1"
+      >
+        <input type="radio"
+               tabindex="-1"
+               name="shortid.generatebahnhofplaneradio"
+        >
+        <span>
+        </span>
+      </label>
+      <div class="tm-button "
+           role="button"
+           style="display: flex;"
+           tabindex="0"
+      >
+        <div>
+          printprodukte
+        </div>
+      </div>
+    </div>
+    <div class="tm-layer-tree-item"
+         data-react-beautiful-dnd-draggable="0"
+         style="padding-left: 30px;"
+    >
+      <label class="tm-layertree-input-checkbox"
+             tabindex="0"
+      >
+        <input type="checkbox"
+               tabindex="-1"
+               name="shortid.generateovnetzkarteschweizcheckbox"
+        >
+        <span>
+        </span>
+      </label>
+      <div class="tm-button "
+           role="button"
+           style="display: flex;"
+           tabindex="0"
+      >
+        <div>
+          passagierfrequenzen
+        </div>
+        <div class="tm-arrow tm-arrow-down">
+        </div>
+      </div>
+    </div>
+    <div class="tm-layer-tree-item"
+         data-react-beautiful-dnd-draggable="0"
+         style="padding-left: 0px;"
+    >
+      <div style="position: absolute; margin: auto; top: 0px; left: 0px; bottom: 0px; right: 0px;"
+           role="button"
+           tabindex="0"
+      >
+      </div>
+      <label class="tm-layertree-input-radio"
+             tabindex="-1"
+      >
+        <input type="radio"
+               tabindex="-1"
+               name="shortid.generaterootradio"
+        >
+        <span>
+        </span>
+      </label>
+      <div class="tm-button "
+           role="button"
+           style="display: flex;"
+           tabindex="-1"
+      >
+        <div>
+          bauprojekte
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-exports[`LayerTree matches snapshots when renderItem is used. 1`] = `"<div style=\\"pointer-events: auto;\\" data-react-beautiful-dnd-droppable=\\"1\\"><div class=\\"tm-layertree-item\\" data-react-beautiful-dnd-draggable=\\"1\\" style=\\"padding-left: 0px;\\"><div></div></div><div class=\\"tm-layertree-item\\" data-react-beautiful-dnd-draggable=\\"1\\" style=\\"padding-left: 30px;\\"><div></div></div><div class=\\"tm-layertree-item\\" data-react-beautiful-dnd-draggable=\\"1\\" style=\\"padding-left: 60px;\\"><div></div></div><div class=\\"tm-layertree-item\\" data-react-beautiful-dnd-draggable=\\"1\\" style=\\"padding-left: 60px;\\"><div></div></div><div class=\\"tm-layertree-item\\" data-react-beautiful-dnd-draggable=\\"1\\" style=\\"padding-left: 30px;\\"><div></div></div><div class=\\"tm-layertree-item\\" data-react-beautiful-dnd-draggable=\\"1\\" style=\\"padding-left: 0px;\\"><div></div></div></div>"`;
+`;
+
+exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
+
+<div class="tm-layer-tree">
+  <div style="pointer-events: auto;"
+       data-react-beautiful-dnd-droppable="2"
+  >
+    <div class="tm-layer-tree-item"
+         data-react-beautiful-dnd-draggable="2"
+         style="padding-left: 0px;"
+    >
+    </div>
+    <div class="tm-layer-tree-item"
+         data-react-beautiful-dnd-draggable="2"
+         style="padding-left: 30px;"
+    >
+    </div>
+    <div class="tm-layer-tree-item"
+         data-react-beautiful-dnd-draggable="2"
+         style="padding-left: 60px;"
+    >
+      <label class="tm-layertree-input-radio"
+             tabindex="-1"
+      >
+        <input type="radio"
+               tabindex="-1"
+               name="shortid.generatebahnhofplaneradio"
+        >
+        <span>
+        </span>
+      </label>
+      <div class="tm-button "
+           role="button"
+           style="display: flex;"
+           tabindex="0"
+      >
+        <div>
+          interaktivbahnhoplan
+        </div>
+      </div>
+    </div>
+    <div class="tm-layer-tree-item"
+         data-react-beautiful-dnd-draggable="2"
+         style="padding-left: 60px;"
+    >
+      <label class="tm-layertree-input-radio"
+             tabindex="-1"
+      >
+        <input type="radio"
+               tabindex="-1"
+               name="shortid.generatebahnhofplaneradio"
+        >
+        <span>
+        </span>
+      </label>
+      <div class="tm-button "
+           role="button"
+           style="display: flex;"
+           tabindex="0"
+      >
+        <div>
+          printprodukte
+        </div>
+      </div>
+    </div>
+    <div class="tm-layer-tree-item"
+         data-react-beautiful-dnd-draggable="2"
+         style="padding-left: 30px;"
+    >
+    </div>
+    <div class="tm-layer-tree-item"
+         data-react-beautiful-dnd-draggable="2"
+         style="padding-left: 0px;"
+    >
+      <div style="position: absolute; margin: auto; top: 0px; left: 0px; bottom: 0px; right: 0px;"
+           role="button"
+           tabindex="0"
+      >
+      </div>
+      <label class="tm-layertree-input-radio"
+             tabindex="-1"
+      >
+        <input type="radio"
+               tabindex="-1"
+               name="shortid.generaterootradio"
+        >
+        <span>
+        </span>
+      </label>
+      <div class="tm-button "
+           role="button"
+           style="display: flex;"
+           tabindex="-1"
+      >
+        <div>
+          bauprojekte
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+`;
+
+exports[`LayerTree matches snapshots when renderItem is used. 1`] = `
+
+<div class="tm-layer-tree">
+  <div style="pointer-events: auto;"
+       data-react-beautiful-dnd-droppable="1"
+  >
+    <div class="tm-layer-tree-item"
+         data-react-beautiful-dnd-draggable="1"
+         style="padding-left: 0px;"
+    >
+      <div>
+      </div>
+    </div>
+    <div class="tm-layer-tree-item"
+         data-react-beautiful-dnd-draggable="1"
+         style="padding-left: 30px;"
+    >
+      <div>
+      </div>
+    </div>
+    <div class="tm-layer-tree-item"
+         data-react-beautiful-dnd-draggable="1"
+         style="padding-left: 60px;"
+    >
+      <div>
+      </div>
+    </div>
+    <div class="tm-layer-tree-item"
+         data-react-beautiful-dnd-draggable="1"
+         style="padding-left: 60px;"
+    >
+      <div>
+      </div>
+    </div>
+    <div class="tm-layer-tree-item"
+         data-react-beautiful-dnd-draggable="1"
+         style="padding-left: 30px;"
+    >
+      <div>
+      </div>
+    </div>
+    <div class="tm-layer-tree-item"
+         data-react-beautiful-dnd-draggable="1"
+         style="padding-left: 0px;"
+    >
+      <div>
+      </div>
+    </div>
+  </div>
+</div>
+
+`;
