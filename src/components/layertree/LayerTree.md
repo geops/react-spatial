@@ -82,7 +82,7 @@ class LayerTreeExample extends React.Component {
           tree={treeData}
           onItemToggle={(item) => {
             this.setState({
-              treeData: this.layerService.onToggle(item),
+              treeData: this.layerService.onItemToggle(item),
             });
           }}
           onItemChange={(itemId) => {

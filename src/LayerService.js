@@ -329,7 +329,7 @@ export default class LayerService {
       // An input radio automatically expand/collapse on check.
       newTree = this.mutateTree(newTree, item.id, {
         isChecked: value,
-        isExpanded: item.hasChildren,
+        isExpanded: value,
       });
       // Apply to parents if all the others siblings are uncheck.
       newTree = this.applyToParents(newTree, item, {
@@ -359,6 +359,7 @@ export default class LayerService {
         // Uncheck all the children.
         newTree = this.applyToChildren(newTree, item, {
           isChecked: value,
+          isExpanded: value,
         });
       }
     } else if (item.type === 'checkbox') {
@@ -385,7 +386,7 @@ export default class LayerService {
     return this.treeData;
   }
 
-  onToggle(item) {
+  onItemToggle(item) {
     const tree = this.getTree();
     return this.mutateTree(tree, item.id, {
       isExpanded: !item.isExpanded,
