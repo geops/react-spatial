@@ -536,7 +536,7 @@ describe('LayerService', () => {
         expect(updatedItems['1'].isExpanded).toBe(false);
       });
 
-      test.only('a checkbox item', () => {
+      test('a checkbox item', () => {
         const layerServiceInstance = instantiateLayerService({
           rootId: 'root',
           items: {
@@ -562,7 +562,7 @@ describe('LayerService', () => {
         expect(spy).toHaveBeenCalledTimes(1);
         expect(updatedItems['1'].isChecked).toBe(true);
         expect(updatedItems['1'].isExpanded).toBe(false);
-        expect(updatedItems['1-1-'].isChecked).toBe(true);
+        expect(updatedItems['1-1'].isChecked).toBe(true);
       });
     });
   });
