@@ -139,7 +139,6 @@ createlayer = (map, parent, item, dataStyle) => {
     layer = createGroupLayer(map, item, dataStyle);
   }
   if (parent && item.type === 'radio') {
-    console.log(`parent${parent.id}`);
     layer.setRadioGroup(parent.id);
   } else if (item.type === 'radio') {
     layer.setRadioGroup('root');

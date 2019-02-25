@@ -1,4 +1,4 @@
-import Observable from 'ol/Observable';
+import Group from 'ol/layer/Group';
 
 /**
  * A class representing layer group with a name, a visibility, a radioGroup,
@@ -9,45 +9,13 @@ export default class LayerGroup {
     this.name = name;
     this.children = layers;
     this.isBaseLayer = isBaseLayer;
-    console.log(radioGroup);
     this.radioGroup = radioGroup;
     this.visible = typeof visible === 'undefined' ? true : visible;
-    this.setVisible(this.visible);
     this.props = {};
     this.revision = 0;
     this.keys = [];
-
-    this.listenChangeEvt();
-  }
-
-  listenChangeEvt() {
-    const taht = this;
-    this.children.forEach(layer => {
-      this.keys.push(
-        layer.olLayer.on('change:visible', (evt, val) => {
-          console.log('changevisible', evt, val);
-          taht.onChildrenChangeVisible();
-        }),
-      );
-    });
-  }
-
-  unlistenChangeEvt() {
-    this.keys.forEach(key => {
-      Observable.unByKey(key);
-    });
-  }
-
-  onChildrenChangeVisible() {
-    for (let i = 0; i < this.children.length; i += 1) {
-      if (this.children[i].getVisible()) {
-        if (!this.getVisible()) {
-          this.setVisible(true);
-        }
-        return;
-      }
-    }
-    this.setVisible(false);
+    this.olLayer = new Group();
+    this.olLayer.setVisible(this.visible);
   }
 
   getName() {
@@ -100,22 +68,20 @@ export default class LayerGroup {
   }
 
   getVisible() {
-    return this.visible;
+    return this.olLayer.getVisible();
   }
 
   setVisible(visible) {
-    this.visible = visible;
-
-    for (let i = 0; i < this.children.length; i += 1) {
-      if (this.children[i].getVisible() !== visible) {
-        this.children[i].setVisible(visible);
-      }
-    }
+    this.olLayer.setVisible(visible);
     this.revision++;
   }
 
   hasVisibleChildren() {
     return !!this.children.find(l => l.getVisible());
+  }
+
+  hasChildren(visible) {
+    return !!this.children.find(l => visible === l.getVisible());
   }
 
   getProperties() {
