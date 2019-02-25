@@ -139,7 +139,7 @@ export default class LayerService {
   }
 
   getLayers() {
-    return this.layers;
+    return [...this.layers];
   }
 
   getLayersNames() {
@@ -393,5 +393,13 @@ export default class LayerService {
     });
     this.setTree(newTree);
     return this.treeData;
+  }
+
+  on(evt, callback) {
+    const keys = [];
+    console.log(this);
+    this.layers.forEach(layer => {
+      keys.push(layer.olLayer.on('change:visible', callback));
+    });
   }
 }

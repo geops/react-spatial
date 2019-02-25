@@ -1,39 +1,13 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Tree from '@atlaskit/tree';
 import shortid from 'shortid';
+import Observable from 'ol/Observable';
 import Button from '../button/Button';
 
 const propTypes = {
-  /**
-   * The object representing a hierachical object to display as a tree.
-   * This property is only used at initialisation time. Use onItemChange if
-   * you want to keep track of the tree status.
-   */
-  tree: PropTypes.shape({
-    rootId: PropTypes.string.isRequired,
-    items: PropTypes.objectOf(
-      PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        parentId: PropTypes.string,
-        children: PropTypes.arrayOf(PropTypes.string).isRequired,
-        hasChildren: PropTypes.bool.isRequired,
-        hasParent: PropTypes.bool.isRequired,
-        isChecked: PropTypes.bool.isRequired,
-        isExpanded: PropTypes.bool.isRequired,
-        isChildrenLoading: PropTypes.bool.isRequired,
-        type: PropTypes.string.isRequired,
-        data: PropTypes.shape({
-          title: PropTypes.string.isRequired,
-        }).isRequired,
-        defaults: PropTypes.shape({
-          isChecked: PropTypes.bool,
-          isExpanded: PropTypes.bool,
-        }),
-      }),
-    ).isRequired,
-  }),
-
+  service: PropTypes.object,
+  layers: PropTypes.array,
   /**
    * CSS class to apply on the container.
    */
@@ -103,7 +77,6 @@ const propTypes = {
 };
 
 const defaultProps = {
-  tree: null,
   className: 'tm-layer-tree',
   classNameItem: 'tm-layer-tree-item',
   classNameInput: 'tm-layer-tree-input',
@@ -116,75 +89,28 @@ const defaultProps = {
   renderItem: null,
 };
 
-class LayerTree extends PureComponent {
-  static isFirstLevel(item) {
-    return item.parentId === 'root';
+class LayerTree extends Component {
+  static onToggle(item) {
+    // const { onItemToggle } = this.props;
+    // onItemToggle(item);
+    item.setProperties({
+      expanded: !item.getProperties().expanded,
+    });
   }
 
-  constructor(props) {
-    super(props);
-
-    // Prefix used for the name of inputs. This allows multiple LayerTree on the same page.
-    this.prefixInput = shortid.generate();
+  static onInputClick(item) {
+    // const { onItemChange } = this.props;
+    // onItemChange(item.id);
+    item.setVisible(!item.getVisible());
   }
 
-  onToggle(item) {
-    const { onItemToggle } = this.props;
-    onItemToggle(item);
-  }
-
-  onInputClick(item) {
-    const { onItemChange } = this.props;
-    onItemChange(item.id);
-  }
-
-  renderInput(item) {
-    const { classNameInput } = this.props;
-    let tabIndex = 0;
-
-    if (!item.hasChildren || LayerTree.isFirstLevel(item)) {
-      // We forbid focus on keypress event for first level items and items without children.
-      tabIndex = -1;
-    }
-
-    return (
-      <label // eslint-disable-line
-        className={`${classNameInput} ${classNameInput}-${item.type}`}
-        tabIndex={tabIndex}
-        onKeyPress={e => e.which === 13 && this.onInputClick(item)}
-      >
-        <input
-          type={item.type}
-          tabIndex={-1}
-          name={this.prefixInput + item.parentId + item.type}
-          checked={item.isChecked}
-          onChange={() => {}}
-          onClick={() => {
-            this.onInputClick(item);
-          }}
-        />
-        <span />
-      </label>
-    );
-  }
-
-  renderArrow(item) {
-    const { classNameArrow } = this.props;
-    if (!item.hasChildren) {
-      return null;
-    }
-    return (
-      <div
-        className={`${classNameArrow} ${classNameArrow}${
-          item.isExpanded ? '-expanded' : '-collapsed'
-        }`}
-      />
-    );
+  static hasChildren(item) {
+    return !!(item.getChildren() || []).length;
   }
 
   // This function is only used to display an outline on focus around all the item of the first level.
-  renderBarrierFreeDiv(item) {
-    if (!LayerTree.isFirstLevel(item)) {
+  static renderBarrierFreeDiv(item, level) {
+    if (level) {
       return null;
     }
     return (
@@ -199,18 +125,108 @@ class LayerTree extends PureComponent {
         }}
         role="button"
         tabIndex={0}
-        onKeyPress={e => e.which === 13 && this.onInputClick(item)}
+        onKeyPress={e => e.which === 13 && LayerTree.onInputClick(item)}
+      />
+    );
+  }
+
+  constructor(props) {
+    super(props);
+    // Prefix used for the name of inputs. This allows multiple LayerTree on the same page.
+    this.prefixInput = shortid.generate();
+    this.state = {
+      layers: [],
+    };
+    this.olKeys = [];
+  }
+
+  componentDidMount() {
+    const { service } = this.props;
+    const { layers } = this.state;
+    if (layers.length !== service.getLayers().length) {
+      this.setState({
+        layers: service.getLayers(),
+      });
+
+      // Remove listeners
+      this.olKeys.forEach(key => {
+        Observable.unByKey(key);
+      });
+      this.olKeys = service.on('change:visible', () => {
+        this.setState({
+          layers: service.getLayers(),
+        });
+      });
+    }
+  }
+
+  componentDidUpdate() {
+    const { service } = this.props;
+    const { layers } = this.state;
+    const taht = this;
+    if (layers.length !== service.getLayers().length) {
+      this.setState({
+        layers: service.getLayers(),
+      });
+      service.on('change:visible', () => {
+        console.log('change:visible, update STate');
+        taht.setState({
+          layers: service.getLayers(),
+        });
+      });
+    }
+  }
+
+  renderInput(item, level) {
+    const { classNameInput } = this.props;
+    let tabIndex = 0;
+
+    if (!LayerTree.hasChildren(item) || !level) {
+      // We forbid focus on keypress event for first level items and items without children.
+      tabIndex = -1;
+    }
+
+    return (
+      <label // eslint-disable-line
+        className={`${classNameInput} ${classNameInput}-${item.getType()}`}
+        tabIndex={tabIndex}
+        onKeyPress={e => e.which === 13 && LayerTree.onInputClick(item)}
+      >
+        <input
+          type={item.getType()}
+          tabIndex={-1}
+          checked={item.getVisible()}
+          onChange={() => {}}
+          onClick={() => {
+            LayerTree.onInputClick(item);
+          }}
+        />
+        <span />
+      </label>
+    );
+  }
+
+  renderArrow(item) {
+    const { classNameArrow } = this.props;
+    if (!LayerTree.hasChildren(item)) {
+      return null;
+    }
+    return (
+      <div
+        className={`${classNameArrow} ${classNameArrow}${
+          item.getProperties().expanded ? '-expanded' : '-collapsed'
+        }`}
       />
     );
   }
 
   // Render a button which expands/collapse the item if there is children
   // or simulate a click on the input otherwise.
-  renderToggleButton(item) {
+  renderToggleButton(item, level) {
     const { classNameToggle } = this.props;
     let tabIndex = 0;
 
-    if (LayerTree.isFirstLevel(item)) {
+    if (!level) {
       // We forbid focus on the first level items using keypress.
       tabIndex = -1;
     }
@@ -222,60 +238,60 @@ class LayerTree extends PureComponent {
         tabIndex={tabIndex}
         className={classNameToggle}
         onClick={() => {
-          if (!item.hasChildren) {
-            this.onInputClick(item);
+          if (!LayerTree.hasChildren(item)) {
+            LayerTree.onInputClick(item);
           } else {
-            this.onToggle(item);
+            LayerTree.onToggle(item);
           }
         }}
       >
-        <div>{item.data.title}</div>
+        <div>{item.getName()}</div>
         {this.renderArrow(item)}
       </Button>
     );
   }
 
-  renderItem(item) {
-    const { renderItem } = this.props;
+  renderItem(item, level) {
+    const { renderItem, classNameItem, padding } = this.props;
+    let children = item.getChildren() || [];
+
+    if (!item.getProperties().expanded) {
+      children = [];
+    }
 
     if (renderItem) {
       return renderItem(item);
     }
 
     return (
-      <>
-        {this.renderBarrierFreeDiv(item)}
-        {this.renderInput(item)}
-        {this.renderToggleButton(item)}
-      </>
+      <div key={`${item.getName()}-${item.olLayer.getRevision()}`}>
+        <div
+          className={classNameItem}
+          style={{
+            paddingLeft: `${padding * level}px`,
+          }}
+        >
+          {LayerTree.renderBarrierFreeDiv(item, level)}
+          {this.renderInput(item, level)}
+          {this.renderToggleButton(item, level)}
+        </div>
+        {children.map(child => this.renderItem(child, level + 1))}
+      </div>
     );
   }
 
   render() {
-    const {
-      tree,
-      padding,
-      className,
-      classNameItem,
-      isItemHidden,
-    } = this.props;
+    const { className, isItemHidden } = this.props;
+    const { layers } = this.state;
+    if (!layers) {
+      return null;
+    }
 
     return (
       <div className={className}>
-        <Tree
-          tree={tree}
-          renderItem={({ item, provided }) => (
-            <div
-              className={classNameItem}
-              ref={provided.innerRef}
-              {...provided.draggableProps}
-              {...provided.dragHandleProps}
-            >
-              {isItemHidden(item) ? null : this.renderItem(item)}
-            </div>
-          )}
-          offsetPerLevel={padding}
-        />
+        {layers.map(item =>
+          isItemHidden(item) ? null : this.renderItem(item, 0),
+        )}
       </div>
     );
   }

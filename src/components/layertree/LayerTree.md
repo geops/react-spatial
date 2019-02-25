@@ -46,15 +46,15 @@ class LayerTreeExample extends React.Component {
 
     this.state = {
       treeData: { ...treeData },
+      layerService: new LayerService({
+        map: this.map,
+        treeData,
+        dataStyle,
+      })
     };
   }
 
   componentDidMount() {
-    this.layerService = new LayerService({
-      map: this.map,
-      treeData,
-      dataStyle,
-    });
   }
 
   applyStyle(itemId) {
@@ -68,12 +68,12 @@ class LayerTreeExample extends React.Component {
   }
 
   render() {
-    const { featureClicked, treeData } = this.state;
+    const { featureClicked, treeData, layerService } = this.state;
 
     return (
       <div className="tm-layer-tree-example">
         <LayerTree
-          tree={treeData}
+          service={layerService}
           onItemToggle={(item) => {
             this.setState({
               treeData: this.layerService.onItemToggle(item),

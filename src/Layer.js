@@ -1,3 +1,4 @@
+import OLGroup from 'ol/layer/Group';
 /**
  * A class representing layer to display an BasicMap with a name, a visibility
  * status and an [ol/layer/Layer](https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html)
@@ -36,5 +37,28 @@ export default class Layer {
   setVisible(visible) {
     this.visible = visible;
     this.olLayer.setVisible(visible);
+  }
+
+  getChildren() {
+    if (this.olLayer instanceof OLGroup) {
+      return this.olLayer.getLayers();
+    }
+    return [];
+  }
+
+  getProperties() {
+    return this.olLayer.getProperties();
+  }
+
+  setProperties(p) {
+    this.olLayer.setProperties(p);
+  }
+
+  getParentId() {
+    return this.olLayer.getProperties().parentId;
+  }
+
+  getType() {
+    return 'checkbox';
   }
 }
