@@ -16,6 +16,7 @@ const Style = require('ol/style/Style').default;
 const Circle = require('ol/style/Circle').default;
 const Fill = require('ol/style/Fill').default;
 const Text = require('ol/style/Text').default;
+const configReader = require('../../ConfigReader').default;
 require('./LayerTree.md.scss');
 
 class LayerTreeExample extends React.Component {
@@ -43,18 +44,16 @@ class LayerTreeExample extends React.Component {
       }),
     });
     this.layers = [vectorLayer];
-
-    this.state = {
-      treeData: { ...treeData },
-      layerService: new LayerService({
-        map: this.map,
-        treeData,
-        dataStyle,
-      })
-    };
   }
 
   componentDidMount() {
+    const layers = configReader.readConfig(
+      this.map,
+      treeData,
+      dataStyle.default
+    );
+
+    this.layerService = new LayerService(layers);
   }
 
   applyStyle(itemId) {
@@ -68,24 +67,11 @@ class LayerTreeExample extends React.Component {
   }
 
   render() {
-    const { featureClicked, treeData, layerService } = this.state;
-
     return (
-      <div className="tm-layer-tree-example">
-        <LayerTree
-          service={layerService}
-          onItemToggle={(item) => {
-            this.setState({
-              treeData: this.layerService.onItemToggle(item),
-            });
-          }}
-          onItemChange={(itemId) => {
-            this.setState({
-              treeData: this.layerService.onItemChange(itemId),
-            });
-            this.applyStyle(itemId);
-          }}
-        />
+      <div className="tm-layer-tree-example"> 
+          <LayerTree
+            layerService={this.layerService}
+          />
         <BasicMap
           map={this.map}
           center={this.center}

@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Tree from '@atlaskit/tree';
 import shortid from 'shortid';
 import Observable from 'ol/Observable';
 import Button from '../button/Button';
 
 const propTypes = {
+  /**
+   * Layers provider.
+   */
   service: PropTypes.object,
-  layers: PropTypes.array,
+
   /**
    * CSS class to apply on the container.
    */
