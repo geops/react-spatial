@@ -1,10 +1,10 @@
-const data = {
+const configData = {
   name: 'Topic 1',
   items: {
     baselayer1: {
       id: 'baselayer1',
       type: 'checkbox',
-      isChecked: true,
+      isVisible: true,
       isBaseLayer: true,
       data: {
         title: 'OSM Baselayer',
@@ -14,13 +14,13 @@ const data = {
     },
     sublayers1: {
       id: 'sublayers1',
-      isChecked: true,
+      isVisible: true,
       type: 'radio',
       children: {
         usaPop: {
           id: 'usaPop',
           type: 'checkbox',
-          isChecked: true,
+          isVisible: true,
           data: {
             title: 'USA Population Density',
             styleId: 'usaPop',
@@ -30,12 +30,13 @@ const data = {
               'Demographics/USA_Population_Density/MapServer/WMTS/?layer=0' +
               '&style=default&tilematrixset=EPSG%3A3857&Service=WMTS&' +
               'Request=GetTile&Version=1.0.0&Format=image%2Fpng&',
+            projection: 'EPSG:3857',
           },
         },
         countryBorders: {
           id: 'countryBorders',
           type: 'checkbox',
-          isChecked: false,
+          isVisible: false,
           data: {
             title: 'Countries Borders',
             styleId: 'countryBorders',
@@ -53,14 +54,14 @@ const data = {
     },
     sublayers2: {
       id: 'sublayers2',
-      isChecked: false,
+      isVisible: false,
       isExpanded: true,
       type: 'radio',
       children: {
         pointLayer: {
           id: 'pointLayer',
           type: 'radio',
-          isChecked: false,
+          isVisible: false,
           data: {
             title: 'Points Samples',
             styleId: 'pointLayer',
@@ -74,7 +75,7 @@ const data = {
         lineLayer: {
           id: 'lineLayer',
           type: 'radio',
-          isChecked: false,
+          isVisible: false,
           data: {
             title: 'Lines Samples',
             styleId: 'lineLayer',
@@ -88,7 +89,7 @@ const data = {
         polygonLayer: {
           id: 'polygonLayer',
           type: 'radio',
-          isChecked: false,
+          isVisible: false,
           data: {
             title: 'Polygons Samples',
             styleId: 'polygonLayer',
@@ -108,45 +109,7 @@ const data = {
   },
 };
 
-const applyDefaultValuesOnItem = d => {
-  const item = d;
-  if (!item) {
-    // eslint-disable-next-line no-console
-    console.error(`Item undefined`);
-    return;
-  }
-
-  if (!item.id) {
-    // eslint-disable-next-line no-console
-    console.error(`No id in ${item}`);
-    return;
-  }
-  item.id = item.id;
-  item.type = item.type || 'checkbox';
-  item.isBaseLayer = item.isBaseLayer || false;
-  item.data = item.data || {};
-  if (Object.prototype.hasOwnProperty.call(item.data, 'title')) {
-    item.data.title = item.data.title;
-  }
-  item.isChecked = item.isChecked || false;
-};
-
-// Fill the data with some helpers properties
-const applyDefaultValues = dataObj => {
-  const d = { ...dataObj };
-  Object.keys(d.items).forEach(id => {
-    applyDefaultValuesOnItem(d.items[id]);
-    const item = d.items[id];
-    if (item.data.type === 'layerGroup') {
-      Object.keys(item.children).forEach(child => {
-        applyDefaultValuesOnItem(item.children[child]);
-      });
-    }
-  });
-  return d;
-};
-
 // For styleguidist, see styleguide.config.js
 if (module.exports) {
-  module.exports = applyDefaultValues(data);
+  module.exports = configData;
 }

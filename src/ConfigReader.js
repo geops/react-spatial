@@ -9,39 +9,77 @@ import Layer from './Layer';
 import LayerGroup from './LayerGroup';
 import VectorLayer from './VectorLayer';
 
-const wmtsResolutions = [
-  156543.033928,
-  78271.516964,
-  39135.758482,
-  19567.879241,
-  9783.9396205,
-  4891.96981025,
-  2445.98490513,
-  1222.99245256,
-  611.496226281,
-  305.748113141,
-  152.87405657,
-  76.4370282852,
-  38.2185141426,
-  19.1092570713,
-  9.55462853565,
-  4.77731426782,
-  2.38865713391,
-  1.19432856696,
-  0.597164283478,
-  0.298582141739,
-];
-
-const wmtsMatrixIds = wmtsResolutions.map((res, i) => `${i}`);
-
-const projectionExtent = [
-  -20037508.3428,
-  -20037508.3428,
-  20037508.3428,
-  20037508.3428,
-];
+import projections from './Projections';
 
 let createlayer = null;
+
+const applyDefaultValuesOnItem = d => {
+  const item = d;
+  if (!item) {
+    // eslint-disable-next-line no-console
+    console.error(`Item undefined`);
+    return;
+  }
+
+  if (!item.id) {
+    // eslint-disable-next-line no-console
+    console.error(`No id in ${item}`);
+    return;
+  }
+  item.id = item.id;
+  item.type = item.type || 'checkbox';
+  item.isBaseLayer = item.isBaseLayer || false;
+
+  if (item.data) {
+    const { data } = item;
+    if (data.type === 'wmts') {
+      if (
+        Object.prototype.hasOwnProperty.call(data, 'projectionExtent') &&
+        Object.prototype.hasOwnProperty.call(data, 'resolutions')
+      ) {
+        // If 'projectionExtent' & 'resolutions' already defined.
+        data.projectionExtent = data.projectionExtent;
+        data.resolutions = data.resolutions;
+      } else if (
+        Object.prototype.hasOwnProperty.call(projections, data.projection)
+      ) {
+        // If 'projection' defined in layer & projection configuration file.
+        data.projectionExtent = projections[data.projection].projectionExtent;
+        data.resolutions = projections[data.projection].resolutions;
+      } else {
+        // eslint-disable-next-line no-console
+        console.error(
+          "Neither 'resolution' nor 'projectionExtent' " +
+            `is defined in wmts layer '${item.id}'`,
+        );
+        return;
+      }
+    }
+
+    item.data = item.data;
+  } else {
+    item.data = {};
+  }
+  if (Object.prototype.hasOwnProperty.call(item.data, 'title')) {
+    item.data.title = item.data.title;
+  }
+  item.isVisible = item.isVisible || false;
+};
+
+// Fill the data with some helpers properties
+const applyDefaultValues = dataObj => {
+  const d = { ...dataObj };
+  Object.keys(d.items).forEach(id => {
+    applyDefaultValuesOnItem(d.items[id]);
+    const item = d.items[id];
+    if (item.data.type === 'layerGroup') {
+      Object.keys(item.children).forEach(child => {
+        applyDefaultValuesOnItem(item.children[child]);
+      });
+    }
+  });
+  return d;
+};
 
 const isNotTopic = data =>
   !(
@@ -67,7 +105,7 @@ const createXYZLayer = item => {
       }),
     }),
     isBaseLayer: item.isBaseLayer,
-    visible: item.isChecked,
+    visible: item.isVisible,
   });
 };
 
@@ -80,7 +118,7 @@ const createVectorLayer = (item, dataStyle) => {
       format: new GeoJSONFormat(),
     }),
     isBaseLayer: item.isBaseLayer,
-    visible: item.isChecked,
+    visible: item.isVisible,
     style: getStyle(dataStyle, data.styleId),
   });
 };
@@ -94,14 +132,14 @@ const createWMTSLayer = item => {
       source: new WMTSSource({
         url: data.url,
         tileGrid: new WMTSTileGrid({
-          extent: projectionExtent,
-          resolutions: wmtsResolutions,
-          matrixIds: wmtsMatrixIds,
+          extent: item.data.projectionExtent,
+          resolutions: item.data.resolutions,
+          matrixIds: item.data.resolutions.map((res, i) => `${i}`),
         }),
       }),
     }),
     isBaseLayer: item.isBaseLayer,
-    visible: item.isChecked,
+    visible: item.isVisible,
   });
 };
 
@@ -147,10 +185,8 @@ createlayer = (map, parent, item, dataStyle) => {
 };
 
 const initialize = (map, data, dataStyle) => {
-  console.log(data);
-  const { items } = data;
+  const { items } = applyDefaultValues(data);
   const layers = [];
-
   Object.keys(items).forEach(layer => {
     if (isNotTopic(items[layer].data)) {
       layers.unshift(createlayer(map, null, items[layer], dataStyle));
