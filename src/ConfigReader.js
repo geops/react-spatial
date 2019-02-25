@@ -110,48 +110,51 @@ const createGroupLayer = (map, item, dataStyle) => {
   const layers = [];
 
   Object.keys(children).forEach(childId => {
-    layers.unshift(createlayer(map, children[childId], dataStyle));
+    layers.unshift(createlayer(map, item, children[childId], dataStyle));
   });
 
   return new LayerGroup({
     name: item.data.title,
     layers,
     visibile: item.isChecked,
-    radioGroup: item.type === 'radio',
   });
 };
 
-createlayer = (map, item, dataStyle) => {
+createlayer = (map, parent, item, dataStyle) => {
+  console.log(item);
+  let layer;
   if (item.data.type === 'xyz') {
-    const layer = createXYZLayer(item);
+    layer = createXYZLayer(item);
     map.addLayer(layer.olLayer);
-    return layer;
   }
   if (item.data.type === 'wmts') {
-    const layer = createWMTSLayer(item);
+    layer = createWMTSLayer(item);
     map.addLayer(layer.olLayer);
-    return layer;
   }
   if (item.data.type === 'vectorLayer') {
-    const layer = createVectorLayer(item, dataStyle);
+    layer = createVectorLayer(item, dataStyle);
     map.addLayer(layer.olLayer);
-    return layer;
   }
   if (item.data.type === 'layerGroup') {
-    return createGroupLayer(map, item, dataStyle);
+    layer = createGroupLayer(map, item, dataStyle);
   }
-  return undefined;
+  if (parent && item.type === 'radio') {
+    console.log(`parent${parent.id}`);
+    layer.setRadioGroup(parent.id);
+  } else if (item.type === 'radio') {
+    layer.setRadioGroup('root');
+  }
+  return layer;
 };
 
 const initialize = (map, data, dataStyle) => {
+  console.log(data);
   const { items } = data;
   const layers = [];
 
   Object.keys(items).forEach(layer => {
     if (isNotTopic(items[layer].data)) {
-      if (items[layer].isChecked === true) {
-        layers.unshift(createlayer(map, items[layer], dataStyle));
-      }
+      layers.unshift(createlayer(map, null, items[layer], dataStyle));
     }
   });
 

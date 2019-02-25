@@ -47,11 +47,10 @@ const data = {
         },
       },
       data: {
-        title: 'Sub-Layers 1',
+        title: 'Sub-Layers',
         type: 'layerGroup',
       },
     },
-    /*
     sublayers2: {
       id: 'sublayers2',
       isChecked: false,
@@ -103,9 +102,9 @@ const data = {
       },
       data: {
         title: 'Sub-Layers 2',
+        type: 'layerGroup',
       },
     },
-    */
   },
 };
 

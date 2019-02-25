@@ -44,6 +44,9 @@ class LayerTreeExample extends React.Component {
       }),
     });
     this.layers = [vectorLayer];
+    this.state = {
+      layerService: null
+    }
   }
 
   componentDidMount() {
@@ -52,8 +55,9 @@ class LayerTreeExample extends React.Component {
       treeData,
       dataStyle.default
     );
-
-    this.layerService = new LayerService(layers);
+    this.setState({
+      layerService: new LayerService(layers)
+    })
   }
 
   applyStyle(itemId) {
@@ -67,10 +71,11 @@ class LayerTreeExample extends React.Component {
   }
 
   render() {
+    const {layerService} = this.state;
     return (
       <div className="tm-layer-tree-example"> 
           <LayerTree
-            layerService={this.layerService}
+            service={layerService}
           />
         <BasicMap
           map={this.map}

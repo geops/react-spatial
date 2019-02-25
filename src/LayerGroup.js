@@ -1,3 +1,5 @@
+import Observable from 'ol/Observable';
+
 /**
  * A class representing layer group with a name, a visibility, a radioGroup,
  * and a list of [ol/layer/Layer](https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html)
@@ -5,28 +7,65 @@
 export default class LayerGroup {
   constructor({ name, layers, radioGroup, isBaseLayer, visible }) {
     this.name = name;
-    this.childs = layers;
+    this.children = layers;
     this.isBaseLayer = isBaseLayer;
+    console.log(radioGroup);
     this.radioGroup = radioGroup;
     this.visible = typeof visible === 'undefined' ? true : visible;
     this.setVisible(this.visible);
+    this.props = {};
+    this.revision = 0;
+    this.keys = [];
+
+    this.listenChangeEvt();
+  }
+
+  listenChangeEvt() {
+    const taht = this;
+    this.children.forEach(layer => {
+      this.keys.push(
+        layer.olLayer.on('change:visible', (evt, val) => {
+          console.log('changevisible', evt, val);
+          taht.onChildrenChangeVisible();
+        }),
+      );
+    });
+  }
+
+  unlistenChangeEvt() {
+    this.keys.forEach(key => {
+      Observable.unByKey(key);
+    });
+  }
+
+  onChildrenChangeVisible() {
+    for (let i = 0; i < this.children.length; i += 1) {
+      if (this.children[i].getVisible()) {
+        if (!this.getVisible()) {
+          this.setVisible(true);
+        }
+        return;
+      }
+    }
+    this.setVisible(false);
   }
 
   getName() {
     return this.name;
   }
 
-  getChilds() {
-    return this.childs;
+  getChildren() {
+    return this.children;
   }
 
-  setChilds(layers) {
-    this.childs = layers;
+  setChildren(layers) {
+    this.children = layers;
+    this.revision++;
   }
 
-  getVisibleChilds() {
-    for (let i = 0; i < this.childs.length; i += 1) {
-      if (this.childs[i].getVisible()) {
+  getVisibleChildren() {
+    for (let i = 0; i < this.children.length; i += 1) {
+      if (this.children[i].getVisible()) {
         return true;
       }
     }
@@ -34,13 +73,14 @@ export default class LayerGroup {
   }
 
   addChild(layer) {
-    this.childs.unshift(layer);
+    this.children.unshift(layer);
+    this.revision++;
   }
 
   removeChild(name) {
-    for (let i = 0; i < this.childs.length; i += 1) {
-      if (this.childs[i].getName() === name) {
-        this.childs.splice(i, 1);
+    for (let i = 0; i < this.children.length; i += 1) {
+      if (this.children[i].getName() === name) {
+        this.children.splice(i, 1);
         return;
       }
     }
@@ -54,11 +94,40 @@ export default class LayerGroup {
     return this.radioGroup;
   }
 
-  setVisible(visible) {
-    this.visible = visible;
+  setRadioGroup(radioGroup) {
+    this.radioGroup = radioGroup;
+    this.revision++;
   }
 
-  hasVisibleChilds() {
-    return !!this.childs.find(l => l.getVisible());
+  getVisible() {
+    return this.visible;
+  }
+
+  setVisible(visible) {
+    this.visible = visible;
+
+    for (let i = 0; i < this.children.length; i += 1) {
+      if (this.children[i].getVisible() !== visible) {
+        this.children[i].setVisible(visible);
+      }
+    }
+    this.revision++;
+  }
+
+  hasVisibleChildren() {
+    return !!this.children.find(l => l.getVisible());
+  }
+
+  getProperties() {
+    return this.props;
+  }
+
+  setProperties(p) {
+    this.props = p;
+    this.revision++;
+  }
+
+  getRevision() {
+    return this.revision;
   }
 }

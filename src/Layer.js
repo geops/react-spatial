@@ -72,7 +72,7 @@ export default class Layer {
     return this.olLayer.getProperties().parentId;
   }
 
-  getType() {
-    return 'checkbox';
+  getRevision() {
+    return this.olLayer.getRevision();
   }
 }

@@ -43,7 +43,9 @@ export default class LayerService {
     const keys = [];
     console.log(this);
     this.layers.forEach(layer => {
-      keys.push(layer.olLayer.on('change:visible', callback));
+      if (layer.olLayer) {
+        keys.push(layer.olLayer.on('change', callback));
+      }
     });
   }
 }
