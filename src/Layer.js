@@ -1,14 +1,16 @@
 /**
- * A class representing layer to display an BasicMap with a name, a visibility
- * status and an [ol/layer/Layer](https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html)
- *
+ * A class representing layer to display on BasicMap with a name, a visibility,
+ * a radioGroup, astatus and
+ * an [ol/layer/Layer](https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html)
  */
 export default class Layer {
-  constructor({ name, olLayer, visible }) {
+  constructor({ name, olLayer, radioGroup, isBaseLayer, visible }) {
     this.name = name;
     this.olLayer = olLayer;
-
+    this.isBaseLayer = isBaseLayer;
+    this.radioGroup = radioGroup;
     this.visible = typeof visible === 'undefined' ? true : visible;
+
     this.setVisible(this.visible);
   }
 
@@ -23,6 +25,18 @@ export default class Layer {
 
   getVisible() {
     return this.visible;
+  }
+
+  getIsBaseLayer() {
+    return this.isBaseLayer;
+  }
+
+  getRadioGroup() {
+    return this.radioGroup;
+  }
+
+  setRadioGroup(radioGroup) {
+    this.radioGroup = radioGroup;
   }
 
   changed() {
