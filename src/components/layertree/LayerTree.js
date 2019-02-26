@@ -8,7 +8,7 @@ const propTypes = {
   /**
    * Layers provider.
    */
-  service: PropTypes.object.isRequired,
+  service: PropTypes.object,
 
   /**
    * CSS class to apply on the container.
@@ -56,7 +56,6 @@ const propTypes = {
    * Custom function to render an item in the tree.
    *
    * @param {object} item The item to render.
-   * @param {object} provided The option provided by @atlaskit/tree.
    *
    * @return {node} A jsx node.
    */
@@ -64,6 +63,7 @@ const propTypes = {
 };
 
 const defaultProps = {
+  service: undefined,
   className: 'tm-layer-tree',
   classNameItem: 'tm-layer-tree-item',
   classNameInput: 'tm-layer-tree-input',
@@ -79,77 +79,21 @@ class LayerTree extends Component {
     return !!((item.getChildren && item.getChildren()) || []).length;
   }
 
-  constructor(props) {
-    super(props);
-    // Prefix used for the name of inputs. This allows multiple LayerTree on the same page.
-    this.prefixInput = shortid.generate();
-    this.state = {
-      layers: null,
-    };
-    this.olKeys = [];
-  }
-
-  componentDidMount() {
-    const { service } = this.props;
-    const { layers } = this.state;
-    if (service && layers && layers.length !== service.getLayers().length) {
-      this.setState({
-        layers: service.getLayers(),
-      });
-      this.listenChangeEvts();
-    }
-  }
-
-  componentDidUpdate() {
-    const { service } = this.props;
-    const { layers } = this.state;
-    if (service && (!layers || layers.length !== service.getLayers().length)) {
-      this.setState({
-        layers: service.getLayers(),
-      });
-      this.listenChangeEvts();
-    }
-  }
-
-  onToggle(item) {
-    const { service } = this.props;
+  static onToggle(item) {
     item.setProperties({
       expanded: !item.getProperties().expanded,
     });
-    this.setState({
-      layers: service.getLayers(),
-    });
   }
 
-  onInputClick(item) {
-    const { service } = this.props;
+  static onInputClick(item) {
     item.setVisible(!item.getVisible());
     if (item.getRadioGroup() === 'root') {
-      /* item.setProperties({
-        expanded: !item.getProperties().expanded,
-      }); */
+      LayerTree.onToggle(item);
     }
-    this.setState({
-      layers: service.getLayers(),
-    });
-  }
-
-  listenChangeEvts() {
-    const { service } = this.props;
-    // Remove listeners
-    this.olKeys.forEach(key => {
-      Observable.unByKey(key);
-    });
-    service.on('change:visible', () => {
-      console.log('changevisible');
-      this.setState({
-        layers: service.getLayers(),
-      });
-    });
   }
 
   // This function is only used to display an outline on focus around all the item of the first level.
-  renderBarrierFreeDiv(item, level) {
+  static renderBarrierFreeDiv(item, level) {
     if (level) {
       return null;
     }
@@ -165,9 +109,52 @@ class LayerTree extends Component {
         }}
         role="button"
         tabIndex={0}
-        onKeyPress={e => e.which === 13 && this.onInputClick(item)}
+        onKeyPress={e => e.which === 13 && LayerTree.onInputClick(item)}
       />
     );
+  }
+
+  constructor(props) {
+    super(props);
+    // Prefix used for the name of inputs. This allows multiple LayerTree on the same page.
+    this.prefixInput = shortid.generate();
+    this.state = {
+      layers: null,
+    };
+    this.olKeys = [];
+  }
+
+  componentDidMount() {
+    this.updateState();
+  }
+
+  componentDidUpdate() {
+    this.updateState();
+  }
+
+  updateState() {
+    const { service } = this.props;
+    const { layers } = this.state;
+
+    if (service && (!layers || layers.length !== service.getLayers().length)) {
+      this.setState({
+        layers: service.getLayers(),
+      });
+      this.listenChangeEvts();
+    }
+  }
+
+  listenChangeEvts() {
+    const { service } = this.props;
+    // Remove listeners
+    this.olKeys.forEach(key => {
+      Observable.unByKey(key);
+    });
+    service.on('change:visible', () => {
+      this.setState({
+        layers: service.getLayers(),
+      });
+    });
   }
 
   renderInput(item, level) {
@@ -179,21 +166,20 @@ class LayerTree extends Component {
       tabIndex = -1;
     }
     const inputType = item.getRadioGroup() ? 'radio' : 'checkbox';
-
     return (
       <label // eslint-disable-line
         className={`${classNameInput} ${classNameInput}-${inputType}`}
         tabIndex={tabIndex}
-        onKeyPress={e => e.which === 13 && this.onInputClick(item)}
+        onKeyPress={e => e.which === 13 && LayerTree.onInputClick(item)}
       >
         <input
-          type="checkbox"
+          type={inputType}
           name={item.getRadioGroup()}
           tabIndex={-1}
           checked={item.getVisible()}
           onChange={() => {}}
           onClick={() => {
-            this.onInputClick(item);
+            LayerTree.onInputClick(item);
           }}
         />
         <span />
@@ -228,15 +214,13 @@ class LayerTree extends Component {
 
     return (
       <Button
-        role="button"
-        style={{ display: 'flex' }}
         tabIndex={tabIndex}
         className={classNameToggle}
         onClick={() => {
           if (!LayerTree.hasChildren(item)) {
-            this.onInputClick(item);
+            LayerTree.onInputClick(item);
           } else {
-            this.onToggle(item);
+            LayerTree.onToggle(item);
           }
         }}
       >
@@ -259,21 +243,21 @@ class LayerTree extends Component {
     }
 
     return (
-      <div key={`${item.getName()}-${item.getRevision()}`}>
+      <>
         <div
           className={classNameItem}
           style={{
             paddingLeft: `${padding * level}px`,
           }}
         >
-          {this.renderBarrierFreeDiv(item, level)}
+          {LayerTree.renderBarrierFreeDiv(item, level)}
           {this.renderInput(item, level)}
           {this.renderToggleButton(item, level)}
         </div>
         {[...children]
           .reverse()
           .map(child => this.renderItem(child, level + 1))}
-      </div>
+      </>
     );
   }
 

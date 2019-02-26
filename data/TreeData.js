@@ -3,6 +3,7 @@ const configData = {
   items: {
     mytopic: {
       id: 'mytopic',
+      type: 'radio',
       isVisible: true,
       data: {
         title: 'My topic',

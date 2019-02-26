@@ -13,18 +13,17 @@ export default class LayerService {
   }
 
   getLayers() {
-    return [...this.layers];
+    return this.layers;
   }
 
   getLayersAsFlatArray(layers) {
     let arr = [];
-    const layerss = layers || this.getLayers();
-    for (let i = 0; i < layerss.length; i += 1) {
-      arr.push(layerss[i]);
-      if (layerss[i].children) {
-        arr = arr.concat(this.getLayersAsFlatArray(layerss[i].children));
+    (layers || this.getLayers()).forEach(l => {
+      arr.push(l);
+      if (l.children) {
+        arr = arr.concat(this.getLayersAsFlatArray(l.children));
       }
-    }
+    });
     return arr;
   }
 
@@ -88,7 +87,7 @@ export default class LayerService {
     const keys = [];
     this.getLayers().forEach(layer => {
       if (layer.olLayer) {
-        keys.push(layer.olLayer.on(evt, callback));
+        keys.push(layer.olLayer.on('change', callback));
       }
     });
   }
