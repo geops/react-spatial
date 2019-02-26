@@ -73,10 +73,10 @@ class LayerTreeExample extends React.Component {
   render() {
     const {layerService} = this.state;
     return (
-      <div className="tm-layer-tree-example"> 
-          <LayerTree
-            service={layerService}
-          />
+      <div className="tm-layer-tree-example">
+        <LayerTree
+          service={layerService}
+        />
         <BasicMap
           map={this.map}
           center={this.center}
