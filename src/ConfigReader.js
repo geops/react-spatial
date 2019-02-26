@@ -1,4 +1,5 @@
 import TileLayer from 'ol/layer/Tile';
+import Group from 'ol/layer/Group';
 import XYZ from 'ol/source/XYZ';
 import VectorSource from 'ol/source/Vector';
 import WMTSSource from 'ol/source/WMTS';
@@ -143,38 +144,43 @@ const createWMTSLayer = item => {
   });
 };
 
-const createGroupLayer = (map, item, dataStyle) => {
+const createGroupLayer = (item, dataStyle) => {
   const { children } = item;
   const layers = [];
+  const olLayers = [];
 
   Object.keys(children).forEach(childId => {
-    layers.unshift(createlayer(map, item, children[childId], dataStyle));
+    layers.unshift(createlayer(item, children[childId], dataStyle));
+  });
+
+  for (let i = 0; i < layers.length; i += 1) {
+    olLayers.push(layers[i].olLayer);
+  }
+  const olLayer = new Group({
+    layers: olLayers,
   });
 
   return new LayerGroup({
     name: item.data.title,
     layers,
+    olLayer,
     visibile: item.isChecked,
   });
 };
 
-createlayer = (map, parent, item, dataStyle) => {
-  console.log(item);
+createlayer = (parent, item, dataStyle) => {
   let layer;
   if (item.data.type === 'xyz') {
     layer = createXYZLayer(item);
-    map.addLayer(layer.olLayer);
   }
   if (item.data.type === 'wmts') {
     layer = createWMTSLayer(item);
-    map.addLayer(layer.olLayer);
   }
   if (item.data.type === 'vectorLayer') {
     layer = createVectorLayer(item, dataStyle);
-    map.addLayer(layer.olLayer);
   }
   if (item.data.type === 'layerGroup') {
-    layer = createGroupLayer(map, item, dataStyle);
+    layer = createGroupLayer(item, dataStyle);
   }
   if (parent && item.type === 'radio') {
     layer.setRadioGroup(parent.id);
@@ -189,7 +195,9 @@ const initialize = (map, data, dataStyle) => {
   const layers = [];
   Object.keys(items).forEach(layer => {
     if (isNotTopic(items[layer].data)) {
-      layers.unshift(createlayer(map, null, items[layer], dataStyle));
+      const l = createlayer(null, items[layer], dataStyle);
+      map.addLayer(l.olLayer);
+      layers.unshift(l);
     }
   });
 

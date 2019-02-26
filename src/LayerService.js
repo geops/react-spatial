@@ -1,5 +1,4 @@
 import Observable from 'ol/Observable';
-import Group from 'ol/layer/Group';
 
 /**
  * A layer service class to handle layer adding, removing and visiblity.

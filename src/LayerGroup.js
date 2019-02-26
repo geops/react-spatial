@@ -1,11 +1,9 @@
-import Group from 'ol/layer/Group';
-
 /**
  * A class representing layer group with a name, a visibility, a radioGroup,
  * and a list of [ol/layer/Layer](https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html)
  */
 export default class LayerGroup {
-  constructor({ name, layers, radioGroup, isBaseLayer, visible }) {
+  constructor({ name, layers, olLayer, radioGroup, isBaseLayer, visible }) {
     this.name = name;
     this.children = layers;
     this.isBaseLayer = isBaseLayer;
@@ -14,7 +12,7 @@ export default class LayerGroup {
     this.props = {};
     this.revision = 0;
     this.keys = [];
-    this.olLayer = new Group();
+    this.olLayer = olLayer;
     this.olLayer.setVisible(this.visible);
   }
 
