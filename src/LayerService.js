@@ -59,10 +59,7 @@ export default class LayerService {
       if (layer.children) {
         parentLayer = layer;
       }
-      if (
-        parentLayer.children.find(c => c === child) &&
-        child.getName() === layer.getName()
-      ) {
+      if (parentLayer.children.find(c => c === child)) {
         return parentLayer;
       }
     }
@@ -142,12 +139,11 @@ export default class LayerService {
           if (
             !evt.stopPropagationUp &&
             parent &&
-            (evt.target.getVisible() ||
-              (!evt.target.getVisible() &&
-                !parent.children.find(c => c.getVisible())))
+            (visible ||
+              (!visible && !parent.children.find(c => c.getVisible())))
           ) {
             // console.log('Apply to parent', parent.getName());
-            parent.setVisible(evt.target.getVisible(), evt, true, false, false);
+            parent.setVisible(visible, evt, true, false, false);
           }
         }),
       );
