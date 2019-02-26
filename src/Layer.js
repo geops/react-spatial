@@ -6,15 +6,12 @@ import Observable from 'ol/Observable';
  * an [ol/layer/Layer](https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html)
  */
 export default class Layer extends Observable {
-  constructor({ name, olLayer, radioGroup, isBaseLayer, visible }) {
+  constructor({ name, olLayer, radioGroup, isBaseLayer }) {
     super();
     this.name = name;
     this.olLayer = olLayer;
     this.isBaseLayer = isBaseLayer;
     this.radioGroup = radioGroup;
-    this.visible = typeof visible === 'undefined' ? true : visible;
-
-    this.setVisible(this.visible);
   }
 
   init(map) {
@@ -27,7 +24,7 @@ export default class Layer extends Observable {
   }
 
   getVisible() {
-    return this.visible;
+    return this.olLayer.getVisible();
   }
 
   getIsBaseLayer() {
@@ -60,10 +57,9 @@ export default class Layer extends Observable {
     if (evt && evt.initialTarget === this) {
       return;
     }
-    if (visible === this.visible) {
+    if (visible === this.olLayer.getVisible()) {
       return;
     }
-    this.visible = visible;
     this.olLayer.setVisible(visible);
     this.dispatchEvent({
       type: 'change:visible',

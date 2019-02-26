@@ -12,8 +12,7 @@ import VectorLayer from './VectorLayer';
 
 import projections from './Projections';
 
-let createlayer = null;
-
+let createLayer;
 const applyDefaultValuesOnItem = d => {
   const item = d;
   if (!item) {
@@ -34,16 +33,11 @@ const applyDefaultValuesOnItem = d => {
   if (item.data) {
     const { data } = item;
     if (data.type === 'wmts') {
-      if (
-        Object.prototype.hasOwnProperty.call(data, 'projectionExtent') &&
-        Object.prototype.hasOwnProperty.call(data, 'resolutions')
-      ) {
+      if (data.projectionExtent && data.resolutions) {
         // If 'projectionExtent' & 'resolutions' already defined.
         data.projectionExtent = data.projectionExtent;
         data.resolutions = data.resolutions;
-      } else if (
-        Object.prototype.hasOwnProperty.call(projections, data.projection)
-      ) {
+      } else if (projections[data.projection]) {
         // If 'projection' defined in layer & projection configuration file.
         data.projectionExtent = projections[data.projection].projectionExtent;
         data.resolutions = projections[data.projection].resolutions;
@@ -65,6 +59,12 @@ const applyDefaultValuesOnItem = d => {
     item.data.title = item.data.title;
   }
   item.isVisible = item.isVisible || false;
+
+  if (item.data.type === 'layerGroup') {
+    Object.keys(item.children).forEach(child => {
+      applyDefaultValuesOnItem(item.children[child]);
+    });
+  }
 };
 
 // Fill the data with some helpers properties
@@ -72,21 +72,9 @@ const applyDefaultValues = dataObj => {
   const d = { ...dataObj };
   Object.keys(d.items).forEach(id => {
     applyDefaultValuesOnItem(d.items[id]);
-    const item = d.items[id];
-    if (item.data.type === 'layerGroup') {
-      Object.keys(item.children).forEach(child => {
-        applyDefaultValuesOnItem(item.children[child]);
-      });
-    }
   });
   return d;
 };
-
-const isNotTopic = data =>
-  !(
-    Object.keys(data).length === 1 &&
-    Object.prototype.hasOwnProperty.call(data, 'title')
-  );
 
 const getStyle = (dataStyle, styleId) => {
   if (Object.prototype.hasOwnProperty.call(dataStyle, styleId)) {
@@ -150,10 +138,12 @@ const createGroupLayer = (item, dataStyle) => {
   const olLayers = [];
 
   Object.keys(children).forEach(childId => {
-    layers.unshift(createlayer(item, children[childId], dataStyle));
+    layers.push(createLayer(item, children[childId], dataStyle));
   });
 
   for (let i = 0; i < layers.length; i += 1) {
+    console.log(layers[i].getName());
+
     olLayers.push(layers[i].olLayer);
   }
   const olLayer = new Group({
@@ -164,11 +154,12 @@ const createGroupLayer = (item, dataStyle) => {
     name: item.data.title,
     layers,
     olLayer,
-    visibile: item.isChecked,
+    radioGroup: null,
+    isBaseLayer: item.isBaseLayer,
   });
 };
 
-createlayer = (parent, item, dataStyle) => {
+createLayer = (parent, item, dataStyle) => {
   let layer;
   if (item.data.type === 'xyz') {
     layer = createXYZLayer(item);
@@ -187,6 +178,9 @@ createlayer = (parent, item, dataStyle) => {
   } else if (item.type === 'radio') {
     layer.setRadioGroup('root');
   }
+  console.log(item.data.title, item.isVisible);
+  layer.olLayer.setVisible(item.isVisible);
+  layer.olLayer.setProperties(item.data);
   return layer;
 };
 
@@ -194,11 +188,19 @@ const initialize = (map, data, dataStyle) => {
   const { items } = applyDefaultValues(data);
   const layers = [];
   Object.keys(items).forEach(layer => {
-    if (isNotTopic(items[layer].data)) {
-      const l = createlayer(null, items[layer], dataStyle);
-      map.addLayer(l.olLayer);
-      layers.unshift(l);
-    }
+    const l = createLayer(null, items[layer], dataStyle);
+    console.log('addLayer', l.getName());
+    map.addLayer(l.olLayer);
+    console.log(
+      map
+        .getLayers()
+        .getArray()[0]
+        .getLayers()
+        .getArray()[1]
+        .getLayers()
+        .getArray(),
+    );
+    layers.push(l);
   });
 
   return layers;

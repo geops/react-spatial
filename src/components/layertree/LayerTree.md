@@ -25,25 +25,6 @@ class LayerTreeExample extends React.Component {
 
     this.center = [-10997148, 4569099];
     this.map = new OLMap({controls:[]});
-
-    const vectorLayer = new VectorLayer({
-      source: new VectorSource({
-        features: [
-          new Feature({
-            geometry: new Point(this.center),
-          }),
-        ],
-      }),
-      style: new Style({
-        image: new Circle({
-          radius: 1,
-          fill: new Fill({
-            color: '#FFFFFF',
-          }),
-        }),
-      }),
-    });
-    this.layers = [vectorLayer];
     this.state = {
       layerService: null
     }

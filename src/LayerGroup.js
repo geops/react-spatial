@@ -1,3 +1,4 @@
+import OLGroup from 'ol/layer/Group';
 import Layer from './Layer';
 
 /**
@@ -5,8 +6,8 @@ import Layer from './Layer';
  * and a list of [ol/layer/Layer](https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html)
  */
 export default class LayerGroup extends Layer {
-  constructor({ name, layers, olLayer, radioGroup, isBaseLayer, visible }) {
-    super({ name, olLayer, radioGroup, isBaseLayer, visible });
+  constructor({ name, layers, olLayer, radioGroup, isBaseLayer }) {
+    super({ name, olLayer, radioGroup, isBaseLayer });
     this.children = layers;
   }
 

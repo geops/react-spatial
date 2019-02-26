@@ -8,7 +8,7 @@ const propTypes = {
   /**
    * Layers provider.
    */
-  service: PropTypes.object,
+  service: PropTypes.object.isRequired,
 
   /**
    * CSS class to apply on the container.
@@ -53,14 +53,6 @@ const propTypes = {
   isItemHidden: PropTypes.func,
 
   /**
-   * Callback called on each modification of an item.
-   *
-   * @param {object} item The item modified.
-   * @param {object} tree The current tree.
-   */
-  onItemChange: PropTypes.func,
-
-  /**
    * Custom function to render an item in the tree.
    *
    * @param {object} item The item to render.
@@ -69,13 +61,6 @@ const propTypes = {
    * @return {node} A jsx node.
    */
   renderItem: PropTypes.func,
-
-  /**
-   * Callback called on each toggle event.
-   *
-   * @param {object} item The item toggled.
-   */
-  onItemToggle: PropTypes.func,
 };
 
 const defaultProps = {
@@ -86,56 +71,12 @@ const defaultProps = {
   classNameArrow: 'tm-layer-tree-arrow',
   padding: 30,
   isItemHidden: () => false,
-  onItemChange: () => {},
-  onItemToggle: () => {},
   renderItem: null,
 };
 
 class LayerTree extends Component {
-  onToggle(item) {
-    // const { onItemToggle } = this.props;
-    // onItemToggle(item);
-    item.setProperties({
-      expanded: !item.getProperties().expanded,
-    });
-    this.setState({
-      layers: this.props.service.getLayers(),
-    });
-  }
-
-  onInputClick(item) {
-    // const { onItemChange } = this.props;
-    // onItemChange(item.id);
-    item.setVisible(!item.getVisible());
-    this.setState({
-      layers: this.props.service.getLayers(),
-    });
-  }
-
   static hasChildren(item) {
     return !!((item.getChildren && item.getChildren()) || []).length;
-  }
-
-  // This function is only used to display an outline on focus around all the item of the first level.
-  renderBarrierFreeDiv(item, level) {
-    if (level) {
-      return null;
-    }
-    return (
-      <div
-        style={{
-          position: 'absolute',
-          margin: 'auto',
-          top: 0,
-          left: 0,
-          bottom: 0,
-          right: 0,
-        }}
-        role="button"
-        tabIndex={0}
-        onKeyPress={e => e.which === 13 && this.onInputClick(item)}
-      />
-    );
   }
 
   constructor(props) {
@@ -170,6 +111,29 @@ class LayerTree extends Component {
     }
   }
 
+  onToggle(item) {
+    const { service } = this.props;
+    item.setProperties({
+      expanded: !item.getProperties().expanded,
+    });
+    this.setState({
+      layers: service.getLayers(),
+    });
+  }
+
+  onInputClick(item) {
+    const { service } = this.props;
+    item.setVisible(!item.getVisible());
+    if (item.getRadioGroup() === 'root') {
+      /* item.setProperties({
+        expanded: !item.getProperties().expanded,
+      }); */
+    }
+    this.setState({
+      layers: service.getLayers(),
+    });
+  }
+
   listenChangeEvts() {
     const { service } = this.props;
     // Remove listeners
@@ -177,10 +141,33 @@ class LayerTree extends Component {
       Observable.unByKey(key);
     });
     service.on('change:visible', () => {
+      console.log('changevisible');
       this.setState({
         layers: service.getLayers(),
       });
     });
+  }
+
+  // This function is only used to display an outline on focus around all the item of the first level.
+  renderBarrierFreeDiv(item, level) {
+    if (level) {
+      return null;
+    }
+    return (
+      <div
+        style={{
+          position: 'absolute',
+          margin: 'auto',
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,
+        }}
+        role="button"
+        tabIndex={0}
+        onKeyPress={e => e.which === 13 && this.onInputClick(item)}
+      />
+    );
   }
 
   renderInput(item, level) {
@@ -283,7 +270,9 @@ class LayerTree extends Component {
           {this.renderInput(item, level)}
           {this.renderToggleButton(item, level)}
         </div>
-        {children.map(child => this.renderItem(child, level + 1))}
+        {[...children]
+          .reverse()
+          .map(child => this.renderItem(child, level + 1))}
       </div>
     );
   }
@@ -294,9 +283,9 @@ class LayerTree extends Component {
 
     return (
       <div className={className}>
-        {(layers || []).map(item =>
-          isItemHidden(item) ? null : this.renderItem(item, 0),
-        )}
+        {(layers || [])
+          .reverse()
+          .map(item => (isItemHidden(item) ? null : this.renderItem(item, 0)))}
       </div>
     );
   }

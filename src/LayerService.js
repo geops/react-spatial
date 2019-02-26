@@ -89,7 +89,7 @@ export default class LayerService {
 
   on(evt, callback) {
     const keys = [];
-    this.getLayersAsFlatArray().forEach(layer => {
+    this.getLayers().forEach(layer => {
       if (layer.olLayer) {
         keys.push(layer.olLayer.on(evt, callback));
       }
