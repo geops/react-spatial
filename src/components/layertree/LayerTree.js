@@ -155,35 +155,32 @@ class LayerTree extends Component {
       this.setState({
         layers: service.getLayers(),
       });
-
-      // Remove listeners
-      this.olKeys.forEach(key => {
-        Observable.unByKey(key);
-      });
-      this.olKeys = service.on('change:visible', () => {
-        this.setState({
-          layers: service.getLayers(),
-        });
-      });
+      this.listenChangeEvts();
     }
   }
 
   componentDidUpdate() {
     const { service } = this.props;
     const { layers } = this.state;
-    const taht = this;
     if (service && (!layers || layers.length !== service.getLayers().length)) {
       this.setState({
         layers: service.getLayers(),
       });
-      console.log(service);
-      service.on('change:visible', () => {
-        console.log('change:visible, update STate');
-        taht.setState({
-          layers: service.getLayers(),
-        });
-      });
+      this.listenChangeEvts();
     }
+  }
+
+  listenChangeEvts() {
+    const { service } = this.props;
+    // Remove listeners
+    this.olKeys.forEach(key => {
+      Observable.unByKey(key);
+    });
+    service.on('change:visible', () => {
+      this.setState({
+        layers: service.getLayers(),
+      });
+    });
   }
 
   renderInput(item, level) {
@@ -194,7 +191,6 @@ class LayerTree extends Component {
       // We forbid focus on keypress event for first level items and items without children.
       tabIndex = -1;
     }
-    console.log(`radioGroup${item.getRadioGroup()}`);
     const inputType = item.getRadioGroup() ? 'radio' : 'checkbox';
 
     return (
@@ -267,7 +263,6 @@ class LayerTree extends Component {
     const { renderItem, classNameItem, padding } = this.props;
     let children = (item.getChildren && item.getChildren()) || [];
 
-    console.log('children ', children, !item.getProperties().expanded);
     if (children.length && !item.getProperties().expanded) {
       children = [];
     }
@@ -299,10 +294,9 @@ class LayerTree extends Component {
 
     return (
       <div className={className}>
-        {(layers || []).map(item => {
-          console.log(item);
-          return isItemHidden(item) ? null : this.renderItem(item, 0);
-        })}
+        {(layers || []).map(item =>
+          isItemHidden(item) ? null : this.renderItem(item, 0),
+        )}
       </div>
     );
   }

@@ -1,25 +1,14 @@
-import Group from 'ol/layer/Group';
+import OLGroup from 'ol/layer/Group';
+import Layer from './Layer';
 
 /**
  * A class representing layer group with a name, a visibility, a radioGroup,
  * and a list of [ol/layer/Layer](https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html)
  */
-export default class LayerGroup {
+export default class LayerGroup extends Layer {
   constructor({ name, layers, radioGroup, isBaseLayer, visible }) {
-    this.name = name;
+    super({ name, olLayer: new OLGroup(), radioGroup, isBaseLayer, visible });
     this.children = layers;
-    this.isBaseLayer = isBaseLayer;
-    this.radioGroup = radioGroup;
-    this.visible = typeof visible === 'undefined' ? true : visible;
-    this.props = {};
-    this.revision = 0;
-    this.keys = [];
-    this.olLayer = new Group();
-    this.olLayer.setVisible(this.visible);
-  }
-
-  getName() {
-    return this.name;
   }
 
   getChildren() {
@@ -28,7 +17,6 @@ export default class LayerGroup {
 
   setChildren(layers) {
     this.children = layers;
-    this.revision++;
   }
 
   getVisibleChildren() {
@@ -42,7 +30,6 @@ export default class LayerGroup {
 
   addChild(layer) {
     this.children.unshift(layer);
-    this.revision++;
   }
 
   removeChild(name) {
@@ -54,46 +41,11 @@ export default class LayerGroup {
     }
   }
 
-  getIsBaseLayer() {
-    return this.isBaseLayer;
-  }
-
-  getRadioGroup() {
-    return this.radioGroup;
-  }
-
-  setRadioGroup(radioGroup) {
-    this.radioGroup = radioGroup;
-    this.revision++;
-  }
-
-  getVisible() {
-    return this.olLayer.getVisible();
-  }
-
-  setVisible(visible) {
-    this.olLayer.setVisible(visible);
-    this.revision++;
-  }
-
   hasVisibleChildren() {
     return !!this.children.find(l => l.getVisible());
   }
 
   hasChildren(visible) {
     return !!this.children.find(l => visible === l.getVisible());
-  }
-
-  getProperties() {
-    return this.props;
-  }
-
-  setProperties(p) {
-    this.props = p;
-    this.revision++;
-  }
-
-  getRevision() {
-    return this.revision;
   }
 }

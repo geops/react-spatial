@@ -1,11 +1,13 @@
 import OLGroup from 'ol/layer/Group';
+import Observable from 'ol/Observable';
 /**
  * A class representing layer to display on BasicMap with a name, a visibility,
  * a radioGroup, astatus and
  * an [ol/layer/Layer](https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html)
  */
-export default class Layer {
+export default class Layer extends Observable {
   constructor({ name, olLayer, radioGroup, isBaseLayer, visible }) {
+    super();
     this.name = name;
     this.olLayer = olLayer;
     this.isBaseLayer = isBaseLayer;
@@ -48,9 +50,29 @@ export default class Layer {
     this.olLayer.setStyle(style);
   }
 
-  setVisible(visible) {
+  setVisible(
+    visible,
+    evt,
+    stopPropagationDown = false,
+    stopPropagationUp = false,
+    stopPropagationSiblings = false,
+  ) {
+    if (evt && evt.initialTarget === this) {
+      return;
+    }
+    if (visible === this.visible) {
+      return;
+    }
     this.visible = visible;
     this.olLayer.setVisible(visible);
+    this.dispatchEvent({
+      type: 'change:visible',
+      target: this,
+      initialTarget: (evt && evt.initialTarget) || this,
+      stopPropagationDown,
+      stopPropagationUp,
+      stopPropagationSiblings,
+    });
   }
 
   getChildren() {

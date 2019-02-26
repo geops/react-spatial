@@ -60,7 +60,10 @@ export default class LayerService {
       if (layer.children) {
         parentLayer = layer;
       }
-      if (child.getName() === layer.getName()) {
+      if (
+        parentLayer.children.find(c => c === child) &&
+        child.getName() === layer.getName()
+      ) {
         return parentLayer;
       }
     }
@@ -87,31 +90,65 @@ export default class LayerService {
 
   on(evt, callback) {
     const keys = [];
-    console.log(this);
-    this.layers.forEach(layer => {
+    this.getLayersAsFlatArray().forEach(layer => {
       if (layer.olLayer) {
-        keys.push(layer.olLayer.on('change', callback));
+        keys.push(layer.olLayer.on(evt, callback));
       }
     });
   }
 
   listenChangeEvt() {
     const taht = this;
-    console.log(this.getLayersAsFlatArray());
     this.getLayersAsFlatArray().forEach(layer => {
       taht.keys.push(
-        layer.olLayer.on('change:visible', evt => {
-          // Apply to radio group
-          // Apply to children
-          if (layer.children) {
-            console.log('Apply to children', layer.getName());
-            taht.applyToChildren(layer.children, evt.target.getVisible());
-          }
-          // Apply to parent
+        layer.on('change:visible', evt => {
+          const visible = evt.target.getVisible();
           const parent = taht.getParentLayer(layer);
-          if (parent) {
-            console.log('Apply to parent', parent.getName());
-            taht.applyToParent(parent, evt.target.getVisible());
+
+          // Apply to siblings only if it's a radio group.
+          if (
+            !evt.stopPropagationSiblings &&
+            layer.getRadioGroup() &&
+            visible
+          ) {
+            const siblings = this.getRadioGroupLayers(
+              layer.getRadioGroup(),
+            ).filter(l => l !== layer);
+            // console.log('Apply to siblings', siblings);
+
+            siblings.forEach(s => {
+              if (
+                visible &&
+                s.getRadioGroup() &&
+                evt.target.getRadioGroup() === s.getRadioGroup()
+              ) {
+                // console.log('Apply to Siblings', s, visible);
+                s.setVisible(false, evt, false, true, true);
+              }
+            });
+          }
+
+          // Apply to children
+          if (!evt.stopPropagationDown && layer.children) {
+            // console.log('Apply to children', layer.children);
+
+            layer.children.forEach(child => {
+              child.setVisible(visible, evt, false, true, false);
+            });
+          }
+
+          // Apply to parent only if:
+          //   - a child is visible
+          //   - all children are hidden
+          if (
+            !evt.stopPropagationUp &&
+            parent &&
+            (evt.target.getVisible() ||
+              (!evt.target.getVisible() &&
+                !parent.children.find(c => c.getVisible())))
+          ) {
+            // console.log('Apply to parent', parent.getName());
+            parent.setVisible(evt.target.getVisible(), evt, true, false, false);
           }
         }),
       );
@@ -122,21 +159,5 @@ export default class LayerService {
     this.keys.forEach(key => {
       Observable.unByKey(key);
     });
-  }
-
-  applyToParent(parent, visible) {
-    if (parent.hasChildren(visible)) {
-      console.log('Apply to parent', parent.getName(), visible);
-      parent.setVisible(visible);
-    }
-  }
-
-  applyToChildren(children, visible) {
-    for (let i = 0; i < children.length; i += 1) {
-      if (children[i].getVisible() !== visible) {
-        console.log('Apply to children', children[i].getName());
-        children[i].setVisible(visible);
-      }
-    }
   }
 }
