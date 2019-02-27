@@ -1,35 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ShareMenu from './ShareMenu';
-
 import './MenuItem.scss';
 
 const propTypes = {
-  defaultMenuName: PropTypes.oneOf(['share']),
-  element: PropTypes.element,
+  children: PropTypes.node.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
-const defaultProps = {
-  defaultMenuName: null,
-  element: null,
-};
-
-const MenuItem = ({ defaultMenuName, element }) => {
-  let elem = null;
-
-  switch (defaultMenuName) {
-    case 'share':
-      elem = <ShareMenu />;
-      break;
-    default:
-      elem = element;
-  }
-
-  return <div className="tm-menu-item">{elem}</div>;
-};
+const MenuItem = ({ children, title }) => (
+  <>
+    <div className="tm-menu-item-title">{title}</div>
+    <div className="tm-menu-item">{children}</div>
+  </>
+);
 
 MenuItem.propTypes = propTypes;
-MenuItem.defaultProps = defaultProps;
 
 export default MenuItem;

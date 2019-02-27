@@ -2,23 +2,13 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import Menu from './Menu';
-import MenuItem from './MenuItem';
+import ShareMenu from './ShareMenu';
 
 configure({ adapter: new Adapter() });
 
-describe('Menu', () => {
+describe('ShareMenu', () => {
   test('should match snapshot.', () => {
-    const component = renderer.create(
-      <Menu>
-        <MenuItem title="foo">
-          <div>foo</div>
-        </MenuItem>
-        <MenuItem title="bar">
-          <div>bar</div>
-        </MenuItem>
-      </Menu>,
-    );
+    const component = renderer.create(<ShareMenu title="Teilen" />);
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
   });

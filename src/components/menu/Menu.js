@@ -1,33 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withTranslation } from 'react-i18next';
 
 import './Menu.scss';
 
 const propTypes = {
-  menuItems: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string,
-      element: PropTypes.element,
-    }),
-  ).isRequired,
-  // react-i18next
-  t: PropTypes.func.isRequired,
+  children: PropTypes.array.isRequired,
 };
 
-const Menu = ({ menuItems, t }) => (
+const Menu = ({ children }) => (
   <div className="tm-menu">
-    <div className="tm-menu-content">
-      {menuItems.map(item => (
-        <div key={item.title}>
-          <div className="tm-menu-item-title">{t(item.title)}</div>
-          {item.element}
-        </div>
-      ))}
-    </div>
+    <div className="tm-menu-content">{children}</div>
   </div>
 );
 
 Menu.propTypes = propTypes;
 
-export default withTranslation()(Menu);
+export default Menu;

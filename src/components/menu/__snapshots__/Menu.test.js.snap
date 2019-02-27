@@ -7,132 +7,28 @@ exports[`Menu should match snapshot. 1`] = `
   <div
     className="tm-menu-content"
   >
-    <div>
-      <div
-        className="tm-menu-item-title"
-      >
-        Teilen
-      </div>
-      <div
-        className="tm-menu-item"
-      >
-        <div
-          id="share-menu"
-        >
-          <div
-            className="share-menu-icon "
-          >
-            <a
-              href="//www.facebook.com/sharer.php?u=http://localhost/"
-              rel="noopener noreferrer"
-              tabIndex="0"
-              target="_blank"
-              title="Auf Facebook teilen."
-            >
-              <svg
-                baseProfile="tiny"
-                fill="currentColor"
-                focusable={false}
-                height="1em"
-                stroke="currentColor"
-                strokeWidth="0"
-                style={
-                  Object {
-                    "color": undefined,
-                  }
-                }
-                version="1.2"
-                viewBox="0 0 24 24"
-                width="1em"
-              >
-                <path
-                  d="M13 10h3v3h-3v7h-3v-7h-3v-3h3v-1.255c0-1.189.374-2.691 1.118-3.512.744-.823 1.673-1.233 2.786-1.233h2.096v3h-2.1c-.498 0-.9.402-.9.899v2.101z"
-                />
-              </svg>
-            </a>
-          </div>
-          <div
-            className="share-menu-icon "
-          >
-            <a
-              href="//twitter.com/intent/tweet?url=http://localhost/"
-              rel="noopener noreferrer"
-              tabIndex="0"
-              target="_blank"
-              title="Twittern."
-            >
-              <svg
-                baseProfile="tiny"
-                fill="currentColor"
-                focusable={false}
-                height="1em"
-                stroke="currentColor"
-                strokeWidth="0"
-                style={
-                  Object {
-                    "color": undefined,
-                  }
-                }
-                version="1.2"
-                viewBox="0 0 24 24"
-                width="1em"
-              >
-                <path
-                  d="M18.89 7.012c.808-.496 1.343-1.173 1.605-2.034-.786.417-1.569.703-2.351.861-.703-.756-1.593-1.14-2.66-1.14-1.043 0-1.924.366-2.643 1.078-.715.717-1.076 1.588-1.076 2.605 0 .309.039.585.117.819-3.076-.105-5.622-1.381-7.628-3.837-.34.601-.51 1.213-.51 1.846 0 1.301.549 2.332 1.645 3.089-.625-.053-1.176-.211-1.645-.47 0 .929.273 1.705.82 2.388.549.676 1.254 1.107 2.115 1.291-.312.08-.641.118-.979.118-.312 0-.533-.026-.664-.083.23.757.664 1.371 1.291 1.841.625.472 1.344.721 2.152.743-1.332 1.045-2.855 1.562-4.578 1.562-.422 0-.721-.006-.902-.038 1.697 1.102 3.586 1.649 5.676 1.649 2.139 0 4.029-.542 5.674-1.626 1.645-1.078 2.859-2.408 3.639-3.974.784-1.564 1.172-3.192 1.172-4.892v-.468c.758-.57 1.371-1.212 1.84-1.921-.68.293-1.383.492-2.11.593z"
-                />
-              </svg>
-            </a>
-          </div>
-          <div
-            className="share-menu-icon ta-mail-icon"
-          >
-            <a
-              href="mailto:?body=http://localhost/"
-              rel="noopener noreferrer"
-              tabIndex="0"
-              target="_blank"
-              title="Per Email teilen."
-            >
-              <svg
-                fill="none"
-                focusable={false}
-                height="1em"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                style={
-                  Object {
-                    "color": undefined,
-                  }
-                }
-                viewBox="0 0 24 24"
-                width="1em"
-              >
-                <path
-                  d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
-                />
-                <polyline
-                  points="22,6 12,13 2,6"
-                />
-              </svg>
-            </a>
-          </div>
-        </div>
+    <div
+      className="tm-menu-item-title"
+    >
+      foo
+    </div>
+    <div
+      className="tm-menu-item"
+    >
+      <div>
+        foo
       </div>
     </div>
-    <div>
-      <div
-        className="tm-menu-item-title"
-      >
-        Test
-      </div>
-      <div
-        className="tm-menu-item"
-      >
-        <div>
-          test
-        </div>
+    <div
+      className="tm-menu-item-title"
+    >
+      bar
+    </div>
+    <div
+      className="tm-menu-item"
+    >
+      <div>
+        bar
       </div>
     </div>
   </div>
