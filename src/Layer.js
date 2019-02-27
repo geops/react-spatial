@@ -1,4 +1,3 @@
-import OLGroup from 'ol/layer/Group';
 import Observable from 'ol/Observable';
 /**
  * A class representing layer to display on BasicMap with a name, a visibility,
@@ -13,6 +12,7 @@ export default class Layer extends Observable {
     this.olLayer = olLayer;
     this.isBaseLayer = isBaseLayer;
     this.radioGroup = radioGroup;
+    this.children = [];
 
     if (visible === undefined) {
       this.olLayer.setVisible(true);
@@ -78,10 +78,41 @@ export default class Layer extends Observable {
   }
 
   getChildren() {
-    if (this.olLayer instanceof OLGroup) {
-      return this.olLayer.getLayers();
+    return this.children;
+  }
+
+  setChildren(layers) {
+    this.children = layers;
+  }
+
+  getVisibleChildren() {
+    for (let i = 0; i < this.children.length; i += 1) {
+      if (this.children[i].getVisible()) {
+        return true;
+      }
     }
-    return [];
+    return false;
+  }
+
+  addChild(layer) {
+    this.children.unshift(layer);
+  }
+
+  removeChild(name) {
+    for (let i = 0; i < this.children.length; i += 1) {
+      if (this.children[i].getName() === name) {
+        this.children.splice(i, 1);
+        return;
+      }
+    }
+  }
+
+  hasVisibleChildren() {
+    return !!this.children.find(l => l.getVisible());
+  }
+
+  hasChildren(visible) {
+    return !!this.children.find(l => visible === l.getVisible());
   }
 
   getProperties() {
@@ -90,5 +121,13 @@ export default class Layer extends Observable {
 
   setProperties(p) {
     this.olLayer.setProperties(p);
+  }
+
+  getParentId() {
+    return this.olLayer.getProperties().parentId;
+  }
+
+  getRevision() {
+    return this.olLayer.getRevision();
   }
 }
