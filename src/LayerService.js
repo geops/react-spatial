@@ -27,27 +27,14 @@ export default class LayerService {
     return arr;
   }
 
-  getLayersNames() {
-    const namesArray = [];
-    const layers = this.getLayers();
-    for (let i = 0; i < layers.length; i += 1) {
-      namesArray.push(layers[i].getName());
-    }
-    return namesArray;
-  }
-
-  doesLayerExist(layerName) {
-    return this.getLayersNames().indexOf(layerName) > -1;
+  doesLayerExist(name) {
+    const layers = this.getLayersAsFlatArray();
+    return layers.some(layer => name === layer.getName());
   }
 
   getLayer(name) {
-    const layers = this.getLayers();
-    for (let i = 0; i < layers.length; i += 1) {
-      if (layers[i].getName() === name) {
-        return layers[i];
-      }
-    }
-    return null;
+    const layers = this.getLayersAsFlatArray();
+    return layers.find(layer => name === layer.getName());
   }
 
   getParentLayer(child) {
@@ -93,12 +80,12 @@ export default class LayerService {
   }
 
   listenChangeEvt() {
-    const taht = this;
+    const that = this;
     this.getLayersAsFlatArray().forEach(layer => {
-      taht.keys.push(
+      that.keys.push(
         layer.on('change:visible', evt => {
           const visible = evt.target.getVisible();
-          const parent = taht.getParentLayer(layer);
+          const parent = that.getParentLayer(layer);
 
           // Apply to siblings only if it's a radio group.
           if (
@@ -109,7 +96,6 @@ export default class LayerService {
             const siblings = this.getRadioGroupLayers(
               layer.getRadioGroup(),
             ).filter(l => l !== layer);
-            // console.log('Apply to siblings', siblings);
 
             siblings.forEach(s => {
               if (
@@ -117,18 +103,15 @@ export default class LayerService {
                 s.getRadioGroup() &&
                 evt.target.getRadioGroup() === s.getRadioGroup()
               ) {
-                // console.log('Apply to Siblings', s, visible);
-                s.setVisible(false, evt, false, true, true);
+                s.setVisible(false, false, true, true);
               }
             });
           }
 
           // Apply to children
           if (!evt.stopPropagationDown && layer.children) {
-            // console.log('Apply to children', layer.children);
-
             layer.children.forEach(child => {
-              child.setVisible(visible, evt, false, true, false);
+              child.setVisible(visible, false, true, false);
             });
           }
 
@@ -141,8 +124,7 @@ export default class LayerService {
             (visible ||
               (!visible && !parent.children.find(c => c.getVisible())))
           ) {
-            // console.log('Apply to parent', parent.getName());
-            parent.setVisible(visible, evt, true, false, false);
+            parent.setVisible(visible, true, false, false);
           }
         }),
       );

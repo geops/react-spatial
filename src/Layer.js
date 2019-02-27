@@ -60,14 +60,10 @@ export default class Layer extends Observable {
 
   setVisible(
     visible,
-    evt,
     stopPropagationDown = false,
     stopPropagationUp = false,
     stopPropagationSiblings = false,
   ) {
-    if (evt && evt.initialTarget === this) {
-      return;
-    }
     if (visible === this.olLayer.getVisible()) {
       return;
     }
@@ -75,7 +71,6 @@ export default class Layer extends Observable {
     this.dispatchEvent({
       type: 'change:visible',
       target: this,
-      initialTarget: (evt && evt.initialTarget) || this,
       stopPropagationDown,
       stopPropagationUp,
       stopPropagationSiblings,
@@ -95,13 +90,5 @@ export default class Layer extends Observable {
 
   setProperties(p) {
     this.olLayer.setProperties(p);
-  }
-
-  getParentId() {
-    return this.olLayer.getProperties().parentId;
-  }
-
-  getRevision() {
-    return this.olLayer.getRevision();
   }
 }
