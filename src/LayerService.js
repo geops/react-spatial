@@ -58,7 +58,7 @@ export default class LayerService {
       if (layer.children) {
         parentLayer = layer;
       }
-      if (parentLayer.children.find(c => c === child)) {
+      if (parentLayer && parentLayer.children.find(c => c === child)) {
         return parentLayer;
       }
     }

@@ -6,17 +6,28 @@ import Observable from 'ol/Observable';
  * an [ol/layer/Layer](https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html)
  */
 export default class Layer extends Observable {
-  constructor({ name, olLayer, radioGroup, isBaseLayer }) {
+  constructor({ id, name, olLayer, radioGroup, isBaseLayer, visible }) {
     super();
+    this.id = id;
     this.name = name;
     this.olLayer = olLayer;
     this.isBaseLayer = isBaseLayer;
     this.radioGroup = radioGroup;
+
+    if (visible === undefined) {
+      this.olLayer.setVisible(true);
+    } else {
+      this.olLayer.setVisible(visible);
+    }
   }
 
   init(map) {
     this.map = map;
     map.addLayer(this.olLayer);
+  }
+
+  getId() {
+    return this.id;
   }
 
   getName() {

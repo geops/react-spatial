@@ -81,7 +81,7 @@ class LayerTree extends Component {
 
   static onToggle(item) {
     item.setProperties({
-      expanded: !item.getProperties().expanded,
+      isExpanded: !item.getProperties().isExpanded,
     });
   }
 
@@ -195,7 +195,7 @@ class LayerTree extends Component {
     return (
       <div
         className={`${classNameArrow} ${classNameArrow}${
-          item.getProperties().expanded ? '-expanded' : '-collapsed'
+          item.getProperties().isExpanded ? '-expanded' : '-collapsed'
         }`}
       />
     );
@@ -217,7 +217,7 @@ class LayerTree extends Component {
         tabIndex={tabIndex}
         className={classNameToggle}
         onClick={() => {
-          if (!LayerTree.hasChildren(item)) {
+          if (!level || !LayerTree.hasChildren(item)) {
             LayerTree.onInputClick(item);
           } else {
             LayerTree.onToggle(item);
@@ -234,7 +234,7 @@ class LayerTree extends Component {
     const { renderItem, classNameItem, padding } = this.props;
     let children = (item.getChildren && item.getChildren()) || [];
 
-    if (children.length && !item.getProperties().expanded) {
+    if (children.length && !item.getProperties().isExpanded) {
       children = [];
     }
 
@@ -243,7 +243,7 @@ class LayerTree extends Component {
     }
 
     return (
-      <>
+      <div key={item.getId()}>
         <div
           className={classNameItem}
           style={{
@@ -257,21 +257,28 @@ class LayerTree extends Component {
         {[...children]
           .reverse()
           .map(child => this.renderItem(child, level + 1))}
+      </div>
+    );
+  }
+
+  renderTree() {
+    const { isItemHidden } = this.props;
+    const { layers } = this.state;
+    if (!layers) {
+      return null;
+    }
+    return (
+      <>
+        {[...layers]
+          .reverse()
+          .map(item => (isItemHidden(item) ? null : this.renderItem(item, 0)))}
       </>
     );
   }
 
   render() {
-    const { className, isItemHidden } = this.props;
-    const { layers } = this.state;
-
-    return (
-      <div className={className}>
-        {(layers || [])
-          .reverse()
-          .map(item => (isItemHidden(item) ? null : this.renderItem(item, 0)))}
-      </div>
-    );
+    const { className } = this.props;
+    return <div className={className}>{this.renderTree()}</div>;
   }
 }
 

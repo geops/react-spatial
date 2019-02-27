@@ -13,20 +13,16 @@ import VectorLayer from './VectorLayer';
 import projections from './Projections';
 
 let createLayer;
-const applyDefaultValuesOnItem = d => {
-  const item = d;
+
+const applyDefaultValuesOnItem = (items, it, id) => {
+  const item = it;
   if (!item) {
     // eslint-disable-next-line no-console
     console.error(`Item undefined`);
     return;
   }
 
-  if (!item.id) {
-    // eslint-disable-next-line no-console
-    console.error(`No id in ${item}`);
-    return;
-  }
-  item.id = item.id;
+  item.id = item.id || id;
   item.type = item.type || 'checkbox';
   item.isBaseLayer = item.isBaseLayer || false;
 
@@ -53,39 +49,39 @@ const applyDefaultValuesOnItem = d => {
 
     item.data = item.data;
   } else {
-    item.data = {};
-  }
-  if (Object.prototype.hasOwnProperty.call(item.data, 'title')) {
-    item.data.title = item.data.title;
+    item.data = {
+      title: item.id,
+    };
   }
   item.isVisible = item.isVisible || false;
 
-  if (item.data.type === 'layerGroup') {
-    Object.keys(item.children).forEach(child => {
-      applyDefaultValuesOnItem(item.children[child]);
+  if (item.children) {
+    item.children.forEach(childId => {
+      applyDefaultValuesOnItem(items, items[childId], childId);
     });
   }
 };
 
 // Fill the data with some helpers properties
 const applyDefaultValues = dataObj => {
-  const d = { ...dataObj };
-  Object.keys(d.items).forEach(id => {
-    applyDefaultValuesOnItem(d.items[id]);
+  const { items } = dataObj;
+  Object.keys(items).forEach(id => {
+    applyDefaultValuesOnItem(items, items[id], id);
   });
-  return d;
+  return dataObj;
 };
 
 const getStyle = (dataStyle, styleId) => {
-  if (Object.prototype.hasOwnProperty.call(dataStyle, styleId)) {
+  if (dataStyle && dataStyle[styleId]) {
     return dataStyle[styleId];
   }
   return undefined;
 };
 
 const createXYZLayer = item => {
-  const { data } = item;
+  const { id, data } = item;
   return new Layer({
+    id,
     name: data.title,
     olLayer: new TileLayer({
       zIndex: -1,
@@ -99,8 +95,9 @@ const createXYZLayer = item => {
 };
 
 const createVectorLayer = (item, dataStyle) => {
-  const { data } = item;
+  const { id, data } = item;
   return new VectorLayer({
+    id,
     name: data.title,
     source: new VectorSource({
       url: data.url,
@@ -113,8 +110,9 @@ const createVectorLayer = (item, dataStyle) => {
 };
 
 const createWMTSLayer = item => {
-  const { data } = item;
+  const { id, data } = item;
   return new Layer({
+    id,
     name: data.title,
     olLayer: new TileLayer({
       zIndex: -1,
@@ -132,18 +130,16 @@ const createWMTSLayer = item => {
   });
 };
 
-const createGroupLayer = (item, dataStyle) => {
+const createGroupLayer = (items, item, dataStyle) => {
   const { children } = item;
   const layers = [];
   const olLayers = [];
 
-  Object.keys(children).forEach(childId => {
-    layers.push(createLayer(item, children[childId], dataStyle));
+  children.forEach(childId => {
+    layers.push(createLayer(items, item, items[childId], dataStyle));
   });
 
   for (let i = 0; i < layers.length; i += 1) {
-    console.log(layers[i].getName());
-
     olLayers.push(layers[i].olLayer);
   }
   const olLayer = new Group({
@@ -151,6 +147,7 @@ const createGroupLayer = (item, dataStyle) => {
   });
 
   return new LayerGroup({
+    id: item.id,
     name: item.data.title,
     layers,
     olLayer,
@@ -159,7 +156,7 @@ const createGroupLayer = (item, dataStyle) => {
   });
 };
 
-createLayer = (parent, item, dataStyle) => {
+createLayer = (items, parent, item, dataStyle) => {
   let layer;
   if (item.data.type === 'xyz') {
     layer = createXYZLayer(item);
@@ -170,39 +167,29 @@ createLayer = (parent, item, dataStyle) => {
   if (item.data.type === 'vectorLayer') {
     layer = createVectorLayer(item, dataStyle);
   }
-  if (item.data.type === 'layerGroup') {
-    layer = createGroupLayer(item, dataStyle);
+  if (
+    item.data.type === 'layerGroup' ||
+    (!item.data.type && item.children && item.children.length)
+  ) {
+    layer = createGroupLayer(items, item, dataStyle);
   }
+
   if (parent && item.type === 'radio') {
     layer.setRadioGroup(parent.id);
   } else if (item.type === 'radio') {
     layer.setRadioGroup('root');
   }
-  console.log(item.data.title, item.isVisible);
   layer.olLayer.setVisible(item.isVisible);
   layer.olLayer.setProperties(item.data);
   return layer;
 };
 
 const initialize = (map, data, dataStyle) => {
-  const { items } = applyDefaultValues(data);
+  const { rootId, items } = applyDefaultValues(data);
   const layers = [];
-  Object.keys(items).forEach(layer => {
-    const l = createLayer(null, items[layer], dataStyle);
-    console.log('addLayer', l.getName());
-    map.addLayer(l.olLayer);
-    console.log(
-      map
-        .getLayers()
-        .getArray()[0]
-        .getLayers()
-        .getArray()[1]
-        .getLayers()
-        .getArray(),
-    );
-    layers.push(l);
-  });
-
+  const l = createLayer(items, null, items[rootId], dataStyle);
+  map.addLayer(l.olLayer);
+  layers.push(l);
   return layers;
 };
 

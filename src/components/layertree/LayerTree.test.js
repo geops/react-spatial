@@ -1,66 +1,60 @@
 import React from 'react';
 import { configure, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import 'jest-canvas-mock';
+import OLMap from 'ol/Map';
+import renderer from 'react-test-renderer';
 import LayerTree from './LayerTree';
-import data, { applyDefaultValues } from '../../../data/TreeData.esm';
+import data from '../../../data/TreeData';
+import ConfigReader from '../../ConfigReader';
+import LayerService from '../../LayerService';
 
 configure({ adapter: new Adapter() });
 
 const mountLayerTree = newData => {
-  const a = applyDefaultValues(newData);
-  return mount(<LayerTree tree={a} />);
+  const layers = ConfigReader.readConfig(new OLMap({}), newData);
+  const layerService = new LayerService(layers);
+  return mount(<LayerTree service={layerService} />);
 };
+
+const renderLayerTree = (newData, props) => {
+  const layers = ConfigReader.readConfig(new OLMap({}), newData);
+  const layerService = new LayerService(layers);
+  const component = renderer.create(
+    <LayerTree service={layerService} {...props || {}} />,
+  );
+  const tree = component.toJSON();
+  expect(tree).toMatchSnapshot();
+};
+
 const classItem = '.tm-layer-tree-item';
 
 describe('LayerTree', () => {
   describe('matches snapshots', () => {
     test('using default properties.', () => {
-      /*
-      Test-renderer cannot be use because of th DnD functionnality
-      which needs an existing Html element
-      */
-      const wrapper = mount(<LayerTree tree={data} />);
-      expect(wrapper.html()).toMatchSnapshot();
+      renderLayerTree(data);
     });
 
     test('when renderItem is used.', () => {
-      /*
-      Test-renderer cannot be use because of th DnD functionnality
-      which needs an existing Html element
-      */
-      const wrapper = mount(
-        <LayerTree tree={data} renderItem={item => <div>{item.title}</div>} />,
-      );
-      expect(wrapper.html()).toMatchSnapshot();
+      renderLayerTree(data, {
+        renderItem: item => <div key={item.getId()}>{item.title}</div>,
+      });
     });
 
     test('when classNames are used.', () => {
-      /*
-      Test-renderer cannot be use because of th DnD functionnality
-      which needs an existing Html element
-      */
-      const wrapper = mount(
-        <LayerTree
-          tree={data}
-          className="foo"
-          classNameItem="bar"
-          classNameInput="qux"
-          classNameToggle="quux"
-          classNameArrow="ged"
-        />,
-      );
-      expect(wrapper.html()).toMatchSnapshot();
+      renderLayerTree(data, {
+        className: 'foo',
+        classNameItem: 'bar',
+        classNameInput: 'qux',
+        classNameToggle: 'quux',
+        classNameArrow: 'ged',
+      });
     });
 
     test('when an item is hidden.', () => {
-      /*
-      Test-renderer cannot be use because of th DnD functionnality
-      which needs an existing Html element
-      */
-      const wrapper = mount(
-        <LayerTree tree={data} isItemHidden={item => !!item.children.length} />,
-      );
-      expect(wrapper.html()).toMatchSnapshot();
+      renderLayerTree(data, {
+        isItemHidden: item => !!item.children.length,
+      });
     });
   });
 
@@ -68,22 +62,27 @@ describe('LayerTree', () => {
     let wrapper;
     let spy;
     const data2 = {
-      rootId: 'root',
+      rootId: '1',
       items: {
-        root: {
-          children: ['1'],
+        '1': {
+          data: {
+            type: 'xyz',
+          },
         },
-        '1': {},
       },
     };
     const expectCalled = () => {
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith(data2.items['1']);
+      expect(spy.mock.calls[0][0].getId()).toBe('1');
     };
 
     beforeEach(() => {
+      spy = jest.spyOn(LayerTree, 'onInputClick');
       wrapper = mountLayerTree(data2);
-      spy = jest.spyOn(wrapper.instance(), 'onInputClick');
+    });
+
+    afterEach(() => {
+      spy.mockRestore();
     });
 
     test('when we press enter with keyboard on the barrierfree element.', () => {
@@ -125,32 +124,43 @@ describe('LayerTree', () => {
     let wrapper;
     let spy;
     const data2 = {
-      rootId: 'root',
+      rootId: '1',
       items: {
-        root: {
-          children: ['1'],
-        },
         '1': {
           children: ['1-1'],
+          data: {
+            isExpanded: true,
+          },
         },
-        '1-1': {},
+        '1-1': {
+          children: ['1-1-1'],
+          data: {
+            isExpanded: true,
+          },
+        },
+        '1-1-1': {
+          data: {
+            type: 'xyz',
+          },
+        },
       },
     };
+
     const expectCalled = () => {
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith(data2.items['1']);
+      expect(spy.mock.calls[0][0].getId()).toBe('1-1');
     };
 
     beforeEach(() => {
+      spy = jest.spyOn(LayerTree, 'onToggle');
       wrapper = mountLayerTree(data2);
-      spy = jest.spyOn(wrapper.instance(), 'onToggle');
     });
 
-    test('when we click on toggle button (label+arrow) of an item with children.', () => {
+    test('when we click on toggle button (label+arrow, not on level 0) of an item with children.', () => {
       wrapper
         .find(classItem)
-        .first()
-        .childAt(2)
+        .at(1)
+        .childAt(1)
         .simulate('click');
       expectCalled();
     });

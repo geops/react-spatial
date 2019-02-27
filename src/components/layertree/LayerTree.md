@@ -16,7 +16,7 @@ const Style = require('ol/style/Style').default;
 const Circle = require('ol/style/Circle').default;
 const Fill = require('ol/style/Fill').default;
 const Text = require('ol/style/Text').default;
-const configReader = require('../../ConfigReader').default;
+const ConfigReader = require('../../ConfigReader').default;
 require('./LayerTree.md.scss');
 
 class LayerTreeExample extends React.Component {
@@ -31,7 +31,7 @@ class LayerTreeExample extends React.Component {
   }
 
   componentDidMount() {
-    const layers = configReader.readConfig(
+    const layers = ConfigReader.readConfig(
       this.map,
       treeData,
       dataStyle.default
