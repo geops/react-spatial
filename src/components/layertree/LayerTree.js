@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import shortid from 'shortid';
 import Observable from 'ol/Observable';
 import Button from '../button/Button';
 
@@ -116,8 +115,6 @@ class LayerTree extends Component {
 
   constructor(props) {
     super(props);
-    // Prefix used for the name of inputs. This allows multiple LayerTree on the same page.
-    this.prefixInput = shortid.generate();
     this.state = {
       layers: null,
     };
