@@ -20,11 +20,8 @@ export default class LayerService {
       .find(id => tree.items[id].isChecked);
   }
 
-  static isNotTopic(data) {
-    return !(
-      Object.keys(data).length === 1 &&
-      Object.prototype.hasOwnProperty.call(data, 'title')
-    );
+  static isLayer(data) {
+    return Object.prototype.hasOwnProperty.call(data, 'type');
   }
 
   static createXYZLayer(data) {
@@ -82,7 +79,7 @@ export default class LayerService {
     this.layers = [];
 
     Object.keys(items).forEach(layer => {
-      if (LayerService.isNotTopic(items[layer].data)) {
+      if (LayerService.isLayer(items[layer].data)) {
         if (items[layer].isChecked === true) {
           this.addLayer(this.map, items[layer].data);
         }
@@ -121,7 +118,7 @@ export default class LayerService {
         url: data.url,
         format: new GeoJSONFormat(),
       }),
-      style: this.getStyle(data.styleId),
+      style: data.styleId ? this.getStyle(data.styleId) : undefined,
     });
   }
 
@@ -173,7 +170,7 @@ export default class LayerService {
 
   applyMutationToMap(layerId, mutation) {
     const { data } = this.treeData.items[layerId];
-    if (LayerService.isNotTopic(data)) {
+    if (LayerService.isLayer(data)) {
       if (mutation.isChecked) {
         if (!this.doesLayerExist(data.title)) {
           this.addLayer(this.map, data);
@@ -326,10 +323,11 @@ export default class LayerService {
     const value = !item.isChecked;
     let newTree = tree;
     if (item.type === 'radio') {
-      // An input radio automatically expand/collapse on check.
+      // Input radio automatically expand/collapse if is a Topic (parent=root).
+      const isExpanded = item.parentId === 'root' ? value : item.hasChildren;
       newTree = this.mutateTree(newTree, item.id, {
         isChecked: value,
-        isExpanded: value,
+        isExpanded,
       });
       // Apply to parents if all the others siblings are uncheck.
       newTree = this.applyToParents(newTree, item, {
