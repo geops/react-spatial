@@ -33,8 +33,7 @@ class LayerTreeExample extends React.Component {
   componentDidMount() {
     const layers = ConfigReader.readConfig(
       this.map,
-      treeData,
-      dataStyle.default
+      treeData.default,
     );
     this.setState({
       layerService: new LayerService(layers)
@@ -56,7 +55,7 @@ class LayerTreeExample extends React.Component {
     return (
       <div className="tm-layer-tree-example">
         <LayerTree
-          service={layerService}
+          layerService={layerService}
         />
         <BasicMap
           map={this.map}

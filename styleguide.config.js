@@ -9,7 +9,6 @@ module.exports = {
   },
   context: {
     treeData: path.join(__dirname, 'data/TreeData'),
-    dataStyle: path.join(__dirname, 'data/DataStyle'),
   },
   sections: [
     {

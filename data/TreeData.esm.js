@@ -1,7 +1,6 @@
 /**
  *  Node definition:
  *
- *     id: 'root',
  *     children: ['ovnetzkarteschweiz', 'bauprojekte'],
  *     isExpanded: true,
  *     isChecked: false,
@@ -13,19 +12,10 @@
  *
  */
 
-const data = {
+export default {
   rootId: 'root',
   items: {
-    root: {
-      id: 'root',
-      children: ['ovnetzkarteschweiz', 'bauprojekte'],
-      type: 'checkbox',
-      data: {
-        title: 'root',
-      },
-    },
     ovnetzkarteschweiz: {
-      id: 'ovnetzkarteschweiz',
       isExpanded: true,
       children: ['bahnhofplane', 'passagierfrequenzen'],
       type: 'radio',
@@ -83,46 +73,3 @@ const data = {
     printprodukte3: {},
   },
 };
-
-const applyDefaultValuesOnItem = (d, id) => {
-  const item = d.items[id];
-  if (!item) {
-    // eslint-disable-next-line no-console
-    console.error(`No item with id  ${id}`);
-    return;
-  }
-  item.id = item.id || id;
-  item.type = item.type || 'checkbox';
-  item.data = item.data || {};
-  item.data.title = item.data.title || id;
-  item.hasChildren = !!(item.children && item.children.length);
-  item.hasParent = item.hasParent || false;
-  item.parentId = item.parentId || null;
-  item.isExpanded = item.isExpanded || false;
-  item.isChecked = item.isChecked || false;
-  item.isChildrenLoading = item.isChildrenLoading || false;
-};
-
-// Fill the data tree with some helpers properties
-const applyDefaultValues = dat => {
-  const d = { ...dat };
-  Object.keys(d.items).forEach(id => {
-    applyDefaultValuesOnItem(d, id);
-    const item = d.items[id];
-    if (item.hasChildren) {
-      item.hasChildren = true;
-      item.children.forEach(childId => {
-        applyDefaultValuesOnItem(d, childId);
-        d.items[childId].parentId = id;
-        d.items[childId].hasParent = true;
-      });
-    } else {
-      item.children = [];
-    }
-  });
-  return d;
-};
-
-// For tests
-export { applyDefaultValues };
-export default applyDefaultValues(data);

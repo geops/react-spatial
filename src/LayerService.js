@@ -7,6 +7,7 @@ export default class LayerService {
   constructor(layers) {
     this.layers = layers;
     this.callbacks = {};
+    this.callbacks = {};
     this.keys = [];
     this.listenChangeEvt();
   }
@@ -36,28 +37,23 @@ export default class LayerService {
   }
 
   getRadioGroupLayers(radioGroupName) {
-    if (!radioGroupName) {
-      return null;
+    if (radioGroupName) {
+      return this.getLayersAsFlatArray().filter(
+        l => l.getRadioGroup() === radioGroupName,
+      );
     }
 
-    return this.getLayersAsFlatArray().filter(
-      l => l.getRadioGroup() === radioGroupName,
-    );
+    return null;
   }
 
   on(evt, callback) {
-    const keys = [];
-    this.getLayers().forEach(layer => {
-      if (layer.olLayer) {
-        keys.push(layer.olLayer.on('change', callback));
-      }
-    });
+    this.callbacks[evt] = this.callbacks[evt] || [];
+    this.callbacks[evt].push(callback);
   }
 
   listenChangeEvt() {
-    const that = this;
     this.getLayersAsFlatArray().forEach(layer => {
-      that.keys.push(
+      this.keys.push(
         layer.on('change:visible', evt => {
           const visible = evt.target.getVisible();
 
@@ -92,8 +88,7 @@ export default class LayerService {
           // Apply to parent only if:
           //   - a child is visible
           //   - all children are hidden
-
-          const parentLayer = that.getParentLayer(layer);
+          const parentLayer = this.getParentLayer(layer);
 
           if (
             !evt.stopPropagationUp &&
@@ -103,6 +98,8 @@ export default class LayerService {
           ) {
             parentLayer.setVisible(visible, true, false, false);
           }
+
+          (this.callbacks['change:visible'] || []).forEach(cb => cb());
         }),
       );
     });

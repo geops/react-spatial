@@ -13,17 +13,18 @@ export default class Layer extends Observable {
     this.isBaseLayer = isBaseLayer;
     this.radioGroup = radioGroup;
     this.children = [];
+    this.visible = typeof visible === 'undefined' ? true : visible;
 
-    if (visible === undefined) {
-      this.olLayer.setVisible(true);
-    } else {
-      this.olLayer.setVisible(visible);
+    if (this.olLayer) {
+      this.olLayer.setVisible(this.visible);
     }
   }
 
   init(map) {
     this.map = map;
-    map.addLayer(this.olLayer);
+    if (this.map && this.olLayer) {
+      map.addLayer(this.olLayer);
+    }
   }
 
   getId() {
@@ -35,7 +36,7 @@ export default class Layer extends Observable {
   }
 
   getVisible() {
-    return this.olLayer.getVisible();
+    return this.visible;
   }
 
   getIsBaseLayer() {
@@ -51,11 +52,15 @@ export default class Layer extends Observable {
   }
 
   changed() {
-    this.olLayer.changed();
+    if (this.olLayer) {
+      this.olLayer.changed();
+    }
   }
 
   setStyle(style) {
-    this.olLayer.setStyle(style);
+    if (this.olLayer) {
+      this.olLayer.setStyle(style);
+    }
   }
 
   setVisible(
@@ -64,10 +69,16 @@ export default class Layer extends Observable {
     stopPropagationUp = false,
     stopPropagationSiblings = false,
   ) {
-    if (visible === this.olLayer.getVisible()) {
+    if (visible === this.visible) {
       return;
     }
-    this.olLayer.setVisible(visible);
+
+    this.visible = visible;
+
+    if (this.olLayer) {
+      this.olLayer.setVisible(this.visible);
+    }
+
     this.dispatchEvent({
       type: 'change:visible',
       target: this,
@@ -116,18 +127,16 @@ export default class Layer extends Observable {
   }
 
   getProperties() {
-    return this.olLayer.getProperties();
+    if (this.olLayer) {
+      return this.olLayer.getProperties();
+    }
+
+    return null;
   }
 
   setProperties(p) {
-    this.olLayer.setProperties(p);
-  }
-
-  getParentId() {
-    return this.olLayer.getProperties().parentId;
-  }
-
-  getRevision() {
-    return this.olLayer.getRevision();
+    if (this.olLayer) {
+      this.olLayer.setProperties(p);
+    }
   }
 }
