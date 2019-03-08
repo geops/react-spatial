@@ -27,10 +27,6 @@ export default class Layer extends Observable {
     }
   }
 
-  getId() {
-    return this.id;
-  }
-
   getName() {
     return this.name;
   }

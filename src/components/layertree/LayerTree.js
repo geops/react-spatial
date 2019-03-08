@@ -229,7 +229,7 @@ class LayerTree extends Component {
     }
 
     return (
-      <div key={layer.getId()}>
+      <div key={layer.getName()}>
         <div
           className={classNameItem}
           style={{
