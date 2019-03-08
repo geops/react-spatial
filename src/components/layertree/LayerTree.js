@@ -222,7 +222,11 @@ class LayerTree extends Component {
 
   renderItem(layer, level) {
     const { renderItem, classNameItem, padding } = this.props;
-    const children = [...layer.getChildren()];
+    const { expandedLayerNames } = this.state;
+
+    const children = expandedLayerNames.includes(layer.getName())
+      ? []
+      : [...layer.getChildren()];
 
     if (renderItem) {
       return renderItem(layer);
