@@ -18,45 +18,44 @@ class ConfigReader {
   }
 
   static createXYZLayer(item) {
-    const { id, data } = item;
+    const conf = { ...item };
+    delete conf.data;
+
     return new Layer({
-      id,
-      name: data.title,
+      ...conf,
       olLayer: new TileLayer({
         zIndex: -1,
         source: new XYZ({
-          url: data.url,
+          url: item.data.url,
         }),
       }),
-      isBaseLayer: item.isBaseLayer,
-      visible: item.isVisible,
     });
   }
 
   static createVectorLayer(item) {
-    const { id, data, style } = item;
+    const conf = { ...item };
+    delete conf.data;
+
     return new VectorLayer({
-      id,
-      name: data.title,
+      ...conf,
       source: new VectorSource({
-        url: data.url,
+        url: item.data.url,
         format: new GeoJSONFormat(),
       }),
-      isBaseLayer: item.isBaseLayer,
-      visible: item.isVisible,
-      style,
+      style: item.data.style,
     });
   }
 
   static createWMTSLayer(item) {
-    const { id, data } = item;
+    const conf = { ...item };
+    delete conf.data;
+
     return new Layer({
-      id,
-      name: data.title,
+      ...conf,
       olLayer: new TileLayer({
         zIndex: -1,
         source: new WMTSSource({
-          url: data.url,
+          url: item.data.url,
           tileGrid: new WMTSTileGrid({
             extent: item.data.projectionExtent,
             resolutions: item.data.resolutions,
@@ -64,17 +63,15 @@ class ConfigReader {
           }),
         }),
       }),
-      isBaseLayer: item.isBaseLayer,
-      visible: item.isVisible,
     });
   }
 
   static createEmptyLayer(item) {
-    const { id, data } = item;
+    const conf = { ...item };
+    delete conf.data;
+
     return new Layer({
-      id,
-      name: data.title,
-      visible: item.isVisible,
+      ...conf,
     });
   }
 
@@ -95,8 +92,6 @@ class ConfigReader {
         layer = ConfigReader.createEmptyLayer(item);
     }
 
-    layer.setVisible(item.isVisible);
-    layer.setProperties(item.data);
     return layer;
   }
 
@@ -107,7 +102,6 @@ class ConfigReader {
 
     this.defaults = {
       data: {},
-      type: 'checkbox',
       visible: false,
       isBaseLayer: false,
     };

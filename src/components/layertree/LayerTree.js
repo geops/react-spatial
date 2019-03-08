@@ -114,15 +114,8 @@ class LayerTree extends Component {
     const { layerService } = this.props;
 
     if (layerService !== prevProps.layerService) {
-      this.setState({
-        layers: layerService.getLayers(),
-      });
-
-      layerService.on('change:visible', () => {
-        this.setState({
-          layers: layerService.getLayers(),
-        });
-      });
+      this.updateLayers(layerService);
+      layerService.on('change:visible', () => this.updateLayers(layerService));
     }
   }
 
@@ -138,6 +131,12 @@ class LayerTree extends Component {
     this.setState({ expandedLayerNames });
   }
 
+  updateLayers(layerService) {
+    this.setState({
+      layers: layerService.getLayers(),
+    });
+  }
+
   renderInput(layer, level) {
     const { classNameInput } = this.props;
     let tabIndex = 0;
@@ -146,6 +145,7 @@ class LayerTree extends Component {
       // We forbid focus on keypress event for first level layers and layers without children.
       tabIndex = -1;
     }
+
     const inputType = layer.getRadioGroup() ? 'radio' : 'checkbox';
     return (
       <label // eslint-disable-line

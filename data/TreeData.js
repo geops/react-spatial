@@ -5,27 +5,23 @@ import Fill from 'ol/style/Fill';
 
 export default {
   baselayer1: {
-    type: 'checkbox',
-    isVisible: true,
+    name: 'OSM Baselayer',
+    visible: true,
     isBaseLayer: true,
     data: {
-      title: 'OSM Baselayer',
       type: 'xyz',
       url: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
     },
   },
   sublayers1: {
-    isVisible: true,
-    type: 'radio',
-    data: {
-      title: 'Others layers',
-    },
+    name: 'Others layers',
+    visible: true,
+    type: 'parent',
     children: {
       countryBorders: {
-        type: 'checkbox',
-        isVisible: false,
+        name: 'Countries Borders',
+        visible: false,
         data: {
-          title: 'Countries Borders',
           type: 'vectorLayer',
           url:
             'https://openlayers.org/en/latest/examples/data/geojson/' +
@@ -33,10 +29,9 @@ export default {
         },
       },
       usaPop: {
-        type: 'checkbox',
-        isVisible: true,
+        name: 'USA Population Density',
+        visible: true,
         data: {
-          title: 'USA Population Density',
           type: 'wmts',
           url:
             'https://services.arcgisonline.com/arcgis/rest/services/' +
@@ -49,15 +44,15 @@ export default {
     },
   },
   sublayers2: {
-    isVisible: false,
-    type: 'radio',
-    title: 'Vector sample layers',
+    name: 'Vector sample layers',
+    visible: 'parent',
+    radioGroup: 'radio',
     children: {
       pointLayer: {
-        type: 'radio',
-        isVisible: false,
+        name: 'Points Samples',
+        radioGroup: 'vectorLayers',
+        visible: false,
         data: {
-          title: 'Points Samples',
           style: new Style({
             image: new Circle({
               radius: 5,
@@ -74,10 +69,10 @@ export default {
         },
       },
       lineLayer: {
-        type: 'radio',
-        isVisible: false,
+        name: 'Lines Samples',
+        radioGroup: 'vectorLayers',
+        visible: false,
         data: {
-          title: 'Lines Samples',
           style: new Style({
             stroke: new Stroke({
               color: '#ffcc33',
@@ -92,10 +87,10 @@ export default {
         },
       },
       polygonLayer: {
-        type: 'radio',
-        isVisible: false,
+        name: 'Polygons Samples',
+        radioGroup: 'vectorLayers',
+        visible: false,
         data: {
-          title: 'Polygons Samples',
           style: new Style({
             stroke: new Stroke({
               color: '#7dff8f',

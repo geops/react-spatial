@@ -133,10 +133,4 @@ export default class Layer extends Observable {
 
     return null;
   }
-
-  setProperties(p) {
-    if (this.olLayer) {
-      this.olLayer.setProperties(p);
-    }
-  }
 }
