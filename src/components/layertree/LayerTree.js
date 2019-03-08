@@ -74,31 +74,6 @@ const defaultProps = {
 };
 
 class LayerTree extends Component {
-  static renderBarrierFreeDiv(layer, level) {
-    if (level) {
-      return null;
-    }
-    return (
-      <div
-        style={{
-          position: 'absolute',
-          margin: 'auto',
-          top: 0,
-          left: 0,
-          bottom: 0,
-          right: 0,
-        }}
-        role="button"
-        tabIndex={0}
-        onKeyPress={e => {
-          if (e.which === 13) {
-            layer.setVisible(!layer.getVisible());
-          }
-        }}
-      />
-    );
-  }
-
   constructor(props) {
     super(props);
     // Prefix used for the name of inputs. This allows multiple LayerTree on the same page.
@@ -116,6 +91,14 @@ class LayerTree extends Component {
     if (layerService !== prevProps.layerService) {
       this.updateLayers(layerService);
       layerService.on('change:visible', () => this.updateLayers(layerService));
+    }
+  }
+
+  onInputClick(layer, toggle = false) {
+    if (toggle) {
+      this.onToggle(layer);
+    } else {
+      layer.setVisible(!layer.getVisible());
     }
   }
 
@@ -137,6 +120,31 @@ class LayerTree extends Component {
     });
   }
 
+  renderBarrierFreeDiv(layer, level) {
+    if (level) {
+      return null;
+    }
+    return (
+      <div
+        style={{
+          position: 'absolute',
+          margin: 'auto',
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,
+        }}
+        role="button"
+        tabIndex={0}
+        onKeyPress={e => {
+          if (e.which === 13) {
+            this.onInputClick(layer);
+          }
+        }}
+      />
+    );
+  }
+
   renderInput(layer, level) {
     const { classNameInput } = this.props;
     let tabIndex = 0;
@@ -153,7 +161,7 @@ class LayerTree extends Component {
         tabIndex={tabIndex}
         onKeyPress={e => {
           if (e.which === 13) {
-            layer.setVisible(!layer.getVisible());
+            this.onInputClick(layer, layer.getChildren().length);
           }
         }}
       >
@@ -164,7 +172,7 @@ class LayerTree extends Component {
           checked={layer.getVisible()}
           onChange={() => {}}
           onClick={() => {
-            layer.setVisible(!layer.getVisible());
+            this.onInputClick(layer, layer.getChildren().lenght);
           }}
         />
         <span />
@@ -207,11 +215,7 @@ class LayerTree extends Component {
         tabIndex={tabIndex}
         className={classNameToggle}
         onClick={() => {
-          if (layer.getChildren().length === 0) {
-            layer.setVisible(!layer.getVisible());
-          } else {
-            this.onToggle(layer);
-          }
+          this.onInputClick(layer, layer.getChildren().length);
         }}
       >
         <div>{layer.getName()}</div>
@@ -240,7 +244,7 @@ class LayerTree extends Component {
             paddingLeft: `${padding * level}px`,
           }}
         >
-          {LayerTree.renderBarrierFreeDiv(layer, level)}
+          {this.renderBarrierFreeDiv(layer, level)}
           {this.renderInput(layer, level)}
           {this.renderToggleButton(layer, level)}
         </div>
