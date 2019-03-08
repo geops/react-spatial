@@ -1,52 +1,45 @@
 import 'jest-canvas-mock';
-// import OLMap from 'ol/Map';
-// import LayerService from './LayerService';
-// import { applyDefaultValues } from '../data/TreeData.esm';
+import OLMap from 'ol/Map';
+import LayerService from './LayerService';
+// import treeData from '../data/TreeData.esm';
+import ConfigReader from './ConfigReader';
 
 describe('LayerService', () => {
-  /*
   const instantiateLayerService = data => {
     const map = new OLMap();
-    const treeData = applyDefaultValues(data);
-    return new LayerService({
-      map,
-      treeData,
-      dataStyle: {},
-    });
+    const layers = ConfigReader.readConfig(map, data);
+    return new LayerService(layers);
   };
 
   test('should instantiate LayerService class correctly.', () => {
     const layerServiceInstance = instantiateLayerService({
-      rootId: 'root',
-      items: {
-        root: {
-          type: 'radio',
-          children: ['1', '2'],
-        },
-        '1': {
-          type: 'radio',
-          isChecked: true,
-          isExpanded: true,
-          children: ['1-1', '1-2'],
-        },
-        '1-1': {
-          type: 'radio',
-        },
-        '1-2': {
-          type: 'radio',
-          isChecked: true,
-          isExpanded: true,
-          children: ['1-2-1', '1-2-2'],
-        },
-        '1-2-1': {},
-        '1-2-2': {},
-        '2': {},
+      '0': {
+        name: 'root',
+        radiogroup: 'foo',
+      },
+      '1': {
+        name: '1-1',
+        radiogroup: 'foo',
+        children: [
+          {
+            name: '1-1',
+            type: 'radio',
+          },
+          {
+            name: '1-2',
+            type: 'radio',
+            isChecked: true,
+            isExpanded: true,
+            children: [{ name: '1-2-1' }, { name: '1-2-2' }, { name: '2' }],
+          },
+        ],
       },
     });
 
-    expect(Object.keys(layerServiceInstance.treeData.items).length).toBe(7);
+    expect(layerServiceInstance.getLayersAsFlatArray().length).toBe(7);
   });
 
+  /*
   describe('onItemChange', () => {
     describe('when an checkbox item is checked,', () => {
       test('check only this checkbox.', () => {
