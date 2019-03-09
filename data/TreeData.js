@@ -71,7 +71,7 @@ export default {
       lineLayer: {
         name: 'Lines Samples',
         radioGroup: 'vectorLayers',
-        visible: false,
+        visible: true,
         data: {
           style: new Style({
             stroke: new Stroke({
