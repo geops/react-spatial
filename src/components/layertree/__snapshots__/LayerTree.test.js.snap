@@ -110,7 +110,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           tabIndex={0}
         >
           <input
-            checked={false}
+            checked={true}
             name="vectorLayers"
             onChange={[Function]}
             onClick={[Function]}
@@ -518,7 +518,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           tabIndex={0}
         >
           <input
-            checked={false}
+            checked={true}
             name="vectorLayers"
             onChange={[Function]}
             onClick={[Function]}
