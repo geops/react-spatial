@@ -27,10 +27,10 @@ export default class LayerService {
   }
 
   getLayer(name) {
-    return this.getLayers().find(l => l.getName() === name);
+    return this.getLayersAsFlatArray().find(l => l.getName() === name);
   }
 
-  getParentLayer(child) {
+  getParent(child) {
     return this.getLayersAsFlatArray().find(
       l => !!l.getChildren().includes(child),
     );
@@ -88,7 +88,7 @@ export default class LayerService {
           // Apply to parent only if:
           //   - a child is visible
           //   - all children are hidden
-          const parentLayer = this.getParentLayer(layer);
+          const parentLayer = this.getParent(layer);
 
           if (
             !evt.stopPropagationUp &&
