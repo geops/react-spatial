@@ -1,125 +1,112 @@
-const configData = {
-  rootId: 'topic',
-  items: {
-    topic: {
-      id: 'topic',
-      type: 'radio',
-      isVisible: true,
-      data: {
-        title: 'My topic',
-        type: 'layerGroup',
-        isExpanded: true,
-      },
-      children: ['baselayer1', 'sublayers1', 'sublayers2'],
-    },
-    baselayer1: {
-      id: 'baselayer1',
-      type: 'checkbox',
-      isVisible: true,
-      isBaseLayer: true,
-      data: {
-        title: 'OSM Baselayer',
-        type: 'xyz',
-        url: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      },
-    },
-    sublayers1: {
-      id: 'sublayers1',
-      isVisible: true,
-      type: 'radio',
-      data: {
-        title: 'Others layers',
-        type: 'layerGroup',
-        isExpanded: true,
-      },
-      children: ['countryBorders', 'usaPop'],
-    },
-    countryBorders: {
-      id: 'countryBorders',
-      type: 'checkbox',
-      isVisible: false,
-      data: {
-        title: 'Countries Borders',
-        styleId: 'countryBorders',
-        type: 'vectorLayer',
-        url:
-          'https://openlayers.org/en/latest/examples/data/geojson/' +
-          'countries.geojson',
-      },
-    },
-    usaPop: {
-      id: 'usaPop',
-      type: 'checkbox',
-      isVisible: true,
-      data: {
-        title: 'USA Population Density',
-        styleId: 'usaPop',
-        type: 'wmts',
-        url:
-          'https://services.arcgisonline.com/arcgis/rest/services/' +
-          'Demographics/USA_Population_Density/MapServer/WMTS/?layer=0' +
-          '&style=default&tilematrixset=EPSG%3A3857&Service=WMTS&' +
-          'Request=GetTile&Version=1.0.0&Format=image%2Fpng&',
-        projection: 'EPSG:3857',
-      },
-    },
-    sublayers2: {
-      id: 'sublayers2',
-      isVisible: false,
-      type: 'radio',
-      data: {
-        title: 'Vector sample layers',
-        type: 'layerGroup',
-        isExpanded: false,
-      },
-      children: ['pointLayer', 'lineLayer', 'polygonLayer'],
-    },
-    pointLayer: {
-      id: 'pointLayer',
-      type: 'radio',
-      isVisible: false,
-      data: {
-        title: 'Points Samples',
-        styleId: 'pointLayer',
-        type: 'vectorLayer',
-        url:
-          'https://raw.githubusercontent.com/openlayers/openlayers/' +
-          '3c64018b3754cf605ea19cbbe4c8813304da2539/examples/data/geojson/' +
-          'point-samples.geojson',
-      },
-    },
-    lineLayer: {
-      id: 'lineLayer',
-      type: 'radio',
-      isVisible: false,
-      data: {
-        title: 'Lines Samples',
-        styleId: 'lineLayer',
-        type: 'vectorLayer',
-        url:
-          'https://raw.githubusercontent.com/openlayers/openlayers/' +
-          '3c64018b3754cf605ea19cbbe4c8813304da2539/examples/data/geojson/' +
-          'line-samples.geojson',
-      },
-    },
-    polygonLayer: {
-      id: 'polygonLayer',
-      type: 'radio',
-      isVisible: false,
-      data: {
-        title: 'Polygons Samples',
-        styleId: 'polygonLayer',
-        type: 'vectorLayer',
-        url:
-          'https://raw.githubusercontent.com/openlayers/openlayers/' +
-          '3c64018b3754cf605ea19cbbe4c8813304da2539/examples/data/geojson/' +
-          'polygon-samples.geojson',
-      },
+import Style from 'ol/style/Style';
+import Circle from 'ol/style/Circle';
+import Stroke from 'ol/style/Stroke';
+import Fill from 'ol/style/Fill';
+
+export default [
+  {
+    name: 'OSM Baselayer',
+    visible: true,
+    isBaseLayer: true,
+    data: {
+      type: 'xyz',
+      url: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
     },
   },
-};
-
-// For styleguidist, see styleguide.config.js
-if (module.exports) {
-  module.exports = configData;
-}
+  {
+    name: 'Others layers',
+    visible: true,
+    type: 'parent',
+    children: [
+      {
+        name: 'Countries Borders',
+        visible: false,
+        data: {
+          type: 'vectorLayer',
+          url:
+            'https://openlayers.org/en/latest/examples/data/geojson/' +
+            'countries.geojson',
+        },
+      },
+      {
+        name: 'USA Population Density',
+        visible: true,
+        data: {
+          type: 'wmts',
+          url:
+            'https://services.arcgisonline.com/arcgis/rest/services/' +
+            'Demographics/USA_Population_Density/MapServer/WMTS/?layer=0' +
+            '&style=default&tilematrixset=EPSG%3A3857&Service=WMTS&' +
+            'Request=GetTile&Version=1.0.0&Format=image%2Fpng&',
+          projection: 'EPSG:3857',
+        },
+      },
+    ],
+  },
+  {
+    name: 'Vector sample layers',
+    visible: 'parent',
+    radioGroup: 'radio',
+    children: [
+      {
+        name: 'Points Samples',
+        radioGroup: 'vectorLayers',
+        visible: false,
+        data: {
+          style: new Style({
+            image: new Circle({
+              radius: 5,
+              fill: new Fill({
+                color: '#ff0000',
+              }),
+            }),
+          }),
+          type: 'vectorLayer',
+          url:
+            'https://raw.githubusercontent.com/openlayers/openlayers/' +
+            '3c64018b3754cf605ea19cbbe4c8813304da2539/examples/data/geojson/' +
+            'point-samples.geojson',
+        },
+      },
+      {
+        name: 'Lines Samples',
+        radioGroup: 'vectorLayers',
+        visible: true,
+        data: {
+          style: new Style({
+            stroke: new Stroke({
+              color: '#ffcc33',
+              width: 2,
+            }),
+          }),
+          type: 'vectorLayer',
+          url:
+            'https://raw.githubusercontent.com/openlayers/openlayers/' +
+            '3c64018b3754cf605ea19cbbe4c8813304da2539/examples/data/geojson/' +
+            'line-samples.geojson',
+        },
+      },
+      {
+        name: 'Polygons Samples',
+        radioGroup: 'vectorLayers',
+        visible: false,
+        data: {
+          style: new Style({
+            stroke: new Stroke({
+              color: '#7dff8f',
+              width: 3,
+            }),
+            fill: new Fill({
+              color: 'rgba(125, 255, 143, 0.2)',
+            }),
+          }),
+          type: 'vectorLayer',
+          url:
+            'https://raw.githubusercontent.com/openlayers/openlayers/' +
+            '3c64018b3754cf605ea19cbbe4c8813304da2539/examples/data/geojson/' +
+            'polygon-samples.geojson',
+        },
+      },
+    ],
+  },
+];

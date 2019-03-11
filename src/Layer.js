@@ -1,4 +1,3 @@
-import OLGroup from 'ol/layer/Group';
 import Observable from 'ol/Observable';
 /**
  * A class representing layer to display on BasicMap with a name, a visibility,
@@ -13,21 +12,19 @@ export default class Layer extends Observable {
     this.olLayer = olLayer;
     this.isBaseLayer = isBaseLayer;
     this.radioGroup = radioGroup;
+    this.children = [];
+    this.visible = typeof visible === 'undefined' ? true : visible;
 
-    if (visible === undefined) {
-      this.olLayer.setVisible(true);
-    } else {
-      this.olLayer.setVisible(visible);
+    if (this.olLayer) {
+      this.olLayer.setVisible(this.visible);
     }
   }
 
   init(map) {
     this.map = map;
-    map.addLayer(this.olLayer);
-  }
-
-  getId() {
-    return this.id;
+    if (this.map && this.olLayer) {
+      map.addLayer(this.olLayer);
+    }
   }
 
   getName() {
@@ -35,7 +32,7 @@ export default class Layer extends Observable {
   }
 
   getVisible() {
-    return this.olLayer.getVisible();
+    return this.visible;
   }
 
   getIsBaseLayer() {
@@ -51,11 +48,15 @@ export default class Layer extends Observable {
   }
 
   changed() {
-    this.olLayer.changed();
+    if (this.olLayer) {
+      this.olLayer.changed();
+    }
   }
 
   setStyle(style) {
-    this.olLayer.setStyle(style);
+    if (this.olLayer) {
+      this.olLayer.setStyle(style);
+    }
   }
 
   setVisible(
@@ -64,10 +65,16 @@ export default class Layer extends Observable {
     stopPropagationUp = false,
     stopPropagationSiblings = false,
   ) {
-    if (visible === this.olLayer.getVisible()) {
+    if (visible === this.visible) {
       return;
     }
-    this.olLayer.setVisible(visible);
+
+    this.visible = visible;
+
+    if (this.olLayer) {
+      this.olLayer.setVisible(this.visible);
+    }
+
     this.dispatchEvent({
       type: 'change:visible',
       target: this,
@@ -78,17 +85,48 @@ export default class Layer extends Observable {
   }
 
   getChildren() {
-    if (this.olLayer instanceof OLGroup) {
-      return this.olLayer.getLayers();
+    return this.children;
+  }
+
+  setChildren(layers) {
+    this.children = layers;
+  }
+
+  getVisibleChildren() {
+    for (let i = 0; i < this.children.length; i += 1) {
+      if (this.children[i].getVisible()) {
+        return true;
+      }
     }
-    return [];
+    return false;
+  }
+
+  addChild(layer) {
+    this.children.unshift(layer);
+  }
+
+  removeChild(name) {
+    for (let i = 0; i < this.children.length; i += 1) {
+      if (this.children[i].getName() === name) {
+        this.children.splice(i, 1);
+        return;
+      }
+    }
+  }
+
+  hasVisibleChildren() {
+    return !!this.children.find(l => l.getVisible());
+  }
+
+  hasChildren(visible) {
+    return !!this.children.find(l => visible === l.getVisible());
   }
 
   getProperties() {
-    return this.olLayer.getProperties();
-  }
+    if (this.olLayer) {
+      return this.olLayer.getProperties();
+    }
 
-  setProperties(p) {
-    this.olLayer.setProperties(p);
+    return null;
   }
 }

@@ -7,8 +7,8 @@ export default class LayerService {
   constructor(layers) {
     this.layers = layers;
     this.callbacks = {};
+    this.callbacks = {};
     this.keys = [];
-
     this.listenChangeEvt();
   }
 
@@ -16,76 +16,46 @@ export default class LayerService {
     return this.layers;
   }
 
-  getLayersAsFlatArray(layers) {
-    let arr = [];
-    (layers || this.getLayers()).forEach(l => {
-      arr.push(l);
-      if (l.children) {
-        arr = arr.concat(this.getLayersAsFlatArray(l.children));
-      }
+  getLayersAsFlatArray(optLayers) {
+    let layers = [];
+    (optLayers || this.getLayers()).forEach(l => {
+      layers.push(l);
+      const children = l.getChildren();
+      layers = layers.concat(this.getLayersAsFlatArray(children));
     });
-    return arr;
-  }
-
-  doesLayerExist(name) {
-    const layers = this.getLayersAsFlatArray();
-    return layers.some(layer => name === layer.getName());
+    return layers;
   }
 
   getLayer(name) {
-    const layers = this.getLayersAsFlatArray();
-    return layers.find(layer => name === layer.getName());
+    return this.getLayersAsFlatArray().find(l => l.getName() === name);
   }
 
-  getParentLayer(child) {
-    const layers = this.getLayersAsFlatArray();
-    let parentLayer;
-    for (let i = 0; i < layers.length; i += 1) {
-      const layer = layers[i];
-      if (layer.children) {
-        parentLayer = layer;
-      }
-      if (parentLayer && parentLayer.children.find(c => c === child)) {
-        return parentLayer;
-      }
-    }
+  getParent(child) {
+    return this.getLayersAsFlatArray().find(
+      l => !!l.getChildren().includes(child),
+    );
   }
 
   getRadioGroupLayers(radioGroupName) {
-    const groupLayers = [];
-    const layers = this.getLayersAsFlatArray();
-    for (let i = 0; i < layers.length; i += 1) {
-      if (
-        layers[i].getRadioGroup() &&
-        layers[i].getRadioGroup() === radioGroupName
-      ) {
-        groupLayers.push(layers[i]);
-      }
+    if (radioGroupName) {
+      return this.getLayersAsFlatArray().filter(
+        l => l.getRadioGroup() === radioGroupName,
+      );
     }
-    return groupLayers.length ? groupLayers : null;
+
+    return null;
   }
 
-  /* on(key, callback) {
-    this.callbacks[key] = this.callbacks[key] || [];
-    this.callbacks[key].push(callback);
-  } */
-
   on(evt, callback) {
-    const keys = [];
-    this.getLayers().forEach(layer => {
-      if (layer.olLayer) {
-        keys.push(layer.olLayer.on('change', callback));
-      }
-    });
+    this.callbacks[evt] = this.callbacks[evt] || [];
+    this.callbacks[evt].push(callback);
   }
 
   listenChangeEvt() {
-    const that = this;
     this.getLayersAsFlatArray().forEach(layer => {
-      that.keys.push(
+      this.keys.push(
         layer.on('change:visible', evt => {
           const visible = evt.target.getVisible();
-          const parent = that.getParentLayer(layer);
 
           // Apply to siblings only if it's a radio group.
           if (
@@ -118,14 +88,18 @@ export default class LayerService {
           // Apply to parent only if:
           //   - a child is visible
           //   - all children are hidden
+          const parentLayer = this.getParent(layer);
+
           if (
             !evt.stopPropagationUp &&
-            parent &&
+            parentLayer &&
             (visible ||
-              (!visible && !parent.children.find(c => c.getVisible())))
+              (!visible && !parentLayer.children.find(c => c.getVisible())))
           ) {
-            parent.setVisible(visible, true, false, false);
+            parentLayer.setVisible(visible, true, false, false);
           }
+
+          (this.callbacks['change:visible'] || []).forEach(cb => cb());
         }),
       );
     });
