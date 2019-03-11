@@ -53,9 +53,6 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <div>
           Vector sample layers
         </div>
-        <div
-          className="tm-layer-tree-arrow tm-layer-tree-arrow-collapsed"
-        />
       </div>
     </div>
     <div>
@@ -92,6 +89,9 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <div>
             Points Samples
           </div>
+          <div
+            className="tm-layer-tree-arrow tm-layer-tree-arrow-collapsed"
+          />
         </div>
       </div>
     </div>
@@ -129,6 +129,9 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <div>
             Lines Samples
           </div>
+          <div
+            className="tm-layer-tree-arrow tm-layer-tree-arrow-collapsed"
+          />
         </div>
       </div>
     </div>
@@ -166,6 +169,9 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <div>
             Polygons Samples
           </div>
+          <div
+            className="tm-layer-tree-arrow tm-layer-tree-arrow-collapsed"
+          />
         </div>
       </div>
     </div>
@@ -218,9 +224,6 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <div>
           Others layers
         </div>
-        <div
-          className="tm-layer-tree-arrow tm-layer-tree-arrow-collapsed"
-        />
       </div>
     </div>
     <div>
@@ -256,6 +259,9 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <div>
             Countries Borders
           </div>
+          <div
+            className="tm-layer-tree-arrow tm-layer-tree-arrow-collapsed"
+          />
         </div>
       </div>
     </div>
@@ -292,6 +298,9 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <div>
             USA Population Density
           </div>
+          <div
+            className="tm-layer-tree-arrow tm-layer-tree-arrow-collapsed"
+          />
         </div>
       </div>
     </div>
@@ -344,6 +353,9 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <div>
           OSM Baselayer
         </div>
+        <div
+          className="tm-layer-tree-arrow tm-layer-tree-arrow-collapsed"
+        />
       </div>
     </div>
   </div>
@@ -402,6 +414,9 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
         <div>
           OSM Baselayer
         </div>
+        <div
+          className="tm-layer-tree-arrow tm-layer-tree-arrow-collapsed"
+        />
       </div>
     </div>
   </div>
@@ -461,9 +476,6 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <div>
           Vector sample layers
         </div>
-        <div
-          className="ged ged-collapsed"
-        />
       </div>
     </div>
     <div>
@@ -500,6 +512,9 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <div>
             Points Samples
           </div>
+          <div
+            className="ged ged-collapsed"
+          />
         </div>
       </div>
     </div>
@@ -537,6 +552,9 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <div>
             Lines Samples
           </div>
+          <div
+            className="ged ged-collapsed"
+          />
         </div>
       </div>
     </div>
@@ -574,6 +592,9 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <div>
             Polygons Samples
           </div>
+          <div
+            className="ged ged-collapsed"
+          />
         </div>
       </div>
     </div>
@@ -626,9 +647,6 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <div>
           Others layers
         </div>
-        <div
-          className="ged ged-collapsed"
-        />
       </div>
     </div>
     <div>
@@ -664,6 +682,9 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <div>
             Countries Borders
           </div>
+          <div
+            className="ged ged-collapsed"
+          />
         </div>
       </div>
     </div>
@@ -700,6 +721,9 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <div>
             USA Population Density
           </div>
+          <div
+            className="ged ged-collapsed"
+          />
         </div>
       </div>
     </div>
@@ -752,6 +776,9 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <div>
           OSM Baselayer
         </div>
+        <div
+          className="ged ged-collapsed"
+        />
       </div>
     </div>
   </div>
