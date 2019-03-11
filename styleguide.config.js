@@ -8,6 +8,9 @@ module.exports = {
     url: 'https://github.com/geops/react-spatial',
     text: 'Fork me on GitHub',
   },
+  context: {
+    treeData: path.join(__dirname, 'data/TreeData'),
+  },
   sections: [
     {
       name: '',
@@ -33,7 +36,7 @@ module.exports = {
         // Load css and scss files.
         {
           test: /\.s?css$/,
-          loader: 'style-loader!css-loader!sass-loader?modules',
+          use: ['style-loader', 'css-loader', 'sass-loader?modules'],
         },
       ],
     },

@@ -42,7 +42,7 @@ Then on every change you have to re-rerun `yarn build` or `yarn symlink`
 
 If you project use webpack, set the [`resolve.symlinks`](https://webpack.js.org/configuration/resolve/#resolve-symlinks) options to `false`, in your webpack config file.
 
-If you use [`create-ract-app`](https://github.com/facebook/create-react-app) without ejecting, you have no choice than temporarly modify the webpack config in the `node_modules` folder.
+If you use [`create-react-app`](https://github.com/facebook/create-react-app) without ejecting, you have no choice than temporarly modify the webpack config in the `node_modules` folder.
 
 ```bash
 vim react-spatial/node_modules/react-scripts/config/webpack.config.js
