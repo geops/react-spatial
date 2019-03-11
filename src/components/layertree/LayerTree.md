@@ -17,7 +17,6 @@ const Circle = require('ol/style/Circle').default;
 const Fill = require('ol/style/Fill').default;
 const Text = require('ol/style/Text').default;
 const ConfigReader = require('../../ConfigReader').default;
-require('./LayerTree.md.scss');
 
 class LayerTreeExample extends React.Component {
   constructor(props) {

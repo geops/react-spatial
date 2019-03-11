@@ -1,5 +1,3 @@
-@import '../../Globals.scss';
-
 .tm-layer-tree-example {
   width: 100%;
   height: 300px;
@@ -128,7 +126,7 @@
       top: 1px;
       width: 5px;
       height: 10px;
-      border: solid $tm-color-sbb-red;
+      border: solid $brand-primary;
       border-width: 0 1px 1px 0;
       -webkit-transform: rotate(45deg);
       -ms-transform: rotate(45deg);
@@ -142,7 +140,7 @@
       width: 12px;
       height: 12px;
       border-radius: 50%;
-      background: #eb0000;
+      background: $brand-primary;
     }
 
     label input:checked ~ span::after {
