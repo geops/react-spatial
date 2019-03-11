@@ -15,23 +15,25 @@
   }
 
   .tm-layer-tree-arrow {
-    border: solid lightgray;
-    border-width: 0 3px 3px 0;
+    border: solid black;
+    border-width: 0 1px 1px 0;
     display: inline-block;
     padding: 0;
     background: transparent;
-    width: 10px;
-    height: 10px;
+    width: 5px;
+    height: 5px;
   }
 
   .tm-layer-tree-arrow-collapsed {
     transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
+    margin-top: -3px;
   }
 
   .tm-layer-tree-arrow-expanded {
     transform: rotate(-135deg);
     -webkit-transform: rotate(-135deg);
+    margin-top: 3px;
   }
 
   .tm-layer-tree {
