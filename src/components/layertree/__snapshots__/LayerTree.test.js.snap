@@ -13,25 +13,10 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         }
       }
     >
-      <div
-        onKeyPress={[Function]}
-        role="button"
-        style={
-          Object {
-            "bottom": 0,
-            "left": 0,
-            "margin": "auto",
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-          }
-        }
-        tabIndex={0}
-      />
       <label
         className="tm-layer-tree-input tm-layer-tree-input-radio"
         onKeyPress={[Function]}
-        tabIndex={-1}
+        tabIndex={0}
       >
         <input
           checked="parent"
@@ -48,7 +33,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
-        tabIndex={-1}
+        tabIndex={0}
       >
         <div>
           Vector sample layers
@@ -70,7 +55,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <label
           className="tm-layer-tree-input tm-layer-tree-input-radio"
           onKeyPress={[Function]}
-          tabIndex={0}
+          tabIndex={-1}
         >
           <input
             checked={false}
@@ -107,7 +92,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <label
           className="tm-layer-tree-input tm-layer-tree-input-radio"
           onKeyPress={[Function]}
-          tabIndex={0}
+          tabIndex={-1}
         >
           <input
             checked={true}
@@ -144,7 +129,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <label
           className="tm-layer-tree-input tm-layer-tree-input-radio"
           onKeyPress={[Function]}
-          tabIndex={0}
+          tabIndex={-1}
         >
           <input
             checked={false}
@@ -179,25 +164,10 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         }
       }
     >
-      <div
-        onKeyPress={[Function]}
-        role="button"
-        style={
-          Object {
-            "bottom": 0,
-            "left": 0,
-            "margin": "auto",
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-          }
-        }
-        tabIndex={0}
-      />
       <label
         className="tm-layer-tree-input tm-layer-tree-input-checkbox"
         onKeyPress={[Function]}
-        tabIndex={-1}
+        tabIndex={0}
       >
         <input
           checked={true}
@@ -213,7 +183,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
-        tabIndex={-1}
+        tabIndex={0}
       >
         <div>
           Others layers
@@ -235,7 +205,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <label
           className="tm-layer-tree-input tm-layer-tree-input-checkbox"
           onKeyPress={[Function]}
-          tabIndex={0}
+          tabIndex={-1}
         >
           <input
             checked={false}
@@ -271,7 +241,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <label
           className="tm-layer-tree-input tm-layer-tree-input-checkbox"
           onKeyPress={[Function]}
-          tabIndex={0}
+          tabIndex={-1}
         >
           <input
             checked={true}
@@ -305,21 +275,6 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         }
       }
     >
-      <div
-        onKeyPress={[Function]}
-        role="button"
-        style={
-          Object {
-            "bottom": 0,
-            "left": 0,
-            "margin": "auto",
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-          }
-        }
-        tabIndex={0}
-      />
       <label
         className="tm-layer-tree-input tm-layer-tree-input-checkbox"
         onKeyPress={[Function]}
@@ -339,7 +294,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
-        tabIndex={-1}
+        tabIndex={0}
       >
         <div>
           OSM Baselayer
@@ -363,21 +318,6 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
         }
       }
     >
-      <div
-        onKeyPress={[Function]}
-        role="button"
-        style={
-          Object {
-            "bottom": 0,
-            "left": 0,
-            "margin": "auto",
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-          }
-        }
-        tabIndex={0}
-      />
       <label
         className="tm-layer-tree-input tm-layer-tree-input-checkbox"
         onKeyPress={[Function]}
@@ -397,7 +337,7 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
-        tabIndex={-1}
+        tabIndex={0}
       >
         <div>
           OSM Baselayer
@@ -421,25 +361,10 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         }
       }
     >
-      <div
-        onKeyPress={[Function]}
-        role="button"
-        style={
-          Object {
-            "bottom": 0,
-            "left": 0,
-            "margin": "auto",
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-          }
-        }
-        tabIndex={0}
-      />
       <label
         className="qux qux-radio"
         onKeyPress={[Function]}
-        tabIndex={-1}
+        tabIndex={0}
       >
         <input
           checked="parent"
@@ -456,7 +381,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
-        tabIndex={-1}
+        tabIndex={0}
       >
         <div>
           Vector sample layers
@@ -478,7 +403,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <label
           className="qux qux-radio"
           onKeyPress={[Function]}
-          tabIndex={0}
+          tabIndex={-1}
         >
           <input
             checked={false}
@@ -515,7 +440,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <label
           className="qux qux-radio"
           onKeyPress={[Function]}
-          tabIndex={0}
+          tabIndex={-1}
         >
           <input
             checked={true}
@@ -552,7 +477,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <label
           className="qux qux-radio"
           onKeyPress={[Function]}
-          tabIndex={0}
+          tabIndex={-1}
         >
           <input
             checked={false}
@@ -587,25 +512,10 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         }
       }
     >
-      <div
-        onKeyPress={[Function]}
-        role="button"
-        style={
-          Object {
-            "bottom": 0,
-            "left": 0,
-            "margin": "auto",
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-          }
-        }
-        tabIndex={0}
-      />
       <label
         className="qux qux-checkbox"
         onKeyPress={[Function]}
-        tabIndex={-1}
+        tabIndex={0}
       >
         <input
           checked={true}
@@ -621,7 +531,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
-        tabIndex={-1}
+        tabIndex={0}
       >
         <div>
           Others layers
@@ -643,7 +553,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <label
           className="qux qux-checkbox"
           onKeyPress={[Function]}
-          tabIndex={0}
+          tabIndex={-1}
         >
           <input
             checked={false}
@@ -679,7 +589,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <label
           className="qux qux-checkbox"
           onKeyPress={[Function]}
-          tabIndex={0}
+          tabIndex={-1}
         >
           <input
             checked={true}
@@ -713,21 +623,6 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         }
       }
     >
-      <div
-        onKeyPress={[Function]}
-        role="button"
-        style={
-          Object {
-            "bottom": 0,
-            "left": 0,
-            "margin": "auto",
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-          }
-        }
-        tabIndex={0}
-      />
       <label
         className="qux qux-checkbox"
         onKeyPress={[Function]}
@@ -747,7 +642,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
-        tabIndex={-1}
+        tabIndex={0}
       >
         <div>
           OSM Baselayer

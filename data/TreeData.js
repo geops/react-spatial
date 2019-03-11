@@ -3,8 +3,8 @@ import Circle from 'ol/style/Circle';
 import Stroke from 'ol/style/Stroke';
 import Fill from 'ol/style/Fill';
 
-export default {
-  baselayer1: {
+export default [
+  {
     name: 'OSM Baselayer',
     visible: true,
     isBaseLayer: true,
@@ -13,12 +13,12 @@ export default {
       url: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
     },
   },
-  sublayers1: {
+  {
     name: 'Others layers',
     visible: true,
     type: 'parent',
-    children: {
-      countryBorders: {
+    children: [
+      {
         name: 'Countries Borders',
         visible: false,
         data: {
@@ -28,7 +28,7 @@ export default {
             'countries.geojson',
         },
       },
-      usaPop: {
+      {
         name: 'USA Population Density',
         visible: true,
         data: {
@@ -41,14 +41,14 @@ export default {
           projection: 'EPSG:3857',
         },
       },
-    },
+    ],
   },
-  sublayers2: {
+  {
     name: 'Vector sample layers',
     visible: 'parent',
     radioGroup: 'radio',
-    children: {
-      pointLayer: {
+    children: [
+      {
         name: 'Points Samples',
         radioGroup: 'vectorLayers',
         visible: false,
@@ -68,7 +68,7 @@ export default {
             'point-samples.geojson',
         },
       },
-      lineLayer: {
+      {
         name: 'Lines Samples',
         radioGroup: 'vectorLayers',
         visible: true,
@@ -86,7 +86,7 @@ export default {
             'line-samples.geojson',
         },
       },
-      polygonLayer: {
+      {
         name: 'Polygons Samples',
         radioGroup: 'vectorLayers',
         visible: false,
@@ -107,6 +107,6 @@ export default {
             'polygon-samples.geojson',
         },
       },
-    },
+    ],
   },
-};
+];

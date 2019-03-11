@@ -33,7 +33,7 @@ class LayerTreeExample extends React.Component {
   componentDidMount() {
     const layers = ConfigReader.readConfig(
       this.map,
-      treeData.default,
+      treeData,
     );
     this.setState({
       layerService: new LayerService(layers)

@@ -50,11 +50,6 @@
     & > * {
       margin-right: 10px;
       align-items: center;
-
-      &:focus {
-        outline: 2px solid black !important;
-        outline-offset: 5px;
-      }
     }
 
     div {

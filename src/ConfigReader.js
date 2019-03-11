@@ -10,13 +10,6 @@ import VectorLayer from './VectorLayer';
 import projections from './Projections';
 
 class ConfigReader {
-  static getStyle(style, styleId) {
-    if (style && style[styleId]) {
-      return style[styleId];
-    }
-    return null;
-  }
-
   static createXYZLayer(item) {
     const conf = { ...item };
     delete conf.data;
@@ -112,10 +105,10 @@ class ConfigReader {
     const item = { ...this.defaults, ...config };
 
     if (item.data && item.data.type === 'wmts') {
-      const proy = projections[item.data.projection];
-      if (proy) {
-        item.data.projectionExtent = proy.projectionExtent;
-        item.data.resolutions = proy.resolutions;
+      const proj = projections[item.data.projection];
+      if (proj) {
+        item.data.projectionExtent = proj.projectionExtent;
+        item.data.resolutions = proj.resolutions;
       }
     }
 
@@ -123,7 +116,7 @@ class ConfigReader {
     layer.init(this.map);
 
     if (item.children) {
-      Object.values(item.children).forEach(childConf => {
+      item.children.forEach(childConf => {
         layer.addChild(this.loadLayerFromConfig(childConf));
       });
     }
@@ -132,7 +125,7 @@ class ConfigReader {
   }
 
   initialize() {
-    return Object.values(this.data).map(val => this.loadLayerFromConfig(val));
+    return this.data.map(val => this.loadLayerFromConfig(val));
   }
 }
 

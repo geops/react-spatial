@@ -117,36 +117,11 @@ class LayerTree extends Component {
     });
   }
 
-  renderBarrierFreeDiv(layer, level) {
-    if (level) {
-      return null;
-    }
-    return (
-      <div
-        style={{
-          position: 'absolute',
-          margin: 'auto',
-          top: 0,
-          left: 0,
-          bottom: 0,
-          right: 0,
-        }}
-        role="button"
-        tabIndex={0}
-        onKeyPress={e => {
-          if (e.which === 13) {
-            this.onInputClick(layer);
-          }
-        }}
-      />
-    );
-  }
-
-  renderInput(layer, level) {
+  renderInput(layer) {
     const { classNameInput } = this.props;
     let tabIndex = 0;
 
-    if (layer.getChildren().length || !level) {
+    if (!layer.getChildren().length) {
       // We forbid focus on keypress event for first level layers and layers without children.
       tabIndex = -1;
     }
@@ -154,11 +129,12 @@ class LayerTree extends Component {
     const inputType = layer.getRadioGroup() ? 'radio' : 'checkbox';
     return (
       <label // eslint-disable-line
+        key={layer.getName()}
         className={`${classNameInput} ${classNameInput}-${inputType}`}
         tabIndex={tabIndex}
         onKeyPress={e => {
           if (e.which === 13) {
-            this.onInputClick(layer, layer.getChildren().length);
+            this.onInputClick(layer);
           }
         }}
       >
@@ -198,14 +174,9 @@ class LayerTree extends Component {
 
   // Render a button which expands/collapse the layer if there is children
   // or simulate a click on the input otherwise.
-  renderToggleButton(layer, level) {
+  renderToggleButton(layer) {
     const { classNameToggle } = this.props;
-    let tabIndex = 0;
-
-    if (!level) {
-      // We forbid focus on the first level layers using keypress.
-      tabIndex = -1;
-    }
+    const tabIndex = 0;
 
     return (
       <Button
@@ -241,9 +212,8 @@ class LayerTree extends Component {
             paddingLeft: `${padding * level}px`,
           }}
         >
-          {this.renderBarrierFreeDiv(layer, level)}
-          {this.renderInput(layer, level)}
-          {this.renderToggleButton(layer, level)}
+          {this.renderInput(layer)}
+          {this.renderToggleButton(layer)}
         </div>
         {[...children]
           .reverse()

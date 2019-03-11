@@ -62,36 +62,30 @@ describe('LayerTree', () => {
   describe('triggers onInputClick', () => {
     let wrapper;
     let spy;
-    const data2 = {
-      '1': {
+    let spy2;
+    const data2 = [
+      {
         name: 'foo',
         data: {
           type: 'xyz',
         },
       },
-    };
+    ];
     const expectCalled = () => {
       expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy2).toHaveBeenCalledTimes(0);
       expect(spy.mock.calls[0][0].getName()).toBe('foo');
     };
 
     beforeEach(() => {
       spy = jest.spyOn(LayerTree.prototype, 'onInputClick');
+      spy2 = jest.spyOn(LayerTree.prototype, 'onToggle');
       wrapper = mountLayerTree(data2);
     });
 
     afterEach(() => {
       spy.mockRestore();
-    });
-
-    test('when we press enter with keyboard on the barrierfree element.', () => {
-      wrapper.update();
-      wrapper
-        .find(classItem)
-        .first()
-        .childAt(0)
-        .simulate('keypress', { which: 13 });
-      expectCalled();
+      spy2.mockRestore();
     });
 
     test('when we press enter with keyboard on the label element.', () => {
@@ -114,7 +108,7 @@ describe('LayerTree', () => {
       wrapper
         .find(classItem)
         .first()
-        .childAt(2)
+        .childAt(1)
         .simulate('click');
       expectCalled();
     });
@@ -123,8 +117,9 @@ describe('LayerTree', () => {
   describe('triggers onToggle', () => {
     let wrapper;
     let spy;
-    const data2 = {
-      '1': {
+    const data2 = [
+      {
+        name: '1',
         children: [
           {
             name: '1-1',
@@ -137,7 +132,7 @@ describe('LayerTree', () => {
           },
         ],
       },
-    };
+    ];
 
     const expectCalled = () => {
       expect(spy).toHaveBeenCalledTimes(1);
@@ -148,7 +143,7 @@ describe('LayerTree', () => {
       wrapper = mountLayerTree(data2);
     });
 
-    test('when we click on toggle button (label+arrow) of an item', () => {
+    test('when we click on toggle button (label+arrow) of an item with children', () => {
       wrapper
         .find(toggleItem)
         .first()

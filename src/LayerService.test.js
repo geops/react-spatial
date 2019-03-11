@@ -1,7 +1,6 @@
 import 'jest-canvas-mock';
 import OLMap from 'ol/Map';
 import LayerService from './LayerService';
-// import treeData from '../data/TreeData.esm';
 import ConfigReader from './ConfigReader';
 
 describe('LayerService', () => {
@@ -11,11 +10,11 @@ describe('LayerService', () => {
     return new LayerService(layers);
   };
 
-  const layerData = {
-    '0': {
+  const layerData = [
+    {
       name: 'root',
     },
-    '1': {
+    {
       name: '1',
       children: [
         {
@@ -29,7 +28,7 @@ describe('LayerService', () => {
         },
       ],
     },
-  };
+  ];
 
   test('should instantiate LayerService class correctly.', () => {
     const layerService = instantiateLayerService(layerData);
