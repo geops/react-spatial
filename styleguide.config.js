@@ -1,13 +1,14 @@
+const path = require('path');
 const { version } = require('./package.json');
-const MiniHtmlWebpackPlugin = require('mini-html-webpack-plugin');
-
-const { generateCSSReferences, generateJSReferences } = MiniHtmlWebpackPlugin;
 
 module.exports = {
   title: `React-spatial ${version}`,
   ribbon: {
     url: 'https://github.com/geops/react-spatial',
     text: 'Fork me on GitHub',
+  },
+  context: {
+    treeData: path.join(__dirname, 'data/TreeData'),
   },
   sections: [
     {
@@ -34,7 +35,7 @@ module.exports = {
         // Load css and scss files.
         {
           test: /\.s?css$/,
-          loader: 'style-loader!css-loader!sass-loader?modules',
+          use: ['style-loader', 'css-loader', 'sass-loader?modules'],
         },
       ],
     },

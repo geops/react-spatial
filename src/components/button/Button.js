@@ -20,14 +20,26 @@ const propTypes = {
   className: PropTypes.string,
 
   /**
+   * HTML tabIndex attribute
+   */
+  tabIndex: PropTypes.number,
+
+  /**
    * Title of the button.
    */
   title: PropTypes.string,
+
+  /**
+   * HTML style attribute
+   */
+  style: PropTypes.object,
 };
 
 const defaultProps = {
   className: undefined,
   title: undefined,
+  tabIndex: undefined,
+  style: undefined,
 };
 
 /**
@@ -35,13 +47,14 @@ const defaultProps = {
  */
 class Button extends PureComponent {
   render() {
-    const { onClick, children, className, title } = this.props;
+    const { onClick, children, className, title, tabIndex, style } = this.props;
 
     return (
       <div
         className={`tm-button ${className}`}
         role="button"
-        tabIndex="0"
+        style={style}
+        tabIndex={tabIndex}
         title={title}
         aria-label={title}
         onKeyPress={e => e.which === 13 && onClick()}

@@ -22,7 +22,6 @@ exports[`SearchInput when no properties are set matches snapshot 1`] = `
     onClick={[Function]}
     onKeyPress={[Function]}
     role="button"
-    tabIndex="0"
     title=""
   >
     <svg
@@ -50,7 +49,6 @@ exports[`SearchInput when no properties are set matches snapshot 1`] = `
     onClick={[Function]}
     onKeyPress={[Function]}
     role="button"
-    tabIndex="0"
     title=""
   >
     search
@@ -80,7 +78,6 @@ exports[`SearchInput when properties are set matches snapshot  1`] = `
     onClick={[Function]}
     onKeyPress={[Function]}
     role="button"
-    tabIndex="0"
     title=""
   >
     <svg
@@ -108,7 +105,6 @@ exports[`SearchInput when properties are set matches snapshot  1`] = `
     onClick={[Function]}
     onKeyPress={[Function]}
     role="button"
-    tabIndex="0"
     title=""
   >
     search
@@ -138,7 +134,6 @@ exports[`SearchInput when properties are set matches snapshot  2`] = `
     onClick={[Function]}
     onKeyPress={[Function]}
     role="button"
-    tabIndex="0"
     title=""
   >
     <svg
@@ -166,7 +161,6 @@ exports[`SearchInput when properties are set matches snapshot  2`] = `
     onClick={[Function]}
     onKeyPress={[Function]}
     role="button"
-    tabIndex="0"
     title=""
   >
     search
