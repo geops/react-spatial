@@ -149,7 +149,7 @@ class LayerTree extends Component {
     const { classNameInput } = this.props;
     let tabIndex = 0;
 
-    if (!layer.getChildren().length === 0 || !level) {
+    if (!layer.getChildren() || !level) {
       // We forbid focus on keypress event for first level layers and layers without children.
       tabIndex = -1;
     }
@@ -172,7 +172,7 @@ class LayerTree extends Component {
           checked={layer.getVisible()}
           onChange={() => {}}
           onClick={() => {
-            this.onInputClick(layer, layer.getChildren().lenght);
+            this.onInputClick(layer, layer.getChildren().length);
           }}
         />
         <span />
@@ -184,14 +184,14 @@ class LayerTree extends Component {
     const { classNameArrow } = this.props;
     const { expandedLayerNames } = this.state;
 
-    if (layer.getChildren().length === 0) {
+    if (layer.getChildren().length) {
       return null;
     }
 
     return (
       <div
         className={`${classNameArrow} ${classNameArrow}${
-          expandedLayerNames.indexOf(layer.getName()) > -1
+          expandedLayerNames.includes(layer.getName())
             ? '-expanded'
             : '-collapsed'
         }`}
