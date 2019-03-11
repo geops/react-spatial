@@ -36,6 +36,15 @@ describe('LayerTree', () => {
       renderLayerTree(data);
     });
 
+    test('when no layers.', () => {
+      const layerService = new LayerService();
+      const component = renderer.create(
+        <LayerTree layerService={layerService} />,
+      );
+      const tree = component.toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+
     test('when renderItem is used.', () => {
       renderLayerTree(data, {
         renderItem: item => <div key={item.getName()}>{item.getName()}</div>,

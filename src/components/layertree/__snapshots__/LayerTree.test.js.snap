@@ -653,6 +653,12 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
 </div>
 `;
 
+exports[`LayerTree matches snapshots when no layers. 1`] = `
+<div
+  className="tm-layer-tree"
+/>
+`;
+
 exports[`LayerTree matches snapshots when renderItem is used. 1`] = `
 <div
   className="tm-layer-tree"

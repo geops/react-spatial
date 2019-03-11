@@ -18,7 +18,7 @@ export default class LayerService {
 
   getLayersAsFlatArray(optLayers) {
     let layers = [];
-    (optLayers || this.getLayers()).forEach(l => {
+    (optLayers || this.getLayers() || []).forEach(l => {
       layers.push(l);
       const children = l.getChildren();
       layers = layers.concat(this.getLayersAsFlatArray(children));

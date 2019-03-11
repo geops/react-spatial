@@ -224,15 +224,20 @@ class LayerTree extends Component {
 
   renderTree() {
     const { isItemHidden } = this.props;
-    let { layers } = this.state;
+    const { layers } = this.state;
 
     if (!layers) {
       return null;
     }
 
-    layers = layers.filter(l => !isItemHidden(l));
-
-    return <>{layers.reverse().map(l => this.renderItem(l, 0))}</>;
+    return (
+      <>
+        {layers
+          .filter(l => !isItemHidden(l))
+          .reverse()
+          .map(l => this.renderItem(l, 0))}
+      </>
+    );
   }
 
   render() {
