@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import shortid from 'shortid';
 import Button from '../button/Button';
 
 const propTypes = {
@@ -76,8 +75,6 @@ const defaultProps = {
 class LayerTree extends Component {
   constructor(props) {
     super(props);
-    // Prefix used for the name of inputs. This allows multiple LayerTree on the same page.
-    this.prefixInput = shortid.generate();
     this.state = {
       layers: props.layerService ? props.layerService.getLayers() : [],
       expandedLayerNames: [],
