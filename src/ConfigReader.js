@@ -125,7 +125,7 @@ class ConfigReader {
   }
 
   initialize() {
-    return this.data.map(val => this.loadLayerFromConfig(val));
+    return this.data.default.map(val => this.loadLayerFromConfig(val));
   }
 }
 
