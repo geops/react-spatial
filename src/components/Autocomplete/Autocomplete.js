@@ -161,15 +161,11 @@ class Autocomplete extends PureComponent {
   }
 
   onKeyPress(evt) {
-    if (evt.which === 40) {
-      const { refList } = this.state;
-      if (refList) {
-        // Give focus to the first element of the results
-        if (refList.querySelector('.tm-list-item')) {
-          // eslint-disable-next-line react/no-find-dom-node
-          refList.querySelector('.tm-list-item').focus();
-        }
-      }
+    const { refList } = this.state;
+    if (evt.which === 40 && refList && refList.querySelector('.tm-list-item')) {
+      // Give focus to the first element of the results
+      // eslint-disable-next-line react/no-find-dom-node
+      refList.querySelector('.tm-list-item').focus();
     }
   }
 
@@ -184,9 +180,6 @@ class Autocomplete extends PureComponent {
     const { refList } = this.state;
     const liFocused = document.activeElement;
     const lis = refList.querySelectorAll('.tm-list-item');
-    if (!lis.length) {
-      return;
-    }
     const idxItemFocused = Array.prototype.slice.call(lis).indexOf(liFocused);
     let nextIndex = idxItemFocused + delta;
     if (nextIndex < 0) {
