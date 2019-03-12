@@ -15,8 +15,8 @@ const defaultProps = {
 
 const MenuItem = ({ children, title, className, classNameTitle }) => (
   <>
-    <div className={className}>{title}</div>
-    <div className={classNameTitle}>{children}</div>
+    <div className={classNameTitle}>{title}</div>
+    <div className={className}>{children}</div>
   </>
 );
 
