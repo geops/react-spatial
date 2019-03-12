@@ -3,12 +3,12 @@
 exports[`MenuItem should match snapshot. 1`] = `
 Array [
   <div
-    className="tm-menu-item"
+    className="tm-menu-item-title"
   >
     Test2
   </div>,
   <div
-    className="tm-menu-item-title"
+    className="tm-menu-item"
   >
     <div>
       test
