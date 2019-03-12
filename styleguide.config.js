@@ -4,6 +4,9 @@ const { version } = require('./package.json');
 module.exports = {
   title: `React-spatial ${version}`,
   require: [path.join(__dirname, 'src/themes/default/examples.scss')],
+  moduleAliases: {
+    'react-spatial': path.resolve(__dirname, 'src'),
+  },
   ribbon: {
     url: 'https://github.com/geops/react-spatial',
     text: 'Fork me on GitHub',
@@ -19,7 +22,7 @@ module.exports = {
     {
       name: 'UI components',
       description: 'A collection of react components.',
-      components: 'src/components/**/*.js',
+      components: 'src/components/**/[A-Z]*.js',
       exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
       usageMode: 'expand', // 'hide' | 'collapse' | 'expand'
     },

@@ -15,7 +15,7 @@ import VectorSource from 'ol/source/Vector';
 import TileLayer from 'ol/layer/Tile';
 import TileGrid from 'ol/tilegrid/TileGrid';
 import TileImageSource from 'ol/source/TileImage';
-import getCenter from 'ol/extent').getCenter;
+import { getCenter } from 'ol/extent';
 import Style from 'ol/style/Style';
 import Circle from 'ol/style/Circle';
 import Fill from 'ol/style/Fill';
