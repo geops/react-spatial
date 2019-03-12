@@ -1,0 +1,19 @@
+.tm-footer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  text-align: right;
+  font-size: 0.8em;
+  padding: 5px;
+  border-top: 1px solid #aaa;
+  background: white;
+
+  @include a();
+
+  // To be removed
+  a {
+    margin-left: 10px;
+    color: black;
+  }
+}

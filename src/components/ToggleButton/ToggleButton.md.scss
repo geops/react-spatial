@@ -1,0 +1,25 @@
+.tm-toggle-button-example {
+  .tm-toggle {
+    width: 300px;
+    height: 200px;
+    background-color: red;
+    transition: height 0.2s ease;
+    font-size: 24px;
+    margin-top: 5px;
+
+    &.tm-close {
+      height: 0;
+    }
+  }
+
+  .tm-toggle-button {
+    position: relative;
+    width: auto;
+    height: auto;
+    cursor: pointer;
+  }
+
+  button {
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Menu should match snapshot. 1`] = `
+<div
+  className="tm-menu"
+>
+  <div
+    className="tm-menu-content"
+  >
+    <div
+      className="tm-menu-item"
+    >
+      foo
+    </div>
+    <div
+      className="tm-menu-item-title"
+    >
+      <div>
+        foo
+      </div>
+    </div>
+    <div
+      className="tm-menu-item"
+    >
+      bar
+    </div>
+    <div
+      className="tm-menu-item-title"
+    >
+      <div>
+        bar
+      </div>
+    </div>
+  </div>
+</div>
+`;
