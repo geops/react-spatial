@@ -1,3 +1,1 @@
-import BasicMap from './BasicMap';
-
-export default BasicMap;
+export { default } from './BasicMap';

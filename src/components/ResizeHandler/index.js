@@ -1,3 +1,1 @@
-import ResizeHandler from './ResizeHandler';
-
-export default ResizeHandler;
+export { default } from './ResizeHandler';

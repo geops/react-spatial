@@ -1,3 +1,1 @@
-import LayerTree from './LayerTree';
-
-export default LayerTree;
+export { default } from './LayerTree';

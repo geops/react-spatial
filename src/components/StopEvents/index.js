@@ -1,3 +1,1 @@
-import StopEvents from './StopEvents';
-
-export default StopEvents;
+export { default } from './StopEvents';
