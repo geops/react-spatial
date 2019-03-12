@@ -1,0 +1,43 @@
+/**
+* This file defines mixins.
+*/
+
+/**
+* Define basic style for <a> tag, using variables.
+*/
+@mixin a() {
+  a {
+    color: $link-color;
+    text-decoration: $link-decoration;
+
+    &:hover {
+      color: $link-color-hover;
+      text-decoration: $link-decoration-hover;
+    }
+
+    &:active {
+      color: $link-color-active;
+    }
+
+    &.tm-selected {
+      font-weight: bold;
+    }
+  }
+}
+
+/**
+* Load fonts.
+*/
+@mixin loadFonts($paths...) {
+  @each $family in $paths {
+    @font-face {
+      font-family: #{$family};
+      src: url('#{$family}.eot');
+      src:
+        url('#{$family}.woff2') format('woff2'),
+        url('#{$family}.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+  }
+}

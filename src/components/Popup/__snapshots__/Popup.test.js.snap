@@ -1,0 +1,126 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Popup should match snapshot with default values. 1`] = `
+<div
+  className="tm-popup"
+  style={
+    Object {
+      "left": 0,
+      "position": "absolute",
+      "top": 0,
+    }
+  }
+>
+  <div
+    onKeyUp={[Function]}
+    role="button"
+    tabIndex=""
+  >
+    <div
+      aria-label="Popup Schliessen"
+      className="tm-button tm-popup-close-bt"
+      onClick={[Function]}
+      onKeyPress={[Function]}
+      role="button"
+      title="Popup Schliessen"
+    >
+      <svg
+        fill="currentColor"
+        focusable={false}
+        height="1em"
+        stroke="currentColor"
+        strokeWidth="0"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+        />
+      </svg>
+    </div>
+    <div
+      id="foo"
+    />
+  </div>
+</div>
+`;
+
+exports[`Popup should match snapshot with tm-tooltip class. 1`] = `
+<div
+  className="tm-tooltip"
+  style={
+    Object {
+      "left": 0,
+      "position": "absolute",
+      "top": 0,
+    }
+  }
+>
+  <div
+    onKeyUp={[Function]}
+    role="button"
+    tabIndex="0"
+  >
+    <div
+      aria-label="Popup Schliessen"
+      className="tm-button tm-popup-close-bt"
+      onClick={[Function]}
+      onKeyPress={[Function]}
+      role="button"
+      title="Popup Schliessen"
+    >
+      <svg
+        fill="currentColor"
+        focusable={false}
+        height="1em"
+        stroke="currentColor"
+        strokeWidth="0"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+        />
+      </svg>
+    </div>
+    <div
+      id="bar"
+    />
+  </div>
+</div>
+`;
+
+exports[`Popup should match snapshot without close button. 1`] = `
+<div
+  className="tm-popup"
+  style={
+    Object {
+      "left": 0,
+      "position": "absolute",
+      "top": 0,
+    }
+  }
+>
+  <div
+    onKeyUp={[Function]}
+    role="button"
+    tabIndex=""
+  >
+    <div
+      id="bar"
+    />
+  </div>
+</div>
+`;
+
+exports[`Popup should match snapshot without feature 1`] = `null`;

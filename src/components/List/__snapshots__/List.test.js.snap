@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`List when no properties are set matches snapshot 1`] = `null`;
+
+exports[`List when properties are set matches snapshot with defaultItems 1`] = `null`;
+
+exports[`List when properties are set matches snapshot with items 1`] = `
+<ul
+  className="tm-foo"
+  role="menu"
+>
+  <li
+    className="tm-list-item"
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    onKeyPress={[Function]}
+    role="menuitem"
+    tabIndex="0"
+  >
+    qux
+  </li>
+  <li
+    className="tm-list-item"
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    onKeyPress={[Function]}
+    role="menuitem"
+    tabIndex="0"
+  >
+    quux
+  </li>
+  <li
+    className="tm-list-item"
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    onKeyPress={[Function]}
+    role="menuitem"
+    tabIndex="0"
+  >
+    corge
+  </li>
+</ul>
+`;

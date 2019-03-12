@@ -1,0 +1,44 @@
+.tm-search-input {
+  display: flex;
+  justify-content: flex-end;
+  width: calc(100% - 4px);
+  height: calc(100% - 4px);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  border: 1px solid $gray;
+  background-color: white;
+
+  input,
+  button,
+  svg {
+    border: none;
+  }
+
+  input {
+    padding: 0 0 0 15px;
+    flex-grow: 2;
+    text-overflow: ellipsis;
+    min-width: 0;
+
+    &::-ms-clear {
+      display: none;
+    }
+  }
+
+  div[role='button'] {
+    width: $btn-size-base;
+    height: 100%;
+    flex-shrink: 0;
+  }
+
+  div[role='button']:last-child {
+    background-color: $btn-primary-color;
+    color: white;
+
+    &:hover {
+      background-color: $btn-primary-color-hover;
+    }
+  }
+}
