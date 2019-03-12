@@ -1,3 +1,1 @@
-import SelectLinks from './SelectLinks';
-
-export default SelectLinks;
+export { default } from './SelectLinks';

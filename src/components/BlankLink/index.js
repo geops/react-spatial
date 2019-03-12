@@ -1,3 +1,1 @@
-import BlankLink from './BlankLink';
-
-export default BlankLink;
+export { default } from './BlankLink';

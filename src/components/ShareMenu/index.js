@@ -1,3 +1,1 @@
-import ShareMenu from './ShareMenu';
-
-export default ShareMenu;
+export { default } from './ShareMenu';
