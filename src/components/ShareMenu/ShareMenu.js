@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { TiSocialFacebook, TiSocialTwitter } from 'react-icons/ti';
 import { FiMail } from 'react-icons/fi';
-import { withTranslation } from 'react-i18next';
 import BlankLink from '../BlankLink';
 
 const configPropType = PropTypes.arrayOf(
@@ -14,13 +13,14 @@ const configPropType = PropTypes.arrayOf(
 );
 
 const propTypes = {
+  /**
+   * Translation function.
+   */
+  t: PropTypes.func,
   className: PropTypes.string,
   classNameIcon: PropTypes.string,
   socialShareConfig: configPropType,
   extraSocialShareConfig: configPropType,
-
-  // react-i18next
-  t: PropTypes.func.isRequired,
 };
 
 const defaultProps = {
@@ -45,6 +45,7 @@ const defaultProps = {
     },
   ],
   extraSocialShareConfig: [],
+  t: t => t,
 };
 
 const ShareMenu = ({
@@ -79,4 +80,4 @@ const ShareMenu = ({
 ShareMenu.propTypes = propTypes;
 ShareMenu.defaultProps = defaultProps;
 
-export default withTranslation()(ShareMenu);
+export default ShareMenu;

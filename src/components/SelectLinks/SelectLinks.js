@@ -80,7 +80,7 @@ const SelectLinks = ({
   }
   return (
     <div className={className}>
-      {(options || []).map(option => (
+      {options.map(option => (
         <ActionLink
           key={getLabel(option)}
           href={getHref(option)}
