@@ -1,5 +1,5 @@
 import React from 'react';
-import { configure, shallow } from 'enzyme';
+import { configure, shallow, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import renderer from 'react-test-renderer';
 import SelectLinks from './SelectLinks';
@@ -60,6 +60,35 @@ describe('SelectLinks', () => {
       );
       const tree = component.toJSON();
       expect(tree).toMatchSnapshot();
+    });
+
+    test('matches snapshot when a link is selected', () => {
+      const component = renderer.create(
+        <SelectLinks
+          isSelected={option => option.title === 'bar'}
+          options={options}
+          onClick={onClick}
+        />,
+      );
+      const tree = component.toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+
+    test('can click a link', () => {
+      const fn = jest.fn(onClick);
+      const fn2 = jest.fn();
+      const evt = {
+        preventDefault: fn2,
+        stopPropagation: fn2,
+      };
+      const wrapper = mount(
+        <SelectLinks isSelected={() => false} options={options} onClick={fn} />,
+      );
+      wrapper
+        .find('a')
+        .first()
+        .simulate('click', evt);
+      expect(fn).toHaveBeenCalledTimes(1);
     });
   });
 });

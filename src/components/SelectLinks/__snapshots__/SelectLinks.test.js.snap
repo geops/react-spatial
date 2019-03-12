@@ -32,3 +32,35 @@ exports[`SelectLinks when properties are set matches snapshot 1`] = `
   </a>
 </div>
 `;
+
+exports[`SelectLinks when properties are set matches snapshot when a link is selected 1`] = `
+<div
+  className="tm-select-links"
+>
+  <a
+    aria-label="foo"
+    href="#"
+    onClick={[Function]}
+    title="foo"
+  >
+    qux
+  </a>
+  <a
+    aria-label="bar"
+    className="tm-selected"
+    href="#"
+    onClick={[Function]}
+    title="bar"
+  >
+    quux
+  </a>
+  <a
+    aria-label="baz"
+    href="#"
+    onClick={[Function]}
+    title="baz"
+  >
+    corge
+  </a>
+</div>
+`;

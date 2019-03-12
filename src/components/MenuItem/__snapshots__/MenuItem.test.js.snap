@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MenuItem should match snapshot. 1`] = `
+Array [
+  <div
+    className="tm-menu-item"
+  >
+    Test2
+  </div>,
+  <div
+    className="tm-menu-item-title"
+  >
+    <div>
+      test
+    </div>
+  </div>,
+]
+`;

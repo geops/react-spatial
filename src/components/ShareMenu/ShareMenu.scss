@@ -1,6 +1,5 @@
 .tm-share-menu {
   display: flex;
-  padding-left: 20px;
 
   .tm-share-menu-icon {
     background-color: #666;
@@ -12,6 +11,10 @@
     text-align: center;
     transition: background-color 0.5s ease, color 0.5s ease;
     width: 35px;
+
+    &:hover {
+      background-color: $btn-primary-color-hover;
+    }
 
     svg {
       padding-top: 3px;
@@ -27,18 +30,9 @@
       margin-left: 0;
     }
 
-    a {
-      transition: background-color 0.5s ease, color 0.5s ease;
+    a,
+    a:hover {
       color: white;
-    }
-
-    &:hover {
-      background-color: $btn-primary-color-hover;
-      color: white;
-
-      a {
-        color: white;
-      }
     }
   }
 }
