@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LayerTree matches snapshots using default properties. 1`] = `
+exports[`Topiclist matches snapshots using default properties. 1`] = `
 <div
   className="tm-topic-list"
 >
@@ -395,13 +395,13 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
 </div>
 `;
 
-exports[`LayerTree matches snapshots when classNames are used. 1`] = `
+exports[`Topiclist matches snapshots when classNames are used. 1`] = `
 <div
-  className="foo"
+  className="mimi"
 >
   <div>
     <div
-      className="bar"
+      className="mama"
       style={
         Object {
           "paddingLeft": "10px",
@@ -409,7 +409,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       }
     >
       <label
-        className="qux tm-radio"
+        className="momo tm-radio"
         onKeyPress={[Function]}
         tabIndex={0}
       >
@@ -423,7 +423,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <span />
       </label>
       <div
-        className="quux"
+        className="mumu"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -433,7 +433,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           Topic 1
         </div>
         <div
-          className="ged ged-expanded"
+          className="meme meme-expanded"
         />
       </div>
     </div>
@@ -746,7 +746,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
   </div>
   <div>
     <div
-      className="bar"
+      className="mama"
       style={
         Object {
           "paddingLeft": "10px",
@@ -754,7 +754,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       }
     >
       <label
-        className="qux tm-radio"
+        className="momo tm-radio"
         onKeyPress={[Function]}
         tabIndex={0}
       >
@@ -768,7 +768,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <span />
       </label>
       <div
-        className="quux"
+        className="mumu"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -790,7 +790,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
 </div>
 `;
 
-exports[`LayerTree matches snapshots when no layers. 1`] = `
+exports[`Topiclist matches snapshots when no layers. 1`] = `
 <div
   className="tm-topic-list"
 >
