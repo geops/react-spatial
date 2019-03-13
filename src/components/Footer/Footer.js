@@ -11,11 +11,23 @@ const propTypes = {
    * Element to display in a container.
    */
   children: PropTypes.node,
+
+  /**
+   * Element displayed on the left side of the footer
+   */
+  left: PropTypes.node,
+
+  /**
+   * Element displayed on the right side of the footer
+   */
+  right: PropTypes.node,
 };
 
 const defaultProps = {
   children: undefined,
   className: 'tm-footer',
+  left: undefined,
+  right: undefined,
 };
 
 /**
@@ -23,9 +35,17 @@ const defaultProps = {
  */
 class Footer extends PureComponent {
   render() {
-    const { children, className } = this.props;
+    const { children, className, left, right } = this.props;
+    const lElem = left ? <div className="tm-footer-left">{left}</div> : null;
+    const rElem = right ? <div className="tm-footer-right">{right}</div> : null;
 
-    return <div className={className}>{children}</div>;
+    return (
+      <div className={className}>
+        {lElem}
+        <div className="tm-footer-content">{children}</div>
+        {rElem}
+      </div>
+    );
   }
 }
 

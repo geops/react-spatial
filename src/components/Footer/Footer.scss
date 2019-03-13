@@ -8,6 +8,21 @@
   padding: 5px;
   border-top: 1px solid #aaa;
   background: white;
+  display: flex;
+  align-items: center;
+
+  .tm-footer-left{
+    padding-right: 5px;
+  }
+
+  .tm-footer-content {
+    flex: 1;
+  }
+
+  .tm-footer-right {
+    padding-left: 5px;
+    right: 0;
+  }
 
   @include a();
 
