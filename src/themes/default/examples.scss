@@ -13,3 +13,8 @@
 @import '../../components/Popup/Popup.md.scss';
 @import '../../components/ToggleButton/ToggleButton.md.scss';
 @import '../../components/LayerTree/LayerTree.md.scss';
+@import '../../components/Menu/Menu.md.scss';
+
+body {
+  font-family: $font-family;
+}

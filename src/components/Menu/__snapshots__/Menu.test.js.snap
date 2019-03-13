@@ -8,24 +8,24 @@ exports[`Menu should match snapshot. 1`] = `
     className="tm-menu-content"
   >
     <div
-      className="tm-menu-item"
+      className="tm-menu-item-title"
     >
       foo
     </div>
     <div
-      className="tm-menu-item-title"
+      className="tm-menu-item"
     >
       <div>
         foo
       </div>
     </div>
     <div
-      className="tm-menu-item"
+      className="tm-menu-item-title"
     >
       bar
     </div>
     <div
-      className="tm-menu-item-title"
+      className="tm-menu-item"
     >
       <div>
         bar
