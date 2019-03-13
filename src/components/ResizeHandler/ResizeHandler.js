@@ -82,6 +82,20 @@ class ResizeHandler extends PureComponent {
       stylePropHeight,
       onResize,
     } = this.props;
+
+    if (stylePropHeight) {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty(stylePropHeight, `${vh}px`);
+    }
+
+    if (onResize) {
+      onResize(entries);
+    }
+
+    if (!maxWidthBrkpts && !maxHeightBrkpts) {
+      return;
+    }
+
     for (let i = 0; i < entries.length; i += 1) {
       const entry = entries[i];
       const rect = entry.contentRect;
@@ -93,14 +107,6 @@ class ResizeHandler extends PureComponent {
       if (maxHeightBrkpts) {
         ResizeHandler.applyBreakpoints(entry, maxHeightBrkpts, height, 'h');
       }
-    }
-    if (stylePropHeight) {
-      const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty(stylePropHeight, `${vh}px`);
-    }
-
-    if (onResize) {
-      onResize(entries);
     }
   }
 

@@ -233,7 +233,9 @@ class BasicMap extends Component {
         tabIndex={tabIndex}
       >
         <ResizeHandler
-          observe={this.node}
+          maxHeightBrkpts={null}
+          maxWidthBrkpts={null}
+          observe={this.node && this.node.current}
           onResize={() => {
             this.map.updateSize();
           }}
