@@ -22,7 +22,6 @@ label input {
   display: none;
 }
 
-
 label span {
   background-color: white;
   border: 1px solid lightgray;
@@ -34,18 +33,15 @@ label span {
   border-radius: 50%;
 }
 
-
 label:hover input ~ span {
   background-color: #ccc;
 }
-
 
 label span::after {
   content: '';
   position: absolute;
   display: none;
 }
-
 
 .tm-checkbox span::after {
   left: 5px;
@@ -58,7 +54,6 @@ label span::after {
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
-
 
 .tm-radio span::after {
   top: 2px;
