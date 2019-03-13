@@ -3,8 +3,8 @@
 This demonstrates the use of Checkbox.
 
 ```jsx
-const React = require('react');
-const Checkbox = require('./Checkbox').default;
+import React from  'react';
+import Checkbox from 'react-spatial/components/Checkbox';
 
 class CheckboxExample extends React.Component {
   constructor(props) {

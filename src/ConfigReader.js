@@ -116,8 +116,8 @@ class ConfigReader {
     layer.init(this.map);
 
     if (item.children) {
-      Object.keys(item.children).forEach(childConf => {
-        layer.addChild(this.loadLayerFromConfig(item.children[childConf]));
+      item.children.forEach(childConf => {
+        layer.addChild(this.loadLayerFromConfig(childConf));
       });
     }
 
@@ -125,9 +125,7 @@ class ConfigReader {
   }
 
   initialize() {
-    return Object.keys(this.data).map(val =>
-      this.loadLayerFromConfig(this.data[val]),
-    );
+    return this.data.map(val => this.loadLayerFromConfig(val));
   }
 }
 

@@ -23,38 +23,27 @@ const propTypes = {
   inputType: PropTypes.string,
 
   /**
-   * HTML tabIndex attribute
+   * HTML tabIndex attribute.
    */
   tabIndex: PropTypes.number,
-
-  /**
-   * Key of the label
-   */
-  keyName: PropTypes.string,
 };
 
 const defaultProps = {
   className: 'tm-check',
   inputType: 'checkbox',
-  keyName: undefined,
   checked: false,
   tabIndex: 0,
 };
 
 class Checkbox extends PureComponent {
   render() {
-    const {
-      className,
-      onClick,
-      tabIndex,
-      inputType,
-      checked,
-      keyName,
-    } = this.props;
-
+    const { className, onClick, tabIndex, inputType, checked } = this.props;
+    /*
+      eslint-disable jsx-a11y/label-has-associated-control,
+      jsx-a11y/label-has-for
+    */
     return (
-      <label // eslint-disable-line
-        key={keyName}
+      <label
         className={`${className} tm-${inputType}`}
         tabIndex={tabIndex}
         onKeyPress={e => {
@@ -73,6 +62,10 @@ class Checkbox extends PureComponent {
         <span />
       </label>
     );
+    /*
+      eslint-enable jsx-a11y/label-has-associated-control,
+      jsx-a11y/label-has-for
+    */
   }
 }
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Checkbox from '../Checkbox/Checkbox';
+import Checkbox from '../Checkbox';
 import Button from '../Button';
 
 const propTypes = {
@@ -142,7 +142,6 @@ class LayerTree extends Component {
     const inputType = layer.getRadioGroup() ? 'radio' : 'checkbox';
     return (
       <Checkbox
-        keyName={layer.getName()}
         tabIndex={tabIndex}
         inputType={inputType}
         checked={layer.getVisible()}

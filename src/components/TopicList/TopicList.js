@@ -21,7 +21,7 @@ const propTypes = {
   /**
    * All props aimed to be passed to child LayerTree
    */
-  propsToLayerTree: PropTypes.object.isRequired,
+  propsToLayerTree: PropTypes.object,
 
   /**
    * Function triggered on topic click.
@@ -65,6 +65,7 @@ const propTypes = {
 };
 
 const defaultProps = {
+  propsToLayerTree: null,
   className: 'tm-topic-list',
   classNameItem: 'tm-topic-list-item',
   classNameInput: undefined,
