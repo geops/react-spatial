@@ -34,130 +34,132 @@ const olLayers = [
   }),
 ];
 
-test('Map should be rendered', () => {
-  const setTarget = jest.spyOn(olMap, 'setTarget');
-  shallow(<BasicMap map={olMap} />);
-  expect(setTarget).toHaveBeenCalled();
-});
+describe('BasicMap', () => {
+  test('should be rendered', () => {
+    const setTarget = jest.spyOn(olMap, 'setTarget');
+    shallow(<BasicMap map={olMap} />);
+    expect(setTarget).toHaveBeenCalled();
+  });
 
-test('Map uses onMapMoved function', () => {
-  const spy = jest.fn(() => {});
-  shallow(<BasicMap map={olMap} onMapMoved={spy} />);
-  olMap.dispatchEvent(new MapEvent('moveend', olMap));
-  expect(spy).toHaveBeenCalledTimes(1);
-});
+  test('uses onMapMoved function', () => {
+    const spy = jest.fn(() => {});
+    shallow(<BasicMap map={olMap} onMapMoved={spy} />);
+    olMap.dispatchEvent(new MapEvent('moveend', olMap));
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
 
-test('Map uses onFeaturesClick function', () => {
-  const spy = jest.fn();
-  shallow(<BasicMap map={olMap} onFeaturesClick={spy} />);
-  olMap.dispatchEvent(new MapEvent('singleclick', olMap));
-  expect(spy).toHaveBeenCalledTimes(1);
-});
+  test('uses onFeaturesClick function', () => {
+    const spy = jest.fn();
+    shallow(<BasicMap map={olMap} onFeaturesClick={spy} />);
+    olMap.dispatchEvent(new MapEvent('singleclick', olMap));
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
 
-test('Map uses onFeaturesHover function', () => {
-  const spy = jest.fn();
-  shallow(<BasicMap map={olMap} onFeaturesHover={spy} />);
-  olMap.dispatchEvent(new MapEvent('pointermove', olMap));
-  expect(spy).toHaveBeenCalledTimes(1);
-});
+  test('uses onFeaturesHover function', () => {
+    const spy = jest.fn();
+    shallow(<BasicMap map={olMap} onFeaturesHover={spy} />);
+    olMap.dispatchEvent(new MapEvent('pointermove', olMap));
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
 
-test('Map should be rendered with a default map', () => {
-  const wrapper = shallow(<BasicMap />);
-  expect(wrapper.instance().map).toBeDefined();
-});
+  test('should be rendered with a default map', () => {
+    const wrapper = shallow(<BasicMap />);
+    expect(wrapper.instance().map).toBeDefined();
+  });
 
-test('Map should be rendered with layers and an extent', () => {
-  const wrapper = shallow(
-    <BasicMap
-      map={olMap}
-      layers={olLayers}
-      extent={extent}
-      viewOptions={{
-        minZoom: 16,
-        maxZoom: 22,
-        projection: 'EPSG:21781',
-      }}
-    />,
-  );
-  const inst = wrapper.instance();
-  expect(inst.map).toBeDefined();
-  expect(inst.map.getLayers().getLength()).toBe(1);
-  expect(inst.map.getView().calculateExtent()).toEqual([
-    -1.8640493388513675,
-    -1.8640493388513675,
-    1.8640493388513675,
-    1.8640493388513675,
-  ]);
-});
+  test('should be rendered with layers and an extent', () => {
+    const wrapper = shallow(
+      <BasicMap
+        map={olMap}
+        layers={olLayers}
+        extent={extent}
+        viewOptions={{
+          minZoom: 16,
+          maxZoom: 22,
+          projection: 'EPSG:21781',
+        }}
+      />,
+    );
+    const inst = wrapper.instance();
+    expect(inst.map).toBeDefined();
+    expect(inst.map.getLayers().getLength()).toBe(1);
+    expect(inst.map.getView().calculateExtent()).toEqual([
+      -1.8640493388513675,
+      -1.8640493388513675,
+      1.8640493388513675,
+      1.8640493388513675,
+    ]);
+  });
 
-test("Map's center shoud be set", () => {
-  const map = shallow(<BasicMap map={olMap} />);
-  const setCenter = jest.spyOn(olMap.getView(), 'setCenter');
-  map.setProps({ center: [0, 0] }).update();
-  expect(setCenter).toHaveBeenCalled();
-});
+  test('center shoud be set', () => {
+    const map = shallow(<BasicMap map={olMap} />);
+    const setCenter = jest.spyOn(olMap.getView(), 'setCenter');
+    map.setProps({ center: [0, 0] }).update();
+    expect(setCenter).toHaveBeenCalled();
+  });
 
-test("Map's zoom shoud be set", () => {
-  const map = shallow(<BasicMap map={olMap} zoom={5} />);
-  expect(olMap.getView().getZoom()).toBe(5);
-  map.setProps({ zoom: 2 }).update();
-  expect(olMap.getView().getZoom()).toBe(2);
-});
+  test('zoom shoud be set', () => {
+    const map = shallow(<BasicMap map={olMap} zoom={5} />);
+    expect(olMap.getView().getZoom()).toBe(5);
+    map.setProps({ zoom: 2 }).update();
+    expect(olMap.getView().getZoom()).toBe(2);
+  });
 
-test("Map's resolution shoud be set", () => {
-  const map = shallow(<BasicMap map={olMap} resolution={100} />);
-  expect(olMap.getView().getResolution()).toBe(100);
-  map.setProps({ resolution: 5 }).update();
-  expect(olMap.getView().getResolution()).toBe(5);
-});
+  test('resolution shoud be set', () => {
+    const map = shallow(<BasicMap map={olMap} resolution={100} />);
+    expect(olMap.getView().getResolution()).toBe(100);
+    map.setProps({ resolution: 5 }).update();
+    expect(olMap.getView().getResolution()).toBe(5);
+  });
 
-test("Map's animation shoud be set", () => {
-  const obj = {
-    zoom: 4,
-  };
-  const map = shallow(<BasicMap map={olMap} />);
-  const spy = jest.spyOn(olMap.getView(), 'animate');
-  map.setProps({ animationOptions: obj }).update();
-  expect(spy).toHaveBeenCalledWith(obj);
-});
+  test('animation shoud be set', () => {
+    const obj = {
+      zoom: 4,
+    };
+    const map = shallow(<BasicMap map={olMap} />);
+    const spy = jest.spyOn(olMap.getView(), 'animate');
+    map.setProps({ animationOptions: obj }).update();
+    expect(spy).toHaveBeenCalledWith(obj);
+  });
 
-test("Map's layers shoud be updated", () => {
-  const addLayer = jest.spyOn(olMap, 'addLayer');
-  const map = shallow(<BasicMap map={olMap} />);
-  const layer = new Layer({ name: 'test', olLayer: new OLLayer() });
-  map.setProps({ layers: [layer] }).update();
-  expect(addLayer).toHaveBeenCalled();
-});
+  test('layers shoud be updated', () => {
+    const addLayer = jest.spyOn(olMap, 'addLayer');
+    const map = shallow(<BasicMap map={olMap} />);
+    const layer = new Layer({ name: 'test', olLayer: new OLLayer() });
+    map.setProps({ layers: [layer] }).update();
+    expect(addLayer).toHaveBeenCalled();
+  });
 
-test('Map should be fitted if extent is updated', () => {
-  const fitExtent = jest.spyOn(OLView.prototype, 'fit');
-  const map = shallow(<BasicMap map={olMap} />);
-  map.setProps({ extent: [1, 2, 3, 4] }).update();
-  expect(fitExtent).toHaveBeenCalled();
-});
+  test('should be fitted if extent is updated', () => {
+    const fitExtent = jest.spyOn(OLView.prototype, 'fit');
+    const map = shallow(<BasicMap map={olMap} />);
+    map.setProps({ extent: [1, 2, 3, 4] }).update();
+    expect(fitExtent).toHaveBeenCalled();
+  });
 
-test('Map should be zoomed if zoom is updated', () => {
-  const setZoom = jest.spyOn(OLView.prototype, 'setZoom');
-  const map = shallow(<BasicMap map={olMap} />);
-  map.setProps({ zoom: 15 }).update();
-  expect(setZoom).toHaveBeenCalled();
-});
+  test('should be zoomed if zoom is updated', () => {
+    const setZoom = jest.spyOn(OLView.prototype, 'setZoom');
+    const map = shallow(<BasicMap map={olMap} />);
+    map.setProps({ zoom: 15 }).update();
+    expect(setZoom).toHaveBeenCalled();
+  });
 
-test("Map's size is updated when div is resized", () => {
-  const spy = jest.spyOn(olMap, 'updateSize');
-  const map = mount(<BasicMap map={olMap} />);
-  const node = map.getDOMNode();
-  expect(spy).toHaveBeenCalledTimes(1);
-  // The mock class set the onResize property, we just have to run it to
-  // simulate a resize
-  ResizeObserver.onResize([
-    {
-      target: node,
-      contentRect: {
-        width: 20,
-        height: 20,
+  test('size is updated when div is resized', () => {
+    const spy = jest.spyOn(olMap, 'updateSize');
+    const map = mount(<BasicMap map={olMap} />);
+    const node = map.getDOMNode();
+    expect(spy).toHaveBeenCalledTimes(1);
+    // The mock class set the onResize property, we just have to run it to
+    // simulate a resize
+    ResizeObserver.onResize([
+      {
+        target: node,
+        contentRect: {
+          width: 20,
+          height: 20,
+        },
       },
-    },
-  ]);
-  expect(spy).toHaveBeenCalledTimes(2);
+    ]);
+    expect(spy).toHaveBeenCalledTimes(2);
+  });
 });
