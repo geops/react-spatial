@@ -3,5 +3,21 @@
 exports[`Footer matches snapshot 1`] = `
 <div
   className="tm-footer"
-/>
+>
+  <div
+    className="tm-footer-left"
+  >
+    I'm the left component
+  </div>
+  <div
+    className="tm-footer-content"
+  >
+    I am the footer
+  </div>
+  <div
+    className="tm-footer-right"
+  >
+    I'm the right component
+  </div>
+</div>
 `;
