@@ -45,13 +45,13 @@ class CheckboxExample extends React.Component {
           <Checkbox
             className="tm-checkbox-example"
             checked={radio1}
-            inputType={'radio'}
+            inputType="radio"
             onClick={() => this.onRadioClick()}
           />
           <Checkbox
             className="tm-checkbox-example"
             checked={radio2}
-            inputType={'radio'}
+            inputType="radio"
             onClick={() => this.onRadioClick()}
           />
         </div>
