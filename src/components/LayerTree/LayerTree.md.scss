@@ -5,146 +5,96 @@
   display: flex;
   overflow: hidden;
   border: 1px solid lightgray;
+}
 
-  .tm-map {
+.tm-map {
+  width: auto;
+  height: auto;
+  flex-grow: 1;
+}
+
+.tm-layer-tree-arrow {
+  border: solid black;
+  border-width: 0 1px 1px 0;
+  display: inline-block;
+  padding: 0;
+  background: transparent;
+  width: 5px;
+  height: 5px;
+}
+
+.tm-layer-tree-arrow-collapsed {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  margin-top: -3px;
+}
+
+.tm-layer-tree-arrow-expanded {
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+  margin-top: 3px;
+}
+
+.tm-layer-tree {
+  width: 300px;
+  padding: 0 10px;
+  overflow-y: auto;
+}
+
+.tm-layer-tree-item {
+  display: flex;
+  align-items: center;
+  padding: 7px;
+  position: relative;
+
+  & > * {
+    margin-right: 10px;
+    align-items: center;
+  }
+
+  div {
+    /* HACK: Without this it breaks the click on the label (Chrome) */
+    position: relative;
+  }
+
+  /* CSS for the toggle div */
+  .tm-layer-tree-toggle {
     width: auto;
     height: auto;
     flex-grow: 1;
-  }
-
-  .tm-layer-tree-arrow {
-    border: solid black;
-    border-width: 0 1px 1px 0;
-    display: inline-block;
-    padding: 0;
-    background: transparent;
-    width: 5px;
-    height: 5px;
-  }
-
-  .tm-layer-tree-arrow-collapsed {
-    transform: rotate(45deg);
-    -webkit-transform: rotate(45deg);
-    margin-top: -3px;
-  }
-
-  .tm-layer-tree-arrow-expanded {
-    transform: rotate(-135deg);
-    -webkit-transform: rotate(-135deg);
-    margin-top: 3px;
-  }
-
-  .tm-layer-tree {
-    width: 300px;
-    padding: 10px;
-    border-right: 1px solid lightgray;
-    overflow-y: auto;
-  }
-
-  .tm-layer-tree-item {
     display: flex;
     align-items: center;
-    padding: 10px;
-    position: relative;
+    justify-content: left;
 
-    & > * {
+    div:first-child {
       margin-right: 10px;
-      align-items: center;
     }
+  }
 
-    div {
-      /* HACK: Without this it breaks the click on the label (Chrome) */
-      position: relative;
-    }
+  .tm-layer-tree-input-radio span {
+    border-radius: 50%;
+  }
 
-    /* CSS for the toggle div */
-    .tm-layer-tree-toggle {
-      width: auto;
-      height: auto;
-      flex-grow: 1;
-      display: flex;
-      align-items: center;
-      justify-content: left;
+  /* Style the checkmark/indicator */
+  .tm-layer-tree-input-checkbox span::after {
+    left: 5px;
+    top: 1px;
+    width: 5px;
+    height: 10px;
+    border: solid $brand-primary;
+    border-width: 0 1px 1px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
 
-      div:first-child {
-        margin-right: 10px;
-      }
-    }
-
-    /* Customize the label (the container) */
-    label {
-      display: inline-block;
-      position: relative;
-      cursor: pointer;
-    }
-
-    label,
-    label input {
-      height: 18px;
-      width: 18px;
-    }
-
-    label input,
-    label span {
-      position: absolute;
-      top: 0;
-      left: 0;
-      margin: 0;
-    }
-
-    label input {
-      display: none;
-    }
-
-    /* Create a custom checkbox */
-    label span {
-      background-color: white;
-      border: 1px solid lightgray;
-      width: calc(100% - 2px);
-      height: calc(100% - 2px);
-    }
-
-    .tm-layer-tree-input-radio span {
-      border-radius: 50%;
-    }
-
-    /* On mouse-over, add a grey background color */
-    label:hover input ~ span {
-      background-color: #ccc;
-    }
-
-    /* Create the checkmark/indicator (hidden when not checked) */
-    label span::after {
-      content: '';
-      position: absolute;
-      display: none;
-    }
-
-    /* Style the checkmark/indicator */
-    .tm-layer-tree-input-checkbox span::after {
-      left: 5px;
-      top: 1px;
-      width: 5px;
-      height: 10px;
-      border: solid $brand-primary;
-      border-width: 0 1px 1px 0;
-      -webkit-transform: rotate(45deg);
-      -ms-transform: rotate(45deg);
-      transform: rotate(45deg);
-    }
-
-    /* Style the  (dot/circle) */
-    .tm-layer-tree-input-radio span::after {
-      top: 2px;
-      left: 2px;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: $brand-primary;
-    }
-
-    label input:checked ~ span::after {
-      display: block;
-    }
+  /* Style the  (dot/circle) */
+  .tm-layer-tree-input-radio span::after {
+    top: 2px;
+    left: 2px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: $brand-primary;
   }
 }

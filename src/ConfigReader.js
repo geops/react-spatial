@@ -116,8 +116,8 @@ class ConfigReader {
     layer.init(this.map);
 
     if (item.children) {
-      item.children.forEach(childConf => {
-        layer.addChild(this.loadLayerFromConfig(childConf));
+      Object.keys(item.children).forEach(childConf => {
+        layer.addChild(this.loadLayerFromConfig(item.children[childConf]));
       });
     }
 
@@ -125,7 +125,9 @@ class ConfigReader {
   }
 
   initialize() {
-    return this.data.default.map(val => this.loadLayerFromConfig(val));
+    return Object.keys(this.data).map(val =>
+      this.loadLayerFromConfig(this.data[val]),
+    );
   }
 }
 
@@ -134,4 +136,14 @@ const readConfig = (map, data) => {
   return configReader.initialize();
 };
 
-export default { readConfig };
+const getVisibleTopic = topicList => {
+  let visibleTopic = null;
+  topicList.forEach(topic => {
+    if (topic.visible) {
+      visibleTopic = topic;
+    }
+  });
+  return visibleTopic.children;
+};
+
+export default { getVisibleTopic, readConfig };
