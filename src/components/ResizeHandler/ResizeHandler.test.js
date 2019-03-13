@@ -1,3 +1,4 @@
+/* eslint-disable  react/no-multi-comp,react/prefer-stateless-function,react/prop-types */
 import React from 'react';
 import { configure, mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
@@ -8,27 +9,27 @@ jest.mock('resize-observer-polyfill');
 
 configure({ adapter: new Adapter() });
 
-// eslint-disable-next-line  react/prefer-stateless-function
+class Div extends React.Component {
+  render() {
+    return <div />;
+  }
+}
+
 class BasicComponent extends React.Component {
   render() {
+    const { onResize, stylePropHeight } = this.props;
     return (
       <div id="basic">
-        <ResizeHandler observe={this} />
+        <ResizeHandler
+          observe={this}
+          onResize={onResize}
+          stylePropHeight={stylePropHeight}
+        />
       </div>
     );
   }
 }
-// eslint-disable-next-line  react/prefer-stateless-function,react/no-multi-comp
-class BasicComponent2 extends React.Component {
-  render() {
-    return (
-      <div>
-        <ResizeHandler observe="#basic" />
-      </div>
-    );
-  }
-}
-// eslint-disable-next-line  react/prefer-stateless-function, react/no-multi-comp
+
 class BasicComponent3 extends React.Component {
   render() {
     return (
@@ -49,37 +50,167 @@ class BasicComponent3 extends React.Component {
   }
 }
 
+class StrComponent extends React.Component {
+  render() {
+    return (
+      <span id="basic">
+        <ResizeHandler observe="#basic" />
+      </span>
+    );
+  }
+}
+
+class ThisComponent extends React.Component {
+  render() {
+    return (
+      <div>
+        <ResizeHandler observe={this} />
+      </div>
+    );
+  }
+}
+
+class RefComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.ref = React.createRef();
+  }
+
+  render() {
+    return (
+      <>
+        <Div ref={this.ref} />
+        <ResizeHandler observe={this.ref} />
+      </>
+    );
+  }
+}
+
+class CallbackComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      ref: null,
+    };
+  }
+
+  render() {
+    const { ref } = this.state;
+    return (
+      <>
+        <div
+          ref={node => {
+            if (node && !ref) {
+              this.setState({
+                ref: node,
+              });
+            }
+          }}
+        />
+        <ResizeHandler observe={ref} />
+      </>
+    );
+  }
+}
+
+// eslint-disable-next-line  react/prefer-stateless-function
+class RefNodeComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.ref = React.createRef();
+  }
+
+  render() {
+    return (
+      <>
+        <div ref={this.ref} />
+        <ResizeHandler observe={this.ref} />
+      </>
+    );
+  }
+}
+
+// eslint-disable-next-line  react/prefer-stateless-function
+class CallbackNodeComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      ref: null,
+    };
+  }
+
+  render() {
+    const { ref } = this.state;
+    return (
+      <>
+        <div
+          ref={node => {
+            if (node && !ref) {
+              this.setState({
+                ref: node,
+              });
+            }
+          }}
+        />
+        <ResizeHandler observe={ref} />
+      </>
+    );
+  }
+}
+
+const comps = [
+  ThisComponent,
+  RefComponent,
+  RefNodeComponent,
+  CallbackComponent,
+  CallbackNodeComponent,
+];
+
 describe('ResizeHandler', () => {
   describe('when observe property is not set', () => {
-    test('displays an error', () => {
-      window.console.error = jest.fn().mockImplementation(() => {});
-      const spy = jest.spyOn(window.console, 'error');
-      const wrapper = mount(<ResizeHandler />);
-      expect(spy).toHaveBeenCalled();
+    test("doesn't observe", () => {
+      const spy = jest.spyOn(ResizeObserver.prototype, 'observe');
+      shallow(<ResizeHandler />);
+      expect(spy).not.toHaveBeenCalled();
       spy.mockRestore();
-      // Test componentWillUnmount function
-      wrapper.unmount();
-      window.console.error.mockRestore();
     });
 
-    test('never updates', () => {
-      const comp = shallow(<ResizeHandler />);
-      const shouldUpdate = comp.instance().shouldComponentUpdate({});
-      expect(shouldUpdate).toBe(false);
+    test('disconnect on unmount', () => {
+      const wrapper = shallow(<ResizeHandler />);
+      const spy = jest.spyOn(wrapper.instance().observer, 'disconnect');
+      wrapper.unmount();
+      expect(spy).toHaveBeenCalledTimes(1);
     });
   });
 
-  describe('when observe property is set to a React Component', () => {
-    test('(un)observes it on (un)mount', () => {
+  describe('when observe property is set', () => {
+    test('try t get  an html node from a string on (un)mount', () => {
+      const div = document.createElement('div');
+      document.querySelectorAll = jest.fn().mockImplementation(() => [div]);
       const spy = jest.spyOn(ResizeObserver.prototype, 'observe');
-      const spy2 = jest.spyOn(ResizeObserver.prototype, 'unobserve');
-      const wrapper = mount(<BasicComponent />);
-      const basic = wrapper.getDOMNode();
-      expect(spy).toHaveBeenCalledWith(basic);
-      wrapper.unmount();
-      expect(spy2).toHaveBeenCalledWith(basic);
+      const spy2 = jest.spyOn(ResizeObserver.prototype, 'disconnect');
+      mount(<StrComponent />);
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy.mock.calls[0][0]).toBe(div);
+      expect(spy2.mock.calls.length >= 1).toBe(true);
       spy.mockRestore();
       spy2.mockRestore();
+      document.querySelectorAll.mockRestore();
+    });
+
+    comps.forEach(Comp => {
+      test(`(un)observes an html node from ${Comp.name} on (un)mount`, () => {
+        const spy = jest.spyOn(ResizeObserver.prototype, 'observe');
+        const spy2 = jest.spyOn(ResizeObserver.prototype, 'disconnect');
+        const wrapper = mount(<Comp />);
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(spy.mock.calls[0][0]).toBeInstanceOf(Element);
+        expect(spy2.mock.calls.length >= 1).toBe(true);
+        ResizeObserver.prototype.observe.mockRestore();
+        spy.mockRestore();
+        spy2.mockRestore();
+        wrapper.unmount();
+      });
     });
 
     test('set the default css class on resize ', () => {
@@ -169,21 +300,43 @@ describe('ResizeHandler', () => {
       ]);
       expect(basic.className).toBe('tm-w-breit tm-h-hoch');
     });
-  });
 
-  describe('when observe property is set to a query selector', () => {
-    test('(un)observes it on (un)mount', () => {
-      document.querySelectorAll = jest
-        .fn()
-        .mockImplementation(() => ['1', '2']);
-      const spy = jest.spyOn(ResizeObserver.prototype, 'observe');
-      const spy2 = jest.spyOn(ResizeObserver.prototype, 'unobserve');
-      expect(spy).toHaveBeenCalledTimes(0);
-      const wrapper = mount(<BasicComponent2 />);
-      expect(spy).toHaveBeenCalledTimes(2);
-      wrapper.unmount();
-      expect(spy2).toHaveBeenCalledTimes(2);
-      document.querySelectorAll.mockRestore();
+    test('calls onResize property', () => {
+      const fn = jest.fn();
+      const wrapper = mount(<BasicComponent onResize={fn} />);
+      const basic = wrapper.getDOMNode();
+
+      // The mock class set the onResize property, we just have to run it to
+      // simulate a resize
+      ResizeObserver.onResize([
+        {
+          target: basic,
+          contentRect: {
+            width: 100,
+            height: 100,
+          },
+        },
+      ]);
+      expect(fn).toHaveBeenCalledTimes(1);
+    });
+
+    test('set a style property on resize', () => {
+      const spy = jest.spyOn(document.documentElement.style, 'setProperty');
+      const wrapper = mount(<BasicComponent stylePropHeight="foo" />);
+      const basic = wrapper.getDOMNode();
+
+      // The mock class set the onResize property, we just have to run it to
+      // simulate a resize
+      ResizeObserver.onResize([
+        {
+          target: basic,
+          contentRect: {
+            width: 100,
+            height: 100,
+          },
+        },
+      ]);
+      expect(spy).toHaveBeenCalledWith('foo', '7.68px');
     });
   });
 });
