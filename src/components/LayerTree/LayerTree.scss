@@ -1,23 +1,6 @@
-.tm-layer-tree-example {
-  position: relative;
-
-  .tm-map {
-    width: 100%;
-    height: 100%;
-    flex-grow: 1;
-
-  }
-
-  .tm-layer-tree {
-    background: white;
-    padding: 10px 5px;
-    width: 250px;
-    top: 10px;
-    left: 10px;
-    bottom: 10px;
-    position: absolute;
-    margin: auto;
-  }
+.tm-layer-tree {
+  width: 100%;
+  overflow-y: auto;
 
   .tm-layer-tree-arrow {
     border: solid black;
@@ -41,12 +24,10 @@
     margin-top: 3px;
   }
 
-
-
   .tm-layer-tree-item {
     display: flex;
     align-items: center;
-    padding: 7px;
+    padding: 10px;
     position: relative;
 
     & > * {
@@ -73,8 +54,53 @@
       }
     }
 
+    /* Customize the label (the container) */
+    label {
+      display: inline-block;
+      position: relative;
+      cursor: pointer;
+    }
+
+    label,
+    label input {
+      height: 18px;
+      width: 18px;
+    }
+
+    label input,
+    label span {
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin: 0;
+    }
+
+    label input {
+      display: none;
+    }
+
+    /* Create a custom checkbox */
+    label span {
+      background-color: white;
+      border: 1px solid lightgray;
+      width: calc(100% - 2px);
+      height: calc(100% - 2px);
+    }
+
     .tm-layer-tree-input-radio span {
       border-radius: 50%;
+    }
+
+    /* On mouse-over, add a grey background color */
+    label:hover input ~ span {
+      background-color: #ccc;
+    }
+
+    /* Create the checkmark/indicator (hidden when not checked) */
+    label span::after {
+      content: '';
+      position: absolute;
+      display: none;
     }
 
     /* Style the checkmark/indicator */
@@ -98,6 +124,10 @@
       height: 12px;
       border-radius: 50%;
       background: $brand-primary;
+    }
+
+    label input:checked ~ span::after {
+      display: block;
     }
   }
 }
