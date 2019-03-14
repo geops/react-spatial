@@ -47,7 +47,8 @@ Then open the file `coverage/lcov-report/index.html` in your browser.
 
 ## Publish on [npmjs.com](https://www.npmjs.com/package/react-spatial)
 
-Commit/push the new version in `package.json`.
+Set the new version in `package.json`.
+Commit/push in master.
 
 Run publish:
 
@@ -58,6 +59,21 @@ yarn publish
 ```
 
 Then the new version must be published on [npmjs.com](https://www.npmjs.com/package/react-spatial).
+
+## Publish a development version on [npmjs.com](https://www.npmjs.com/package/react-spatial)
+
+This version WILL NOT be displayed to other in [npmjs.com](https://www.npmjs.com/package/react-spatial).
+Append `-beta.0` to the current version in `package.json` or increase the dev number.
+
+Run publish:
+
+```bash
+yarn build
+cd build
+yarn publish --tag beta
+```
+
+Then the new version must be published on [npmjs.com](https://www.npmjs.com/package/react-spatial) with the tag dev.
 
 ## How to use `npm link`
 
