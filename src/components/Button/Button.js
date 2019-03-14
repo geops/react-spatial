@@ -36,7 +36,7 @@ const propTypes = {
 const defaultProps = {
   className: 'tm-button',
   title: undefined,
-  tabIndex: undefined,
+  tabIndex: 0,
   style: undefined,
 };
 
