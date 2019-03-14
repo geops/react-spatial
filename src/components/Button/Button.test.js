@@ -10,7 +10,7 @@ const funcs = {
   onClick: () => {},
 };
 
-test('Menu should match snapshot.', () => {
+test('Button should match snapshot.', () => {
   const component = renderer.create(
     <Button
       className="tm-zoom in"
