@@ -7,6 +7,7 @@ import OLCollection from 'ol/Collection';
 import View from 'ol/View';
 import Interaction from 'ol/interaction/Interaction';
 import Layer from '../../Layer';
+import ResizeHandler from '../ResizeHandler';
 
 const propTypes = {
   /** Map animation options */
@@ -230,7 +231,16 @@ class BasicMap extends Component {
         ref={this.node}
         role="menu"
         tabIndex={tabIndex}
-      />
+      >
+        <ResizeHandler
+          maxHeightBrkpts={null}
+          maxWidthBrkpts={null}
+          observe={this.node && this.node.current}
+          onResize={() => {
+            this.map.updateSize();
+          }}
+        />
+      </div>
     );
   }
 }
