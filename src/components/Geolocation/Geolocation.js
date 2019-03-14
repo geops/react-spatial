@@ -1,0 +1,213 @@
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+
+import OLMap from 'ol/Map';
+import { transform } from 'ol/proj';
+import Point from 'ol/geom/Point';
+import Feature from 'ol/Feature';
+
+import Style from 'ol/style/Style';
+import Circle from 'ol/style/Circle';
+import Fill from 'ol/style/Fill';
+import Stroke from 'ol/style/Stroke';
+
+import VectorLayer from 'ol/layer/Vector';
+import VectorSource from 'ol/source/Vector';
+
+import { FaRegDotCircle } from 'react-icons/fa';
+
+import Button from '../Button';
+
+const propTypes = {
+  /**
+   * CSS class of the button.
+   */
+  className: PropTypes.string,
+
+  /**
+   * Title of the button.
+   */
+  title: PropTypes.string,
+
+  /**
+   * Map.
+   */
+  map: PropTypes.instanceOf(OLMap).isRequired,
+
+  /**
+   * Function triggered when geolocating is not successful.
+   */
+  onError: PropTypes.func,
+
+  /**
+   * If true, the map is not centered after it has been dragged once.
+   */
+  noCenterAfterDrag: PropTypes.bool,
+};
+
+const defaultProps = {
+  className: 'tm-geolocation',
+  title: undefined,
+  onError: () => {},
+  noCenterAfterDrag: false,
+};
+
+/**
+ * This component displays a geolocator.
+ */
+class Geolocation extends PureComponent {
+  constructor(props) {
+    super(props);
+    const { map, onError, noCenterAfterDrag } = this.props;
+
+    this.map = map;
+    this.onError = onError;
+    this.layer = new VectorLayer({
+      source: new VectorSource(),
+    });
+
+    this.isCentered = true;
+    if (noCenterAfterDrag) {
+      this.map.on('pointerdrag', () => {
+        this.isCentered = false;
+      });
+    }
+
+    this.state = {
+      active: false,
+    };
+  }
+
+  toggle() {
+    const { active } = this.state;
+    const geolocation = 'geolocation' in navigator;
+
+    if (!geolocation) {
+      this.onError();
+    } else if (!active) {
+      this.watch = navigator.geolocation.watchPosition(
+        this.activate.bind(this),
+        this.error.bind(this),
+        {
+          enableHighAccuracy: true,
+        },
+      );
+    } else {
+      this.deactivate();
+    }
+  }
+
+  error() {
+    this.deactivate();
+    this.onError();
+  }
+
+  deactivate() {
+    window.clearInterval(this.interval);
+    this.layer.setMap(null);
+    navigator.geolocation.clearWatch(this.watch);
+
+    this.setState({
+      active: false,
+    });
+  }
+
+  activate(position) {
+    const code = this.map
+      .getView()
+      .getProjection()
+      .getCode();
+    const pos = transform(
+      [position.coords.longitude, position.coords.latitude],
+      'EPSG:4326',
+      code,
+    );
+
+    const point = new Point(pos);
+    this.highlight(point);
+    this.layer.setMap(this.map);
+    if (this.isCentered) {
+      this.map.getView().setCenter(pos);
+    }
+
+    this.setState({
+      active: true,
+    });
+  }
+
+  highlight(point) {
+    let decrease = true;
+    let opacity = 0.5;
+    let rotation = 0;
+    let feature;
+
+    window.clearInterval(this.interval);
+    this.interval = window.setInterval(() => {
+      rotation += 0.03;
+      decrease = opacity < 0.1 ? false : decrease;
+      decrease = opacity > 0.5 ? true : decrease;
+      opacity += decrease ? -0.03 : 0.03;
+      if (feature) {
+        feature.changed();
+      }
+    }, 50);
+
+    feature = new Feature({
+      geometry: point,
+      source: new VectorSource(),
+    });
+
+    feature.setStyle(() => {
+      const circleStyle = new Style({
+        image: new Circle({
+          radius: 20,
+          rotation,
+          fill: new Fill({
+            color: 'rgba(255, 255, 255, 0.01)',
+          }),
+          stroke: new Stroke({
+            lineDash: [30, 5],
+            width: 6,
+            color: `rgba(0, 61, 133, ${opacity})`,
+          }),
+        }),
+      });
+
+      circleStyle.getImage().setRotation(rotation);
+
+      return [
+        new Style({
+          image: new Circle({
+            radius: 10,
+            fill: new Fill({
+              color: 'rgba(0, 61, 133, 0.5)',
+            }),
+          }),
+        }),
+        circleStyle,
+      ];
+    });
+    this.layer.getSource().clear();
+    this.layer.getSource().addFeature(feature);
+  }
+
+  render() {
+    const { className, title } = this.props;
+    const { active } = this.state;
+
+    return (
+      <Button
+        className={`${className} ${active ? 'blink' : ''}`}
+        title={title}
+        onClick={() => this.toggle()}
+      >
+        <FaRegDotCircle />
+      </Button>
+    );
+  }
+}
+
+Geolocation.propTypes = propTypes;
+Geolocation.defaultProps = defaultProps;
+
+export default Geolocation;
