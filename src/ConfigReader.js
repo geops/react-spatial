@@ -134,14 +134,14 @@ const readConfig = (map, data) => {
   return configReader.initialize();
 };
 
-const getVisibleTopic = (topicList, param) => {
+const getVisibleTopic = topicList => {
   let visibleTopic = null;
   topicList.forEach(topic => {
     if (topic.visible) {
       visibleTopic = topic;
     }
   });
-  return param ? visibleTopic[param] : visibleTopic;
+  return visibleTopic;
 };
 
 export default { getVisibleTopic, readConfig };

@@ -77,7 +77,7 @@ class TopicList extends Component {
     const { topics } = this.props;
 
     this.state = {
-      expandedTopic: ConfigReader.getVisibleTopic(topics, 'id'),
+      expandedTopic: ConfigReader.getVisibleTopic(topics).id,
     };
   }
 

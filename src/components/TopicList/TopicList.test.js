@@ -26,7 +26,7 @@ const mountTopicList = (topics, props) => {
 const renderTopicList = (topics, props) => {
   const layers = ConfigReader.readConfig(
     new OLMap({}),
-    ConfigReader.getVisibleTopic(topics, 'children'),
+    ConfigReader.getVisibleTopic(topics).children,
   );
   const layerService = new LayerService(layers);
   const component = renderer.create(
