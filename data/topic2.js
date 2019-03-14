@@ -2,7 +2,6 @@ const topic2 = {
   id: 'topic2',
   name: 'Topic 2',
   visible: false,
-  expanded: true,
   children: [
     {
       name: 'OSM Baselayer',

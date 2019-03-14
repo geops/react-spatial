@@ -26,7 +26,7 @@ class TopicListExample extends React.Component {
   componentDidMount() {
     const layers = ConfigReader.readConfig(
       this.map,
-      ConfigReader.getVisibleTopic(topicData),
+      ConfigReader.getVisibleTopic(topicData, 'children'),
     );
 
     this.setState({
@@ -46,35 +46,12 @@ class TopicListExample extends React.Component {
 
     const layers = ConfigReader.readConfig(
       this.map,
-      ConfigReader.getVisibleTopic(topics),
+      ConfigReader.getVisibleTopic(topics, 'children'),
     );
 
     this.setState({
       layerService: new LayerService(layers),
     });
-  }
-
-  onTopicToggle(topic) {
-    const { topics } = this.state;
-
-    this.setState({
-      topics: topics.map(t => {
-        if (t.id === topic.id) {
-          t.expanded = !topic.expanded;
-        }
-        return t;
-      })
-    });
-  }
-
-  applyStyle(itemId) {
-    this.layers[0].olLayer.getStyle().setText(
-      new Text({
-        font: '20px sans-serif',
-        text: 'Last item modified is : ' + itemId,
-      }),
-    );
-    this.layers[0].olLayer.changed();
   }
 
   render() {
@@ -88,7 +65,6 @@ class TopicListExample extends React.Component {
       <div className="tm-topic-list-example">
         <TopicList
           onTopicClick={(topic) => this.onTopicClick(topic)}
-          onTopicToggle={(topic) => this.onTopicToggle(topic)}
           propsToLayerTree={propsToLayerTree}
           layerService={layerService}
           topics={topics}

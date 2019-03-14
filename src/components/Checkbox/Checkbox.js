@@ -8,6 +8,11 @@ const propTypes = {
   onClick: PropTypes.func.isRequired,
 
   /**
+   * Function triggered on input change event.
+   */
+  onChange: PropTypes.func,
+
+  /**
    * Boolean attribute if input is checked or not.
    */
   checked: PropTypes.bool,
@@ -31,13 +36,22 @@ const propTypes = {
 const defaultProps = {
   className: 'tm-check',
   inputType: 'checkbox',
+  onChange: () => {},
   checked: false,
   tabIndex: 0,
 };
 
 class Checkbox extends PureComponent {
   render() {
-    const { className, onClick, tabIndex, inputType, checked } = this.props;
+    const {
+      className,
+      onClick,
+      onChange,
+      tabIndex,
+      inputType,
+      checked,
+    } = this.props;
+
     /*
       eslint-disable jsx-a11y/label-has-associated-control,
       jsx-a11y/label-has-for
@@ -56,7 +70,7 @@ class Checkbox extends PureComponent {
           type={inputType}
           tabIndex={-1}
           checked={checked}
-          onChange={() => {}}
+          onChange={() => onChange()}
           onClick={() => onClick()}
         />
         <span />
