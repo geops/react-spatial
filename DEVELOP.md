@@ -51,7 +51,6 @@ Run publish:
 
 ```bash
 yarn version    // Increase the version number.
-git commit -a -m "Change version"
 git push origin HEAD
 yarn build
 cd build
@@ -68,7 +67,6 @@ Run publish:
 
 ```bash
 yarn version   // Append `-beta.0` to the current version or increase the beta number.
-git commit -a -m "Change version"
 git push origin HEAD
 yarn build
 cd build
