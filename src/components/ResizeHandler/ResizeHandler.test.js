@@ -113,7 +113,6 @@ class CallbackComponent extends React.Component {
   }
 }
 
-// eslint-disable-next-line  react/prefer-stateless-function
 class RefNodeComponent extends React.Component {
   constructor(props) {
     super(props);
