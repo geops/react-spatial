@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ConfigReader from '../../ConfigReader';
-import LayerTree from '../LayerTree/LayerTree';
-import Checkbox from '../Checkbox/Checkbox';
-import Button from '../Button/Button';
+import LayerTree from '../LayerTree';
+import Checkbox from '../Checkbox';
+import Button from '../Button';
 
 const propTypes = {
   /**
