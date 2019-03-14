@@ -83,6 +83,7 @@ class TopicList extends Component {
     return (
       <Checkbox
         inputType="radio"
+        tabIndex={-1}
         checked={topic.visible}
         className={classNameInput}
         onClick={() => onTopicClick(topic)}
@@ -97,6 +98,34 @@ class TopicList extends Component {
         className={`${classNameArrow} ${classNameArrow}${
           topic.expanded ? '-expanded' : '-collapsed'
         }`}
+      />
+    );
+  }
+
+  renderBarrierFreeDiv(topic) {
+    const { onTopicToggle, onTopicClick } = this.props;
+
+    return (
+      <div
+        style={{
+          position: 'absolute',
+          margin: 'auto',
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,
+        }}
+        role="button"
+        tabIndex={0}
+        onKeyPress={e => {
+          if (e.which === 13) {
+            if (topic.visible) {
+              onTopicToggle(topic);
+            } else {
+              onTopicClick(topic);
+            }
+          }
+        }}
       />
     );
   }
@@ -131,6 +160,7 @@ class TopicList extends Component {
             paddingLeft: `${padding}px`,
           }}
         >
+          {this.renderBarrierFreeDiv(topic)}
           {this.renderInput(topic)}
           {this.renderToggleButton(topic)}
         </div>
