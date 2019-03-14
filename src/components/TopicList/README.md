@@ -3,21 +3,13 @@
 This demonstrates the use of TopicList.
 
 ```jsx
-const React = require('react');
-const LayerTree = require('../LayerTree/LayerTree').default;
-const TopicList = require('./TopicList').default;
-const BasicMap = require('../BasicMap/BasicMap').default;
-const VectorLayer = require('../../VectorLayer').default;
-const LayerService = require('../../LayerService').default;
-const OLMap = require('ol/Map').default;
-const Feature = require('ol/Feature').default;
-const Point = require('ol/geom/Point').default;
-const VectorSource = require('ol/source/Vector').default;
-const Style = require('ol/style/Style').default;
-const Circle = require('ol/style/Circle').default;
-const Fill = require('ol/style/Fill').default;
-const Text = require('ol/style/Text').default;
-const ConfigReader = require('../../ConfigReader').default;
+import React from  'react';
+import LayerTree from 'react-spatial/components/LayerTree';
+import TopicList from 'react-spatial/components/TopicList';
+import BasicMap from 'react-spatial/components/BasicMap';
+import LayerService from 'react-spatial/LayerService';
+import OLMap from 'ol/Map';
+import ConfigReader from 'react-spatial/ConfigReader';
 
 class TopicListExample extends React.Component {
   constructor(props) {
@@ -48,6 +40,7 @@ class TopicListExample extends React.Component {
 
     topics.map(t => {
       t.visible = (t.id === topic.id);
+      t.expanded = true;
       return t;
     });
 
