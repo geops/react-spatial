@@ -13,10 +13,25 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
         }
       }
     >
+      <div
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "margin": "auto",
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        tabIndex={0}
+      />
       <label
         className="tm-check tm-radio"
         onKeyPress={[Function]}
-        tabIndex={0}
+        tabIndex={-1}
       >
         <input
           checked={true}
@@ -358,10 +373,25 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
         }
       }
     >
+      <div
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "margin": "auto",
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        tabIndex={0}
+      />
       <label
         className="tm-check tm-radio"
         onKeyPress={[Function]}
-        tabIndex={0}
+        tabIndex={-1}
       >
         <input
           checked={false}
@@ -408,10 +438,25 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
         }
       }
     >
+      <div
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "margin": "auto",
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        tabIndex={0}
+      />
       <label
         className="momo tm-radio"
         onKeyPress={[Function]}
-        tabIndex={0}
+        tabIndex={-1}
       >
         <input
           checked={true}
@@ -753,10 +798,25 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
         }
       }
     >
+      <div
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "margin": "auto",
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        tabIndex={0}
+      />
       <label
         className="momo tm-radio"
         onKeyPress={[Function]}
-        tabIndex={0}
+        tabIndex={-1}
       >
         <input
           checked={false}
@@ -803,10 +863,25 @@ exports[`Topiclist matches snapshots when no layers. 1`] = `
         }
       }
     >
+      <div
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "margin": "auto",
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        tabIndex={0}
+      />
       <label
         className="tm-check tm-radio"
         onKeyPress={[Function]}
-        tabIndex={0}
+        tabIndex={-1}
       >
         <input
           checked={true}
@@ -853,10 +928,25 @@ exports[`Topiclist matches snapshots when no layers. 1`] = `
         }
       }
     >
+      <div
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "margin": "auto",
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        tabIndex={0}
+      />
       <label
         className="tm-check tm-radio"
         onKeyPress={[Function]}
-        tabIndex={0}
+        tabIndex={-1}
       >
         <input
           checked={false}
