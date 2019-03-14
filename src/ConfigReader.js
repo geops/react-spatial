@@ -141,7 +141,7 @@ const getVisibleTopic = topicList => {
       visibleTopic = topic;
     }
   });
-  return visibleTopic.children;
+  return visibleTopic;
 };
 
 export default { getVisibleTopic, readConfig };

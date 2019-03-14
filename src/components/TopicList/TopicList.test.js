@@ -26,7 +26,7 @@ const mountTopicList = (topics, props) => {
 const renderTopicList = (topics, props) => {
   const layers = ConfigReader.readConfig(
     new OLMap({}),
-    ConfigReader.getVisibleTopic(topics),
+    ConfigReader.getVisibleTopic(topics).children,
   );
   const layerService = new LayerService(layers);
   const component = renderer.create(
@@ -95,10 +95,9 @@ describe('Topiclist', () => {
     beforeEach(() => {
       wrapper = mountTopicList(topicsData, {
         onTopicClick: () => funcs.topicClick(),
-        onTopicToggle: () => funcs.topicToggle(),
       });
       spy = jest.spyOn(funcs, 'topicClick');
-      spy2 = jest.spyOn(funcs, 'topicToggle');
+      spy2 = jest.spyOn(TopicList.prototype, 'onTopicToggle');
     });
 
     afterEach(() => {
@@ -148,7 +147,7 @@ describe('Topiclist', () => {
       wrapper = mountTopicList(topicsData, {
         onTopicToggle: () => funcs.topicToggle(),
       });
-      spy = jest.spyOn(funcs, 'topicToggle');
+      spy = jest.spyOn(TopicList.prototype, 'onTopicToggle');
     });
 
     afterEach(() => {

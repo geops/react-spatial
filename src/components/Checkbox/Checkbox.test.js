@@ -34,12 +34,11 @@ describe('Checkbox', () => {
   describe('triggers onClick', () => {
     let wrapper;
     let spy;
-    let checked = true;
+    const checked = true;
 
     const funcs = {
-      onCheckboxClick: () => {
-        checked = !checked;
-      },
+      onCheckboxClick: () => {},
+      onCheckboxChange: () => {},
     };
 
     const expectCalled = () => {
@@ -52,6 +51,7 @@ describe('Checkbox', () => {
           className="tm-checkbox-ex"
           checked={checked}
           onClick={() => funcs.onCheckboxClick()}
+          onChange={() => funcs.onCheckboxChange()}
         />,
       );
       spy = jest.spyOn(funcs, 'onCheckboxClick');
@@ -66,12 +66,26 @@ describe('Checkbox', () => {
       expectCalled();
     });
 
+    test('Checkbox should not be clicked.', () => {
+      wrapper
+        .find('label')
+        .first()
+        .simulate('keypress', { which: 10 });
+      expect(spy).toHaveBeenCalledTimes(0);
+    });
+
     test('Checkbox should be clicked.', () => {
       wrapper
         .find('label')
         .first()
         .simulate('keypress', { which: 13 });
       expectCalled();
+    });
+
+    test('Checkbox input should change.', () => {
+      const spyChange = jest.spyOn(funcs, 'onCheckboxChange');
+      wrapper.find({ type: 'checkbox' }).simulate('change');
+      expect(spyChange).toHaveBeenCalledTimes(1);
     });
   });
 });

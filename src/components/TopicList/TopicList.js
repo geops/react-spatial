@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import LayerTree from '../LayerTree/LayerTree';
-import Checkbox from '../Checkbox/Checkbox';
-import Button from '../Button/Button';
+import ConfigReader from '../../ConfigReader';
+import LayerTree from '../LayerTree';
+import Checkbox from '../Checkbox';
+import Button from '../Button';
 
 const propTypes = {
   /**
@@ -27,11 +28,6 @@ const propTypes = {
    * Function triggered on topic click.
    */
   onTopicClick: PropTypes.func,
-
-  /**
-   * Function triggered on topic toggle.
-   */
-  onTopicToggle: PropTypes.func,
 
   /**
    * CSS class to apply on the container.
@@ -72,11 +68,24 @@ const defaultProps = {
   classNameToggle: 'tm-topic-list-toggle',
   classNameArrow: 'tm-topic-list-arrow',
   onTopicClick: () => {},
-  onTopicToggle: () => {},
   padding: 10,
 };
 
 class TopicList extends Component {
+  constructor(props) {
+    super(props);
+    const { topics } = this.props;
+
+    this.state = {
+      expandedTopic: ConfigReader.getVisibleTopic(topics).id,
+    };
+  }
+
+  onTopicToggle(topic) {
+    const { expandedTopic } = this.state;
+    this.setState({ expandedTopic: expandedTopic ? null : topic.id });
+  }
+
   renderInput(topic) {
     const { onTopicClick, classNameInput } = this.props;
 
@@ -86,24 +95,28 @@ class TopicList extends Component {
         tabIndex={-1}
         checked={topic.visible}
         className={classNameInput}
-        onClick={() => onTopicClick(topic)}
+        onClick={() => {
+          this.setState({ expandedTopic: topic.id });
+          onTopicClick(topic);
+        }}
       />
     );
   }
 
   renderArrow(topic) {
     const { classNameArrow } = this.props;
+    const { expandedTopic } = this.state;
     return (
       <div
         className={`${classNameArrow} ${classNameArrow}${
-          topic.expanded ? '-expanded' : '-collapsed'
+          topic.id === expandedTopic ? '-expanded' : '-collapsed'
         }`}
       />
     );
   }
 
   renderBarrierFreeDiv(topic) {
-    const { onTopicToggle, onTopicClick } = this.props;
+    const { onTopicClick } = this.props;
 
     return (
       <div
@@ -120,8 +133,9 @@ class TopicList extends Component {
         onKeyPress={e => {
           if (e.which === 13) {
             if (topic.visible) {
-              onTopicToggle(topic);
+              this.onTopicToggle(topic);
             } else {
+              this.setState({ expandedTopic: topic.id });
               onTopicClick(topic);
             }
           }
@@ -133,15 +147,20 @@ class TopicList extends Component {
   // Render a button which expands/collapse the layer if there is children
   // or simulate a click on the input otherwise.
   renderToggleButton(topic) {
-    const { onTopicToggle, onTopicClick, classNameToggle } = this.props;
+    const { onTopicClick, classNameToggle } = this.props;
 
     return (
       <Button
         tabIndex={-1}
         className={classNameToggle}
-        onClick={() =>
-          topic.visible ? onTopicToggle(topic) : onTopicClick(topic)
-        }
+        onClick={() => {
+          if (topic.visible) {
+            this.onTopicToggle(topic);
+          } else {
+            this.setState({ expandedTopic: topic.id });
+            onTopicClick(topic);
+          }
+        }}
       >
         <div>{topic.name}</div>
         {topic.visible ? this.renderArrow(topic) : null}
@@ -151,6 +170,7 @@ class TopicList extends Component {
 
   renderTopic(topic, index) {
     const { classNameItem, padding, propsToLayerTree } = this.props;
+    const { expandedTopic } = this.state;
 
     return (
       <div key={topic.id}>
@@ -165,7 +185,7 @@ class TopicList extends Component {
           {this.renderToggleButton(topic)}
         </div>
         <div style={{ paddingLeft: `${padding * 2}px` }}>
-          {topic.visible && topic.expanded ? (
+          {topic.visible && topic.id === expandedTopic ? (
             <LayerTree key={index} {...propsToLayerTree} />
           ) : null}
         </div>
