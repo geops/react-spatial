@@ -14,7 +14,7 @@ class BaseLayerTogglerExample extends React.Component {
   constructor(props) {
     super(props);
 
-    this.center = [-10997148, 4569099];
+    this.center = [1149722.7037660484, 6618091.313553318];
     this.map = new OLMap({controls:[]});
     this.state = {
       layerService: null
@@ -38,10 +38,11 @@ class BaseLayerTogglerExample extends React.Component {
         <BasicMap
           map={this.map}
           center={this.center}
-          zoom={3}
           layers={this.layers}
+          zoom={6}
         />
         <BaseLayerToggler
+          map={this.map}
           layerService={layerService}
         />
       </div>

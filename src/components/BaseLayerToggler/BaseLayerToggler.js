@@ -1,16 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
-import { SSL_OP_NO_TLSv1_1 } from 'constants';
-import LayerTree from '../LayerTree';
+import OLMap from 'ol/Map';
+import TileLayer from 'ol/layer/Tile';
+import LayerService from '../../LayerService';
 import Button from '../Button';
 import Footer from '../Footer';
+import BasicMap from '../BasicMap';
 
 const propTypes = {
   /**
+   * An ol map.
+   */
+  map: PropTypes.instanceOf(OLMap).isRequired,
+
+  /**
    * Layers provider.
    */
-  layerService: PropTypes.object,
+  layerService: PropTypes.instanceOf(LayerService),
 
   /**
    * CSS class to apply on the container.
@@ -23,12 +30,12 @@ const propTypes = {
   classNameItem: PropTypes.string,
 
   /**
-   * CSS class to apply to the button to move the previous base layer.
+   * CSS class to apply to the previous button.
    */
   classNamePrevious: PropTypes.string,
 
   /**
-   * CSS class to apply to the button to move the the next base layer.
+   * CSS class to apply to the next button.
    */
   classNameNext: PropTypes.string,
 };
@@ -47,32 +54,51 @@ class BaseLayerToggler extends Component {
     this.state = {
       layers: null,
       layerVisible: null,
-      idx: null,
+      idx: 0,
     };
+    this.map = null;
+    this.ref = React.createRef();
   }
 
   componentDidMount() {
-    const { layerService } = this.props;
+    const { layerService, map } = this.props;
 
     if (layerService) {
-      this.onUpdateLayerService();
+      this.updateLayerService();
+    }
+
+    if (map) {
+      this.updateMap();
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { layerService } = this.props;
-    const { layerVisible } = this.state;
+    const { layerService, map } = this.props;
+    const { layerVisible, idx, layers } = this.state;
 
     if (layerService !== prevProps.layerService) {
-      this.onUpdateLayerService();
+      this.updateLayerService();
+    }
+
+    if (map !== prevProps.map) {
+      this.updateMap();
     }
 
     if (layerVisible !== prevState.layerVisible) {
       this.next();
     }
+
+    if (this.map && idx !== prevState.idx) {
+      this.map.getLayers().clear();
+      this.map.addLayer(
+        new TileLayer({
+          source: layers[idx].olLayer.getSource(),
+        }),
+      );
+    }
   }
 
-  onUpdateLayerService() {
+  updateLayerService() {
     const { layerService } = this.props;
 
     if (!layerService) {
@@ -91,6 +117,26 @@ class BaseLayerToggler extends Component {
       layers,
       idx,
       layerVisible: layers[idx],
+    });
+  }
+
+  updateMap() {
+    const { map } = this.props;
+    if (!this.map) {
+      this.map = new OLMap({ controls: [], interactions: [] });
+    }
+    this.map.setView(map.getView());
+
+    map.on('postrender', e => {
+      this.map.getView().setZoom(e.target.getView().getZoom());
+      if (this.ref && this.ref.current) {
+        const elt = this.ref.current;
+        const coord = map.getCoordinateFromPixel([
+          elt.offsetLeft + elt.offsetWidth / 2,
+          elt.offsetTop + elt.offsetHeight / 2,
+        ]);
+        this.map.getView().setCenter(coord);
+      }
     });
   }
 
@@ -126,47 +172,30 @@ class BaseLayerToggler extends Component {
     });
   }
 
-  renderItem(item, onClick) {
-    const { classNameItem } = this.props;
-    const { layers, idx } = this.state;
-    return (
-      <Button
-        key={item.getName()}
-        className={classNameItem}
-        style={{
-          zIndex: item === layers[idx] ? 0 : -1,
-        }}
-        onClick={() => {
-          onClick(item);
-        }}
-      >
-        {item.getName()}
-      </Button>
-    );
-  }
-
   render() {
     const {
       className,
+      classNameItem,
       classNamePrevious,
       classNameNext,
-      layerService,
     } = this.props;
-    const { layers } = this.state;
+    const { layers, idx } = this.state;
 
     if (!layers || layers.length < 2) {
       return null;
     }
 
+    const nextLayer = layers[idx];
+
     return (
-      <div className={className}>
-        <LayerTree
-          layerService={layerService}
-          isItemHidden={l => {
-            return !l.getIsBaseLayer();
-          }}
-          renderItem={(item, dfltOnClick) => this.renderItem(item, dfltOnClick)}
+      <div className={className} ref={this.ref}>
+        <BasicMap map={this.map} />
+
+        <Button
+          className={classNameItem}
+          onClick={() => nextLayer.setVisible(true)}
         />
+
         <Footer>
           <Button className={classNamePrevious} onClick={() => this.previous()}>
             <FaArrowCircleLeft />

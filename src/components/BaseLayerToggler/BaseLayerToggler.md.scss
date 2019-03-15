@@ -1,4 +1,4 @@
-.tm-layer-tree-example {
+.tm-base-layer-example {
   position: relative;
 
   .tm-map {
@@ -7,14 +7,9 @@
     flex-grow: 1;
   }
 
-  .tm-layer-tree {
-    background: white;
-    padding: 10px 5px;
-    width: 250px;
-    top: 10px;
-    left: 10px;
-    bottom: 10px;
+  .tm-base-layer-toggler {
     position: absolute;
-    margin: auto;
+    bottom: 10px;
+    left: 10px;
   }
 }
