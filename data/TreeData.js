@@ -45,7 +45,7 @@ export default [
   },
   {
     name: 'Vector sample layers',
-    visible: 'parent',
+    visible: true,
     radioGroup: 'radio',
     children: [
       {

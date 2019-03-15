@@ -13,6 +13,7 @@ module.exports = {
   },
   context: {
     treeData: path.join(__dirname, 'data/TreeData'),
+    topicData: path.join(__dirname, 'data/TopicData'),
   },
   sections: [
     {
