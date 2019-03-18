@@ -12,25 +12,28 @@ import LayerService from '../../LayerService';
 configure({ adapter: new Adapter() });
 
 const shallowComp = (newData, props) => {
-  const layers = ConfigReader.readConfig(new OLMap({}), newData || data);
+  const map = new OLMap({});
+  const layers = ConfigReader.readConfig(map, newData || data);
   const layerService = new LayerService(layers);
   return shallow(
-    <BaseLayerToggler layerService={layerService} {...props || {}} />,
+    <BaseLayerToggler layerService={layerService} map={map} {...props || {}} />,
   );
 };
 const mountComp = (newData, props) => {
-  const layers = ConfigReader.readConfig(new OLMap({}), newData || data);
+  const map = new OLMap({});
+  const layers = ConfigReader.readConfig(map, newData || data);
   const layerService = new LayerService(layers);
   return mount(
-    <BaseLayerToggler layerService={layerService} {...props || {}} />,
+    <BaseLayerToggler layerService={layerService} map={map} {...props || {}} />,
   );
 };
 
 const expectSnapshot = (newData, props) => {
-  const layers = ConfigReader.readConfig(new OLMap({}), newData || data);
+  const map = new OLMap({});
+  const layers = ConfigReader.readConfig(map, newData || data);
   const layerService = new LayerService(layers);
   const component = renderer.create(
-    <BaseLayerToggler layerService={layerService} {...props || {}} />,
+    <BaseLayerToggler layerService={layerService} map={map} {...props || {}} />,
   );
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
@@ -41,12 +44,6 @@ describe('BaseLayerToggler', () => {
     test('using default properties.', () => {
       expectSnapshot();
     });
-
-    test.todo('when no layers.');
-    /* , () => {
-      // This test never ends.
-      // expectSnapshot([]);
-    }); */
   });
 
   test('initialize correctly the state', () => {
@@ -98,10 +95,9 @@ describe('BaseLayerToggler', () => {
     const comp = wrapper.instance();
     expect(comp.state.layers.length).toBe(3);
     expect(comp.state.layers[0].getVisible()).toBe(true);
-    // TODO: Investigate why the 'find' returns 6 elements instead of 3.
     wrapper
       .find('.tm-base-layer-item')
-      .at(3)
+      .at(1)
       .simulate('click');
     wrapper.update();
     expect(comp.state.layers[0].getVisible()).toBe(false);

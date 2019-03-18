@@ -5,51 +5,17 @@ exports[`BaseLayerToggler matches snapshots using default properties. 1`] = `
   className="tm-base-layer-toggler"
 >
   <div
-    className="tm-layer-tree"
-  >
-    <div
-      className="tm-base-layer-item"
-      onClick={[Function]}
-      onKeyPress={[Function]}
-      role="button"
-      style={
-        Object {
-          "zIndex": -1,
-        }
-      }
-      tabIndex={0}
-    >
-      OpenTopoMap
-    </div>
-    <div
-      className="tm-base-layer-item"
-      onClick={[Function]}
-      onKeyPress={[Function]}
-      role="button"
-      style={
-        Object {
-          "zIndex": 0,
-        }
-      }
-      tabIndex={0}
-    >
-      OSM Baselayer Hot
-    </div>
-    <div
-      className="tm-base-layer-item"
-      onClick={[Function]}
-      onKeyPress={[Function]}
-      role="button"
-      style={
-        Object {
-          "zIndex": -1,
-        }
-      }
-      tabIndex={0}
-    >
-      OSM Baselayer
-    </div>
-  </div>
+    className="tm-map"
+    role="menu"
+    tabIndex={0}
+  />
+  <div
+    className="tm-base-layer-item"
+    onClick={[Function]}
+    onKeyPress={[Function]}
+    role="button"
+    tabIndex={0}
+  />
   <div
     className="tm-footer"
   >

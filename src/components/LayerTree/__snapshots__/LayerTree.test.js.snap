@@ -272,7 +272,79 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       }
     >
       <label
-        className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
+        className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
+        onKeyPress={[Function]}
+        tabIndex={-1}
+      >
+        <input
+          checked={false}
+          onChange={[Function]}
+          onClick={[Function]}
+          tabIndex={-1}
+          type="radio"
+        />
+        <span />
+      </label>
+      <div
+        className="tm-layer-tree-toggle"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div>
+          OpenTopoMap
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div
+      className="tm-layer-tree-item"
+      style={
+        Object {
+          "paddingLeft": "0px",
+        }
+      }
+    >
+      <label
+        className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
+        onKeyPress={[Function]}
+        tabIndex={-1}
+      >
+        <input
+          checked={false}
+          onChange={[Function]}
+          onClick={[Function]}
+          tabIndex={-1}
+          type="radio"
+        />
+        <span />
+      </label>
+      <div
+        className="tm-layer-tree-toggle"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div>
+          OSM Baselayer Hot
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div
+      className="tm-layer-tree-item"
+      style={
+        Object {
+          "paddingLeft": "0px",
+        }
+      }
+    >
+      <label
+        className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
       >
@@ -281,7 +353,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           onChange={[Function]}
           onClick={[Function]}
           tabIndex={-1}
-          type="checkbox"
+          type="radio"
         />
         <span />
       </label>
@@ -315,7 +387,79 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
       }
     >
       <label
-        className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
+        className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
+        onKeyPress={[Function]}
+        tabIndex={-1}
+      >
+        <input
+          checked={false}
+          onChange={[Function]}
+          onClick={[Function]}
+          tabIndex={-1}
+          type="radio"
+        />
+        <span />
+      </label>
+      <div
+        className="tm-layer-tree-toggle"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div>
+          OpenTopoMap
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div
+      className="tm-layer-tree-item"
+      style={
+        Object {
+          "paddingLeft": "0px",
+        }
+      }
+    >
+      <label
+        className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
+        onKeyPress={[Function]}
+        tabIndex={-1}
+      >
+        <input
+          checked={false}
+          onChange={[Function]}
+          onClick={[Function]}
+          tabIndex={-1}
+          type="radio"
+        />
+        <span />
+      </label>
+      <div
+        className="tm-layer-tree-toggle"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div>
+          OSM Baselayer Hot
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div
+      className="tm-layer-tree-item"
+      style={
+        Object {
+          "paddingLeft": "0px",
+        }
+      }
+    >
+      <label
+        className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
       >
@@ -324,7 +468,7 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
           onChange={[Function]}
           onClick={[Function]}
           tabIndex={-1}
-          type="checkbox"
+          type="radio"
         />
         <span />
       </label>
@@ -616,7 +760,79 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       }
     >
       <label
-        className="qux qux-checkbox tm-checkbox"
+        className="qux qux-radio tm-radio"
+        onKeyPress={[Function]}
+        tabIndex={-1}
+      >
+        <input
+          checked={false}
+          onChange={[Function]}
+          onClick={[Function]}
+          tabIndex={-1}
+          type="radio"
+        />
+        <span />
+      </label>
+      <div
+        className="quux"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div>
+          OpenTopoMap
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div
+      className="bar"
+      style={
+        Object {
+          "paddingLeft": "0px",
+        }
+      }
+    >
+      <label
+        className="qux qux-radio tm-radio"
+        onKeyPress={[Function]}
+        tabIndex={-1}
+      >
+        <input
+          checked={false}
+          onChange={[Function]}
+          onClick={[Function]}
+          tabIndex={-1}
+          type="radio"
+        />
+        <span />
+      </label>
+      <div
+        className="quux"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div>
+          OSM Baselayer Hot
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div
+      className="bar"
+      style={
+        Object {
+          "paddingLeft": "0px",
+        }
+      }
+    >
+      <label
+        className="qux qux-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
       >
@@ -625,7 +841,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           onChange={[Function]}
           onClick={[Function]}
           tabIndex={-1}
-          type="checkbox"
+          type="radio"
         />
         <span />
       </label>
@@ -660,6 +876,12 @@ exports[`LayerTree matches snapshots when renderItem is used. 1`] = `
   </div>
   <div>
     Others layers
+  </div>
+  <div>
+    OpenTopoMap
+  </div>
+  <div>
+    OSM Baselayer Hot
   </div>
   <div>
     OSM Baselayer
