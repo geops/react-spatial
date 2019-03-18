@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MousePosition matches snapshots using default values. 1`] = `
+<div
+  className="tm-mouse-position"
+>
+  <select
+    className="tm-select"
+    onChange={[Function]}
+  >
+    <option
+      value="EPSG:4326"
+    >
+      EPSG:4326
+    </option>
+    <option
+      value="EPSG:3857"
+    >
+      EPSG:3857
+    </option>
+  </select>
+  <span />
+</div>
+`;
+
+exports[`MousePosition matches snapshots using multiple projectionds. 1`] = `
+<div
+  className="tm-mouse-position"
+>
+  <select
+    className="tm-select"
+    onChange={[Function]}
+  >
+    <option
+      value="foo"
+    >
+      foo
+    </option>
+    <option
+      value="bar"
+    >
+      bar
+    </option>
+  </select>
+  <span />
+</div>
+`;
+
+exports[`MousePosition matches snapshots using no projections. 1`] = `
+<div
+  className="tm-mouse-position"
+>
+  <span />
+</div>
+`;
+
+exports[`MousePosition matches snapshots using only one projection 1`] = `
+<div
+  className="tm-mouse-position"
+>
+  <select
+    className="tm-select"
+    onChange={[Function]}
+  >
+    <option
+      value="foo"
+    >
+      foo
+    </option>
+  </select>
+  <span />
+</div>
+`;
