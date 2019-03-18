@@ -17,30 +17,10 @@
   }
 
   &.blink {
-    -webkit-animation-name: blinking;
-    -webkit-animation-duration: 3s;
-    -webkit-animation-timing-function: linear;
-    -webkit-animation-iteration-count: infinite;
-    -moz-animation-name: blinking;
-    -moz-animation-duration: 3s;
-    -moz-animation-timing-function: linear;
-    -moz-animation-iteration-count: infinite;
     animation-name: blinking;
     animation-duration: 3s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
-  }
-
-  @-moz-keyframes blinking {
-    0% { color: white; }
-    50% { color: $btn-primary-color; }
-    100% { color: white; }
-  }
-
-  @-webkit-keyframes blinking {
-    0% { color: white; }
-    50% { color: $btn-primary-color; }
-    100% { color: white; }
   }
 
   @keyframes blinking {
