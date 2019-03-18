@@ -26,6 +26,12 @@
       }
     }
 
+    &.ta-image-icon {
+      svg {
+        width: 75%;
+      }
+    }
+
     &:first-child {
       margin-left: 0;
     }
@@ -35,6 +41,8 @@
     }
 
     a,
+    .tm-share-button,
+    .tm-share-button:hover,
     a:hover {
       color: white;
     }

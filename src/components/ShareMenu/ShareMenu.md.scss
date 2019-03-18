@@ -1,0 +1,13 @@
+.tm-share-menu-example {
+  position: relative;
+
+  .tm-share-menu {
+    padding: 10px;
+    border: 2px solid $gray-lighter;
+  }
+  .tm-map {
+    width: 100%;
+    height: 100%;
+    flex-grow: 1;
+  }
+}
