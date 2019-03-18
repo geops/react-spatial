@@ -1,11 +1,10 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { configure, shallow, mount } from 'enzyme';
+import { configure, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import 'jest-canvas-mock';
 import OLMap from 'ol/Map';
 import OLMousePosition from 'ol/control/MousePosition';
-import { wrap } from 'module';
 import MousePosition from './MousePosition';
 
 configure({ adapter: new Adapter() });
