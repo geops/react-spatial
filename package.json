@@ -5,7 +5,7 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.2.2",
-    "@babel/preset-env": "^7.2.3",
+    "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
     "babel-core": "^7.0.0-0",
     "babel-eslint": "^10.0.1",
@@ -47,7 +47,9 @@
     "ol": "^5.3.0"
   },
   "dependencies": {
+    "core-js": "^2.6.5",
     "node-sass": "^4.11.0",
+    "react-app-polyfill": "^0.2.2",
     "react-icons": "^3.4.0",
     "resize-observer-polyfill": "^1.5.1"
   },
@@ -83,5 +85,11 @@
     "doc:server": "styleguidist server",
     "start": "yarn doc:server",
     "symlink": "yarn build && cd build && yarn link"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 9",
+    "not op_mini all"
+  ]
 }
