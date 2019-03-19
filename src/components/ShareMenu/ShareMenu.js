@@ -54,7 +54,7 @@ const propTypes = {
   /**
    * Configuration for extra social sharing.
    */
-  extraSocialShareConfig: PropTypes.array,
+  extraSocialShareConfig: shareConfigPropType,
 };
 
 const defaultProps = {

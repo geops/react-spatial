@@ -11,6 +11,11 @@ const propTypes = {
   title: PropTypes.string.isRequired,
 
   /**
+   *  Children content of the button.
+   */
+  children: PropTypes.element,
+
+  /**
    * CSS class of the button.
    */
   className: PropTypes.string,
@@ -32,6 +37,7 @@ const propTypes = {
 const defaultProps = {
   map: null,
   tabIndex: 0,
+  children: <TiImage focusable={false} />,
   className: 'tm-canvas-save-button',
   saveFormat: 'image/png',
 };
@@ -41,15 +47,18 @@ const defaultProps = {
  * It is a sub-component of the ShareMenu.
  */
 class CanvasSaveButton extends PureComponent {
-  static getDownloadImageName() {
-    return window.document.title.replace(/ /g, '_').toLowerCase();
-  }
-
   constructor(props) {
     super(props);
     const { saveFormat } = this.props;
     this.options = { format: saveFormat };
     this.fileExt = this.options.format === 'image/jpeg' ? 'jpg' : 'png';
+  }
+
+  getDownloadImageName() {
+    return (
+      `${window.document.title.replace(/ /g, '_').toLowerCase()}` +
+      `.${this.fileExt}`
+    );
   }
 
   getCanvasImage(opts, asMSBlob) {
@@ -90,13 +99,11 @@ class CanvasSaveButton extends PureComponent {
       // ie 11 and higher
       window.navigator.msSaveBlob(
         new Blob([this.getCanvasImage(opts, true)], { type: opts.format }),
-        `${CanvasSaveButton.getDownloadImageName()}.${this.fileExt}`,
+        this.getDownloadImageName(),
       );
     } else {
       const link = document.createElement('a');
-      link.download = `${CanvasSaveButton.getDownloadImageName()}.${
-        this.fileExt
-      }`;
+      link.download = this.getDownloadImageName();
       link.href = this.getCanvasImage(opts);
       link.click();
     }
@@ -109,7 +116,7 @@ class CanvasSaveButton extends PureComponent {
   }
 
   render() {
-    const { title, tabIndex, className } = this.props;
+    const { title, children, tabIndex, className } = this.props;
 
     return (
       <Button
@@ -118,7 +125,7 @@ class CanvasSaveButton extends PureComponent {
         tabIndex={tabIndex}
         onClick={e => this.downloadCanvasImage(e, this.options)}
       >
-        <TiImage focusable={false} />
+        {children}
       </Button>
     );
   }
