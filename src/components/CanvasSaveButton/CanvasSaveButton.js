@@ -8,7 +8,15 @@ const propTypes = {
    * Translation function.
    */
   t: PropTypes.func,
-  conf: PropTypes.object.isRequired,
+  conf: PropTypes.shape({
+    title: PropTypes.string,
+    icon: PropTypes.element,
+    className: PropTypes.string,
+    /**
+     * 'image/jpeg' or 'image/png'
+     */
+    saveFormat: PropTypes.string,
+  }).isRequired,
   map: PropTypes.instanceOf(OLMap),
   className: PropTypes.string,
 };
@@ -26,6 +34,23 @@ const defaultProps = {
 class CanvasSaveButton extends PureComponent {
   static getDownloadImageName() {
     return window.document.title.replace(/ /g, '_').toLowerCase();
+  }
+
+  constructor(props) {
+    super(props);
+    const { conf } = this.props;
+    this.options = { format: conf.saveFormat || 'image/png' };
+    if (
+      this.options.format !== 'image/jpeg' &&
+      this.options.format !== 'image/png'
+    ) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        'Unknown format configured to save canvas for CanvasSaveButton.',
+        'Should be either "image/jpeg" or "image/png"',
+      );
+    }
+    this.fileExt = this.options.format === 'image/jpeg' ? 'jpg' : 'png';
   }
 
   getCanvasImage(opts, asMSBlob) {
@@ -48,15 +73,14 @@ class CanvasSaveButton extends PureComponent {
       if (asMSBlob) {
         image = destinationCanvas.msToBlob();
       } else {
-        image = destinationCanvas.toDataURL(opts.format || 'image/jpeg');
+        image = destinationCanvas.toDataURL(opts.format);
       }
     });
     map.renderSync();
     return image;
   }
 
-  downloadCanvasImage(e, options) {
-    const opts = options || { format: 'image/jpeg' };
+  downloadCanvasImage(e, opts) {
     if (/msie (9|10)/gi.test(window.navigator.userAgent.toLowerCase())) {
       // ie 9 and 10
       const w = window.open('about:blank', '');
@@ -67,11 +91,13 @@ class CanvasSaveButton extends PureComponent {
       // ie 11 and higher
       window.navigator.msSaveBlob(
         new Blob([this.getCanvasImage(opts, true)], { type: opts.format }),
-        `${CanvasSaveButton.getDownloadImageName()}.jpg`,
+        `${CanvasSaveButton.getDownloadImageName()}.${this.fileExt}`,
       );
     } else {
       const link = document.createElement('a');
-      link.download = `${CanvasSaveButton.getDownloadImageName()}.jpg`;
+      link.download = `${CanvasSaveButton.getDownloadImageName()}.${
+        this.fileExt
+      }`;
       link.href = this.getCanvasImage(opts);
       link.click();
     }
@@ -90,7 +116,7 @@ class CanvasSaveButton extends PureComponent {
       <Button
         className={className}
         title={t(conf.title)}
-        onClick={e => this.downloadCanvasImage(e)}
+        onClick={e => this.downloadCanvasImage(e, this.options)}
       >
         {conf.icon}
       </Button>

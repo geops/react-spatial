@@ -15,6 +15,7 @@ describe('CanvasSaveButton', () => {
     title: 'Karte als Bild speichern.',
     icon: <TiImage focusable={false} />,
     className: 'ta-image-icon',
+    saveFormat: 'image/jpeg',
   };
   const olView = new OLView();
   const olMap = new OLMap({ view: olView });

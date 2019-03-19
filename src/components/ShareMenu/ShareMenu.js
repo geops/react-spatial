@@ -53,6 +53,7 @@ const defaultProps = {
       title: 'Karte als Bild speichern.',
       icon: <TiImage focusable={false} />,
       className: 'ta-image-icon',
+      saveFormat: 'image/jpeg',
     },
   ],
   t: t => t,
