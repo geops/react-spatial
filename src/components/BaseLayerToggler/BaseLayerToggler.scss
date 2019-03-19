@@ -1,0 +1,38 @@
+.tm-base-layer-toggler {
+  width: 120px;
+  height: 120px;
+  border: 2px solid lightgray;
+
+  .tm-map {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+  }
+
+  .tm-base-layer-item {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  .tm-footer {
+    height: 21px;
+    background-color: #fffa;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    > div {
+      display: flex;
+      align-items: center;
+    }
+
+    .tm-base-layer-next {
+      float: right;
+    }
+
+    .tm-base-layer-previous {
+      float: left;
+    }
+  }
+}
