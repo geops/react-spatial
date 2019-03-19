@@ -36,12 +36,10 @@ render() {
           zoom={3}
           layers={this.layers}
         />
-        <ShareMenu
-          url={window.location.href}
-          map={this.map}
-        >
+        <ShareMenu url={window.location.href} >
           <CanvasSaveButton
             title="Karte als Bild speichern."
+            className='tm-share-menu-icon'
             map={this.map}
           />
         </ShareMenu>

@@ -38,7 +38,7 @@ const defaultProps = {
   map: null,
   tabIndex: 0,
   children: <TiImage focusable={false} />,
-  className: 'tm-canvas-save-button',
+  className: null,
   saveFormat: 'image/png',
 };
 
@@ -88,23 +88,25 @@ class CanvasSaveButton extends PureComponent {
     return image;
   }
 
-  downloadCanvasImage(e, opts) {
+  downloadCanvasImage(e) {
     if (/msie (9|10)/gi.test(window.navigator.userAgent.toLowerCase())) {
       // ie 9 and 10
       const w = window.open('about:blank', '');
       w.document.write(
-        `<img src="${this.getCanvasImage(opts)}" alt="from canvas"/>`,
+        `<img src="${this.getCanvasImage(this.options)}" alt="from canvas"/>`,
       );
     } else if (window.navigator.msSaveBlob) {
       // ie 11 and higher
       window.navigator.msSaveBlob(
-        new Blob([this.getCanvasImage(opts, true)], { type: opts.format }),
+        new Blob([this.getCanvasImage(this.options, true)], {
+          type: this.options.format,
+        }),
         this.getDownloadImageName(),
       );
     } else {
       const link = document.createElement('a');
       link.download = this.getDownloadImageName();
-      link.href = this.getCanvasImage(opts);
+      link.href = this.getCanvasImage(this.options);
       link.click();
     }
 
@@ -120,10 +122,10 @@ class CanvasSaveButton extends PureComponent {
 
     return (
       <Button
-        className={className}
+        className={`tm-canvas-save-button ${className || ''}`}
         title={title}
         tabIndex={tabIndex}
-        onClick={e => this.downloadCanvasImage(e, this.options)}
+        onClick={e => this.downloadCanvasImage(e)}
       >
         {children}
       </Button>
