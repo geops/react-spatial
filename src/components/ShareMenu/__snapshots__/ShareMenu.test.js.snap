@@ -115,6 +115,7 @@ exports[`ShareMenu should match snapshot. 1`] = `
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
+      tabIndex={0}
       title="Karte als Bild speichern."
     >
       <svg

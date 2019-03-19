@@ -116,6 +116,7 @@ class CanvasSaveButton extends PureComponent {
       <Button
         className={className}
         title={t(conf.title)}
+        tabIndex={0}
         onClick={e => this.downloadCanvasImage(e, this.options)}
       >
         {conf.icon}
