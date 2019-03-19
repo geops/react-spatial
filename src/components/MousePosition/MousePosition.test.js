@@ -33,7 +33,7 @@ describe('MousePosition', () => {
       });
     });
 
-    test('using multiple projectionds.', () => {
+    test('using multiple projections.', () => {
       expectSnapshot({
         projections: [
           { label: 'foo', value: 'foo' },

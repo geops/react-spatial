@@ -23,7 +23,7 @@ exports[`MousePosition matches snapshots using default values. 1`] = `
 </div>
 `;
 
-exports[`MousePosition matches snapshots using multiple projectionds. 1`] = `
+exports[`MousePosition matches snapshots using multiple projections. 1`] = `
 <div
   className="tm-mouse-position"
 >
