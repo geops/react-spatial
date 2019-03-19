@@ -10,35 +10,47 @@ const propTypes = {
   map: PropTypes.instanceOf(OLMap).isRequired,
 
   /**
+   * CSS class for the container.
+   */
+  className: PropTypes.string,
+
+  /**
    * Options for ol/control/ScaleLine.
    * See https://openlayers.org/en/latest/apidoc/module-ol_control_ScaleLine-ScaleLine.html
    */
-  scaleLineOptions: PropTypes.shape(),
+  options: PropTypes.shape(),
 };
 
 const defaultProps = {
-  scaleLineOptions: {},
+  className: 'tm-scale-line',
+  options: {},
 };
 
 class ScaleLine extends Component {
   constructor(props) {
     super(props);
-    this.elementRef = React.createRef();
+    this.ref = React.createRef();
   }
 
   componentDidMount() {
-    const { map, scaleLineOptions } = this.props;
+    const { map, options } = this.props;
 
-    this.scaleLine = new OLScaleLine({
-      ...scaleLineOptions,
-      ...{ target: this.elementRef.current },
+    this.control = new OLScaleLine({
+      ...options,
+      ...{ target: this.ref.current },
     });
 
-    map.addControl(this.scaleLine);
+    map.addControl(this.control);
+  }
+
+  componentWillUnmount() {
+    const { map } = this.props;
+    map.removeControl(this.control);
   }
 
   render() {
-    return <div className="tm-scale-line" ref={this.elementRef} />;
+    const { className } = this.props;
+    return <div className={className} ref={this.ref} />;
   }
 }
 

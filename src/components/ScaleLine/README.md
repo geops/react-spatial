@@ -8,7 +8,7 @@ import BasicMap from 'react-spatial/components/BasicMap';
 import ConfigReader from 'react-spatial/ConfigReader';
 import OLMap from 'ol/Map';
 import Footer from 'react-spatial/components/Footer';
-import ScaleLine from './ScaleLine';
+import ScaleLine from 'react-spatial/components/ScaleLine';
 
 class ScaleLineExample extends Component {
   constructor(props) {

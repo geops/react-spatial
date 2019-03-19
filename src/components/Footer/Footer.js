@@ -3,9 +3,19 @@ import PropTypes from 'prop-types';
 
 const propTypes = {
   /**
-   * CSS class of the button.
+   * CSS class for the container.
    */
   className: PropTypes.string,
+
+  /**
+   * CSS class for the left div.
+   */
+  classNameLeft: PropTypes.string,
+
+  /**
+   * CSS class for the right div.
+   */
+  classNameRight: PropTypes.string,
 
   /**
    * Element to display in a container.
@@ -26,6 +36,8 @@ const propTypes = {
 const defaultProps = {
   children: undefined,
   className: 'tm-footer',
+  classNameLeft: 'tm-footer-left',
+  classNameRight: 'tm-footer-right',
   left: undefined,
   right: undefined,
 };
@@ -35,14 +47,21 @@ const defaultProps = {
  */
 class Footer extends PureComponent {
   render() {
-    const { children, className, left, right } = this.props;
-    const lElem = left ? <div className="tm-footer-left">{left}</div> : null;
-    const rElem = right ? <div className="tm-footer-right">{right}</div> : null;
+    const {
+      children,
+      className,
+      classNameLeft,
+      classNameRight,
+      left,
+      right,
+    } = this.props;
+    const lElem = left ? <div className={classNameLeft}>{left}</div> : null;
+    const rElem = right ? <div className={classNameRight}>{right}</div> : null;
 
     return (
       <div className={className}>
         {lElem}
-        <div className="tm-footer-content">{children}</div>
+        {children}
         {rElem}
       </div>
     );

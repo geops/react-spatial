@@ -9,11 +9,7 @@ exports[`Footer matches snapshot 1`] = `
   >
     I'm the left component
   </div>
-  <div
-    className="tm-footer-content"
-  >
-    I am the footer
-  </div>
+  I am the footer
   <div
     className="tm-footer-right"
   >
