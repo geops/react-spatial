@@ -56,4 +56,5 @@ class ScaleLine extends Component {
 
 ScaleLine.propTypes = propTypes;
 ScaleLine.defaultProps = defaultProps;
+
 export default ScaleLine;
