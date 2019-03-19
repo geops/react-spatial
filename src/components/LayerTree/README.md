@@ -35,14 +35,14 @@ class LayerTreeExample extends React.Component {
     const {layerService} = this.state;
     return (
       <div className="tm-layer-tree-example">
-        <LayerTree
-          layerService={layerService}
-        />
         <BasicMap
           map={this.map}
           center={this.center}
           zoom={3}
           layers={this.layers}
+        />
+        <LayerTree
+          layerService={layerService}
         />
       </div>
     );

@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Checkbox matches snapshots for inputType Checkbox. 1`] = `
+<label
+  className="tm-checkbox-chbx-example tm-checkbox"
+  onKeyPress={[Function]}
+  tabIndex={0}
+>
+  <input
+    checked={false}
+    onChange={[Function]}
+    onClick={[Function]}
+    tabIndex={-1}
+    type="checkbox"
+  />
+  <span />
+</label>
+`;
+
+exports[`Checkbox matches snapshots for inputType Radio. 1`] = `
+<label
+  className="tm-checkbox-radio-ex tm-radio"
+  onKeyPress={[Function]}
+  tabIndex={0}
+>
+  <input
+    checked={true}
+    onChange={[Function]}
+    onClick={[Function]}
+    tabIndex={-1}
+    type="radio"
+  />
+  <span />
+</label>
+`;

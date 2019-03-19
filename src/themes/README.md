@@ -23,4 +23,4 @@ Some rules must be followed:
 - no size information without using CSS variable.
 - use `display: flex` for container when possible.
 
-Of course the is rules must be adapted depending on the component.
+Of course those rules must be adapted depending on the component.

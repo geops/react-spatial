@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Checkbox from '../Checkbox';
 import Button from '../Button';
 
 const propTypes = {
@@ -79,15 +80,19 @@ class LayerTree extends Component {
       layers: props.layerService ? props.layerService.getLayers() : [],
       expandedLayerNames: [],
     };
+
     this.olKeys = [];
+  }
+
+  componentDidMount() {
+    this.updateLayerService();
   }
 
   componentDidUpdate(prevProps) {
     const { layerService } = this.props;
 
     if (layerService !== prevProps.layerService) {
-      this.updateLayers(layerService);
-      layerService.on('change:visible', () => this.updateLayers(layerService));
+      this.updateLayerService();
     }
   }
 
@@ -111,6 +116,14 @@ class LayerTree extends Component {
     this.setState({ expandedLayerNames });
   }
 
+  updateLayerService() {
+    const { layerService } = this.props;
+    if (layerService) {
+      this.updateLayers(layerService);
+      layerService.on('change:visible', () => this.updateLayers(layerService));
+    }
+  }
+
   updateLayers(layerService) {
     this.setState({
       layers: layerService.getLayers(),
@@ -128,28 +141,13 @@ class LayerTree extends Component {
 
     const inputType = layer.getRadioGroup() ? 'radio' : 'checkbox';
     return (
-      <label // eslint-disable-line
-        key={layer.getName()}
-        className={`${classNameInput} ${classNameInput}-${inputType}`}
+      <Checkbox
         tabIndex={tabIndex}
-        onKeyPress={e => {
-          if (e.which === 13) {
-            this.onInputClick(layer);
-          }
-        }}
-      >
-        <input
-          type={inputType}
-          name={layer.getRadioGroup()}
-          tabIndex={-1}
-          checked={layer.getVisible()}
-          onChange={() => {}}
-          onClick={() => {
-            this.onInputClick(layer);
-          }}
-        />
-        <span />
-      </label>
+        inputType={inputType}
+        checked={layer.getVisible()}
+        className={`${classNameInput} ${classNameInput}-${inputType}`}
+        onClick={() => this.onInputClick(layer)}
+      />
     );
   }
 
@@ -165,8 +163,8 @@ class LayerTree extends Component {
       <div
         className={`${classNameArrow} ${classNameArrow}${
           expandedLayerNames.includes(layer.getName())
-            ? '-expanded'
-            : '-collapsed'
+            ? '-collapsed'
+            : '-expanded'
         }`}
       />
     );
@@ -201,7 +199,7 @@ class LayerTree extends Component {
       : [...layer.getChildren()];
 
     if (renderItem) {
-      return renderItem(layer);
+      return renderItem(layer, this.onInputClick, this.onToggle);
     }
 
     return (

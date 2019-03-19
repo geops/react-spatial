@@ -6,11 +6,11 @@
     border-radius: 50%;
     cursor: pointer;
     font-size: 30px;
-    height: 35px;
     margin: 0 10px;
     text-align: center;
     transition: background-color 0.5s ease, color 0.5s ease;
     width: 35px;
+    height: 35px;
 
     &:hover {
       background-color: $btn-primary-color-hover;
@@ -28,6 +28,10 @@
 
     &:first-child {
       margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
     }
 
     a,

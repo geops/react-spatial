@@ -14,6 +14,24 @@ export default [
     },
   },
   {
+    name: 'OSM Baselayer Hot',
+    visible: false,
+    isBaseLayer: true,
+    data: {
+      type: 'xyz',
+      url: 'https://c.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+    },
+  },
+  {
+    name: 'OpenTopoMap',
+    visible: false,
+    isBaseLayer: true,
+    data: {
+      type: 'xyz',
+      url: 'https://a.tile.opentopomap.org/{z}/{x}/{y}.png',
+    },
+  },
+  {
     name: 'Others layers',
     visible: true,
     type: 'parent',
@@ -45,7 +63,7 @@ export default [
   },
   {
     name: 'Vector sample layers',
-    visible: 'parent',
+    visible: true,
     radioGroup: 'radio',
     children: [
       {

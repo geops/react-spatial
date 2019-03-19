@@ -94,7 +94,7 @@ class ConfigReader {
     this.style = style;
 
     this.defaults = {
-      data: {},
+      data: [],
       visible: false,
       isBaseLayer: false,
     };
@@ -134,4 +134,14 @@ const readConfig = (map, data) => {
   return configReader.initialize();
 };
 
-export default { readConfig };
+const getVisibleTopic = topicList => {
+  let visibleTopic = null;
+  topicList.forEach(topic => {
+    if (topic.visible) {
+      visibleTopic = topic;
+    }
+  });
+  return visibleTopic;
+};
+
+export default { getVisibleTopic, readConfig };

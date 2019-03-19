@@ -9,7 +9,7 @@ This library provides React components to build web applications based on [OpenL
 
 ## Getting Started
 
-Install the [react-spatial package](https://www.npmjs.com/package/react-spatial):
+Install the [react-spatial](https://www.npmjs.com/package/react-spatial) package:
 
 ```bash
 yarn add ol react-spatial
@@ -17,38 +17,17 @@ yarn add ol react-spatial
 
 Your build pipeline needs to support ES6 modules and SASS.
 
-## Documentation
+Import the main scss file in your project:
 
-Documentation and examples are available [here](https://react-spatial.geops.de/).
-For a local version, run `yarn doc:server` then open [`http://locahost:6060/`](http://locahost:6060/).
+```bash
+import  'react-spatial/themes/default/index.scss';
+```
 
-## If you want to know more about
+## More
 
+- [Development](https://github.com/geops/react-spatial/tree/master/DEVELOP.md)
 - [Components](https://github.com/geops/react-spatial/tree/master/src/components)
 - [Themes](https://github.com/geops/react-spatial/tree/master/src/themes)
-
-## How to use `npm link`
-
-If you want to use, for development purpose, this project with `npm link`:
-
-```bash
-cd react-spatial
-yarn symlink
-cd ../your_project
-yarn link react-spatial
-```
-
-Then on every change you have to re-rerun `yarn build` or `yarn symlink`
-
-If you project use webpack, set the [`resolve.symlinks`](https://webpack.js.org/configuration/resolve/#resolve-symlinks) options to `false`, in your webpack config file.
-
-If you use [`create-react-app`](https://github.com/facebook/create-react-app) without ejecting, you have no choice than temporarly modify the webpack config in the `node_modules` folder.
-
-```bash
-vim react-spatial/node_modules/react-scripts/config/webpack.config.js
-```
-
-Any ideas to make this properly is welcome !!!
 
 ## Bugs
 
