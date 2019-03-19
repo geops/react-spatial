@@ -14,7 +14,7 @@ describe('CanvasSaveButton', () => {
   const conf = {
     title: 'Karte als Bild speichern.',
     icon: <TiImage focusable={false} />,
-    className: 'ta-image-icon',
+    className: 'ta-example',
     saveFormat: 'image/jpeg',
   };
   const olView = new OLView();
@@ -22,7 +22,13 @@ describe('CanvasSaveButton', () => {
 
   test('should match snapshot.', () => {
     const component = renderer.create(
-      <CanvasSaveButton className={conf.className} conf={conf} map={olMap} />,
+      <CanvasSaveButton
+        title={conf.title}
+        saveFormat={conf.saveFormat}
+        map={olMap}
+      >
+        {conf.icon}
+      </CanvasSaveButton>,
     );
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
@@ -30,11 +36,18 @@ describe('CanvasSaveButton', () => {
 
   test('should be trigger click function.', () => {
     const wrapper = shallow(
-      <CanvasSaveButton className={conf.className} conf={conf} map={olMap} />,
+      <CanvasSaveButton
+        className="ta-example"
+        title={conf.title}
+        saveFormat={conf.saveFormat}
+        map={olMap}
+      >
+        {conf.icon}
+      </CanvasSaveButton>,
     );
     const spy = jest.spyOn(CanvasSaveButton.prototype, 'downloadCanvasImage');
 
-    wrapper.find('.ta-image-icon').simulate('click');
+    wrapper.find('.ta-example').simulate('click');
     expect(spy).toHaveBeenCalledTimes(1);
   });
 });

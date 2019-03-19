@@ -5,25 +5,44 @@ import Button from '../Button';
 
 const propTypes = {
   /**
+   * Title of the button.
+   */
+  title: PropTypes.string.isRequired,
+
+  /**
+   * Children content of the button.
+   */
+  children: PropTypes.element.isRequired,
+
+  /**
+   * CSS class of the button.
+   */
+  className: PropTypes.string,
+
+  /**
    * Translation function.
    */
   t: PropTypes.func,
-  conf: PropTypes.shape({
-    title: PropTypes.string,
-    icon: PropTypes.element,
-    className: PropTypes.string,
-    /**
-     * 'image/jpeg' or 'image/png'
-     */
-    saveFormat: PropTypes.string,
-  }).isRequired,
+
+  /**
+   * HTML tabIndex attribute
+   */
+  tabIndex: PropTypes.number,
+
+  /**
+   * Format to save the image in ('image/jpeg' or 'image/png')
+   */
+  saveFormat: PropTypes.string,
+
+  /** An existing [ol/Map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html). */
   map: PropTypes.instanceOf(OLMap),
-  className: PropTypes.string,
 };
 
 const defaultProps = {
   map: null,
+  tabIndex: 0,
   className: 'tm-share-button',
+  saveFormat: 'image/png',
   t: t => t,
 };
 
@@ -38,8 +57,8 @@ class CanvasSaveButton extends PureComponent {
 
   constructor(props) {
     super(props);
-    const { conf } = this.props;
-    this.options = { format: conf.saveFormat || 'image/png' };
+    const { saveFormat } = this.props;
+    this.options = { format: saveFormat };
     if (
       this.options.format !== 'image/jpeg' &&
       this.options.format !== 'image/png'
@@ -110,16 +129,16 @@ class CanvasSaveButton extends PureComponent {
   }
 
   render() {
-    const { t, conf, className } = this.props;
+    const { t, title, tabIndex, children, className } = this.props;
 
     return (
       <Button
         className={className}
-        title={t(conf.title)}
-        tabIndex={0}
+        title={t(title)}
+        tabIndex={tabIndex}
         onClick={e => this.downloadCanvasImage(e, this.options)}
       >
-        {conf.icon}
+        {children}
       </Button>
     );
   }

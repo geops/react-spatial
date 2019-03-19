@@ -6,11 +6,45 @@ import { FiMail } from 'react-icons/fi';
 import BlankLink from '../BlankLink';
 import CanvasSaveButton from '../CanvasSaveButton';
 
-const configPropType = PropTypes.arrayOf(
+const shareConfigPropType = PropTypes.arrayOf(
   PropTypes.shape({
+    /**
+     * Title of the button.
+     */
     title: PropTypes.string,
+    /**
+     * Url for href.
+     */
     url: PropTypes.string,
+    /**
+     * Icon for the button.
+     */
     icon: PropTypes.shape(),
+    /**
+     * CSS class of the button.
+     */
+    className: PropTypes.string,
+  }),
+);
+
+const extraConfigPropType = PropTypes.arrayOf(
+  PropTypes.shape({
+    /**
+     * Title of the button.
+     */
+    title: PropTypes.string,
+    /**
+     * Icon for the button.
+     */
+    icon: PropTypes.shape(),
+    /**
+     * CSS class of the button.
+     */
+    className: PropTypes.string,
+    /**
+     * Format to save the image in ('image/jpeg' or 'image/png')
+     */
+    saveFormat: PropTypes.string,
   }),
 );
 
@@ -19,11 +53,29 @@ const propTypes = {
    * Translation function.
    */
   t: PropTypes.func,
+
+  /** An existing [ol/Map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html). */
   map: PropTypes.instanceOf(OLMap),
+
+  /**
+   * CSS class of the menu.
+   */
   className: PropTypes.string,
+
+  /**
+   * CSS class of the icon.
+   */
   classNameIcon: PropTypes.string,
-  socialShareConfig: configPropType,
-  extraSocialShareConfig: configPropType,
+
+  /**
+   * Confiuration for social sharing.
+   */
+  socialShareConfig: shareConfigPropType,
+
+  /**
+   * Confiuration for extra social sharing.
+   */
+  extraSocialShareConfig: extraConfigPropType,
 };
 
 const defaultProps = {
@@ -90,7 +142,13 @@ class ShareMenu extends PureComponent {
                 {conf.icon}
               </BlankLink>
             ) : (
-              <CanvasSaveButton conf={conf} map={map} />
+              <CanvasSaveButton
+                title={conf.title}
+                saveFormat={conf.saveFormat}
+                map={map}
+              >
+                {conf.icon}
+              </CanvasSaveButton>
             )}
           </div>
         ))}
