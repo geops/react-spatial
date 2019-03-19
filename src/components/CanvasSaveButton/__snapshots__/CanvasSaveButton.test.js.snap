@@ -3,7 +3,7 @@
 exports[`CanvasSaveButton should match snapshot. 1`] = `
 <div
   aria-label="Karte als Bild speichern."
-  className="tm-share-button"
+  className="tm-canvas-save-button"
   onClick={[Function]}
   onKeyPress={[Function]}
   role="button"

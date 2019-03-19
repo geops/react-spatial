@@ -1,10 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import OLMap from 'ol/Map';
-import { TiImage, TiSocialFacebook, TiSocialTwitter } from 'react-icons/ti';
+import { TiSocialFacebook, TiSocialTwitter } from 'react-icons/ti';
 import { FiMail } from 'react-icons/fi';
 import BlankLink from '../BlankLink';
-import CanvasSaveButton from '../CanvasSaveButton';
 
 const shareConfigPropType = PropTypes.arrayOf(
   PropTypes.shape({
@@ -27,35 +25,16 @@ const shareConfigPropType = PropTypes.arrayOf(
   }),
 );
 
-const extraConfigPropType = PropTypes.arrayOf(
-  PropTypes.shape({
-    /**
-     * Title of the button.
-     */
-    title: PropTypes.string,
-    /**
-     * Icon for the button.
-     */
-    icon: PropTypes.shape(),
-    /**
-     * CSS class of the button.
-     */
-    className: PropTypes.string,
-    /**
-     * Format to save the image in ('image/jpeg' or 'image/png')
-     */
-    saveFormat: PropTypes.string,
-  }),
-);
-
 const propTypes = {
   /**
    * Translation function.
    */
   t: PropTypes.func,
 
-  /** An existing [ol/Map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html). */
-  map: PropTypes.instanceOf(OLMap),
+  /**
+   *  Children content of the ShareMenu.
+   */
+  children: PropTypes.element,
 
   /**
    * CSS class of the menu.
@@ -68,18 +47,18 @@ const propTypes = {
   classNameIcon: PropTypes.string,
 
   /**
-   * Confiuration for social sharing.
+   * Configuration for social sharing.
    */
   socialShareConfig: shareConfigPropType,
 
   /**
-   * Confiuration for extra social sharing.
+   * Configuration for extra social sharing.
    */
-  extraSocialShareConfig: extraConfigPropType,
+  extraSocialShareConfig: PropTypes.array,
 };
 
 const defaultProps = {
-  map: null,
+  children: null,
   className: 'tm-share-menu',
   classNameIcon: 'tm-share-menu-icon',
   socialShareConfig: [
@@ -100,21 +79,14 @@ const defaultProps = {
       className: 'ta-mail-icon',
     },
   ],
-  extraSocialShareConfig: [
-    {
-      title: 'Karte als Bild speichern.',
-      icon: <TiImage focusable={false} />,
-      className: 'ta-image-icon',
-      saveFormat: 'image/jpeg',
-    },
-  ],
+  extraSocialShareConfig: [],
   t: t => t,
 };
 
 class ShareMenu extends PureComponent {
   render() {
     const {
-      map,
+      children,
       className,
       classNameIcon,
       socialShareConfig,
@@ -137,21 +109,12 @@ class ShareMenu extends PureComponent {
             className={`${classNameIcon} ${conf.className || ''}`}
             key={conf.title}
           >
-            {conf.url ? (
-              <BlankLink href={conf.url} title={t(conf.title)}>
-                {conf.icon}
-              </BlankLink>
-            ) : (
-              <CanvasSaveButton
-                title={conf.title}
-                saveFormat={conf.saveFormat}
-                map={map}
-              >
-                {conf.icon}
-              </CanvasSaveButton>
-            )}
+            <BlankLink href={conf.url} title={t(conf.title)}>
+              {conf.icon}
+            </BlankLink>
           </div>
         ))}
+        {children}
       </div>
     );
   }

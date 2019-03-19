@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import OLMap from 'ol/Map';
+import { TiImage } from 'react-icons/ti';
 import Button from '../Button';
 
 const propTypes = {
@@ -10,19 +11,9 @@ const propTypes = {
   title: PropTypes.string.isRequired,
 
   /**
-   * Children content of the button.
-   */
-  children: PropTypes.element.isRequired,
-
-  /**
    * CSS class of the button.
    */
   className: PropTypes.string,
-
-  /**
-   * Translation function.
-   */
-  t: PropTypes.func,
 
   /**
    * HTML tabIndex attribute
@@ -30,9 +21,9 @@ const propTypes = {
   tabIndex: PropTypes.number,
 
   /**
-   * Format to save the image in ('image/jpeg' or 'image/png')
+   * Format to save the image.
    */
-  saveFormat: PropTypes.string,
+  saveFormat: PropTypes.oneOf(['image/jpeg', 'image/png']),
 
   /** An existing [ol/Map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html). */
   map: PropTypes.instanceOf(OLMap),
@@ -41,9 +32,8 @@ const propTypes = {
 const defaultProps = {
   map: null,
   tabIndex: 0,
-  className: 'tm-share-button',
+  className: 'tm-canvas-save-button',
   saveFormat: 'image/png',
-  t: t => t,
 };
 
 /**
@@ -59,16 +49,6 @@ class CanvasSaveButton extends PureComponent {
     super(props);
     const { saveFormat } = this.props;
     this.options = { format: saveFormat };
-    if (
-      this.options.format !== 'image/jpeg' &&
-      this.options.format !== 'image/png'
-    ) {
-      // eslint-disable-next-line no-console
-      console.warn(
-        'Unknown format configured to save canvas for CanvasSaveButton.',
-        'Should be either "image/jpeg" or "image/png"',
-      );
-    }
     this.fileExt = this.options.format === 'image/jpeg' ? 'jpg' : 'png';
   }
 
@@ -129,16 +109,16 @@ class CanvasSaveButton extends PureComponent {
   }
 
   render() {
-    const { t, title, tabIndex, children, className } = this.props;
+    const { title, tabIndex, className } = this.props;
 
     return (
       <Button
         className={className}
-        title={t(title)}
+        title={title}
         tabIndex={tabIndex}
         onClick={e => this.downloadCanvasImage(e, this.options)}
       >
-        {children}
+        <TiImage focusable={false} />
       </Button>
     );
   }

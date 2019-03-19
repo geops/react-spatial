@@ -1,4 +1,22 @@
-.tm-share-button,
-.tm-share-button:hover {
+.tm-canvas-save-button,
+.tm-canvas-save-button:hover {
+  background-color: #666;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 30px;
+  margin: 0 10px;
+  text-align: center;
+  transition: background-color 0.5s ease, color 0.5s ease;
+  width: 35px;
+  height: 35px;
   color: white;
+
+  &:hover {
+    background-color: $btn-primary-color-hover;
+  }
+
+  svg {
+    padding-top: 3px;
+    width: 75%;
+  }
 }

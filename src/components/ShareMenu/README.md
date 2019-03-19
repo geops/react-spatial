@@ -12,6 +12,7 @@ import TileImageSource from 'ol/source/TileImage';
 import { getCenter} from 'ol/extent';
 import ConfigReader from '../../ConfigReader';
 import ShareMenu from 'react-spatial/components/ShareMenu';
+import CanvasSaveButton from '../CanvasSaveButton';
 import OLMap from 'ol/Map';
 
 class ShareMenuExample extends React.Component {
@@ -38,7 +39,13 @@ render() {
         <ShareMenu
           url={window.location.href}
           map={this.map}
-        />
+        >
+          <CanvasSaveButton
+            title="Karte als Bild speichern."
+            map={this.map}
+          />
+        </ShareMenu>
+
       </div>
     );
   }
