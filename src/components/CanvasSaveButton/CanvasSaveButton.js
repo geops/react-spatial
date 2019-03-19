@@ -92,7 +92,7 @@ class CanvasSaveButton extends PureComponent {
         title={t(conf.title)}
         onClick={e => this.downloadCanvasImage(e)}
       >
-        <span>{conf.icon}</span>
+        {conf.icon}
       </Button>
     );
   }
