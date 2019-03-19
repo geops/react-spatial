@@ -27,7 +27,8 @@ const propTypes = {
       label: PropTypes.string.isRequired,
 
       /**
-       * The value used to create the options´s projection of the MousePosition control. See [doc](https://openlayers.org/en/latest/apidoc/module-ol_control_MousePosition.html)
+       * The value used to create the options´s projection of the MousePosition control.
+       * See [doc](https://openlayers.org/en/latest/apidoc/module-ol_control_MousePosition.html).
        */
       value: PropTypes.string.isRequired,
 
