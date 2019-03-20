@@ -39,7 +39,7 @@ render() {
         <ShareMenu url={window.location.href} >
           <CanvasSaveButton
             title="Karte als Bild speichern."
-            className='tm-share-menu-icon'
+            className='tm-canvas-save-button tm-share-menu-icon'
             map={this.map}
           />
         </ShareMenu>

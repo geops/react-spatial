@@ -38,7 +38,7 @@ const defaultProps = {
   map: null,
   tabIndex: 0,
   children: <TiImage focusable={false} />,
-  className: null,
+  className: 'tm-canvas-save-button',
   saveFormat: 'image/png',
 };
 
@@ -122,7 +122,7 @@ class CanvasSaveButton extends PureComponent {
 
     return (
       <Button
-        className={`tm-canvas-save-button ${className || ''}`}
+        className={className}
         title={title}
         tabIndex={tabIndex}
         onClick={e => this.downloadCanvasImage(e)}
