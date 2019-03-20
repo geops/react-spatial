@@ -37,7 +37,7 @@ class MenuExample extends React.Component {
         />
         <Menu>
           <MenuItem title="Share">
-            <ShareMenu url={window.location.href} map={this.map}/>
+            <ShareMenu url={window.location.href} />
           </MenuItem>
           <MenuItem title="Layers">
             <LayerTree layerService={this.layerService} />
