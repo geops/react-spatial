@@ -58,11 +58,6 @@ const propTypes = {
    * Padding left.
    */
   padding: PropTypes.number,
-
-  /**
-   * Padding left for child div.
-   */
-  paddingChild: PropTypes.number,
 };
 
 const defaultProps = {
@@ -73,8 +68,7 @@ const defaultProps = {
   classNameToggle: 'tm-topic-list-toggle',
   classNameArrow: 'tm-topic-list-arrow',
   onTopicClick: () => {},
-  paddingChild: 30,
-  padding: 0,
+  padding: 30,
 };
 
 class TopicList extends Component {
@@ -175,27 +169,17 @@ class TopicList extends Component {
   }
 
   renderTopic(topic, index) {
-    const {
-      classNameItem,
-      padding,
-      paddingChild,
-      propsToLayerTree,
-    } = this.props;
+    const { classNameItem, padding, propsToLayerTree } = this.props;
     const { expandedTopic } = this.state;
 
     return (
       <div key={topic.id}>
-        <div
-          className={classNameItem}
-          style={{
-            paddingLeft: `${padding}px`,
-          }}
-        >
+        <div className={classNameItem}>
           {this.renderBarrierFreeDiv(topic)}
           {this.renderInput(topic)}
           {this.renderToggleButton(topic)}
         </div>
-        <div style={{ paddingLeft: `${paddingChild}px` }}>
+        <div style={{ paddingLeft: `${padding}px` }}>
           {topic.visible && topic.id === expandedTopic ? (
             <LayerTree key={index} {...propsToLayerTree} />
           ) : null}
