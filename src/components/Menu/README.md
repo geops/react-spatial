@@ -16,20 +16,14 @@ import LayerTree from 'react-spatial/components/LayerTree';
 class MenuExample extends React.Component {
   constructor(props) {
     super(props);
+    this.map = new OLMap({controls:[]});
+    this.center = [-10997148, 4569099];
 
-    const layerConf = [{
-      name: 'OSM Baselayer',
-      visible: true,
-      data: {
-        type: 'xyz',
-        url: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      },
-    }];
-
-    this.map = new OLMap();
-    this.layers = ConfigReader.readConfig(this.map, layerConf);
+    const layers = ConfigReader.readConfig(
+      this.map,
+      treeData,
+    );
     this.layerService = new LayerService(this.layers);
-
   }
 
   render() {
@@ -37,12 +31,13 @@ class MenuExample extends React.Component {
       <div className="tm-menu-example">
         <BasicMap
           map={this.map}
+          center={this.center}
           zoom={3}
           layers={this.layers}
         />
         <Menu>
           <MenuItem title="Share">
-            <ShareMenu url={window.location.href}/>
+            <ShareMenu url={window.location.href} />
           </MenuItem>
           <MenuItem title="Layers">
             <LayerTree layerService={this.layerService} />
