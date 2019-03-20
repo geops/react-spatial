@@ -39,6 +39,7 @@
     padding: 10px;
     border-right: 1px solid lightgray;
     overflow-y: auto;
+    flex-shrink: 0;
   }
 
   .tm-topic-list-item {
