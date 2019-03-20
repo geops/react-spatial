@@ -101,5 +101,11 @@ describe('ConfigReader', () => {
       expect(layers[0].olLayer).toBe();
       expect(layers[0].getChildren().length).toBe(0);
     });
+
+    test('returns an empty array', () => {
+      const map = new OLMap();
+      const layers = ConfigReader.readConfig(map, []);
+      expect(layers.length).toEqual(0);
+    });
   });
 });

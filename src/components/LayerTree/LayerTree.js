@@ -199,7 +199,7 @@ class LayerTree extends Component {
       : [...layer.getChildren()];
 
     if (renderItem) {
-      return renderItem(layer);
+      return renderItem(layer, this.onInputClick, this.onToggle);
     }
 
     return (

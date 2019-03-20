@@ -20,6 +20,7 @@ class ConfigReader {
         zIndex: -1,
         source: new XYZ({
           url: item.data.url,
+          crossOrigin: 'Anonymous',
         }),
       }),
     });
@@ -49,6 +50,7 @@ class ConfigReader {
         zIndex: -1,
         source: new WMTSSource({
           url: item.data.url,
+          crossOrigin: 'Anonymous',
           tileGrid: new WMTSTileGrid({
             extent: item.data.projectionExtent,
             resolutions: item.data.resolutions,
@@ -94,7 +96,7 @@ class ConfigReader {
     this.style = style;
 
     this.defaults = {
-      data: {},
+      data: [],
       visible: false,
       isBaseLayer: false,
     };

@@ -3,7 +3,11 @@ const { version } = require('./package.json');
 
 module.exports = {
   title: `React-spatial ${version}`,
-  require: [path.join(__dirname, 'src/themes/default/examples.scss')],
+  require: [
+    path.join(__dirname, 'src/themes/default/examples.scss'),
+    'react-app-polyfill/ie11',
+    'core-js',
+  ],
   moduleAliases: {
     'react-spatial': path.resolve(__dirname, 'src'),
   },

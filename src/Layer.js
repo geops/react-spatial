@@ -40,6 +40,9 @@ export default class Layer extends Observable {
   }
 
   getRadioGroup() {
+    if (!this.radioGroup && this.isBaseLayer) {
+      return 'baseLayer';
+    }
     return this.radioGroup;
   }
 
