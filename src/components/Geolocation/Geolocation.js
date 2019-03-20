@@ -43,6 +43,15 @@ const propTypes = {
    * If true, the map is not centered after it has been dragged once.
    */
   noCenterAfterDrag: PropTypes.bool,
+
+  /**
+   * Color (Number array with rgb values) or style function.
+   * If a color is given, the style is animated.
+   */
+  colorOrStyleFunc: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.number),
+    PropTypes.func,
+  ]),
 };
 
 const defaultProps = {
@@ -50,6 +59,7 @@ const defaultProps = {
   title: undefined,
   onError: () => {},
   noCenterAfterDrag: false,
+  colorOrStyleFunc: [235, 0, 0],
 };
 
 /**
@@ -58,10 +68,11 @@ const defaultProps = {
 class Geolocation extends PureComponent {
   constructor(props) {
     super(props);
-    const { map, onError, noCenterAfterDrag } = this.props;
+    const { map, onError, noCenterAfterDrag, colorOrStyleFunc } = this.props;
 
     this.map = map;
     this.onError = onError;
+    this.colorOrStyleFunc = colorOrStyleFunc;
     this.layer = new VectorLayer({
       source: new VectorSource(),
     });
@@ -157,36 +168,43 @@ class Geolocation extends PureComponent {
       source: new VectorSource(),
     });
 
-    feature.setStyle(() => {
-      const circleStyle = new Style({
-        image: new Circle({
-          radius: 20,
-          rotation,
-          fill: new Fill({
-            color: 'rgba(255, 255, 255, 0.01)',
-          }),
-          stroke: new Stroke({
-            lineDash: [30, 5],
-            width: 6,
-            color: `rgba(0, 61, 133, ${opacity})`,
-          }),
-        }),
-      });
+    if (Array.isArray(this.colorOrStyleFunc)) {
+      const color = this.colorOrStyleFunc;
 
-      circleStyle.getImage().setRotation(rotation);
-
-      return [
-        new Style({
+      feature.setStyle(() => {
+        const circleStyle = new Style({
           image: new Circle({
-            radius: 10,
+            radius: 20,
+            rotation,
             fill: new Fill({
-              color: 'rgba(0, 61, 133, 0.5)',
+              color: 'rgba(255, 255, 255, 0.01)',
+            }),
+            stroke: new Stroke({
+              lineDash: [30, 5],
+              width: 6,
+              color: `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${opacity})`,
             }),
           }),
-        }),
-        circleStyle,
-      ];
-    });
+        });
+
+        circleStyle.getImage().setRotation(rotation);
+
+        return [
+          new Style({
+            image: new Circle({
+              radius: 10,
+              fill: new Fill({
+                color: `rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.5)`,
+              }),
+            }),
+          }),
+          circleStyle,
+        ];
+      });
+    } else {
+      feature.setStyle(this.colorOrStyleFunc);
+    }
+
     this.layer.getSource().clear();
     this.layer.getSource().addFeature(feature);
   }
