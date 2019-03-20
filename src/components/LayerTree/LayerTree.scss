@@ -40,6 +40,10 @@
       position: relative;
     }
 
+    label + div {
+      display: inline-block;
+    }
+
     /* CSS for the toggle div */
     .tm-layer-tree-toggle {
       width: auto;
