@@ -96,7 +96,7 @@ class ConfigReader {
     this.style = style;
 
     this.defaults = {
-      data: {},
+      data: [],
       visible: false,
       isBaseLayer: false,
     };

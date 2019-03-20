@@ -10,7 +10,7 @@ const propTypes = {
   /**
    * Children content of the button.
    */
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
 
   /**
    * CSS class of the button.
@@ -35,8 +35,9 @@ const propTypes = {
 
 const defaultProps = {
   className: 'tm-button',
+  children: undefined,
   title: undefined,
-  tabIndex: undefined,
+  tabIndex: 0,
   style: undefined,
 };
 

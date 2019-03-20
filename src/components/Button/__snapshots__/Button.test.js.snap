@@ -7,6 +7,7 @@ exports[`Button should match snapshot. 1`] = `
   onClick={[Function]}
   onKeyPress={[Function]}
   role="button"
+  tabIndex={0}
   title="Zoom in"
 >
   +

@@ -68,7 +68,7 @@ const defaultProps = {
   classNameToggle: 'tm-topic-list-toggle',
   classNameArrow: 'tm-topic-list-arrow',
   onTopicClick: () => {},
-  padding: 10,
+  padding: 30,
 };
 
 class TopicList extends Component {
@@ -174,17 +174,12 @@ class TopicList extends Component {
 
     return (
       <div key={topic.id}>
-        <div
-          className={classNameItem}
-          style={{
-            paddingLeft: `${padding}px`,
-          }}
-        >
+        <div className={classNameItem}>
           {this.renderBarrierFreeDiv(topic)}
           {this.renderInput(topic)}
           {this.renderToggleButton(topic)}
         </div>
-        <div style={{ paddingLeft: `${padding * 2}px` }}>
+        <div style={{ paddingLeft: `${padding}px` }}>
           {topic.visible && topic.id === expandedTopic ? (
             <LayerTree key={index} {...propsToLayerTree} />
           ) : null}
