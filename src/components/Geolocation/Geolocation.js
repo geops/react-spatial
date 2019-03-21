@@ -74,18 +74,15 @@ const defaultProps = {
 class Geolocation extends PureComponent {
   constructor(props) {
     super(props);
-    const { map, onError, noCenterAfterDrag, colorOrStyleFunc } = this.props;
+    const { map, noCenterAfterDrag } = this.props;
 
-    this.map = map;
-    this.onError = onError;
-    this.colorOrStyleFunc = colorOrStyleFunc;
     this.layer = new VectorLayer({
       source: new VectorSource(),
     });
 
     this.isCentered = true;
     if (noCenterAfterDrag) {
-      this.map.on('pointerdrag', () => {
+      map.on('pointerdrag', () => {
         this.isCentered = false;
       });
     }
@@ -97,10 +94,11 @@ class Geolocation extends PureComponent {
 
   toggle() {
     const { active } = this.state;
+    const { onError } = this.props;
     const geolocation = 'geolocation' in navigator;
 
     if (!geolocation) {
-      this.onError();
+      onError();
     } else if (!active) {
       this.watch = navigator.geolocation.watchPosition(
         this.activate.bind(this),
@@ -115,8 +113,10 @@ class Geolocation extends PureComponent {
   }
 
   error() {
+    const { onError } = this.props;
+
     this.deactivate();
-    this.onError();
+    onError();
   }
 
   deactivate() {
@@ -130,7 +130,9 @@ class Geolocation extends PureComponent {
   }
 
   activate(position) {
-    const code = this.map
+    const { map } = this.props;
+
+    const code = map
       .getView()
       .getProjection()
       .getCode();
@@ -142,9 +144,9 @@ class Geolocation extends PureComponent {
 
     const point = new Point(pos);
     this.highlight(point);
-    this.layer.setMap(this.map);
+    this.layer.setMap(map);
     if (this.isCentered) {
-      this.map.getView().setCenter(pos);
+      map.getView().setCenter(pos);
     }
 
     this.setState({
@@ -153,6 +155,8 @@ class Geolocation extends PureComponent {
   }
 
   highlight(point) {
+    const { colorOrStyleFunc } = this.props;
+
     let decrease = true;
     let opacity = 0.5;
     let rotation = 0;
@@ -174,8 +178,8 @@ class Geolocation extends PureComponent {
       source: new VectorSource(),
     });
 
-    if (Array.isArray(this.colorOrStyleFunc)) {
-      const color = this.colorOrStyleFunc;
+    if (Array.isArray(colorOrStyleFunc)) {
+      const color = colorOrStyleFunc;
 
       feature.setStyle(() => {
         const circleStyle = new Style({
@@ -208,7 +212,7 @@ class Geolocation extends PureComponent {
         ];
       });
     } else {
-      feature.setStyle(this.colorOrStyleFunc);
+      feature.setStyle(colorOrStyleFunc);
     }
 
     this.layer.getSource().clear();
