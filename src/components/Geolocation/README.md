@@ -36,7 +36,7 @@ class GeolocationExample extends React.Component {
         <Geolocation
           title='Lokalisieren'
           map={this.map}
-          noCenterAfterDrag={true}
+          noCenterAfterDrag
           onError={() => window.alert('Geolokalisierung war nicht erfolgreich')}
           colorOrStyleFunc={[0, 61, 133]}
         />
