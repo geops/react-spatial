@@ -12,8 +12,8 @@ const propTypes = {
    */
   options: PropTypes.arrayOf(
     PropTypes.shape({
-      value: PropTypes.string,
-      label: PropTypes.string,
+      value: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
     }),
   ).isRequired,
 
