@@ -3,6 +3,7 @@ import renderer from 'react-test-renderer';
 import { configure, mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
+import 'jest-canvas-mock';
 import OLMap from 'ol/Map';
 import MapEvent from 'ol/MapEvent';
 import Geolocation from './Geolocation';
