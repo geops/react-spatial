@@ -122,7 +122,7 @@ describe('Popup', () => {
             <div id="gux" />
           </Popup>,
         );
-        const spy = jest.spyOn(component.instance(), 'updatePixelPosition');
+        const spy = jest.spyOn(component.instance(), 'updatePosition');
 
         component.setProps({
           feature: f,
@@ -139,7 +139,7 @@ describe('Popup', () => {
           <div id="gux" />
         </Popup>,
       );
-      const spy = jest.spyOn(component.instance(), 'updatePixelPosition');
+      const spy = jest.spyOn(component.instance(), 'updatePosition');
       map.dispatchEvent({ type: 'postrender' });
       expect(spy).toHaveBeenCalledTimes(2);
     });
@@ -152,7 +152,7 @@ describe('Popup', () => {
         <div id="gux" />
       </Popup>,
     );
-    const spy = jest.spyOn(component.instance(), 'updatePixelPosition');
+    const spy = jest.spyOn(component.instance(), 'updatePosition');
     map.dispatchEvent({ type: 'postrender' });
     expect(spy).toHaveBeenCalledTimes(2);
     component.unmount();

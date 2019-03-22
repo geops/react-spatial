@@ -7,4 +7,9 @@
     height: 300px;
     width: 100%;
   }
+
+  .mobile.tm-popup {
+    position: fixed;
+    z-index: 2;
+  }
 }

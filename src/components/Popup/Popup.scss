@@ -1,3 +1,7 @@
+.tm-popup {
+  position: absolute;
+}
+
 .tm-popup > div {
   position: absolute;
   background-color: white;
@@ -46,5 +50,22 @@
     font-weight: bold;
     padding-bottom: 5px;
     margin-right: 25px;
+  }
+}
+
+.mobile.tm-popup {
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.mobile.tm-popup > div {
+  position: relative;
+  left: 0;
+  bottom: 0;
+
+  &::after,
+  &::before {
+    display: none;
   }
 }
