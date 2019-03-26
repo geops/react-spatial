@@ -53,7 +53,7 @@ class ArrowNorth extends PureComponent {
       rotation: map.getView().getRotation() + rotationOffset,
     };
 
-    map.on('moveend', e => this.onRotate(e));
+    map.on('postrender', e => this.onRotate(e));
   }
 
   onRotate(evt) {
