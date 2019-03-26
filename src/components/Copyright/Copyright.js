@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import LayerService from 'react-spatial/LayerService';
+import LayerService from '../../LayerService';
 
 const propTypes = {
   layerService: PropTypes.instanceOf(LayerService).isRequired,
@@ -9,9 +9,6 @@ const propTypes = {
 class Copyright extends Component {
   constructor(props) {
     super(props);
-    const { layerService } = this.props;
-    this.layerService = layerService;
-
     this.state = {
       layers: [],
     };
@@ -24,7 +21,7 @@ class Copyright extends Component {
   componentDidUpdate(prevProps) {
     const { layerService } = this.props;
     if (layerService !== prevProps.layerService) {
-      this.layerService.on('change:visible', () => this.updateLayers());
+      layerService.on('change:visible', () => this.updateLayers());
     }
   }
 
@@ -43,7 +40,12 @@ class Copyright extends Component {
       l.getVisible() ? l.getCopyright() : null,
     );
 
-    return <div className="tm-copyright">ⓒ  {copyrights.join(' | ')}</div>;
+    return (
+      <div className="tm-copyright">
+        &copy;&nbsp;
+        {copyrights.join(' | ')}
+      </div>
+    );
   }
 }
 
