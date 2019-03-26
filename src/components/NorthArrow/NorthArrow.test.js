@@ -7,17 +7,17 @@ import MapEvent from 'ol/MapEvent';
 import OLMap from 'ol/Map';
 import OLView from 'ol/View';
 import { TiImage } from 'react-icons/ti';
-import ArrowNorth from './ArrowNorth';
+import NorthArrow from './NorthArrow';
 
 configure({ adapter: new Adapter() });
 
-describe('ArrowNorth', () => {
+describe('NorthArrow', () => {
   const olView = new OLView();
   const olMap = new OLMap({ view: olView });
 
   test('should match snapshot simple.', () => {
     const component = renderer.create(
-      <ArrowNorth map={olMap} className="test-class" />,
+      <NorthArrow map={olMap} className="test-class" />,
     );
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
@@ -25,9 +25,9 @@ describe('ArrowNorth', () => {
 
   test('should match snapshot with children.', () => {
     const component = renderer.create(
-      <ArrowNorth map={olMap}>
+      <NorthArrow map={olMap}>
         <TiImage />
-      </ArrowNorth>,
+      </NorthArrow>,
     );
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
@@ -35,24 +35,24 @@ describe('ArrowNorth', () => {
 
   test('should match snapshot rotated.', () => {
     const component = renderer.create(
-      <ArrowNorth map={olMap} rotationOffset={45} />,
+      <NorthArrow map={olMap} rotationOffset={45} />,
     );
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
   });
 
   test('should match snapshot with circle.', () => {
-    const component = renderer.create(<ArrowNorth circled map={olMap} />);
+    const component = renderer.create(<NorthArrow circled map={olMap} />);
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
   });
 
   test('should react on view rotation.', () => {
-    const wrapper = shallow(<ArrowNorth map={olMap} />);
+    const wrapper = shallow(<NorthArrow map={olMap} />);
     const spy = jest.spyOn(wrapper.instance(), 'onRotate');
     // Trigger view rotation
     olMap.getView().setRotation(0.3490658503988659);
-    olMap.dispatchEvent(new MapEvent('moveend', olMap));
+    olMap.dispatchEvent(new MapEvent('postrender', olMap));
 
     expect(spy).toHaveBeenCalledTimes(1);
     // 20 degrees = 0.3490658503988659 radians
@@ -60,11 +60,11 @@ describe('ArrowNorth', () => {
   });
 
   test('should react on view rotation with offset.', () => {
-    const wrapper = shallow(<ArrowNorth map={olMap} rotationOffset={-10} />);
+    const wrapper = shallow(<NorthArrow map={olMap} rotationOffset={-10} />);
     const spy = jest.spyOn(wrapper.instance(), 'onRotate');
 
     olMap.getView().setRotation(0.3490658503988659);
-    olMap.dispatchEvent(new MapEvent('moveend', olMap));
+    olMap.dispatchEvent(new MapEvent('postrender', olMap));
 
     expect(spy).toHaveBeenCalledTimes(1);
     expect(wrapper.instance().state.rotation).toBe(10);

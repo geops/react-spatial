@@ -1,10 +1,10 @@
 #
 
-This demonstrates the use of ArrowNorth (Shift + click to rotate).
+This demonstrates the use of NorthArrowExample (Shift + click to rotate).
 
 ```jsx
 import React from  'react';
-import ArrowNorth from 'react-spatial/components/ArrowNorth';
+import NorthArrow from 'react-spatial/components/NorthArrow';
 import BasicMap from 'react-spatial/components/BasicMap';
 import Layer from 'react-spatial/Layer';
 import {
@@ -17,7 +17,7 @@ import TileImageSource from 'ol/source/TileImage';
 import { getCenter} from 'ol/extent';
 import OLMap from 'ol/Map';
 
-class ArrowNorthExample extends React.Component {
+class NorthArrowExample extends React.Component {
   constructor(props) {
     super(props);
 
@@ -60,15 +60,15 @@ class ArrowNorthExample extends React.Component {
 
   render() {
     return (
-      <div className="tm-arrow-north-example">
+      <div className="tm-north-arrow-example">
         <BasicMap
           map={this.map}
           center={this.center}
           zoom={17}
           layers={this.layers}
         />
-        <ArrowNorth
-          className="tm-arrow-north"
+        <NorthArrow
+          className="tm-north-arrow"
           rotationOffset={20}
           map={this.map}
           circled={true}
@@ -78,5 +78,5 @@ class ArrowNorthExample extends React.Component {
   }
 }
 
-<ArrowNorthExample />;
+<NorthArrowExample />;
 ```

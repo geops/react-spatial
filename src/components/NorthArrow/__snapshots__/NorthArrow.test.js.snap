@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ArrowNorth should match snapshot rotated. 1`] = `
+exports[`NorthArrow should match snapshot rotated. 1`] = `
 <div
-  className="tm-arrow-north"
+  className="tm-north-arrow"
   style={
     Object {
       "transform": "rotate(45deg)",
@@ -10,12 +10,12 @@ exports[`ArrowNorth should match snapshot rotated. 1`] = `
   }
 >
   <svg
-    data-file-name="SvgArrowNorth"
+    data-file-name="SvgNorthArrow"
   />
 </div>
 `;
 
-exports[`ArrowNorth should match snapshot simple. 1`] = `
+exports[`NorthArrow should match snapshot simple. 1`] = `
 <div
   className="test-class"
   style={
@@ -25,14 +25,14 @@ exports[`ArrowNorth should match snapshot simple. 1`] = `
   }
 >
   <svg
-    data-file-name="SvgArrowNorth"
+    data-file-name="SvgNorthArrow"
   />
 </div>
 `;
 
-exports[`ArrowNorth should match snapshot with children. 1`] = `
+exports[`NorthArrow should match snapshot with children. 1`] = `
 <div
-  className="tm-arrow-north"
+  className="tm-north-arrow"
   style={
     Object {
       "transform": "rotate(0deg)",
@@ -67,9 +67,9 @@ exports[`ArrowNorth should match snapshot with children. 1`] = `
 </div>
 `;
 
-exports[`ArrowNorth should match snapshot with circle. 1`] = `
+exports[`NorthArrow should match snapshot with circle. 1`] = `
 <div
-  className="tm-arrow-north"
+  className="tm-north-arrow"
   style={
     Object {
       "transform": "rotate(0deg)",
@@ -77,7 +77,7 @@ exports[`ArrowNorth should match snapshot with circle. 1`] = `
   }
 >
   <svg
-    data-file-name="SvgArrowNorthCircle"
+    data-file-name="SvgNorthArrowCircle"
   />
 </div>
 `;

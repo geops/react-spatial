@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import OLMap from 'ol/Map';
-import ArrowNorthSimple from '../../images/arrowNorth.svg';
-import ArrowNorthCircle from '../../images/arrowNorthCircle.svg';
+import NorthArrowSimple from '../../images/northArrow.svg';
+import NorthArrowCircle from '../../images/northArrowCircle.svg';
 
 const propTypes = {
   /**
@@ -16,7 +16,7 @@ const propTypes = {
   rotationOffset: PropTypes.number,
 
   /**
-   * Display circle around the north arrow.
+   * Display circle around the north arrow. Not used if pass children.
    */
   circled: PropTypes.bool,
 
@@ -32,7 +32,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  className: 'tm-arrow-north',
+  className: 'tm-north-arrow',
   rotationOffset: 0,
   circled: false,
   children: null,
@@ -41,7 +41,7 @@ const defaultProps = {
 /**
  * This component displays an arrow pointing the North of the map.
  */
-class ArrowNorth extends PureComponent {
+class NorthArrow extends PureComponent {
   static radToDeg(rad) {
     return (rad * 360) / (Math.PI * 2);
   }
@@ -61,7 +61,7 @@ class ArrowNorth extends PureComponent {
 
     this.setState({
       rotation:
-        ArrowNorth.radToDeg(evt.map.getView().getRotation()) + rotationOffset,
+        NorthArrow.radToDeg(evt.map.getView().getRotation()) + rotationOffset,
     });
   }
 
@@ -74,13 +74,13 @@ class ArrowNorth extends PureComponent {
         className={className}
         style={{ transform: `rotate(${rotation}deg)` }}
       >
-        {children || (circled ? <ArrowNorthCircle /> : <ArrowNorthSimple />)}
+        {children || (circled ? <NorthArrowCircle /> : <NorthArrowSimple />)}
       </div>
     );
   }
 }
 
-ArrowNorth.propTypes = propTypes;
-ArrowNorth.defaultProps = defaultProps;
+NorthArrow.propTypes = propTypes;
+NorthArrow.defaultProps = defaultProps;
 
-export default ArrowNorth;
+export default NorthArrow;
