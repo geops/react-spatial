@@ -6,7 +6,6 @@ This demonstrates the use of Menu.
 import React from 'react';
 import BasicMap from 'react-spatial/components/BasicMap';
 import ConfigReader from 'react-spatial/ConfigReader';
-import LayerService from 'react-spatial/LayerService';
 import OLMap from 'ol/Map';
 import Menu from 'react-spatial/components/Menu';
 import MenuItem from 'react-spatial/components/MenuItem';
@@ -19,11 +18,10 @@ class MenuExample extends React.Component {
     this.map = new OLMap({controls:[]});
     this.center = [-10997148, 4569099];
 
-    const layers = ConfigReader.readConfig(
+    this.layers = ConfigReader.readConfig(
       this.map,
       treeData,
     );
-    this.layerService = new LayerService(this.layers);
   }
 
   render() {
@@ -40,7 +38,7 @@ class MenuExample extends React.Component {
             <ShareMenu url={window.location.href} />
           </MenuItem>
           <MenuItem title="Layers">
-            <LayerTree layerService={this.layerService} />
+            <LayerTree layers={this.layers} />
           </MenuItem>
         </Menu>
       </div>

@@ -7,21 +7,18 @@ import renderer from 'react-test-renderer';
 import LayerTree from './LayerTree';
 import data from '../../../data/TreeData';
 import ConfigReader from '../../ConfigReader';
-import LayerService from '../../LayerService';
 
 configure({ adapter: new Adapter() });
 
 const mountLayerTree = newData => {
   const layers = ConfigReader.readConfig(new OLMap({}), newData);
-  const layerService = new LayerService(layers);
-  return mount(<LayerTree layerService={layerService} />);
+  return mount(<LayerTree layers={layers} />);
 };
 
 const renderLayerTree = (newData, props) => {
   const layers = ConfigReader.readConfig(new OLMap({}), newData);
-  const layerService = new LayerService(layers);
   const component = renderer.create(
-    <LayerTree layerService={layerService} {...props || {}} />,
+    <LayerTree layers={layers} {...props || {}} />,
   );
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
@@ -37,10 +34,7 @@ describe('LayerTree', () => {
     });
 
     test('when no layers.', () => {
-      const layerService = new LayerService();
-      const component = renderer.create(
-        <LayerTree layerService={layerService} />,
-      );
+      const component = renderer.create(<LayerTree />);
       const tree = component.toJSON();
       expect(tree).toMatchSnapshot();
     });

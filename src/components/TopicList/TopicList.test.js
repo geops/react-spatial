@@ -7,17 +7,15 @@ import renderer from 'react-test-renderer';
 import TopicList from './TopicList';
 import topicData from '../../../data/TopicData';
 import ConfigReader from '../../ConfigReader';
-import LayerService from '../../LayerService';
 
 configure({ adapter: new Adapter() });
 
 const mountTopicList = (topics, props) => {
   const layers = ConfigReader.readConfig(new OLMap({}), topics);
-  const layerService = new LayerService(layers);
   return mount(
     <TopicList
       topics={topics}
-      propsToLayerTree={{ layerService }}
+      propsToLayerTree={{ layers }}
       {...props || {}}
     />,
   );
@@ -28,11 +26,10 @@ const renderTopicList = (topics, props) => {
     new OLMap({}),
     ConfigReader.getVisibleTopic(topics).children,
   );
-  const layerService = new LayerService(layers);
   const component = renderer.create(
     <TopicList
       topics={topics}
-      propsToLayerTree={{ layerService }}
+      propsToLayerTree={{ layers }}
       {...props || {}}
     />,
   );
@@ -49,10 +46,7 @@ describe('Topiclist', () => {
     });
 
     test('when no layers.', () => {
-      const layerService = new LayerService();
-      const component = renderer.create(
-        <TopicList topics={topicData} propsToLayerTree={{ layerService }} />,
-      );
+      const component = renderer.create(<TopicList topics={topicData} />);
       const tree = component.toJSON();
       expect(tree).toMatchSnapshot();
     });

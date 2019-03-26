@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import LayerService from '../../LayerService';
+import Layer from '../../Layer';
 import Checkbox from '../Checkbox';
 import Button from '../Button';
 
 const propTypes = {
   /**
-   * Layers provider.
+   * Array of Layer to display.
    */
-  layerService: PropTypes.object,
+  layers: PropTypes.arrayOf(PropTypes.instanceOf(Layer)),
 
   /**
    * CSS class to apply on the container.
@@ -62,7 +64,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  layerService: undefined,
+  layers: null,
   className: 'tm-layer-tree',
   classNameItem: 'tm-layer-tree-item',
   classNameInput: 'tm-layer-tree-input',
@@ -76,8 +78,13 @@ const defaultProps = {
 class LayerTree extends Component {
   constructor(props) {
     super(props);
+
+    this.layerService = props.layers
+      ? new LayerService(props.layers)
+      : undefined;
+
     this.state = {
-      layers: props.layerService ? props.layerService.getLayers() : [],
+      layers: this.layerService ? this.layerService.getLayers() : [],
       expandedLayerNames: [],
     };
 
@@ -89,10 +96,16 @@ class LayerTree extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { layerService } = this.props;
+    const { layers } = this.props;
 
-    if (layerService !== prevProps.layerService) {
+    if (layers !== prevProps.layers) {
       this.updateLayerService();
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.layerService) {
+      this.layerService.unlistenChangeEvt();
     }
   }
 
@@ -117,16 +130,19 @@ class LayerTree extends Component {
   }
 
   updateLayerService() {
-    const { layerService } = this.props;
-    if (layerService) {
-      this.updateLayers(layerService);
-      layerService.on('change:visible', () => this.updateLayers(layerService));
+    const { layers } = this.props;
+
+    this.layerService = layers ? new LayerService(layers) : this.layerService;
+
+    if (this.layerService) {
+      this.updateLayers();
+      this.layerService.on('change:visible', () => this.updateLayers());
     }
   }
 
-  updateLayers(layerService) {
+  updateLayers() {
     this.setState({
-      layers: layerService.getLayers(),
+      layers: this.layerService.getLayers(),
     });
   }
 
