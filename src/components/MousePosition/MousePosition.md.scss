@@ -1,0 +1,16 @@
+.tm-mouse-position-example {
+  .tm-mouse-position {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+
+    span {
+      margin-left: 10px;
+    }
+
+    select {
+      background: none;
+      height: 20px;
+    }
+  }
+}

@@ -2,24 +2,27 @@
 * This file is loaded by the styleguide and provide additionnal css for all examples.
 */
 @import './index.scss';
+@import '../../components/ActionLink/ActionLink.md.scss';
 @import '../../components/Autocomplete/Autocomplete.md.scss';
+@import '../../components/BaseLayerToggler/BaseLayerToggler.md.scss';
+@import '../../components/BasicMap/BasicMap.md.scss';
+@import '../../components/BlankLink/BlankLink.md.scss';
 @import '../../components/Button/Button.md.scss';
+@import '../../components/CanvasSaveButton/CanvasSaveButton.md.scss';
+@import '../../components/Checkbox/Checkbox.md.scss';
+@import '../../components/Geolocation/Geolocation.md.scss';
+@import '../../components/LayerTree/LayerTree.md.scss';
+@import '../../components/Menu/Menu.md.scss';
+@import '../../components/MousePosition/MousePosition.md.scss';
+@import '../../components/NorthArrow/NorthArrow.md.scss';
+@import '../../components/Popup/Popup.md.scss';
+@import '../../components/ScaleLine/ScaleLine.md.scss';
 @import '../../components/SearchInput/SearchInput.md.scss';
 @import '../../components/Select/Select.md.scss';
 @import '../../components/SelectLinks/SelectLinks.md.scss';
-@import '../../components/ActionLink/ActionLink.md.scss';
-@import '../../components/BlankLink/BlankLink.md.scss';
-@import '../../components/BasicMap/BasicMap.md.scss';
-@import '../../components/Popup/Popup.md.scss';
-@import '../../components/ToggleButton/ToggleButton.md.scss';
-@import '../../components/LayerTree/LayerTree.md.scss';
-@import '../../components/ScaleLine/ScaleLine.md.scss';
-@import '../../components/TopicList/TopicList.md.scss';
-@import '../../components/Checkbox/Checkbox.md.scss';
-@import '../../components/Menu/Menu.md.scss';
 @import '../../components/ShareMenu/ShareMenu.md.scss';
-@import '../../components/CanvasSaveButton/CanvasSaveButton.md.scss';
-@import '../../components/BaseLayerToggler/BaseLayerToggler.md.scss';
+@import '../../components/ToggleButton/ToggleButton.md.scss';
+@import '../../components/TopicList/TopicList.md.scss';
 
 body {
   font-family: $font-family;

@@ -1,18 +1,20 @@
 /**
 * This file load the css of components.
 */
-@import '../../components/Popup/Popup.scss';
+@import '../../components/Autocomplete/Autocomplete.scss';
+@import '../../components/BaseLayerToggler/BaseLayerToggler.scss';
 @import '../../components/Button/Button.scss';
+@import '../../components/Checkbox/Checkbox.scss';
 @import '../../components/Footer/Footer.scss';
-@import '../../components/ShareMenu/ShareMenu.scss';
+@import '../../components/Geolocation/Geolocation.scss';
+@import '../../components/Header/Header.scss';
+@import '../../components/LayerTree/LayerTree.scss';
+@import '../../components/List/List.scss';
 @import '../../components/Menu/Menu.scss';
 @import '../../components/MenuItem/MenuItem.scss';
-@import '../../components/ToggleButton/ToggleButton.scss';
-@import '../../components/SearchInput/SearchInput.scss';
-@import '../../components/Autocomplete/Autocomplete.scss';
-@import '../../components/Header/Header.scss';
-@import '../../components/List/List.scss';
+@import '../../components/NorthArrow/NorthArrow.scss';
+@import '../../components/Popup/Popup.scss';
 @import '../../components/ScaleLine/ScaleLine.scss';
-@import '../../components/Checkbox/Checkbox.scss';
-@import '../../components/LayerTree/LayerTree.scss';
-@import '../../components/BaseLayerToggler/BaseLayerToggler.scss';
+@import '../../components/SearchInput/SearchInput.scss';
+@import '../../components/ShareMenu/ShareMenu.scss';
+@import '../../components/ToggleButton/ToggleButton.scss';
