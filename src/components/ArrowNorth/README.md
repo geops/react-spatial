@@ -1,16 +1,21 @@
 #
 
-This demonstrates the use of ArrowNorth.
+This demonstrates the use of ArrowNorth (Shift + click to rotate).
 
 ```jsx
 import React from  'react';
 import ArrowNorth from 'react-spatial/components/ArrowNorth';
 import BasicMap from 'react-spatial/components/BasicMap';
 import Layer from 'react-spatial/Layer';
+import {
+  defaults as defaultInteractions,
+  DragRotateAndZoom
+} from 'ol/interaction';
 import TileLayer from 'ol/layer/Tile';
 import TileGrid from 'ol/tilegrid/TileGrid';
 import TileImageSource from 'ol/source/TileImage';
 import { getCenter} from 'ol/extent';
+import OLMap from 'ol/Map';
 
 class ArrowNorthExample extends React.Component {
   constructor(props) {
@@ -44,15 +49,28 @@ class ArrowNorthExample extends React.Component {
     });
     this.center = getCenter(extent);
     this.layers = [layer];
+
+    this.map = new OLMap({
+      controls:[],
+      interactions: defaultInteractions().extend([
+        new DragRotateAndZoom(),
+      ]),
+    });
   }
 
   render() {
     return (
       <div className="tm-arrow-north-example">
-        <BasicMap center={this.center} zoom={17} layers={this.layers} />
+        <BasicMap
+          map={this.map}
+          center={this.center}
+          zoom={17}
+          layers={this.layers}
+        />
         <ArrowNorth
           className="tm-arrow-north"
           rotationOffset={20}
+          map={this.map}
           circled={true}
         />
       </div>

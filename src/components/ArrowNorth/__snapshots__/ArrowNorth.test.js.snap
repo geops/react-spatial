@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CanvasSaveButton should match snapshot rotated. 1`] = `
+exports[`ArrowNorth should match snapshot rotated. 1`] = `
 <div
   className="tm-arrow-north"
   style={
@@ -10,29 +10,12 @@ exports[`CanvasSaveButton should match snapshot rotated. 1`] = `
   }
 >
   <svg
-    className="tm-arrow-north"
     data-file-name="SvgArrowNorth"
   />
 </div>
 `;
 
-exports[`CanvasSaveButton should match snapshot with circle. 1`] = `
-<div
-  className="tm-arrow-north"
-  style={
-    Object {
-      "transform": "rotate(0deg)",
-    }
-  }
->
-  <svg
-    className="tm-arrow-north"
-    data-file-name="SvgArrowNorthCircle"
-  />
-</div>
-`;
-
-exports[`CanvasSaveButton should match snapshot. 1`] = `
+exports[`ArrowNorth should match snapshot simple. 1`] = `
 <div
   className="test-class"
   style={
@@ -42,8 +25,59 @@ exports[`CanvasSaveButton should match snapshot. 1`] = `
   }
 >
   <svg
-    className="test-class"
     data-file-name="SvgArrowNorth"
+  />
+</div>
+`;
+
+exports[`ArrowNorth should match snapshot with children. 1`] = `
+<div
+  className="tm-arrow-north"
+  style={
+    Object {
+      "transform": "rotate(0deg)",
+    }
+  }
+>
+  <svg
+    baseProfile="tiny"
+    fill="currentColor"
+    height="1em"
+    stroke="currentColor"
+    strokeWidth="0"
+    style={
+      Object {
+        "color": undefined,
+      }
+    }
+    version="1.2"
+    viewBox="0 0 24 24"
+    width="1em"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle
+      cx="8.5"
+      cy="8.501"
+      r="2.5"
+    />
+    <path
+      d="M16 10c-2 0-3 3-4.5 3s-1.499-1-3.5-1c-2 0-3.001 4-3.001 4h14.001s-1-6-3-6zM20 3h-16c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2v-12c0-1.103-.897-2-2-2zm0 14h-16v-12h16v12z"
+    />
+  </svg>
+</div>
+`;
+
+exports[`ArrowNorth should match snapshot with circle. 1`] = `
+<div
+  className="tm-arrow-north"
+  style={
+    Object {
+      "transform": "rotate(0deg)",
+    }
+  }
+>
+  <svg
+    data-file-name="SvgArrowNorthCircle"
   />
 </div>
 `;
