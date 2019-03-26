@@ -32,7 +32,6 @@ class LayerTreeExample extends React.Component {
           map={this.map}
           center={this.center}
           zoom={3}
-          layers={this.layers}
         />
         <LayerTree
           layerService={this.layerService}
