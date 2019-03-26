@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CanvasSaveButton should match snapshot rotated. 1`] = `
+<div
+  className="tm-arrow-north"
+  style={
+    Object {
+      "transform": "rotate(45deg)",
+    }
+  }
+>
+  <svg
+    className="tm-arrow-north"
+    data-file-name="SvgArrowNorth"
+  />
+</div>
+`;
+
+exports[`CanvasSaveButton should match snapshot with circle. 1`] = `
+<div
+  className="tm-arrow-north"
+  style={
+    Object {
+      "transform": "rotate(0deg)",
+    }
+  }
+>
+  <svg
+    className="tm-arrow-north"
+    data-file-name="SvgArrowNorthCircle"
+  />
+</div>
+`;
+
+exports[`CanvasSaveButton should match snapshot. 1`] = `
+<div
+  className="test-class"
+  style={
+    Object {
+      "transform": "rotate(0deg)",
+    }
+  }
+>
+  <svg
+    className="test-class"
+    data-file-name="SvgArrowNorth"
+  />
+</div>
+`;

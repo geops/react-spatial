@@ -1,0 +1,14 @@
+.tm-arrow-north-example {
+  position: relative;
+
+  .tm-map {
+    width: 100%;
+    height: 100%;
+    flex-grow: 1;
+  }
+
+  .tm-arrow-north {
+    height: 80px;
+    width: 80px;
+  }
+}
