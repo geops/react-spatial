@@ -9,9 +9,15 @@ const propTypes = {
 class Copyright extends Component {
   constructor(props) {
     super(props);
+    const { layerService } = this.props;
+
     this.state = {
       layers: [],
     };
+
+    if (layerService) {
+      layerService.on('change:visible', () => this.updateLayers());
+    }
   }
 
   componentDidMount() {
@@ -36,9 +42,12 @@ class Copyright extends Component {
 
   render() {
     const { layers } = this.state;
-    const copyrights = layers.map(l =>
-      l.getVisible() ? l.getCopyright() : null,
-    );
+    const cLayers = layers.filter(l => l.getVisible() && l.getCopyright());
+    const copyrights = cLayers.map(l => l.getCopyright());
+
+    if (!copyrights.length) {
+      return null;
+    }
 
     return (
       <div className="tm-copyright">
