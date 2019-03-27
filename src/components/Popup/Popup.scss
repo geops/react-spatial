@@ -52,21 +52,3 @@
     margin-right: 25px;
   }
 }
-
-.mobile.tm-popup {
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
-.mobile.tm-popup > div {
-  position: relative;
-  left: 0;
-  bottom: 0;
-  min-width: 0;
-
-  &::after,
-  &::before {
-    display: none;
-  }
-}

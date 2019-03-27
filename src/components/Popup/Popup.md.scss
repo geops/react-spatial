@@ -7,9 +7,25 @@
     height: 300px;
     width: 100%;
   }
+}
 
-  .mobile.tm-popup {
-    position: fixed;
-    z-index: 2;
+.tm-w-xs .tm-popup {
+  left: 0 !important;
+  right: 0;
+  bottom: 0;
+  top: auto !important;
+  position: fixed;
+  z-index: 2;
+}
+
+.tm-w-xs .tm-popup > div {
+  position: relative;
+  left: 0 !important;
+  bottom: 0 !important;
+  min-width: 0;
+
+  &::after,
+  &::before {
+    display: none;
   }
 }

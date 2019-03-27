@@ -2,7 +2,7 @@
 
 exports[`Popup should match snapshot with default values. 1`] = `
 <div
-  className="tm-popup "
+  className="tm-popup"
   style={
     Object {
       "left": 0,
@@ -53,7 +53,7 @@ exports[`Popup should match snapshot with default values. 1`] = `
 
 exports[`Popup should match snapshot with tm-tooltip class. 1`] = `
 <div
-  className="tm-tooltip "
+  className="tm-tooltip"
   style={
     Object {
       "left": 0,
@@ -104,7 +104,7 @@ exports[`Popup should match snapshot with tm-tooltip class. 1`] = `
 
 exports[`Popup should match snapshot without close button. 1`] = `
 <div
-  className="tm-popup "
+  className="tm-popup"
   style={
     Object {
       "left": 0,

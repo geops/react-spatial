@@ -15,21 +15,10 @@ const propTypes = {
   feature: PropTypes.instanceOf(Feature),
   className: PropTypes.string,
   classNameCloseBt: PropTypes.string,
-
-  /**
-   * Additional CSS class for small screen widths (mobile).
-   */
-  classNameMobile: PropTypes.string,
-
   onCloseClick: PropTypes.func,
   onKeyUp: PropTypes.func,
   showCloseButton: PropTypes.bool,
 
-  /**
-   * Threshold for small screen widths (mobile)
-   * which are smaller than this value
-   */
-  innerWidthMobile: PropTypes.number,
   t: PropTypes.func,
 };
 
@@ -37,9 +26,7 @@ const defaultProps = {
   feature: null,
   className: 'tm-popup',
   classNameCloseBt: 'tm-button tm-popup-close-bt',
-  classNameMobile: 'mobile',
   showCloseButton: true,
-  innerWidthMobile: 500,
   onKeyUp: () => {},
   onCloseClick: () => {},
   t: p => p,
@@ -58,7 +45,7 @@ class Popup extends PureComponent {
   componentDidMount() {
     const { map } = this.props;
     this.postrenderKey = map.on('postrender', () => {
-      this.updatePosition();
+      this.updatePixelPosition();
     });
   }
 
@@ -66,7 +53,7 @@ class Popup extends PureComponent {
     const { feature } = this.props;
     if (feature) {
       // Initialize the position.
-      this.updatePosition();
+      this.updatePixelPosition();
     }
   }
 
@@ -74,14 +61,9 @@ class Popup extends PureComponent {
     unByKey(this.postrenderKey);
   }
 
-  updatePosition() {
-    const { map, feature, innerWidthMobile } = this.props;
-    const isMobile = window.innerWidth < innerWidthMobile;
-    if (isMobile) {
-      this.setState({
-        isMobile,
-      });
-    } else if (feature) {
+  updatePixelPosition() {
+    const { map, feature } = this.props;
+    if (feature) {
       let coord;
       const geom = feature.getGeometry();
       if (geom instanceof Point) {
@@ -91,7 +73,6 @@ class Popup extends PureComponent {
       }
       const pos = map.getPixelFromCoordinate(coord);
       this.setState({
-        isMobile,
         left: pos[0],
         top: pos[1],
       });
@@ -117,31 +98,21 @@ class Popup extends PureComponent {
   }
 
   render() {
-    const {
-      feature,
-      className,
-      classNameMobile,
-      children,
-      onKeyUp,
-    } = this.props;
+    const { feature, className, children, onKeyUp } = this.props;
 
     if (!feature) {
       return null;
     }
 
-    const { top, left, isMobile } = this.state;
-
-    const style = isMobile
-      ? {}
-      : {
-          left,
-          top,
-        };
+    const { top, left } = this.state;
 
     return (
       <div
-        className={`${className} ${isMobile ? classNameMobile : ''}`}
-        style={style}
+        className={className}
+        style={{
+          left,
+          top,
+        }}
       >
         <div
           role="button"
