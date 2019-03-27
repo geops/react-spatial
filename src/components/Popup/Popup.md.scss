@@ -20,8 +20,8 @@
 
 .tm-w-xs .tm-popup > div {
   position: relative;
-  left: 0 !important;
-  bottom: 0 !important;
+  left: 0;
+  bottom: 0;
   min-width: 0;
 
   &::after,
