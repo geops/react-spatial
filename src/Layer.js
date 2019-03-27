@@ -5,7 +5,15 @@ import Observable from 'ol/Observable';
  * an [ol/layer/Layer](https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html)
  */
 export default class Layer extends Observable {
-  constructor({ id, name, olLayer, radioGroup, isBaseLayer, visible }) {
+  constructor({
+    id,
+    name,
+    olLayer,
+    radioGroup,
+    isBaseLayer,
+    visible,
+    copyright,
+  }) {
     super();
     this.id = id;
     this.name = name;
@@ -14,6 +22,7 @@ export default class Layer extends Observable {
     this.radioGroup = radioGroup;
     this.children = [];
     this.visible = typeof visible === 'undefined' ? true : visible;
+    this.copyright = copyright;
 
     if (this.olLayer) {
       this.olLayer.setVisible(this.visible);
@@ -25,6 +34,10 @@ export default class Layer extends Observable {
     if (this.map && this.olLayer) {
       map.addLayer(this.olLayer);
     }
+  }
+
+  getCopyright() {
+    return this.copyright;
   }
 
   getName() {
