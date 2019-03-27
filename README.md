@@ -6,6 +6,7 @@
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 This library provides React components to build web applications based on [OpenLayers](https://openlayers.org/).
+Documentation and examples at https://react-spatial.geops.de.
 
 ## Getting Started
 
