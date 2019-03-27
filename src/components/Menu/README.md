@@ -18,13 +18,19 @@ class MenuExample extends React.Component {
     this.map = new OLMap({controls:[]});
     this.center = [-10997148, 4569099];
 
-    this.layers = ConfigReader.readConfig(
+    const layers = ConfigReader.readConfig(
       this.map,
       treeData,
     );
+
+    this.state = {
+      layers,
+    };
   }
 
   render() {
+    const { layers } = this.state;
+
     return (
       <div className="tm-menu-example">
         <BasicMap
@@ -38,7 +44,7 @@ class MenuExample extends React.Component {
             <ShareMenu url={window.location.href} />
           </MenuItem>
           <MenuItem title="Layers">
-            <LayerTree layers={this.layers} />
+            <LayerTree layers={layers} />
           </MenuItem>
         </Menu>
       </div>
