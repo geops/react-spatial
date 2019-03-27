@@ -8,3 +8,24 @@
     width: 100%;
   }
 }
+
+.tm-w-xs .tm-popup {
+  left: 0 !important;
+  right: 0;
+  bottom: 0;
+  top: auto !important;
+  position: fixed;
+  z-index: 2;
+}
+
+.tm-w-xs .tm-popup > div {
+  position: relative;
+  left: 0;
+  bottom: 0;
+  min-width: 0;
+
+  &::after,
+  &::before {
+    display: none;
+  }
+}

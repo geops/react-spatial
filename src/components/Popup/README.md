@@ -3,9 +3,10 @@
 This demonstrates the use of Popup.
 
 ```jsx
-import React from  'react'
+import React from 'react';
 import BasicMap from 'react-spatial/components/BasicMap';
 import Popup from 'react-spatial/components/Popup';
+import ResizeHandler from 'react-spatial/components/ResizeHandler';
 import Layer from 'react-spatial/Layer';
 import VectorLayer from 'react-spatial/VectorLayer';
 import OLMap from 'ol/Map';
@@ -38,14 +39,14 @@ class PopupExample extends React.Component {
     const layer = new Layer({
       name: 'Layer',
       olLayer: new TileLayer({
-        extent: extent,
+        extent,
         source: new TileImageSource({
           tileUrlFunction: c =>
             '//plans.trafimage.ch/static/tiles/' +
             `bern_aussenplan/${c[0]}/${c[1]}/${c[2]}.png`,
           tileGrid: new TileGrid({
             origin: [extent[0], extent[1]],
-            resolutions: resolutions,
+            resolutions,
           }),
         }),
       }),
@@ -106,6 +107,7 @@ class PopupExample extends React.Component {
           layers={this.layers}
           onFeaturesClick={this.onFeaturesClick}
         />
+        <ResizeHandler observe={this} />
         <Popup
           map={this.map}
           feature={featureClicked}

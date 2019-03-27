@@ -110,7 +110,6 @@ class Popup extends PureComponent {
       <div
         className={className}
         style={{
-          position: 'absolute',
           left,
           top,
         }}
