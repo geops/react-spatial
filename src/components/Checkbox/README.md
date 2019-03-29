@@ -3,7 +3,7 @@
 This demonstrates the use of Checkbox.
 
 ```jsx
-import React from  'react';
+import React from 'react';;
 import Checkbox from 'react-spatial/components/Checkbox';
 
 class CheckboxExample extends React.Component {

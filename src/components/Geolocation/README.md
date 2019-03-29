@@ -3,7 +3,7 @@
 This demonstrates the use of Geolocation.
 
 ```jsx
-import React from  'react'
+import React from 'react';
 import Geolocation from 'react-spatial/components/Geolocation';
 import BasicMap from 'react-spatial/components/BasicMap';
 import OLMap from 'ol/Map';

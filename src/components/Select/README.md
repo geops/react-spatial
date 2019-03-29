@@ -3,7 +3,7 @@
 This demonstrates the use of Select.
 
 ```jsx
-import React from  'react'
+import React from 'react';
 import Select from 'react-spatial/components/Select';
 
 class SelectExample extends React.Component {

@@ -3,7 +3,7 @@
 This demonstrates the use of SearchInput.
 
 ```jsx
-import React from  'react'
+import React from 'react';
 import SearchInput from 'react-spatial/components/SearchInput';
 
 class SearchInputExample extends React.Component {

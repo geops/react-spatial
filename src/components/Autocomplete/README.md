@@ -3,7 +3,7 @@
 This demonstrates the use of Autocomplete.
 
 ```jsx
-import React from  'react'
+import React from 'react';
 import Autocomplete from 'react-spatial/components/Autocomplete';
 
 class AutocompleteExample extends React.PureComponent {

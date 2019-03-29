@@ -3,7 +3,7 @@
 This demonstrates the use of TopicList.
 
 ```jsx
-import React from  'react';
+import React from 'react';;
 import LayerTree from 'react-spatial/components/LayerTree';
 import TopicList from 'react-spatial/components/TopicList';
 import BasicMap from 'react-spatial/components/BasicMap';

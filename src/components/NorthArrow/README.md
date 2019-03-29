@@ -3,7 +3,7 @@
 This demonstrates the use of NorthArrowExample (Shift + click to rotate).
 
 ```jsx
-import React from  'react';
+import React from 'react';;
 import NorthArrow from 'react-spatial/components/NorthArrow';
 import BasicMap from 'react-spatial/components/BasicMap';
 import Layer from 'react-spatial/Layer';

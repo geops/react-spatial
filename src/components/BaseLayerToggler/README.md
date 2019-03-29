@@ -3,7 +3,7 @@
 This demonstrates the use of LayerTree.
 
 ```jsx
-import React from  'react'
+import React from 'react';
 import BaseLayerToggler from 'react-spatial/components/BaseLayerToggler';
 import BasicMap from 'react-spatial/components/BasicMap';
 import LayerService from 'react-spatial/LayerService';
