@@ -23,7 +23,7 @@ class MenuExample extends React.Component {
       this.map,
       treeData,
     );
-    this.layerService = new LayerService(this.layers);
+    this.layerService = new LayerService(layers);
   }
 
   render() {
@@ -33,7 +33,6 @@ class MenuExample extends React.Component {
           map={this.map}
           center={this.center}
           zoom={3}
-          layers={this.layers}
         />
         <Menu>
           <MenuItem title="Share">
