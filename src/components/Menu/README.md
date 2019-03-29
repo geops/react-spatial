@@ -16,14 +16,14 @@ import LayerTree from 'react-spatial/components/LayerTree';
 class MenuExample extends React.Component {
   constructor(props) {
     super(props);
-    this.map = new OLMap({controls:[]});
+    this.map = new OLMap({ controls: [] });
     this.center = [-10997148, 4569099];
 
     const layers = ConfigReader.readConfig(
       this.map,
       treeData,
     );
-    this.layerService = new LayerService(this.layers);
+    this.layerService = new LayerService(layers);
   }
 
   render() {
@@ -33,7 +33,6 @@ class MenuExample extends React.Component {
           map={this.map}
           center={this.center}
           zoom={3}
-          layers={this.layers}
         />
         <Menu>
           <MenuItem title="Share">
