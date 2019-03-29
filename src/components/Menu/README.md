@@ -16,7 +16,7 @@ import LayerTree from 'react-spatial/components/LayerTree';
 class MenuExample extends React.Component {
   constructor(props) {
     super(props);
-    this.map = new OLMap({controls:[]});
+    this.map = new OLMap({ controls: [] });
     this.center = [-10997148, 4569099];
 
     const layers = ConfigReader.readConfig(
