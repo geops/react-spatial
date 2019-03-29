@@ -16,23 +16,16 @@ class LayerTreeExample extends React.Component {
 
     this.center = [-10997148, 4569099];
     this.map = new OLMap({controls:[]});
-    this.state = {
-      layerService: null
-    }
-  }
 
-  componentDidMount() {
     const layers = ConfigReader.readConfig(
       this.map,
       treeData,
     );
-    this.setState({
-      layerService: new LayerService(layers)
-    })
+
+    this.layerService = new LayerService(layers);
   }
 
   render() {
-    const {layerService} = this.state;
     return (
       <div className="tm-layer-tree-example">
         <BasicMap
@@ -42,7 +35,7 @@ class LayerTreeExample extends React.Component {
           layers={this.layers}
         />
         <LayerTree
-          layerService={layerService}
+          layerService={this.layerService}
         />
       </div>
     );
