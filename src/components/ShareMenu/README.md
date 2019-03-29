@@ -1,15 +1,10 @@
 #
 
-This demonstrates the use of Select.
+This demonstrates the use of ShareMenu.
 
 ```jsx
 import React from  'react'
 import BasicMap from 'react-spatial/components/BasicMap';
-import Layer from 'react-spatial/Layer';
-import TileLayer from 'ol/layer/Tile';
-import TileGrid from 'ol/tilegrid/TileGrid';
-import TileImageSource from 'ol/source/TileImage';
-import { getCenter} from 'ol/extent';
 import ConfigReader from '../../ConfigReader';
 import ShareMenu from 'react-spatial/components/ShareMenu';
 import CanvasSaveButton from '../CanvasSaveButton';

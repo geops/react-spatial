@@ -50,6 +50,7 @@
   "dependencies": {
     "core-js": "^3.0.0",
     "node-sass": "^4.11.0",
+    "query-string": "^6.4.2",
     "react-app-polyfill": "^0.2.2",
     "react-icons": "^3.4.0",
     "react-svg-loader": "^2.1.0",
