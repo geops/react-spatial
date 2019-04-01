@@ -6,28 +6,19 @@ This demonstrates the use of MousePosition.
 import React from 'react';
 import OLMap from 'ol/Map';
 import BasicMap from 'react-spatial/components/BasicMap';
-import LayerService from 'react-spatial/LayerService';
 import ConfigReader from 'react-spatial/ConfigReader';
 import MousePosition from 'react-spatial/components/MousePosition';
 
 class MousePositionExample extends React.Component {
   constructor(props) {
     super(props);
-     this.center = [1149722.7037660484, 6618091.313553318];
-    this.map = new OLMap({controls:[]});
-    this.state = {
-      layerService: null
-    }
-  }
+    this.center = [1149722.7037660484, 6618091.313553318];
+    this.map = new OLMap({ controls: [] });
 
-  componentDidMount() {
-    const layers = ConfigReader.readConfig(
+    ConfigReader.readConfig(
       this.map,
       treeData,
     );
-    this.setState({
-      layerService: new LayerService(layers)
-    })
   }
 
   render() {

@@ -17,34 +17,25 @@ class BaseLayerTogglerExample extends React.Component {
     this.center = [1149722.7037660484, 6618091.313553318];
     this.map = new OLMap({ controls: [] });
 
-    this.state = {
-      layerService: null
-    }
-  }
-
-  componentDidMount() {
     const layers = ConfigReader.readConfig(
       this.map,
       treeData,
     );
-    this.setState({
-      layerService: new LayerService(layers)
-    })
+
+    this.layerService = new LayerService(layers);
   }
 
   render() {
-    const {layerService} = this.state;
     return (
       <div className="tm-base-layer-example">
         <BasicMap
           map={this.map}
           center={this.center}
-          layers={this.layers}
           zoom={6}
         />
         <BaseLayerToggler
           map={this.map}
-          layerService={layerService}
+          layerService={this.layerService}
         />
       </div>
     );
