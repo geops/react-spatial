@@ -3,7 +3,7 @@
 This demonstrates the use of ToggleButton.
 
 ```jsx
-import React from  'react'
+import React from 'react';
 import ToggleButton from 'react-spatial/components/ToggleButton';
 
 class ToggleButtonExample extends React.Component {

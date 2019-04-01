@@ -3,7 +3,7 @@
 This demonstrates the use of BasicMap.
 
 ```jsx
-import React from  'react'
+import React from 'react';
 import BasicMap from 'react-spatial/components/BasicMap';
 import Layer from 'react-spatial/Layer';
 import TileLayer from 'ol/layer/Tile';

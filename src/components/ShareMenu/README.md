@@ -3,7 +3,7 @@
 This demonstrates the use of Select.
 
 ```jsx
-import React from  'react'
+import React from 'react';
 import BasicMap from 'react-spatial/components/BasicMap';
 import Layer from 'react-spatial/Layer';
 import TileLayer from 'ol/layer/Tile';
@@ -18,7 +18,7 @@ import OLMap from 'ol/Map';
 class ShareMenuExample extends React.Component {
    constructor(props) {
     super(props);
-    this.map = new OLMap({controls:[]});
+    this.map = new OLMap({ controls: [] });
     this.center = [-10997148, 4569099];
 
     const layers = ConfigReader.readConfig(
