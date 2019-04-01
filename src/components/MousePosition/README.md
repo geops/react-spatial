@@ -3,7 +3,7 @@
 This demonstrates the use of MousePosition.
 
 ```jsx
-import React from  'react';
+import React from 'react';
 import OLMap from 'ol/Map';
 import BasicMap from 'react-spatial/components/BasicMap';
 import LayerService from 'react-spatial/LayerService';

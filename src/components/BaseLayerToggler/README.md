@@ -3,7 +3,7 @@
 This demonstrates the use of LayerTree.
 
 ```jsx
-import React from  'react'
+import React from 'react';
 import BaseLayerToggler from 'react-spatial/components/BaseLayerToggler';
 import BasicMap from 'react-spatial/components/BasicMap';
 import LayerService from 'react-spatial/LayerService';
@@ -15,7 +15,8 @@ class BaseLayerTogglerExample extends React.Component {
     super(props);
 
     this.center = [1149722.7037660484, 6618091.313553318];
-    this.map = new OLMap({controls:[]});
+    this.map = new OLMap({ controls: [] });
+
     this.state = {
       layerService: null
     }

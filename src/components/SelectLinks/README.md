@@ -3,7 +3,7 @@
 This demonstrates the use of SelectLinks.
 
 ```jsx
-import React from  'react'
+import React from 'react';
 import SelectLinks from 'react-spatial/components/SelectLinks';
 
 class SelectLinksExample extends React.Component {
