@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import OLMap from 'ol/Map';
+import { getTopLeft, getBottomRight } from 'ol/extent';
 import { TiImage } from 'react-icons/ti';
 import Button from '../Button';
 
@@ -32,6 +33,11 @@ const propTypes = {
 
   /** An existing [ol/Map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html). */
   map: PropTypes.instanceOf(OLMap),
+
+  /**
+   * Extent for the export. If no extent is given, the whole map is exported.
+   */
+  extent: PropTypes.arrayOf(PropTypes.number),
 };
 
 const defaultProps = {
@@ -40,6 +46,7 @@ const defaultProps = {
   children: <TiImage focusable={false} />,
   className: 'tm-canvas-save-button',
   saveFormat: 'image/png',
+  extent: null,
 };
 
 /**
@@ -49,8 +56,11 @@ const defaultProps = {
 class CanvasSaveButton extends PureComponent {
   constructor(props) {
     super(props);
-    const { saveFormat } = this.props;
-    this.options = { format: saveFormat };
+    const { saveFormat, extent } = this.props;
+    this.options = {
+      format: saveFormat,
+      extent,
+    };
     this.fileExt = this.options.format === 'image/jpeg' ? 'jpg' : 'png';
   }
 
@@ -67,16 +77,34 @@ class CanvasSaveButton extends PureComponent {
 
     map.once('postcompose', evt => {
       const { canvas } = evt.context;
-      const { height, width } = canvas;
+
+      let clip = {
+        x: 0,
+        y: 0,
+        w: canvas.width,
+        h: canvas.height,
+      };
+
+      if (opts.extent) {
+        const pixelTopLeft = map.getPixelFromCoordinate(getTopLeft(opts.extent));
+        const pixelBottomRight = map.getPixelFromCoordinate(getBottomRight(opts.extent));
+
+        clip = {
+          x: pixelTopLeft[0],
+          y: pixelTopLeft[1],
+          w: pixelBottomRight[0] - pixelTopLeft[0],
+          h: pixelBottomRight[1] - pixelTopLeft[1],
+        }
+      }
 
       const destinationCanvas = document.createElement('canvas');
-      destinationCanvas.width = width;
-      destinationCanvas.height = height;
+      destinationCanvas.width = clip.w;
+      destinationCanvas.height = clip.h;
 
       const destContext = destinationCanvas.getContext('2d');
       destContext.fillStyle = 'white';
-      destContext.fillRect(0, 0, width, height);
-      destContext.drawImage(canvas, 0, 0, width, height, 0, 0, width, height);
+      destContext.fillRect(0, 0, clip.w, clip.h);
+      destContext.drawImage(canvas, clip.x, clip.y, clip.w, clip.h, 0, 0, clip.w, clip.h);
 
       if (asMSBlob) {
         image = destinationCanvas.msToBlob();
