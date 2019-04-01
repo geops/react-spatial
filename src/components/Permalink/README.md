@@ -21,8 +21,15 @@ class PermalinkExample extends React.Component {
       treeData,
     );
 
+    this.layersParam = layers
+      .filter(l => l.isBaseLayer !== true)
+      .map(l => l.getVisibleChildren())
+      .map(l => l.id)
+      .join(',');
+
     this.state = {
       params: {
+        layers: this.layersParam,
         zoom: this.zoom,
         x: this.center[0],
         y: this.center[1],
@@ -44,6 +51,7 @@ class PermalinkExample extends React.Component {
 
     this.setState({
       params: {
+        layers: this.layersParam,
         zoom: this.zoom,
         x: this.center[0],
         y: this.center[1],

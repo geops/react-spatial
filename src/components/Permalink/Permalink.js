@@ -34,7 +34,7 @@ class Permalink extends Component {
   updateHistory() {
     const { params, history } = this.props;
 
-    const qsStr = qs.stringify(params);
+    const qsStr = qs.stringify(params, { encode: false });
 
     const locSearch = `?${qsStr}`;
 
