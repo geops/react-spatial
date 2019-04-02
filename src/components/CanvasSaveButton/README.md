@@ -41,6 +41,9 @@ class ShareMenuExample extends React.Component {
             map={this.map}
             layerService={this.layerService}
             extent={extent}
+            northArrow
+            rotationOffset={20}
+            circled
           />
         </ShareMenu>
 

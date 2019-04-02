@@ -47,7 +47,7 @@ module.exports = {
           use: ['style-loader', 'css-loader', 'sass-loader?modules'],
         },
         {
-          test: /\.svg$/,
+          test: /^((?!url).)*\.svg$/,
           use: [
             {
               loader: 'babel-loader',
@@ -59,6 +59,10 @@ module.exports = {
               },
             },
           ],
+        },
+        {
+          test: /\.url\.svg$/,
+          loader: 'url-loader',
         },
       ],
     },

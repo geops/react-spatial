@@ -6,6 +6,9 @@ import { TiImage } from 'react-icons/ti';
 import Button from '../Button';
 import LayerService from '../../LayerService';
 import Copyright from '../Copyright/Copyright';
+import NorthArrow from '../NorthArrow/NorthArrow';
+import NorthArrowSimple from '../../images/northArrow.url.svg';
+import NorthArrowCircle from '../../images/northArrowCircle.url.svg';
 
 const propTypes = {
   /**
@@ -42,6 +45,21 @@ const propTypes = {
   extent: PropTypes.arrayOf(PropTypes.number),
 
   /**
+   * True if export should include a north arrow.
+   */
+  northArrow: PropTypes.bool,
+
+  /**
+   * Rotation of the north arrow in degrees.
+   */
+  rotationOffset: PropTypes.number,
+
+  /**
+   * Display circle around the north arrow.
+   */
+  circled: PropTypes.bool,
+
+  /**
    * Layers provider.
    */
   layerService: PropTypes.instanceOf(LayerService).isRequired,
@@ -54,6 +72,9 @@ const defaultProps = {
   className: 'tm-canvas-save-button',
   saveFormat: 'image/png',
   extent: null,
+  northArrow: false,
+  rotationOffset: 0,
+  circled: false,
 };
 
 /**
@@ -63,10 +84,9 @@ const defaultProps = {
 class CanvasSaveButton extends PureComponent {
   constructor(props) {
     super(props);
-    const { saveFormat, extent } = this.props;
+    const { saveFormat } = this.props;
     this.options = {
       format: saveFormat,
-      extent,
     };
     this.fileExt = this.options.format === 'image/jpeg' ? 'jpg' : 'png';
   }
@@ -78,8 +98,15 @@ class CanvasSaveButton extends PureComponent {
     );
   }
 
-  getCanvasImage(opts, asMSBlob) {
-    const { map, layerService } = this.props;
+  createCanvasImage(opts, asMSBlob, callback) {
+    const {
+      map,
+      extent,
+      layerService,
+      northArrow,
+      rotationOffset,
+      circled,
+    } = this.props;
     let image;
 
     map.once('postcompose', evt => {
@@ -92,12 +119,12 @@ class CanvasSaveButton extends PureComponent {
         h: canvas.height,
       };
 
-      if (opts.extent) {
+      if (extent) {
         const pixelTopLeft = map.getPixelFromCoordinate(
-          getTopLeft(opts.extent),
+          getTopLeft(extent),
         );
         const pixelBottomRight = map.getPixelFromCoordinate(
-          getBottomRight(opts.extent),
+          getBottomRight(extent),
         );
 
         clip = {
@@ -108,27 +135,30 @@ class CanvasSaveButton extends PureComponent {
         };
       }
 
-      const destinationCanvas = document.createElement('canvas');
-      destinationCanvas.width = clip.w;
-      destinationCanvas.height = clip.h;
-      const destContext = destinationCanvas.getContext('2d');
+      const destCanvas = document.createElement('canvas');
+      destCanvas.width = clip.w;
+      destCanvas.height = clip.h;
+      const destContext = destCanvas.getContext('2d');
 
+
+      // Copyright
       const layers = layerService.getLayersAsFlatArray();
       const text = Copyright.getCopyrights(layers);
 
       // Measure text width in order to adjust the canvas width
-      destContext.font = '12px sans-serif';
+      const font = '12px sans-serif';
+      destContext.font = font;
       const textWidth = destContext.measureText(text).width;
-      if (textWidth > destinationCanvas.width) {
-        destinationCanvas.width = textWidth + 10;
+      if (textWidth > destCanvas.width) {
+        destCanvas.width = textWidth + 10;
 
         // Set font again as it has been reset by changing the canvas width
-        destContext.font = '12px sans-serif';
+        destContext.font = font;
       }
 
       // Draw map
       destContext.fillStyle = 'white';
-      destContext.fillRect(0, 0, destinationCanvas.width, clip.h);
+      destContext.fillRect(0, 0, destCanvas.width, clip.h);
       destContext.drawImage(
         canvas,
         clip.x,
@@ -142,41 +172,79 @@ class CanvasSaveButton extends PureComponent {
       );
 
       const padding = 5;
+      const arrowSize = 80;
 
       // Draw copyright
       destContext.fillStyle = 'black';
       destContext.fillText(text, padding, clip.h - padding);
 
-      if (asMSBlob) {
-        image = destinationCanvas.msToBlob();
+      // North arrow
+      if (northArrow) {
+        const img = new Image();
+        img.src = circled ? NorthArrowCircle : NorthArrowSimple;
+        img.onload = () => {
+          destContext.save();
+
+          destContext.translate(
+            clip.w - 2 * padding - arrowSize / 2,
+            clip.h - 2 * padding - arrowSize / 2,
+          );
+
+          destContext.rotate(
+            NorthArrow.getRotation(map, rotationOffset) * (Math.PI / 180),
+          );
+
+          destContext.drawImage(
+            img,
+            -arrowSize / 2,
+            -arrowSize / 2,
+            arrowSize,
+            arrowSize,
+          );
+
+          destContext.restore();
+
+          image = asMSBlob
+            ? destCanvas.msToBlob()
+            : destCanvas.toDataURL(opts.format);
+          callback(image);
+        };
       } else {
-        image = destinationCanvas.toDataURL(opts.format);
+        image = asMSBlob
+          ? destCanvas.msToBlob()
+          : destCanvas.toDataURL(opts.format);
+        callback(image);
       }
     });
     map.renderSync();
-    return image;
   }
 
   downloadCanvasImage(e) {
     if (/msie (9|10)/gi.test(window.navigator.userAgent.toLowerCase())) {
       // ie 9 and 10
       const w = window.open('about:blank', '');
-      w.document.write(
-        `<img src="${this.getCanvasImage(this.options)}" alt="from canvas"/>`,
-      );
+
+      this.createCanvasImage(this.options, false, image => {
+        w.document.write(`<img src="${image}" alt="from canvas"/>`);
+      });
     } else if (window.navigator.msSaveBlob) {
       // ie 11 and higher
-      window.navigator.msSaveBlob(
-        new Blob([this.getCanvasImage(this.options, true)], {
-          type: this.options.format,
-        }),
-        this.getDownloadImageName(),
-      );
+
+      this.createCanvasImage(this.options, true, image => {
+        window.navigator.msSaveBlob(
+          new Blob([image], {
+            type: this.options.format,
+          }),
+          this.getDownloadImageName(),
+        );
+      });
     } else {
-      const link = document.createElement('a');
-      link.download = this.getDownloadImageName();
-      link.href = this.getCanvasImage(this.options);
-      link.click();
+      this.createCanvasImage(this.options, false, image => {
+        const link = document.createElement('a');
+        link.download = this.getDownloadImageName();
+        link.href = image;
+        link.click();
+      });
     }
 
     if (window.navigator.msSaveBlob) {
