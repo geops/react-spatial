@@ -9,7 +9,7 @@ const propTypes = {
   params: PropTypes.object.isRequired,
 
   /**
-   * either 'react-router' history object:
+   * Either 'react-router' history object:
    * https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/api/history.md<br>
    * or default fallback as HTML5 History:
    * https://developer.mozilla.org/en-US/docs/Web/API/History
