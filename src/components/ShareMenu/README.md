@@ -8,6 +8,7 @@ import OLMap from 'ol/Map';
 import BasicMap from 'react-spatial/components/BasicMap';
 import ConfigReader from 'react-spatial/ConfigReader';
 import CanvasSaveButton from 'react-spatial/components/CanvasSaveButton';
+import LayerService from 'react-spatial/LayerService';
 
 class ShareMenuExample extends React.Component {
   constructor(props) {
@@ -19,6 +20,8 @@ class ShareMenuExample extends React.Component {
       this.map,
       treeData,
     );
+
+    this.layerService = new LayerService(this.layers);
   }
 
   render() {
@@ -34,6 +37,7 @@ class ShareMenuExample extends React.Component {
             title="Karte als Bild speichern."
             className='tm-canvas-save-button tm-share-menu-icon'
             map={this.map}
+            layerService={this.layerService}
           />
         </ShareMenu>
 

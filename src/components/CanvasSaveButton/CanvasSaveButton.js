@@ -4,6 +4,8 @@ import OLMap from 'ol/Map';
 import { getTopLeft, getBottomRight } from 'ol/extent';
 import { TiImage } from 'react-icons/ti';
 import Button from '../Button';
+import LayerService from '../../LayerService';
+import Copyright from '../Copyright/Copyright';
 
 const propTypes = {
   /**
@@ -38,6 +40,11 @@ const propTypes = {
    * Extent for the export. If no extent is given, the whole map is exported.
    */
   extent: PropTypes.arrayOf(PropTypes.number),
+
+  /**
+   * Layers provider.
+   */
+  layerService: PropTypes.instanceOf(LayerService).isRequired,
 };
 
 const defaultProps = {
@@ -72,7 +79,7 @@ class CanvasSaveButton extends PureComponent {
   }
 
   getCanvasImage(opts, asMSBlob) {
-    const { map } = this.props;
+    const { map, layerService } = this.props;
     let image;
 
     map.once('postcompose', evt => {
@@ -86,25 +93,59 @@ class CanvasSaveButton extends PureComponent {
       };
 
       if (opts.extent) {
-        const pixelTopLeft = map.getPixelFromCoordinate(getTopLeft(opts.extent));
-        const pixelBottomRight = map.getPixelFromCoordinate(getBottomRight(opts.extent));
+        const pixelTopLeft = map.getPixelFromCoordinate(
+          getTopLeft(opts.extent),
+        );
+        const pixelBottomRight = map.getPixelFromCoordinate(
+          getBottomRight(opts.extent),
+        );
 
         clip = {
           x: pixelTopLeft[0],
           y: pixelTopLeft[1],
           w: pixelBottomRight[0] - pixelTopLeft[0],
           h: pixelBottomRight[1] - pixelTopLeft[1],
-        }
+        };
       }
 
       const destinationCanvas = document.createElement('canvas');
       destinationCanvas.width = clip.w;
       destinationCanvas.height = clip.h;
-
       const destContext = destinationCanvas.getContext('2d');
+
+      const layers = layerService.getLayersAsFlatArray();
+      const text = Copyright.getCopyrights(layers);
+
+      // Measure text width in order to adjust the canvas width
+      destContext.font = '12px sans-serif';
+      const textWidth = destContext.measureText(text).width;
+      if (textWidth > destinationCanvas.width) {
+        destinationCanvas.width = textWidth + 10;
+
+        // Set font again as it has been reset by changing the canvas width
+        destContext.font = '12px sans-serif';
+      }
+
+      // Draw map
       destContext.fillStyle = 'white';
-      destContext.fillRect(0, 0, clip.w, clip.h);
-      destContext.drawImage(canvas, clip.x, clip.y, clip.w, clip.h, 0, 0, clip.w, clip.h);
+      destContext.fillRect(0, 0, destinationCanvas.width, clip.h);
+      destContext.drawImage(
+        canvas,
+        clip.x,
+        clip.y,
+        clip.w,
+        clip.h,
+        0,
+        0,
+        clip.w,
+        clip.h,
+      );
+
+      const padding = 5;
+
+      // Draw copyright
+      destContext.fillStyle = 'black';
+      destContext.fillText(text, padding, clip.h - padding);
 
       if (asMSBlob) {
         image = destinationCanvas.msToBlob();
