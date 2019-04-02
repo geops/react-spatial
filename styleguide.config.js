@@ -66,4 +66,7 @@ module.exports = {
       ],
     },
   },
+  styleguideComponents: {
+    ComponentsList: path.join(__dirname, 'src/styleguidist/ComponentsList')
+  }
 };
