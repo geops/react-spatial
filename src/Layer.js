@@ -109,12 +109,7 @@ export default class Layer extends Observable {
   }
 
   getVisibleChildren() {
-    for (let i = 0; i < this.children.length; i += 1) {
-      if (this.children[i].getVisible()) {
-        return this.children[i];
-      }
-    }
-    return false;
+    return this.children.filter(c => c.getVisible() === true)
   }
 
   addChild(layer) {

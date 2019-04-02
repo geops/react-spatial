@@ -24,6 +24,7 @@ class PermalinkExample extends React.Component {
     this.layersParam = layers
       .filter(l => l.isBaseLayer !== true)
       .map(l => l.getVisibleChildren())
+      .reduce((pre, cur) => { return pre.concat(cur) })
       .map(l => l.id)
       .join(',');
 
