@@ -3,6 +3,9 @@ const { version } = require('./package.json');
 
 module.exports = {
   title: `React-spatial ${version}`,
+  template: {
+    favicon: 'src/images/favicon.png',
+  },
   require: [
     path.join(__dirname, 'src/themes/default/examples.scss'),
     'react-app-polyfill/ie11',
