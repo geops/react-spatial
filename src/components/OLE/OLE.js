@@ -3,7 +3,7 @@ import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import OLMap from 'ol/Map';
 import { Editor, control } from 'ole';
-import Style, { createDefaultStyle, createEditingStyle } from 'ol/style/Style';
+import { Style } from 'ol/style';
 import VectorLayer from '../../VectorLayer';
 import Styles from '../../utils/Styles';
 
@@ -58,6 +58,12 @@ const propTypes = {
     PropTypes.arrayOf(PropTypes.instanceOf(Style)),
     PropTypes.func,
   ]),
+
+  /* Function triggered when a feature is selected */
+  onSelect: PropTypes.func,
+
+  /* Function triggered when a feature is deselected */
+  onDeselect: PropTypes.func,
 };
 
 const defaultProps = {
@@ -76,6 +82,8 @@ const defaultProps = {
   intersection: false,
   difference: false,
   selectStyle: Styles.default,
+  onSelect: () => {},
+  onDeselect: () => {},
 };
 
 /**
@@ -86,8 +94,42 @@ class OLE extends PureComponent {
     this.initializeEditor();
   }
 
-  componentDidUpdate() {
-    this.initializeEditor();
+  componentDidUpdate(prevProps) {
+    const {
+      map,
+      layer,
+      cad,
+      drawPoint,
+      drawLineString,
+      drawPolygon,
+      move,
+      rotate,
+      modify,
+      del,
+      buffer,
+      union,
+      intersection,
+      difference,
+      selectStyle,
+      onSelect,
+    } = this.props;
+
+    if (
+      cad !== prevProps.cad ||
+      drawPoint !== prevProps.drawPoint ||
+      drawLineString !== prevProps.drawLineString ||
+      drawPolygon !== prevProps.drawPolygon ||
+      move !== prevProps.move ||
+      rotate !== prevProps.rotate ||
+      modify !== prevProps.modify ||
+      del !== prevProps.del ||
+      buffer !== prevProps.buffer ||
+      union !== prevProps.union ||
+      intersection !== prevProps.intersection ||
+      difference !== prevProps.difference
+    ) {
+      this.initializeEditor();
+    }
   }
 
   componentWillUnmount() {
@@ -112,6 +154,7 @@ class OLE extends PureComponent {
       intersection,
       difference,
       selectStyle,
+      onSelect,
     } = this.props;
 
     if (!map || !layer || !layer.olLayer || !layer.olLayer.getSource()) {
@@ -206,31 +249,19 @@ class OLE extends PureComponent {
     }
 
     if (modify) {
-      ctrls.push(
-        new control.Modify(
-          Object.assign(
-            {
-              source,
-              style,
-            },
-            modify,
-          ),
+      const modifyCtrl = new control.Modify(
+        Object.assign(
+          {
+            source,
+            style,
+          },
+          modify,
         ),
       );
-    }
-
-    if (del) {
-      ctrls.push(
-        new control.Delete(
-          Object.assign(
-            {
-              source,
-              style,
-            },
-            del,
-          ),
-        ),
-      );
+      modifyCtrl.selectInteraction.on('select', e => {
+        onSelect(e.selected[e.selected.length - 1], e);
+      });
+      ctrls.push(modifyCtrl);
     }
 
     if (buffer) {

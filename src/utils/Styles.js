@@ -7,18 +7,16 @@ const stroke = new Stroke({
   color: '#3399CC',
   width: 1.25,
 });
-const styles = [
-  new Style({
-    image: new Circle({
-      fill,
-      stroke,
-      radius: 5,
-    }),
+const dfltOlStyle = new Style({
+  image: new Circle({
     fill,
     stroke,
+    radius: 5,
   }),
-];
+  fill,
+  stroke,
+});
 
 export default {
-  default: styles,
+  default: dfltOlStyle,
 };
