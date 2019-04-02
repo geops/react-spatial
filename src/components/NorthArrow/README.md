@@ -3,7 +3,7 @@
 This demonstrates the use of NorthArrowExample (Shift + click to rotate).
 
 ```jsx
-import React from 'react';;
+import React from 'react';
 import NorthArrow from 'react-spatial/components/NorthArrow';
 import BasicMap from 'react-spatial/components/BasicMap';
 import Layer from 'react-spatial/Layer';
@@ -35,7 +35,7 @@ class NorthArrowExample extends React.Component {
     const layer = new Layer({
       name: 'Layer',
       olLayer: new TileLayer({
-        extent: extent,
+        extent,
         source: new TileImageSource({
           tileUrlFunction: c =>
             '//plans.trafimage.ch/static/tiles/' +
@@ -51,7 +51,7 @@ class NorthArrowExample extends React.Component {
     this.layers = [layer];
 
     this.map = new OLMap({
-      controls:[],
+      controls: [],
       interactions: defaultInteractions().extend([
         new DragRotateAndZoom(),
       ]),
