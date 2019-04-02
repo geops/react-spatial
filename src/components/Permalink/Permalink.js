@@ -4,7 +4,7 @@ import qs from 'query-string';
 
 const propTypes = {
   /**
-   * params to be written in url.
+   * Params to be written in url.
    */
   params: PropTypes.object.isRequired,
 
