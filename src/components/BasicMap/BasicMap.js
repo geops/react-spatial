@@ -99,7 +99,7 @@ const defaultProps = {
     maxZoom: 22,
     projection: 'EPSG:3857',
   },
-  zoom: 0,
+  zoom: 1,
 };
 
 /**
@@ -139,7 +139,7 @@ class BasicMap extends Component {
 
     this.map.setView(view);
 
-    if (zoom) {
+    if (zoom || zoom === 0) {
       view.setZoom(zoom);
     }
     if (resolution) {

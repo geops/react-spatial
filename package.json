@@ -28,7 +28,9 @@
     "jest-canvas-mock": "^2.0.0-alpha.3",
     "jest-serializer-html": "^6.0.0",
     "jest-svg-transformer": "^1.0.0",
+    "jsts": "^2.0.3",
     "ol": "^5.3.0",
+    "ole": "../oterral-ole2",
     "prettier": "^1.16.1",
     "proj4": "^2.5.0",
     "prop-types": "^15.6.2",
@@ -45,7 +47,8 @@
     "webpack": "^4.28.4"
   },
   "peerDependency": {
-    "ol": "^5.3.0"
+    "ol": "^5.3.0",
+    "ole": "^0.0.3"
   },
   "dependencies": {
     "core-js": "^3.0.0",
