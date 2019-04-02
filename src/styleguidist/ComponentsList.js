@@ -30,7 +30,7 @@ function ComponentsList({
     ...item,
     href: item.href
       ? item.href
-      : // Remove the first '/' to avoid page reload on click
+      : // Conflict with Permalink Component: Remove the first '/' to avoid page reload on click
         getUrl({
           name: item.name,
           slug: item.slug,
