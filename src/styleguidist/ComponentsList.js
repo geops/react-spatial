@@ -4,6 +4,21 @@ import PropTypes from 'prop-types';
 import ComponentsListRenderer from 'react-styleguidist/lib/client/rsg-components/ComponentsList/ComponentsListRenderer';
 import getUrl from 'react-styleguidist/lib/client/utils/getUrl';
 
+const propTypes = {
+  items: PropTypes.array.isRequired,
+  classes: PropTypes.object,
+  hashPath: PropTypes.array,
+  useRouterLinks: PropTypes.bool,
+  useHashId: PropTypes.bool,
+};
+
+const defaultProps = {
+  classes: null,
+  hashPath: [],
+  useRouterLinks: false,
+  useHashId: true,
+};
+
 function ComponentsList({
   classes,
   items,
@@ -24,12 +39,7 @@ function ComponentsList({
   return <ComponentsListRenderer classes={classes} items={mappedItems} />;
 }
 
-ComponentsList.propTypes = {
-  items: PropTypes.array.isRequired,
-  classes: PropTypes.object,
-  hashPath: PropTypes.array,
-  useRouterLinks: PropTypes.bool,
-  useHashId: PropTypes.bool,
-};
+ComponentsList.propTypes = propTypes;
+ComponentsList.defaultProps = defaultProps;
 
 export default ComponentsList;
