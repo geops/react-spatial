@@ -29,15 +29,15 @@ function ComponentsList({
   const mappedItems = items.map(item => ({
     ...item,
     href: item.href
-      ? item.href :
-      // Remove the first '/' to avoid page reload on click
-      getUrl({
-        name: item.name,
-        slug: item.slug,
-        anchor: !useRouterLinks,
-        hashPath: useRouterLinks ? hashPath : false,
-        id: useRouterLinks ? useHashId : false,
-      }).replace(/^\/+/g, ''),
+      ? item.href
+      : // Remove the first '/' to avoid page reload on click
+        getUrl({
+          name: item.name,
+          slug: item.slug,
+          anchor: !useRouterLinks,
+          hashPath: useRouterLinks ? hashPath : false,
+          id: useRouterLinks ? useHashId : false,
+        }).replace(/^\/+/g, ''),
   }));
   return <ComponentsListRenderer classes={classes} items={mappedItems} />;
 }
