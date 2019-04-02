@@ -21,13 +21,13 @@ const vectorLayer = new VectorLayer({
 const layers = [vectorLayer];
 
 describe('OLE', () => {
-  test('matche snapshots', () => {
+  beforeEach(()=> {
+    map.setTarget(document.createElement('div'));
+  });
+  test('matches snapshots', () => {
     window.ole = 'fgjkfgio';
     const component = renderer.create(
-      <>
-        <BasicMap map={map} layers={layers} zoom={0} />
-        <OLE map={map} layer={vectorLayer} />
-      </>,
+      <OLE map={map} layer={vectorLayer} />
     );
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();

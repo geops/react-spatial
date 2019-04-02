@@ -1,9 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`OLE matche snapshots 1`] = `
-<div
-  className="tm-map"
-  role="menu"
-  tabIndex={0}
-/>
-`;
+exports[`OLE matches snapshots 1`] = `null`;
