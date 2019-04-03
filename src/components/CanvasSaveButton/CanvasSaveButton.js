@@ -98,106 +98,110 @@ class CanvasSaveButton extends PureComponent {
     );
   }
 
-  createCanvasImage(opts, asMSBlob, callback) {
-    const { map, extent, extraData } = this.props;
-    let image;
+  createCanvasImage(opts, asMSBlob) {
+    return new Promise(resolve => {
+      const { map, extent, extraData } = this.props;
+      let image;
 
-    map.once('postcompose', evt => {
-      const { canvas } = evt.context;
+      map.once('postcompose', evt => {
+        const { canvas } = evt.context;
 
-      let clip = {
-        x: 0,
-        y: 0,
-        w: canvas.width,
-        h: canvas.height,
-      };
+        let clip = {
+          x: 0,
+          y: 0,
+          w: canvas.width,
+          h: canvas.height,
+        };
 
-      if (extent) {
-        const pixelTopLeft = map.getPixelFromCoordinate(getTopLeft(extent));
-        const pixelBottomRight = map.getPixelFromCoordinate(
-          getBottomRight(extent),
+        if (extent) {
+          const pixelTopLeft = map.getPixelFromCoordinate(getTopLeft(extent));
+          const pixelBottomRight = map.getPixelFromCoordinate(
+            getBottomRight(extent),
+          );
+
+          clip = {
+            x: pixelTopLeft[0],
+            y: pixelTopLeft[1],
+            w: pixelBottomRight[0] - pixelTopLeft[0],
+            h: pixelBottomRight[1] - pixelTopLeft[1],
+          };
+        }
+
+        const destCanvas = document.createElement('canvas');
+        destCanvas.width = clip.w;
+        destCanvas.height = clip.h;
+        const destContext = destCanvas.getContext('2d');
+
+        // Draw map
+        destContext.fillStyle = 'white';
+        destContext.fillRect(0, 0, destCanvas.width, clip.h);
+        destContext.drawImage(
+          canvas,
+          clip.x,
+          clip.y,
+          clip.w,
+          clip.h,
+          0,
+          0,
+          clip.w,
+          clip.h,
         );
 
-        clip = {
-          x: pixelTopLeft[0],
-          y: pixelTopLeft[1],
-          w: pixelBottomRight[0] - pixelTopLeft[0],
-          h: pixelBottomRight[1] - pixelTopLeft[1],
-        };
-      }
+        const padding = 5;
+        const arrowSize = 80;
 
-      const destCanvas = document.createElement('canvas');
-      destCanvas.width = clip.w;
-      destCanvas.height = clip.h;
-      const destContext = destCanvas.getContext('2d');
+        // Copyright
+        if (extraData.copyright) {
+          destContext.font = '12px Arial';
+          destContext.fillStyle = 'black';
+          destContext.fillText(extraData.copyright, padding, clip.h - padding);
+        }
 
-      // Draw map
-      destContext.fillStyle = 'white';
-      destContext.fillRect(0, 0, destCanvas.width, clip.h);
-      destContext.drawImage(
-        canvas,
-        clip.x,
-        clip.y,
-        clip.w,
-        clip.h,
-        0,
-        0,
-        clip.w,
-        clip.h,
-      );
+        // North arrow
+        if (extraData.northArrow) {
+          const img = new Image();
+          img.src = extraData.northArrow.circled
+            ? NorthArrowCircle
+            : NorthArrowSimple;
 
-      const padding = 5;
-      const arrowSize = 80;
+          img.onload = () => {
+            destContext.save();
 
-      // Copyright
-      if (extraData.copyright) {
-        destContext.font = '12px Arial';
-        destContext.fillStyle = 'black';
-        destContext.fillText(extraData.copyright, padding, clip.h - padding);
-      }
+            destContext.translate(
+              clip.w - 2 * padding - arrowSize / 2,
+              clip.h - 2 * padding - arrowSize / 2,
+            );
 
-      // North arrow
-      if (extraData.northArrow) {
-        const img = new Image();
-        img.src = extraData.northArrow.circled
-          ? NorthArrowCircle
-          : NorthArrowSimple;
+            if (extraData.northArrow.rotation) {
+              destContext.rotate(
+                extraData.northArrow.rotation * (Math.PI / 180),
+              );
+            }
 
-        img.onload = () => {
-          destContext.save();
+            destContext.drawImage(
+              img,
+              -arrowSize / 2,
+              -arrowSize / 2,
+              arrowSize,
+              arrowSize,
+            );
 
-          destContext.translate(
-            clip.w - 2 * padding - arrowSize / 2,
-            clip.h - 2 * padding - arrowSize / 2,
-          );
+            destContext.restore();
 
-          if (extraData.northArrow.rotation) {
-            destContext.rotate(extraData.northArrow.rotation * (Math.PI / 180));
-          }
-
-          destContext.drawImage(
-            img,
-            -arrowSize / 2,
-            -arrowSize / 2,
-            arrowSize,
-            arrowSize,
-          );
-
-          destContext.restore();
-
+            image = asMSBlob
+              ? destCanvas.msToBlob()
+              : destCanvas.toDataURL(opts.format);
+            resolve(image);
+          };
+        } else {
           image = asMSBlob
             ? destCanvas.msToBlob()
             : destCanvas.toDataURL(opts.format);
-          callback(image);
-        };
-      } else {
-        image = asMSBlob
-          ? destCanvas.msToBlob()
-          : destCanvas.toDataURL(opts.format);
-        callback(image);
-      }
+          resolve(image);
+        }
+      });
+      map.renderSync();
     });
-    map.renderSync();
   }
 
   downloadCanvasImage(e) {
@@ -205,13 +209,13 @@ class CanvasSaveButton extends PureComponent {
       // ie 9 and 10
       const w = window.open('about:blank', '');
 
-      this.createCanvasImage(this.options, false, image => {
+      this.createCanvasImage(this.options, false).then(image => {
         w.document.write(`<img src="${image}" alt="from canvas"/>`);
       });
     } else if (window.navigator.msSaveBlob) {
       // ie 11 and higher
 
-      this.createCanvasImage(this.options, true, image => {
+      this.createCanvasImage(this.options, true).then(image => {
         window.navigator.msSaveBlob(
           new Blob([image], {
             type: this.options.format,
@@ -220,7 +224,7 @@ class CanvasSaveButton extends PureComponent {
         );
       });
     } else {
-      this.createCanvasImage(this.options, false, image => {
+      this.createCanvasImage(this.options, false).then(image => {
         const link = document.createElement('a');
         link.download = this.getDownloadImageName();
         link.href = image;
