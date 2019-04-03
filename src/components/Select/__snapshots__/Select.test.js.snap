@@ -1,13 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Select when no properties are set matches snapshot 1`] = `
-<select
-  className="tm-select"
-  onChange={[Function]}
-/>
-`;
+exports[`Select when no properties are set matches snapshot 1`] = `null`;
 
-exports[`Select when properties are set matches snapshot 1`] = `
+exports[`Select when options are objects with a value property. matches snapshot 1`] = `
 <select
   className="tm-select"
   onChange={[Function]}
@@ -27,6 +22,30 @@ exports[`Select when properties are set matches snapshot 1`] = `
     value="baz"
   >
     corge
+  </option>
+</select>
+`;
+
+exports[`Select when options are strings matches snapshot 1`] = `
+<select
+  className="tm-select"
+  onChange={[Function]}
+  value="bar"
+>
+  <option
+    value="foo"
+  >
+    foo
+  </option>
+  <option
+    value="bar"
+  >
+    bar
+  </option>
+  <option
+    value="baz"
+  >
+    baz
   </option>
 </select>
 `;

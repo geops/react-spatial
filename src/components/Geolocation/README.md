@@ -14,7 +14,7 @@ class GeolocationExample extends React.Component {
     super(props);
 
     this.center = [-10997148, 4569099];
-    this.map = new OLMap({controls:[]});
+    this.map = new OLMap({ controls: [] });
   }
 
   componentDidMount() {

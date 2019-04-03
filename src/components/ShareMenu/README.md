@@ -6,9 +6,10 @@ This demonstrates the use of ShareMenu.
 import React from 'react';
 import OLMap from 'ol/Map';
 import BasicMap from 'react-spatial/components/BasicMap';
-import ConfigReader from 'react-spatial/ConfigReader';
-import CanvasSaveButton from 'react-spatial/components/CanvasSaveButton';
-import LayerService from 'react-spatial/LayerService';
+import ShareMenu from 'react-spatial/components/ShareMenu';
+import ConfigReader from '../../ConfigReader';
+
+import CanvasSaveButton from '../CanvasSaveButton';
 
 class ShareMenuExample extends React.Component {
   constructor(props) {
@@ -16,12 +17,10 @@ class ShareMenuExample extends React.Component {
     this.map = new OLMap({ controls: [] });
     this.center = [-10997148, 4569099];
 
-    const layers = ConfigReader.readConfig(
+    ConfigReader.readConfig(
       this.map,
       treeData,
     );
-
-    this.layerService = new LayerService(this.layers);
   }
 
   render() {
@@ -35,12 +34,10 @@ class ShareMenuExample extends React.Component {
         <ShareMenu url={window.location.href}>
           <CanvasSaveButton
             title="Karte als Bild speichern."
-            className='tm-canvas-save-button tm-share-menu-icon'
+            className="tm-canvas-save-button tm-share-menu-icon"
             map={this.map}
-            layerService={this.layerService}
           />
         </ShareMenu>
-
       </div>
     );
   }

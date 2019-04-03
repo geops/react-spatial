@@ -50,6 +50,7 @@ export default [
         },
       },
       {
+        id: 'usaPop',
         name: 'USA Population Density',
         visible: true,
         copyright: '© Esri',
@@ -71,6 +72,7 @@ export default [
     radioGroup: 'radio',
     children: [
       {
+        id: 'pointSamples',
         name: 'Points Samples',
         radioGroup: 'vectorLayers',
         visible: false,
@@ -91,6 +93,7 @@ export default [
         },
       },
       {
+        id: 'lineSamples',
         name: 'Lines Samples',
         radioGroup: 'vectorLayers',
         visible: true,
@@ -109,6 +112,7 @@ export default [
         },
       },
       {
+        id: 'polySamples',
         name: 'Polygons Samples',
         radioGroup: 'vectorLayers',
         visible: false,
