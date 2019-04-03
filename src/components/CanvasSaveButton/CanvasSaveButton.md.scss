@@ -1,18 +1,18 @@
-.tm-canvas-save-button,
-.tm-canvas-save-button:hover {
-  color: white;
-
-  svg {
-    width: 75%;
-  }
-}
-
 .tm-canvas-save-button-example {
   position: relative;
 
-  .tm-share-menu {
+  .tm-canvas-save-button-menu {
     padding: 10px;
     border: 2px solid $gray-lighter;
+  }
+
+  .tm-canvas-save-button,
+  .tm-canvas-save-button:hover {
+    color: white;
+
+    svg {
+      width: 75%;
+    }
   }
 
   .tm-map {
