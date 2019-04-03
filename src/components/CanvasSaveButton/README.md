@@ -41,7 +41,9 @@ class ShareMenuExample extends React.Component {
             map={this.map}
             extent={extent}
             extraData={{
-              copyright: '© Example copyright',
+              copyright: {
+                text: '© Example copyright',
+              },
               northArrow: {
                 rotation: 25,
                 circled: true,

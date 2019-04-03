@@ -48,7 +48,11 @@ const propTypes = {
    * Example 1:
    *
     {
-      copyright: 'Example copyright', // Copyright text
+      copyright: {
+        text: 'Example copyright', // Copyright text
+        font: '10px Arial', // Font, default is '12px Arial'
+        fillStyle: 'blue', // Fill style, default is 'black'
+      }
       northArrow,  // True if the north arrow
                    // should be placed with default configuration
                    // (rotation=0, circled=False)
@@ -151,10 +155,10 @@ class CanvasSaveButton extends PureComponent {
         const arrowSize = 80;
 
         // Copyright
-        if (extraData && extraData.copyright) {
-          destContext.font = '12px Arial';
-          destContext.fillStyle = 'black';
-          destContext.fillText(extraData.copyright, padding, clip.h - padding);
+        if (extraData && extraData.copyright && extraData.copyright.text) {
+          destContext.font = extraData.copyright.font || '12px Arial';
+          destContext.fillStyle = extraData.copyright.fillStyle || 'black';
+          destContext.fillText(extraData.copyright.text, padding, clip.h - padding);
         }
 
         // North arrow
