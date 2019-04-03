@@ -7,6 +7,7 @@ exports[`MousePosition matches snapshots using default values. 1`] = `
   <select
     className="tm-select"
     onChange={[Function]}
+    value="EPSG:4326"
   >
     <option
       value="EPSG:4326"
@@ -30,6 +31,7 @@ exports[`MousePosition matches snapshots using multiple projections. 1`] = `
   <select
     className="tm-select"
     onChange={[Function]}
+    value="foo"
   >
     <option
       value="foo"
@@ -61,6 +63,7 @@ exports[`MousePosition matches snapshots using only one projection 1`] = `
   <select
     className="tm-select"
     onChange={[Function]}
+    value="foo"
   >
     <option
       value="foo"

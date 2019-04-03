@@ -100,12 +100,14 @@ class MousePosition extends PureComponent {
       projection: projection.value,
       target: this.ref.current,
       undefinedHTML: '&nbsp;',
+      className: '',
     });
     map.addControl(this.control);
   }
 
   renderSelect() {
     const { projections } = this.props;
+    const { projection } = this.state;
     if (!projections.length) {
       return null;
     }
@@ -113,9 +115,10 @@ class MousePosition extends PureComponent {
     return (
       <Select
         options={projections}
-        onChange={(evt, val) => {
+        value={projection}
+        onChange={(evt, proj) => {
           this.setState({
-            projection: projections.find(p => p.value === val),
+            projection: proj,
           });
         }}
       />

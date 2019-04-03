@@ -9,24 +9,25 @@ import Select from 'react-spatial/components/Select';
 class SelectExample extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { value: 'ny' };
+    this.cities = [
+      { label: 'New york', value: 'ny' },
+      { label: 'Los angeles', value: 'ls' },
+      { label: 'Orlando', value: 'orl' },
+    ];
+    this.state = { city: this.cities[1] };
   }
 
   render() {
     return (
       <div className="tm-select-example">
         <Select
-          options={[
-            { label: 'New york', value: 'ny' },
-            { label: 'Los angeles', value: 'ls' },
-            { label: 'Orlando', value: 'orl' },
-          ]}
-          value={this.state.value}
-          onChange={(e, value) => {
-            this.setState({ value: value });
+          options={this.cities}
+          value={this.state.city}
+          onChange={(e, city) => {
+            this.setState({ city });
           }}
         />
-        <div>You selected "{this.state.value}".</div>
+        <div>You selected "{this.state.city.label}".</div>
       </div>
     );
   }

@@ -20,11 +20,6 @@ describe('Select', () => {
       window.console.error.mockRestore();
     });
 
-    test('log error if required properties are not set.', () => {
-      shallow(<Select />);
-      expect(spy).toHaveBeenCalledTimes(2);
-    });
-
     test('matches snapshot', () => {
       const component = renderer.create(<Select />);
       const tree = component.toJSON();
@@ -32,7 +27,34 @@ describe('Select', () => {
     });
   });
 
-  describe('when properties are set', () => {
+  describe('when options are strings', () => {
+    const options = ['foo', 'bar', 'baz'];
+
+    const onChange = () => {};
+
+    test('matches snapshot', () => {
+      const component = renderer.create(
+        <Select options={options} value="bar" onChange={() => {}} />,
+      );
+
+      const tree = component.toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+
+    test('executes onChange property function', () => {
+      const onChangeMock = jest.fn(onChange);
+      const wrapper = shallow(
+        <Select options={options} value="baz" onChange={onChangeMock} />,
+      );
+      expect(onChangeMock).toHaveBeenCalledTimes(0);
+      const evt = { target: { value: 'foo' } };
+      wrapper.find('select').simulate('change', evt);
+      expect(onChangeMock).toHaveBeenCalledTimes(1);
+      expect(onChangeMock).toHaveBeenCalledWith(evt, options[0]);
+    });
+  });
+
+  describe('when options are objects with a value property.', () => {
     const options = [
       {
         value: 'foo',
@@ -52,7 +74,7 @@ describe('Select', () => {
 
     test('matches snapshot', () => {
       const component = renderer.create(
-        <Select options={options} value="bar" onChange={() => {}} />,
+        <Select options={options} value={options[1]} onChange={() => {}} />,
       );
 
       const tree = component.toJSON();
@@ -62,11 +84,13 @@ describe('Select', () => {
     test('executes onChange property function', () => {
       const onChangeMock = jest.fn(onChange);
       const wrapper = shallow(
-        <Select options={options} value="baz" onChange={onChangeMock} />,
+        <Select options={options} value={options[2]} onChange={onChangeMock} />,
       );
       expect(onChangeMock).toHaveBeenCalledTimes(0);
-      wrapper.find('select').simulate('change', { target: { value: 'foo' } });
+      const evt = { target: { value: 'foo' } };
+      wrapper.find('select').simulate('change', evt);
       expect(onChangeMock).toHaveBeenCalledTimes(1);
+      expect(onChangeMock).toHaveBeenCalledWith(evt, options[0]);
     });
   });
 });
