@@ -61,9 +61,6 @@ const propTypes = {
 
   /* Function triggered when a feature is selected */
   onSelect: PropTypes.func,
-
-  /* Function triggered when a feature is deselected */
-  onDeselect: PropTypes.func,
 };
 
 const defaultProps = {
@@ -83,7 +80,6 @@ const defaultProps = {
   difference: false,
   selectStyle: Styles.default,
   onSelect: () => {},
-  onDeselect: () => {},
 };
 
 /**
@@ -96,8 +92,6 @@ class OLE extends PureComponent {
 
   componentDidUpdate(prevProps) {
     const {
-      map,
-      layer,
       cad,
       drawPoint,
       drawLineString,
@@ -110,8 +104,6 @@ class OLE extends PureComponent {
       union,
       intersection,
       difference,
-      selectStyle,
-      onSelect,
     } = this.props;
 
     if (
@@ -262,6 +254,15 @@ class OLE extends PureComponent {
         onSelect(e.selected[e.selected.length - 1], e);
       });
       ctrls.push(modifyCtrl);
+    }
+
+    if (del) {
+      ctrls.push(
+        new control.Delete({
+          source,
+          style,
+        }),
+      );
     }
 
     if (buffer) {

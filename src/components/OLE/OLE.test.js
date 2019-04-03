@@ -6,7 +6,6 @@ import renderer from 'react-test-renderer';
 import VectorSource from 'ol/source/Vector';
 import OLMap from 'ol/Map';
 import View from 'ol/View';
-import BasicMap from '../BasicMap';
 import VectorLayer from '../../VectorLayer';
 import OLE from '.';
 
@@ -18,17 +17,14 @@ const vectorLayer = new VectorLayer({
     features: [],
   }),
 });
-const layers = [vectorLayer];
 
 describe('OLE', () => {
-  beforeEach(()=> {
+  beforeEach(() => {
     map.setTarget(document.createElement('div'));
   });
   test('matches snapshots', () => {
     window.ole = 'fgjkfgio';
-    const component = renderer.create(
-      <OLE map={map} layer={vectorLayer} />
-    );
+    const component = renderer.create(<OLE map={map} layer={vectorLayer} />);
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
   });

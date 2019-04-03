@@ -100,7 +100,7 @@ class MousePosition extends PureComponent {
       projection: projection.value,
       target: this.ref.current,
       undefinedHTML: '&nbsp;',
-      className: ''
+      className: '',
     });
     map.addControl(this.control);
   }
@@ -116,9 +116,9 @@ class MousePosition extends PureComponent {
       <Select
         options={projections}
         value={projection}
-        onChange={(evt, projection) => {
+        onChange={(evt, proj) => {
           this.setState({
-            projection,
+            projection: proj,
           });
         }}
       />
