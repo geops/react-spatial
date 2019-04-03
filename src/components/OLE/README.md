@@ -31,16 +31,6 @@ class OLEExample extends React.Component {
 
     this.map = new OLMap();
 
-    const feat = new Feature(new Point(map.getView().getCenter()));
-    feat.setStyle(new Style({
-      image: new Circle({
-        radius: 10,
-        fill: new Fill({
-          color: '#ff0000',
-        }),
-      }),
-    }));
-
     this.layers = [
       new Layer({
         olLayer:new TileLayer({
@@ -48,9 +38,7 @@ class OLEExample extends React.Component {
         })
       }),
       new VectorLayer({
-        source: new VectorSource({
-          features: [feat]
-        }),
+        source: new VectorSource(),
       })
     ];
   }
@@ -65,6 +53,18 @@ class OLEExample extends React.Component {
         <OLE
           map={this.map}
           layer={this.layers[1]}
+          cad
+          drawPoint
+          drawLineString
+          drawPolygon
+          move
+          rotate
+          modify
+          del
+          buffer
+          union
+          intersection
+          difference
         />
       </div>
     );
