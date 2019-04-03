@@ -158,7 +158,11 @@ class CanvasSaveButton extends PureComponent {
         if (extraData && extraData.copyright && extraData.copyright.text) {
           destContext.font = extraData.copyright.font || '12px Arial';
           destContext.fillStyle = extraData.copyright.fillStyle || 'black';
-          destContext.fillText(extraData.copyright.text, padding, clip.h - padding);
+          destContext.fillText(
+            extraData.copyright.text,
+            padding,
+            clip.h - padding,
+          );
         }
 
         // North arrow
