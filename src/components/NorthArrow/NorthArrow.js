@@ -46,10 +46,6 @@ class NorthArrow extends PureComponent {
     return (rad * 360) / (Math.PI * 2);
   }
 
-  static getRotation(map, rotationOffset) {
-    return NorthArrow.radToDeg(map.getView().getRotation()) + rotationOffset;
-  }
-
   constructor(props) {
     super(props);
     const { map, rotationOffset } = this.props;
@@ -64,7 +60,8 @@ class NorthArrow extends PureComponent {
     const { rotationOffset } = this.props;
 
     this.setState({
-      rotation: NorthArrow.getRotation(evt.map, rotationOffset),
+      rotation:
+        NorthArrow.radToDeg(evt.map.getView().getRotation()) + rotationOffset,
     });
   }
 
