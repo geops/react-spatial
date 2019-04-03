@@ -12,8 +12,8 @@ describe('FeatureExportButton', () => {
   test('should match snapshot.', () => {
     const component = renderer.create(
       <FeatureExportButton
-        title="kmlExport"
-        className="tm-kml-export-example"
+        title="FeatureExport"
+        className="tm-feature-export-example"
       />,
     );
     const tree = component.toJSON();

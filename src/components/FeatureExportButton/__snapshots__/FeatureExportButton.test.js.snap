@@ -38,13 +38,13 @@ exports[`FeatureExportButton should match snapshot with children passed. 1`] = `
 
 exports[`FeatureExportButton should match snapshot. 1`] = `
 <div
-  aria-label="kmlExport"
-  className="tm-kml-export-example"
+  aria-label="FeatureExport"
+  className="tm-feature-export-example"
   onClick={[Function]}
   onKeyPress={[Function]}
   role="button"
   tabIndex={0}
-  title="kmlExport"
+  title="FeatureExport"
 >
   <svg
     fill="currentColor"
