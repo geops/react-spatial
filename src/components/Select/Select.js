@@ -18,7 +18,9 @@ const propTypes = {
         value: PropTypes.oneOfType([
           PropTypes.string,
           PropTypes.number,
-          PropTypes.arrayOf(PropTypes.string),
+          PropTypes.arrayOf(
+            PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+          ),
         ]).isRequired,
         label: PropTypes.string.isRequired,
       }),
@@ -35,7 +37,9 @@ const propTypes = {
       value: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number,
-        PropTypes.arrayOf(PropTypes.string),
+        PropTypes.arrayOf(
+          PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        ),
       ]).isRequired,
       label: PropTypes.string.isRequired,
     }),

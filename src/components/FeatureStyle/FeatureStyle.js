@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Feature } from 'ol';
 import { Fill, Stroke, Style, Icon } from 'ol/style';
 import { asString } from 'ol/color';
 import Select from '../Select';
+import Button from '../Button';
 // import NorthArrow from '../../images/northArrow.svg';
 // import NorthArrowCircle from '../../images/northArrowCircle.svg';
 
@@ -278,12 +279,12 @@ class FeatureStyle extends PureComponent {
 
   componentDidUpdate(prevProps, prevState) {
     const { feature } = this.props;
-    const { iconSize } = this.state;
+    const { iconSize, icon } = this.state;
     if (feature !== prevProps.feature) {
       this.updateContent();
     }
 
-    if (iconSize !== prevState.iconSize) {
+    if (iconSize !== prevState.iconSize || icon !== prevState.icon) {
       this.applyStyle();
     }
   }
@@ -445,41 +446,50 @@ class FeatureStyle extends PureComponent {
   }
 
   renderIconStyle() {
-    const { useIconStyle, iconSize, iconCategory } = this.state;
+    const { useIconStyle, icon, iconSize, iconCategory } = this.state;
     const { iconSizes } = this.props;
     if (!useIconStyle) {
       return null;
     }
+    console.log(iconCategory);
+    console.log(iconSize);
+    console.log(icon);
     return (
       <>
-        <label>
+        <div>
           <span>Modify icon size:</span>
           <Select
             options={iconSizes}
-            value={iconSize.value}
+            value={iconSize}
             onChange={(e, newIconSize) => {
               this.setState({ iconSize: newIconSize });
             }}
           />
-        </label>
-        <label>
+        </div>
+        <div>
           <span>Modify icon:</span>
           {iconCategory.icons.map(i => {
             return (
-              <div key={i.url}>
+              <Button
+                key={i.url}
+                onClick={() => {
+                  this.setState({ icon: i });
+                }}
+                style={{
+                  width: iconSize.value[0],
+                  height: iconSize.value[1],
+                }}
+              >
                 <img
                   src={i.url}
                   alt={i.url}
-                  onClick={() => {
-                    this.setState({ icon: i });
-                  }}
-                  height={iconSize[0]}
-                  width={iconSize[1]}
+                  width={iconSize.value[0]}
+                  height={iconSize.value[1]}
                 />
-              </div>
+              </Button>
             );
           })}
-        </label>
+        </div>
       </>
       /* <label>
         <span translate>{{'modify_icon_category_label'}}:</span>
