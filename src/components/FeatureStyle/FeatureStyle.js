@@ -457,7 +457,7 @@ class FeatureStyle extends PureComponent {
     return (
       <>
         <div>
-          <span>Modify icon size:</span>
+          <div>Modify icon size:</div>
           <Select
             options={iconSizes}
             value={iconSize}
@@ -467,28 +467,30 @@ class FeatureStyle extends PureComponent {
           />
         </div>
         <div>
-          <span>Modify icon:</span>
-          {iconCategory.icons.map(i => {
-            return (
-              <Button
-                key={i.url}
-                onClick={() => {
-                  this.setState({ icon: i });
-                }}
-                style={{
-                  width: iconSize.value[0],
-                  height: iconSize.value[1],
-                }}
-              >
-                <img
-                  src={i.url}
-                  alt={i.url}
-                  width={iconSize.value[0]}
-                  height={iconSize.value[1]}
-                />
-              </Button>
-            );
-          })}
+          <div>Modify icon:</div>
+          <div>
+            {iconCategory.icons.map(i => {
+              return (
+                <Button
+                  key={i.url}
+                  onClick={() => {
+                    this.setState({ icon: i });
+                  }}
+                  style={{
+                    width: iconSize.value[0],
+                    height: iconSize.value[1],
+                  }}
+                >
+                  <img
+                    src={i.url}
+                    alt={i.url}
+                    width={iconSize.value[0]}
+                    height={iconSize.value[1]}
+                  />
+                </Button>
+              );
+            })}
+          </div>
         </div>
       </>
       /* <label>

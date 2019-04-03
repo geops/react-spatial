@@ -3,7 +3,7 @@
 This demonstrates the use of Geolocation.
 
 ```jsx
-import React from  'react'
+import React from 'react';
 import Geolocation from 'react-spatial/components/Geolocation';
 import BasicMap from 'react-spatial/components/BasicMap';
 import OLMap from 'ol/Map';
@@ -14,7 +14,7 @@ class GeolocationExample extends React.Component {
     super(props);
 
     this.center = [-10997148, 4569099];
-    this.map = new OLMap({controls:[]});
+    this.map = new OLMap({ controls: [] });
   }
 
   componentDidMount() {
