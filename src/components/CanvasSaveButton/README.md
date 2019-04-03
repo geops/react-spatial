@@ -39,11 +39,14 @@ class ShareMenuExample extends React.Component {
             title="Karte als Bild speichern."
             className='tm-canvas-save-button tm-share-menu-icon'
             map={this.map}
-            layerService={this.layerService}
             extent={extent}
-            northArrow
-            rotationOffset={20}
-            circled
+            extraData={{
+              copyright: '© Example copyright',
+              northArrow: {
+                rotation: 25,
+                circled: true,
+              },
+            }}
           />
         </ShareMenu>
 

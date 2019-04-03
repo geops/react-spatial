@@ -4,9 +4,6 @@ import OLMap from 'ol/Map';
 import { getTopLeft, getBottomRight } from 'ol/extent';
 import { TiImage } from 'react-icons/ti';
 import Button from '../Button';
-import LayerService from '../../LayerService';
-import Copyright from '../Copyright/Copyright';
-import NorthArrow from '../NorthArrow/NorthArrow';
 import NorthArrowSimple from '../../images/northArrow.url.svg';
 import NorthArrowCircle from '../../images/northArrowCircle.url.svg';
 
@@ -45,24 +42,29 @@ const propTypes = {
   extent: PropTypes.arrayOf(PropTypes.number),
 
   /**
-   * True if export should include a north arrow.
-   */
-  northArrow: PropTypes.bool,
+   * Extra data, such as copyright and north arrow configuration.
+   * All extra data is optional.
+   *
+   * Example 1:
+   *
+    {
+      copyright: 'Example copyright', // Copyright text
+      northArrow,  // True if the north arrow
+                   // should be placed with default configuration
+                   // (rotation=0, circled=False)
+    }
+   * Example 2:
+   *
 
-  /**
-   * Rotation of the north arrow in degrees.
-   */
-  rotationOffset: PropTypes.number,
+    {
+      northArrow: {
+        rotation: 25, // Absolute rotation in degrees
+        circled, // Display circle around the north arrow
+      }
+    }
 
-  /**
-   * Display circle around the north arrow.
    */
-  circled: PropTypes.bool,
-
-  /**
-   * Layers provider.
-   */
-  layerService: PropTypes.instanceOf(LayerService).isRequired,
+  extraData: PropTypes.object,
 };
 
 const defaultProps = {
@@ -72,9 +74,7 @@ const defaultProps = {
   className: 'tm-canvas-save-button',
   saveFormat: 'image/png',
   extent: null,
-  northArrow: false,
-  rotationOffset: 0,
-  circled: false,
+  extraData: null,
 };
 
 /**
@@ -99,14 +99,7 @@ class CanvasSaveButton extends PureComponent {
   }
 
   createCanvasImage(opts, asMSBlob, callback) {
-    const {
-      map,
-      extent,
-      layerService,
-      northArrow,
-      rotationOffset,
-      circled,
-    } = this.props;
+    const { map, extent, extraData } = this.props;
     let image;
 
     map.once('postcompose', evt => {
@@ -120,9 +113,7 @@ class CanvasSaveButton extends PureComponent {
       };
 
       if (extent) {
-        const pixelTopLeft = map.getPixelFromCoordinate(
-          getTopLeft(extent),
-        );
+        const pixelTopLeft = map.getPixelFromCoordinate(getTopLeft(extent));
         const pixelBottomRight = map.getPixelFromCoordinate(
           getBottomRight(extent),
         );
@@ -139,22 +130,6 @@ class CanvasSaveButton extends PureComponent {
       destCanvas.width = clip.w;
       destCanvas.height = clip.h;
       const destContext = destCanvas.getContext('2d');
-
-
-      // Copyright
-      const layers = layerService.getLayersAsFlatArray();
-      const text = Copyright.getCopyrights(layers);
-
-      // Measure text width in order to adjust the canvas width
-      const font = '12px sans-serif';
-      destContext.font = font;
-      const textWidth = destContext.measureText(text).width;
-      if (textWidth > destCanvas.width) {
-        destCanvas.width = textWidth + 10;
-
-        // Set font again as it has been reset by changing the canvas width
-        destContext.font = font;
-      }
 
       // Draw map
       destContext.fillStyle = 'white';
@@ -174,14 +149,20 @@ class CanvasSaveButton extends PureComponent {
       const padding = 5;
       const arrowSize = 80;
 
-      // Draw copyright
-      destContext.fillStyle = 'black';
-      destContext.fillText(text, padding, clip.h - padding);
+      // Copyright
+      if (extraData.copyright) {
+        destContext.font = '12px Arial';
+        destContext.fillStyle = 'black';
+        destContext.fillText(extraData.copyright, padding, clip.h - padding);
+      }
 
       // North arrow
-      if (northArrow) {
+      if (extraData.northArrow) {
         const img = new Image();
-        img.src = circled ? NorthArrowCircle : NorthArrowSimple;
+        img.src = extraData.northArrow.circled
+          ? NorthArrowCircle
+          : NorthArrowSimple;
+
         img.onload = () => {
           destContext.save();
 
@@ -190,9 +171,9 @@ class CanvasSaveButton extends PureComponent {
             clip.h - 2 * padding - arrowSize / 2,
           );
 
-          destContext.rotate(
-            NorthArrow.getRotation(map, rotationOffset) * (Math.PI / 180),
-          );
+          if (extraData.northArrow.rotation) {
+            destContext.rotate(extraData.northArrow.rotation * (Math.PI / 180));
+          }
 
           destContext.drawImage(
             img,
