@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`KmlExportButton should match snapshot with children passed. 1`] = `
+exports[`FeatureExportButton should match snapshot with children passed. 1`] = `
 <div
-  className="tm-kml-export"
+  className="tm-feature-export"
   onClick={[Function]}
   onKeyPress={[Function]}
   role="button"
@@ -36,7 +36,7 @@ exports[`KmlExportButton should match snapshot with children passed. 1`] = `
 </div>
 `;
 
-exports[`KmlExportButton should match snapshot. 1`] = `
+exports[`FeatureExportButton should match snapshot. 1`] = `
 <div
   aria-label="kmlExport"
   className="tm-kml-export-example"

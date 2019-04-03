@@ -5,17 +5,17 @@ import Button from '../Button';
 
 const propTypes = {
   /**
-   * Title of the Kml export button.
+   * Title of the Feature export button.
    */
   title: PropTypes.string,
 
   /**
-   *  Children content of the Kml export button.
+   *  Children content of the Feature export button.
    */
   children: PropTypes.element,
 
   /**
-   * CSS class of the Kml export button.
+   * CSS class of the Feature export button.
    */
   className: PropTypes.string,
 
@@ -29,15 +29,15 @@ const defaultProps = {
   tabIndex: 0,
   title: undefined,
   children: <FaCloudDownloadAlt focusable={false} />,
-  className: 'tm-kml-export',
+  className: 'tm-feature-export',
 };
 
 /**
- * This component displays a button to export geometry as Kml.
+ * This component displays a button to export geometry feature.
  */
-class KmlExportButton extends PureComponent {
-  exportAsKml() {
-    console.log('exportAsKml');
+class FeatureExportButton extends PureComponent {
+  exportFeature() {
+    console.log('exportFeature');
   }
 
   render() {
@@ -48,7 +48,7 @@ class KmlExportButton extends PureComponent {
         className={className}
         title={title}
         tabIndex={tabIndex}
-        onClick={e => this.exportAsKml(e)}
+        onClick={e => this.exportFeature(e)}
       >
         {children}
       </Button>
@@ -56,7 +56,7 @@ class KmlExportButton extends PureComponent {
   }
 }
 
-KmlExportButton.propTypes = propTypes;
-KmlExportButton.defaultProps = defaultProps;
+FeatureExportButton.propTypes = propTypes;
+FeatureExportButton.defaultProps = defaultProps;
 
-export default KmlExportButton;
+export default FeatureExportButton;
