@@ -5,8 +5,6 @@ import { Fill, Stroke, Style, Icon } from 'ol/style';
 import { asString } from 'ol/color';
 import Select from '../Select';
 import Button from '../Button';
-// import NorthArrow from '../../images/northArrow.svg';
-// import NorthArrowCircle from '../../images/northArrowCircle.svg';
 
 const propTypes = {
   feature: PropTypes.instanceOf(Feature),
@@ -46,11 +44,21 @@ const propTypes = {
       icons: PropTypes.array,
     }),
   ),
+
+  /** Translation function */
+  t: PropTypes.func,
+  className: PropTypes.string,
+  classNameIcons: PropTypes.string,
+  classNameIconSize: PropTypes.string,
 };
 
 const defaultProps = {
+  t: l => l,
   feature: undefined,
   styleIdx: 0,
+  className: 'tm-feature-style',
+  classNameIcons: 'tm-modify-icons',
+  classNameIconSize: 'tm-modify-icon-size',
   /* svgIcons: [
     { src: `data:image/svg+xml;utf8,${encodeURIComponent(NorthArrow)}` },
     { src: `data:image/svg+xml;utf8,${encodeURIComponent(NorthArrowCircle)}` },
@@ -88,25 +96,22 @@ const defaultProps = {
       icons: iconsCategory0,
     }, */
     {
-      id: 'sbb',
+      id: 'default',
       useColorOption: false,
       nbIcons: 160,
       type: 'img',
       icons: [
         {
           id: 1,
-          url:
-            'https://maps.trafimage.ch/static/app_trafimage/img/sbb/sbb-1.png',
+          url: 'src/images/airport.png',
         },
         {
           id: 2,
-          url:
-            'https://maps.trafimage.ch/static/app_trafimage/img/sbb/sbb-2.png',
+          url: 'src/images/fuel.png',
         },
         {
           id: 26,
-          url:
-            'https://maps.trafimage.ch/static/app_trafimage/img/sbb/sbb-26.png',
+          url: 'src/images/marker.png',
         },
       ],
     },
@@ -127,17 +132,19 @@ class FeatureStyle extends PureComponent {
     for (let i = 0; i < categories.length; i += 1) {
       const c = categories[i];
       const regex = c.type === 'img' ? new RegExp(`^(.*)${c.id}`) : c.regex();
-      if (regex.test(src)) {
+      if (
+        regex.test(src) ||
+        (c.type === 'img' && c.icons.find(ico => ico.url === src))
+      ) {
         return c;
       }
     }
-    console.error(`No category found for source ${src}`);
     return null;
   }
 
   // Find the corresponding style
   static findIcon(olIcon, category) {
-    const id = olIcon.getSrc();
+    const src = olIcon.getSrc();
     const { icons } = category;
     for (let i = 0; i < icons.length; i += 1) {
       const icon = icons[i];
@@ -145,7 +152,7 @@ class FeatureStyle extends PureComponent {
         category.type === 'img'
           ? new RegExp(`${category.id}-${icon.id}.png`)
           : category.regex(icon.id);
-      if (regex.test(id)) {
+      if (regex.test(src) || (category.type === 'img' && icon.url === src)) {
         return icons[i];
       }
     }
@@ -275,12 +282,17 @@ class FeatureStyle extends PureComponent {
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    const { feature } = this.props;
+    if (feature) {
+      this.updateContent();
+    }
+  }
 
   componentDidUpdate(prevProps, prevState) {
     const { feature } = this.props;
     const { iconSize, icon } = this.state;
-    if (feature !== prevProps.feature) {
+    if (feature && feature !== prevProps.feature) {
       this.updateContent();
     }
 
@@ -324,9 +336,13 @@ class FeatureStyle extends PureComponent {
           img.getSrc(),
           iconCategories,
         );
-        icon =
-          FeatureStyle.findIcon(img, iconCategory) ||
-          iconCategories[0].icons[0];
+        if (iconCategory) {
+          icon =
+            FeatureStyle.findIcon(img, iconCategory) ||
+            iconCategories[0].icons[0];
+        } else {
+          [iconCategory] = iconCategories;
+        }
         iconSize = FeatureStyle.findSize(img, iconSizes);
         iconColor = FeatureStyle.findIconColor(img, colors);
       }
@@ -380,7 +396,7 @@ class FeatureStyle extends PureComponent {
   }
 
   applyStyle() {
-    const { feature, styleIdx, iconCategories } = this.props;
+    const { feature, styleIdx } = this.props;
     const {
       useTextStyle,
       font,
@@ -392,6 +408,7 @@ class FeatureStyle extends PureComponent {
       iconSize,
       textColor,
       textSize,
+      iconCategory,
     } = this.state;
 
     const text = useTextStyle ? name : undefined;
@@ -403,9 +420,7 @@ class FeatureStyle extends PureComponent {
       description,
       color,
       icon,
-      iconCategory: iconCategories.find(cat =>
-        cat.icons.some(iconByCategory => icon.id === iconByCategory.id),
-      ),
+      iconCategory,
       iconColor,
       iconSize,
       text,
@@ -447,27 +462,14 @@ class FeatureStyle extends PureComponent {
 
   renderIconStyle() {
     const { useIconStyle, icon, iconSize, iconCategory } = this.state;
-    const { iconSizes } = this.props;
+    const { iconSizes, t, classNameIcons, classNameIconSize } = this.props;
     if (!useIconStyle) {
       return null;
     }
-    console.log(iconCategory);
-    console.log(iconSize);
-    console.log(icon);
     return (
       <>
-        <div>
-          <div>Modify icon size:</div>
-          <Select
-            options={iconSizes}
-            value={iconSize}
-            onChange={(e, newIconSize) => {
-              this.setState({ iconSize: newIconSize });
-            }}
-          />
-        </div>
-        <div>
-          <div>Modify icon:</div>
+        <div className={classNameIcons}>
+          <div>{`${t('Modify icon')}:`}</div>
           <div>
             {iconCategory.icons.map(i => {
               return (
@@ -480,6 +482,9 @@ class FeatureStyle extends PureComponent {
                     width: iconSize.value[0],
                     height: iconSize.value[1],
                   }}
+                  className={
+                    icon && icon.url === i.url ? 'tm-selected' : undefined
+                  }
                 >
                   <img
                     src={i.url}
@@ -491,6 +496,17 @@ class FeatureStyle extends PureComponent {
               );
             })}
           </div>
+        </div>
+
+        <div className={classNameIconSize}>
+          <div>{`${t('Modify icon size')}:`}</div>
+          <Select
+            options={iconSizes}
+            value={iconSize}
+            onChange={(e, newIconSize) => {
+              this.setState({ iconSize: newIconSize });
+            }}
+          />
         </div>
       </>
       /* <label>
@@ -535,23 +551,11 @@ class FeatureStyle extends PureComponent {
   }
 
   render() {
-    const { feature, svgIcons } = this.props;
+    const { feature, className } = this.props;
     if (!feature) {
       return null;
     }
-    return (
-      <div className="tm-feature-style">
-        <button
-          type="button"
-          onClick={() => {
-            this.applyNewStyle();
-          }}
-        >
-          Apply new style
-        </button>
-        {this.renderIconStyle()}
-      </div>
-    );
+    return <div className={className}>{this.renderIconStyle()}</div>;
   }
 }
 

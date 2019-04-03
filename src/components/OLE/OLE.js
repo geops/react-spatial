@@ -61,6 +61,9 @@ const propTypes = {
 
   /* Function triggered when a feature is selected */
   onSelect: PropTypes.func,
+
+  /* Function triggered when a feature is deselected */
+  onDeselect: PropTypes.func,
 };
 
 const defaultProps = {
@@ -80,6 +83,7 @@ const defaultProps = {
   difference: false,
   selectStyle: Styles.default,
   onSelect: () => {},
+  onDeselect: () => {},
 };
 
 /**
@@ -147,6 +151,7 @@ class OLE extends PureComponent {
       difference,
       selectStyle,
       onSelect,
+      onDeselect,
     } = this.props;
 
     if (!map || !layer || !layer.olLayer || !layer.olLayer.getSource()) {
@@ -250,9 +255,17 @@ class OLE extends PureComponent {
           modify,
         ),
       );
-      modifyCtrl.selectInteraction.on('select', e => {
-        onSelect(e.selected[e.selected.length - 1], e);
+
+      modifyCtrl.selectInteraction.getFeatures().on('add', evt => {
+        console.log('add1');
+        onSelect(evt.element);
       });
+
+      modifyCtrl.selectInteraction.getFeatures().on('remove', evt => {
+        console.log('remove1');
+        onDeselect(evt.element);
+      });
+
       ctrls.push(modifyCtrl);
     }
 

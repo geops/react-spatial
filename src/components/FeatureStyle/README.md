@@ -22,7 +22,9 @@ import {Style, Circle,Fill,Icon} from 'ol/style';
 import OLE from 'react-spatial/components/OLE';
 import OSM, {ATTRIBUTION} from 'ol/source/OSM';
 import FeatureStyle from 'react-spatial/components/FeatureStyle';
+import Button from 'react-spatial/components/Button';
 import 'ol/ol.css';
+import './FeatureStyle.md.scss';
 
 class FeatureStyleExample extends React.Component {
   constructor(props) {
@@ -30,14 +32,16 @@ class FeatureStyleExample extends React.Component {
     this.state = {
       selectedFeature: null
     };
-    this.onSelect = this.onSelect.bind(this);
+    this.select = this.select.bind(this);
+    this.deselect = this.deselect.bind(this);
+    this.cancel = this.cancel.bind(this);
 
     this.map = new OLMap();
 
     const feat = new Feature(new Point(map.getView().getCenter()));
     feat.setStyle(new Style({
       image: new Icon({
-        src: 'https://maps.trafimage.ch/static/app_trafimage/img/sbb/sbb-26.png'
+        src: 'src/images/marker.png'
       }),
     }));
 
@@ -55,10 +59,51 @@ class FeatureStyleExample extends React.Component {
     ];
   }
 
-  onSelect(feature) {
+  componentDidUpdate(prevProps, prevState) {
+    const { selectedFeature } = this.state
+
+    if (selectedFeature && !prevState.selectedFeature){
+      let style = selectedFeature.getStyle();
+      style = 
+        (style && Array.isArray(style))
+          ? style.map(s => s.clone())
+          : style.clone();
+      this.oldStyle = style;
+    }
+  }
+
+  select(feature) {
     this.setState({
-      'selectedFeature': feature
+      selectedFeature: feature
     });
+  }
+
+  cancel() {
+    const { selectedFeature } = this.state;
+    selectedFeature.setStyle(this.oldStyle);
+    this.deselect();
+  }
+
+  deselect() {
+    this.setState({
+      selectedFeature: null
+    });
+  }
+
+  renderFeatureStyle() {
+    const { selectedFeature } = this.state
+    if (!selectedFeature) {
+      return null;
+    }
+
+    return (
+      <div className="tm-feature-style-popup">
+        <Button onClick={this.deselect}>X</Button>
+        <FeatureStyle feature={selectedFeature} />
+        <button onClick={this.cancel}>Cancel</button>
+        <button onClick={this.deselect}>Save</button>
+      </div>
+    );
   }
 
   render() {
@@ -72,9 +117,10 @@ class FeatureStyleExample extends React.Component {
         <OLE
           map={this.map}
           layer={this.layers[1]}
-          onSelect={this.onSelect}
+          onSelect={this.select}
+          onDeselect={this.deselect}
         />
-        <FeatureStyle feature={selectedFeature} />
+        {this.renderFeatureStyle()}
       </div>
     );
   }
