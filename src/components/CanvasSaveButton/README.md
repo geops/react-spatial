@@ -25,7 +25,7 @@ class ShareMenuExample extends React.Component {
   }
 
   render() {
-    const extent = [-9794733.326747464, 4282425.233910811, -7588454.942324137, 5385564.4261224745];
+    const extent = [-16681616.919511989, 655523.1517989757, -5312679.080488012, 8482674.848201025];
 
     return (
       <div className="tm-canvas-save-button-example">
