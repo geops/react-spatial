@@ -151,14 +151,14 @@ class CanvasSaveButton extends PureComponent {
         const arrowSize = 80;
 
         // Copyright
-        if (extraData.copyright) {
+        if (extraData && extraData.copyright) {
           destContext.font = '12px Arial';
           destContext.fillStyle = 'black';
           destContext.fillText(extraData.copyright, padding, clip.h - padding);
         }
 
         // North arrow
-        if (extraData.northArrow) {
+        if (extraData && extraData.northArrow) {
           const img = new Image();
           img.src = extraData.northArrow.circled
             ? NorthArrowCircle
