@@ -5,22 +5,11 @@ This demonstrates the use of OLE.
 ```jsx
 import React from 'react';
 import BasicMap from 'react-spatial/components/BasicMap';
-import ConfigReader from 'react-spatial/ConfigReader';
-import Popup from 'react-spatial/components/Popup';
-import ResizeHandler from 'react-spatial/components/ResizeHandler';
 import Layer from 'react-spatial/Layer';
 import VectorLayer from 'react-spatial/VectorLayer';
 import OLMap from 'ol/Map';
-import Feature from 'ol/Feature';
-import Point from 'ol/geom/Point';
 import VectorSource from 'ol/source/Vector';
 import TileLayer from 'ol/layer/Tile';
-import TileGrid from 'ol/tilegrid/TileGrid';
-import TileImageSource from 'ol/source/TileImage';
-import { getCenter } from 'ol/extent';
-import Style from 'ol/style/Style';
-import Circle from 'ol/style/Circle';
-import Fill from 'ol/style/Fill';
 import OLE from 'react-spatial/components/OLE';
 import OSM, {ATTRIBUTION} from 'ol/source/OSM.js';
 import 'ol/ol.css';
