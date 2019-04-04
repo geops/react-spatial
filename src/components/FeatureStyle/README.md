@@ -25,6 +25,7 @@ import OSM, {ATTRIBUTION} from 'ol/source/OSM';
 import FeatureStyle from 'react-spatial/components/FeatureStyle';
 import Button from 'react-spatial/components/Button';
 import Styles from '../../utils/Styles';
+import AddTextIcon from '../../images/text.png';
 import 'ol/ol.css';
 import './FeatureStyle.md.scss';
 
@@ -83,6 +84,7 @@ class FeatureStyleExample extends React.Component {
     // Draw labels
     this.drawCustomsOptions = [{
       style: this.defaultTextStyle.clone(),
+      image: AddTextIcon,
       onDrawEnd: (evt)=> {
         evt.feature.setStyle(this.defaultTextStyle.clone());
       }
