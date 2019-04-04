@@ -1,5 +1,5 @@
 import '../../utils/GlobalsForOle';
-import { PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import OLMap from 'ol/Map';
 import { Editor, control } from 'ole';
@@ -67,6 +67,9 @@ const propTypes = {
 
   /* Function triggered when a feature is deselected */
   onDeselect: PropTypes.func,
+
+  /* CSS class of the container */
+  className: PropTypes.string,
 };
 
 const defaultProps = {
@@ -88,12 +91,18 @@ const defaultProps = {
   selectStyle: Styles.default,
   onSelect: () => {},
   onDeselect: () => {},
+  className: 'tm-ole',
 };
 
 /**
  * This component displays a [OpenLayers Editor](http://openlayers-editor.geops.de/).
  */
 class OLE extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.ref = React.createRef();
+  }
+
   componentDidMount() {
     this.initializeEditor();
   }
@@ -161,9 +170,17 @@ class OLE extends PureComponent {
       onDeselect,
     } = this.props;
 
-    if (!map || !layer || !layer.olLayer || !layer.olLayer.getSource()) {
+    if (
+      !this.ref ||
+      !this.ref.current ||
+      !map ||
+      !layer ||
+      !layer.olLayer ||
+      !layer.olLayer.getSource()
+    ) {
       return;
     }
+
     const source = layer.olLayer.getSource();
     const style = selectStyle;
 
@@ -346,13 +363,16 @@ class OLE extends PureComponent {
     }
 
     if (ctrls.length) {
-      this.editor = new Editor(map);
+      this.editor = new Editor(map, {
+        target: this.ref.current,
+      });
       this.editor.addControls(ctrls);
     }
   }
 
   render() {
-    return null;
+    const { className } = this.props;
+    return <div ref={this.ref} className={className} />;
   }
 }
 
