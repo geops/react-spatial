@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Feature } from 'ol';
-import { Fill, Stroke, Style, Icon } from 'ol/style';
+import { Fill, Stroke, Style, Icon, Text } from 'ol/style';
 import { asString } from 'ol/color';
 import Select from '../Select';
 import Button from '../Button';
@@ -50,6 +50,8 @@ const propTypes = {
   className: PropTypes.string,
   classNameIcons: PropTypes.string,
   classNameIconSize: PropTypes.string,
+  classNameColors: PropTypes.string,
+  classNameTextSize: PropTypes.string,
 };
 
 const defaultProps = {
@@ -59,10 +61,8 @@ const defaultProps = {
   className: 'tm-feature-style',
   classNameIcons: 'tm-modify-icons',
   classNameIconSize: 'tm-modify-icon-size',
-  /* svgIcons: [
-    { src: `data:image/svg+xml;utf8,${encodeURIComponent(NorthArrow)}` },
-    { src: `data:image/svg+xml;utf8,${encodeURIComponent(NorthArrowCircle)}` },
-  ], */
+  classNameColors: 'tm-modify-color',
+  classNameTextSize: 'tm-modify-text-size',
   colors: [
     { name: 'black', fill: [0, 0, 0], border: 'white' },
     { name: 'blue', fill: [0, 0, 255], border: 'white' },
@@ -74,9 +74,9 @@ const defaultProps = {
     { name: 'yellow', fill: [255, 255, 0], border: 'black' },
   ],
   textSizes: [
-    { label: 'small_size', scale: 1 },
-    { label: 'medium_size', scale: 1.5 },
-    { label: 'big_size', scale: 2 },
+    { label: 'small_size', value: 1, scale: 1 },
+    { label: 'medium_size', value: 1.5, scale: 1.5 },
+    { label: 'big_size', value: 2, scale: 2 },
   ],
   iconSizes: [
     { label: 'small_size', value: [24, 24], scale: 0.5 },
@@ -121,7 +121,7 @@ const defaultProps = {
 class FeatureStyle extends PureComponent {
   // Defines a text stroke (white or black) depending on a text color
   static getTextStroke(olColor) {
-    const stroke = Stroke({
+    const stroke = new Stroke({
       color: olColor[1] >= 160 ? [0, 0, 0, 1] : [255, 255, 255, 1],
       width: 3,
     });
@@ -182,17 +182,19 @@ class FeatureStyle extends PureComponent {
       }
     }
     // Red
-    return colors[5];
+    return null;
   }
 
   static findColor(olColor, colors) {
-    const rgb = asString(olColor.slice(0, 3));
+    const rgb = asString(
+      typeof olColor === 'string' ? olColor : olColor.slice(0, 3),
+    );
     for (let i = 0; i < colors.length; i += 1) {
       if (rgb === asString(colors[i].fill)) {
         return colors[i];
       }
     }
-    return colors[5];
+    return null;
   }
 
   // Return the icon url with the good color.
@@ -201,68 +203,88 @@ class FeatureStyle extends PureComponent {
     return `/color/${olColor.toString()}/${icon.id}-24@2x.png`;
   }
 
-  static getUrl(options) {
-    const { icon } = options;
-    const color = options.iconColor.fill;
-    return icon.url || FeatureStyle.getIconUrl(icon, color);
+  static getUrl(icon, iconColor) {
+    return (
+      icon.url || (iconColor && FeatureStyle.getIconUrl(icon, iconColor.fill))
+    );
   }
 
   // Get the current style defined by the properties object
   static updateStyleFromProperties(oldStyle, properties) {
     // Update Fill if it exists
-    const { color } = properties;
-    const fill = oldStyle.getFill();
-    if (fill) {
-      fill.setColor(color.fill.concat(fill.getColor()[3]));
+    const {
+      font,
+      color,
+      icon,
+      iconColor,
+      iconSize,
+      text,
+      textColor,
+      textSize,
+      textRotation,
+    } = properties;
+
+    // Update Fill style if it existed.
+    const fillStyle = oldStyle.getFill();
+    if (fillStyle) {
+      fillStyle.setColor(color.fill.concat(fillStyle.getColor()[3]));
     }
 
-    // Update Stroke if it exists
-    const stroke = oldStyle.getStroke();
-    if (stroke) {
-      stroke.setColor(color.fill.concat(stroke.getColor()[3]));
+    // Update Stroke style if it existed
+    const strokeStyle = oldStyle.getStroke();
+    if (strokeStyle) {
+      strokeStyle.setColor(color.fill.concat(strokeStyle.getColor()[3]));
     }
 
-    // Update text style
-    let text;
-    if (properties.text) {
-      text = oldStyle.getText() || new Text();
-      text.setText(properties.text);
-      text.setScale(properties.textSize.scale);
+    // Update Text style if it existed;
+    let textStyle = oldStyle.getText();
+    if (textStyle) {
+      textStyle = oldStyle.getText() || new Text();
+      textStyle.setText(text);
 
-      if (properties.font) {
-        text.setFont(properties.font);
+      if (textSize && textSize.scale !== 1) {
+        textStyle.setScale(textSize.scale);
       }
 
-      const textColor = properties.textColor.fill.concat([1]);
-      const textFill = text.getFill() || new Fill();
-      textFill.setColor(textColor);
-      text.setFill(textFill);
-      text.setStroke(FeatureStyle.getTextStroke(textColor));
+      if (font) {
+        // textStyle.setFont(font);
+      }
+
+      if (textColor) {
+        const olColor = textColor.fill.concat([1]);
+        const textFill = textStyle.getFill() || new Fill();
+        textFill.setColor(olColor);
+        textStyle.setFill(textFill);
+        textStyle.setStroke(FeatureStyle.getTextStroke(olColor));
+      }
+
+      if (textRotation > 0) {
+        textStyle.setRotation(textRotation);
+      }
     }
 
-    // Update Icon style if it exists
-    let icon = oldStyle.getImage();
-    if (icon instanceof Icon && properties.icon) {
-      const url = FeatureStyle.getUrl(properties);
-      icon = new Icon({
+    // Update Icon style if it existed.
+    let iconStyle = oldStyle.getImage();
+    if (iconStyle instanceof Icon && icon) {
+      const url = FeatureStyle.getUrl(icon, iconColor);
+      iconStyle = new Icon({
         src: url,
-        scale: properties.iconSize.scale,
-        anchor: properties.icon.anchor,
+        scale: iconSize.scale,
+        anchor: icon.anchor,
       });
     }
 
     return new Style({
-      fill,
-      stroke,
-      text,
-      image: icon,
+      fill: fillStyle,
+      stroke: strokeStyle,
+      text: textStyle,
+      image: iconStyle,
       zIndex: oldStyle.getZIndex(),
     });
   }
 
   constructor(props) {
     super(props);
-    this.IDX = 0;
     const { iconCategories, colors, textSizes, iconSizes } = this.props;
     this.state = {
       font: 'arial',
@@ -270,12 +292,12 @@ class FeatureStyle extends PureComponent {
       description: null,
       color: colors[0],
       iconCategory: iconCategories[0],
-      icons: iconCategories[0].icons,
       icon: iconCategories[0].icons[0],
       iconColor: colors[0],
       iconSize: iconSizes[0],
       textColor: colors[0],
       textSize: textSizes[0],
+      textRotation: 0,
       useIconStyle: false,
       useTextStyle: false,
       useColorStyle: false,
@@ -284,25 +306,49 @@ class FeatureStyle extends PureComponent {
 
   componentDidMount() {
     const { feature } = this.props;
-    if (feature) {
+    if (feature && feature.getStyle()) {
       this.updateContent();
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
     const { feature } = this.props;
-    const { iconSize, icon } = this.state;
-    if (feature && feature !== prevProps.feature) {
+    const {
+      font,
+      name,
+      description,
+      icon,
+      iconColor,
+      iconCategory,
+      iconSize,
+      textColor,
+      textSize,
+      textRotation,
+    } = this.state;
+
+    // Update the content of the feature style component.
+    if (feature && feature !== prevProps.feature && feature.getStyle()) {
       this.updateContent();
     }
 
-    if (iconSize !== prevState.iconSize || icon !== prevState.icon) {
+    // Update the feature's style.
+    if (
+      font !== prevState.font ||
+      name !== prevState.name ||
+      description !== prevState.description ||
+      icon !== prevState.icon ||
+      iconColor !== prevState.iconColor ||
+      iconCategory !== prevState.iconCategory ||
+      iconSize !== prevState.iconSize ||
+      textColor !== prevState.textColor ||
+      textSize !== prevState.textSize ||
+      textRotation !== prevState.textRotation
+    ) {
       this.applyStyle();
     }
   }
 
-  // Determines which elements to display in the feature's propereties
-  // tab
+  // Determines which elements to display in the render method.
   updateContent() {
     const {
       feature,
@@ -310,6 +356,7 @@ class FeatureStyle extends PureComponent {
       colors,
       textSizes,
       iconSizes,
+      styleIdx,
     } = this.props;
     let name;
     let description;
@@ -319,18 +366,32 @@ class FeatureStyle extends PureComponent {
     let iconColor;
     let textColor;
     let textSize;
+    let textRotation;
     let useTextStyle = false;
     let useIconStyle = false;
     let useColorStyle = false;
     let color;
 
     if (feature) {
-      const styles = feature.getStyleFunction()();
-      const featStyle = styles[0];
+      const styles =
+        (feature.getStyleFunction() && feature.getStyleFunction()()) || [];
+      let featStyle = styles[styleIdx];
+
+      if (!featStyle) {
+        if (/Point/.test(feature.getGeometry().getType())) {
+          featStyle = new Style({
+            image: new Icon({
+              src: 'images/marker.png',
+            }),
+          });
+        }
+        if (!featStyle) {
+          return;
+        }
+      }
 
       if (featStyle.getImage() instanceof Icon) {
         useIconStyle = true;
-        useTextStyle = true;
         const img = featStyle.getImage();
         iconCategory = FeatureStyle.findCategoryBySource(
           img.getSrc(),
@@ -358,21 +419,23 @@ class FeatureStyle extends PureComponent {
       if (featStyle.getText()) {
         useTextStyle = true;
         name = featStyle.getText().getText();
-        textColor = FeatureStyle.findColor(
-          featStyle
-            .getText()
-            .getFill()
-            .getColor(),
-          colors,
-        );
+        const currColor = featStyle
+          .getText()
+          .getFill()
+          .getColor();
+
+        if (currColor) {
+          textColor = FeatureStyle.findColor(currColor, colors);
+        }
         textSize = FeatureStyle.findSize(
           featStyle.getText(),
           textSizes,
           textSizes[0],
         );
+        textRotation = featStyle.getText().getRotation();
       }
 
-      name = feature.get('name') || '';
+      name = name || feature.get('name') || '';
       description = feature.get('description') || '';
     } else {
       name = '';
@@ -389,6 +452,7 @@ class FeatureStyle extends PureComponent {
       iconColor,
       textColor,
       textSize,
+      textRotation,
       useTextStyle,
       useIconStyle,
       useColorStyle,
@@ -408,6 +472,7 @@ class FeatureStyle extends PureComponent {
       iconSize,
       textColor,
       textSize,
+      textRotation,
       iconCategory,
     } = this.state;
 
@@ -427,29 +492,8 @@ class FeatureStyle extends PureComponent {
       text,
       textColor,
       textSize,
+      textRotation,
     });
-
-    /* const { feature, styleIdx } = this.props;
-    const fill = new Fill({
-      color: 'rgba(0,255,0,0.4)',
-    });
-    const stroke = new Stroke({
-      color: 'rgba(0,255,0,1)',
-      width: 1.25,
-    });
-    const style = new Style({
-      image: ico
-        ? new Icon({
-            src: ico.src,
-          })
-        : new Circle({
-            fill,
-            stroke,
-            radius: 15,
-          }),
-      fill,
-      stroke,
-    }); */
 
     // Set feature's properties
     feature.set('name', text);
@@ -461,12 +505,108 @@ class FeatureStyle extends PureComponent {
     ]);
   }
 
+  renderColors(color, onClick) {
+    const { font } = this.state;
+    const { t, colors, classNameColors } = this.props;
+    return (
+      <div className={classNameColors}>
+        <div>{`${t('Modify color')}:`}</div>
+        <div>
+          {colors.map(c => (
+            <Button
+              key={c.label}
+              className={color === c ? 'tm-selected' : undefined}
+              onClick={e => {
+                onClick(e, c);
+              }}
+            >
+              <div
+                style={{
+                  color: `rgb(${c.fill.toString()})`,
+                  font,
+                  textShadow:
+                    `-1px -1px 0 ${c.border},` +
+                    `1px -1px 0 ${c.border},` +
+                    `-1px 1px 0 ${c.border},` +
+                    `1px 1px 0 ${c.border}`,
+                }}
+              >
+                Aa
+              </div>
+            </Button>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  renderTextStyle() {
+    const {
+      useTextStyle,
+      name,
+      textColor,
+      textSize,
+      textRotation,
+    } = this.state;
+    const { textSizes, t, classNameTextSize } = this.props;
+
+    if (!useTextStyle) {
+      return null;
+    }
+
+    return (
+      <>
+        <div>
+          <div>{`${t('Modify text')}:`}</div>
+          <textarea
+            rows="1"
+            value={name}
+            onChange={e => {
+              this.setState({ name: e.target.value });
+            }}
+          />
+        </div>
+        {this.renderColors(textColor, (e, newColor) => {
+          this.setState({
+            textColor: newColor,
+          });
+        })}
+        <div className={classNameTextSize}>
+          <div>{`${t('Modify text size')}:`}</div>
+          <Select
+            options={textSizes}
+            value={textSize}
+            onChange={(e, newSize) => {
+              this.setState({ textSize: newSize });
+            }}
+          />
+        </div>
+
+        <div>
+          <div>{`${t('Modify text rotation')}:`}</div>
+          <input
+            type="range"
+            min="0"
+            max="360"
+            rows="1"
+            value={((textRotation || 0) * 180) / Math.PI}
+            onChange={e => {
+              this.setState({ textRotation: (e.target.value * Math.PI) / 180 });
+            }}
+          />
+        </div>
+      </>
+    );
+  }
+
   renderIconStyle() {
     const { useIconStyle, icon, iconSize, iconCategory } = this.state;
     const { iconSizes, t, classNameIcons, classNameIconSize } = this.props;
+
     if (!useIconStyle) {
       return null;
     }
+
     return (
       <>
         <div className={classNameIcons}>
@@ -510,82 +650,23 @@ class FeatureStyle extends PureComponent {
           />
         </div>
       </>
-      /* <label>
-        <span translate>{{'modify_icon_category_label'}}:</span>
-        <select ng-model="options.iconCategory"
-                ng-options="s.label | translate for s in options.iconCategories">
-        </select>
-      </label>
-      <label ng-if="options.iconCategory.useColorOption">
-        <span translate>{{'modify_color_label'}}:</span>
-        <div class="ga-select-box ga-select-colors">
-          <div ng-repeat="c in ::options.colors"
-               ng-class="{'ga-selected': (options.iconColor == c)}"
-               ng-click="options.iconColor = c">
-            <div ng-style="::{'background-color': c.name}">
-            </div>
-          </div>
-        </div>
-      </label>
-      <label>
-        <span translate>{{'modify_icon_label'}}:</span>
-        <div class="ga-select-box ga-select-icons"
-             ng-class="{'ga-select-box-open': gaSelectBoxOpen}"
-             ng-style="{color:options.iconColor.name}"
-             ng-if="options.iconCategory.label === cat.label"
-             ng-repeat="cat in options.iconCategories">
-          <i tabindex=1 ng-repeat="i in ::cat.icons"
-             class="fa fa-maki-{{::i.id}}"
-             ng-if="cat.type === 'css'"
-             ng-click="options.icon = i;$event.preventDefault();"> </i>
-          <img ng-src="{{i.url}}" ng-repeat="i in ::cat.icons"
-             class="fa"
-             ng-click="options.icon = i;$event.preventDefault();"
-             ng-if="cat.type === 'img'"
-             height="options.iconSize" width="options.iconSize" ></img>
-          <button class="ga-icon fa fa-caret-down"
-             ng-click="gaSelectBoxOpen =! gaSelectBoxOpen"></button>
-        </div>
-      </label>
-      */
     );
   }
 
   render() {
     const { feature, className } = this.props;
-    if (!feature) {
+    if (!feature || !feature.getStyleFunction()) {
       return null;
     }
-    return <div className={className}>{this.renderIconStyle()}</div>;
+    return (
+      <div className={className}>
+        {this.renderTextStyle()}
+        {this.renderIconStyle()}
+      </div>
+    );
   }
 }
 
-/*
-        {svgIcons.map(ico => {
-          if (ico.src) {
-            return (
-              <img
-                onClick={() => {
-                  this.applyNewStyle(ico);
-                }}
-                src={ico.src}
-              />
-            );
-          }
-          if (ico.reactComp) {
-            return (
-              <div
-                key={Math.random()}
-                onClick={() => {
-                  this.applyNewStyle(ico);
-                }}
-              >
-                {ico.reactComp}
-              </div>
-            );
-          }
-        })}
-        */
 FeatureStyle.propTypes = propTypes;
 FeatureStyle.defaultProps = defaultProps;
 

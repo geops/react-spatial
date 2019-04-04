@@ -68,11 +68,11 @@ const getSelectedOption = (inputValue, options) => {
 };
 
 const getValue = opt => {
-  return typeof opt === 'string' ? opt : opt.value;
+  return opt && (typeof opt === 'string' ? opt : opt.value);
 };
 
 const getLabel = opt => {
-  return typeof opt === 'string' ? opt : opt.label;
+  return opt && (typeof opt === 'string' ? opt : opt.label);
 };
 
 /**

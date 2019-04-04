@@ -17,12 +17,14 @@ import VectorSource from 'ol/source/Vector';
 import TileLayer from 'ol/layer/Tile';
 import TileGrid from 'ol/tilegrid/TileGrid';
 import TileImageSource from 'ol/source/TileImage';
+import Select from 'ol/interaction/Select';
 import { getCenter } from 'ol/extent';
-import {Style, Circle,Fill,Icon} from 'ol/style';
+import { Style, Circle, Fill, Icon, Text, Stroke } from 'ol/style';
 import OLE from 'react-spatial/components/OLE';
 import OSM, {ATTRIBUTION} from 'ol/source/OSM';
 import FeatureStyle from 'react-spatial/components/FeatureStyle';
 import Button from 'react-spatial/components/Button';
+import Styles from '../../utils/Styles';
 import 'ol/ol.css';
 import './FeatureStyle.md.scss';
 
@@ -35,26 +37,109 @@ class FeatureStyleExample extends React.Component {
     this.select = this.select.bind(this);
     this.deselect = this.deselect.bind(this);
     this.cancel = this.cancel.bind(this);
+    this.forceDeselect = this.forceDeselect.bind(this);
 
     this.map = new OLMap();
 
+    this.defaultIconStyle = new Style({
+      image: new Icon({
+        src: 'images/marker.png',
+        scale: 0.5
+      }),
+    });
+
+    this.defaultTextStyle = new Style({
+      text: new Text({
+        font: '16px arial',
+        text: 'My custom text',
+        fill: new Fill({
+          color: [255, 0, 0]
+          }),
+        stroke: new Stroke({ 
+          color:[255,255,255],
+          width: 3
+        }),
+        scale: 1.5,
+        rotation: 0.5
+      }),
+    });
+
+    this.defaultLineStyle =  new Style({
+      stroke: new Stroke({
+        color: 'red',
+        lineDash: [10,10],
+        width: 3
+      }),
+    });
+
+    // Modify options.  
+    /*this.modifyOptions = {
+      style: new Style({
+        image: Styles.default.getImage(),
+        stroke: this.defaultLineStyle.getStroke()
+      })
+    };*/
+
+    // Draw labels
+    this.drawCustomsOptions = [{
+      style: this.defaultTextStyle.clone(),
+      onDrawEnd: (evt)=> {
+        evt.feature.setStyle(this.defaultTextStyle.clone());
+      }
+    }];
+
+    // Draw icons
+    this.drawIconOptions = {
+      style: this.defaultIconStyle.clone(),
+      onDrawEnd: (evt)=> {
+        evt.feature.setStyle(this.defaultIconStyle.clone());
+      }
+    };
+
+    // Draw dashed line
+    this.drawLineOptions = {
+      style: this.defaultLineStyle.clone()
+    };
+
+
+    // Label feature with a custom style  
     const feat = new Feature(new Point(map.getView().getCenter()));
     feat.setStyle(new Style({
-      image: new Icon({
-        src: 'images/marker.png'
+      text: new Text({
+        text: 'My text'
       }),
     }));
 
+    // Icon feature with a custom style 
+    const feat2 = new Feature(new Point([2000000, 8000000]));
+    feat2.setStyle(new Style({
+      image: new Icon({
+        src: 'images/favicon.png',
+        scale: 3
+      }),
+    }));
+
+    // Label feature with a style created by FeatureStyle.
+    // Values must be selected in the form.
+    const feat3 = new Feature(new Point([-8000000, 3000000]));
+    feat3.setStyle(this.defaultTextStyle);
+
+    // Icon feature with a style created by FeatureStyle.
+    // Values must be selected in the form.
+    const feat4 = new Feature(new Point([8000000, 3000000]));
+    feat4.setStyle(this.defaultIconStyle);
+
     this.layers = [
       new Layer({
-        olLayer:new TileLayer({
-          source: new OSM()
+        olLayer: new TileLayer({
+          source: new OSM(),
         })
       }),
       new VectorLayer({
         source: new VectorSource({
-          features: [feat]
+          features: [feat, feat2, feat3, feat4]
         }),
+        style: this.defaultLineStyle.clone()
       })
     ];
   }
@@ -64,11 +149,11 @@ class FeatureStyleExample extends React.Component {
 
     if (selectedFeature && !prevState.selectedFeature){
       let style = selectedFeature.getStyle();
-      style = 
-        (style && Array.isArray(style))
+      style =style && (Array.isArray(style)
           ? style.map(s => s.clone())
-          : style.clone();
+          : style.clone());
       this.oldStyle = style;
+      this.oldGeometry = selectedFeature.getGeometry().clone();
     }
   }
 
@@ -81,7 +166,8 @@ class FeatureStyleExample extends React.Component {
   cancel() {
     const { selectedFeature } = this.state;
     selectedFeature.setStyle(this.oldStyle);
-    this.deselect();
+    selectedFeature.setGeometry(this.oldGeometry);
+    this.forceDeselect();
   }
 
   deselect() {
@@ -90,16 +176,36 @@ class FeatureStyleExample extends React.Component {
     });
   }
 
+  forceDeselect() {
+    const { selectedFeature } = this.state;
+
+    // we remove the feature from the select interaction
+    const int = this.map
+      .getInteractions()
+      .getArray()
+      .find(
+        int =>
+          int instanceof Select &&
+          int.getActive() &&
+          int.getFeatures().getArray().includes(selectedFeature),
+      );
+    if (int) {
+      int.getFeatures().remove(selectedFeature);
+    }
+  }
+
   renderFeatureStyle() {
     const { selectedFeature } = this.state
-    if (!selectedFeature) {
+
+    // Modification of feature Style is only allowed if a feature has a style.
+    if (!selectedFeature || !selectedFeature.getStyleFunction()) {
       return null;
     }
 
     return (
       <div className="tm-feature-style-popup">
-        <Button onClick={this.deselect}>X</Button>
-        <FeatureStyle feature={selectedFeature} />
+        <Button onClick={this.forceDeselect}>X</Button>
+        <FeatureStyle feature={selectedFeature}/>
         <button onClick={this.cancel}>Cancel</button>
         <button onClick={this.deselect}>Save</button>
       </div>
@@ -116,9 +222,14 @@ class FeatureStyleExample extends React.Component {
         />
         <OLE
           map={this.map}
+          drawPoint={this.drawIconOptions}
+          drawLineString={this.drawLineOptions}
+          drawCustoms={this.drawCustomsOptions}
+          modify={this.modifyOptions}
           layer={this.layers[1]}
           onSelect={this.select}
           onDeselect={this.deselect}
+          clearModifySelection={true}
         />
         {this.renderFeatureStyle()}
       </div>

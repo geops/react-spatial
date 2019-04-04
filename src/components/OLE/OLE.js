@@ -20,6 +20,9 @@ const propTypes = {
   /** Control for drawing points, see [doc](http://openlayers-editor.geops.de/api.html). Default to false. */
   drawPoint: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 
+  /** Array of draw options t create custom more drawing controls, see [doc](http://openlayers-editor.geops.de/api.html). Default to false. */
+  drawCustoms: PropTypes.arrayOf(PropTypes.object),
+
   /** Control for drawing lines, see [doc](http://openlayers-editor.geops.de/api.html). Default to false. */
   drawLineString: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 
@@ -70,8 +73,9 @@ const defaultProps = {
   map: undefined,
   layer: undefined,
   cad: false,
-  drawPoint: false,
-  drawLineString: false,
+  drawPoint: true,
+  drawCustoms: [],
+  drawLineString: true,
   drawPolygon: false,
   move: false,
   rotate: false,
@@ -98,6 +102,7 @@ class OLE extends PureComponent {
     const {
       cad,
       drawPoint,
+      drawCustoms,
       drawLineString,
       drawPolygon,
       move,
@@ -113,6 +118,7 @@ class OLE extends PureComponent {
     if (
       cad !== prevProps.cad ||
       drawPoint !== prevProps.drawPoint ||
+      drawCustoms !== prevProps.drawCustoms ||
       drawLineString !== prevProps.drawLineString ||
       drawPolygon !== prevProps.drawPolygon ||
       move !== prevProps.move ||
@@ -139,6 +145,7 @@ class OLE extends PureComponent {
       layer,
       cad,
       drawPoint,
+      drawCustoms,
       drawLineString,
       drawPolygon,
       move,
@@ -164,46 +171,52 @@ class OLE extends PureComponent {
       this.editor.remove();
     }
 
-    if (drawPoint) {
-      ctrls.push(
-        new control.Draw(
-          Object.assign(
-            {
-              source,
-            },
-            drawPoint,
-          ),
+    if (drawPolygon) {
+      drawCustoms.unshift(
+        Object.assign(
+          {
+            type: 'Polygon',
+          },
+          drawLineString,
         ),
       );
     }
 
     if (drawLineString) {
-      ctrls.push(
-        new control.Draw(
-          Object.assign(
-            {
-              type: 'LineString',
-              source,
-            },
-            drawLineString,
-          ),
+      drawCustoms.unshift(
+        Object.assign(
+          {
+            type: 'LineString',
+          },
+          drawLineString,
         ),
       );
     }
 
-    if (drawPolygon) {
-      ctrls.push(
-        new control.Draw(
-          Object.assign(
-            {
-              type: 'Polygon',
-              source,
-            },
-            drawPolygon,
-          ),
+    if (drawPoint) {
+      drawCustoms.unshift(drawPoint);
+    }
+
+    drawCustoms.forEach(opt => {
+      const draw = new control.Draw(
+        Object.assign(
+          {
+            source,
+          },
+          opt,
         ),
       );
-    }
+
+      if (opt.onDrawStart) {
+        draw.drawInteraction.on('drawstart', opt.onDrawStart);
+      }
+
+      if (opt.onDrawEnd) {
+        draw.drawInteraction.on('drawend', opt.onDrawEnd);
+      }
+
+      ctrls.push(draw);
+    });
 
     if (cad) {
       ctrls.push(
