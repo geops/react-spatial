@@ -41,7 +41,7 @@ class FeatureStyleExample extends React.Component {
     const feat = new Feature(new Point(map.getView().getCenter()));
     feat.setStyle(new Style({
       image: new Icon({
-        src: 'src/images/marker.png'
+        src: 'images/marker.png'
       }),
     }));
 

@@ -6,6 +6,7 @@ module.exports = {
   template: {
     favicon: 'src/images/favicon.png',
   },
+  assetsDir: 'src/',
   require: [
     path.join(__dirname, 'src/themes/default/examples.scss'),
     'react-app-polyfill/ie11',

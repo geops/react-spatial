@@ -88,7 +88,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "coverage": "yarn test --coverage --coverageDirectory=coverage",
-    "doc": "styleguidist build",
+    "doc": "styleguidist build && cp -rf src/images styleguide",
     "doc:server": "styleguidist server",
     "start": "yarn doc:server",
     "symlink": "yarn build && cd build && yarn link"

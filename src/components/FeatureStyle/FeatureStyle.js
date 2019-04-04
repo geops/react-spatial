@@ -103,15 +103,15 @@ const defaultProps = {
       icons: [
         {
           id: 1,
-          url: 'src/images/airport.png',
+          url: 'images/airport.png',
         },
         {
           id: 2,
-          url: 'src/images/fuel.png',
+          url: 'images/fuel.png',
         },
         {
           id: 26,
-          url: 'src/images/marker.png',
+          url: 'images/marker.png',
         },
       ],
     },
@@ -414,6 +414,7 @@ class FeatureStyle extends PureComponent {
     const text = useTextStyle ? name : undefined;
 
     // Update the style of the feature with the current style
+    // At this point the select style has been added so the getStyle() returns an array.
     const oldStyles = feature.getStyle();
     const style = FeatureStyle.updateStyleFromProperties(oldStyles[styleIdx], {
       font,
