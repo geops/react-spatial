@@ -178,7 +178,7 @@ class FeatureExportButton extends PureComponent {
 
     const formatString = featString
       ? featString.match(/<(\w+)\s+\w+.*?>/)[1]
-      : null;
+      : 'xml';
 
     const fileName = `exported_features_${now}.${formatString || 'xml'}`;
     const charset = document.characterSet || 'UTF-8';
