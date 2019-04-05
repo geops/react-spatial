@@ -32,7 +32,7 @@ const simpleIcon = new Style({
   }),
 });
 
-describe.only('FeatureStyle', () => {
+describe('FeatureStyle', () => {
   describe('matches snapshot', () => {
     test('when no feature provided', () => {
       const component = renderer.create(<FeatureStyle />);
