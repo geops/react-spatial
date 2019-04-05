@@ -13,6 +13,7 @@ import TileLayer from 'ol/layer/Tile';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
 import Style from 'ol/style/Style';
+import Icon from 'ol/style/Icon';
 import Circle from 'ol/style/Circle';
 import Fill from 'ol/style/Fill';
 import OSM, {ATTRIBUTION} from 'ol/source/OSM.js';
@@ -22,43 +23,56 @@ import FeatureExportButton from 'react-spatial/components/FeatureExportButton';
 class FeatureExportButtonExample extends React.Component {
   constructor(props) {
     super(props);
-
     this.map = new OLMap();
+
+    const featStyle = new Style({
+      image: new Icon({
+        anchor: [0.5, 46],
+        anchorXUnits: 'fraction',
+        anchorYUnits: 'pixels',
+          src: 'https://openlayers.org/en/latest/examples/data/icon.png',
+      }),
+    });
 
     this.layers = [
       new Layer({
-        olLayer:new TileLayer({
-          source: new OSM()
-        })
+        olLayer: new TileLayer({
+          source: new OSM(),
+        }),
       }),
       new VectorLayer({
+        name: 'ExportLayer',
         source: new VectorSource({
           features: [
             new Feature({
-              geometry: new Point([0, 0]),
+              geometry: new Point([819103.972418, 6120013.078324]),
+            }),
+            new Feature({
+              geometry: new Point([873838.856313, 6106009.575876]),
             }),
           ],
         }),
-        style: new Style({
-          image: new Circle({
-            radius: 10,
-            fill: new Fill({
-              color: '#7109e8',
-            }),
-          }),
-        }),
-      })
+      }),
     ];
+
+    // Need to assign a style to each Feature.
+    this.layers[1].olLayer.getSource().forEachFeature(f => {
+      f.setStyle(featStyle)
+    });
   }
 
   render() {
     return (
       <div className="tm-feature-export-example">
         <BasicMap
+          center={[843119.531243, 6111943.000197]}
+          zoom={9}
           map={this.map}
           layers={this.layers}
         />
-        <FeatureExportButton layer={this.layers[1]} />
+        <FeatureExportButton
+          layer={this.layers[1]}
+        />
       </div>
     )
   }
