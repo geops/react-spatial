@@ -4,6 +4,7 @@ import renderer from 'react-test-renderer';
 import { configure, mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { TiImage } from 'react-icons/ti';
+import GPX from 'ol/format/GPX';
 import VectorSource from 'ol/source/Vector';
 import Style from 'ol/style/Style';
 import Icon from 'ol/style/Icon';
@@ -89,7 +90,14 @@ describe('FeatureExportButton', () => {
       expect(exportString.match(/<(\w+)\s+\w+.*?>/)[1]).toBe('kml');
     });
 
-    test.skip('should export another format.', () => {});
+    test('should export gpx format.', () => {
+      const gpxConstructorFc = GPX;
+      const wrapper = mount(
+        <FeatureExportButton format={gpxConstructorFc} layer={iconLayer} />,
+      );
+      const exportString = wrapper.instance().createFeatureString(iconLayer);
+      expect(exportString.match(/<(\w+)\s+\w+.*?>/)[1]).toBe('gpx');
+    });
 
     const iconStyle = new Style({
       image: new Icon({
