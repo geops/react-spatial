@@ -53,7 +53,8 @@ const propTypes = {
   /** Control for creating a difference of geometries, see [doc](http://openlayers-editor.geops.de/api.html). Default to false. */
   difference: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 
-  /** Style used for all ol.interaction.Select used by controls (delete, buffer, union, difference).
+  /**
+   * Style used for all ol.interaction.Select used by controls (delete, buffer, union, difference).
    * This style will be applied on top of the current feature's style or will replace the current layer's style.
    */
   selectStyle: PropTypes.oneOfType([

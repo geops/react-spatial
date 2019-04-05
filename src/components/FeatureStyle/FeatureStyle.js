@@ -7,8 +7,20 @@ import Select from '../Select';
 import Button from '../Button';
 
 const propTypes = {
+  /**
+   *  The feature to modify.
+   */
   feature: PropTypes.instanceOf(Feature),
+
+  /**
+   * Index of the style to modify.
+   * Only necessary feature.getStyleFunction()  returns an array of styles.
+   */
   styleIdx: PropTypes.number,
+
+  /**
+   * List of colors available for modifcation.
+   */
   colors: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,
@@ -16,12 +28,20 @@ const propTypes = {
       border: PropTypes.string,
     }),
   ),
+
+  /**
+   * List of sizes available for text modification.
+   */
   textSizes: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,
       scale: PropTypes.number,
     }),
   ),
+
+  /**
+   * List of sizes available for icon modification.
+   */
   iconSizes: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,
@@ -29,6 +49,10 @@ const propTypes = {
       scale: PropTypes.number,
     }),
   ),
+
+  /**
+   * List of categories of icons available for modification.
+   */
   iconCategories: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
@@ -42,11 +66,35 @@ const propTypes = {
   /** Translation function */
   t: PropTypes.func,
 
+  /**
+   * CSS class for the container.
+   */
   className: PropTypes.string,
+
+  /**
+   * CSS class for the container of the list of icons.
+   */
   classNameIcons: PropTypes.string,
+
+  /**
+   * CSS class for the container of the list of icon sizes.
+   */
   classNameIconSize: PropTypes.string,
+
+  /**
+   * CSS class for the container of the list of colors.
+   */
   classNameColors: PropTypes.string,
+
+  /**
+   * CSS class for the container of the list of text sizes.
+   */
   classNameTextSize: PropTypes.string,
+
+  /**
+   * CSS class of the selected values.
+   */
+  classNameSelected: PropTypes.string,
 };
 
 const defaultProps = {
@@ -58,6 +106,7 @@ const defaultProps = {
   classNameIconSize: 'tm-modify-icon-size',
   classNameColors: 'tm-modify-color',
   classNameTextSize: 'tm-modify-text-size',
+  classNameSelected: 'tm-selected',
   colors: [
     { name: 'black', fill: [0, 0, 0], border: 'white' },
     { name: 'blue', fill: [0, 0, 255], border: 'white' },
@@ -82,14 +131,6 @@ const defaultProps = {
   // regex: pattern for icon category. Mandatory for category type "css".
   //    It must represent the pattern after icon name and start with ^(.*)
   iconCategories: [
-    /* {
-      id: 'modify_icon_category_default_label',
-      label: 'modify_icon_category_default_label',
-      useColorOption: true,
-      type: 'css',
-      regex: getDefaultIconsRegex,
-      icons: iconsCategory0,
-    }, */
     {
       id: 'default',
       useColorOption: false,
@@ -113,7 +154,17 @@ const defaultProps = {
   ],
 };
 
+/**
+ * This component allows to modify an ol.style.Style of a ol.Feature.
+ * Only requirement, the feature.getStyleFunction() must return a ol.style.Style or an array of ol.style.Style.
+ */
 class FeatureStyle extends PureComponent {
+  // Get the current style of a feature and returns an array.
+  static getStyleAsArray(feature) {
+    const styles = feature.getStyleFunction()();
+    return Array.isArray(styles) ? styles : [styles];
+  }
+
   // Defines a text stroke (white or black) depending on a text color
   static getTextStroke(olColor) {
     const stroke = new Stroke({
@@ -137,7 +188,7 @@ class FeatureStyle extends PureComponent {
     return null;
   }
 
-  // Find the corresponding style
+  // Search for the current icon in a category's icons list.
   static findIcon(olIcon, category) {
     const src = olIcon.getSrc();
     const { icons } = category;
@@ -154,6 +205,7 @@ class FeatureStyle extends PureComponent {
     return null;
   }
 
+  // Search for the current size in a sizes list.
   static findSize(olStyle, sizes, dflt) {
     const scale = olStyle.getScale();
     for (let i = 0; i < sizes.length; i += 1) {
@@ -164,6 +216,7 @@ class FeatureStyle extends PureComponent {
     return dflt || sizes[2];
   }
 
+  // Search for the current icon color in a color list.
   static findIconColor(olIcon, colors) {
     const url = olIcon.getSrc();
     // Test if the url use the color service
@@ -180,6 +233,7 @@ class FeatureStyle extends PureComponent {
     return null;
   }
 
+  // Search for the current color in a color list.
   static findColor(olColor, colors) {
     const rgb = asString(
       typeof olColor === 'string' ? olColor : olColor.slice(0, 3),
@@ -192,12 +246,12 @@ class FeatureStyle extends PureComponent {
     return null;
   }
 
-  // Return the icon url with the good color.
+  // Return the icon url with the good color. Only when category.type == 'css'
   static getIconUrl(icon, olColor) {
-    // TODO
     return `/color/${olColor.toString()}/${icon.id}-24@2x.png`;
   }
 
+  // Return the icon url.
   static getUrl(icon, iconColor) {
     return (
       icon.url || (iconColor && FeatureStyle.getIconUrl(icon, iconColor.fill))
@@ -206,7 +260,6 @@ class FeatureStyle extends PureComponent {
 
   // Get the current style defined by the properties object
   static updateStyleFromProperties(oldStyle, properties) {
-    // Update Fill if it exists
     const {
       font,
       color,
@@ -242,7 +295,7 @@ class FeatureStyle extends PureComponent {
       }
 
       if (font) {
-        // textStyle.setFont(font);
+        textStyle.setFont(font);
       }
 
       if (textColor) {
@@ -282,7 +335,7 @@ class FeatureStyle extends PureComponent {
     super(props);
     const { iconCategories, colors, textSizes, iconSizes } = this.props;
     this.state = {
-      font: 'arial',
+      font: '14px  Arial, serif',
       name: null,
       description: null,
       color: colors[0],
@@ -301,7 +354,7 @@ class FeatureStyle extends PureComponent {
 
   componentDidMount() {
     const { feature } = this.props;
-    if (feature && feature.getStyle()) {
+    if (feature && feature.getStyleFunction()) {
       this.updateContent();
     }
   }
@@ -322,7 +375,11 @@ class FeatureStyle extends PureComponent {
     } = this.state;
 
     // Update the content of the feature style component.
-    if (feature && feature !== prevProps.feature && feature.getStyle()) {
+    if (
+      feature &&
+      feature.getStyleFunction() &&
+      feature !== prevProps.feature
+    ) {
       this.updateContent();
     }
 
@@ -354,7 +411,6 @@ class FeatureStyle extends PureComponent {
       styleIdx,
     } = this.props;
     let name;
-    let description;
     let iconCategory;
     let icon;
     let iconSize;
@@ -366,80 +422,57 @@ class FeatureStyle extends PureComponent {
     let useIconStyle = false;
     let useColorStyle = false;
     let color;
+    const featStyle = FeatureStyle.getStyleAsArray(feature)[styleIdx];
 
-    if (feature) {
-      const styles =
-        (feature.getStyleFunction() && feature.getStyleFunction()()) || [];
-      let featStyle = Array.isArray(styles) ? styles[styleIdx] : styles;
+    if (!featStyle) {
+      return;
+    }
 
-      if (!featStyle) {
-        if (/Point/.test(feature.getGeometry().getType())) {
-          featStyle = new Style({
-            image: new Icon({
-              src: 'images/marker.png',
-            }),
-          });
-        }
-        if (!featStyle) {
-          return;
-        }
+    if (featStyle.getImage() instanceof Icon) {
+      useIconStyle = true;
+      const img = featStyle.getImage();
+      iconCategory = FeatureStyle.findCategoryBySource(
+        img.getSrc(),
+        iconCategories,
+      );
+      if (iconCategory) {
+        icon =
+          FeatureStyle.findIcon(img, iconCategory) ||
+          iconCategories[0].icons[0];
+      } else {
+        [iconCategory] = iconCategories;
       }
+      iconSize = FeatureStyle.findSize(img, iconSizes);
+      iconColor = FeatureStyle.findIconColor(img, colors);
+    }
 
-      if (featStyle.getImage() instanceof Icon) {
-        useIconStyle = true;
-        const img = featStyle.getImage();
-        iconCategory = FeatureStyle.findCategoryBySource(
-          img.getSrc(),
-          iconCategories,
-        );
-        if (iconCategory) {
-          icon =
-            FeatureStyle.findIcon(img, iconCategory) ||
-            iconCategories[0].icons[0];
-        } else {
-          [iconCategory] = iconCategories;
-        }
-        iconSize = FeatureStyle.findSize(img, iconSizes);
-        iconColor = FeatureStyle.findIconColor(img, colors);
+    if (!useIconStyle && featStyle.getStroke()) {
+      useColorStyle = true;
+      color = FeatureStyle.findColor(featStyle.getStroke().getColor(), colors);
+    }
+
+    if (featStyle.getText()) {
+      useTextStyle = true;
+      name = featStyle.getText().getText();
+      const currColor = featStyle
+        .getText()
+        .getFill()
+        .getColor();
+
+      if (currColor) {
+        textColor = FeatureStyle.findColor(currColor, colors);
       }
-
-      if (!useIconStyle && featStyle.getStroke()) {
-        useColorStyle = true;
-        color = FeatureStyle.findColor(
-          featStyle.getStroke().getColor(),
-          colors,
-        );
-      }
-
-      if (featStyle.getText()) {
-        useTextStyle = true;
-        name = featStyle.getText().getText();
-        const currColor = featStyle
-          .getText()
-          .getFill()
-          .getColor();
-
-        if (currColor) {
-          textColor = FeatureStyle.findColor(currColor, colors);
-        }
-        textSize = FeatureStyle.findSize(
-          featStyle.getText(),
-          textSizes,
-          textSizes[0],
-        );
-        textRotation = featStyle.getText().getRotation();
-      }
-
-      name = name || feature.get('name') || '';
-      description = feature.get('description') || '';
-    } else {
-      name = '';
-      description = '';
+      textSize = FeatureStyle.findSize(
+        featStyle.getText(),
+        textSizes,
+        textSizes[0],
+      );
+      textRotation = featStyle.getText().getRotation();
     }
 
     this.setState({
-      name,
-      description,
+      name: name || feature.get('name') || '',
+      description: feature.get('description') || '',
       color,
       iconCategory,
       icon,
@@ -474,11 +507,8 @@ class FeatureStyle extends PureComponent {
     const text = useTextStyle ? name : undefined;
 
     // Update the style of the feature with the current style
-    // At this point the select style has been added so the getStyle() returns an array.
-
-    const styles = feature.getStyle();
-    const oldStyle = Array.isArray(styles) ? styles[styleIdx] : styles;
-    const style = FeatureStyle.updateStyleFromProperties(oldStyle, {
+    const oldStyles = FeatureStyle.getStyleAsArray(feature);
+    const style = FeatureStyle.updateStyleFromProperties(oldStyles[styleIdx], {
       font,
       description,
       color,
@@ -495,6 +525,8 @@ class FeatureStyle extends PureComponent {
     // Set feature's properties
     feature.set('name', text);
     feature.set('description', description);
+
+    // Reconstruct the initial styles array.
     feature.setStyle([
       ...oldStyles.splice(0, styleIdx),
       style,
@@ -504,7 +536,7 @@ class FeatureStyle extends PureComponent {
 
   renderColors(color, onClick) {
     const { font } = this.state;
-    const { t, colors, classNameColors } = this.props;
+    const { t, colors, classNameColors, classNameSelected } = this.props;
     return (
       <div className={classNameColors}>
         <div>{`${t('Modify color')}:`}</div>
@@ -512,14 +544,14 @@ class FeatureStyle extends PureComponent {
           {colors.map(c => (
             <Button
               key={c.label}
-              className={color === c ? 'tm-selected' : undefined}
+              className={color === c ? classNameSelected : undefined}
               onClick={e => {
                 onClick(e, c);
               }}
             >
               <div
                 style={{
-                  color: `rgb(${c.fill.toString()})`,
+                  color: `rgb(${c.fill})`,
                   font,
                   textShadow:
                     `-1px -1px 0 ${c.border},` +
@@ -598,7 +630,13 @@ class FeatureStyle extends PureComponent {
 
   renderIconStyle() {
     const { useIconStyle, icon, iconSize, iconCategory } = this.state;
-    const { iconSizes, t, classNameIcons, classNameIconSize } = this.props;
+    const {
+      iconSizes,
+      t,
+      classNameIcons,
+      classNameIconSize,
+      classNameSelected,
+    } = this.props;
 
     if (!useIconStyle) {
       return null;
@@ -621,7 +659,7 @@ class FeatureStyle extends PureComponent {
                     height: iconSize.value[1],
                   }}
                   className={
-                    icon && icon.url === i.url ? 'tm-selected' : undefined
+                    icon && icon.url === i.url ? classNameSelected : undefined
                   }
                 >
                   <img
