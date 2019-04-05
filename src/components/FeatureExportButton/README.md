@@ -3,7 +3,7 @@
 This demonstrates the use of FeatureExportButton.
 
 ```jsx
-import React from  'react';
+import React from 'react';
 import BasicMap from 'react-spatial/components/BasicMap';
 import Layer from 'react-spatial/Layer';
 import VectorLayer from 'react-spatial/VectorLayer';
@@ -14,8 +14,7 @@ import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
 import Style from 'ol/style/Style';
 import Icon from 'ol/style/Icon';
-import Circle from 'ol/style/Circle';
-import Fill from 'ol/style/Fill';
+import GPX from 'ol/format/GPX';
 import OSM, {ATTRIBUTION} from 'ol/source/OSM.js';
 
 import FeatureExportButton from 'react-spatial/components/FeatureExportButton';
@@ -30,7 +29,7 @@ class FeatureExportButtonExample extends React.Component {
         anchor: [0.5, 46],
         anchorXUnits: 'fraction',
         anchorYUnits: 'pixels',
-          src: 'https://openlayers.org/en/latest/examples/data/icon.png',
+        src: 'https://openlayers.org/en/latest/examples/data/icon.png',
       }),
     });
 
@@ -57,24 +56,34 @@ class FeatureExportButtonExample extends React.Component {
 
     // Need to assign a style to each Feature.
     this.layers[1].olLayer.getSource().forEachFeature(f => {
-      f.setStyle(featStyle)
+      f.setStyle(featStyle);
     });
+    // Should pass a constructor function.
+    this.gpxConstructorFc = GPX;
   }
 
   render() {
     return (
-      <div className="tm-feature-export-example">
+      <div>
         <BasicMap
           center={[843119.531243, 6111943.000197]}
           zoom={9}
           map={this.map}
           layers={this.layers}
         />
-        <FeatureExportButton
-          layer={this.layers[1]}
-        />
+        <div className="tm-feature-export-example">
+          <FeatureExportButton layer={this.layers[1]}>
+            Export as KML
+          </FeatureExportButton>
+          <FeatureExportButton
+            format={this.gpxConstructorFc}
+            layer={this.layers[1]}
+          >
+            Export as GPX
+          </FeatureExportButton>
+        </div>
       </div>
-    )
+    );
   }
 }
 

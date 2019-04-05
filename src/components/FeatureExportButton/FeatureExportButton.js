@@ -15,7 +15,7 @@ const propTypes = {
   /**
    *  Children content of the Feature export button.
    */
-  children: PropTypes.element,
+  children: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
 
   /**
    * CSS class of the Feature export button.
@@ -24,6 +24,7 @@ const propTypes = {
 
   /**
    * Format to export features (function).
+   * Supported formats: https://openlayers.org/en/latest/apidoc/module-ol_format_Feature-FeatureFormat.html
    */
   format: PropTypes.func,
 
@@ -56,7 +57,9 @@ const defaultProps = {
 };
 
 /**
- * This component displays a button to export geometry feature.
+ * This component displays a button to export geometry feature.<br>
+ * Default export format is KML, which supported features' style export.<br>
+ * Other formats do not always support style export (See specific format specs).
  */
 class FeatureExportButton extends PureComponent {
   createFeatureString(layer) {
@@ -104,6 +107,17 @@ class FeatureExportButton extends PureComponent {
 
       if (newStyle.image instanceof Circle) {
         newStyle.image = null;
+      }
+
+      if (newStyle.image) {
+        const imgSource = newStyle.image.getSrc();
+        if (!/(http(s?)):\/\//gi.test(imgSource)) {
+          // eslint-disable-next-line no-console
+          console.log(
+            "Local image source isn't support for KML export." +
+              'Should use remote web server',
+          );
+        }
       }
 
       // If only text is displayed we must specify an
