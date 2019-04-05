@@ -58,8 +58,6 @@ class FeatureExportButtonExample extends React.Component {
     this.layers[1].olLayer.getSource().forEachFeature(f => {
       f.setStyle(featStyle);
     });
-    // Should pass a constructor function.
-    this.gpxConstructorFc = GPX;
   }
 
   render() {
@@ -76,7 +74,7 @@ class FeatureExportButtonExample extends React.Component {
             Export as KML
           </FeatureExportButton>
           <FeatureExportButton
-            format={this.gpxConstructorFc}
+            format={GPX}
             layer={this.layers[1]}
           >
             Export as GPX

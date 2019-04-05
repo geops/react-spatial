@@ -49,7 +49,7 @@ const propTypes = {
 
 const defaultProps = {
   children: <FaCloudDownloadAlt focusable={false} />,
-  className: 'tm-feature-export',
+  className: 'tm-button tm-feature-export',
   format: KML,
   projection: 'EPSG:3857',
   tabIndex: 0,
@@ -129,8 +129,8 @@ class FeatureExportButton extends PureComponent {
         });
       }
 
-      const myStyle = new Style(newStyle);
-      clone.setStyle(myStyle);
+      const olStyle = new Style(newStyle);
+      clone.setStyle(olStyle);
       exportFeatures.push(clone);
     });
 
@@ -185,7 +185,7 @@ class FeatureExportButton extends PureComponent {
     const type = `${
       formatString === 'kml'
         ? 'data:application/vnd.google-earth.kml+xml'
-        : 'data:text/plain'
+        : 'data:text/xml'
     };charset=${charset}`;
 
     if (featString) {

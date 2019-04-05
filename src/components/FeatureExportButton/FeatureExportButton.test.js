@@ -91,9 +91,8 @@ describe('FeatureExportButton', () => {
     });
 
     test('should export gpx format.', () => {
-      const gpxConstructorFc = GPX;
       const wrapper = mount(
-        <FeatureExportButton format={gpxConstructorFc} layer={iconLayer} />,
+        <FeatureExportButton format={GPX} layer={iconLayer} />,
       );
       const exportString = wrapper.instance().createFeatureString(iconLayer);
       expect(exportString.match(/<(\w+)\s+\w+.*?>/)[1]).toBe('gpx');

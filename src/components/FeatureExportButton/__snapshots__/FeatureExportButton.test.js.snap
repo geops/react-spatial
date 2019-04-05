@@ -2,7 +2,7 @@
 
 exports[`FeatureExportButton should match snapshot with children passed. 1`] = `
 <div
-  className="tm-feature-export"
+  className="tm-button tm-feature-export"
   onClick={[Function]}
   onKeyPress={[Function]}
   role="button"
