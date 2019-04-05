@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Feature } from 'ol';
-import { Fill, Stroke, Style, Icon, Text } from 'ol/style';
+import { Stroke, Style, Icon } from 'ol/style';
 import { asString } from 'ol/color';
 import Select from '../Select';
 import Button from '../Button';
@@ -14,7 +14,7 @@ const propTypes = {
 
   /**
    * Index of the style to modify.
-   * Only necessary feature.getStyleFunction()  returns an array of styles.
+   * Only necessary feature.getStyleFunction() returns an array of styles.
    */
   styleIdx: PropTypes.number,
 
@@ -87,6 +87,11 @@ const propTypes = {
   classNameColors: PropTypes.string,
 
   /**
+   * CSS class for the container of the list of text colors.
+   */
+  classNameTextColors: PropTypes.string,
+
+  /**
    * CSS class for the container of the list of text sizes.
    */
   classNameTextSize: PropTypes.string,
@@ -105,8 +110,9 @@ const defaultProps = {
   classNameIcons: 'tm-modify-icons',
   classNameIconSize: 'tm-modify-icon-size',
   classNameColors: 'tm-modify-color',
+  classNameTextColors: 'tm-modify-text-color',
   classNameTextSize: 'tm-modify-text-size',
-  classNameSelected: 'tm-selected',
+  classNameSelected: 'tm-button tm-selected',
   colors: [
     { name: 'black', fill: [0, 0, 0], border: 'white' },
     { name: 'blue', fill: [0, 0, 255], border: 'white' },
@@ -174,14 +180,10 @@ class FeatureStyle extends PureComponent {
     return stroke;
   }
 
-  static findCategoryBySource(src, categories) {
+  static findCategoryBySource(olIcon, categories) {
     for (let i = 0; i < categories.length; i += 1) {
       const c = categories[i];
-      const regex = c.type === 'img' ? new RegExp(`^(.*)${c.id}`) : c.regex();
-      if (
-        regex.test(src) ||
-        (c.type === 'img' && c.icons.find(ico => ico.url === src))
-      ) {
+      if (FeatureStyle.findIcon(olIcon, c)) {
         return c;
       }
     }
@@ -216,23 +218,6 @@ class FeatureStyle extends PureComponent {
     return dflt || sizes[2];
   }
 
-  // Search for the current icon color in a color list.
-  static findIconColor(olIcon, colors) {
-    const url = olIcon.getSrc();
-    // Test if the url use the color service
-    const colorReg = /\/([0-9]{1,3},[0-9]{1,3},[0-9]{1,3})\//;
-    const rgb = url.match(colorReg);
-    if (rgb) {
-      for (let i = 0; i < colors.length; i += 1) {
-        if (colors[i].fill.toString() === rgb[1].toString()) {
-          return colors[i];
-        }
-      }
-    }
-    // Red
-    return null;
-  }
-
   // Search for the current color in a color list.
   static findColor(olColor, colors) {
     const rgb = asString(
@@ -246,25 +231,12 @@ class FeatureStyle extends PureComponent {
     return null;
   }
 
-  // Return the icon url with the good color. Only when category.type == 'css'
-  static getIconUrl(icon, olColor) {
-    return `/color/${olColor.toString()}/${icon.id}-24@2x.png`;
-  }
-
-  // Return the icon url.
-  static getUrl(icon, iconColor) {
-    return (
-      icon.url || (iconColor && FeatureStyle.getIconUrl(icon, iconColor.fill))
-    );
-  }
-
   // Get the current style defined by the properties object
   static updateStyleFromProperties(oldStyle, properties) {
     const {
       font,
       color,
       icon,
-      iconColor,
       iconSize,
       text,
       textColor,
@@ -274,20 +246,19 @@ class FeatureStyle extends PureComponent {
 
     // Update Fill style if it existed.
     const fillStyle = oldStyle.getFill();
-    if (fillStyle) {
+    if (fillStyle && color) {
       fillStyle.setColor(color.fill.concat(fillStyle.getColor()[3]));
     }
 
     // Update Stroke style if it existed
     const strokeStyle = oldStyle.getStroke();
-    if (strokeStyle) {
+    if (strokeStyle && color) {
       strokeStyle.setColor(color.fill.concat(strokeStyle.getColor()[3]));
     }
 
     // Update Text style if it existed;
-    let textStyle = oldStyle.getText();
+    const textStyle = oldStyle.getText();
     if (textStyle) {
-      textStyle = oldStyle.getText() || new Text();
       textStyle.setText(text);
 
       if (textSize && textSize.scale !== 1) {
@@ -300,7 +271,7 @@ class FeatureStyle extends PureComponent {
 
       if (textColor) {
         const olColor = textColor.fill.concat([1]);
-        const textFill = textStyle.getFill() || new Fill();
+        const textFill = textStyle.getFill();
         textFill.setColor(olColor);
         textStyle.setFill(textFill);
         textStyle.setStroke(FeatureStyle.getTextStroke(olColor));
@@ -314,9 +285,8 @@ class FeatureStyle extends PureComponent {
     // Update Icon style if it existed.
     let iconStyle = oldStyle.getImage();
     if (iconStyle instanceof Icon && icon) {
-      const url = FeatureStyle.getUrl(icon, iconColor);
       iconStyle = new Icon({
-        src: url,
+        src: icon.url,
         scale: iconSize.scale,
         anchor: icon.anchor,
       });
@@ -341,7 +311,6 @@ class FeatureStyle extends PureComponent {
       color: colors[0],
       iconCategory: iconCategories[0],
       icon: iconCategories[0].icons[0],
-      iconColor: colors[0],
       iconSize: iconSizes[0],
       textColor: colors[0],
       textSize: textSizes[0],
@@ -365,9 +334,8 @@ class FeatureStyle extends PureComponent {
       font,
       name,
       description,
+      color,
       icon,
-      iconColor,
-      iconCategory,
       iconSize,
       textColor,
       textSize,
@@ -388,9 +356,8 @@ class FeatureStyle extends PureComponent {
       font !== prevState.font ||
       name !== prevState.name ||
       description !== prevState.description ||
+      color !== prevState.color ||
       icon !== prevState.icon ||
-      iconColor !== prevState.iconColor ||
-      iconCategory !== prevState.iconCategory ||
       iconSize !== prevState.iconSize ||
       textColor !== prevState.textColor ||
       textSize !== prevState.textSize ||
@@ -414,7 +381,6 @@ class FeatureStyle extends PureComponent {
     let iconCategory;
     let icon;
     let iconSize;
-    let iconColor;
     let textColor;
     let textSize;
     let textRotation;
@@ -431,19 +397,13 @@ class FeatureStyle extends PureComponent {
     if (featStyle.getImage() instanceof Icon) {
       useIconStyle = true;
       const img = featStyle.getImage();
-      iconCategory = FeatureStyle.findCategoryBySource(
-        img.getSrc(),
-        iconCategories,
-      );
+      iconCategory = FeatureStyle.findCategoryBySource(img, iconCategories);
       if (iconCategory) {
-        icon =
-          FeatureStyle.findIcon(img, iconCategory) ||
-          iconCategories[0].icons[0];
+        icon = FeatureStyle.findIcon(img, iconCategory);
       } else {
         [iconCategory] = iconCategories;
       }
       iconSize = FeatureStyle.findSize(img, iconSizes);
-      iconColor = FeatureStyle.findIconColor(img, colors);
     }
 
     if (!useIconStyle && featStyle.getStroke()) {
@@ -458,10 +418,7 @@ class FeatureStyle extends PureComponent {
         .getText()
         .getFill()
         .getColor();
-
-      if (currColor) {
-        textColor = FeatureStyle.findColor(currColor, colors);
-      }
+      textColor = FeatureStyle.findColor(currColor, colors);
       textSize = FeatureStyle.findSize(
         featStyle.getText(),
         textSizes,
@@ -477,7 +434,6 @@ class FeatureStyle extends PureComponent {
       iconCategory,
       icon,
       iconSize,
-      iconColor,
       textColor,
       textSize,
       textRotation,
@@ -496,7 +452,6 @@ class FeatureStyle extends PureComponent {
       description,
       color,
       icon,
-      iconColor,
       iconSize,
       textColor,
       textSize,
@@ -514,7 +469,6 @@ class FeatureStyle extends PureComponent {
       color,
       icon,
       iconCategory,
-      iconColor,
       iconSize,
       text,
       textColor,
@@ -535,7 +489,6 @@ class FeatureStyle extends PureComponent {
   }
 
   renderColors(color, onClick) {
-    const { font } = this.state;
     const { t, colors, classNameColors, classNameSelected } = this.props;
     return (
       <div className={classNameColors}>
@@ -543,7 +496,36 @@ class FeatureStyle extends PureComponent {
         <div>
           {colors.map(c => (
             <Button
-              key={c.label}
+              key={c.name}
+              className={color === c ? classNameSelected : undefined}
+              onClick={e => {
+                onClick(e, c);
+              }}
+            >
+              <div
+                style={{
+                  backgroundColor: `rgb(${c.fill})`,
+                  width: '100%',
+                  height: '100%',
+                }}
+              />
+            </Button>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  renderTextColors(color, onClick) {
+    const { font } = this.state;
+    const { t, colors, classNameTextColors, classNameSelected } = this.props;
+    return (
+      <div className={classNameTextColors}>
+        <div>{`${t('Modify color')}:`}</div>
+        <div>
+          {colors.map(c => (
+            <Button
+              key={c.name}
               className={color === c ? classNameSelected : undefined}
               onClick={e => {
                 onClick(e, c);
@@ -566,6 +548,24 @@ class FeatureStyle extends PureComponent {
           ))}
         </div>
       </div>
+    );
+  }
+
+  renderColorStyle() {
+    const { useColorStyle, color } = this.state;
+
+    if (!useColorStyle) {
+      return null;
+    }
+
+    return (
+      <>
+        {this.renderColors(color, (e, newColor) => {
+          this.setState({
+            color: newColor,
+          });
+        })}
+      </>
     );
   }
 
@@ -595,7 +595,7 @@ class FeatureStyle extends PureComponent {
             }}
           />
         </div>
-        {this.renderColors(textColor, (e, newColor) => {
+        {this.renderTextColors(textColor, (e, newColor) => {
           this.setState({
             textColor: newColor,
           });
@@ -697,6 +697,7 @@ class FeatureStyle extends PureComponent {
       <div className={className}>
         {this.renderTextStyle()}
         {this.renderIconStyle()}
+        {this.renderColorStyle()}
       </div>
     );
   }

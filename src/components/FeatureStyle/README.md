@@ -1,5 +1,6 @@
 #
 
+#
 This demonstrates the use of FeatureStyle.
 
 ```jsx
@@ -29,7 +30,7 @@ import AddTextIcon from '../../images/text.png';
 import 'ol/ol.css';
 import './FeatureStyle.md.scss';
 
-class FeatureStyleExample extends React.Component {
+class ComplexFeatureStyleExample extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -87,8 +88,14 @@ class FeatureStyleExample extends React.Component {
       image: AddTextIcon,
       onDrawEnd: (evt)=> {
         evt.feature.setStyle(this.defaultTextStyle.clone());
-      }
-    }];
+      }},{
+      style: this.defaultLineStyle.clone(),
+      type: 'LineString',
+      image: AddTextIcon,
+      onDrawEnd: (evt)=> {
+        evt.feature.setStyle(this.defaultLineStyle.clone());
+      }}
+    ];
 
     // Draw icons
     this.drawIconOptions = {
@@ -106,11 +113,11 @@ class FeatureStyleExample extends React.Component {
 
     // Label feature with a custom style  
     const feat = new Feature(new Point(map.getView().getCenter()));
-    feat.setStyle(new Style({
+    feat.setStyle([new Style({
       text: new Text({
         text: 'My text'
       }),
-    }));
+    })]);
 
     // Icon feature with a custom style 
     const feat2 = new Feature(new Point([2000000, 8000000]));
@@ -131,6 +138,11 @@ class FeatureStyleExample extends React.Component {
     const feat4 = new Feature(new Point([8000000, 3000000]));
     feat4.setStyle(this.defaultIconStyle);
 
+    // Icon feature with a style created by FeatureStyle.
+    // Values must be selected in the form.
+    const feat5 = new Feature(new Point([8000000, 3000000]));
+    feat5.setStyle(this.defaultLineStyle);
+
     this.layers = [
       new Layer({
         olLayer: new TileLayer({
@@ -139,7 +151,7 @@ class FeatureStyleExample extends React.Component {
       }),
       new VectorLayer({
         source: new VectorSource({
-          features: [feat, feat2, feat3, feat4]
+          features: [feat, feat2, feat3, feat4, feat5]
         }),
         style: this.defaultLineStyle.clone()
       })
@@ -239,5 +251,5 @@ class FeatureStyleExample extends React.Component {
   }
 }
 
-<FeatureStyleExample />;
+<ComplexFeatureStyleExample />;
 ```

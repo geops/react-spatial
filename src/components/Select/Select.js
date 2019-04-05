@@ -84,11 +84,10 @@ const Select = props => {
     return null;
   }
   const inputValue = getValue(value);
-
   return (
     <select
       className={className}
-      value={inputValue}
+      value={`${inputValue}`}
       onChange={evt => {
         onChange(evt, getSelectedOption(evt.target.value, options));
       }}
