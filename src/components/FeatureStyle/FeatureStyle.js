@@ -9,12 +9,6 @@ import Button from '../Button';
 const propTypes = {
   feature: PropTypes.instanceOf(Feature),
   styleIdx: PropTypes.number,
-  /* svgIcons: PropTypes.arrayOf(
-    PropTypes.shape({
-      url: PropTypes.url,
-      reactComp: PropTypes.element,
-    }),
-  ), */
   colors: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,
@@ -47,6 +41,7 @@ const propTypes = {
 
   /** Translation function */
   t: PropTypes.func,
+
   className: PropTypes.string,
   classNameIcons: PropTypes.string,
   classNameIconSize: PropTypes.string,
@@ -375,7 +370,7 @@ class FeatureStyle extends PureComponent {
     if (feature) {
       const styles =
         (feature.getStyleFunction() && feature.getStyleFunction()()) || [];
-      let featStyle = styles[styleIdx];
+      let featStyle = Array.isArray(styles) ? styles[styleIdx] : styles;
 
       if (!featStyle) {
         if (/Point/.test(feature.getGeometry().getType())) {
@@ -480,8 +475,10 @@ class FeatureStyle extends PureComponent {
 
     // Update the style of the feature with the current style
     // At this point the select style has been added so the getStyle() returns an array.
-    const oldStyles = feature.getStyle();
-    const style = FeatureStyle.updateStyleFromProperties(oldStyles[styleIdx], {
+
+    const styles = feature.getStyle();
+    const oldStyle = Array.isArray(styles) ? styles[styleIdx] : styles;
+    const style = FeatureStyle.updateStyleFromProperties(oldStyle, {
       font,
       description,
       color,
