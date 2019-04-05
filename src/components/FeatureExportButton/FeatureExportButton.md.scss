@@ -1,0 +1,16 @@
+.tm-feature-export-example {
+  display: flex;
+  padding: 15px 0;
+
+  .tm-feature-export {
+    margin-right: 15px;
+    width: 150px;
+    padding: 5px;
+    border-radius: 10px;
+    border: 2px solid $gray-lighter;
+
+    &:hover {
+      background-color: $gray-lighter;
+    }
+  }
+}

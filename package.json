@@ -53,6 +53,7 @@
   },
   "dependencies": {
     "core-js": "^3.0.0",
+    "jest-environment-jsdom-fourteen": "^0.1.0",
     "node-sass": "^4.11.0",
     "query-string": "^6.4.2",
     "react-app-polyfill": "^0.2.2",
@@ -78,7 +79,8 @@
     },
     "snapshotSerializers": [
       "jest-serializer-html"
-    ]
+    ],
+    "testEnvironment": "jest-environment-jsdom-fourteen"
   },
   "scripts": {
     "prebuild": "rm -rf build/",
