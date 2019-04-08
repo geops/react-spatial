@@ -20,7 +20,7 @@ const propTypes = {
   /** Control for drawing points, see [doc](http://openlayers-editor.geops.de/api.html). Default to false. */
   drawPoint: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 
-  /** Array of draw options t create custom more drawing controls, see [doc](http://openlayers-editor.geops.de/api.html). Default to false. */
+  /** Array of draw options to create custom more drawing controls, see [doc](http://openlayers-editor.geops.de/api.html). Default to false. */
   drawCustoms: PropTypes.arrayOf(PropTypes.object),
 
   /** Control for drawing lines, see [doc](http://openlayers-editor.geops.de/api.html). Default to false. */
