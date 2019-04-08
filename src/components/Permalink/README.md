@@ -33,7 +33,7 @@ class PermalinkExample extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="tm-permalink-example">
         <BasicMap
           map={this.map}
           center={this.center}
@@ -44,7 +44,7 @@ class PermalinkExample extends React.Component {
           map={this.map}
           params={this.params}
         />
-        <div className="tm-permalink-example">
+        <div>
           <Button
             className="tm-button tm-permalink-button"
             onClick={() => this.toggleVisibility()}

@@ -6,7 +6,7 @@ import MapEvent from 'ol/MapEvent';
 import OLMap from 'ol/Map';
 import View from 'ol/View';
 import data from '../../../data/TreeData';
-import data2 from '../../../data/exampleData';
+import data2 from '../../../data/ExampleData';
 import LayerService from '../../LayerService';
 import ConfigReader from '../../ConfigReader';
 import Permalink from './Permalink';

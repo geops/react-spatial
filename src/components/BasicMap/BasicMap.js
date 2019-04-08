@@ -216,6 +216,17 @@ class BasicMap extends Component {
     }
   }
 
+  componentWillUnmount() {
+    const { onFeaturesHover } = this.props;
+    ['moveend', 'singleclick'].forEach(event => {
+      this.map.removeEventListener(event);
+    });
+
+    if (onFeaturesHover) {
+      this.map.removeEventListener('pointermove');
+    }
+  }
+
   setLayers(layers) {
     this.map.getLayers().clear();
     for (let i = 0; i < layers.length; i += 1) {

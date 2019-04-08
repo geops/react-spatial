@@ -45,8 +45,10 @@ class Permalink extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mapParams: null,
-      layersParams: null,
+      x: undefined,
+      y: undefined,
+      z: undefined,
+      layers: undefined,
     };
   }
 
@@ -62,12 +64,29 @@ class Permalink extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { layerService } = this.props;
+    const { map, layerService } = this.props;
 
     if (layerService !== prevProps.layerService) {
       this.updateLayerService();
     }
+
+    if (map !== prevProps.map) {
+      map.on('moveend', () => this.onMapMoved());
+    }
+
     this.updateHistory();
+  }
+
+  componentWillUnmount() {
+    const { layerService, map } = this.props;
+
+    if (map) {
+      map.removeEventListener('moveend');
+    }
+
+    if (layerService) {
+      layerService.unlistenChangeEvt('change:visible');
+    }
   }
 
   onMapMoved() {
@@ -76,11 +95,9 @@ class Permalink extends Component {
     const { center } = mapView.getProperties();
 
     this.setState({
-      mapParams: {
-        x: center[0],
-        y: center[1],
-        z: mapView.getZoom(),
-      },
+      x: center[0],
+      y: center[1],
+      z: mapView.getZoom(),
     });
   }
 
@@ -94,36 +111,36 @@ class Permalink extends Component {
 
   updateLayers(layerService) {
     this.setState({
-      layersParams: {
-        layers: layerService
-          .getLayers()
-          .filter(l => l.isBaseLayer !== true)
-          .filter(l => l.getVisibleChildren().length || l.getVisible())
-          .map(l => {
-            if (l.getVisibleChildren().length) {
-              return l.getVisibleChildren();
-            }
-            if (l.getVisible()) {
-              return l;
-            }
-            return null;
-          })
-          .reduce((pre, cur) => pre.concat(cur), [])
-          .map(l => l.id)
-          .join(','),
-      },
+      layers: layerService
+        .getLayersAsFlatArray()
+        .filter(l => l.isBaseLayer !== true)
+        .filter(l => l.getVisible())
+        .filter(l => l.hasVisibleChildren() === false)
+        .reduce((pre, cur) => pre.concat(cur), [])
+        .map(l => l.id)
+        .join(','),
     });
   }
 
   updateHistory() {
     const { params, history } = this.props;
-    const { mapParams, layersParams } = this.state;
+    const { x, y, z, layers } = this.state;
+
+    const parameters = {
+      ...{ x, y, z },
+      ...{ layers },
+    };
+
+    Object.keys(parameters).forEach(key => {
+      if (parameters[key] === undefined) {
+        delete parameters[key];
+      }
+    });
 
     const qsStr = qs.stringify(
       {
         ...params,
-        ...layersParams,
-        ...mapParams,
+        ...parameters,
       },
       { encode: false },
     );
