@@ -47,7 +47,7 @@ class ComplexFeatureStyleExample extends React.Component {
         font: '16px arial',
         text: 'My custom text',
         fill: new Fill({
-          color: [255, 0, 0]
+          color: [255, 0, 0],
           }),
         stroke: new Stroke({ 
           color:[255,255,255],
