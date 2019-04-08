@@ -2,6 +2,7 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'query-string';
 import OLMap from 'ol/Map';
+import { unByKey } from 'ol/Observable';
 import LayerService from '../../LayerService';
 
 const propTypes = {
@@ -50,12 +51,15 @@ class Permalink extends Component {
       z: undefined,
       layers: undefined,
     };
+    this.moveEndRef = null;
   }
 
   componentDidMount() {
     const { map, layerService } = this.props;
     if (map) {
-      map.on('moveend', () => this.onMapMoved());
+      this.moveEndRef = map.on('moveend', () => {
+        this.onMapMoved();
+      });
     }
 
     if (layerService) {
@@ -81,7 +85,7 @@ class Permalink extends Component {
     const { layerService, map } = this.props;
 
     if (map) {
-      map.removeEventListener('moveend');
+      unByKey(this.moveEndRef);
     }
 
     if (layerService) {
