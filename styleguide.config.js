@@ -20,6 +20,7 @@ module.exports = {
     text: 'Fork me on GitHub',
   },
   context: {
+    exampleData: path.join(__dirname, 'data/ExampleData'),
     treeData: path.join(__dirname, 'data/TreeData'),
     topicData: path.join(__dirname, 'data/TopicData'),
   },

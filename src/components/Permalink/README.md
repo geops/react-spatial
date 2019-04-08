@@ -3,76 +3,55 @@
 This demonstrates the use of Permalink.
 
 ```jsx
-import React from  'react'
+import React from 'react'
 import Permalink from 'react-spatial/components/Permalink';
 import BasicMap from 'react-spatial/components/BasicMap';
+import LayerService from 'react-spatial/LayerService';
+import Button from 'react-spatial/components/Button';
 import OLMap from 'ol/Map';
 import ConfigReader from '../../ConfigReader';
 
 class PermalinkExample extends React.Component {
   constructor(props) {
     super(props);
-    this.map = new OLMap({controls:[]});
+    this.map = new OLMap({ controls: [] });
     this.center = [-10997148, 4569099];
     this.zoom = 3;
 
-    const layers = ConfigReader.readConfig(
-      this.map,
-      treeData,
-    );
+    this.layers = ConfigReader.readConfig(this.map, treeData);
+    this.layerService = new LayerService(this.layers);
 
-    this.layersParam = layers
-      .filter(l => l.isBaseLayer !== true)
-      .map(l => l.getVisibleChildren())
-      .reduce((pre, cur) => { return pre.concat(cur) })
-      .map(l => l.id)
-      .join(',');
-
-    this.state = {
-      params: {
-        layers: this.layersParam,
-        zoom: this.zoom,
-        x: this.center[0],
-        y: this.center[1],
-      },
+    this.params = {
+      mode: 'custom',
     };
   }
 
-  onMapMoved(evt) {
-    const newZoom = evt.map.getView().getZoom();
-    const newCenter = evt.map.getView().getCenter();
-
-    if (this.zoom !== newZoom) {
-      this.zoom = newZoom;
-    }
-
-    if (this.center[0] !== newCenter[0] || this.center[1] !== newCenter[1]) {
-      this.center = newCenter;
-    }
-
-    this.setState({
-      params: {
-        layers: this.layersParam,
-        zoom: this.zoom,
-        x: this.center[0],
-        y: this.center[1],
-      },
-    });
+  toggleVisibility() {
+    const lineLayer = this.layerService.getLayer('USA Population Density');
+    lineLayer.setVisible(!lineLayer.getVisible())
   }
 
   render() {
-    const { params } = this.state;
-
     return (
       <div className="tm-permalink-example">
         <BasicMap
           map={this.map}
           center={this.center}
-          onMapMoved={evt => this.onMapMoved(evt)}
           zoom={this.zoom}
-          layers={this.layers}
         />
-        <Permalink params={params} />
+        <Permalink
+          layerService={this.layerService}
+          map={this.map}
+          params={this.params}
+        />
+        <div>
+          <Button
+            className="tm-button tm-permalink-button"
+            onClick={() => this.toggleVisibility()}
+          >
+            Toggle population layer
+          </Button>
+        </div>
       </div>
     );
   }
