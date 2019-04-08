@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`FeatureStyle matches snapshot when feature has a styleFunction() which returns  a style object. 1`] = `
+exports[`FeatureStyler matches snapshot when feature has a styleFunction() which returns  a style object. 1`] = `
 <div
   className="tm-feature-style"
 >
@@ -119,7 +119,7 @@ exports[`FeatureStyle matches snapshot when feature has a styleFunction() which 
 </div>
 `;
 
-exports[`FeatureStyle matches snapshot when feature has a styleFunction() which returns  an array of 3 styles targeting the one at index 1. 1`] = `
+exports[`FeatureStyler matches snapshot when feature has a styleFunction() which returns  an array of 3 styles targeting the one at index 1. 1`] = `
 <div
   className="tm-feature-style"
 >
@@ -338,7 +338,7 @@ exports[`FeatureStyle matches snapshot when feature has a styleFunction() which 
 </div>
 `;
 
-exports[`FeatureStyle matches snapshot when feature has a styleFunction() which returns  an array of one style. 1`] = `
+exports[`FeatureStyler matches snapshot when feature has a styleFunction() which returns  an array of one style. 1`] = `
 <div
   className="tm-feature-style"
 >
@@ -457,13 +457,13 @@ exports[`FeatureStyle matches snapshot when feature has a styleFunction() which 
 </div>
 `;
 
-exports[`FeatureStyle matches snapshot when feature has a styleFunction() which returns  an empty array. 1`] = `
+exports[`FeatureStyler matches snapshot when feature has a styleFunction() which returns  an empty array. 1`] = `
 <div
   className="tm-feature-style"
 />
 `;
 
-exports[`FeatureStyle matches snapshot when feature has a styleFunction() which returns a style with color values selected from properties. 1`] = `
+exports[`FeatureStyler matches snapshot when feature has a styleFunction() which returns a style with color values selected from properties. 1`] = `
 <div
   className="tm-feature-style"
 >
@@ -615,7 +615,7 @@ exports[`FeatureStyle matches snapshot when feature has a styleFunction() which 
 </div>
 `;
 
-exports[`FeatureStyle matches snapshot when feature has a styleFunction() which returns a style with icon and text values selected from properties. 1`] = `
+exports[`FeatureStyler matches snapshot when feature has a styleFunction() which returns a style with icon and text values selected from properties. 1`] = `
 <div
   className="tm-feature-style"
 >
@@ -946,6 +946,6 @@ exports[`FeatureStyle matches snapshot when feature has a styleFunction() which 
 </div>
 `;
 
-exports[`FeatureStyle matches snapshot when feature has no styleFunction() defined 1`] = `null`;
+exports[`FeatureStyler matches snapshot when feature has no styleFunction() defined 1`] = `null`;
 
-exports[`FeatureStyle matches snapshot when no feature provided 1`] = `null`;
+exports[`FeatureStyler matches snapshot when no feature provided 1`] = `null`;

@@ -5,7 +5,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import renderer from 'react-test-renderer';
 import { Feature } from 'ol';
 import { Fill, Stroke, Style, Icon, Text } from 'ol/style';
-import FeatureStyle from '.';
+import FeatureStyler from '.';
 
 configure({ adapter: new Adapter() });
 
@@ -32,17 +32,17 @@ const simpleIcon = new Style({
   }),
 });
 
-describe('FeatureStyle', () => {
+describe('FeatureStyler', () => {
   describe('matches snapshot', () => {
     test('when no feature provided', () => {
-      const component = renderer.create(<FeatureStyle />);
+      const component = renderer.create(<FeatureStyler />);
       const tree = component.toJSON();
       expect(tree).toMatchSnapshot();
     });
 
     test('when feature has no styleFunction() defined', () => {
       const component = renderer.create(
-        <FeatureStyle feature={new Feature()} />,
+        <FeatureStyler feature={new Feature()} />,
       );
       const tree = component.toJSON();
       expect(tree).toMatchSnapshot();
@@ -87,7 +87,7 @@ describe('FeatureStyle', () => {
       ].forEach(s => {
         test(`returns ${s.descr}.`, () => {
           const component = renderer.create(
-            <FeatureStyle feature={s.feature} styleIdx={s.idx} />,
+            <FeatureStyler feature={s.feature} styleIdx={s.idx} />,
           );
           const tree = component.toJSON();
           expect(tree).toMatchSnapshot();
@@ -123,7 +123,7 @@ describe('FeatureStyle', () => {
         });
         const feature = new Feature();
         feature.setStyle(completeStyleModififiable);
-        const component = renderer.create(<FeatureStyle feature={feature} />);
+        const component = renderer.create(<FeatureStyler feature={feature} />);
         const tree = component.toJSON();
         expect(tree).toMatchSnapshot();
       });
@@ -140,7 +140,7 @@ describe('FeatureStyle', () => {
         });
         const feature = new Feature();
         feature.setStyle(completeStyleModififiable);
-        const component = renderer.create(<FeatureStyle feature={feature} />);
+        const component = renderer.create(<FeatureStyler feature={feature} />);
         const tree = component.toJSON();
         expect(tree).toMatchSnapshot();
       });
@@ -154,7 +154,7 @@ describe('FeatureStyle', () => {
     test('updates content when feature changes', () => {
       const feature2 = new Feature();
       feature2.setStyle(simpleIcon);
-      const wrapper = shallow(<FeatureStyle feature={feature} />);
+      const wrapper = shallow(<FeatureStyler feature={feature} />);
       const inst = wrapper.instance();
       const spy = jest.spyOn(inst, 'updateContent');
       wrapper.setProps({
@@ -166,7 +166,7 @@ describe('FeatureStyle', () => {
 
     test("doesn't update content when new feature has no styleFunction", () => {
       const feature2 = new Feature();
-      const wrapper = shallow(<FeatureStyle feature={feature} />);
+      const wrapper = shallow(<FeatureStyler feature={feature} />);
       const inst = wrapper.instance();
       const spy = jest.spyOn(inst, 'updateContent');
       wrapper.setProps({
@@ -200,7 +200,7 @@ describe('FeatureStyle', () => {
       test(`apply the new style when state's property ${name} changes`, () => {
         const feature2 = new Feature();
         feature2.setStyle(simpleIcon);
-        const wrapper = shallow(<FeatureStyle feature={feature} />);
+        const wrapper = shallow(<FeatureStyler feature={feature} />);
         const inst = wrapper.instance();
         const spy = jest.spyOn(inst, 'applyStyle');
         const state = {};
@@ -219,13 +219,13 @@ describe('FeatureStyle', () => {
 
   describe('#getTextStroke()', () => {
     test('returns a black stroke', () => {
-      const stro = FeatureStyle.getTextStroke([0, 160, 0]);
+      const stro = FeatureStyler.getTextStroke([0, 160, 0]);
       expect(stro.getWidth()).toBe(3);
       expect(stro.getColor()).toEqual([0, 0, 0, 1]);
     });
 
     test('returns a white stroke', () => {
-      const stro = FeatureStyle.getTextStroke([0, 159, 0]);
+      const stro = FeatureStyler.getTextStroke([0, 159, 0]);
       expect(stro.getWidth()).toBe(3);
       expect(stro.getColor()).toEqual([255, 255, 255, 1]);
     });
@@ -245,16 +245,16 @@ describe('FeatureStyle', () => {
           }),
         }),
       );
-      const wrapper = mount(<FeatureStyle feature={feature} />);
+      const wrapper = mount(<FeatureStyler feature={feature} />);
       expect(wrapper.state().color).not.toEqual(
-        FeatureStyle.defaultProps.colors[1],
+        FeatureStyler.defaultProps.colors[1],
       );
       wrapper
         .find('Button')
         .at(1)
         .simulate('click');
       expect(wrapper.state().color).toEqual(
-        FeatureStyle.defaultProps.colors[1],
+        FeatureStyler.defaultProps.colors[1],
       );
     });
   });
@@ -265,7 +265,7 @@ describe('FeatureStyle', () => {
     feature.setStyle(simpleText);
 
     beforeEach(() => {
-      wrapper = mount(<FeatureStyle feature={feature} />);
+      wrapper = mount(<FeatureStyler feature={feature} />);
     });
 
     test("set state's text property on input change", () => {
@@ -276,24 +276,24 @@ describe('FeatureStyle', () => {
 
     test("set state's text color property onClick of a color", () => {
       expect(wrapper.state().textColor).not.toEqual(
-        FeatureStyle.defaultProps.colors[1],
+        FeatureStyler.defaultProps.colors[1],
       );
       wrapper
         .find('Button')
         .at(1)
         .simulate('click');
       expect(wrapper.state().textColor).toEqual(
-        FeatureStyle.defaultProps.colors[1],
+        FeatureStyler.defaultProps.colors[1],
       );
     });
 
     test("set state's text size property on select", () => {
       expect(wrapper.state().textSize).not.toEqual(
-        FeatureStyle.defaultProps.textSizes[1],
+        FeatureStyler.defaultProps.textSizes[1],
       );
       wrapper.find('Select').simulate('change', { target: { value: 2 } });
       expect(wrapper.state().textSize).toEqual(
-        FeatureStyle.defaultProps.textSizes[2],
+        FeatureStyler.defaultProps.textSizes[2],
       );
     });
 
@@ -310,11 +310,11 @@ describe('FeatureStyle', () => {
     feature.setStyle(simpleIcon);
 
     beforeEach(() => {
-      wrapper = mount(<FeatureStyle feature={feature} />);
+      wrapper = mount(<FeatureStyler feature={feature} />);
     });
 
     test("set state's icon property onClick of a color", () => {
-      const targetIcon = FeatureStyle.defaultProps.iconCategories[0].icons[1];
+      const targetIcon = FeatureStyler.defaultProps.iconCategories[0].icons[1];
       expect(wrapper.state().icon).not.toEqual(targetIcon);
       wrapper
         .find('Button')
@@ -324,7 +324,7 @@ describe('FeatureStyle', () => {
     });
 
     test("set state's icon size property on select", () => {
-      const targetSize = FeatureStyle.defaultProps.iconSizes[1];
+      const targetSize = FeatureStyler.defaultProps.iconSizes[1];
       expect(wrapper.state().iconSize).not.toEqual(targetSize);
       wrapper.find('Select').simulate('change', {
         target: {
