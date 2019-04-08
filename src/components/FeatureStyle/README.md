@@ -96,7 +96,7 @@ class ComplexFeatureStyleExample extends React.Component {
 
 
     // Label feature with a custom style  
-    const feat = new Feature(new Point(map.getView().getCenter()));
+    const feat = new Feature(new Point(this.map.getView().getCenter()));
     feat.setStyle([new Style({
       text: new Text({
         text: 'My text'
