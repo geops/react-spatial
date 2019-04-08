@@ -9,7 +9,7 @@ import Layer from 'react-spatial/Layer';
 import VectorLayer from 'react-spatial/VectorLayer';
 import OLMap from 'ol/Map';
 import Feature from 'ol/Feature';
-import Point from 'ol/geom/Point';
+import { Point, LineString } from 'ol/geom';
 import VectorSource from 'ol/source/Vector';
 import TileLayer from 'ol/layer/Tile';
 import Select from 'ol/interaction/Select';
@@ -30,8 +30,6 @@ class FeatureStylerExample extends React.Component {
     };
     this.select = this.select.bind(this);
     this.deselect = this.deselect.bind(this);
-    this.cancel = this.cancel.bind(this);
-    this.forceDeselect = this.forceDeselect.bind(this);
 
     this.map = new OLMap();
 
@@ -75,14 +73,6 @@ class FeatureStylerExample extends React.Component {
           evt.feature.setStyle(this.defaultTextStyle.clone());
         },
       },
-      {
-        style: this.defaultLineStyle.clone(),
-        type: 'LineString',
-        image: AddTextIcon,
-        onDrawEnd: evt => {
-          evt.feature.setStyle(this.defaultLineStyle.clone());
-        },
-      },
     ];
 
     // Draw icons
@@ -96,43 +86,19 @@ class FeatureStylerExample extends React.Component {
     // Draw dashed line
     this.drawLineOptions = {
       style: this.defaultLineStyle.clone(),
+      onDrawEnd: evt => {
+        evt.feature.setStyle(this.defaultLineStyle.clone());
+      },
     };
 
-    // Label feature with a custom style
-    const feat = new Feature(new Point(this.map.getView().getCenter()));
-    feat.setStyle([
-      new Style({
-        text: new Text({
-          text: 'My text',
-        }),
-      }),
-    ]);
+    const text = new Feature(new Point([-8000000, 3000000]));
+    text.setStyle(this.defaultTextStyle.clone());
 
-    // Icon feature with a custom style
-    const feat2 = new Feature(new Point([2000000, 8000000]));
-    feat2.setStyle(
-      new Style({
-        image: new Icon({
-          src: 'images/favicon.png',
-          scale: 3,
-        }),
-      }),
-    );
+    const icon = new Feature(new Point([8000000, 3000000]));
+    icon.setStyle(this.defaultIconStyle.clone());
 
-    // Label feature with a style created by FeatureStyler.
-    // Values must be selected in the form.
-    const feat3 = new Feature(new Point([-8000000, 3000000]));
-    feat3.setStyle(this.defaultTextStyle);
-
-    // Icon feature with a style created by FeatureStyler.
-    // Values must be selected in the form.
-    const feat4 = new Feature(new Point([8000000, 3000000]));
-    feat4.setStyle(this.defaultIconStyle);
-
-    // Icon feature with a style created by FeatureStyler.
-    // Values must be selected in the form.
-    const feat5 = new Feature(new Point([8000000, 3000000]));
-    feat5.setStyle(this.defaultLineStyle);
+    const line = new Feature(new LineString([[-8000000, 3000000], [8000000, 3000000]]));
+    line.setStyle(this.defaultLineStyle.clone());
 
     this.layers = [
       new Layer({
@@ -142,24 +108,10 @@ class FeatureStylerExample extends React.Component {
       }),
       new VectorLayer({
         source: new VectorSource({
-          features: [feat, feat2, feat3, feat4, feat5],
+          features: [text, icon, line],
         }),
-        style: this.defaultLineStyle.clone(),
       }),
     ];
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const { selectedFeature } = this.state;
-
-    if (selectedFeature && !prevState.selectedFeature) {
-      let style = selectedFeature.getStyle();
-      style =
-        style &&
-        (Array.isArray(style) ? style.map(s => s.clone()) : style.clone());
-      this.oldStyle = style;
-      this.oldGeometry = selectedFeature.getGeometry().clone();
-    }
   }
 
   select(feature) {
@@ -168,38 +120,10 @@ class FeatureStylerExample extends React.Component {
     });
   }
 
-  cancel() {
-    const { selectedFeature } = this.state;
-    selectedFeature.setStyle(this.oldStyle);
-    selectedFeature.setGeometry(this.oldGeometry);
-    this.forceDeselect();
-  }
-
   deselect() {
     this.setState({
       selectedFeature: null,
     });
-  }
-
-  forceDeselect() {
-    const { selectedFeature } = this.state;
-
-    // we remove the feature from the select interaction
-    const interaction = this.map
-      .getInteractions()
-      .getArray()
-      .find(
-        int =>
-          int instanceof Select &&
-          int.getActive() &&
-          int
-            .getFeatures()
-            .getArray()
-            .includes(selectedFeature),
-      );
-    if (interaction) {
-      interaction.getFeatures().remove(selectedFeature);
-    }
   }
 
   renderFeatureStyler() {
@@ -212,10 +136,7 @@ class FeatureStylerExample extends React.Component {
 
     return (
       <div className="tm-feature-style-popup">
-        <Button onClick={this.forceDeselect}>X</Button>
         <FeatureStyler feature={selectedFeature} />
-        <Button onClick={this.cancel}>Cancel</Button>
-        <Button onClick={this.deselect}>Save</Button>
       </div>
     );
   }
