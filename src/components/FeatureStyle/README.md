@@ -26,7 +26,7 @@ class ComplexFeatureStyleExample extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedFeature: null
+      selectedFeature: null,
     };
     this.select = this.select.bind(this);
     this.deselect = this.deselect.bind(this);
@@ -48,37 +48,41 @@ class ComplexFeatureStyleExample extends React.Component {
         text: 'My custom text',
         fill: new Fill({
           color: [255, 0, 0],
-          }),
-        stroke: new Stroke({ 
-          color:[255,255,255],
-          width: 3
+        }),
+        stroke: new Stroke({
+          color: [255, 255, 255],
+          width: 3,
         }),
         scale: 1.5,
-        rotation: 0.5
+        rotation: 0.5,
       }),
     });
 
-    this.defaultLineStyle =  new Style({
+    this.defaultLineStyle = new Style({
       stroke: new Stroke({
         color: 'red',
-        lineDash: [10,10],
-        width: 3
+        lineDash: [10, 10],
+        width: 3,
       }),
     });
 
     // Draw labels
-    this.drawCustomsOptions = [{
-      style: this.defaultTextStyle.clone(),
-      image: AddTextIcon,
-      onDrawEnd: (evt)=> {
-        evt.feature.setStyle(this.defaultTextStyle.clone());
-      }},{
-      style: this.defaultLineStyle.clone(),
-      type: 'LineString',
-      image: AddTextIcon,
-      onDrawEnd: (evt)=> {
-        evt.feature.setStyle(this.defaultLineStyle.clone());
-      }}
+    this.drawCustomsOptions = [
+      {
+        style: this.defaultTextStyle.clone(),
+        image: AddTextIcon,
+        onDrawEnd: evt => {
+          evt.feature.setStyle(this.defaultTextStyle.clone());
+        },
+      },
+      {
+        style: this.defaultLineStyle.clone(),
+        type: 'LineString',
+        image: AddTextIcon,
+        onDrawEnd: evt => {
+          evt.feature.setStyle(this.defaultLineStyle.clone());
+        },
+      },
     ];
 
     // Draw icons
@@ -86,31 +90,34 @@ class ComplexFeatureStyleExample extends React.Component {
       style: this.defaultIconStyle.clone(),
       onDrawEnd: evt => {
         evt.feature.setStyle(this.defaultIconStyle.clone());
-      }
+      },
     };
 
     // Draw dashed line
     this.drawLineOptions = {
-      style: this.defaultLineStyle.clone()
+      style: this.defaultLineStyle.clone(),
     };
 
-
-    // Label feature with a custom style  
+    // Label feature with a custom style
     const feat = new Feature(new Point(this.map.getView().getCenter()));
-    feat.setStyle([new Style({
-      text: new Text({
-        text: 'My text'
+    feat.setStyle([
+      new Style({
+        text: new Text({
+          text: 'My text',
+        }),
       }),
-    })]);
+    ]);
 
-    // Icon feature with a custom style 
+    // Icon feature with a custom style
     const feat2 = new Feature(new Point([2000000, 8000000]));
-    feat2.setStyle(new Style({
-      image: new Icon({
-        src: 'images/favicon.png',
-        scale: 3
+    feat2.setStyle(
+      new Style({
+        image: new Icon({
+          src: 'images/favicon.png',
+          scale: 3,
+        }),
       }),
-    }));
+    );
 
     // Label feature with a style created by FeatureStyle.
     // Values must be selected in the form.
@@ -131,25 +138,25 @@ class ComplexFeatureStyleExample extends React.Component {
       new Layer({
         olLayer: new TileLayer({
           source: new OSM(),
-        })
+        }),
       }),
       new VectorLayer({
         source: new VectorSource({
-          features: [feat, feat2, feat3, feat4, feat5]
+          features: [feat, feat2, feat3, feat4, feat5],
         }),
-        style: this.defaultLineStyle.clone()
-      })
+        style: this.defaultLineStyle.clone(),
+      }),
     ];
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { selectedFeature } = this.state
+    const { selectedFeature } = this.state;
 
-    if (selectedFeature && !prevState.selectedFeature){
+    if (selectedFeature && !prevState.selectedFeature) {
       let style = selectedFeature.getStyle();
-      style =style && (Array.isArray(style)
-          ? style.map(s => s.clone())
-          : style.clone());
+      style =
+        style &&
+        (Array.isArray(style) ? style.map(s => s.clone()) : style.clone());
       this.oldStyle = style;
       this.oldGeometry = selectedFeature.getGeometry().clone();
     }
@@ -157,7 +164,7 @@ class ComplexFeatureStyleExample extends React.Component {
 
   select(feature) {
     this.setState({
-      selectedFeature: feature
+      selectedFeature: feature,
     });
   }
 
@@ -170,7 +177,7 @@ class ComplexFeatureStyleExample extends React.Component {
 
   deselect() {
     this.setState({
-      selectedFeature: null
+      selectedFeature: null,
     });
   }
 
@@ -185,7 +192,10 @@ class ComplexFeatureStyleExample extends React.Component {
         int =>
           int instanceof Select &&
           int.getActive() &&
-          int.getFeatures().getArray().includes(selectedFeature),
+          int
+            .getFeatures()
+            .getArray()
+            .includes(selectedFeature),
       );
     if (interaction) {
       interaction.getFeatures().remove(selectedFeature);
@@ -193,7 +203,7 @@ class ComplexFeatureStyleExample extends React.Component {
   }
 
   renderFeatureStyle() {
-    const { selectedFeature } = this.state
+    const { selectedFeature } = this.state;
 
     // Modification of feature Style is only allowed if a feature has a style.
     if (!selectedFeature || !selectedFeature.getStyleFunction()) {
@@ -203,7 +213,7 @@ class ComplexFeatureStyleExample extends React.Component {
     return (
       <div className="tm-feature-style-popup">
         <Button onClick={this.forceDeselect}>X</Button>
-        <FeatureStyle feature={selectedFeature}/>
+        <FeatureStyle feature={selectedFeature} />
         <Button onClick={this.cancel}>Cancel</Button>
         <Button onClick={this.deselect}>Save</Button>
       </div>
@@ -213,10 +223,7 @@ class ComplexFeatureStyleExample extends React.Component {
   render() {
     return (
       <div className="tm-feature-style-example">
-        <BasicMap
-          map={this.map}
-          layers={this.layers}
-        />
+        <BasicMap map={this.map} layers={this.layers} />
         <OLE
           map={this.map}
           drawPoint={this.drawIconOptions}
