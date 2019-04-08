@@ -117,10 +117,12 @@ class Permalink extends Component {
     this.setState({
       layers: layerService
         .getLayersAsFlatArray()
-        .filter(l => l.isBaseLayer !== true)
-        .filter(l => l.getVisible())
-        .filter(l => l.hasVisibleChildren() === false)
-        .reduce((pre, cur) => pre.concat(cur), [])
+        .filter(
+          l =>
+            l.isBaseLayer !== true &&
+            l.getVisible() &&
+            l.hasVisibleChildren() === false,
+        )
         .map(l => l.id)
         .join(','),
     });
@@ -128,11 +130,10 @@ class Permalink extends Component {
 
   updateHistory() {
     const { params, history } = this.props;
-    const { x, y, z, layers } = this.state;
 
     const parameters = {
-      ...{ x, y, z },
-      ...{ layers },
+      ...params,
+      ...this.state,
     };
 
     Object.keys(parameters).forEach(key => {
