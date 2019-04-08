@@ -49,10 +49,10 @@ const propTypes = {
    *
     {
       copyright: {
-        text: 'Example copyright', // Copyright text
+        text: 'Example copyright', // Copyright text or function
         font: '10px Arial', // Font, default is '12px Arial'
         fillStyle: 'blue', // Fill style, default is 'black'
-      }
+      },
       northArrow,  // True if the north arrow
                    // should be placed with default configuration
                    // (rotation=0, circled=False)
@@ -62,11 +62,25 @@ const propTypes = {
 
     {
       northArrow: {
-        rotation: 25, // Absolute rotation in degrees
+        rotation: 25, // Absolute rotation in degrees as number or function
         circled, // Display circle around the north arrow
       }
     }
-
+   * Example 3:
+   *
+    {
+      copyright: {
+        text: () => { // Copyright as function
+          const layers = this.layerService.getLayersAsFlatArray();
+          return Copyright.getCopyrights(layers);
+        },
+      },
+      northArrow: {
+        rotation: () => { // Rotation as function
+          return NorthArrow.radToDeg(this.map.getView().getRotation());
+        },
+      },
+    }
    */
   extraData: PropTypes.object,
 };
@@ -156,13 +170,14 @@ class CanvasSaveButton extends PureComponent {
 
         // Copyright
         if (extraData && extraData.copyright && extraData.copyright.text) {
+          const text =
+            typeof extraData.copyright.text === 'function'
+              ? extraData.copyright.text()
+              : extraData.copyright.text;
+
           destContext.font = extraData.copyright.font || '12px Arial';
           destContext.fillStyle = extraData.copyright.fillStyle || 'black';
-          destContext.fillText(
-            extraData.copyright.text,
-            padding,
-            clip.h - padding,
-          );
+          destContext.fillText(text, padding, clip.h - padding);
         }
 
         // North arrow
@@ -181,9 +196,12 @@ class CanvasSaveButton extends PureComponent {
             );
 
             if (extraData.northArrow.rotation) {
-              destContext.rotate(
-                extraData.northArrow.rotation * (Math.PI / 180),
-              );
+              const rotation =
+                typeof extraData.northArrow.rotation === 'function'
+                  ? extraData.northArrow.rotation()
+                  : extraData.northArrow.rotation;
+
+              destContext.rotate(rotation * (Math.PI / 180));
             }
 
             destContext.drawImage(

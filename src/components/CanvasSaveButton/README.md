@@ -9,6 +9,8 @@ import CanvasSaveButton from 'react-spatial/components/CanvasSaveButton';
 import BasicMap from 'react-spatial/components/BasicMap';
 import ConfigReader from 'react-spatial/ConfigReader';
 import LayerService from 'react-spatial/LayerService';
+import Copyright from '../Copyright/Copyright';
+import NorthArrow from '../NorthArrow/NorthArrow';
 
 class ShareMenuExample extends React.Component {
   constructor(props) {
@@ -42,10 +44,15 @@ class ShareMenuExample extends React.Component {
             extent={extent}
             extraData={{
               copyright: {
-                text: '© Example copyright',
+                text: () => {
+                  const layers = this.layerService.getLayersAsFlatArray();
+                  return Copyright.getCopyrights(layers);
+                },
               },
               northArrow: {
-                rotation: 25,
+                rotation: () => {
+                  return NorthArrow.radToDeg(this.map.getView().getRotation());
+                },
                 circled: true,
               },
             }}
