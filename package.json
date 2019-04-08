@@ -30,7 +30,7 @@
     "jest-svg-transformer": "^1.0.0",
     "jsts": "^2.0.3",
     "ol": "^5.3.0",
-    "ole": "^0.0.3",
+    "ole": "^0.0.4-beta.2",
     "prettier": "^1.16.1",
     "proj4": "^2.5.0",
     "prop-types": "^15.6.2",
@@ -44,6 +44,7 @@
     "stylelint-config-recommended-scss": "^3.2.0",
     "stylelint-config-standard": "^18.2.0",
     "stylelint-scss": "^3.4.0",
+    "url-loader": "^1.1.2",
     "webpack": "^4.28.4"
   },
   "peerDependency": {
@@ -83,14 +84,14 @@
   },
   "scripts": {
     "prebuild": "rm -rf build/",
-    "build": "buble --no modules -i src -o build --objectAssign Object.assign --sourcemap && cp -t build package.json README.md LICENSE",
+    "build": "buble --no modules -i src -o build --objectAssign Object.assign --sourcemap && cp -t build package.json README.md LICENSE && cp -rf src/images build",
     "postbuild": "cp package.json build/ && cd src && find .  -name '*.scss' | cpio -pdm ../build",
     "format": "prettier --write 'src/**/*.js' && stylelint 'src/**/*.css' 'src/**/*.scss' --fix",
     "lint": "eslint 'src/**/*.js' && stylelint 'src/**/*.css' 'src/**/*.scss'",
     "test": "jest",
     "test:watch": "jest --watch",
     "coverage": "yarn test --coverage --coverageDirectory=coverage",
-    "doc": "styleguidist build",
+    "doc": "styleguidist build && cp -rf src/images/ styleguide",
     "doc:server": "styleguidist server",
     "start": "yarn doc:server",
     "symlink": "yarn build && cd build && yarn link"

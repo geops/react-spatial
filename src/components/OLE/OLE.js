@@ -1,5 +1,5 @@
 import '../../utils/GlobalsForOle';
-import { PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import OLMap from 'ol/Map';
 import { Editor, control } from 'ole';
@@ -19,6 +19,9 @@ const propTypes = {
 
   /** Control for drawing points, see [doc](http://openlayers-editor.geops.de/api.html). Default to false. */
   drawPoint: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+
+  /** Array of draw options to create custom more drawing controls, see [doc](http://openlayers-editor.geops.de/api.html). Default to false. */
+  drawCustoms: PropTypes.arrayOf(PropTypes.object),
 
   /** Control for drawing lines, see [doc](http://openlayers-editor.geops.de/api.html). Default to false. */
   drawLineString: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
@@ -50,7 +53,8 @@ const propTypes = {
   /** Control for creating a difference of geometries, see [doc](http://openlayers-editor.geops.de/api.html). Default to false. */
   difference: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 
-  /** Style used for all ol.interaction.Select used by controls (delete, buffer, union, difference).
+  /**
+   * Style used for all ol.interaction.Select used by controls (delete, buffer, union, difference).
    * This style will be applied on top of the current feature's style or will replace the current layer's style.
    */
   selectStyle: PropTypes.oneOfType([
@@ -61,14 +65,21 @@ const propTypes = {
 
   /* Function triggered when a feature is selected */
   onSelect: PropTypes.func,
+
+  /* Function triggered when a feature is deselected */
+  onDeselect: PropTypes.func,
+
+  /* CSS class of the container */
+  className: PropTypes.string,
 };
 
 const defaultProps = {
   map: undefined,
   layer: undefined,
   cad: false,
-  drawPoint: false,
-  drawLineString: false,
+  drawPoint: true,
+  drawCustoms: [],
+  drawLineString: true,
   drawPolygon: false,
   move: false,
   rotate: false,
@@ -80,12 +91,19 @@ const defaultProps = {
   difference: false,
   selectStyle: Styles.default,
   onSelect: () => {},
+  onDeselect: () => {},
+  className: 'tm-ole',
 };
 
 /**
  * This component displays a [OpenLayers Editor](http://openlayers-editor.geops.de/).
  */
 class OLE extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.ref = React.createRef();
+  }
+
   componentDidMount() {
     this.initializeEditor();
   }
@@ -94,6 +112,7 @@ class OLE extends PureComponent {
     const {
       cad,
       drawPoint,
+      drawCustoms,
       drawLineString,
       drawPolygon,
       move,
@@ -109,6 +128,7 @@ class OLE extends PureComponent {
     if (
       cad !== prevProps.cad ||
       drawPoint !== prevProps.drawPoint ||
+      drawCustoms !== prevProps.drawCustoms ||
       drawLineString !== prevProps.drawLineString ||
       drawPolygon !== prevProps.drawPolygon ||
       move !== prevProps.move ||
@@ -135,6 +155,7 @@ class OLE extends PureComponent {
       layer,
       cad,
       drawPoint,
+      drawCustoms,
       drawLineString,
       drawPolygon,
       move,
@@ -147,11 +168,20 @@ class OLE extends PureComponent {
       difference,
       selectStyle,
       onSelect,
+      onDeselect,
     } = this.props;
 
-    if (!map || !layer || !layer.olLayer || !layer.olLayer.getSource()) {
+    if (
+      !this.ref ||
+      !this.ref.current ||
+      !map ||
+      !layer ||
+      !layer.olLayer ||
+      !layer.olLayer.getSource()
+    ) {
       return;
     }
+
     const source = layer.olLayer.getSource();
     const style = selectStyle;
 
@@ -159,46 +189,52 @@ class OLE extends PureComponent {
       this.editor.remove();
     }
 
-    if (drawPoint) {
-      ctrls.push(
-        new control.Draw(
-          Object.assign(
-            {
-              source,
-            },
-            drawPoint,
-          ),
+    if (drawPolygon) {
+      drawCustoms.unshift(
+        Object.assign(
+          {
+            type: 'Polygon',
+          },
+          drawLineString,
         ),
       );
     }
 
     if (drawLineString) {
-      ctrls.push(
-        new control.Draw(
-          Object.assign(
-            {
-              type: 'LineString',
-              source,
-            },
-            drawLineString,
-          ),
+      drawCustoms.unshift(
+        Object.assign(
+          {
+            type: 'LineString',
+          },
+          drawLineString,
         ),
       );
     }
 
-    if (drawPolygon) {
-      ctrls.push(
-        new control.Draw(
-          Object.assign(
-            {
-              type: 'Polygon',
-              source,
-            },
-            drawPolygon,
-          ),
+    if (drawPoint) {
+      drawCustoms.unshift(drawPoint);
+    }
+
+    drawCustoms.forEach(opt => {
+      const draw = new control.Draw(
+        Object.assign(
+          {
+            source,
+          },
+          opt,
         ),
       );
-    }
+
+      if (opt.onDrawStart) {
+        draw.drawInteraction.on('drawstart', opt.onDrawStart);
+      }
+
+      if (opt.onDrawEnd) {
+        draw.drawInteraction.on('drawend', opt.onDrawEnd);
+      }
+
+      ctrls.push(draw);
+    });
 
     if (cad) {
       ctrls.push(
@@ -250,9 +286,15 @@ class OLE extends PureComponent {
           modify,
         ),
       );
-      modifyCtrl.selectInteraction.on('select', e => {
-        onSelect(e.selected[e.selected.length - 1], e);
+
+      modifyCtrl.selectInteraction.getFeatures().on('add', evt => {
+        onSelect(evt.element);
       });
+
+      modifyCtrl.selectInteraction.getFeatures().on('remove', evt => {
+        onDeselect(evt.element);
+      });
+
       ctrls.push(modifyCtrl);
     }
 
@@ -322,13 +364,16 @@ class OLE extends PureComponent {
     }
 
     if (ctrls.length) {
-      this.editor = new Editor(map);
+      this.editor = new Editor(map, {
+        target: this.ref.current,
+      });
       this.editor.addControls(ctrls);
     }
   }
 
   render() {
-    return null;
+    const { className } = this.props;
+    return <div ref={this.ref} className={className} />;
   }
 }
 

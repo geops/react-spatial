@@ -6,6 +6,7 @@ module.exports = {
   template: {
     favicon: 'src/images/favicon.png',
   },
+  assetsDir: 'src/',
   require: [
     path.join(__dirname, 'src/themes/default/examples.scss'),
     'react-app-polyfill/ie11',
@@ -63,10 +64,18 @@ module.exports = {
             },
           ],
         },
+        {
+          test: /\.png$/,
+          use: [
+            {
+              loader: 'url-loader',
+            },
+          ],
+        },
       ],
     },
   },
   styleguideComponents: {
-    ComponentsList: path.join(__dirname, 'src/styleguidist/ComponentsList')
-  }
+    ComponentsList: path.join(__dirname, 'src/styleguidist/ComponentsList'),
+  },
 };

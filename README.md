@@ -4,6 +4,7 @@
 [![build](https://travis-ci.com/geops/react-spatial.svg?branch=master)](https://travis-ci.com/geops/react-spatial)
 [![Greenkeeper badge](https://badges.greenkeeper.io/geops/react-spatial.svg)](https://greenkeeper.io/)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/8f7b7082-8998-4e1f-9a34-4d8cd18e6003/deploy-status)](https://app.netlify.com/sites/react-spatial/deploys)
 
 This library provides React components to build web applications based on [OpenLayers](https://openlayers.org/).
 
