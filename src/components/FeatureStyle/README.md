@@ -84,7 +84,7 @@ class ComplexFeatureStyleExample extends React.Component {
     // Draw icons
     this.drawIconOptions = {
       style: this.defaultIconStyle.clone(),
-      onDrawEnd: (evt)=> {
+      onDrawEnd: evt => {
         evt.feature.setStyle(this.defaultIconStyle.clone());
       }
     };
