@@ -1,0 +1,951 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FeatureStyler matches snapshot when feature has a styleFunction() which returns  a style object. 1`] = `
+<div
+  className="tm-feature-style"
+>
+  <div
+    className="tm-modify-icons"
+  >
+    <div>
+      Modify icon:
+    </div>
+    <div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "height": 48,
+            "width": 48,
+          }
+        }
+        tabIndex={0}
+      >
+        <img
+          alt="images/airport.png"
+          height={48}
+          src="images/airport.png"
+          width={48}
+        />
+      </div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "height": 48,
+            "width": 48,
+          }
+        }
+        tabIndex={0}
+      >
+        <img
+          alt="images/fuel.png"
+          height={48}
+          src="images/fuel.png"
+          width={48}
+        />
+      </div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "height": 48,
+            "width": 48,
+          }
+        }
+        tabIndex={0}
+      >
+        <img
+          alt="images/marker.png"
+          height={48}
+          src="images/marker.png"
+          width={48}
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    className="tm-modify-icon-size"
+  >
+    <div>
+      Modify icon size:
+    </div>
+    <select
+      className="tm-select"
+      onChange={[Function]}
+      value="48,48"
+    >
+      <option
+        value={
+          Array [
+            24,
+            24,
+          ]
+        }
+      >
+        small_size
+      </option>
+      <option
+        value={
+          Array [
+            36,
+            36,
+          ]
+        }
+      >
+        medium_size
+      </option>
+      <option
+        value={
+          Array [
+            48,
+            48,
+          ]
+        }
+      >
+        big_size
+      </option>
+    </select>
+  </div>
+</div>
+`;
+
+exports[`FeatureStyler matches snapshot when feature has a styleFunction() which returns  an array of 3 styles targeting the one at index 1. 1`] = `
+<div
+  className="tm-feature-style"
+>
+  <div>
+    <div>
+      Modify text:
+    </div>
+    <textarea
+      onChange={[Function]}
+      rows="1"
+      value="foo"
+    />
+  </div>
+  <div
+    className="tm-modify-text-color"
+  >
+    <div>
+      Modify color:
+    </div>
+    <div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          style={
+            Object {
+              "color": "rgb(0,0,0)",
+              "font": "14px  Arial, serif",
+              "textShadow": "-1px -1px 0 white,1px -1px 0 white,-1px 1px 0 white,1px 1px 0 white",
+            }
+          }
+        >
+          Aa
+        </div>
+      </div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          style={
+            Object {
+              "color": "rgb(0,0,255)",
+              "font": "14px  Arial, serif",
+              "textShadow": "-1px -1px 0 white,1px -1px 0 white,-1px 1px 0 white,1px 1px 0 white",
+            }
+          }
+        >
+          Aa
+        </div>
+      </div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          style={
+            Object {
+              "color": "rgb(128,128,128)",
+              "font": "14px  Arial, serif",
+              "textShadow": "-1px -1px 0 white,1px -1px 0 white,-1px 1px 0 white,1px 1px 0 white",
+            }
+          }
+        >
+          Aa
+        </div>
+      </div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          style={
+            Object {
+              "color": "rgb(0,128,0)",
+              "font": "14px  Arial, serif",
+              "textShadow": "-1px -1px 0 white,1px -1px 0 white,-1px 1px 0 white,1px 1px 0 white",
+            }
+          }
+        >
+          Aa
+        </div>
+      </div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          style={
+            Object {
+              "color": "rgb(255,165,0)",
+              "font": "14px  Arial, serif",
+              "textShadow": "-1px -1px 0 black,1px -1px 0 black,-1px 1px 0 black,1px 1px 0 black",
+            }
+          }
+        >
+          Aa
+        </div>
+      </div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          style={
+            Object {
+              "color": "rgb(255,0,0)",
+              "font": "14px  Arial, serif",
+              "textShadow": "-1px -1px 0 white,1px -1px 0 white,-1px 1px 0 white,1px 1px 0 white",
+            }
+          }
+        >
+          Aa
+        </div>
+      </div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          style={
+            Object {
+              "color": "rgb(255,255,255)",
+              "font": "14px  Arial, serif",
+              "textShadow": "-1px -1px 0 black,1px -1px 0 black,-1px 1px 0 black,1px 1px 0 black",
+            }
+          }
+        >
+          Aa
+        </div>
+      </div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          style={
+            Object {
+              "color": "rgb(255,255,0)",
+              "font": "14px  Arial, serif",
+              "textShadow": "-1px -1px 0 black,1px -1px 0 black,-1px 1px 0 black,1px 1px 0 black",
+            }
+          }
+        >
+          Aa
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="tm-modify-text-size"
+  >
+    <div>
+      Modify text size:
+    </div>
+    <select
+      className="tm-select"
+      onChange={[Function]}
+      value="1"
+    >
+      <option
+        value={1}
+      >
+        small_size
+      </option>
+      <option
+        value={1.5}
+      >
+        medium_size
+      </option>
+      <option
+        value={2}
+      >
+        big_size
+      </option>
+    </select>
+  </div>
+  <div>
+    <div>
+      Modify text rotation:
+    </div>
+    <input
+      max="360"
+      min="0"
+      onChange={[Function]}
+      rows="1"
+      type="range"
+      value={0}
+    />
+  </div>
+</div>
+`;
+
+exports[`FeatureStyler matches snapshot when feature has a styleFunction() which returns  an array of one style. 1`] = `
+<div
+  className="tm-feature-style"
+>
+  <div
+    className="tm-modify-icons"
+  >
+    <div>
+      Modify icon:
+    </div>
+    <div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "height": 48,
+            "width": 48,
+          }
+        }
+        tabIndex={0}
+      >
+        <img
+          alt="images/airport.png"
+          height={48}
+          src="images/airport.png"
+          width={48}
+        />
+      </div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "height": 48,
+            "width": 48,
+          }
+        }
+        tabIndex={0}
+      >
+        <img
+          alt="images/fuel.png"
+          height={48}
+          src="images/fuel.png"
+          width={48}
+        />
+      </div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "height": 48,
+            "width": 48,
+          }
+        }
+        tabIndex={0}
+      >
+        <img
+          alt="images/marker.png"
+          height={48}
+          src="images/marker.png"
+          width={48}
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    className="tm-modify-icon-size"
+  >
+    <div>
+      Modify icon size:
+    </div>
+    <select
+      className="tm-select"
+      onChange={[Function]}
+      value="48,48"
+    >
+      <option
+        value={
+          Array [
+            24,
+            24,
+          ]
+        }
+      >
+        small_size
+      </option>
+      <option
+        value={
+          Array [
+            36,
+            36,
+          ]
+        }
+      >
+        medium_size
+      </option>
+      <option
+        value={
+          Array [
+            48,
+            48,
+          ]
+        }
+      >
+        big_size
+      </option>
+    </select>
+  </div>
+</div>
+`;
+
+exports[`FeatureStyler matches snapshot when feature has a styleFunction() which returns  an empty array. 1`] = `
+<div
+  className="tm-feature-style"
+/>
+`;
+
+exports[`FeatureStyler matches snapshot when feature has a styleFunction() which returns a style with color values selected from properties. 1`] = `
+<div
+  className="tm-feature-style"
+>
+  <div
+    className="tm-modify-color"
+  >
+    <div>
+      Modify color:
+    </div>
+    <div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          style={
+            Object {
+              "backgroundColor": "rgb(0,0,0)",
+              "height": "100%",
+              "width": "100%",
+            }
+          }
+        />
+      </div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          style={
+            Object {
+              "backgroundColor": "rgb(0,0,255)",
+              "height": "100%",
+              "width": "100%",
+            }
+          }
+        />
+      </div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          style={
+            Object {
+              "backgroundColor": "rgb(128,128,128)",
+              "height": "100%",
+              "width": "100%",
+            }
+          }
+        />
+      </div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          style={
+            Object {
+              "backgroundColor": "rgb(0,128,0)",
+              "height": "100%",
+              "width": "100%",
+            }
+          }
+        />
+      </div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          style={
+            Object {
+              "backgroundColor": "rgb(255,165,0)",
+              "height": "100%",
+              "width": "100%",
+            }
+          }
+        />
+      </div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          style={
+            Object {
+              "backgroundColor": "rgb(255,0,0)",
+              "height": "100%",
+              "width": "100%",
+            }
+          }
+        />
+      </div>
+      <div
+        className="tm-button tm-selected"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          style={
+            Object {
+              "backgroundColor": "rgb(255,255,255)",
+              "height": "100%",
+              "width": "100%",
+            }
+          }
+        />
+      </div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          style={
+            Object {
+              "backgroundColor": "rgb(255,255,0)",
+              "height": "100%",
+              "width": "100%",
+            }
+          }
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`FeatureStyler matches snapshot when feature has a styleFunction() which returns a style with icon and text values selected from properties. 1`] = `
+<div
+  className="tm-feature-style"
+>
+  <div>
+    <div>
+      Modify text:
+    </div>
+    <textarea
+      onChange={[Function]}
+      rows="1"
+      value="bar"
+    />
+  </div>
+  <div
+    className="tm-modify-text-color"
+  >
+    <div>
+      Modify color:
+    </div>
+    <div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          style={
+            Object {
+              "color": "rgb(0,0,0)",
+              "font": "14px  Arial, serif",
+              "textShadow": "-1px -1px 0 white,1px -1px 0 white,-1px 1px 0 white,1px 1px 0 white",
+            }
+          }
+        >
+          Aa
+        </div>
+      </div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          style={
+            Object {
+              "color": "rgb(0,0,255)",
+              "font": "14px  Arial, serif",
+              "textShadow": "-1px -1px 0 white,1px -1px 0 white,-1px 1px 0 white,1px 1px 0 white",
+            }
+          }
+        >
+          Aa
+        </div>
+      </div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          style={
+            Object {
+              "color": "rgb(128,128,128)",
+              "font": "14px  Arial, serif",
+              "textShadow": "-1px -1px 0 white,1px -1px 0 white,-1px 1px 0 white,1px 1px 0 white",
+            }
+          }
+        >
+          Aa
+        </div>
+      </div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          style={
+            Object {
+              "color": "rgb(0,128,0)",
+              "font": "14px  Arial, serif",
+              "textShadow": "-1px -1px 0 white,1px -1px 0 white,-1px 1px 0 white,1px 1px 0 white",
+            }
+          }
+        >
+          Aa
+        </div>
+      </div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          style={
+            Object {
+              "color": "rgb(255,165,0)",
+              "font": "14px  Arial, serif",
+              "textShadow": "-1px -1px 0 black,1px -1px 0 black,-1px 1px 0 black,1px 1px 0 black",
+            }
+          }
+        >
+          Aa
+        </div>
+      </div>
+      <div
+        className="tm-button tm-selected"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          style={
+            Object {
+              "color": "rgb(255,0,0)",
+              "font": "14px  Arial, serif",
+              "textShadow": "-1px -1px 0 white,1px -1px 0 white,-1px 1px 0 white,1px 1px 0 white",
+            }
+          }
+        >
+          Aa
+        </div>
+      </div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          style={
+            Object {
+              "color": "rgb(255,255,255)",
+              "font": "14px  Arial, serif",
+              "textShadow": "-1px -1px 0 black,1px -1px 0 black,-1px 1px 0 black,1px 1px 0 black",
+            }
+          }
+        >
+          Aa
+        </div>
+      </div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          style={
+            Object {
+              "color": "rgb(255,255,0)",
+              "font": "14px  Arial, serif",
+              "textShadow": "-1px -1px 0 black,1px -1px 0 black,-1px 1px 0 black,1px 1px 0 black",
+            }
+          }
+        >
+          Aa
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="tm-modify-text-size"
+  >
+    <div>
+      Modify text size:
+    </div>
+    <select
+      className="tm-select"
+      onChange={[Function]}
+      value="1.5"
+    >
+      <option
+        value={1}
+      >
+        small_size
+      </option>
+      <option
+        value={1.5}
+      >
+        medium_size
+      </option>
+      <option
+        value={2}
+      >
+        big_size
+      </option>
+    </select>
+  </div>
+  <div>
+    <div>
+      Modify text rotation:
+    </div>
+    <input
+      max="360"
+      min="0"
+      onChange={[Function]}
+      rows="1"
+      type="range"
+      value={28.64788975654116}
+    />
+  </div>
+  <div
+    className="tm-modify-icons"
+  >
+    <div>
+      Modify icon:
+    </div>
+    <div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "height": 24,
+            "width": 24,
+          }
+        }
+        tabIndex={0}
+      >
+        <img
+          alt="images/airport.png"
+          height={24}
+          src="images/airport.png"
+          width={24}
+        />
+      </div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "height": 24,
+            "width": 24,
+          }
+        }
+        tabIndex={0}
+      >
+        <img
+          alt="images/fuel.png"
+          height={24}
+          src="images/fuel.png"
+          width={24}
+        />
+      </div>
+      <div
+        className="tm-button tm-selected"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "height": 24,
+            "width": 24,
+          }
+        }
+        tabIndex={0}
+      >
+        <img
+          alt="images/marker.png"
+          height={24}
+          src="images/marker.png"
+          width={24}
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    className="tm-modify-icon-size"
+  >
+    <div>
+      Modify icon size:
+    </div>
+    <select
+      className="tm-select"
+      onChange={[Function]}
+      value="24,24"
+    >
+      <option
+        value={
+          Array [
+            24,
+            24,
+          ]
+        }
+      >
+        small_size
+      </option>
+      <option
+        value={
+          Array [
+            36,
+            36,
+          ]
+        }
+      >
+        medium_size
+      </option>
+      <option
+        value={
+          Array [
+            48,
+            48,
+          ]
+        }
+      >
+        big_size
+      </option>
+    </select>
+  </div>
+</div>
+`;
+
+exports[`FeatureStyler matches snapshot when feature has no styleFunction() defined 1`] = `null`;
+
+exports[`FeatureStyler matches snapshot when no feature provided 1`] = `null`;
