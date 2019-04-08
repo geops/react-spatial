@@ -38,7 +38,7 @@ class ComplexFeatureStyleExample extends React.Component {
     this.defaultIconStyle = new Style({
       image: new Icon({
         src: 'images/marker.png',
-        scale: 0.5
+        scale: 0.5,
       }),
     });
 
