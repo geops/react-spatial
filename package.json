@@ -84,7 +84,7 @@
   },
   "scripts": {
     "prebuild": "rm -rf build/",
-    "build": "buble --no modules -i src -o build --objectAssign Object.assign --sourcemap && cp -t build package.json README.md LICENSE",
+    "build": "buble --no modules -i src -o build --objectAssign Object.assign --sourcemap && cp -t build package.json README.md LICENSE && cp -rf src/images build",
     "postbuild": "cp package.json build/ && cd src && find .  -name '*.scss' | cpio -pdm ../build",
     "format": "prettier --write 'src/**/*.js' && stylelint 'src/**/*.css' 'src/**/*.scss' --fix",
     "lint": "eslint 'src/**/*.js' && stylelint 'src/**/*.css' 'src/**/*.scss'",
