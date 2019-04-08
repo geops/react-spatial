@@ -75,7 +75,7 @@ class Permalink extends Component {
     }
 
     if (map !== prevProps.map) {
-      map.on('moveend', () => this.onMapMoved());
+      this.moveEndRef = map.on('moveend', () => this.onMapMoved());
     }
 
     this.updateHistory();
