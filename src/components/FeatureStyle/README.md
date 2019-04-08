@@ -1,14 +1,10 @@
 #
 
-#
 This demonstrates the use of FeatureStyle.
 
 ```jsx
 import React from 'react';
 import BasicMap from 'react-spatial/components/BasicMap';
-import ConfigReader from 'react-spatial/ConfigReader';
-import Popup from 'react-spatial/components/Popup';
-import ResizeHandler from 'react-spatial/components/ResizeHandler';
 import Layer from 'react-spatial/Layer';
 import VectorLayer from 'react-spatial/VectorLayer';
 import OLMap from 'ol/Map';
@@ -16,19 +12,15 @@ import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
 import VectorSource from 'ol/source/Vector';
 import TileLayer from 'ol/layer/Tile';
-import TileGrid from 'ol/tilegrid/TileGrid';
-import TileImageSource from 'ol/source/TileImage';
 import Select from 'ol/interaction/Select';
-import { getCenter } from 'ol/extent';
-import { Style, Circle, Fill, Icon, Text, Stroke } from 'ol/style';
+import { Style, Fill, Icon, Text, Stroke } from 'ol/style';
 import OLE from 'react-spatial/components/OLE';
-import OSM, {ATTRIBUTION} from 'ol/source/OSM';
+import OSM from 'ol/source/OSM';
 import FeatureStyle from 'react-spatial/components/FeatureStyle';
 import Button from 'react-spatial/components/Button';
-import Styles from '../../utils/Styles';
-import AddTextIcon from '../../images/text.png';
+import AddTextIcon from 'react-spatial/images/text.png';
 import 'ol/ol.css';
-import './FeatureStyle.md.scss';
+import 'react-spatial/components/FeatureStyle.md.scss';
 
 class ComplexFeatureStyleExample extends React.Component {
   constructor(props) {
@@ -73,14 +65,6 @@ class ComplexFeatureStyleExample extends React.Component {
         width: 3
       }),
     });
-
-    // Modify options.  
-    /*this.modifyOptions = {
-      style: new Style({
-        image: Styles.default.getImage(),
-        stroke: this.defaultLineStyle.getStroke()
-      })
-    };*/
 
     // Draw labels
     this.drawCustomsOptions = [{
@@ -194,7 +178,7 @@ class ComplexFeatureStyleExample extends React.Component {
     const { selectedFeature } = this.state;
 
     // we remove the feature from the select interaction
-    const int = this.map
+    const interaction = this.map
       .getInteractions()
       .getArray()
       .find(
@@ -203,8 +187,8 @@ class ComplexFeatureStyleExample extends React.Component {
           int.getActive() &&
           int.getFeatures().getArray().includes(selectedFeature),
       );
-    if (int) {
-      int.getFeatures().remove(selectedFeature);
+    if (interaction) {
+      interaction.getFeatures().remove(selectedFeature);
     }
   }
 
@@ -227,7 +211,6 @@ class ComplexFeatureStyleExample extends React.Component {
   }
 
   render() {
-    const { selectedFeature } = this.state
     return (
       <div className="tm-feature-style-example">
         <BasicMap
@@ -243,7 +226,6 @@ class ComplexFeatureStyleExample extends React.Component {
           layer={this.layers[1]}
           onSelect={this.select}
           onDeselect={this.deselect}
-          clearModifySelection={true}
         />
         {this.renderFeatureStyle()}
       </div>
