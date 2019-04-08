@@ -20,7 +20,7 @@ import FeatureStyle from 'react-spatial/components/FeatureStyle';
 import Button from 'react-spatial/components/Button';
 import AddTextIcon from 'react-spatial/images/text.png';
 import 'ol/ol.css';
-import 'react-spatial/components/FeatureStyle.md.scss';
+import 'react-spatial/components/FeatureStyle/FeatureStyle.md.scss';
 
 class ComplexFeatureStyleExample extends React.Component {
   constructor(props) {
