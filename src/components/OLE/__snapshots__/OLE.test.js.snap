@@ -5,9 +5,3 @@ exports[`OLE matches snapshots 1`] = `
   className="tm-ole"
 />
 `;
-
-exports[`OLE matches snapshots with all controls 1`] = `
-<div
-  className="tm-ole"
-/>
-`;

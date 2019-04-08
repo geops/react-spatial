@@ -173,49 +173,32 @@ class FeatureStyle extends PureComponent {
 
   // Defines a text stroke (white or black) depending on a text color
   static getTextStroke(olColor) {
-    const stroke = new Stroke({
+    return new Stroke({
       color: olColor[1] >= 160 ? [0, 0, 0, 1] : [255, 255, 255, 1],
       width: 3,
     });
-    return stroke;
   }
 
   static findCategoryBySource(olIcon, categories) {
-    for (let i = 0; i < categories.length; i += 1) {
-      const c = categories[i];
-      if (FeatureStyle.findIcon(olIcon, c)) {
-        return c;
-      }
-    }
-    return null;
+    return categories.find(c => FeatureStyle.findIcon(olIcon, c));
   }
 
   // Search for the current icon in a category's icons list.
   static findIcon(olIcon, category) {
     const src = olIcon.getSrc();
-    const { icons } = category;
-    for (let i = 0; i < icons.length; i += 1) {
-      const icon = icons[i];
+    return category.icons.find(icon => {
       const regex =
         category.type === 'img'
           ? new RegExp(`${category.id}-${icon.id}.png`)
           : category.regex(icon.id);
-      if (regex.test(src) || (category.type === 'img' && icon.url === src)) {
-        return icons[i];
-      }
-    }
-    return null;
+      return regex.test(src) || (category.type === 'img' && icon.url === src);
+    });
   }
 
   // Search for the current size in a sizes list.
   static findSize(olStyle, sizes, dflt) {
     const scale = olStyle.getScale();
-    for (let i = 0; i < sizes.length; i += 1) {
-      if (scale === sizes[i].scale) {
-        return sizes[i];
-      }
-    }
-    return dflt || sizes[2];
+    return sizes.find(size => scale === size.scale) || dflt || sizes[2];
   }
 
   // Search for the current color in a color list.
@@ -223,12 +206,7 @@ class FeatureStyle extends PureComponent {
     const rgb = asString(
       typeof olColor === 'string' ? olColor : olColor.slice(0, 3),
     );
-    for (let i = 0; i < colors.length; i += 1) {
-      if (rgb === asString(colors[i].fill)) {
-        return colors[i];
-      }
-    }
-    return null;
+    return colors.find(c => rgb === asString(c.fill));
   }
 
   // Get the current style defined by the properties object
