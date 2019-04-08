@@ -164,7 +164,7 @@ const defaultProps = {
  * This component allows to modify an ol.style.Style of a ol.Feature.
  * Only requirement, the feature.getStyleFunction() must return a ol.style.Style or an array of ol.style.Style.
  */
-class FeatureStyle extends PureComponent {
+class FeatureStyler extends PureComponent {
   // Get the current style of a feature and returns an array.
   static getStyleAsArray(feature) {
     const styles = feature.getStyleFunction()();
@@ -180,7 +180,7 @@ class FeatureStyle extends PureComponent {
   }
 
   static findCategoryBySource(olIcon, categories) {
-    return categories.find(c => FeatureStyle.findIcon(olIcon, c));
+    return categories.find(c => FeatureStyler.findIcon(olIcon, c));
   }
 
   // Search for the current icon in a category's icons list.
@@ -252,7 +252,7 @@ class FeatureStyle extends PureComponent {
         const textFill = textStyle.getFill();
         textFill.setColor(olColor);
         textStyle.setFill(textFill);
-        textStyle.setStroke(FeatureStyle.getTextStroke(olColor));
+        textStyle.setStroke(FeatureStyler.getTextStroke(olColor));
       }
 
       if (textRotation > 0) {
@@ -366,7 +366,7 @@ class FeatureStyle extends PureComponent {
     let useIconStyle = false;
     let useColorStyle = false;
     let color;
-    const featStyle = FeatureStyle.getStyleAsArray(feature)[styleIdx];
+    const featStyle = FeatureStyler.getStyleAsArray(feature)[styleIdx];
 
     if (!featStyle) {
       return;
@@ -375,18 +375,18 @@ class FeatureStyle extends PureComponent {
     if (featStyle.getImage() instanceof Icon) {
       useIconStyle = true;
       const img = featStyle.getImage();
-      iconCategory = FeatureStyle.findCategoryBySource(img, iconCategories);
+      iconCategory = FeatureStyler.findCategoryBySource(img, iconCategories);
       if (iconCategory) {
-        icon = FeatureStyle.findIcon(img, iconCategory);
+        icon = FeatureStyler.findIcon(img, iconCategory);
       } else {
         [iconCategory] = iconCategories;
       }
-      iconSize = FeatureStyle.findSize(img, iconSizes);
+      iconSize = FeatureStyler.findSize(img, iconSizes);
     }
 
     if (!useIconStyle && featStyle.getStroke()) {
       useColorStyle = true;
-      color = FeatureStyle.findColor(featStyle.getStroke().getColor(), colors);
+      color = FeatureStyler.findColor(featStyle.getStroke().getColor(), colors);
     }
 
     if (featStyle.getText()) {
@@ -396,8 +396,8 @@ class FeatureStyle extends PureComponent {
         .getText()
         .getFill()
         .getColor();
-      textColor = FeatureStyle.findColor(currColor, colors);
-      textSize = FeatureStyle.findSize(
+      textColor = FeatureStyler.findColor(currColor, colors);
+      textSize = FeatureStyler.findSize(
         featStyle.getText(),
         textSizes,
         textSizes[0],
@@ -440,8 +440,8 @@ class FeatureStyle extends PureComponent {
     const text = useTextStyle ? name : undefined;
 
     // Update the style of the feature with the current style
-    const oldStyles = FeatureStyle.getStyleAsArray(feature);
-    const style = FeatureStyle.updateStyleFromProperties(oldStyles[styleIdx], {
+    const oldStyles = FeatureStyler.getStyleAsArray(feature);
+    const style = FeatureStyler.updateStyleFromProperties(oldStyles[styleIdx], {
       font,
       description,
       color,
@@ -681,7 +681,7 @@ class FeatureStyle extends PureComponent {
   }
 }
 
-FeatureStyle.propTypes = propTypes;
-FeatureStyle.defaultProps = defaultProps;
+FeatureStyler.propTypes = propTypes;
+FeatureStyler.defaultProps = defaultProps;
 
-export default FeatureStyle;
+export default FeatureStyler;

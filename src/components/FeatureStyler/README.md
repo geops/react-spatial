@@ -1,6 +1,6 @@
 #
 
-This demonstrates the use of FeatureStyle.
+This demonstrates the use of FeatureStyler.
 
 ```jsx
 import React from 'react';
@@ -16,13 +16,13 @@ import Select from 'ol/interaction/Select';
 import { Style, Fill, Icon, Text, Stroke } from 'ol/style';
 import OLE from 'react-spatial/components/OLE';
 import OSM from 'ol/source/OSM';
-import FeatureStyle from 'react-spatial/components/FeatureStyle';
+import FeatureStyler from 'react-spatial/components/FeatureStyler';
 import Button from 'react-spatial/components/Button';
 import AddTextIcon from 'react-spatial/images/text.png';
 import 'ol/ol.css';
-import 'react-spatial/components/FeatureStyle/FeatureStyle.md.scss';
+import 'react-spatial/components/FeatureStyler/FeatureStyler.md.scss';
 
-class ComplexFeatureStyleExample extends React.Component {
+class FeatureStylerExample extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -119,17 +119,17 @@ class ComplexFeatureStyleExample extends React.Component {
       }),
     );
 
-    // Label feature with a style created by FeatureStyle.
+    // Label feature with a style created by FeatureStyler.
     // Values must be selected in the form.
     const feat3 = new Feature(new Point([-8000000, 3000000]));
     feat3.setStyle(this.defaultTextStyle);
 
-    // Icon feature with a style created by FeatureStyle.
+    // Icon feature with a style created by FeatureStyler.
     // Values must be selected in the form.
     const feat4 = new Feature(new Point([8000000, 3000000]));
     feat4.setStyle(this.defaultIconStyle);
 
-    // Icon feature with a style created by FeatureStyle.
+    // Icon feature with a style created by FeatureStyler.
     // Values must be selected in the form.
     const feat5 = new Feature(new Point([8000000, 3000000]));
     feat5.setStyle(this.defaultLineStyle);
@@ -202,7 +202,7 @@ class ComplexFeatureStyleExample extends React.Component {
     }
   }
 
-  renderFeatureStyle() {
+  renderFeatureStyler() {
     const { selectedFeature } = this.state;
 
     // Modification of feature Style is only allowed if a feature has a style.
@@ -213,7 +213,7 @@ class ComplexFeatureStyleExample extends React.Component {
     return (
       <div className="tm-feature-style-popup">
         <Button onClick={this.forceDeselect}>X</Button>
-        <FeatureStyle feature={selectedFeature} />
+        <FeatureStyler feature={selectedFeature} />
         <Button onClick={this.cancel}>Cancel</Button>
         <Button onClick={this.deselect}>Save</Button>
       </div>
@@ -234,11 +234,11 @@ class ComplexFeatureStyleExample extends React.Component {
           onSelect={this.select}
           onDeselect={this.deselect}
         />
-        {this.renderFeatureStyle()}
+        {this.renderFeatureStyler()}
       </div>
     );
   }
 }
 
-<ComplexFeatureStyleExample />;
+<FeatureStylerExample />;
 ```
