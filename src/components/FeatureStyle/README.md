@@ -204,8 +204,8 @@ class ComplexFeatureStyleExample extends React.Component {
       <div className="tm-feature-style-popup">
         <Button onClick={this.forceDeselect}>X</Button>
         <FeatureStyle feature={selectedFeature}/>
-        <button onClick={this.cancel}>Cancel</button>
-        <button onClick={this.deselect}>Save</button>
+        <Button onClick={this.cancel}>Cancel</Button>
+        <Button onClick={this.deselect}>Save</Button>
       </div>
     );
   }
