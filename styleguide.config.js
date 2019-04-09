@@ -9,6 +9,7 @@ module.exports = {
   assetsDir: 'src/',
   require: [
     path.join(__dirname, 'src/themes/default/examples.scss'),
+    'ol/ol.css',
     'react-app-polyfill/ie11',
     'core-js',
   ],

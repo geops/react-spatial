@@ -19,8 +19,6 @@ import OSM from 'ol/source/OSM';
 import FeatureStyler from 'react-spatial/components/FeatureStyler';
 import Button from 'react-spatial/components/Button';
 import AddTextIcon from 'react-spatial/images/text.png';
-import 'ol/ol.css';
-import 'react-spatial/components/FeatureStyler/FeatureStyler.md.scss';
 
 class FeatureStylerExample extends React.Component {
   constructor(props) {
@@ -135,7 +133,7 @@ class FeatureStylerExample extends React.Component {
     }
 
     return (
-      <div className="tm-feature-style-popup">
+      <div className="tm-feature-styler-popup">
         <FeatureStyler feature={selectedFeature} />
       </div>
     );
@@ -143,7 +141,7 @@ class FeatureStylerExample extends React.Component {
 
   render() {
     return (
-      <div className="tm-feature-style-example">
+      <div className="tm-feature-styler-example">
         <BasicMap map={this.map} layers={this.layers} />
         <OLE
           map={this.map}
