@@ -54,7 +54,7 @@ const propTypes = {
   /**
    * Dialog title.
    */
-  title: PropTypes.element,
+  title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
 };
 
 const defaultProps = {
