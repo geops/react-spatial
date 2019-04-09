@@ -59,7 +59,7 @@ const propTypes = {
 
 const defaultProps = {
   children: undefined,
-  className: undefined,
+  className: 'tm-dialog-container',
   classNameChildren: undefined,
   classNameHeader: 'tm-dialog-header',
   classNameCloseBt: 'tm-button tm-dialog-close-bt',
@@ -108,11 +108,7 @@ class Dialog extends Component {
         className={isModal ? 'tm-modal' : 'tm-dialog'}
         style={{ display: isOpen ? 'block' : 'none' }}
       >
-        <div
-          className={`${
-            isModal ? 'tm-modal-container' : 'tm-dialog-container'
-          }${className || ''}`}
-        >
+        <div className={className}>
           {this.renderDialogTitle()}
           <div className={classNameChildren}>{children}</div>
         </div>

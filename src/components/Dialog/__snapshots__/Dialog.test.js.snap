@@ -12,7 +12,7 @@ exports[`Dialog matches snapshots for modal Dialog. 1`] = `
   }
 >
   <div
-    className="tm-modal-container"
+    className="tm-dialog-container"
   >
     <div
       className="tm-dialog-header "
