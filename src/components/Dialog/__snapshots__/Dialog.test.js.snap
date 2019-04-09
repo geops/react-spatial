@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Checkbox matches snapshots for closed Dialog. 1`] = `null`;
+exports[`Dialog matches snapshots for closed Dialog. 1`] = `null`;
 
-exports[`Checkbox matches snapshots for modal Dialog. 1`] = `
+exports[`Dialog matches snapshots for modal Dialog. 1`] = `
 <div
   className="tm-modal"
   style={
@@ -57,7 +57,7 @@ exports[`Checkbox matches snapshots for modal Dialog. 1`] = `
 </div>
 `;
 
-exports[`Checkbox matches snapshots for normal Dialog. 1`] = `
+exports[`Dialog matches snapshots for normal Dialog. 1`] = `
 <div
   className="tm-dialog"
   style={
