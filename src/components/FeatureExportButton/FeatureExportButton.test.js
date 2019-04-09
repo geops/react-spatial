@@ -78,7 +78,7 @@ describe('FeatureExportButton', () => {
 
     test('should be trigger click function.', () => {
       const wrapper = shallow(<FeatureExportButton layer={iconLayer} />);
-      const spy = jest.spyOn(FeatureExportButton.prototype, 'exportFeature');
+      const spy = jest.spyOn(FeatureExportButton.prototype, 'exportFeatures');
 
       wrapper.find('.tm-feature-export').simulate('click');
       expect(spy).toHaveBeenCalledTimes(1);

@@ -1,15 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { FaCloudDownloadAlt } from 'react-icons/fa';
-import KML from 'ol/format/KML';
-import Feature from 'ol/Feature';
-import Style from 'ol/style/Style';
-import Circle from 'ol/style/Circle';
-import Icon from 'ol/style/Icon';
+import KMLFormat from 'ol/format/KML';
 import VectorLayer from '../../VectorLayer';
 import Button from '../Button';
-
-import { kmlStyle } from '../../utils/Styles';
+import KML from '../../utils/KML';
 
 const propTypes = {
   /**
@@ -50,7 +45,7 @@ const propTypes = {
 const defaultProps = {
   children: <FaCloudDownloadAlt focusable={false} />,
   className: 'tm-button tm-feature-export',
-  format: KML,
+  format: KMLFormat,
   projection: 'EPSG:3857',
   tabIndex: 0,
   title: undefined,
@@ -64,111 +59,18 @@ const defaultProps = {
 class FeatureExportButton extends PureComponent {
   createFeatureString(layer) {
     const { projection, format } = this.props;
-    const { olLayer } = layer;
+    const featuresToExport = layer.olLayer.getSource().getFeatures();
 
-    let featString;
-    const exportFeatures = [];
-
-    olLayer.getSource().forEachFeature(f => {
-      // We silently ignore Circle elements as they are
-      // not supported in kml
-      if (f.getGeometry().getType() === 'Circle') {
-        return;
-      }
-
-      const clone = f.clone();
-      clone.setId(f.getId());
-      clone.getGeometry().setProperties(f.getGeometry().getProperties());
-      clone.getGeometry().transform(projection, 'EPSG:4326');
-
-      // Extended data breaks KML validty so we remove it for now.
-      for (let i = 0; i < f.getProperties(); i += 1) {
-        if (/^(geometry|name|description)$/.test(i)) {
-          // eslint-disable-next-line no-continue
-          continue;
-        }
-        clone.unset(i, true);
-      }
-
-      let styles;
-
-      if (clone.getStyleFunction()) {
-        styles = clone.getStyleFunction().call(clone);
-      } else {
-        styles = olLayer.getStyleFunction().call(olLayer, clone);
-      }
-      const newStyle = {
-        fill: styles[0].getFill(),
-        stroke: styles[0].getStroke(),
-        text: styles[0].getText(),
-        image: styles[0].getImage(),
-        zIndex: styles[0].getZIndex(),
-      };
-
-      if (newStyle.image instanceof Circle) {
-        newStyle.image = null;
-      }
-
-      if (newStyle.image) {
-        const imgSource = newStyle.image.getSrc();
-        if (!/(http(s?)):\/\//gi.test(imgSource)) {
-          // eslint-disable-next-line no-console
-          console.log(
-            "Local image source isn't support for KML export." +
-              'Should use remote web server',
-          );
-        }
-      }
-
-      // If only text is displayed we must specify an
-      // image style with scale=0
-      if (newStyle.text && !newStyle.image) {
-        newStyle.image = new Icon({
-          src: 'noimage',
-          scale: 0,
-        });
-      }
-
-      const olStyle = new Style(newStyle);
-      clone.setStyle(olStyle);
-      exportFeatures.push(clone);
-    });
-
-    if (exportFeatures.length > 0) {
-      if (exportFeatures.length === 1) {
-        // force the add of a <Document> node
-        exportFeatures.push(new Feature());
-      }
-
-      // eslint-disable-next-line new-cap
-      featString = new format({
-        extractStyles: true,
-        defaultStyle: [kmlStyle],
-      }).writeFeatures(exportFeatures);
-
-      // Remove no image hack
-      featString = featString.replace(
-        /<Icon>\s*<href>noimage<\/href>\s*<\/Icon>/g,
-        '',
-      );
-
-      // Remove empty placemark added to have
-      // <Document> tag
-      featString = featString.replace(/<Placemark\/>/g, '');
-
-      // Add KML document name
-      if (layer.name) {
-        featString = featString.replace(
-          /<Document>/,
-          `<Document><name>${layer.name}</name>`,
-        );
-      }
+    if (format === KMLFormat) {
+      return KML.writeFeatures(layer, projection);
     }
-
-    return featString;
+    // eslint-disable-next-line new-cap
+    return new format({
+      featureProjection: projection,
+    }).writeFeatures(featuresToExport);
   }
 
-  exportFeature() {
+  exportFeatures() {
     const { layer } = this.props;
     const now = new Date()
       .toJSON()
@@ -209,7 +111,7 @@ class FeatureExportButton extends PureComponent {
         className={className}
         title={title}
         tabIndex={tabIndex}
-        onClick={e => this.exportFeature(e)}
+        onClick={() => this.exportFeatures()}
       >
         {children}
       </Button>
