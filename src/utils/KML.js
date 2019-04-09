@@ -1,7 +1,7 @@
 import KML from 'ol/format/KML';
 import { Feature } from 'ol';
 import Point from 'ol/geom/Point';
-import MultiPoint from 'ol/geom/Point';
+import MultiPoint from 'ol/geom/MultiPoint';
 import GeometryCollection from 'ol/geom/GeometryCollection';
 import { Style, Text, Icon, Circle } from 'ol/style';
 import { kmlStyle } from './Styles';
