@@ -12,8 +12,6 @@ import VectorSource from 'ol/source/Vector';
 import TileLayer from 'ol/layer/Tile';
 import OLE from 'react-spatial/components/OLE';
 import OSM, {ATTRIBUTION} from 'ol/source/OSM.js';
-import 'ol/ol.css';
-import './OLE.md.scss';
 
 class OLEExample extends React.Component {
   constructor(props) {

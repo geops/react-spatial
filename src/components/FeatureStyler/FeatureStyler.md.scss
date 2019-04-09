@@ -1,4 +1,4 @@
-.tm-feature-style-example {
+.tm-feature-styler-example {
   position: relative;
 
   .tm-ole {
@@ -28,7 +28,7 @@
     }
   }
 
-  .tm-feature-style-popup {
+  .tm-feature-styler-popup {
     position: absolute;
     top: 10px;
     left: 10px;
@@ -45,7 +45,7 @@
     }
   }
 
-  .tm-feature-style {
+  .tm-feature-styler {
     & > div > * {
       margin: 10px 0;
     }

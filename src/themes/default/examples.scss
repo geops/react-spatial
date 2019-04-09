@@ -2,6 +2,7 @@
 * This file is loaded by the styleguide and provide additionnal css for all examples.
 */
 @import './index.scss';
+@import 'ol/ol.css';
 @import '../../components/ActionLink/ActionLink.md.scss';
 @import '../../components/Autocomplete/Autocomplete.md.scss';
 @import '../../components/BaseLayerToggler/BaseLayerToggler.md.scss';
@@ -25,6 +26,8 @@
 @import '../../components/ShareMenu/ShareMenu.md.scss';
 @import '../../components/ToggleButton/ToggleButton.md.scss';
 @import '../../components/TopicList/TopicList.md.scss';
+@import '../../components/OLE/OLE.md.scss';
+@import '../../components/FeatureStyler/FeatureStyler.md.scss';
 
 body {
   font-family: $font-family;

@@ -106,7 +106,7 @@ const defaultProps = {
   t: l => l,
   feature: undefined,
   styleIdx: 0,
-  className: 'tm-feature-style',
+  className: 'tm-feature-styler',
   classNameIcons: 'tm-modify-icons',
   classNameIconSize: 'tm-modify-icon-size',
   classNameColors: 'tm-modify-color',
