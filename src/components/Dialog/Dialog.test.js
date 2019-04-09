@@ -6,7 +6,7 @@ import Dialog from '.';
 
 configure({ adapter: new Adapter() });
 
-describe('Checkbox', () => {
+describe('Dialog', () => {
   describe('matches snapshots', () => {
     test('for closed Dialog.', () => {
       const component = renderer.create(
