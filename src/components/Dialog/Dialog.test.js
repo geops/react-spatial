@@ -37,7 +37,7 @@ describe('Checkbox', () => {
     });
   });
 
-  describe('triggers onClose', () => {
+  describe('triggers onClose.', () => {
     const fn = jest.fn();
     const wrapper = mount(
       <Dialog onClose={fn} isOpen classNameCloseBt="tm-close-classname">

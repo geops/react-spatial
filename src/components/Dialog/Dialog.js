@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { MdClose } from 'react-icons/md';
+import Draggable from 'react-draggable';
 import Header from '../Header';
 import Button from '../Button';
 
@@ -16,6 +17,16 @@ const propTypes = {
   className: PropTypes.string,
 
   /**
+   * CSS class of the dialog's children.
+   */
+  classNameChildren: PropTypes.string,
+
+  /**
+   * CSS class of the dialog's header.
+   */
+  classNameHeader: PropTypes.string,
+
+  /**
    * CSS class of the dialog close button.
    */
   classNameCloseBt: PropTypes.string,
@@ -26,7 +37,12 @@ const propTypes = {
   onClose: PropTypes.func.isRequired,
 
   /**
-   * If set to true, blocks the application.
+   * If set to true, allow user to drag the dialog.
+   */
+  isDraggable: PropTypes.bool,
+
+  /**
+   * If set to true, blocks the application, and disable dragging action.
    */
   isModal: PropTypes.bool,
 
@@ -43,8 +59,11 @@ const propTypes = {
 
 const defaultProps = {
   children: undefined,
-  className: '',
+  className: undefined,
+  classNameChildren: undefined,
+  classNameHeader: 'tm-dialog-header',
   classNameCloseBt: 'tm-button tm-dialog-close-bt',
+  isDraggable: false,
   isModal: false,
   isOpen: false,
   title: undefined,
@@ -55,9 +74,19 @@ const defaultProps = {
  */
 class Dialog extends Component {
   renderDialogTitle() {
-    const { title, onClose, classNameCloseBt } = this.props;
+    const {
+      title,
+      onClose,
+      classNameHeader,
+      classNameCloseBt,
+      isDraggable,
+    } = this.props;
     return (
-      <Header className="tm-dialog-header">
+      <Header
+        className={`${classNameHeader} ${
+          isDraggable ? 'tm-dialog-draggable' : ''
+        }`}
+      >
         {title}
         <Button className={classNameCloseBt} onClick={() => onClose()}>
           <MdClose focusable={false} />
@@ -66,24 +95,38 @@ class Dialog extends Component {
     );
   }
 
-  render() {
-    const { className, children, isModal, isOpen } = this.props;
-    if (isOpen) {
-      return (
+  renderDialog() {
+    const {
+      className,
+      classNameChildren,
+      children,
+      isModal,
+      isOpen,
+    } = this.props;
+    return (
+      <div
+        className={isModal ? 'tm-modal' : 'tm-dialog'}
+        style={{ display: isOpen ? 'block' : 'none' }}
+      >
         <div
-          className={isModal ? 'tm-modal' : null}
-          style={{ display: isOpen ? 'block' : 'none' }}
+          className={`${
+            isModal ? 'tm-modal-container' : 'tm-dialog-container'
+          }${className || ''}`}
         >
-          <div
-            className={`${className} ${
-              isModal ? 'tm-dialog-modal' : 'tm-dialog'
-            }`}
-          >
-            {this.renderDialogTitle()}
-            {children}
-          </div>
+          {this.renderDialogTitle()}
+          <div className={classNameChildren}>{children}</div>
         </div>
-      );
+      </div>
+    );
+  }
+
+  render() {
+    const { isModal, isOpen, isDraggable } = this.props;
+    if (isOpen) {
+      if (!isModal && isDraggable) {
+        return <Draggable>{this.renderDialog()}</Draggable>;
+      }
+      return <>{this.renderDialog()}</>;
     }
     return null;
   }

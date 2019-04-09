@@ -12,10 +12,10 @@ exports[`Checkbox matches snapshots for modal Dialog. 1`] = `
   }
 >
   <div
-    className=" tm-dialog-modal"
+    className="tm-modal-container"
   >
     <div
-      className="tm-dialog-header"
+      className="tm-dialog-header "
     >
       <div
         className="tm-header-left"
@@ -48,16 +48,18 @@ exports[`Checkbox matches snapshots for modal Dialog. 1`] = `
         </svg>
       </div>
     </div>
-    <span>
-      content
-    </span>
+    <div>
+      <span>
+        content
+      </span>
+    </div>
   </div>
 </div>
 `;
 
 exports[`Checkbox matches snapshots for normal Dialog. 1`] = `
 <div
-  className={null}
+  className="tm-dialog"
   style={
     Object {
       "display": "block",
@@ -65,10 +67,10 @@ exports[`Checkbox matches snapshots for normal Dialog. 1`] = `
   }
 >
   <div
-    className=" tm-dialog"
+    className="tm-dialog-container"
   >
     <div
-      className="tm-dialog-header"
+      className="tm-dialog-header "
     >
       <div
         className="tm-header-left"
@@ -104,9 +106,11 @@ exports[`Checkbox matches snapshots for normal Dialog. 1`] = `
         </svg>
       </div>
     </div>
-    <span>
-      content
-    </span>
+    <div>
+      <span>
+        content
+      </span>
+    </div>
   </div>
 </div>
 `;

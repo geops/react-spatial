@@ -29,12 +29,12 @@ class DialogExample extends React.Component {
       <div className="tm-dialog-example">
         <Dialog
           title={<span>Example Dialog</span>}
+          classNameChildren="tm-dialog-content"
           onClose={() => this.toggleDialog()}
           isOpen={isOpen}
+          isDraggable
         >
-          <div className="tm-dialog-content">
-            I am the content of the dialog
-          </div>
+          <span >I am the content of the dialog</span>
         </Dialog>
         <Button
           className="tm-button tm-dialog-btn"
