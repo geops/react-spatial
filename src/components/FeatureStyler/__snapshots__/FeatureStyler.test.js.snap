@@ -2,7 +2,7 @@
 
 exports[`FeatureStyler matches snapshot when feature has a styleFunction() which returns  a style object. 1`] = `
 <div
-  className="tm-feature-style"
+  className="tm-feature-styler"
 >
   <div
     className="tm-modify-icons"
@@ -121,7 +121,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
 
 exports[`FeatureStyler matches snapshot when feature has a styleFunction() which returns  an array of 3 styles targeting the one at index 1. 1`] = `
 <div
-  className="tm-feature-style"
+  className="tm-feature-styler"
 >
   <div>
     <div>
@@ -340,7 +340,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
 
 exports[`FeatureStyler matches snapshot when feature has a styleFunction() which returns  an array of one style. 1`] = `
 <div
-  className="tm-feature-style"
+  className="tm-feature-styler"
 >
   <div
     className="tm-modify-icons"
@@ -459,13 +459,13 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
 
 exports[`FeatureStyler matches snapshot when feature has a styleFunction() which returns  an empty array. 1`] = `
 <div
-  className="tm-feature-style"
+  className="tm-feature-styler"
 />
 `;
 
 exports[`FeatureStyler matches snapshot when feature has a styleFunction() which returns a style with color values selected from properties. 1`] = `
 <div
-  className="tm-feature-style"
+  className="tm-feature-styler"
 >
   <div
     className="tm-modify-color"
@@ -617,7 +617,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
 
 exports[`FeatureStyler matches snapshot when feature has a styleFunction() which returns a style with icon and text values selected from properties. 1`] = `
 <div
-  className="tm-feature-style"
+  className="tm-feature-styler"
 >
   <div>
     <div>
