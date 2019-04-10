@@ -12,7 +12,7 @@ import LayerService from 'react-spatial/LayerService';
 import Copyright from '../Copyright/Copyright';
 import NorthArrow from '../NorthArrow/NorthArrow';
 
-class ShareMenuExample extends React.Component {
+class CanvasSaveButtonExample extends React.Component {
   constructor(props) {
     super(props);
     this.map = new OLMap({ controls: [] });
@@ -63,5 +63,5 @@ class ShareMenuExample extends React.Component {
   }
 }
 
-<ShareMenuExample />;
+<CanvasSaveButtonExample />;
 ```
