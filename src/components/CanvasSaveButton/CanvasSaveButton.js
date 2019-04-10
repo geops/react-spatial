@@ -55,13 +55,16 @@ const propTypes = {
       },
       northArrow,  // True if the north arrow
                    // should be placed with default configuration
-                   // (rotation=0, circled=False)
+                   // (default image, rotation=0, circled=False)
     }
    * Example 2:
    *
 
     {
       northArrow: {
+        src: NorthArrowCustom,
+        width: 60, // Width in px, default is 80
+        height: 100, // Height in px, default is 80
         rotation: 25, // Absolute rotation in degrees as number or function
         circled, // Display circle around the north arrow
       }
@@ -166,7 +169,6 @@ class CanvasSaveButton extends PureComponent {
         );
 
         const padding = 5;
-        const arrowSize = 80;
 
         // Copyright
         if (extraData && extraData.copyright && extraData.copyright.text) {
@@ -183,12 +185,20 @@ class CanvasSaveButton extends PureComponent {
         // North arrow
         if (extraData && extraData.northArrow) {
           const img = new Image();
-          img.src = extraData.northArrow.circled
-            ? NorthArrowCircle
-            : NorthArrowSimple;
+          if (extraData.northArrow.src) {
+            img.src = extraData.northArrow.src;
+          } else {
+            img.src = extraData.northArrow.circled
+              ? NorthArrowCircle
+              : NorthArrowSimple;
+          }
 
           img.onload = () => {
             destContext.save();
+
+            const arrowWidth = extraData.northArrow.width || 80;
+            const arrowHeight = extraData.northArrow.height || 80;
+            const arrowSize = Math.max(arrowWidth, arrowHeight);
 
             destContext.translate(
               clip.w - 2 * padding - arrowSize / 2,
@@ -206,10 +216,10 @@ class CanvasSaveButton extends PureComponent {
 
             destContext.drawImage(
               img,
-              -arrowSize / 2,
-              -arrowSize / 2,
-              arrowSize,
-              arrowSize,
+              -arrowWidth / 2,
+              -arrowHeight / 2,
+              arrowWidth,
+              arrowHeight,
             );
 
             destContext.restore();
