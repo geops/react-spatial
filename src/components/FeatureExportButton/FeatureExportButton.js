@@ -59,16 +59,17 @@ const defaultProps = {
 class FeatureExportButton extends PureComponent {
   createFeatureString(layer) {
     const { projection, format } = this.props;
+
+    if (format === KMLFormat) {
+      return KML.writeFeatures(layer, projection);
+    }
+
     const featuresToExport = [];
 
     layer.olLayer.getSource().forEachFeature(f => {
       f.getGeometry().transform(projection, 'EPSG:4326');
       featuresToExport.push(f);
     });
-
-    if (format === KMLFormat) {
-      return KML.writeFeatures(layer, projection);
-    }
     // eslint-disable-next-line new-cap
     return new format({
       featureProjection: projection,
