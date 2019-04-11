@@ -59,7 +59,12 @@ const defaultProps = {
 class FeatureExportButton extends PureComponent {
   createFeatureString(layer) {
     const { projection, format } = this.props;
-    const featuresToExport = layer.olLayer.getSource().getFeatures();
+    const featuresToExport = [];
+
+    layer.olLayer.getSource().forEachFeature(f => {
+      f.getGeometry().transform(projection, 'EPSG:4326');
+      featuresToExport.push(f);
+    });
 
     if (format === KMLFormat) {
       return KML.writeFeatures(layer, projection);
