@@ -27,21 +27,22 @@ class DialogExample extends React.Component {
     const { isOpen } = this.state;
     return (
       <div className="tm-dialog-example">
-        <Dialog
-          title={<span>Example Dialog</span>}
-          classNameChildren="tm-dialog-content"
-          onClose={() => this.toggleDialog()}
-          isOpen={isOpen}
-          isDraggable
-        >
-          <span >I am the content of the dialog</span>
-        </Dialog>
         <Button
           className="tm-button tm-dialog-btn"
           onClick={() => this.toggleDialog()}
         >
           Open Dialog
         </Button>
+        <Dialog
+          title={<span>Example Dialog</span>}
+          classNameChildren="tm-dialog-content"
+          onClose={() => this.toggleDialog()}
+          isOpen={isOpen}
+          isDraggable
+          isModal
+        >
+          <span >I am the content of the dialog</span>
+        </Dialog>
       </div>
     );
   }
