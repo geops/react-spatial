@@ -66,7 +66,7 @@ const propTypes = {
         width: 60, // Width in px, default is 80
         height: 100, // Height in px, default is 80
         rotation: 25, // Absolute rotation in degrees as number or function
-        circled, // Display circle around the north arrow
+
       }
     }
    * Example 3:
@@ -82,6 +82,7 @@ const propTypes = {
         rotation: () => { // Rotation as function
           return NorthArrow.radToDeg(this.map.getView().getRotation());
         },
+        circled, // Display circle around the north arrow (Does not work for custom src)
       },
     }
    */
