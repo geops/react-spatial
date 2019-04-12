@@ -25,14 +25,29 @@ class Copyright extends Component {
   }
 
   componentDidMount() {
+    const { layerService } = this.props;
     this.updateLayers();
+
+    if (layerService) {
+      this.updateLayerService();
+    }
   }
 
   componentDidUpdate(prevProps) {
     const { layerService } = this.props;
     if (layerService !== prevProps.layerService) {
-      layerService.on('change:visible', () => this.updateLayers());
+      this.updateLayerService();
     }
+  }
+
+  componentWillUnmount() {
+    const { layerService } = this.props;
+    layerService.unlistenChangeEvt('change:visible');
+  }
+
+  updateLayerService() {
+    const { layerService } = this.props;
+    layerService.on('change:visible', () => this.updateLayers());
   }
 
   updateLayers() {
