@@ -3,12 +3,11 @@
 This demonstrates the use of Dialog.
 
 ```jsx
-import React from  'react'
+import React from 'react'
 import Button from 'react-spatial/components/Button';
 import Dialog from 'react-spatial/components/Dialog';
 
 class DialogExample extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -41,7 +40,7 @@ class DialogExample extends React.Component {
           isDraggable
           isModal
         >
-          <span >I am the content of the dialog</span>
+          <span>I am the content of the dialog</span>
         </Dialog>
       </div>
     );
