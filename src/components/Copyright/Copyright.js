@@ -10,40 +10,46 @@ class Copyright extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      layers: [],
+      copyrights: null,
     };
   }
 
   componentDidMount() {
     this.updateLayers();
+    this.updateLayerService();
   }
 
   componentDidUpdate(prevProps) {
     const { layerService } = this.props;
     if (layerService !== prevProps.layerService) {
-      layerService.on('change:visible', () => this.updateLayers());
+      this.updateLayerService();
     }
+  }
+
+  componentWillUnmount() {
+    const { layerService } = this.props;
+    layerService.unlistenChangeEvt('change:visible');
+  }
+
+  updateLayerService() {
+    const { layerService } = this.props;
+    layerService.on('change:visible', () => this.updateLayers());
   }
 
   updateLayers() {
     const { layerService } = this.props;
-
-    if (layerService) {
-      const layers = layerService.getLayersAsFlatArray();
-      this.setState({ layers });
-    }
+    const copyrights = layerService.getCopyrights();
+    this.setState({
+      copyrights,
+    });
   }
 
   render() {
-    const { layers } = this.state;
-    const copyrights = layers.map(l =>
-      l.getVisible() ? l.getCopyright() : null,
-    );
-
+    const { copyrights } = this.state;
     return (
       <div className="tm-copyright">
         &copy;&nbsp;
-        {copyrights.join(' | ')}
+        {copyrights}
       </div>
     );
   }

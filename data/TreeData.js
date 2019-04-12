@@ -8,6 +8,7 @@ export default [
     name: 'OSM Baselayer',
     visible: true,
     isBaseLayer: true,
+    copyright: '© OSM Contributors',
     data: {
       type: 'xyz',
       url: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -17,6 +18,7 @@ export default [
     name: 'OSM Baselayer Hot',
     visible: false,
     isBaseLayer: true,
+    copyright: '© OSM Contributors',
     data: {
       type: 'xyz',
       url: 'https://c.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
@@ -26,6 +28,7 @@ export default [
     name: 'OpenTopoMap',
     visible: false,
     isBaseLayer: true,
+    copyright: 'map data: © OpenStreetMap contributors, SRTM | map style: © OpenTopoMap (CC-BY-SA)',
     data: {
       type: 'xyz',
       url: 'https://a.tile.opentopomap.org/{z}/{x}/{y}.png',
@@ -50,6 +53,7 @@ export default [
         id: 'usaPop',
         name: 'USA Population Density',
         visible: true,
+        copyright: '© Esri',
         data: {
           type: 'wmts',
           url:
