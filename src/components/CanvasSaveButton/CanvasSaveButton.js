@@ -120,20 +120,120 @@ class CanvasSaveButton extends PureComponent {
     );
   }
 
-  createCanvasImage(opts, asMSBlob) {
+  /**
+   * Creates a new canvas based on the map canvas,
+   * potentially clips it
+   * and adds the copyright and north arrow
+   */
+  createCanvas(canvas, opts) {
     return new Promise(resolve => {
-      const { map, extent, extraData } = this.props;
-      let image;
+      const { extraData } = this.props;
+
+      const clip = opts.clip || {
+        x: 0,
+        y: 0,
+        w: canvas.width,
+        h: canvas.height,
+      };
+
+      const destCanvas = document.createElement('canvas');
+      destCanvas.width = clip.w;
+      destCanvas.height = clip.h;
+      const destContext = destCanvas.getContext('2d');
+
+      // Draw map
+      destContext.fillStyle = 'white';
+      destContext.fillRect(0, 0, destCanvas.width, clip.h);
+      destContext.drawImage(
+        canvas,
+        clip.x,
+        clip.y,
+        clip.w,
+        clip.h,
+        0,
+        0,
+        clip.w,
+        clip.h,
+      );
+
+      const padding = 5;
+
+      // Copyright
+      if (extraData && extraData.copyright && extraData.copyright.text) {
+        const text =
+          typeof extraData.copyright.text === 'function'
+            ? extraData.copyright.text()
+            : extraData.copyright.text;
+
+        destContext.font = extraData.copyright.font || '12px Arial';
+        destContext.fillStyle = extraData.copyright.fillStyle || 'black';
+        destContext.fillText(text, padding, clip.h - padding);
+      }
+
+      // North arrow
+      if (extraData && extraData.northArrow) {
+        const img = new Image();
+        if (extraData.northArrow.src) {
+          img.src = extraData.northArrow.src;
+        } else {
+          img.src = extraData.northArrow.circled
+            ? NorthArrowCircle
+            : NorthArrowSimple;
+        }
+
+        img.onload = () => {
+          destContext.save();
+
+          const arrowWidth = extraData.northArrow.width || 80;
+          const arrowHeight = extraData.northArrow.height || 80;
+          const arrowSize = Math.max(arrowWidth, arrowHeight);
+
+          destContext.translate(
+            clip.w - 2 * padding - arrowSize / 2,
+            clip.h - 2 * padding - arrowSize / 2,
+          );
+
+          if (extraData.northArrow.rotation) {
+            const rotation =
+              typeof extraData.northArrow.rotation === 'function'
+                ? extraData.northArrow.rotation()
+                : extraData.northArrow.rotation;
+
+            destContext.rotate(rotation * (Math.PI / 180));
+          }
+
+          destContext.drawImage(
+            img,
+            -arrowWidth / 2,
+            -arrowHeight / 2,
+            arrowWidth,
+            arrowHeight,
+          );
+
+          destContext.restore();
+
+          resolve(destCanvas);
+        };
+      } else {
+        resolve(destCanvas);
+      }
+    });
+  }
+
+  /**
+   * Creates an image from the map for the given extent
+   * with copyright and north arrow
+   *
+   * All operations with the map are done here
+   * in order to enable canvas tests with jest.
+   */
+  createImage(opts, asMSBlob) {
+    return new Promise(resolve => {
+      const { map, extent } = this.props;
 
       map.once('postcompose', evt => {
         const { canvas } = evt.context;
-
-        let clip = {
-          x: 0,
-          y: 0,
-          w: canvas.width,
-          h: canvas.height,
-        };
+        let options = opts;
 
         if (extent) {
           const pixelTopLeft = map.getPixelFromCoordinate(getTopLeft(extent));
@@ -141,118 +241,43 @@ class CanvasSaveButton extends PureComponent {
             getBottomRight(extent),
           );
 
-          clip = {
-            x: pixelTopLeft[0],
-            y: pixelTopLeft[1],
-            w: pixelBottomRight[0] - pixelTopLeft[0],
-            h: pixelBottomRight[1] - pixelTopLeft[1],
+          options = {
+            ...options,
+            clip: {
+              x: pixelTopLeft[0],
+              y: pixelTopLeft[1],
+              w: pixelBottomRight[0] - pixelTopLeft[0],
+              h: pixelBottomRight[1] - pixelTopLeft[1],
+            },
           };
         }
 
-        const destCanvas = document.createElement('canvas');
-        destCanvas.width = clip.w;
-        destCanvas.height = clip.h;
-        const destContext = destCanvas.getContext('2d');
-
-        // Draw map
-        destContext.fillStyle = 'white';
-        destContext.fillRect(0, 0, destCanvas.width, clip.h);
-        destContext.drawImage(
-          canvas,
-          clip.x,
-          clip.y,
-          clip.w,
-          clip.h,
-          0,
-          0,
-          clip.w,
-          clip.h,
-        );
-
-        const padding = 5;
-
-        // Copyright
-        if (extraData && extraData.copyright && extraData.copyright.text) {
-          const text =
-            typeof extraData.copyright.text === 'function'
-              ? extraData.copyright.text()
-              : extraData.copyright.text;
-
-          destContext.font = extraData.copyright.font || '12px Arial';
-          destContext.fillStyle = extraData.copyright.fillStyle || 'black';
-          destContext.fillText(text, padding, clip.h - padding);
-        }
-
-        // North arrow
-        if (extraData && extraData.northArrow) {
-          const img = new Image();
-          if (extraData.northArrow.src) {
-            img.src = extraData.northArrow.src;
-          } else {
-            img.src = extraData.northArrow.circled
-              ? NorthArrowCircle
-              : NorthArrowSimple;
-          }
-
-          img.onload = () => {
-            destContext.save();
-
-            const arrowWidth = extraData.northArrow.width || 80;
-            const arrowHeight = extraData.northArrow.height || 80;
-            const arrowSize = Math.max(arrowWidth, arrowHeight);
-
-            destContext.translate(
-              clip.w - 2 * padding - arrowSize / 2,
-              clip.h - 2 * padding - arrowSize / 2,
-            );
-
-            if (extraData.northArrow.rotation) {
-              const rotation =
-                typeof extraData.northArrow.rotation === 'function'
-                  ? extraData.northArrow.rotation()
-                  : extraData.northArrow.rotation;
-
-              destContext.rotate(rotation * (Math.PI / 180));
-            }
-
-            destContext.drawImage(
-              img,
-              -arrowWidth / 2,
-              -arrowHeight / 2,
-              arrowWidth,
-              arrowHeight,
-            );
-
-            destContext.restore();
-
-            image = asMSBlob
-              ? destCanvas.msToBlob()
-              : destCanvas.toDataURL(opts.format);
-            resolve(image);
-          };
-        } else {
-          image = asMSBlob
+        this.createCanvas(canvas, options, asMSBlob).then(destCanvas => {
+          const image = asMSBlob
             ? destCanvas.msToBlob()
             : destCanvas.toDataURL(opts.format);
           resolve(image);
-        }
+        });
       });
       map.renderSync();
     });
   }
 
+  /**
+   * Downloads the map as image
+   */
   downloadCanvasImage(e) {
     if (/msie (9|10)/gi.test(window.navigator.userAgent.toLowerCase())) {
       // ie 9 and 10
       const w = window.open('about:blank', '');
 
-      this.createCanvasImage(this.options, false).then(image => {
+      this.createImage(this.options, false).then(image => {
         w.document.write(`<img src="${image}" alt="from canvas"/>`);
       });
     } else if (window.navigator.msSaveBlob) {
       // ie 11 and higher
 
-      this.createCanvasImage(this.options, true).then(image => {
+      this.createImage(this.options, true).then(image => {
         window.navigator.msSaveBlob(
           new Blob([image], {
             type: this.options.format,
@@ -261,7 +286,7 @@ class CanvasSaveButton extends PureComponent {
         );
       });
     } else {
-      this.createCanvasImage(this.options, false).then(image => {
+      this.createImage(this.options, false).then(image => {
         const link = document.createElement('a');
         link.download = this.getDownloadImageName();
         link.href = image;
