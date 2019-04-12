@@ -136,11 +136,9 @@ const writeFeatures = (layer, featureProjection) => {
 
     // Extended data breaks KML validity so we remove it for now.
     for (let i = 0; i < f.getProperties(); i += 1) {
-      if (/^(geometry|name|description)$/.test(i)) {
-        // eslint-disable-next-line no-continue
-        continue;
+      if (!/^(geometry|name|description)$/.test(i)) {
+        clone.unset(i, true);
       }
-      clone.unset(i, true);
     }
 
     let styles;
