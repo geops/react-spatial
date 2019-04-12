@@ -6,8 +6,10 @@ module.exports = {
   template: {
     favicon: 'src/images/favicon.png',
   },
+  assetsDir: 'src/',
   require: [
     path.join(__dirname, 'src/themes/default/examples.scss'),
+    'ol/ol.css',
     'react-app-polyfill/ie11',
     'core-js',
   ],
@@ -19,6 +21,7 @@ module.exports = {
     text: 'Fork me on GitHub',
   },
   context: {
+    exampleData: path.join(__dirname, 'data/ExampleData'),
     treeData: path.join(__dirname, 'data/TreeData'),
     topicData: path.join(__dirname, 'data/TopicData'),
   },
@@ -67,10 +70,18 @@ module.exports = {
           test: /\.url\.svg$/,
           loader: 'url-loader',
         },
+	{
+          test: /\.png$/,
+          use: [
+            {
+              loader: 'url-loader',
+            },
+          ],
+        },
       ],
     },
   },
   styleguideComponents: {
-    ComponentsList: path.join(__dirname, 'src/styleguidist/ComponentsList')
-  }
+    ComponentsList: path.join(__dirname, 'src/styleguidist/ComponentsList'),
+  },
 };

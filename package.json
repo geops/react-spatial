@@ -1,6 +1,6 @@
 {
   "name": "react-spatial",
-  "version": "0.0.14-beta.3",
+  "version": "0.0.14-beta.8",
   "description": "Components to build React map apps.",
   "license": "MIT",
   "devDependencies": {
@@ -14,8 +14,8 @@
     "buble": "^0.19.6",
     "canvas": "^2.2.0",
     "css-loader": "^2.1.0",
-    "enzyme": "^3.8.0",
-    "enzyme-adapter-react-16": "^1.7.1",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.12.0",
     "eslint": "^5.12.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^4.1.0",
@@ -30,7 +30,7 @@
     "jest-svg-transformer": "^1.0.0",
     "jsts": "^2.0.3",
     "ol": "^5.3.0",
-    "ole": "^0.0.3",
+    "ole": "^0.0.4-beta.2",
     "prettier": "^1.16.1",
     "proj4": "^2.5.0",
     "prop-types": "^15.6.2",
@@ -44,6 +44,7 @@
     "stylelint-config-recommended-scss": "^3.2.0",
     "stylelint-config-standard": "^18.2.0",
     "stylelint-scss": "^3.4.0",
+    "url-loader": "^1.1.2",
     "webpack": "^4.28.4"
   },
   "peerDependency": {
@@ -52,9 +53,11 @@
   },
   "dependencies": {
     "core-js": "^3.0.0",
+    "jest-environment-jsdom-fourteen": "^0.1.0",
     "node-sass": "^4.11.0",
     "query-string": "^6.4.2",
     "react-app-polyfill": "^0.2.2",
+    "react-draggable": "^3.2.1",
     "react-icons": "^3.4.0",
     "react-svg-loader": "^2.1.0",
     "resize-observer-polyfill": "^1.5.1",
@@ -78,18 +81,19 @@
     },
     "snapshotSerializers": [
       "jest-serializer-html"
-    ]
+    ],
+    "testEnvironment": "jest-environment-jsdom-fourteen"
   },
   "scripts": {
     "prebuild": "rm -rf build/",
-    "build": "buble --no modules -i src -o build --objectAssign Object.assign --sourcemap && cp -t build package.json README.md LICENSE",
+    "build": "buble --no modules -i src -o build --objectAssign Object.assign --sourcemap && cp -t build package.json README.md LICENSE && cp -rf src/images build",
     "postbuild": "cp package.json build/ && cd src && find .  -name '*.scss' | cpio -pdm ../build",
     "format": "prettier --write 'src/**/*.js' && stylelint 'src/**/*.css' 'src/**/*.scss' --fix",
     "lint": "eslint 'src/**/*.js' && stylelint 'src/**/*.css' 'src/**/*.scss'",
     "test": "jest",
     "test:watch": "jest --watch",
     "coverage": "yarn test --coverage --coverageDirectory=coverage",
-    "doc": "styleguidist build",
+    "doc": "styleguidist build && cp -rf src/images/ styleguide",
     "doc:server": "styleguidist server",
     "start": "yarn doc:server",
     "symlink": "yarn build && cd build && yarn link"

@@ -1,0 +1,51 @@
+.tm-dialog-container {
+  background: white;
+  text-align: center;
+  width: 60%;
+
+  .tm-dialog-header {
+    position: relative;
+    background: white;
+    text-align: center;
+    line-height: $btn-size-base;
+    height: $btn-size-base;
+  }
+
+  .tm-dialog-draggable {
+    cursor: pointer;
+  }
+
+  .tm-dialog-close-bt {
+    position: absolute;
+    border: none;
+    right: 0;
+    top: 0;
+    color: black;
+    height: $btn-size-base;
+    width: $btn-size-base;
+  }
+}
+
+.tm-modal {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: rgba(0, 0, 0, 0.1);
+
+  .tm-dialog-container {
+    position: absolute;
+    height: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.tm-dialog {
+  .tm-dialog-container {
+    box-shadow: $box-shadow;
+    margin: auto;
+    position: absolute;
+    top: 0;
+  }
+}

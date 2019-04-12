@@ -5,6 +5,7 @@ import { defaults as defaultInteractions } from 'ol/interaction';
 import OLMap from 'ol/Map';
 import OLCollection from 'ol/Collection';
 import View from 'ol/View';
+import { unByKey } from 'ol/Observable';
 import Interaction from 'ol/interaction/Interaction';
 import Layer from '../../Layer';
 import ResizeHandler from '../ResizeHandler';
@@ -157,20 +158,22 @@ class BasicMap extends Component {
       this.map.getView().fit(extent);
     }
 
-    this.map.on('moveend', e => onMapMoved(e));
+    this.moveEndRef = this.map.on('moveend', e => onMapMoved(e));
+    this.singleClickRef = null;
+    this.pointerMoveRef = null;
   }
 
   componentDidMount() {
     const { onFeaturesClick, onFeaturesHover } = this.props;
     this.map.setTarget(this.node.current);
 
-    this.map.on('singleclick', evt => {
+    this.singleClickRef = this.map.on('singleclick', evt => {
       const features = evt.map.getFeaturesAtPixel(evt.pixel);
       onFeaturesClick(features || []);
     });
 
     if (onFeaturesHover) {
-      this.map.on('pointermove', evt => {
+      this.pointerMoveRef = this.map.on('pointermove', evt => {
         const features = this.map.getFeaturesAtPixel(evt.pixel);
         onFeaturesHover(features || []);
       });
@@ -213,6 +216,16 @@ class BasicMap extends Component {
       this.map.getView().getResolution() !== resolution
     ) {
       this.map.getView().setResolution(resolution);
+    }
+  }
+
+  componentWillUnmount() {
+    const { onFeaturesHover } = this.props;
+    unByKey(this.moveEndRef);
+    unByKey(this.singleClickRef);
+
+    if (onFeaturesHover) {
+      unByKey(this.pointerMoveRef);
     }
   }
 

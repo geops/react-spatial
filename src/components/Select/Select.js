@@ -18,7 +18,9 @@ const propTypes = {
         value: PropTypes.oneOfType([
           PropTypes.string,
           PropTypes.number,
-          PropTypes.arrayOf(PropTypes.string),
+          PropTypes.arrayOf(
+            PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+          ),
         ]).isRequired,
         label: PropTypes.string.isRequired,
       }),
@@ -35,7 +37,9 @@ const propTypes = {
       value: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number,
-        PropTypes.arrayOf(PropTypes.string),
+        PropTypes.arrayOf(
+          PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        ),
       ]).isRequired,
       label: PropTypes.string.isRequired,
     }),
@@ -64,11 +68,11 @@ const getSelectedOption = (inputValue, options) => {
 };
 
 const getValue = opt => {
-  return typeof opt === 'string' ? opt : opt.value;
+  return opt && (typeof opt === 'string' ? opt : opt.value);
 };
 
 const getLabel = opt => {
-  return typeof opt === 'string' ? opt : opt.label;
+  return opt && (typeof opt === 'string' ? opt : opt.label);
 };
 
 /**
@@ -80,11 +84,10 @@ const Select = props => {
     return null;
   }
   const inputValue = getValue(value);
-
   return (
     <select
       className={className}
-      value={inputValue}
+      value={`${inputValue}`}
       onChange={evt => {
         onChange(evt, getSelectedOption(evt.target.value, options));
       }}

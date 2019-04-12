@@ -1,0 +1,80 @@
+.tm-feature-styler-example {
+  position: relative;
+
+  .tm-ole {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 45px;
+
+    button {
+      background: #fafafa;
+      border: 0;
+      padding: 5px;
+      width: 45px;
+      height: 45px;
+      box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.2);
+
+      &.active {
+        box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.3);
+        color: #5c5c5c;
+        filter: brightness(90%);
+      }
+    }
+
+    img {
+      width: 35px;
+      height: 35px;
+    }
+  }
+
+  .tm-feature-styler-popup {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    bottom: 10px;
+    background: white;
+    padding: 10px;
+    width: 200px;
+    overflow-y: auto;
+
+    > .tm-button {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+
+  .tm-feature-styler {
+    & > div > * {
+      margin: 10px 0;
+    }
+  }
+
+  .tm-modify-icon-size {
+    margin: 20px 0;
+
+    select {
+      padding: 10px;
+      background: white;
+      width: 100%;
+    }
+  }
+
+  .tm-modify-icons {
+    margin: 5px 0;
+
+    div[role='button'] {
+      display: inline-block;
+      padding: 2px;
+
+      &.tm-selected {
+        background-color: lightgray;
+      }
+
+      &:hover {
+        background-color: gray;
+      }
+    }
+  }
+}
