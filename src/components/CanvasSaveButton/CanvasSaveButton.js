@@ -74,8 +74,7 @@ const propTypes = {
     {
       copyright: {
         text: () => { // Copyright as function
-          const layers = this.layerService.getLayersAsFlatArray();
-          return Copyright.getCopyrights(layers);
+          return this.layerService.getCopyrights();
         },
       },
       northArrow: {

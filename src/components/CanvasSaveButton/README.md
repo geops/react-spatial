@@ -45,8 +45,7 @@ class CanvasSaveButtonExample extends React.Component {
             extraData={{
               copyright: {
                 text: () => {
-                  const layers = this.layerService.getLayersAsFlatArray();
-                  return Copyright.getCopyrights(layers);
+                  return this.layerService.getCopyrights();
                 },
               },
               northArrow: {

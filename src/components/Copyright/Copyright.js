@@ -7,30 +7,16 @@ const propTypes = {
 };
 
 class Copyright extends Component {
-  static getCopyrights(layers) {
-    const copyrights = layers
-      .filter(l => l.getVisible() && l.getCopyright())
-      .map(l => l.getCopyright());
-
-    const unique = Array.from(new Set(copyrights));
-
-    return unique.join(' | ');
-  }
-
   constructor(props) {
     super(props);
     this.state = {
-      layers: [],
+      copyrights: null,
     };
   }
 
   componentDidMount() {
-    const { layerService } = this.props;
     this.updateLayers();
-
-    if (layerService) {
-      this.updateLayerService();
-    }
+    this.updateLayerService();
   }
 
   componentDidUpdate(prevProps) {
@@ -52,17 +38,14 @@ class Copyright extends Component {
 
   updateLayers() {
     const { layerService } = this.props;
-
-    if (layerService) {
-      const layers = layerService.getLayersAsFlatArray();
-      this.setState({ layers });
-    }
+    const copyrights = layerService.getCopyrights();
+    this.setState({
+      copyrights,
+    });
   }
 
   render() {
-    const { layers } = this.state;
-    const copyrights = Copyright.getCopyrights(layers);
-
+    const { copyrights } = this.state;
     return (
       <div className="tm-copyright">
         &copy;&nbsp;
