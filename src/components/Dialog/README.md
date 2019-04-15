@@ -36,9 +36,12 @@ class DialogExample extends React.Component {
           title={<span>Example Dialog</span>}
           classNameChildren="tm-dialog-content"
           onClose={() => this.toggleDialog()}
+          draggableProps= {{
+            // Pass props to sub-component 'react-draggable'
+            cancel: '.tm-dialog-content'
+          }}
           isOpen={isOpen}
           isDraggable
-          isModal
         >
           <span>I am the content of the dialog</span>
         </Dialog>

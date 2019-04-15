@@ -32,6 +32,12 @@ const propTypes = {
   classNameCloseBt: PropTypes.string,
 
   /**
+   * Object to pass props to sub-component 'react-draggable', to configure it.
+   * https://github.com/mzabriskie/react-draggable
+   */
+  draggableProps: PropTypes.object,
+
+  /**
    * Function triggered on closing dialog.
    */
   onClose: PropTypes.func.isRequired,
@@ -63,6 +69,7 @@ const defaultProps = {
   classNameChildren: undefined,
   classNameHeader: 'tm-dialog-header',
   classNameCloseBt: 'tm-button tm-dialog-close-bt',
+  draggableProps: {},
   isDraggable: false,
   isModal: false,
   isOpen: false,
@@ -117,10 +124,10 @@ class Dialog extends Component {
   }
 
   render() {
-    const { isModal, isOpen, isDraggable } = this.props;
+    const { isModal, isOpen, isDraggable, draggableProps } = this.props;
     if (isOpen) {
       if (!isModal && isDraggable) {
-        return <Draggable>{this.renderDialog()}</Draggable>;
+        return <Draggable {...draggableProps}>{this.renderDialog()}</Draggable>;
       }
       return <>{this.renderDialog()}</>;
     }
