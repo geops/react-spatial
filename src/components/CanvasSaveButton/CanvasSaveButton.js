@@ -277,7 +277,6 @@ class CanvasSaveButton extends PureComponent {
 
   render() {
     const { title, children, tabIndex, className } = this.props;
-    debugger;
     return (
       <Button
         className={className}
