@@ -36,9 +36,9 @@ class DialogExample extends React.Component {
           title={<span>Example Dialog</span>}
           classNameChildren="tm-dialog-content"
           onClose={() => this.toggleDialog()}
+          cancelDraggable=".tm-dialog-content"
           isOpen={isOpen}
           isDraggable
-          isModal
         >
           <span>I am the content of the dialog</span>
         </Dialog>

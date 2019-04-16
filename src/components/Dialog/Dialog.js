@@ -32,6 +32,13 @@ const propTypes = {
   classNameCloseBt: PropTypes.string,
 
   /**
+   * Specifies a selector to be used to prevent drag initialization.
+   * Pass to 'cancel' props of sub-component 'react-draggable'.
+   * https://github.com/mzabriskie/react-draggable
+   */
+  cancelDraggable: PropTypes.string,
+
+  /**
    * Function triggered on closing dialog.
    */
   onClose: PropTypes.func.isRequired,
@@ -63,6 +70,7 @@ const defaultProps = {
   classNameChildren: undefined,
   classNameHeader: 'tm-dialog-header',
   classNameCloseBt: 'tm-button tm-dialog-close-bt',
+  cancelDraggable: undefined,
   isDraggable: false,
   isModal: false,
   isOpen: false,
@@ -117,10 +125,14 @@ class Dialog extends Component {
   }
 
   render() {
-    const { isModal, isOpen, isDraggable } = this.props;
+    const { isModal, isOpen, isDraggable, cancelDraggable } = this.props;
     if (isOpen) {
       if (!isModal && isDraggable) {
-        return <Draggable>{this.renderDialog()}</Draggable>;
+        const draggableProps = cancelDraggable
+          ? { cancel: cancelDraggable }
+          : {};
+
+        return <Draggable {...draggableProps}>{this.renderDialog()}</Draggable>;
       }
       return <>{this.renderDialog()}</>;
     }

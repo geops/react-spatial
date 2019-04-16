@@ -97,9 +97,26 @@ const propTypes = {
   classNameTextSize: PropTypes.string,
 
   /**
+   * CSS class for the container of the list of text sizes.
+   */
+  classNameTextRotation: PropTypes.string,
+
+  /**
    * CSS class of the selected values.
    */
   classNameSelected: PropTypes.string,
+
+  /**
+   * List of labels to be overwritten.
+   */
+  labels: PropTypes.shape({
+    modifyColor: PropTypes.string,
+    modifyText: PropTypes.string,
+    modifyTextSize: PropTypes.string,
+    modifyTextRotation: PropTypes.string,
+    modifyIcon: PropTypes.string,
+    modifyIconSize: PropTypes.string,
+  }),
 };
 
 const defaultProps = {
@@ -112,6 +129,7 @@ const defaultProps = {
   classNameColors: 'tm-modify-color',
   classNameTextColors: 'tm-modify-text-color',
   classNameTextSize: 'tm-modify-text-size',
+  classNameTextRotation: 'tm-modify-text-rotation',
   classNameSelected: 'tm-button tm-selected',
   colors: [
     { name: 'black', fill: [0, 0, 0], border: 'white' },
@@ -124,14 +142,14 @@ const defaultProps = {
     { name: 'yellow', fill: [255, 255, 0], border: 'black' },
   ],
   textSizes: [
-    { label: 'small_size', value: 1, scale: 1 },
-    { label: 'medium_size', value: 1.5, scale: 1.5 },
-    { label: 'big_size', value: 2, scale: 2 },
+    { label: 'small size', value: 1, scale: 1 },
+    { label: 'medium size', value: 1.5, scale: 1.5 },
+    { label: 'big size', value: 2, scale: 2 },
   ],
   iconSizes: [
-    { label: 'small_size', value: [24, 24], scale: 0.5 },
-    { label: 'medium_size', value: [36, 36], scale: 0.75 },
-    { label: 'big_size', value: [48, 48], scale: 1 },
+    { label: 'small size', value: [24, 24], scale: 0.5 },
+    { label: 'medium size', value: [36, 36], scale: 0.75 },
+    { label: 'big size', value: [48, 48], scale: 1 },
   ],
   // type: Type of icon: if stored as css style -> "css", if image ->"img"
   // regex: pattern for icon category. Mandatory for category type "css".
@@ -158,6 +176,14 @@ const defaultProps = {
       ],
     },
   ],
+  labels: {
+    modifyColor: 'Modify color',
+    modifyText: 'Modify text',
+    modifyTextSize: 'Modify text size',
+    modifyTextRotation: 'Modify text rotation',
+    modifyIcon: 'Modify icon',
+    modifyIconSize: 'Modify icon size',
+  },
 };
 
 /**
@@ -239,7 +265,7 @@ class FeatureStyler extends PureComponent {
     if (textStyle) {
       textStyle.setText(text);
 
-      if (textSize && textSize.scale !== 1) {
+      if (textSize) {
         textStyle.setScale(textSize.scale);
       }
 
@@ -372,7 +398,7 @@ class FeatureStyler extends PureComponent {
       return;
     }
 
-    if (featStyle.getImage() instanceof Icon) {
+    if (featStyle.getImage()) {
       useIconStyle = true;
       const img = featStyle.getImage();
       iconCategory = FeatureStyler.findCategoryBySource(img, iconCategories);
@@ -467,10 +493,16 @@ class FeatureStyler extends PureComponent {
   }
 
   renderColors(color, onClick) {
-    const { t, colors, classNameColors, classNameSelected } = this.props;
+    const {
+      t,
+      colors,
+      classNameColors,
+      classNameSelected,
+      labels,
+    } = this.props;
     return (
       <div className={classNameColors}>
-        <div>{`${t('Modify color')}:`}</div>
+        {labels.modifyColor ? <div>{t(labels.modifyColor)}</div> : null}
         <div>
           {colors.map(c => (
             <Button
@@ -496,10 +528,16 @@ class FeatureStyler extends PureComponent {
 
   renderTextColors(color, onClick) {
     const { font } = this.state;
-    const { t, colors, classNameTextColors, classNameSelected } = this.props;
+    const {
+      t,
+      colors,
+      classNameTextColors,
+      classNameSelected,
+      labels,
+    } = this.props;
     return (
       <div className={classNameTextColors}>
-        <div>{`${t('Modify color')}:`}</div>
+        {labels.modifyColor ? <div>{t(labels.modifyColor)}</div> : null}
         <div>
           {colors.map(c => (
             <Button
@@ -555,7 +593,13 @@ class FeatureStyler extends PureComponent {
       textSize,
       textRotation,
     } = this.state;
-    const { textSizes, t, classNameTextSize } = this.props;
+    const {
+      textSizes,
+      t,
+      classNameTextSize,
+      classNameTextRotation,
+      labels,
+    } = this.props;
 
     if (!useTextStyle) {
       return null;
@@ -564,7 +608,7 @@ class FeatureStyler extends PureComponent {
     return (
       <>
         <div>
-          <div>{`${t('Modify text')}:`}</div>
+          {labels.modifyText ? <div>{t(labels.modifyText)}</div> : null}
           <textarea
             rows="1"
             value={name}
@@ -579,7 +623,7 @@ class FeatureStyler extends PureComponent {
           });
         })}
         <div className={classNameTextSize}>
-          <div>{`${t('Modify text size')}:`}</div>
+          {labels.modifyTextSize ? <div>{t(labels.modifyTextSize)}</div> : null}
           <Select
             options={textSizes}
             value={textSize}
@@ -589,8 +633,12 @@ class FeatureStyler extends PureComponent {
           />
         </div>
 
-        <div>
-          <div>{`${t('Modify text rotation')}:`}</div>
+        <div className={classNameTextRotation}>
+          <div>
+            {labels.modifyTextRotation ? (
+              <div>{t(labels.modifyTextRotation)}</div>
+            ) : null}
+          </div>
           <input
             type="range"
             min="0"
@@ -607,7 +655,8 @@ class FeatureStyler extends PureComponent {
   }
 
   renderIconStyle() {
-    const { useIconStyle, icon, iconSize, iconCategory } = this.state;
+    const { labels, iconCategories } = this.props;
+    const { useIconStyle, icon, iconSize } = this.state;
     const {
       iconSizes,
       t,
@@ -623,37 +672,43 @@ class FeatureStyler extends PureComponent {
     return (
       <>
         <div className={classNameIcons}>
-          <div>{`${t('Modify icon')}:`}</div>
-          <div>
-            {iconCategory.icons.map(i => {
-              return (
-                <Button
-                  key={i.url}
-                  onClick={() => {
-                    this.setState({ icon: i });
-                  }}
-                  style={{
-                    width: iconSize.value[0],
-                    height: iconSize.value[1],
-                  }}
-                  className={
-                    icon && icon.url === i.url ? classNameSelected : undefined
-                  }
-                >
-                  <img
-                    src={i.url}
-                    alt={i.url}
-                    width={iconSize.value[0]}
-                    height={iconSize.value[1]}
-                  />
-                </Button>
-              );
-            })}
-          </div>
+          {labels.modifyIcon ? <div>{t(labels.modifyIcon)}</div> : null}
+          {iconCategories.map(category => {
+            return (
+              <div key={category.id}>
+                {category.icons.map(i => {
+                  return (
+                    <Button
+                      key={i.url}
+                      onClick={() => {
+                        this.setState({ icon: i });
+                      }}
+                      style={{
+                        width: iconSize.value[0],
+                        height: iconSize.value[1],
+                      }}
+                      className={
+                        icon && icon.url === i.url
+                          ? classNameSelected
+                          : undefined
+                      }
+                    >
+                      <img
+                        src={i.url}
+                        alt={i.url}
+                        width={iconSize.value[0]}
+                        height={iconSize.value[1]}
+                      />
+                    </Button>
+                  );
+                })}
+              </div>
+            );
+          })}
         </div>
 
         <div className={classNameIconSize}>
-          <div>{`${t('Modify icon size')}:`}</div>
+          {labels.modifyIconSize ? <div>{t(labels.modifyIconSize)}</div> : null}
           <Select
             options={iconSizes}
             value={iconSize}

@@ -95,7 +95,9 @@ class FeatureStylerExample extends React.Component {
     const icon = new Feature(new Point([8000000, 3000000]));
     icon.setStyle(this.defaultIconStyle.clone());
 
-    const line = new Feature(new LineString([[-8000000, 3000000], [8000000, 3000000]]));
+    const line = new Feature(new LineString([
+      [-8000000, 3000000], [8000000, 3000000],
+    ]));
     line.setStyle(this.defaultLineStyle.clone());
 
     this.layers = [

@@ -59,18 +59,25 @@ exports[`Dialog matches snapshots for modal Dialog. 1`] = `
 
 exports[`Dialog matches snapshots for normal Dialog. 1`] = `
 <div
-  className="tm-dialog"
+  className="tm-dialog react-draggable"
+  onMouseDown={[Function]}
+  onMouseUp={[Function]}
+  onTouchEnd={[Function]}
+  onTouchStart={[Function]}
   style={
     Object {
       "display": "block",
+      "touchAction": "none",
+      "transform": "translate(0px,0px)",
     }
   }
+  transform={null}
 >
   <div
     className="tm-dialog-container"
   >
     <div
-      className="tm-dialog-header "
+      className="tm-dialog-header tm-dialog-draggable"
     >
       <div
         className="tm-header-left"

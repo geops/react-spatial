@@ -18,7 +18,12 @@ describe('Dialog', () => {
 
     test('for normal Dialog.', () => {
       const component = renderer.create(
-        <Dialog title={<span>Example Dialog</span>} onClose={() => {}} isOpen>
+        <Dialog
+          title={<span>Example Dialog</span>}
+          onClose={() => {}}
+          isDraggable
+          isOpen
+        >
           <span>content</span>
         </Dialog>,
       );
