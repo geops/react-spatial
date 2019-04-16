@@ -92,7 +92,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
           ]
         }
       >
-        small_size
+        small size
       </option>
       <option
         value={
@@ -102,7 +102,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
           ]
         }
       >
-        medium_size
+        medium size
       </option>
       <option
         value={
@@ -112,7 +112,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
           ]
         }
       >
-        big_size
+        big size
       </option>
     </select>
   </div>
@@ -308,17 +308,17 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
       <option
         value={1}
       >
-        small_size
+        small size
       </option>
       <option
         value={1.5}
       >
-        medium_size
+        medium size
       </option>
       <option
         value={2}
       >
-        big_size
+        big size
       </option>
     </select>
   </div>
@@ -434,7 +434,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
           ]
         }
       >
-        small_size
+        small size
       </option>
       <option
         value={
@@ -444,7 +444,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
           ]
         }
       >
-        medium_size
+        medium size
       </option>
       <option
         value={
@@ -454,7 +454,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
           ]
         }
       >
-        big_size
+        big size
       </option>
     </select>
   </div>
@@ -808,17 +808,17 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
       <option
         value={1}
       >
-        small_size
+        small size
       </option>
       <option
         value={1.5}
       >
-        medium_size
+        medium size
       </option>
       <option
         value={2}
       >
-        big_size
+        big size
       </option>
     </select>
   </div>
@@ -927,7 +927,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
           ]
         }
       >
-        small_size
+        small size
       </option>
       <option
         value={
@@ -937,7 +937,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
           ]
         }
       >
-        medium_size
+        medium size
       </option>
       <option
         value={
@@ -947,7 +947,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
           ]
         }
       >
-        big_size
+        big size
       </option>
     </select>
   </div>
