@@ -142,14 +142,14 @@ const defaultProps = {
     { name: 'yellow', fill: [255, 255, 0], border: 'black' },
   ],
   textSizes: [
-    { label: 'small_size', value: 1, scale: 1 },
-    { label: 'medium_size', value: 1.5, scale: 1.5 },
-    { label: 'big_size', value: 2, scale: 2 },
+    { label: 'small size', value: 1, scale: 1 },
+    { label: 'medium size', value: 1.5, scale: 1.5 },
+    { label: 'big size', value: 2, scale: 2 },
   ],
   iconSizes: [
-    { label: 'small_size', value: [24, 24], scale: 0.5 },
-    { label: 'medium_size', value: [36, 36], scale: 0.75 },
-    { label: 'big_size', value: [48, 48], scale: 1 },
+    { label: 'small size', value: [24, 24], scale: 0.5 },
+    { label: 'medium size', value: [36, 36], scale: 0.75 },
+    { label: 'big size', value: [48, 48], scale: 1 },
   ],
   // type: Type of icon: if stored as css style -> "css", if image ->"img"
   // regex: pattern for icon category. Mandatory for category type "css".
@@ -265,7 +265,7 @@ class FeatureStyler extends PureComponent {
     if (textStyle) {
       textStyle.setText(text);
 
-      if (textSize && textSize.scale !== 1) {
+      if (textSize) {
         textStyle.setScale(textSize.scale);
       }
 
