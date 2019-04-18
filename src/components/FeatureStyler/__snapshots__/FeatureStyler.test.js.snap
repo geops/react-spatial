@@ -18,17 +18,17 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         role="button"
         style={
           Object {
-            "height": 48,
-            "width": 48,
+            "height": 24,
+            "width": 24,
           }
         }
         tabIndex={0}
       >
         <img
           alt="images/marker.png"
-          height={48}
+          height={24}
           src="images/marker.png"
-          width={48}
+          width={24}
         />
       </div>
     </div>
@@ -40,17 +40,17 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         role="button"
         style={
           Object {
-            "height": 48,
-            "width": 48,
+            "height": 24,
+            "width": 24,
           }
         }
         tabIndex={0}
       >
         <img
           alt="images/airport.png"
-          height={48}
+          height={24}
           src="images/airport.png"
-          width={48}
+          width={24}
         />
       </div>
       <div
@@ -60,17 +60,17 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         role="button"
         style={
           Object {
-            "height": 48,
-            "width": 48,
+            "height": 24,
+            "width": 24,
           }
         }
         tabIndex={0}
       >
         <img
           alt="images/fuel.png"
-          height={48}
+          height={24}
           src="images/fuel.png"
-          width={48}
+          width={24}
         />
       </div>
     </div>
@@ -360,17 +360,17 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         role="button"
         style={
           Object {
-            "height": 48,
-            "width": 48,
+            "height": 24,
+            "width": 24,
           }
         }
         tabIndex={0}
       >
         <img
           alt="images/marker.png"
-          height={48}
+          height={24}
           src="images/marker.png"
-          width={48}
+          width={24}
         />
       </div>
     </div>
@@ -382,17 +382,17 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         role="button"
         style={
           Object {
-            "height": 48,
-            "width": 48,
+            "height": 24,
+            "width": 24,
           }
         }
         tabIndex={0}
       >
         <img
           alt="images/airport.png"
-          height={48}
+          height={24}
           src="images/airport.png"
-          width={48}
+          width={24}
         />
       </div>
       <div
@@ -402,17 +402,17 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         role="button"
         style={
           Object {
-            "height": 48,
-            "width": 48,
+            "height": 24,
+            "width": 24,
           }
         }
         tabIndex={0}
       >
         <img
           alt="images/fuel.png"
-          height={48}
+          height={24}
           src="images/fuel.png"
-          width={48}
+          width={24}
         />
       </div>
     </div>
