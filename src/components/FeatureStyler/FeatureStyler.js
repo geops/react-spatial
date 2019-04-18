@@ -162,16 +162,24 @@ const defaultProps = {
       type: 'img',
       icons: [
         {
+          id: 26,
+          url: 'images/marker.png',
+        },
+      ],
+    },
+    {
+      id: 'default2',
+      useColorOption: false,
+      nbIcons: 160,
+      type: 'img',
+      icons: [
+        {
           id: 1,
           url: 'images/airport.png',
         },
         {
           id: 2,
           url: 'images/fuel.png',
-        },
-        {
-          id: 26,
-          url: 'images/marker.png',
         },
       ],
     },
@@ -398,7 +406,7 @@ class FeatureStyler extends PureComponent {
       return;
     }
 
-    if (featStyle.getImage()) {
+    if (featStyle.getImage() instanceof Icon) {
       useIconStyle = true;
       const img = featStyle.getImage();
       iconCategory = FeatureStyler.findCategoryBySource(img, iconCategories);
@@ -634,11 +642,9 @@ class FeatureStyler extends PureComponent {
         </div>
 
         <div className={classNameTextRotation}>
-          <div>
-            {labels.modifyTextRotation ? (
-              <div>{t(labels.modifyTextRotation)}</div>
-            ) : null}
-          </div>
+          {labels.modifyTextRotation ? (
+            <div>{t(labels.modifyTextRotation)}</div>
+          ) : null}
           <input
             type="range"
             min="0"
