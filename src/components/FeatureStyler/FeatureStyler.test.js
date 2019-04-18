@@ -314,7 +314,7 @@ describe('FeatureStyler', () => {
     });
 
     test("set state's icon property onClick of a color", () => {
-      const targetIcon = FeatureStyler.defaultProps.iconCategories[0].icons[1];
+      const targetIcon = FeatureStyler.defaultProps.iconCategories[1].icons[0];
       expect(wrapper.state().icon).not.toEqual(targetIcon);
       wrapper
         .find('Button')
