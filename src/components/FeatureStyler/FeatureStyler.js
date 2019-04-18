@@ -690,8 +690,8 @@ class FeatureStyler extends PureComponent {
                         this.setState({ icon: i });
                       }}
                       style={{
-                        width: iconSize.value[0],
-                        height: iconSize.value[1],
+                        width: iconSizes[0].value[0],
+                        height: iconSizes[0].value[1],
                       }}
                       className={
                         icon && icon.url === i.url
@@ -702,8 +702,8 @@ class FeatureStyler extends PureComponent {
                       <img
                         src={i.url}
                         alt={i.url}
-                        width={iconSize.value[0]}
-                        height={iconSize.value[1]}
+                        width={iconSizes[0].value[0]}
+                        height={iconSizes[0].value[1]}
                       />
                     </Button>
                   );
