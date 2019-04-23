@@ -18,57 +18,59 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         role="button"
         style={
           Object {
-            "height": 48,
-            "width": 48,
-          }
-        }
-        tabIndex={0}
-      >
-        <img
-          alt="images/airport.png"
-          height={48}
-          src="images/airport.png"
-          width={48}
-        />
-      </div>
-      <div
-        className="tm-button"
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        style={
-          Object {
-            "height": 48,
-            "width": 48,
-          }
-        }
-        tabIndex={0}
-      >
-        <img
-          alt="images/fuel.png"
-          height={48}
-          src="images/fuel.png"
-          width={48}
-        />
-      </div>
-      <div
-        className="tm-button"
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        style={
-          Object {
-            "height": 48,
-            "width": 48,
+            "height": 24,
+            "width": 24,
           }
         }
         tabIndex={0}
       >
         <img
           alt="images/marker.png"
-          height={48}
+          height={24}
           src="images/marker.png"
-          width={48}
+          width={24}
+        />
+      </div>
+    </div>
+    <div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "height": 24,
+            "width": 24,
+          }
+        }
+        tabIndex={0}
+      >
+        <img
+          alt="images/airport.png"
+          height={24}
+          src="images/airport.png"
+          width={24}
+        />
+      </div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "height": 24,
+            "width": 24,
+          }
+        }
+        tabIndex={0}
+      >
+        <img
+          alt="images/fuel.png"
+          height={24}
+          src="images/fuel.png"
+          width={24}
         />
       </div>
     </div>
@@ -326,9 +328,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
     className="tm-modify-text-rotation"
   >
     <div>
-      <div>
-        Modify text rotation
-      </div>
+      Modify text rotation
     </div>
     <input
       max="360"
@@ -360,57 +360,59 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         role="button"
         style={
           Object {
-            "height": 48,
-            "width": 48,
-          }
-        }
-        tabIndex={0}
-      >
-        <img
-          alt="images/airport.png"
-          height={48}
-          src="images/airport.png"
-          width={48}
-        />
-      </div>
-      <div
-        className="tm-button"
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        style={
-          Object {
-            "height": 48,
-            "width": 48,
-          }
-        }
-        tabIndex={0}
-      >
-        <img
-          alt="images/fuel.png"
-          height={48}
-          src="images/fuel.png"
-          width={48}
-        />
-      </div>
-      <div
-        className="tm-button"
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        style={
-          Object {
-            "height": 48,
-            "width": 48,
+            "height": 24,
+            "width": 24,
           }
         }
         tabIndex={0}
       >
         <img
           alt="images/marker.png"
-          height={48}
+          height={24}
           src="images/marker.png"
-          width={48}
+          width={24}
+        />
+      </div>
+    </div>
+    <div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "height": 24,
+            "width": 24,
+          }
+        }
+        tabIndex={0}
+      >
+        <img
+          alt="images/airport.png"
+          height={24}
+          src="images/airport.png"
+          width={24}
+        />
+      </div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "height": 24,
+            "width": 24,
+          }
+        }
+        tabIndex={0}
+      >
+        <img
+          alt="images/fuel.png"
+          height={24}
+          src="images/fuel.png"
+          width={24}
         />
       </div>
     </div>
@@ -826,9 +828,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
     className="tm-modify-text-rotation"
   >
     <div>
-      <div>
-        Modify text rotation
-      </div>
+      Modify text rotation
     </div>
     <input
       max="360"
@@ -844,6 +844,28 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
   >
     <div>
       Modify icon
+    </div>
+    <div>
+      <div
+        className="tm-button tm-selected"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "height": 24,
+            "width": 24,
+          }
+        }
+        tabIndex={0}
+      >
+        <img
+          alt="images/marker.png"
+          height={24}
+          src="images/marker.png"
+          width={24}
+        />
+      </div>
     </div>
     <div>
       <div
@@ -883,26 +905,6 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
           alt="images/fuel.png"
           height={24}
           src="images/fuel.png"
-          width={24}
-        />
-      </div>
-      <div
-        className="tm-button tm-selected"
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        style={
-          Object {
-            "height": 24,
-            "width": 24,
-          }
-        }
-        tabIndex={0}
-      >
-        <img
-          alt="images/marker.png"
-          height={24}
-          src="images/marker.png"
           width={24}
         />
       </div>
