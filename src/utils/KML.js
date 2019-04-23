@@ -9,10 +9,10 @@ import { kmlStyle } from './Styles';
 // Clean the uneeded feature's style and properties created by the KML parser.
 const sanitizeFeature = feature => {
   const geom = feature.getGeometry();
-  let styles = feature.getStyleFunction().call(feature);
+  let styles = feature.getStyleFunction();
 
   // The use of clone is part of the scale fix line 156
-  const style = styles[0].clone();
+  const style = styles(feature)[0].clone();
 
   // The canvas draws a stroke width=1 by default if width=0, so we
   // remove the stroke style in that case.
