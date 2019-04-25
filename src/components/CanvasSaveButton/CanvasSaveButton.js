@@ -119,10 +119,9 @@ class CanvasSaveButton extends PureComponent {
     );
   }
 
-  createCanvasImage(opts, asMSBlob) {
+  createCanvasImage() {
     return new Promise(resolve => {
       const { map, extent, extraData } = this.props;
-      let image;
 
       map.once('postcompose', evt => {
         const { canvas } = evt.context;
@@ -224,16 +223,10 @@ class CanvasSaveButton extends PureComponent {
 
             destContext.restore();
 
-            image = asMSBlob
-              ? destCanvas.msToBlob()
-              : destCanvas.toDataURL(opts.format);
-            resolve(image);
+            resolve(destCanvas);
           };
         } else {
-          image = asMSBlob
-            ? destCanvas.msToBlob()
-            : destCanvas.toDataURL(opts.format);
-          resolve(image);
+          resolve(destCanvas);
         }
       });
       map.renderSync();
@@ -241,32 +234,33 @@ class CanvasSaveButton extends PureComponent {
   }
 
   downloadCanvasImage(e) {
-    if (/msie (9|10)/gi.test(window.navigator.userAgent.toLowerCase())) {
-      // ie 9 and 10
-      const w = window.open('about:blank', '');
+    this.createCanvasImage().then(canvas => {
+      if (/msie (9|10)/gi.test(window.navigator.userAgent.toLowerCase())) {
+        // ie 9 and 10
+        const url = canvas.toDataURL(this.options.format);
+        const w = window.open('about:blank', '');
+        w.document.write(`<img src="${url}" alt="from canvas"/>`);
+      } else if (window.navigator.msSaveBlob) {
+        // ie 11 and higher
 
-      this.createCanvasImage(this.options, false).then(image => {
-        w.document.write(`<img src="${image}" alt="from canvas"/>`);
-      });
-    } else if (window.navigator.msSaveBlob) {
-      // ie 11 and higher
-
-      this.createCanvasImage(this.options, true).then(image => {
+        const image = canvas.msToBlob();
         window.navigator.msSaveBlob(
           new Blob([image], {
             type: this.options.format,
           }),
           this.getDownloadImageName(),
         );
-      });
-    } else {
-      this.createCanvasImage(this.options, false).then(image => {
+      } else {
         const link = document.createElement('a');
         link.download = this.getDownloadImageName();
-        link.href = image;
-        link.click();
-      });
-    }
+
+        // Use blob for large images
+        canvas.toBlob(blob => {
+          link.href = URL.createObjectURL(blob);
+          link.click();
+        }, this.options.format);
+      }
+    });
 
     if (window.navigator.msSaveBlob) {
       // ie only
