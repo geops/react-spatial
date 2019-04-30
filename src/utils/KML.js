@@ -6,6 +6,10 @@ import GeometryCollection from 'ol/geom/GeometryCollection';
 import { Style, Text, Icon, Circle, Fill, Stroke } from 'ol/style';
 import { kmlStyle } from './Styles';
 
+const replaceAll = (str, regEx, replace) => {
+  return str.replace(regEx, replace);
+};
+
 const applyTextStyleForIcon = (olIcon, olText) => {
   const size = olIcon.getSize() || [48, 48];
   const scale = olIcon.getScale() || 1;
@@ -26,8 +30,10 @@ const addCustomField = (featString, feature, closingTag) => {
   const placemarkRegEx = new RegExp(
     `<s*Placemark id="${feature.key}"[^>]*>(.*?)</Placemark>`,
   );
+  const exDataRegEx = new RegExp(`<s*ExtendedData[^>]*>(.*?)</ExtendedData>`);
+
   const matchingRegEx = featString.match(placemarkRegEx);
-  const matchingTag = matchingRegEx[1];
+  const matchingTag = replaceAll(matchingRegEx[1], exDataRegEx, '');
   const indexOf = matchingTag.indexOf(closingTag) + closingTag.length;
 
   const extendedPlacemark = [
@@ -58,6 +64,15 @@ const sanitizeFeature = feature => {
   // The canvas draws a stroke width=1 by default if width=0, so we
   // remove the stroke style in that case.
   let stroke = style.getStroke();
+  if (stroke && feature.get('dashedLine')) {
+    stroke.setLineDash(
+      feature
+        .get('dashedLine')
+        .split(',')
+        .map(l => parseInt(l, 10)),
+    );
+  }
+
   if (stroke && stroke.getWidth() === 0) {
     stroke = undefined;
   }
@@ -172,6 +187,7 @@ const writeFeatures = (layer, featureProjection) => {
   const { olLayer } = layer;
   const exportFeatures = [];
   const rotatedTexts = [];
+  const dashedLines = [];
 
   olLayer.getSource().forEachFeature(f => {
     // We silently ignore Circle elements as they are
@@ -208,6 +224,7 @@ const writeFeatures = (layer, featureProjection) => {
       zIndex: styles[0].getZIndex(),
     };
 
+    // Set temporary ID.
     clone.setId(`id${clone.ol_uid}`);
 
     // Create array of rotation values for LabelTexts.
@@ -216,6 +233,14 @@ const writeFeatures = (layer, featureProjection) => {
         key: clone.getId(),
         fieldName: 'textRotation',
         fieldValue: newStyle.text.getRotation(),
+      });
+    }
+
+    if (newStyle.stroke) {
+      dashedLines.push({
+        key: clone.getId(),
+        fieldName: 'dashedLine',
+        fieldValue: newStyle.stroke.getLineDash(),
       });
     }
 
@@ -282,6 +307,17 @@ const writeFeatures = (layer, featureProjection) => {
   for (let i = 0; i < rotatedTexts.length; i += 1) {
     featString = addCustomField(featString, rotatedTexts[i], '</Style>');
   }
+
+  for (let i = 0; i < dashedLines.length; i += 1) {
+    featString = addCustomField(featString, dashedLines[i], '</Style>');
+  }
+
+  // Remove temporary feature id.
+  featString = replaceAll(
+    featString,
+    /<s*Placemark id="(.*?)"[^>]*>/g,
+    '<Placemark>',
+  );
 
   return featString;
 };
