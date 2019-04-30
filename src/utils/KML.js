@@ -3,8 +3,24 @@ import { Feature } from 'ol';
 import Point from 'ol/geom/Point';
 import MultiPoint from 'ol/geom/MultiPoint';
 import GeometryCollection from 'ol/geom/GeometryCollection';
-import { Style, Text, Icon, Circle } from 'ol/style';
+import { Style, Text, Icon, Circle, Fill, Stroke } from 'ol/style';
 import { kmlStyle } from './Styles';
+
+const applyTextStyleForIcon = (olIcon, olText) => {
+  const size = olIcon.getSize() || [48, 48];
+  const scale = olIcon.getScale() || 1;
+  const anchor = olIcon.getAnchor() || [
+    (size[0] * scale) / 2,
+    (size[1] * scale) / 2,
+  ];
+  const offset = [
+    scale * (size[0] - anchor[0]) + 5,
+    scale * (size[1] / 2 - anchor[1]),
+  ];
+  olText.setOffsetX(offset[0]);
+  olText.setOffsetY(offset[1]);
+  olText.setTextAlign('left');
+};
 
 // Clean the uneeded feature's style and properties created by the KML parser.
 const sanitizeFeature = feature => {
@@ -40,24 +56,31 @@ const sanitizeFeature = feature => {
     ) {
       if (image && image.getScale() === 0) {
         // transparentCircle is used to allow selection
-        image = this.gaStyleFactory.getStyle('transparentCircle');
+        image = new Circle({
+          radius: 1,
+          fill: new Fill({ color: [0, 0, 0, 0] }),
+          stroke: new Stroke({ color: [0, 0, 0, 0] }),
+        });
       }
 
+      const olColor = style
+        .getText()
+        .getFill()
+        .getColor();
+
       text = new Text({
-        font: this.gaStyleFactory.FONT,
+        font: 'normal 16px Helvetica',
         text: feature.get('name'),
         fill: style.getText().getFill(),
-        stroke: this.gaStyleFactory.getTextStroke(
-          style
-            .getText()
-            .getFill()
-            .getColor(),
-        ),
+        stroke: new Stroke({
+          color: olColor[1] >= 160 ? [0, 0, 0, 1] : [255, 255, 255, 1],
+          width: 3,
+        }),
         scale: style.getText().getScale(),
       });
 
       if (image instanceof Icon) {
-        this.gaStyleFactory.applyTextStyleForIcon(image, text);
+        applyTextStyleForIcon(image, text);
       }
 
       fill = undefined;
