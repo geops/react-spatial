@@ -22,6 +22,31 @@ const applyTextStyleForIcon = (olIcon, olText) => {
   olText.setTextAlign('left');
 };
 
+const addCustomField = (featString, feature, closingTag) => {
+  const placemarkRegEx = new RegExp(
+    `<s*Placemark id="${feature.key}"[^>]*>(.*?)</Placemark>`,
+  );
+  const matchingRegEx = featString.match(placemarkRegEx);
+  const matchingTag = matchingRegEx[1];
+  const indexOf = matchingTag.indexOf(closingTag) + closingTag.length;
+
+  const extendedPlacemark = [
+    `<Placemark id="${feature.key}">`,
+    matchingTag.slice(0, indexOf),
+    `<ExtendedData><Data name="${feature.fieldName}"><value>${
+      feature.fieldValue
+    }</value></Data></ExtendedData>`,
+    matchingTag.slice(indexOf),
+    '</Placemark>',
+  ].join('');
+
+  const newFeatureString = featString.replace(
+    matchingRegEx[0],
+    extendedPlacemark,
+  );
+  return newFeatureString;
+};
+
 // Clean the uneeded feature's style and properties created by the KML parser.
 const sanitizeFeature = feature => {
   const geom = feature.getGeometry();
@@ -72,6 +97,8 @@ const sanitizeFeature = feature => {
         font: 'normal 16px Helvetica',
         text: feature.get('name'),
         fill: style.getText().getFill(),
+        // rotation unsupported by KML, taken instead from custom field.
+        rotation: feature.get('textRotation') || 1,
         stroke: new Stroke({
           color: olColor[1] >= 160 ? [0, 0, 0, 1] : [255, 255, 255, 1],
           width: 3,
@@ -144,6 +171,7 @@ const writeFeatures = (layer, featureProjection) => {
   let featString;
   const { olLayer } = layer;
   const exportFeatures = [];
+  const rotatedTexts = [];
 
   olLayer.getSource().forEachFeature(f => {
     // We silently ignore Circle elements as they are
@@ -179,6 +207,17 @@ const writeFeatures = (layer, featureProjection) => {
       image: styles[0].getImage(),
       zIndex: styles[0].getZIndex(),
     };
+
+    clone.setId(`id${clone.ol_uid}`);
+
+    // Create array of rotation values for LabelTexts.
+    if (newStyle.text) {
+      rotatedTexts.push({
+        key: clone.getId(),
+        fieldName: 'textRotation',
+        fieldValue: newStyle.text.getRotation(),
+      });
+    }
 
     if (newStyle.image instanceof Circle) {
       newStyle.image = null;
@@ -237,6 +276,11 @@ const writeFeatures = (layer, featureProjection) => {
         `<Document><name>${layer.getName()}</name>`,
       );
     }
+  }
+
+  // Loop to add custom rotation field for LabelStyle.
+  for (let i = 0; i < rotatedTexts.length; i += 1) {
+    featString = addCustomField(featString, rotatedTexts[i], '</Style>');
   }
 
   return featString;
