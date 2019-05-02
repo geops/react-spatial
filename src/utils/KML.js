@@ -312,12 +312,14 @@ const writeFeatures = (layer, featureProjection) => {
     featString = addCustomField(featString, dashedLines[i], '</Style>');
   }
 
-  // Remove temporary feature id.
-  featString = replaceAll(
-    featString,
-    /<s*Placemark id="(.*?)"[^>]*>/g,
-    '<Placemark>',
-  );
+  if (featString) {
+    // Remove temporary feature id.
+    featString = replaceAll(
+      featString,
+      /<s*Placemark id="(.*?)"[^>]*>/g,
+      '<Placemark>',
+    );
+  }
 
   return featString;
 };
