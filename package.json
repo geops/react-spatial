@@ -59,7 +59,7 @@
     "react-app-polyfill": "^0.2.2",
     "react-draggable": "^3.2.1",
     "react-icons": "^3.4.0",
-    "react-svg-loader": "^2.1.0",
+    "react-svg-loader": "^3.0.0",
     "resize-observer-polyfill": "^1.5.1",
     "url-loader": "^1.1.2"
   },
