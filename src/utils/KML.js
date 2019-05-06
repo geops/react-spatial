@@ -31,7 +31,6 @@ const sanitizeFeature = feature => {
   const style = styles(feature)[0].clone();
 
   // The canvas draws a stroke width=1 by default if width=0, so we
-  // remove the stroke style in that case.
   let stroke = style.getStroke();
   if (stroke && feature.get('lineDash')) {
     stroke.setLineDash(
@@ -42,6 +41,7 @@ const sanitizeFeature = feature => {
     );
   }
 
+  // remove the stroke style in that case.
   if (stroke && stroke.getWidth() === 0) {
     stroke = undefined;
   }
