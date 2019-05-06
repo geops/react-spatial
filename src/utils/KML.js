@@ -192,7 +192,7 @@ const writeFeatures = (layer, featureProjection) => {
     };
 
     // Set custom properties to be converted in extendedData in KML.
-    if (newStyle.text) {
+    if (newStyle.text && newStyle.text.getRotation()) {
       clone.set('textRotation', newStyle.text.getRotation());
     }
 
