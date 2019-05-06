@@ -196,7 +196,7 @@ const writeFeatures = (layer, featureProjection) => {
       clone.set('textRotation', newStyle.text.getRotation());
     }
 
-    if (newStyle.stroke) {
+    if (newStyle.stroke && newStyle.stroke.getLineDash()) {
       clone.set('lineDash', newStyle.stroke.getLineDash().join(','));
     }
 
