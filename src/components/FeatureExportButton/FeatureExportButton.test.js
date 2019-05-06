@@ -87,7 +87,7 @@ describe('FeatureExportButton', () => {
     test('should export kml by default.', () => {
       const wrapper = mount(<FeatureExportButton layer={iconLayer} />);
       const exportString = wrapper.instance().createFeatureString(iconLayer);
-      expect(exportString.match(/<(\w+)\s+\w+.*?>/)[1]).toBe('kml');
+      expect(exportString).toMatchSnapshot();
     });
 
     test('should export gpx format.', () => {
@@ -95,7 +95,7 @@ describe('FeatureExportButton', () => {
         <FeatureExportButton format={GPX} layer={iconLayer} />,
       );
       const exportString = wrapper.instance().createFeatureString(iconLayer);
-      expect(exportString.match(/<(\w+)\s+\w+.*?>/)[1]).toBe('gpx');
+      expect(exportString).toMatchSnapshot();
     });
 
     const iconStyle = new Style({

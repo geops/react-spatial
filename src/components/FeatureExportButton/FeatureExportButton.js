@@ -64,16 +64,10 @@ class FeatureExportButton extends PureComponent {
       return KML.writeFeatures(layer, projection);
     }
 
-    const featuresToExport = [];
-
-    layer.olLayer.getSource().forEachFeature(f => {
-      f.getGeometry().transform(projection, 'EPSG:4326');
-      featuresToExport.push(f);
-    });
     // eslint-disable-next-line new-cap
-    return new format({
+    return new format().writeFeatures(layer.olLayer.getSource().getFeatures(), {
       featureProjection: projection,
-    }).writeFeatures(featuresToExport);
+    });
   }
 
   exportFeatures() {
