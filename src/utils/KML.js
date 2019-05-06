@@ -3,8 +3,24 @@ import { Feature } from 'ol';
 import Point from 'ol/geom/Point';
 import MultiPoint from 'ol/geom/MultiPoint';
 import GeometryCollection from 'ol/geom/GeometryCollection';
-import { Style, Text, Icon, Circle } from 'ol/style';
+import { Style, Text, Icon, Circle, Fill, Stroke } from 'ol/style';
 import { kmlStyle } from './Styles';
+
+const applyTextStyleForIcon = (olIcon, olText) => {
+  const size = olIcon.getSize() || [48, 48];
+  const scale = olIcon.getScale() || 1;
+  const anchor = olIcon.getAnchor() || [
+    (size[0] * scale) / 2,
+    (size[1] * scale) / 2,
+  ];
+  const offset = [
+    scale * (size[0] - anchor[0]) + 5,
+    scale * (size[1] / 2 - anchor[1]),
+  ];
+  olText.setOffsetX(offset[0]);
+  olText.setOffsetY(offset[1]);
+  olText.setTextAlign('left');
+};
 
 // Clean the uneeded feature's style and properties created by the KML parser.
 const sanitizeFeature = feature => {
@@ -15,8 +31,17 @@ const sanitizeFeature = feature => {
   const style = styles(feature)[0].clone();
 
   // The canvas draws a stroke width=1 by default if width=0, so we
-  // remove the stroke style in that case.
   let stroke = style.getStroke();
+  if (stroke && feature.get('lineDash')) {
+    stroke.setLineDash(
+      feature
+        .get('lineDash')
+        .split(',')
+        .map(l => parseInt(l, 10)),
+    );
+  }
+
+  // remove the stroke style in that case.
   if (stroke && stroke.getWidth() === 0) {
     stroke = undefined;
   }
@@ -40,24 +65,33 @@ const sanitizeFeature = feature => {
     ) {
       if (image && image.getScale() === 0) {
         // transparentCircle is used to allow selection
-        image = this.gaStyleFactory.getStyle('transparentCircle');
+        image = new Circle({
+          radius: 1,
+          fill: new Fill({ color: [0, 0, 0, 0] }),
+          stroke: new Stroke({ color: [0, 0, 0, 0] }),
+        });
       }
 
+      const olColor = style
+        .getText()
+        .getFill()
+        .getColor();
+
       text = new Text({
-        font: this.gaStyleFactory.FONT,
+        font: 'normal 16px Helvetica',
         text: feature.get('name'),
         fill: style.getText().getFill(),
-        stroke: this.gaStyleFactory.getTextStroke(
-          style
-            .getText()
-            .getFill()
-            .getColor(),
-        ),
+        // rotation unsupported by KML, taken instead from custom field.
+        rotation: feature.get('textRotation') || 1,
+        stroke: new Stroke({
+          color: olColor[1] >= 160 ? [0, 0, 0, 1] : [255, 255, 255, 1],
+          width: 3,
+        }),
         scale: style.getText().getScale(),
       });
 
       if (image instanceof Icon) {
-        this.gaStyleFactory.applyTextStyleForIcon(image, text);
+        applyTextStyleForIcon(image, text);
       }
 
       fill = undefined;
@@ -156,6 +190,15 @@ const writeFeatures = (layer, featureProjection) => {
       image: styles[0].getImage(),
       zIndex: styles[0].getZIndex(),
     };
+
+    // Set custom properties to be converted in extendedData in KML.
+    if (newStyle.text && newStyle.text.getRotation()) {
+      clone.set('textRotation', newStyle.text.getRotation());
+    }
+
+    if (newStyle.stroke && newStyle.stroke.getLineDash()) {
+      clone.set('lineDash', newStyle.stroke.getLineDash().join(','));
+    }
 
     if (newStyle.image instanceof Circle) {
       newStyle.image = null;
