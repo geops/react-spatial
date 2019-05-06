@@ -6,10 +6,6 @@ import GeometryCollection from 'ol/geom/GeometryCollection';
 import { Style, Text, Icon, Circle, Fill, Stroke } from 'ol/style';
 import { kmlStyle } from './Styles';
 
-const replaceAll = (str, regEx, replace) => {
-  return str.replace(regEx, replace);
-};
-
 const applyTextStyleForIcon = (olIcon, olText) => {
   const size = olIcon.getSize() || [48, 48];
   const scale = olIcon.getScale() || 1;
@@ -26,33 +22,6 @@ const applyTextStyleForIcon = (olIcon, olText) => {
   olText.setTextAlign('left');
 };
 
-const addCustomField = (featString, feature, closingTag) => {
-  const placemarkRegEx = new RegExp(
-    `<s*Placemark id="${feature.key}"[^>]*>(.*?)</Placemark>`,
-  );
-  const exDataRegEx = new RegExp(`<s*ExtendedData[^>]*>(.*?)</ExtendedData>`);
-
-  const matchingRegEx = featString.match(placemarkRegEx);
-  const matchingTag = replaceAll(matchingRegEx[1], exDataRegEx, '');
-  const indexOf = matchingTag.indexOf(closingTag) + closingTag.length;
-
-  const extendedPlacemark = [
-    `<Placemark id="${feature.key}">`,
-    matchingTag.slice(0, indexOf),
-    `<ExtendedData><Data name="${feature.fieldName}"><value>${
-      feature.fieldValue
-    }</value></Data></ExtendedData>`,
-    matchingTag.slice(indexOf),
-    '</Placemark>',
-  ].join('');
-
-  const newFeatureString = featString.replace(
-    matchingRegEx[0],
-    extendedPlacemark,
-  );
-  return newFeatureString;
-};
-
 // Clean the uneeded feature's style and properties created by the KML parser.
 const sanitizeFeature = feature => {
   const geom = feature.getGeometry();
@@ -64,10 +33,10 @@ const sanitizeFeature = feature => {
   // The canvas draws a stroke width=1 by default if width=0, so we
   // remove the stroke style in that case.
   let stroke = style.getStroke();
-  if (stroke && feature.get('dashedLine')) {
+  if (stroke && feature.get('lineDash')) {
     stroke.setLineDash(
       feature
-        .get('dashedLine')
+        .get('lineDash')
         .split(',')
         .map(l => parseInt(l, 10)),
     );
@@ -186,8 +155,6 @@ const writeFeatures = (layer, featureProjection) => {
   let featString;
   const { olLayer } = layer;
   const exportFeatures = [];
-  const rotatedTexts = [];
-  const dashedLines = [];
 
   olLayer.getSource().forEachFeature(f => {
     // We silently ignore Circle elements as they are
@@ -224,24 +191,13 @@ const writeFeatures = (layer, featureProjection) => {
       zIndex: styles[0].getZIndex(),
     };
 
-    // Set temporary ID.
-    clone.setId(`id${clone.ol_uid}`);
-
-    // Create array of rotation values for LabelTexts.
+    // Set custom properties to be converted in extendedData in KML.
     if (newStyle.text) {
-      rotatedTexts.push({
-        key: clone.getId(),
-        fieldName: 'textRotation',
-        fieldValue: newStyle.text.getRotation(),
-      });
+      clone.set('textRotation', newStyle.text.getRotation());
     }
 
     if (newStyle.stroke) {
-      dashedLines.push({
-        key: clone.getId(),
-        fieldName: 'dashedLine',
-        fieldValue: newStyle.stroke.getLineDash(),
-      });
+      clone.set('lineDash', newStyle.stroke.getLineDash().join(','));
     }
 
     if (newStyle.image instanceof Circle) {
@@ -301,24 +257,6 @@ const writeFeatures = (layer, featureProjection) => {
         `<Document><name>${layer.getName()}</name>`,
       );
     }
-  }
-
-  // Loop to add custom rotation field for LabelStyle.
-  for (let i = 0; i < rotatedTexts.length; i += 1) {
-    featString = addCustomField(featString, rotatedTexts[i], '</Style>');
-  }
-
-  for (let i = 0; i < dashedLines.length; i += 1) {
-    featString = addCustomField(featString, dashedLines[i], '</Style>');
-  }
-
-  if (featString) {
-    // Remove temporary feature id.
-    featString = replaceAll(
-      featString,
-      /<s*Placemark id="(.*?)"[^>]*>/g,
-      '<Placemark>',
-    );
   }
 
   return featString;
