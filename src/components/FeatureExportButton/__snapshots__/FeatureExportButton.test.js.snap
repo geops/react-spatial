@@ -67,3 +67,46 @@ exports[`FeatureExportButton should match snapshot. 1`] = `
   </svg>
 </div>
 `;
+
+exports[`FeatureExportButton triggers onClick should export gpx format. 1`] = `
+<gpx xmlns="http://www.topografix.com/GPX/1/1"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemalocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd"
+     version="1.1"
+     creator="OpenLayers"
+>
+  <wpt lat="48.07903229472336"
+       lon="7.358136177061042"
+  >
+  </wpt>
+</gpx>
+`;
+
+exports[`FeatureExportButton triggers onClick should export kml by default. 1`] = `
+<kml xmlns="http://www.opengis.net/kml/2.2"
+     xmlns:gx="http://www.google.com/kml/ext/2.2"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemalocation="http://www.opengis.net/kml/2.2 https://developers.google.com/kml/schema/kml22gx.xsd"
+>
+  <Document>
+    <name>
+      ExportLayer
+    </name>
+    <Placemark>
+      <Style>
+        <IconStyle>
+        <Icon>
+        <href>https://openlayers.org/en/latest/examples/data/icon.png
+        </href>
+        </Icon>
+        </IconStyle>
+      </Style>
+      <Point>
+        <coordinates>
+          7.358136177061042,48.07903229472336
+        </coordinates>
+      </Point>
+    </Placemark>
+  </Document>
+</kml>
+`;
