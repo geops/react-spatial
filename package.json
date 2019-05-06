@@ -13,6 +13,7 @@
     "babel-loader": "^8.0.5",
     "buble": "^0.19.6",
     "canvas": "^2.2.0",
+    "core-js": "^3.0.0",
     "css-loader": "^2.1.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.0",
@@ -26,17 +27,21 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.1.0",
     "jest-canvas-mock": "^2.0.0-alpha.3",
+    "jest-environment-jsdom-fourteen": "^0.1.0",
     "jest-serializer-html": "^7.0.0",
     "jest-svg-transformer": "^1.0.0",
     "jsts": "^2.0.3",
+    "node-sass": "^4.11.0",
     "ol": "^5.3.0",
     "ole": "^0.0.4-beta.2",
     "prettier": "^1.16.1",
     "proj4": "^2.5.0",
     "prop-types": "^15.6.2",
     "react": "^16.7.0",
+    "react-app-polyfill": "^1.0.0",
     "react-dom": "^16.7.0",
     "react-styleguidist": "^9.0.0",
+    "react-svg-loader": "^3.0.0",
     "react-test-renderer": "^16.7.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
@@ -52,16 +57,10 @@
     "ole": "^0.0.3"
   },
   "dependencies": {
-    "core-js": "^3.0.0",
-    "jest-environment-jsdom-fourteen": "^0.1.0",
-    "node-sass": "^4.11.0",
     "query-string": "^6.4.2",
-    "react-app-polyfill": "^1.0.0",
     "react-draggable": "^3.2.1",
     "react-icons": "^3.4.0",
-    "react-svg-loader": "^3.0.0",
-    "resize-observer-polyfill": "^1.5.1",
-    "url-loader": "^1.1.2"
+    "resize-observer-polyfill": "^1.5.1"
   },
   "jest": {
     "transform": {
