@@ -72,21 +72,13 @@ const sanitizeFeature = feature => {
         });
       }
 
-      const olColor = style
-        .getText()
-        .getFill()
-        .getColor();
-
       text = new Text({
         font: 'normal 16px Helvetica',
         text: feature.get('name'),
         fill: style.getText().getFill(),
         // rotation unsupported by KML, taken instead from custom field.
         rotation: feature.get('textRotation') || 1,
-        stroke: new Stroke({
-          color: olColor[1] >= 160 ? [0, 0, 0, 1] : [255, 255, 255, 1],
-          width: 3,
-        }),
+        stroke: style.getText().getStroke(),
         scale: style.getText().getScale(),
       });
 
