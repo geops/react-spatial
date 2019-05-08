@@ -69,7 +69,6 @@ exports[`FeatureExportButton should match snapshot. 1`] = `
 `;
 
 exports[`FeatureExportButton triggers onClick should export gpx format. 1`] = `
-
 <gpx xmlns="http://www.topografix.com/GPX/1/1"
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
      xsi:schemalocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd"
@@ -81,11 +80,9 @@ exports[`FeatureExportButton triggers onClick should export gpx format. 1`] = `
   >
   </wpt>
 </gpx>
-
 `;
 
 exports[`FeatureExportButton triggers onClick should export kml by default. 1`] = `
-
 <kml xmlns="http://www.opengis.net/kml/2.2"
      xmlns:gx="http://www.google.com/kml/ext/2.2"
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -112,5 +109,4 @@ exports[`FeatureExportButton triggers onClick should export kml by default. 1`] 
     </Placemark>
   </Document>
 </kml>
-
 `;
