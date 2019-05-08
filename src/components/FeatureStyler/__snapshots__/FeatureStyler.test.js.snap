@@ -332,7 +332,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
       min="0"
       onChange={[Function]}
       type="number"
-      value={0}
+      value="0"
     />
     <div>
       °
@@ -343,7 +343,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
       onChange={[Function]}
       rows="1"
       type="range"
-      value={0}
+      value="0"
     />
   </div>
 </div>
@@ -839,7 +839,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
       min="0"
       onChange={[Function]}
       type="number"
-      value={28.64788975654116}
+      value="29"
     />
     <div>
       °
@@ -850,7 +850,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
       onChange={[Function]}
       rows="1"
       type="range"
-      value={28.64788975654116}
+      value="29"
     />
   </div>
   <div
