@@ -251,6 +251,7 @@ const writeFeatures = (layer, featureProjection) => {
     }
 
     // Temporary to locate <ExtendedData> after <Style>
+    // TODO: Remove it when https://github.com/openlayers/openlayers/pull/9500 is merged and ol updated.
     const customFields = featString.match(
       /<s*ExtendedData[^>]*>(.*?)<\/ExtendedData>/g,
     );
