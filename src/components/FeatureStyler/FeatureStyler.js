@@ -219,7 +219,13 @@ class FeatureStyler extends PureComponent {
 
   static convertDegRotation(rotation) {
     const inDegrees = (((rotation || 0) * 180) / Math.PI).toFixed(0);
-    return inDegrees < 360 ? inDegrees : '360';
+    if (inDegrees < 0) {
+      return '0';
+    }
+    if (inDegrees > 360) {
+      return '360';
+    }
+    return inDegrees;
   }
 
   static findCategoryBySource(olIcon, categories) {

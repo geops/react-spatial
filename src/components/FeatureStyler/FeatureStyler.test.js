@@ -242,6 +242,11 @@ describe('FeatureStyler', () => {
       const rotation = FeatureStyler.convertDegRotation(99);
       expect(rotation).toBe('360');
     });
+
+    test('limits negative ol numeric rotation to 0 deg', () => {
+      const rotation = FeatureStyler.convertDegRotation(-99);
+      expect(rotation).toBe('0');
+    });
   });
 
   describe('when a fill style is modified', () => {
