@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Feature } from 'ol';
-import { Stroke, Style, Icon } from 'ol/style';
+import { Style, Icon } from 'ol/style';
 import { asString } from 'ol/color';
 import Select from '../Select';
 import Button from '../Button';

@@ -283,13 +283,14 @@ describe('FeatureStyler', () => {
         FeatureStyler.defaultProps.textSizes[2],
       );
     });
+
     test("set state's text rotation property on change input number", () => {
-      expect(wrapper.state().textRotation).toEqual(0.40142572795869574);
+      expect(wrapper.state().textRotation).not.toEqual(3.141592653589793);
       wrapper
         .find('input')
         .at(0)
         .simulate('change', { target: { value: 180 } });
-      expect(wrapper.state().textRotation).not.toEqual(3.141592653589793);
+      expect(wrapper.state().textRotation).toEqual(3.141592653589793);
     });
 
     test("set state's text rotation property on change input range", () => {
