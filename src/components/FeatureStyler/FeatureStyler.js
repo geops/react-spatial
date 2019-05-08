@@ -631,7 +631,7 @@ class FeatureStyler extends PureComponent {
             type="number"
             min="0"
             max="360"
-            value={((textRotation || 0) * 180) / Math.PI}
+            value={(((textRotation || 0) * 180) / Math.PI).toFixed(0)}
             onChange={e => {
               this.setState({ textRotation: (e.target.value * Math.PI) / 180 });
             }}
@@ -642,7 +642,7 @@ class FeatureStyler extends PureComponent {
             min="0"
             max="360"
             rows="1"
-            value={((textRotation || 0) * 180) / Math.PI}
+            value={(((textRotation || 0) * 180) / Math.PI).toFixed(0)}
             onChange={e => {
               this.setState({ textRotation: (e.target.value * Math.PI) / 180 });
             }}

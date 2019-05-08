@@ -20,6 +20,7 @@ const dashedLine = new Style({
 // Text style with a custom style
 const simpleText = new Style({
   text: new Text({
+    font: '16px Helvetica',
     text: 'foo',
   }),
 });
@@ -217,6 +218,20 @@ describe('FeatureStyler', () => {
     });
   });
 
+  describe('#toggleFontBold()', () => {
+    test('returns a bold font', () => {
+      const font = FeatureStyler.toggleFontBold('16px Helvetica');
+      const substring = 'bold';
+      expect(font.includes(substring)).toBe(true);
+    });
+
+    test('returns a not bold font', () => {
+      const font = FeatureStyler.toggleFontBold('bold 16px Helvetica');
+      const substring = 'bold';
+      expect(font.includes(substring)).toBe(false);
+    });
+  });
+
   describe('when a fill style is modified', () => {
     test("set state's color property onClick of a color", () => {
       const feature = new Feature();
@@ -258,6 +273,18 @@ describe('FeatureStyler', () => {
       expect(wrapper.state().name).toEqual('foo');
       wrapper.find('textarea').simulate('change', { target: { value: 'bar' } });
       expect(wrapper.state().name).toEqual('bar');
+    });
+
+    test('toggle text boldness on click', () => {
+      expect(wrapper.state().font).toEqual('16px Helvetica');
+      const btn = wrapper
+        .find('.tm-modify-text-font')
+        .find('Button')
+        .at(0);
+      btn.simulate('click');
+      expect(wrapper.state().font).toEqual('bold 16px Helvetica');
+      btn.simulate('click');
+      expect(wrapper.state().font).toEqual('16px Helvetica');
     });
 
     test("set state's text color property onClick of a color", () => {
