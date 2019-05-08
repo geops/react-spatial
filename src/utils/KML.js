@@ -249,6 +249,28 @@ const writeFeatures = (layer, featureProjection) => {
         `<Document><name>${layer.getName()}</name>`,
       );
     }
+
+    // Temporary to locate <ExtendedData> after <Style>
+    const customFields = featString.match(
+      /<s*ExtendedData[^>]*>(.*?)<\/ExtendedData>/g,
+    );
+
+    if (customFields) {
+      customFields.forEach(matched => {
+        const initialMatch = featString.substring(
+          featString.indexOf(matched),
+          featString.length,
+        );
+        const indexOfStyle =
+          initialMatch.indexOf('</Style>') + '</Style>'.length;
+        let modifiedMatch =
+          initialMatch.slice(0, indexOfStyle) +
+          matched +
+          initialMatch.slice(indexOfStyle, featString.length);
+        modifiedMatch = modifiedMatch.replace(matched, '');
+        featString = featString.replace(initialMatch, modifiedMatch);
+      });
+    }
   }
 
   return featString;
