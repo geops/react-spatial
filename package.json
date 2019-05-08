@@ -76,7 +76,8 @@
       "<rootDir>/styleguide/"
     ],
     "moduleNameMapper": {
-      "^.+\\.scss$": "identity-obj-proxy"
+      "^.+\\.scss$": "identity-obj-proxy",
+      "^!url-loader.*svg$": "<rootDir>/__mocks__/url-loader-svg.js"
     },
     "snapshotSerializers": [
       "jest-serializer-html"
