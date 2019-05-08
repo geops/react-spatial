@@ -136,6 +136,19 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
     />
   </div>
   <div
+    className="tm-modify-text-font"
+  >
+    <div
+      className="tm-button"
+      onClick={[Function]}
+      onKeyPress={[Function]}
+      role="button"
+      tabIndex={0}
+    >
+      F
+    </div>
+  </div>
+  <div
     className="tm-modify-text-color"
   >
     <div>
@@ -152,14 +165,12 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         <div
           style={
             Object {
-              "color": "rgb(0,0,0)",
-              "font": "14px  Arial, serif",
-              "textShadow": "-1px -1px 0 white,1px -1px 0 white,-1px 1px 0 white,1px 1px 0 white",
+              "backgroundColor": "rgb(0,0,0)",
+              "height": "100%",
+              "width": "100%",
             }
           }
-        >
-          Aa
-        </div>
+        />
       </div>
       <div
         className="tm-button"
@@ -171,14 +182,12 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         <div
           style={
             Object {
-              "color": "rgb(0,0,255)",
-              "font": "14px  Arial, serif",
-              "textShadow": "-1px -1px 0 white,1px -1px 0 white,-1px 1px 0 white,1px 1px 0 white",
+              "backgroundColor": "rgb(0,0,255)",
+              "height": "100%",
+              "width": "100%",
             }
           }
-        >
-          Aa
-        </div>
+        />
       </div>
       <div
         className="tm-button"
@@ -190,14 +199,12 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         <div
           style={
             Object {
-              "color": "rgb(128,128,128)",
-              "font": "14px  Arial, serif",
-              "textShadow": "-1px -1px 0 white,1px -1px 0 white,-1px 1px 0 white,1px 1px 0 white",
+              "backgroundColor": "rgb(128,128,128)",
+              "height": "100%",
+              "width": "100%",
             }
           }
-        >
-          Aa
-        </div>
+        />
       </div>
       <div
         className="tm-button"
@@ -209,14 +216,12 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         <div
           style={
             Object {
-              "color": "rgb(0,128,0)",
-              "font": "14px  Arial, serif",
-              "textShadow": "-1px -1px 0 white,1px -1px 0 white,-1px 1px 0 white,1px 1px 0 white",
+              "backgroundColor": "rgb(0,128,0)",
+              "height": "100%",
+              "width": "100%",
             }
           }
-        >
-          Aa
-        </div>
+        />
       </div>
       <div
         className="tm-button"
@@ -228,14 +233,12 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         <div
           style={
             Object {
-              "color": "rgb(255,165,0)",
-              "font": "14px  Arial, serif",
-              "textShadow": "-1px -1px 0 black,1px -1px 0 black,-1px 1px 0 black,1px 1px 0 black",
+              "backgroundColor": "rgb(255,165,0)",
+              "height": "100%",
+              "width": "100%",
             }
           }
-        >
-          Aa
-        </div>
+        />
       </div>
       <div
         className="tm-button"
@@ -247,14 +250,12 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         <div
           style={
             Object {
-              "color": "rgb(255,0,0)",
-              "font": "14px  Arial, serif",
-              "textShadow": "-1px -1px 0 white,1px -1px 0 white,-1px 1px 0 white,1px 1px 0 white",
+              "backgroundColor": "rgb(255,0,0)",
+              "height": "100%",
+              "width": "100%",
             }
           }
-        >
-          Aa
-        </div>
+        />
       </div>
       <div
         className="tm-button"
@@ -266,14 +267,12 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         <div
           style={
             Object {
-              "color": "rgb(255,255,255)",
-              "font": "14px  Arial, serif",
-              "textShadow": "-1px -1px 0 black,1px -1px 0 black,-1px 1px 0 black,1px 1px 0 black",
+              "backgroundColor": "rgb(255,255,255)",
+              "height": "100%",
+              "width": "100%",
             }
           }
-        >
-          Aa
-        </div>
+        />
       </div>
       <div
         className="tm-button"
@@ -285,14 +284,12 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         <div
           style={
             Object {
-              "color": "rgb(255,255,0)",
-              "font": "14px  Arial, serif",
-              "textShadow": "-1px -1px 0 black,1px -1px 0 black,-1px 1px 0 black,1px 1px 0 black",
+              "backgroundColor": "rgb(255,255,0)",
+              "height": "100%",
+              "width": "100%",
             }
           }
-        >
-          Aa
-        </div>
+        />
       </div>
     </div>
   </div>
@@ -329,6 +326,16 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
   >
     <div>
       Modify text rotation
+    </div>
+    <input
+      max="360"
+      min="0"
+      onChange={[Function]}
+      type="number"
+      value={0}
+    />
+    <div>
+      °
     </div>
     <input
       max="360"
@@ -636,6 +643,19 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
     />
   </div>
   <div
+    className="tm-modify-text-font"
+  >
+    <div
+      className="tm-button"
+      onClick={[Function]}
+      onKeyPress={[Function]}
+      role="button"
+      tabIndex={0}
+    >
+      F
+    </div>
+  </div>
+  <div
     className="tm-modify-text-color"
   >
     <div>
@@ -652,14 +672,12 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         <div
           style={
             Object {
-              "color": "rgb(0,0,0)",
-              "font": "14px  Arial, serif",
-              "textShadow": "-1px -1px 0 white,1px -1px 0 white,-1px 1px 0 white,1px 1px 0 white",
+              "backgroundColor": "rgb(0,0,0)",
+              "height": "100%",
+              "width": "100%",
             }
           }
-        >
-          Aa
-        </div>
+        />
       </div>
       <div
         className="tm-button"
@@ -671,14 +689,12 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         <div
           style={
             Object {
-              "color": "rgb(0,0,255)",
-              "font": "14px  Arial, serif",
-              "textShadow": "-1px -1px 0 white,1px -1px 0 white,-1px 1px 0 white,1px 1px 0 white",
+              "backgroundColor": "rgb(0,0,255)",
+              "height": "100%",
+              "width": "100%",
             }
           }
-        >
-          Aa
-        </div>
+        />
       </div>
       <div
         className="tm-button"
@@ -690,14 +706,12 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         <div
           style={
             Object {
-              "color": "rgb(128,128,128)",
-              "font": "14px  Arial, serif",
-              "textShadow": "-1px -1px 0 white,1px -1px 0 white,-1px 1px 0 white,1px 1px 0 white",
+              "backgroundColor": "rgb(128,128,128)",
+              "height": "100%",
+              "width": "100%",
             }
           }
-        >
-          Aa
-        </div>
+        />
       </div>
       <div
         className="tm-button"
@@ -709,14 +723,12 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         <div
           style={
             Object {
-              "color": "rgb(0,128,0)",
-              "font": "14px  Arial, serif",
-              "textShadow": "-1px -1px 0 white,1px -1px 0 white,-1px 1px 0 white,1px 1px 0 white",
+              "backgroundColor": "rgb(0,128,0)",
+              "height": "100%",
+              "width": "100%",
             }
           }
-        >
-          Aa
-        </div>
+        />
       </div>
       <div
         className="tm-button"
@@ -728,14 +740,12 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         <div
           style={
             Object {
-              "color": "rgb(255,165,0)",
-              "font": "14px  Arial, serif",
-              "textShadow": "-1px -1px 0 black,1px -1px 0 black,-1px 1px 0 black,1px 1px 0 black",
+              "backgroundColor": "rgb(255,165,0)",
+              "height": "100%",
+              "width": "100%",
             }
           }
-        >
-          Aa
-        </div>
+        />
       </div>
       <div
         className="tm-button tm-selected"
@@ -747,14 +757,12 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         <div
           style={
             Object {
-              "color": "rgb(255,0,0)",
-              "font": "14px  Arial, serif",
-              "textShadow": "-1px -1px 0 white,1px -1px 0 white,-1px 1px 0 white,1px 1px 0 white",
+              "backgroundColor": "rgb(255,0,0)",
+              "height": "100%",
+              "width": "100%",
             }
           }
-        >
-          Aa
-        </div>
+        />
       </div>
       <div
         className="tm-button"
@@ -766,14 +774,12 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         <div
           style={
             Object {
-              "color": "rgb(255,255,255)",
-              "font": "14px  Arial, serif",
-              "textShadow": "-1px -1px 0 black,1px -1px 0 black,-1px 1px 0 black,1px 1px 0 black",
+              "backgroundColor": "rgb(255,255,255)",
+              "height": "100%",
+              "width": "100%",
             }
           }
-        >
-          Aa
-        </div>
+        />
       </div>
       <div
         className="tm-button"
@@ -785,14 +791,12 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         <div
           style={
             Object {
-              "color": "rgb(255,255,0)",
-              "font": "14px  Arial, serif",
-              "textShadow": "-1px -1px 0 black,1px -1px 0 black,-1px 1px 0 black,1px 1px 0 black",
+              "backgroundColor": "rgb(255,255,0)",
+              "height": "100%",
+              "width": "100%",
             }
           }
-        >
-          Aa
-        </div>
+        />
       </div>
     </div>
   </div>
@@ -829,6 +833,16 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
   >
     <div>
       Modify text rotation
+    </div>
+    <input
+      max="360"
+      min="0"
+      onChange={[Function]}
+      type="number"
+      value={28.64788975654116}
+    />
+    <div>
+      °
     </div>
     <input
       max="360"

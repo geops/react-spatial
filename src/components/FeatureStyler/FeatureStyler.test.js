@@ -217,20 +217,6 @@ describe('FeatureStyler', () => {
     });
   });
 
-  describe('#getTextStroke()', () => {
-    test('returns a black stroke', () => {
-      const stro = FeatureStyler.getTextStroke([0, 160, 0]);
-      expect(stro.getWidth()).toBe(3);
-      expect(stro.getColor()).toEqual([0, 0, 0, 1]);
-    });
-
-    test('returns a white stroke', () => {
-      const stro = FeatureStyler.getTextStroke([0, 159, 0]);
-      expect(stro.getWidth()).toBe(3);
-      expect(stro.getColor()).toEqual([255, 255, 255, 1]);
-    });
-  });
-
   describe('when a fill style is modified', () => {
     test("set state's color property onClick of a color", () => {
       const feature = new Feature();
@@ -279,6 +265,7 @@ describe('FeatureStyler', () => {
         FeatureStyler.defaultProps.colors[1],
       );
       wrapper
+        .find('.tm-modify-text-color')
         .find('Button')
         .at(1)
         .simulate('click');
@@ -297,9 +284,21 @@ describe('FeatureStyler', () => {
       );
     });
 
-    test("set state's text rotation property on change", () => {
+    test("set state's text rotation property on change input number", () => {
+      expect(wrapper.state().textRotation).not.toEqual(3.141592653589793);
+      wrapper
+        .find('input')
+        .at(0)
+        .simulate('change', { target: { value: 180 } });
+      expect(wrapper.state().textRotation).toEqual(3.141592653589793);
+    });
+
+    test("set state's text rotation property on change input range", () => {
       expect(wrapper.state().textRotation).not.toEqual(0.40142572795869574);
-      wrapper.find('input').simulate('change', { target: { value: 23 } });
+      wrapper
+        .find('input')
+        .at(1)
+        .simulate('change', { target: { value: 23 } });
       expect(wrapper.state().textRotation).toEqual(0.40142572795869574);
     });
   });

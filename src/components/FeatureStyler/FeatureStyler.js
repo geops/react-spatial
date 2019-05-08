@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Feature } from 'ol';
-import { Stroke, Style, Icon } from 'ol/style';
+import { Style, Icon } from 'ol/style';
 import { asString } from 'ol/color';
 import Select from '../Select';
 import Button from '../Button';
@@ -97,6 +97,11 @@ const propTypes = {
   classNameTextSize: PropTypes.string,
 
   /**
+   * CSS class for the container of the text font toggler.
+   */
+  classNameTextFont: PropTypes.string,
+
+  /**
    * CSS class for the container of the list of text sizes.
    */
   classNameTextRotation: PropTypes.string,
@@ -129,6 +134,7 @@ const defaultProps = {
   classNameColors: 'tm-modify-color',
   classNameTextColors: 'tm-modify-text-color',
   classNameTextSize: 'tm-modify-text-size',
+  classNameTextFont: 'tm-modify-text-font',
   classNameTextRotation: 'tm-modify-text-rotation',
   classNameSelected: 'tm-button tm-selected',
   colors: [
@@ -205,12 +211,10 @@ class FeatureStyler extends PureComponent {
     return Array.isArray(styles) ? styles : [styles];
   }
 
-  // Defines a text stroke (white or black) depending on a text color
-  static getTextStroke(olColor) {
-    return new Stroke({
-      color: olColor[1] >= 160 ? [0, 0, 0, 1] : [255, 255, 255, 1],
-      width: 3,
-    });
+  static toggleFontBold(font) {
+    return font.indexOf('bold') > -1
+      ? font.replace('bold ', '')
+      : `bold ${font}`;
   }
 
   static findCategoryBySource(olIcon, categories) {
@@ -286,12 +290,9 @@ class FeatureStyler extends PureComponent {
         const textFill = textStyle.getFill();
         textFill.setColor(olColor);
         textStyle.setFill(textFill);
-        textStyle.setStroke(FeatureStyler.getTextStroke(olColor));
       }
 
-      if (textRotation > 0) {
-        textStyle.setRotation(textRotation);
-      }
+      textStyle.setRotation(textRotation);
     }
 
     // Update Icon style if it existed.
@@ -392,6 +393,7 @@ class FeatureStyler extends PureComponent {
     let name;
     let iconCategory;
     let icon;
+    let font;
     let iconSize;
     let textColor;
     let textSize;
@@ -426,6 +428,7 @@ class FeatureStyler extends PureComponent {
     if (featStyle.getText()) {
       useTextStyle = true;
       name = featStyle.getText().getText();
+      font = featStyle.getText().getFont();
       const currColor = featStyle
         .getText()
         .getFill()
@@ -442,6 +445,7 @@ class FeatureStyler extends PureComponent {
     this.setState({
       name: name || feature.get('name') || '',
       description: feature.get('description') || '',
+      font,
       color,
       iconCategory,
       icon,
@@ -500,14 +504,8 @@ class FeatureStyler extends PureComponent {
     ]);
   }
 
-  renderColors(color, onClick) {
-    const {
-      t,
-      colors,
-      classNameColors,
-      classNameSelected,
-      labels,
-    } = this.props;
+  renderColors(color, classNameColors, classNameSelected, onClick) {
+    const { t, colors, labels } = this.props;
     return (
       <div className={classNameColors}>
         {labels.modifyColor ? <div>{t(labels.modifyColor)}</div> : null}
@@ -534,48 +532,8 @@ class FeatureStyler extends PureComponent {
     );
   }
 
-  renderTextColors(color, onClick) {
-    const { font } = this.state;
-    const {
-      t,
-      colors,
-      classNameTextColors,
-      classNameSelected,
-      labels,
-    } = this.props;
-    return (
-      <div className={classNameTextColors}>
-        {labels.modifyColor ? <div>{t(labels.modifyColor)}</div> : null}
-        <div>
-          {colors.map(c => (
-            <Button
-              key={c.name}
-              className={color === c ? classNameSelected : undefined}
-              onClick={e => {
-                onClick(e, c);
-              }}
-            >
-              <div
-                style={{
-                  color: `rgb(${c.fill})`,
-                  font,
-                  textShadow:
-                    `-1px -1px 0 ${c.border},` +
-                    `1px -1px 0 ${c.border},` +
-                    `-1px 1px 0 ${c.border},` +
-                    `1px 1px 0 ${c.border}`,
-                }}
-              >
-                Aa
-              </div>
-            </Button>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
   renderColorStyle() {
+    const { classNameColors, classNameSelected } = this.props;
     const { useColorStyle, color } = this.state;
 
     if (!useColorStyle) {
@@ -584,11 +542,16 @@ class FeatureStyler extends PureComponent {
 
     return (
       <>
-        {this.renderColors(color, (e, newColor) => {
-          this.setState({
-            color: newColor,
-          });
-        })}
+        {this.renderColors(
+          color,
+          classNameColors,
+          classNameSelected,
+          (e, newColor) => {
+            this.setState({
+              color: newColor,
+            });
+          },
+        )}
       </>
     );
   }
@@ -596,6 +559,7 @@ class FeatureStyler extends PureComponent {
   renderTextStyle() {
     const {
       useTextStyle,
+      font,
       name,
       textColor,
       textSize,
@@ -605,7 +569,10 @@ class FeatureStyler extends PureComponent {
       textSizes,
       t,
       classNameTextSize,
+      classNameTextFont,
       classNameTextRotation,
+      classNameTextColors,
+      classNameSelected,
       labels,
     } = this.props;
 
@@ -625,11 +592,26 @@ class FeatureStyler extends PureComponent {
             }}
           />
         </div>
-        {this.renderTextColors(textColor, (e, newColor) => {
-          this.setState({
-            textColor: newColor,
-          });
-        })}
+
+        <div className={classNameTextFont}>
+          <Button
+            onClick={() => {
+              this.setState({ font: FeatureStyler.toggleFontBold(font) });
+            }}
+          >
+            F
+          </Button>
+        </div>
+        {this.renderColors(
+          textColor,
+          classNameTextColors,
+          classNameSelected,
+          (e, newColor) => {
+            this.setState({
+              textColor: newColor,
+            });
+          },
+        )}
         <div className={classNameTextSize}>
           {labels.modifyTextSize ? <div>{t(labels.modifyTextSize)}</div> : null}
           <Select
@@ -645,6 +627,16 @@ class FeatureStyler extends PureComponent {
           {labels.modifyTextRotation ? (
             <div>{t(labels.modifyTextRotation)}</div>
           ) : null}
+          <input
+            type="number"
+            min="0"
+            max="360"
+            value={((textRotation || 0) * 180) / Math.PI}
+            onChange={e => {
+              this.setState({ textRotation: (e.target.value * Math.PI) / 180 });
+            }}
+          />
+          <div>°</div>
           <input
             type="range"
             min="0"
