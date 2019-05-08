@@ -32,10 +32,75 @@ module.exports = {
     },
     {
       name: 'UI components',
-      description: 'A collection of react components.',
-      components: 'src/components/**/[A-Z]*.js',
-      exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
-      usageMode: 'expand', // 'hide' | 'collapse' | 'expand'
+      sections: [
+        {
+          name: 'Spatial',
+          description: 'Spatial components',
+          components: [
+            'src/components/BaseLayerToggler/[A-Z]*.js',
+            'src/components/BasicMap/[A-Z]*.js',
+            'src/components/CanvasSaveButton/[A-Z]*.js',
+            'src/components/Copyright/[A-Z]*.js',
+            'src/components/FeatureExportButton/[A-Z]*.js',
+            'src/components/FeatureStyler/[A-Z]*.js',
+            'src/components/Geolocation/[A-Z]*.js',
+            'src/components/MousePosition/[A-Z]*.js',
+            'src/components/NorthArrow/[A-Z]*.js',
+            'src/components/OLE/[A-Z]*.js',
+            'src/components/Popup/[A-Z]*.js',
+            'src/components/ScaleLine/[A-Z]*.js',
+          ],
+          exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
+          usageMode: 'expand', // 'hide' | 'collapse' | 'expand'
+        },
+        {
+          name: 'Menu',
+          description: 'Menu components',
+          components: [
+            'src/components/LayerTree/[A-Z]*.js',
+            'src/components/Menu/[A-Z]*.js',
+            'src/components/MenuItem/[A-Z]*.js',
+            'src/components/TopicList/[A-Z]*.js',
+            'src/components/ShareMenu/[A-Z]*.js',
+          ],
+          exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
+          usageMode: 'expand', // 'hide' | 'collapse' | 'expand'
+        },
+        {
+          name: 'Form',
+          description: 'Form components',
+          components: [
+            'src/components/Autocomplete/[A-Z]*.js',
+            'src/components/Checkbox/[A-Z]*.js',
+            'src/components/Select/[A-Z]*.js',
+            'src/components/SelectLinks/[A-Z]*.js',
+            'src/components/SearchInput/[A-Z]*.js',
+          ],
+          exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
+          usageMode: 'expand', // 'hide' | 'collapse' | 'expand'
+        },
+        {
+          name: 'Basic',
+          description: 'Basic components',
+          components: [
+            'src/components/ActionLink/[A-Z]*.js',
+            'src/components/BlankLink/[A-Z]*.js',
+            'src/components/Dialog/[A-Z]*.js',
+            'src/components/Footer/[A-Z]*.js',
+            'src/components/Header/[A-Z]*.js',
+            'src/components/List/[A-Z]*.js',
+            'src/components/ListItem/[A-Z]*.js',
+            'src/components/Permalink/[A-Z]*.js',
+            'src/components/ResizeHandler/[A-Z]*.js',
+            'src/components/StopEvents/[A-Z]*.js',
+            'src/components/ToggleButton/[A-Z]*.js',
+          ],
+          exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
+          usageMode: 'expand', // 'hide' | 'collapse' | 'expand'
+        },
+      ],
+      description:
+        'A collection of react components for spatial web development.',
     },
   ],
   webpackConfig: {
@@ -70,7 +135,7 @@ module.exports = {
           test: /\.url\.svg$/,
           loader: 'url-loader',
         },
-	{
+        {
           test: /\.png$/,
           use: [
             {
