@@ -232,6 +232,18 @@ describe('FeatureStyler', () => {
     });
   });
 
+  describe('#convertDegRotation()', () => {
+    test('returns a correct ol numeric rotation converted to deg', () => {
+      const rotation = FeatureStyler.convertDegRotation(3.141592653589793);
+      expect(rotation).toBe('180');
+    });
+
+    test('limits too high ol numeric rotation to 360 deg', () => {
+      const rotation = FeatureStyler.convertDegRotation(99);
+      expect(rotation).toBe('360');
+    });
+  });
+
   describe('when a fill style is modified', () => {
     test("set state's color property onClick of a color", () => {
       const feature = new Feature();
