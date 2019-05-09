@@ -104,31 +104,29 @@ Before adding an SVG file in this folder please clean it using [svgo](https://ww
 
 After optimization, verify you can use it Openlayers using this [code sandbox](https://codesandbox.io/s/5w5o4mqwlk).
 
-Then use one of the 4 ways to load it depending on what you want:
+By default the svg loader will load the svg file as a react component if you want to load svg file as a base64 data URI use the extension .url.svg :
 
 ```javascript
 // Import as a React component:
 import NorthArrow from 'northArrow.svg';
 // Use: <NorthArrow />
 
-// Import as an inline svg:
-import northArrow from '!svg-inline-loader?noquotes!northArrow.svg';
-// northArrow = "<svg xmlns='http://www.w3.org/2000/svg' height='192' ...> ... </svg>"
-
 // Import as a base64 data URI (or with an url the file is too big):
-import northArrow from '!url-loader!northArrow.svg';
+import northArrow from 'northArrow.url.svg';
 // northArrow = "data:image/svg+xml;base64,PHN2ZyB4...."
-
-
-// Import as an encoded inline svg data URI (or with an url the file is too big):
-import northArrow from '!svg-url-loader?noquotes!northArrow.svg';
-// northArrow = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='192' ...%3E ... %3C/svg%3E"
 ```
 
-svg-inline-loader , svg-url-loader are npm modules add them if you need it:
+You could also use others loaders (ex: svg-inline-loader , svg-url-loader ...) .
+To use these loaders just adapt the extension of the svg file and add the loader config in styleguide.config.js, then you will be able to use it like this :
 
-```bash
-yarn add svg-inline-loader svg-url-loader
+```javascript
+// Import as an inline svg:
+import northArrow from 'northArrow.svginline.svg';
+// northArrow = "<svg xmlns='http://www.w3.org/2000/svg' height='192' ...> ... </svg>"
+
+// Import as an encoded inline svg data URI (or with an url the file is too big):
+import northArrow from 'northArrow.svgurl.svg';
+// northArrow = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='192' ...%3E ... %3C/svg%3E"
 ```
 
 ## How to use SVG with a dynamic size

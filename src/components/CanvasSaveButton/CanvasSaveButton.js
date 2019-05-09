@@ -4,10 +4,8 @@ import OLMap from 'ol/Map';
 import { getTopLeft, getBottomRight } from 'ol/extent';
 import { TiImage } from 'react-icons/ti';
 import Button from '../Button';
-// eslint-disable-next-line import/no-unresolved,import/no-webpack-loader-syntax
-import NorthArrowSimple from '!url-loader!../../images/northArrow.svg';
-// eslint-disable-next-line import/no-unresolved,import/no-webpack-loader-syntax
-import NorthArrowCircle from '!url-loader!../../images/northArrowCircle.svg';
+import NorthArrowSimple from '../../images/northArrow.url.svg';
+import NorthArrowCircle from '../../images/northArrowCircle.url.svg';
 
 const propTypes = {
   /**
