@@ -73,7 +73,7 @@ const sanitizeFeature = feature => {
       }
 
       text = new Text({
-        font: 'normal 16px Helvetica',
+        font: feature.get('textFont') || 'normal 16px Helvetica',
         text: feature.get('name'),
         fill: style.getText().getFill(),
         // rotation unsupported by KML, taken instead from custom field.
@@ -186,6 +186,10 @@ const writeFeatures = (layer, featureProjection) => {
     // Set custom properties to be converted in extendedData in KML.
     if (newStyle.text && newStyle.text.getRotation()) {
       clone.set('textRotation', newStyle.text.getRotation());
+    }
+
+    if (newStyle.text && newStyle.text.getFont()) {
+      clone.set('textFont', newStyle.text.getFont());
     }
 
     if (newStyle.stroke && newStyle.stroke.getLineDash()) {
