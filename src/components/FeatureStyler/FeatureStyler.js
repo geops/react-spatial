@@ -217,6 +217,17 @@ class FeatureStyler extends PureComponent {
       : `bold ${font}`;
   }
 
+  static convertDegRotation(rotation) {
+    const inDegrees = (((rotation || 0) * 180) / Math.PI).toFixed(0);
+    if (inDegrees < 0) {
+      return '0';
+    }
+    if (inDegrees > 360) {
+      return '360';
+    }
+    return inDegrees;
+  }
+
   static findCategoryBySource(olIcon, categories) {
     return categories.find(c => FeatureStyler.findIcon(olIcon, c));
   }
@@ -631,7 +642,7 @@ class FeatureStyler extends PureComponent {
             type="number"
             min="0"
             max="360"
-            value={(((textRotation || 0) * 180) / Math.PI).toFixed(0)}
+            value={FeatureStyler.convertDegRotation(textRotation)}
             onChange={e => {
               this.setState({ textRotation: (e.target.value * Math.PI) / 180 });
             }}
@@ -642,7 +653,7 @@ class FeatureStyler extends PureComponent {
             min="0"
             max="360"
             rows="1"
-            value={(((textRotation || 0) * 180) / Math.PI).toFixed(0)}
+            value={FeatureStyler.convertDegRotation(textRotation)}
             onChange={e => {
               this.setState({ textRotation: (e.target.value * Math.PI) / 180 });
             }}
