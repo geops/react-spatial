@@ -185,8 +185,11 @@ const writeFeatures = (layer, featureProjection) => {
 
     // Set custom properties to be converted in extendedData in KML.
     if (newStyle.text && newStyle.text.getRotation()) {
-      clone.set('textFont', newStyle.text.getFont());
       clone.set('textRotation', newStyle.text.getRotation());
+    }
+
+    if (newStyle.text && newStyle.text.getFont()) {
+      clone.set('textFont', newStyle.text.getFont());
     }
 
     if (newStyle.stroke && newStyle.stroke.getLineDash()) {
