@@ -10,11 +10,6 @@ const propTypes = {
   value: PropTypes.string,
 
   /**
-   * Set input field as read only.
-   */
-  readOnly: PropTypes.bool,
-
-  /**
    * CSS class of the container (input+button).
    */
   className: PropTypes.string,
@@ -52,7 +47,6 @@ const propTypes = {
 
 const defaultProps = {
   value: '',
-  readOnly: false,
   className: 'tm-permalink-field',
   classNameInputField: 'tm-permalink-input',
   classNameCopyBt: 'tm-permalink-bt',
@@ -65,13 +59,18 @@ const defaultProps = {
 /**
  * This component displays a permalink field.
  */
-class PermalinkField extends PureComponent {
+class PermalinkInput extends PureComponent {
   constructor(props) {
     super(props);
     const { value, getShortenedUrl } = this.props;
-    this.state = {
-      permalinkValue: getShortenedUrl ? getShortenedUrl(value) : value,
-    };
+
+    if (getShortenedUrl) {
+      getShortenedUrl(value).then(v => {
+        this.state = { permalinkValue: v };
+      });
+    } else {
+      this.state = { permalinkValue: value };
+    }
     this.inputRef = null;
   }
 
@@ -91,7 +90,9 @@ class PermalinkField extends PureComponent {
 
     if (value !== prevProps.value) {
       if (getShortenedUrl) {
-        this.setState({ permalinkValue: getShortenedUrl(value) });
+        getShortenedUrl(value).then(v => {
+          this.setState({ permalinkValue: v });
+        });
       } else {
         this.setState({ permalinkValue: value });
       }
@@ -101,7 +102,6 @@ class PermalinkField extends PureComponent {
   render() {
     const {
       button,
-      readOnly,
       className,
       classNameInputField,
       classNameCopyBt,
@@ -115,7 +115,7 @@ class PermalinkField extends PureComponent {
       <div className={className}>
         <input
           value={permalinkValue}
-          readOnly={readOnly}
+          readOnly
           type="text"
           tabIndex="0"
           title={titleInputField}
@@ -123,7 +123,6 @@ class PermalinkField extends PureComponent {
           ref={node => {
             this.inputRef = node;
           }}
-          onChange={() => {}}
           onClick={() => document.execCommand('selectall')}
         />
         <Button
@@ -140,7 +139,7 @@ class PermalinkField extends PureComponent {
   }
 }
 
-PermalinkField.propTypes = propTypes;
-PermalinkField.defaultProps = defaultProps;
+PermalinkInput.propTypes = propTypes;
+PermalinkInput.defaultProps = defaultProps;
 
-export default PermalinkField;
+export default PermalinkInput;

@@ -72,6 +72,7 @@ module.exports = {
           components: [
             'src/components/Autocomplete/[A-Z]*.js',
             'src/components/Checkbox/[A-Z]*.js',
+            'src/components/PermalinkInput/[A-Z]*.js',
             'src/components/Select/[A-Z]*.js',
             'src/components/SelectLinks/[A-Z]*.js',
             'src/components/SearchInput/[A-Z]*.js',
@@ -91,7 +92,6 @@ module.exports = {
             'src/components/List/[A-Z]*.js',
             'src/components/ListItem/[A-Z]*.js',
             'src/components/Permalink/[A-Z]*.js',
-            'src/components/PermalinkField/[A-Z]*.js',
             'src/components/ResizeHandler/[A-Z]*.js',
             'src/components/StopEvents/[A-Z]*.js',
             'src/components/ToggleButton/[A-Z]*.js',

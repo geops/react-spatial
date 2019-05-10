@@ -1,6 +1,9 @@
 .tm-permalink-field {
   display: flex;
-  // border: 1px solid $gray;
+  justify-content: flex-end;
+  width: calc(100% - 4px);
+  height: calc(100% - 4px);
+  border: 1px solid $gray;
   background-color: white;
 
   input,

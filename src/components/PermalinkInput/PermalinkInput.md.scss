@@ -1,6 +1,5 @@
-.tm-permalink-field-example {
+.tm-permalink-input-example {
   .tm-permalink-field {
-    border: 1px solid $gray;
     position: relative;
     margin: auto;
     width: 400px;
@@ -16,9 +15,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-    }
 
-    div[role='button']:last-child {
       &:hover {
         background-color: $gray-lighter;
       }
