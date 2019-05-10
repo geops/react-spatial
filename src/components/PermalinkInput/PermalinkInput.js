@@ -62,16 +62,19 @@ const defaultProps = {
 class PermalinkInput extends PureComponent {
   constructor(props) {
     super(props);
-    const { value, getShortenedUrl } = this.props;
+    this.state = { permalinkValue: null };
+    this.inputRef = null;
+  }
 
+  componentDidMount() {
+    const { value, getShortenedUrl } = this.props;
     if (getShortenedUrl) {
       getShortenedUrl(value).then(v => {
-        this.state = { permalinkValue: v };
+        this.setState({ permalinkValue: v });
       });
     } else {
-      this.state = { permalinkValue: value };
+      this.setState({ permalinkValue: value });
     }
-    this.inputRef = null;
   }
 
   componentDidUpdate(prevProps) {
@@ -111,31 +114,34 @@ class PermalinkInput extends PureComponent {
 
     const { permalinkValue } = this.state;
 
-    return (
-      <div className={className}>
-        <input
-          value={permalinkValue}
-          readOnly
-          type="text"
-          tabIndex="0"
-          title={titleInputField}
-          className={classNameInputField}
-          ref={node => {
-            this.inputRef = node;
-          }}
-          onClick={() => document.execCommand('selectall')}
-        />
-        <Button
-          className={classNameCopyBt}
-          title={titleCopyBt}
-          onClick={() => {
-            this.onClickCopyButton();
-          }}
-        >
-          {button}
-        </Button>
-      </div>
-    );
+    if (permalinkValue) {
+      return (
+        <div className={className}>
+          <input
+            value={permalinkValue}
+            readOnly
+            type="text"
+            tabIndex="0"
+            title={titleInputField}
+            className={classNameInputField}
+            ref={node => {
+              this.inputRef = node;
+            }}
+            onClick={() => document.execCommand('selectall')}
+          />
+          <Button
+            className={classNameCopyBt}
+            title={titleCopyBt}
+            onClick={() => {
+              this.onClickCopyButton();
+            }}
+          >
+            {button}
+          </Button>
+        </div>
+      );
+    }
+    return null;
   }
 }
 
