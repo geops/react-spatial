@@ -12,7 +12,7 @@ const propTypes = {
   /**
    * Set input field as read only.
    */
-  readOnly: PropTypes.boolean,
+  readOnly: PropTypes.bool,
 
   /**
    * CSS class of the container (input+button).
@@ -123,6 +123,7 @@ class PermalinkField extends PureComponent {
           ref={node => {
             this.inputRef = node;
           }}
+          onChange={() => {}}
           onClick={() => document.execCommand('selectall')}
         />
         <Button
