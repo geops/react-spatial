@@ -10,6 +10,11 @@ const propTypes = {
   value: PropTypes.string,
 
   /**
+   * Set input field as read only.
+   */
+  readOnly: PropTypes.boolean,
+
+  /**
    * CSS class of the container (input+button).
    */
   className: PropTypes.string,
@@ -47,6 +52,7 @@ const propTypes = {
 
 const defaultProps = {
   value: '',
+  readOnly: false,
   className: 'tm-permalink-field',
   classNameInputField: 'tm-permalink-input',
   classNameCopyBt: 'tm-permalink-bt',
@@ -95,6 +101,7 @@ class PermalinkField extends PureComponent {
   render() {
     const {
       button,
+      readOnly,
       className,
       classNameInputField,
       classNameCopyBt,
@@ -108,7 +115,7 @@ class PermalinkField extends PureComponent {
       <div className={className}>
         <input
           value={permalinkValue}
-          readOnly
+          readOnly={readOnly}
           type="text"
           tabIndex="0"
           title={titleInputField}
