@@ -1,0 +1,28 @@
+.tm-permalink-field {
+  display: flex;
+  // border: 1px solid $gray;
+  background-color: white;
+
+  input,
+  button,
+  svg {
+    border: none;
+  }
+
+  input {
+    padding: 0 0 0 15px;
+    flex-grow: 2;
+    text-overflow: ellipsis;
+    min-width: 0;
+
+    &::-ms-clear {
+      display: none;
+    }
+  }
+
+  div[role='button'] {
+    width: $btn-size-base;
+    height: 100%;
+    flex-shrink: 0;
+  }
+}

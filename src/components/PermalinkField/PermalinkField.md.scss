@@ -1,0 +1,23 @@
+.tm-permalink-field-example {
+  .tm-permalink-field {
+    border: 1px solid $gray;
+    position: relative;
+    margin: auto;
+    width: 400px;
+    height: 30px;
+
+    div[role='button'] {
+      border-left: 1px solid $gray;
+      width: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    div[role='button']:last-child {
+      &:hover {
+        background-color: $gray-lighter;
+      }
+    }
+  }
+}
