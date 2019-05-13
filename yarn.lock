@@ -1604,6 +1604,15 @@ babel-plugin-react-svg@^3.0.1:
   resolved "https://registry.yarnpkg.com/babel-plugin-react-svg/-/babel-plugin-react-svg-3.0.1.tgz#baa804fcd851ed928035975c2a31725b16581395"
   integrity sha512-BHJoNHMk03GunN2C9Z7zivhtY39h93yRagOOObGulSlTVUsUL40iAa4GlpGFkclGqGBkgtW06VUtENvfwCUGNA==
 
+babel-polyfill@^6.26.0:
+  version "6.26.0"
+  resolved "https://registry.yarnpkg.com/babel-polyfill/-/babel-polyfill-6.26.0.tgz#379937abc67d7895970adc621f284cd966cf2153"
+  integrity sha1-N5k3q8Z9eJWXCtxiHyhM2WbPIVM=
+  dependencies:
+    babel-runtime "^6.26.0"
+    core-js "^2.5.0"
+    regenerator-runtime "^0.10.5"
+
 babel-preset-jest@^24.6.0:
   version "24.6.0"
   resolved "https://registry.yarnpkg.com/babel-preset-jest/-/babel-preset-jest-24.6.0.tgz#66f06136eefce87797539c0d63f1769cc3915984"
@@ -1611,6 +1620,14 @@ babel-preset-jest@^24.6.0:
   dependencies:
     "@babel/plugin-syntax-object-rest-spread" "^7.0.0"
     babel-plugin-jest-hoist "^24.6.0"
+
+babel-runtime@^6.26.0:
+  version "6.26.0"
+  resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
+  integrity sha1-llxwWGaOgrVde/4E/yM3vItWR/4=
+  dependencies:
+    core-js "^2.4.0"
+    regenerator-runtime "^0.11.0"
 
 bail@^1.0.0:
   version "1.0.3"
@@ -2493,6 +2510,11 @@ core-js@3.0.1, core-js@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.0.1.tgz#1343182634298f7f38622f95e73f54e48ddf4738"
   integrity sha512-sco40rF+2KlE0ROMvydjkrVMMG1vYilP2ALoRXcYR4obqbYIuV3Bg+51GEDW+HF8n7NRA+iaA4qD0nD9lo9mew==
+
+core-js@^2.4.0, core-js@^2.5.0:
+  version "2.6.5"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.5.tgz#44bc8d249e7fb2ff5d00e0341a7ffb94fbf67895"
+  integrity sha512-klh/kDpwX8hryYL14M9w/xei6vrv6sE8gTHDG7/T/+SEovB/G4ejwcfE/CBzO6Edsu+OETZMZ3wcX/EjUkrl5A==
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -3793,6 +3815,11 @@ flatted@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-2.0.0.tgz#55122b6536ea496b4b44893ee2608141d10d9916"
   integrity sha512-R+H8IZclI8AAkSBRQJLVOsxwAoHd6WC40b4QTNWIjzAa6BXOBfQcM587MXDTVPeYaopFNWHUFLx7eNmHDSxMWg==
+
+flush-promises@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/flush-promises/-/flush-promises-1.0.2.tgz#4948fd58f15281fed79cbafc86293d5bb09b2ced"
+  integrity sha512-G0sYfLQERwKz4+4iOZYQEZVpOt9zQrlItIxQAAYAWpfby3gbHrx0osCHz5RLl/XoXevXk0xoN4hDFky/VV9TrA==
 
 flush-write-stream@^1.0.0:
   version "1.1.1"
@@ -8037,6 +8064,16 @@ regenerator-runtime@0.13.2, regenerator-runtime@^0.13.2:
   version "0.13.2"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.2.tgz#32e59c9a6fb9b1a4aff09b4930ca2d4477343447"
   integrity sha512-S/TQAZJO+D3m9xeN1WTI8dLKBBiRgXBlTJvbWjCThHWZj9EvHK70Ff50/tYj2J/fvBY6JtFVwRuazHN2E7M9BA==
+
+regenerator-runtime@^0.10.5:
+  version "0.10.5"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.10.5.tgz#336c3efc1220adcedda2c9fab67b5a7955a33658"
+  integrity sha1-M2w+/BIgrc7dosn6tntaeVWjNlg=
+
+regenerator-runtime@^0.11.0:
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
+  integrity sha512-MguG95oij0fC3QV3URf4V2SDYGJhJnJGqvIIgdECeODCT98wSWDAJ94SSuVpYQUoTcGUIL6L4yNB7j1DFFHSBg==
 
 regenerator-transform@^0.13.4:
   version "0.13.4"

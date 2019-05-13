@@ -57,6 +57,8 @@
     "ole": "^0.0.3"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "flush-promises": "^1.0.2",
     "query-string": "^6.4.2",
     "react-draggable": "^3.2.1",
     "react-icons": "^3.4.0",
