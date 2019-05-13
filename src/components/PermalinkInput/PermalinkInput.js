@@ -53,7 +53,11 @@ const defaultProps = {
   titleCopyBt: '',
   titleInputField: '',
   button: <MdContentCopy focusable={false} />,
-  getShortenedUrl: null,
+  getShortenedUrl: val => {
+    return new Promise(resolve => {
+      return resolve(val);
+    });
+  },
 };
 
 /**
@@ -92,13 +96,9 @@ class PermalinkInput extends PureComponent {
     const { value, getShortenedUrl } = this.props;
 
     if (value !== prevProps.value) {
-      if (getShortenedUrl) {
-        getShortenedUrl(value).then(v => {
-          this.setState({ permalinkValue: v });
-        });
-      } else {
-        this.setState({ permalinkValue: value });
-      }
+      getShortenedUrl(value).then(v => {
+        this.setState({ permalinkValue: v });
+      });
     }
   }
 
