@@ -64,6 +64,10 @@ const defaultProps = {
  * This component displays a permalink field.
  */
 class PermalinkInput extends PureComponent {
+  static selectInput() {
+    document.execCommand('selectall');
+  }
+
   constructor(props) {
     super(props);
     this.state = { permalinkValue: null };
@@ -123,7 +127,7 @@ class PermalinkInput extends PureComponent {
             ref={node => {
               this.inputRef = node;
             }}
-            onClick={() => document.execCommand('selectall')}
+            onClick={() => PermalinkInput.selectInput()}
           />
           <Button
             className={classNameCopyBt}
