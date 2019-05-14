@@ -2,7 +2,6 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { configure, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-// import Draggable from 'react-draggable';
 import Dialog from '.';
 
 configure({ adapter: new Adapter() });
