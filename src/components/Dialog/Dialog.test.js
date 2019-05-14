@@ -42,7 +42,7 @@ describe('Dialog', () => {
     });
   });
 
-  describe('triggers onClose.', () => {
+  test('triggers onClose.', () => {
     const fn = jest.fn();
     const wrapper = mount(
       <Dialog onClose={fn} isOpen classNameCloseBt="tm-close-classname">
@@ -55,5 +55,23 @@ describe('Dialog', () => {
       .at(1)
       .simulate('click');
     expect(fn).toHaveBeenCalledTimes(1);
+  });
+
+  test('set dialog position.', () => {
+    const fn = jest.fn();
+    const wrapper = mount(
+      <Dialog onClose={fn} isOpen isDraggable>
+        <span>content</span>
+      </Dialog>,
+    );
+    wrapper.setProps({
+      position: {
+        x: 9,
+        y: 9,
+      },
+    });
+
+    const draggable = wrapper.find('.react-draggable');
+    expect(draggable.prop('style').transform).toBe('translate(9px,9px)');
   });
 });
