@@ -11,7 +11,7 @@ module.exports = {
     path.join(__dirname, 'src/themes/default/examples.scss'),
     'ol/ol.css',
     'react-app-polyfill/ie11',
-    'core-js',
+    'react-app-polyfill/stable',
   ],
   moduleAliases: {
     'react-spatial': path.resolve(__dirname, 'src'),
@@ -107,6 +107,15 @@ module.exports = {
     module: {
       rules: [
         // Babel loader, will use your project’s .babelrc
+        // Transpile node dependencies, node deps are often not transpiled for IE11
+        {
+          test: [
+            /\/node_modules\/(regexpu-core|unicode-.*|acorn-.*|query-string|strict-uri-encode)/,
+            /\/node_modules\/(split-on-first|react-dev-utils|ansi-styles|jsts)/,
+          ],
+          loader: 'babel-loader',
+        },
+        // Transpile js
         {
           test: /\.jsx?$/,
           exclude: /node_modules/,
@@ -145,8 +154,5 @@ module.exports = {
         },
       ],
     },
-  },
-  styleguideComponents: {
-    ComponentsList: path.join(__dirname, 'src/styleguidist/ComponentsList'),
   },
 };
