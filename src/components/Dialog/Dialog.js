@@ -88,10 +88,7 @@ const defaultProps = {
   isModal: false,
   isOpen: false,
   title: undefined,
-  position: {
-    x: 0,
-    y: 0,
-  },
+  position: null,
   onDragStop: () => {},
 };
 
