@@ -35,6 +35,7 @@ const propTypes = {
    * Specifies a selector to be used to prevent drag initialization.
    * Pass to 'cancel' props of sub-component 'react-draggable'.
    * https://github.com/mzabriskie/react-draggable
+   * (Only available if isDraggable is true)
    */
   cancelDraggable: PropTypes.string,
 
@@ -64,7 +65,7 @@ const propTypes = {
   title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
 
   /**
-   * Default Dialog position.
+   * Default Dialog position (Only available if isDraggable is true).
    */
   position: PropTypes.shape({
     x: PropTypes.number,
@@ -72,7 +73,7 @@ const propTypes = {
   }),
 
   /**
-   * Function triggered on drag stop.
+   * Function triggered on drag stop (Only available if isDraggable is true).
    */
   onDragStop: PropTypes.func,
 };
@@ -151,19 +152,18 @@ class Dialog extends Component {
 
     if (isOpen) {
       if (!isModal && isDraggable) {
-        const draggableProps = cancelDraggable
-          ? { cancel: cancelDraggable }
-          : {};
+        const draggableProps = {};
+        if (cancelDraggable) {
+          draggableProps.cancel = cancelDraggable;
+        }
+        if (onDragStop) {
+          draggableProps.onStop = evt => onDragStop(evt);
+        }
+        if (position) {
+          draggableProps.position = position;
+        }
 
-        return (
-          <Draggable
-            {...draggableProps}
-            onStop={evt => onDragStop(evt)}
-            position={position}
-          >
-            {this.renderDialog()}
-          </Draggable>
-        );
+        return <Draggable {...draggableProps}>{this.renderDialog()}</Draggable>;
       }
       return <>{this.renderDialog()}</>;
     }
