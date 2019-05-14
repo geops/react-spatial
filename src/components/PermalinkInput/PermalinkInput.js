@@ -75,14 +75,19 @@ class PermalinkInput extends PureComponent {
   }
 
   componentDidMount() {
-    const { value, getShortenedUrl } = this.props;
-    getShortenedUrl(value).then(permalinkValue => {
-      this.setState({ permalinkValue });
-    });
+    const { value } = this.props;
+
+    if (value) {
+      this.updatePermalinkValue();
+    }
   }
 
   componentDidUpdate(prevProps) {
-    this.updatePermalinkValue(prevProps);
+    const { value } = this.props;
+
+    if (value !== prevProps.value) {
+      this.updatePermalinkValue();
+    }
   }
 
   onClickCopyButton() {
@@ -92,14 +97,12 @@ class PermalinkInput extends PureComponent {
     document.execCommand('copy');
   }
 
-  updatePermalinkValue(prevProps) {
+  updatePermalinkValue() {
     const { value, getShortenedUrl } = this.props;
 
-    if (value !== prevProps.value) {
-      getShortenedUrl(value).then(v => {
-        this.setState({ permalinkValue: v });
-      });
-    }
+    getShortenedUrl(value).then(v => {
+      this.setState({ permalinkValue: v });
+    });
   }
 
   render() {
