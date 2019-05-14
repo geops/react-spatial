@@ -72,6 +72,7 @@ module.exports = {
           components: [
             'src/components/Autocomplete/[A-Z]*.js',
             'src/components/Checkbox/[A-Z]*.js',
+            'src/components/PermalinkInput/[A-Z]*.js',
             'src/components/Select/[A-Z]*.js',
             'src/components/SelectLinks/[A-Z]*.js',
             'src/components/SearchInput/[A-Z]*.js',
