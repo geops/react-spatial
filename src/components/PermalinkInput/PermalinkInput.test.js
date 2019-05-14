@@ -1,6 +1,4 @@
 import React from 'react';
-import 'babel-polyfill';
-import flushPromises from 'flush-promises';
 import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import renderer from 'react-test-renderer';
@@ -29,19 +27,22 @@ describe('PermalinkInput', () => {
       });
     });
 
-    test('Promise resolution set state permalinkValue.', async () => {
+    test('Promise resolution set input value.', () => {
       const wrapper = shallow(
         <PermalinkInput getShortenedUrl={getShortenedUrl} />,
       );
       wrapper.setProps({ value: 'http://url.test' });
-      await flushPromises();
-      wrapper.update();
-      const input = wrapper
-        .find('input')
-        .first()
-        .getElement();
+      wrapper
+        .instance()
+        .updatePermalinkValue()
+        .then(() => {
+          const input = wrapper
+            .find('input')
+            .first()
+            .getElement();
 
-      expect(input.props.value).toBe('http://url.test');
+          expect(input.props.value).toBe('http://url.test');
+        });
     });
 
     test('getShortenedUrl is called to set value.', () => {
@@ -56,8 +57,7 @@ describe('PermalinkInput', () => {
       expect(getShortenedUrl).toHaveBeenCalledWith('http://url.test');
     });
 
-    test('select value on input click.', async () => {
-      PermalinkInput.selectInput = jest.fn();
+    test('select value on input click.', () => {
       const wrapper = shallow(
         <PermalinkInput
           getShortenedUrl={getShortenedUrl}
@@ -65,17 +65,20 @@ describe('PermalinkInput', () => {
         />,
       );
       const spy = jest.spyOn(PermalinkInput, 'selectInput');
-      await flushPromises();
-      wrapper.update();
       wrapper
-        .find('input')
-        .first()
-        .simulate('click');
+        .instance()
+        .updatePermalinkValue()
+        .then(() => {
+          wrapper
+            .find('input')
+            .first()
+            .simulate('click');
 
-      expect(spy).toHaveBeenCalledTimes(1);
+          expect(spy).toHaveBeenCalledTimes(1);
+        });
     });
 
-    test('click button copy the value.', async () => {
+    test('click button copy the value.', () => {
       document.execCommand = jest.fn();
       const wrapper = shallow(
         <PermalinkInput
@@ -84,14 +87,17 @@ describe('PermalinkInput', () => {
         />,
       );
       const spy = jest.spyOn(wrapper.instance(), 'onClickCopyButton');
-      await flushPromises();
-      wrapper.update();
       wrapper
-        .find('.tm-permalink-bt')
-        .first()
-        .simulate('click');
-
-      expect(spy).toHaveBeenCalledTimes(1);
+        .instance()
+        .updatePermalinkValue()
+        .then(() => {
+          wrapper
+            .find('.tm-permalink-bt')
+            .first()
+            .simulate('click');
+          console.log(wrapper.find('[selected=true]').node.value);
+          expect(spy).toHaveBeenCalledTimes(1);
+        });
     });
   });
 });
