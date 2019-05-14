@@ -16,7 +16,7 @@ class PermalinkInputExample extends React.Component {
     const { value } = this.state;
     return (
       <div className="tm-permalink-input-example">
-        <PermalinkInput value={value} />
+        <PermalinkInput value={window.location.href} />
       </div>
     );
   }
