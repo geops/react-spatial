@@ -77,7 +77,7 @@ class PermalinkInput extends PureComponent {
   componentDidMount() {
     const { value, getShortenedUrl } = this.props;
     getShortenedUrl(value).then(permalinkValue => {
-      this.setState({ permalinkValue: v });
+      this.setState({ permalinkValue });
     });
   }
 
