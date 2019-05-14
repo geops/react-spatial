@@ -62,6 +62,19 @@ const propTypes = {
    * Dialog title.
    */
   title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+
+  /**
+   * Default Dialog position.
+   */
+  position: PropTypes.shape({
+    x: PropTypes.number,
+    y: PropTypes.number,
+  }),
+
+  /**
+   * Function triggered on drag stop.
+   */
+  onDragStop: PropTypes.func,
 };
 
 const defaultProps = {
@@ -75,6 +88,11 @@ const defaultProps = {
   isModal: false,
   isOpen: false,
   title: undefined,
+  position: {
+    x: 0,
+    y: 0,
+  },
+  onDragStop: () => {},
 };
 
 /**
@@ -125,14 +143,30 @@ class Dialog extends Component {
   }
 
   render() {
-    const { isModal, isOpen, isDraggable, cancelDraggable } = this.props;
+    const {
+      isModal,
+      isOpen,
+      isDraggable,
+      onDragStop,
+      position,
+      cancelDraggable,
+    } = this.props;
+
     if (isOpen) {
       if (!isModal && isDraggable) {
         const draggableProps = cancelDraggable
           ? { cancel: cancelDraggable }
           : {};
 
-        return <Draggable {...draggableProps}>{this.renderDialog()}</Draggable>;
+        return (
+          <Draggable
+            {...draggableProps}
+            onStop={evt => onDragStop(evt)}
+            position={position}
+          >
+            {this.renderDialog()}
+          </Draggable>
+        );
       }
       return <>{this.renderDialog()}</>;
     }
