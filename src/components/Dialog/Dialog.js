@@ -157,7 +157,7 @@ class Dialog extends Component {
           draggableProps.cancel = cancelDraggable;
         }
         if (onDragStop) {
-          draggableProps.onStop = evt => onDragStop(evt);
+          draggableProps.onStop = onDragStop;
         }
         if (position) {
           draggableProps.position = position;
