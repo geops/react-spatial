@@ -1,5 +1,5 @@
 import React from 'react';
-import { configure, shallow } from 'enzyme';
+import { configure, shallow, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import renderer from 'react-test-renderer';
 import PermalinkInput from './PermalinkInput';
@@ -58,17 +58,22 @@ describe('PermalinkInput', () => {
     });
 
     test('select value on input click.', () => {
-      const wrapper = shallow(
+      document.execCommand = jest.fn();
+      const wrapper = mount(
         <PermalinkInput
           getShortenedUrl={getShortenedUrl}
           value="http://url.test"
         />,
       );
       const spy = jest.spyOn(PermalinkInput, 'selectInput');
+
+      expect(spy).toHaveBeenCalledTimes(0);
+
       wrapper
         .instance()
         .updatePermalinkValue()
         .then(() => {
+          wrapper.update();
           wrapper
             .find('input')
             .first()
@@ -80,22 +85,25 @@ describe('PermalinkInput', () => {
 
     test('click button copy the value.', () => {
       document.execCommand = jest.fn();
-      const wrapper = shallow(
+      const wrapper = mount(
         <PermalinkInput
           getShortenedUrl={getShortenedUrl}
           value="http://url.test"
         />,
       );
       const spy = jest.spyOn(wrapper.instance(), 'onClickCopyButton');
+
+      expect(spy).toHaveBeenCalledTimes(0);
+
       wrapper
         .instance()
         .updatePermalinkValue()
         .then(() => {
+          wrapper.update();
           wrapper
             .find('.tm-permalink-bt')
             .first()
             .simulate('click');
-          console.log(wrapper.find('[selected=true]').node.value);
           expect(spy).toHaveBeenCalledTimes(1);
         });
     });
