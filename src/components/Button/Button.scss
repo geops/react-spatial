@@ -5,7 +5,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: background-color 0.5s ease;
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 .tm-round-blue {
@@ -21,5 +21,15 @@
 
   &.tm-active {
     background-color: $btn-secondary-color-active;
+  }
+}
+
+.tm-round-grey-hover-primary {
+  background-color: $gray-light;
+  border-radius: 50%;
+  color: white;
+
+  &:hover {
+    background-color: $btn-primary-color-hover;
   }
 }

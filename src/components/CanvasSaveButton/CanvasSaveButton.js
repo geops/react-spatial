@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import OLMap from 'ol/Map';
 import { getTopLeft, getBottomRight } from 'ol/extent';
-import { TiImage } from 'react-icons/ti';
 import Button from '../Button';
 import NorthArrowSimple from '../../images/northArrow.url.svg';
 import NorthArrowCircle from '../../images/northArrowCircle.url.svg';
@@ -16,7 +15,7 @@ const propTypes = {
   /**
    *  Children content of the button.
    */
-  children: PropTypes.element,
+  children: PropTypes.element.isRequired,
 
   /**
    * CSS class of the button.
@@ -91,8 +90,7 @@ const propTypes = {
 const defaultProps = {
   map: null,
   tabIndex: 0,
-  children: <TiImage focusable={false} />,
-  className: 'tm-canvas-save-button',
+  className: 'tm-canvas-save-button tm-button',
   saveFormat: 'image/png',
   extent: null,
   extraData: null,
