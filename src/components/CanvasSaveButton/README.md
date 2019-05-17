@@ -4,6 +4,7 @@ This demonstrates the use of CanvasSaveButton.
 
 ```jsx
 import React from 'react';
+import { TiImage } from 'react-icons/ti';
 import OLMap from 'ol/Map';
 import CanvasSaveButton from 'react-spatial/components/CanvasSaveButton';
 import BasicMap from 'react-spatial/components/BasicMap';
@@ -36,27 +37,27 @@ class CanvasSaveButtonExample extends React.Component {
           center={this.center}
           zoom={3}
         />
-        <div className="tm-canvas-save-button-menu">
-          <CanvasSaveButton
-            title="Karte als Bild speichern."
-            className="tm-canvas-save-button"
-            map={this.map}
-            extent={extent}
-            extraData={{
-              copyright: {
-                text: () => {
-                  return this.layerService.getCopyrights();
-                },
+        <CanvasSaveButton
+          title="Karte als Bild speichern."
+          className="tm-round-grey-hover-primary tm-button"
+          map={this.map}
+          extent={extent}
+          extraData={{
+            copyright: {
+              text: () => {
+                return this.layerService.getCopyrights();
               },
-              northArrow: {
-                rotation: () => {
-                  return NorthArrow.radToDeg(this.map.getView().getRotation());
-                },
-                circled: true,
+            },
+            northArrow: {
+              rotation: () => {
+                return NorthArrow.radToDeg(this.map.getView().getRotation());
               },
-            }}
-          />
-        </div>
+              circled: true,
+            },
+          }}
+        >
+          <TiImage focusable={false} />
+        </CanvasSaveButton>
       </div>
     );
   }
