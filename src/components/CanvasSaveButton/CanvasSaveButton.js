@@ -42,7 +42,7 @@ const propTypes = {
   extent: PropTypes.arrayOf(PropTypes.number),
 
   /**
-   * Extra data, such as copyright and north arrow configuration.
+   * Extra data, such as copyright, north arrow configuration, or dpi.
    * All extra data is optional.
    *
    * Example 1:
@@ -59,7 +59,6 @@ const propTypes = {
     }
    * Example 2:
    *
-
     {
       northArrow: {
         src: NorthArrowCustom,
@@ -83,6 +82,11 @@ const propTypes = {
         },
         circled, // Display circle around the north arrow (Does not work for custom src)
       },
+    }
+   * Example 4:
+   *
+    {
+      dpi: 300, // dpi for exported image, default is 96
     }
    */
   extraData: PropTypes.object,
@@ -123,6 +127,17 @@ class CanvasSaveButton extends PureComponent {
     return new Promise(resolve => {
       const { map, extent, extraData } = this.props;
 
+      const dpi = extraData && extraData.dpi ? extraData.dpi : 96;
+      const scaleFactor = dpi / 96;
+
+      map.once('precompose', evt => {
+        const { canvas } = evt.context;
+        canvas.width = Math.ceil(canvas.width * scaleFactor);
+        canvas.height = Math.ceil(canvas.height * scaleFactor);
+        const ctx = canvas.getContext('2d');
+        ctx.scale(scaleFactor, scaleFactor);
+      });
+
       map.once('postcompose', evt => {
         const { canvas } = evt.context;
 
@@ -140,10 +155,10 @@ class CanvasSaveButton extends PureComponent {
           );
 
           clip = {
-            x: pixelTopLeft[0],
-            y: pixelTopLeft[1],
-            w: pixelBottomRight[0] - pixelTopLeft[0],
-            h: pixelBottomRight[1] - pixelTopLeft[1],
+            x: pixelTopLeft[0] * scaleFactor,
+            y: pixelTopLeft[1] * scaleFactor,
+            w: (pixelBottomRight[0] - pixelTopLeft[0]) * scaleFactor,
+            h: (pixelBottomRight[1] - pixelTopLeft[1]) * scaleFactor,
           };
         }
 
@@ -228,6 +243,9 @@ class CanvasSaveButton extends PureComponent {
         } else {
           resolve(destCanvas);
         }
+
+        // Re-render in order to revert to initial dpi
+        map.renderSync();
       });
       map.renderSync();
     });
