@@ -29,17 +29,11 @@ const propTypes = {
   /** Control for polygon polygons, see [doc](http://openlayers-editor.geops.de/api.html). Default to false. */
   drawPolygon: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 
-  /** Control for moving geometries, see [doc](http://openlayers-editor.geops.de/api.html). Default to true. */
-  move: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-
   /** Control for rotating geometries, see [doc](http://openlayers-editor.geops.de/api.html). Default to true. */
   rotate: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 
   /** Control for modifying geometries, see [doc](http://openlayers-editor.geops.de/api.html). Default to true. */
   modify: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-
-  /** Control for deleting geometries, see [doc](http://openlayers-editor.geops.de/api.html). Default to true. */
-  del: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 
   /** Control for creating buffers, see [doc](http://openlayers-editor.geops.de/api.html). Default to false. */
   buffer: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
@@ -81,10 +75,8 @@ const defaultProps = {
   drawCustoms: [],
   drawLineString: true,
   drawPolygon: false,
-  move: false,
   rotate: false,
   modify: true,
-  del: false,
   buffer: false,
   union: false,
   intersection: false,
@@ -115,10 +107,8 @@ class OLE extends PureComponent {
       drawCustoms,
       drawLineString,
       drawPolygon,
-      move,
       rotate,
       modify,
-      del,
       buffer,
       union,
       intersection,
@@ -131,10 +121,8 @@ class OLE extends PureComponent {
       drawCustoms !== prevProps.drawCustoms ||
       drawLineString !== prevProps.drawLineString ||
       drawPolygon !== prevProps.drawPolygon ||
-      move !== prevProps.move ||
       rotate !== prevProps.rotate ||
       modify !== prevProps.modify ||
-      del !== prevProps.del ||
       buffer !== prevProps.buffer ||
       union !== prevProps.union ||
       intersection !== prevProps.intersection ||
@@ -158,10 +146,8 @@ class OLE extends PureComponent {
       drawCustoms,
       drawLineString,
       drawPolygon,
-      move,
       rotate,
       modify,
-      del,
       buffer,
       union,
       intersection,
@@ -249,20 +235,6 @@ class OLE extends PureComponent {
       );
     }
 
-    if (move) {
-      ctrls.push(
-        new control.Move(
-          Object.assign(
-            {
-              type: 'Polygon',
-              source,
-            },
-            move,
-          ),
-        ),
-      );
-    }
-
     if (rotate) {
       ctrls.push(
         new control.Rotate(
@@ -296,15 +268,6 @@ class OLE extends PureComponent {
       });
 
       ctrls.push(modifyCtrl);
-    }
-
-    if (del) {
-      ctrls.push(
-        new control.Delete({
-          source,
-          style,
-        }),
-      );
     }
 
     if (buffer) {
