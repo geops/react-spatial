@@ -259,11 +259,11 @@ class OLE extends PureComponent {
         ),
       );
 
-      modifyCtrl.selectInteraction.getFeatures().on('add', evt => {
+      modifyCtrl.selectModify.getFeatures().on('add', evt => {
         onSelect(evt.element);
       });
 
-      modifyCtrl.selectInteraction.getFeatures().on('remove', evt => {
+      modifyCtrl.selectModify.getFeatures().on('remove', evt => {
         onDeselect(evt.element);
       });
 
