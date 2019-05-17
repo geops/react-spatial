@@ -139,7 +139,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
     className="tm-modify-text-font"
   >
     <div
-      className="tm-button"
+      className="tm-button "
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
@@ -646,7 +646,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
     className="tm-modify-text-font"
   >
     <div
-      className="tm-button"
+      className="tm-button "
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"

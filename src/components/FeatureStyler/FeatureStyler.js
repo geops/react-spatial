@@ -591,6 +591,8 @@ class FeatureStyler extends PureComponent {
       return null;
     }
 
+    const isBold = font.indexOf('bold') > -1;
+
     return (
       <>
         <div>
@@ -606,6 +608,7 @@ class FeatureStyler extends PureComponent {
 
         <div className={classNameTextFont}>
           <Button
+            className={`tm-button ${isBold ? 'tm-button-text-bold' : ''}`}
             onClick={() => {
               this.setState({ font: FeatureStyler.toggleFontBold(font) });
             }}
