@@ -24,6 +24,8 @@ import {
 } from 'ol/geom';
 import LinearRing from 'ol/geom/LinearRing';
 import { fromExtent } from 'ol/geom/Polygon';
+import * as events from 'ol/events';
+import * as condition from 'ol/events/condition';
 import { OL3Parser } from 'jsts/org/locationtech/jts/io';
 import { BufferOp } from 'jsts/org/locationtech/jts/operation/buffer';
 import { OverlayOp } from 'jsts/org/locationtech/jts/operation/overlay';
@@ -69,6 +71,12 @@ if (!window.ol) {
     },
     extent: {
       getCenter,
+    },
+    events: {
+      ...events,
+      condition: {
+        ...condition,
+      },
     },
   };
   window.ol.geom.Polygon.fromExtent = fromExtent;
