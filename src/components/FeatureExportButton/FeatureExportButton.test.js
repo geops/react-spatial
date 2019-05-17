@@ -144,6 +144,9 @@ describe('FeatureExportButton', () => {
 
       const textStyle = new Style({
         text: new Text({
+          backgroundFill: new Fill({
+            color: 'rgba(255,255,255,0.01)',
+          }),
           font: 'normal 16px Helvetica',
           stroke: new Stroke({
             color: [255, 255, 255, 1],
