@@ -41,6 +41,15 @@ const propTypes = {
   extent: PropTypes.arrayOf(PropTypes.number),
 
   /**
+   * Array of 4 [ol/Coordinate](https://openlayers.org/en/latest/apidoc/module-ol_coordinate.html#~Coordinate).
+   * If no coordinates and no extent are given, the whole map is exported.
+   * This property must be used to export rotated map.
+   * If you don't need to export rotated map the extent property can be used as well.
+   * If extent is specified, coordinates property is ignored.
+   */
+  coordinates: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
+
+  /**
    * Extra data, such as copyright and north arrow configuration.
    * All extra data is optional.
    *
@@ -94,6 +103,7 @@ const defaultProps = {
   saveFormat: 'image/png',
   extent: null,
   extraData: null,
+  coordinates: null,
 };
 
 /**
@@ -119,7 +129,7 @@ class CanvasSaveButton extends PureComponent {
 
   createCanvasImage() {
     return new Promise(resolve => {
-      const { map, extent, extraData } = this.props;
+      const { map, extent, extraData, coordinates } = this.props;
 
       map.once('postcompose', evt => {
         const { canvas } = evt.context;
@@ -131,11 +141,34 @@ class CanvasSaveButton extends PureComponent {
           h: canvas.height,
         };
 
+        let firstCoordinate;
+        let oppositeCoordinate;
+
         if (extent) {
-          const pixelTopLeft = map.getPixelFromCoordinate(getTopLeft(extent));
-          const pixelBottomRight = map.getPixelFromCoordinate(
-            getBottomRight(extent),
-          );
+          firstCoordinate = getTopLeft(extent);
+          oppositeCoordinate = getBottomRight(extent);
+        } else if (coordinates) {
+          // In case of coordinates coming from DragBox interaction:
+          //   firstCoordinate is the first coordinate drawn by the user.
+          //   oppositeCoordinate is the coordinate of the point dragged by the user.
+          [firstCoordinate, , oppositeCoordinate] = coordinates;
+        }
+
+        if (firstCoordinate && oppositeCoordinate) {
+          const firstPixel = map.getPixelFromCoordinate(firstCoordinate);
+          const oppositePixel = map.getPixelFromCoordinate(oppositeCoordinate);
+          const pixelTopLeft = [
+            firstPixel[0] <= oppositePixel[0]
+              ? firstPixel[0]
+              : oppositePixel[0],
+            firstPixel[1] <= oppositePixel[1]
+              ? firstPixel[1]
+              : oppositePixel[1],
+          ];
+          const pixelBottomRight = [
+            firstPixel[0] > oppositePixel[0] ? firstPixel[0] : oppositePixel[0],
+            firstPixel[1] > oppositePixel[1] ? firstPixel[1] : oppositePixel[1],
+          ];
 
           clip = {
             x: pixelTopLeft[0],
