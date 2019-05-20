@@ -591,7 +591,7 @@ class FeatureStyler extends PureComponent {
       return null;
     }
 
-    const isBold = font.indexOf('bold') > -1;
+    const isBold = /bold/.test(font);
 
     return (
       <>
