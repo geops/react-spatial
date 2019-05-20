@@ -57,6 +57,12 @@ const propTypes = {
     PropTypes.func,
   ]),
 
+  modifStyle: PropTypes.oneOfType([
+    PropTypes.instanceOf(Style),
+    PropTypes.arrayOf(PropTypes.instanceOf(Style)),
+    PropTypes.func,
+  ]),
+
   /* Function triggered when a feature is selected */
   onSelect: PropTypes.func,
 
@@ -82,6 +88,7 @@ const defaultProps = {
   intersection: false,
   difference: false,
   selectStyle: Styles.default,
+  modifStyle: Styles.default,
   onSelect: () => {},
   onDeselect: () => {},
   className: 'tm-ole',
@@ -153,6 +160,7 @@ class OLE extends PureComponent {
       intersection,
       difference,
       selectStyle,
+      modifStyle,
       onSelect,
       onDeselect,
     } = this.props;
@@ -170,6 +178,7 @@ class OLE extends PureComponent {
 
     const source = layer.olLayer.getSource();
     const style = selectStyle;
+    const modifyStyle = modifStyle;
 
     if (this.editor) {
       this.editor.remove();
@@ -254,16 +263,17 @@ class OLE extends PureComponent {
           {
             source,
             style,
+            modifyStyle,
           },
           modify,
         ),
       );
 
-      modifyCtrl.selectModify.getFeatures().on('add', evt => {
+      modifyCtrl.selectMove.getFeatures().on('add', evt => {
         onSelect(evt.element);
       });
 
-      modifyCtrl.selectModify.getFeatures().on('remove', evt => {
+      modifyCtrl.selectMove.getFeatures().on('remove', evt => {
         onDeselect(evt.element);
       });
 
