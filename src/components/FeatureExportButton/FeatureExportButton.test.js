@@ -144,9 +144,6 @@ describe('FeatureExportButton', () => {
 
       const textStyle = new Style({
         text: new Text({
-          backgroundFill: new Fill({
-            color: 'rgba(255,255,255,0.01)',
-          }),
           font: 'normal 16px Helvetica',
           stroke: new Stroke({
             color: [255, 255, 255, 1],
@@ -201,6 +198,41 @@ describe('FeatureExportButton', () => {
       const wrapper = mount(<FeatureExportButton layer={circleLayer} />);
       const exportString = wrapper.instance().createFeatureString(circleLayer);
       expect(exportString).toBe(undefined);
+    });
+
+    test('should export extended data.', () => {
+      const extendedLayer = renderLayer(1);
+
+      const style = new Style({
+        stroke: new Stroke({
+          color: [0, 0, 0, 1],
+          lineDash: [40, 40],
+        }),
+        text: new Text({
+          font: 'normal 18px Arial',
+          rotation: 0.5,
+          backgroundFill: new Fill({
+            color: 'rgba(255,255,255,0.01)',
+          }),
+        }),
+      });
+
+      extendedLayer.olLayer.getSource().forEachFeature(f => {
+        f.setStyle(style);
+      });
+
+      const wrapper = mount(<FeatureExportButton layer={extendedLayer} />);
+      const exportString = wrapper
+        .instance()
+        .createFeatureString(extendedLayer);
+      const expectedStyle =
+        '<ExtendedData><Data name="lineDash"><value>40,40</value></Data>' +
+        '<Data name="textBackgroundFillColor"><value>rgba(255,255,255,0.01)</value></Data>' +
+        '<Data name="textFont"><value>normal 18px Arial</value></Data>' +
+        '<Data name="textRotation"><value>0.5</value></Data></ExtendedData>';
+      expect(
+        exportString.match(/<ExtendedData>(.*?)<\/ExtendedData>/g)[0],
+      ).toBe(expectedStyle);
     });
   });
 });
