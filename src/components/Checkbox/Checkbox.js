@@ -62,7 +62,7 @@ class Checkbox extends PureComponent {
         tabIndex={tabIndex}
         onKeyPress={e => {
           if (e.which === 13) {
-            onClick();
+            onClick(e);
           }
         }}
       >
@@ -70,8 +70,8 @@ class Checkbox extends PureComponent {
           type={inputType}
           tabIndex={-1}
           checked={checked}
-          onChange={() => onChange()}
-          onClick={() => onClick()}
+          onChange={e => onChange(e)}
+          onClick={e => onClick(e)}
         />
         <span />
       </label>
