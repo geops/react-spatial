@@ -8,6 +8,7 @@ import OLMap from 'ol/Map';
 import BasicMap from 'react-spatial/components/BasicMap';
 import ShareMenu from 'react-spatial/components/ShareMenu';
 import ConfigReader from '../../ConfigReader';
+import { TiImage } from 'react-icons/ti';
 
 import CanvasSaveButton from '../CanvasSaveButton';
 
@@ -36,7 +37,9 @@ class ShareMenuExample extends React.Component {
             title="Karte als Bild speichern."
             className="tm-canvas-save-button tm-share-menu-icon"
             map={this.map}
-          />
+          >
+          <TiImage focusable={false} />
+          </CanvasSaveButton>
         </ShareMenu>
       </div>
     );

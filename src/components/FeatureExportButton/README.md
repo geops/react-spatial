@@ -16,8 +16,10 @@ import Style from 'ol/style/Style';
 import Icon from 'ol/style/Icon';
 import GPX from 'ol/format/GPX';
 import OSM, {ATTRIBUTION} from 'ol/source/OSM.js';
+import ConfigReader from 'react-spatial/ConfigReader';
 
 import FeatureExportButton from 'react-spatial/components/FeatureExportButton';
+import CanvasSaveButton from 'react-spatial/components/CanvasSaveButton';
 
 class FeatureExportButtonExample extends React.Component {
   constructor(props) {
@@ -33,12 +35,11 @@ class FeatureExportButtonExample extends React.Component {
       }),
     });
 
-    this.layers = [
-      new Layer({
-        olLayer: new TileLayer({
-          source: new OSM(),
-        }),
-      }),
+    const layers0 = ConfigReader.readConfig(
+      this.map,
+      treeData,
+    );
+    this.layers = [layers0[0],
       new VectorLayer({
         name: 'ExportLayer',
         source: new VectorSource({
@@ -79,6 +80,12 @@ class FeatureExportButtonExample extends React.Component {
           >
             Export as GPX
           </FeatureExportButton>
+          <CanvasSaveButton
+          title="Karte als Bild speichern."
+            map={this.map}
+          >
+            <span>Export as png</span>
+          </CanvasSaveButton>
         </div>
       </div>
     );

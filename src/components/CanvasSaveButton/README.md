@@ -6,6 +6,7 @@ This demonstrates the use of CanvasSaveButton.
 import React from 'react';
 import { TiImage } from 'react-icons/ti';
 import OLMap from 'ol/Map';
+import Feature from 'ol/Feature';
 import CanvasSaveButton from 'react-spatial/components/CanvasSaveButton';
 import BasicMap from 'react-spatial/components/BasicMap';
 import ConfigReader from 'react-spatial/ConfigReader';
@@ -24,7 +25,6 @@ class CanvasSaveButtonExample extends React.Component {
       treeData,
     );
 
-    this.layerService = new LayerService(layers);
   }
 
   render() {
@@ -42,19 +42,6 @@ class CanvasSaveButtonExample extends React.Component {
           className="tm-round-grey-hover-primary tm-button"
           map={this.map}
           extent={extent}
-          extraData={{
-            copyright: {
-              text: () => {
-                return this.layerService.getCopyrights();
-              },
-            },
-            northArrow: {
-              rotation: () => {
-                return NorthArrow.radToDeg(this.map.getView().getRotation());
-              },
-              circled: true,
-            },
-          }}
         >
           <TiImage focusable={false} />
         </CanvasSaveButton>

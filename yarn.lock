@@ -6736,10 +6736,10 @@ ol@^5.3.0:
     pixelworks "1.1.0"
     rbush "2.0.2"
 
-ole@^0.0.4-beta.2:
-  version "0.0.4-beta.2"
-  resolved "https://registry.yarnpkg.com/ole/-/ole-0.0.4-beta.2.tgz#1f7e2d7ef33f3ab195047e4d50bb132970c8600a"
-  integrity sha512-k9ue7KbUfnY7piICiPt2gYgWPlRNiaJvyeWvqOLbOQUMLxdlmXe3WoSe3QvUkNxB9GexACyWB7WuIkyMXwDS6g==
+ole@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/ole/-/ole-0.0.3.tgz#344767de336b503db893b7c03b10e2f51ae449d2"
+  integrity sha512-SMixG9E80B6eRsCEcO+3PM9aVxT69Hh8SHJRTVnxTMGbdF2WI8Jtu1A05uVzBfWpo8CbZgoqA3VC8rh0V2rE/Q==
 
 on-finished@~2.3.0:
   version "2.3.0"
