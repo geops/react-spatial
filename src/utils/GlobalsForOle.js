@@ -13,6 +13,7 @@ import Icon from 'ol/style/Icon';
 import RegularShape from 'ol/style/RegularShape';
 import Collection from 'ol/Collection';
 import Feature from 'ol/Feature';
+import Observable, { unByKey } from 'ol/Observable';
 import { getCenter } from 'ol/extent';
 import {
   Point,
@@ -71,6 +72,10 @@ if (!window.ol) {
     },
     extent: {
       getCenter,
+    },
+    Observable: {
+      ...Observable,
+      unByKey,
     },
     events: {
       ...events,
