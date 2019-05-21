@@ -200,6 +200,8 @@ const defaultProps = {
   },
 };
 
+const REGEX_BOLD = /bold /i;
+
 /**
  * This component allows to modify an ol.style.Style of a ol.Feature.
  * Only requirement, the feature.getStyleFunction() must return a ol.style.Style or an array of ol.style.Style.
@@ -211,9 +213,13 @@ class FeatureStyler extends PureComponent {
     return Array.isArray(styles) ? styles : [styles];
   }
 
+  static isFontBold(font) {
+    return REGEX_BOLD.test(font);
+  }
+
   static toggleFontBold(font) {
-    return font.indexOf('bold') > -1
-      ? font.replace('bold ', '')
+    return FeatureStyler.isFontBold(font)
+      ? font.replace(REGEX_BOLD, '')
       : `bold ${font}`;
   }
 
@@ -591,6 +597,8 @@ class FeatureStyler extends PureComponent {
       return null;
     }
 
+    const isBold = FeatureStyler.isFontBold(font);
+
     return (
       <>
         <div>
@@ -606,6 +614,7 @@ class FeatureStyler extends PureComponent {
 
         <div className={classNameTextFont}>
           <Button
+            className={`tm-button${isBold ? ' tm-button-text-bold' : ''}`}
             onClick={() => {
               this.setState({ font: FeatureStyler.toggleFontBold(font) });
             }}

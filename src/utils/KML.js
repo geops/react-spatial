@@ -82,6 +82,14 @@ const sanitizeFeature = feature => {
         scale: style.getText().getScale(),
       });
 
+      if (feature.get('textBackgroundFillColor')) {
+        text.setBackgroundFill(
+          new Fill({
+            color: feature.get('textBackgroundFillColor'),
+          }),
+        );
+      }
+
       if (image instanceof Icon) {
         applyTextStyleForIcon(image, text);
       }
@@ -190,6 +198,13 @@ const writeFeatures = (layer, featureProjection) => {
 
     if (newStyle.text && newStyle.text.getFont()) {
       clone.set('textFont', newStyle.text.getFont());
+    }
+
+    if (newStyle.text && newStyle.text.getBackgroundFill()) {
+      clone.set(
+        'textBackgroundFillColor',
+        newStyle.text.getBackgroundFill().getColor(),
+      );
     }
 
     if (newStyle.stroke && newStyle.stroke.getLineDash()) {

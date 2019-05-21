@@ -145,6 +145,19 @@ describe('FeatureStyler', () => {
         const tree = component.toJSON();
         expect(tree).toMatchSnapshot();
       });
+
+      test(`returns a style with bold font.`, () => {
+        const completeStyleModififiable = new Style({
+          text: new Text({
+            font: 'bold 16px Helvetica',
+          }),
+        });
+        const feature = new Feature();
+        feature.setStyle(completeStyleModififiable);
+        const component = renderer.create(<FeatureStyler feature={feature} />);
+        const tree = component.toJSON();
+        expect(tree).toMatchSnapshot();
+      });
     });
   });
 

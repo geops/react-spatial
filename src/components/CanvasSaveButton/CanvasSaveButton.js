@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import OLMap from 'ol/Map';
 import { getTopLeft, getBottomRight } from 'ol/extent';
-import { TiImage } from 'react-icons/ti';
 import Button from '../Button';
 import NorthArrowSimple from '../../images/northArrow.url.svg';
 import NorthArrowCircle from '../../images/northArrowCircle.url.svg';
@@ -16,7 +15,7 @@ const propTypes = {
   /**
    *  Children content of the button.
    */
-  children: PropTypes.element,
+  children: PropTypes.element.isRequired,
 
   /**
    * CSS class of the button.
@@ -42,7 +41,16 @@ const propTypes = {
   extent: PropTypes.arrayOf(PropTypes.number),
 
   /**
-   * Extra data, such as copyright and north arrow configuration.
+   * Array of 4 [ol/Coordinate](https://openlayers.org/en/latest/apidoc/module-ol_coordinate.html#~Coordinate).
+   * If no coordinates and no extent are given, the whole map is exported.
+   * This property must be used to export rotated map.
+   * If you don't need to export rotated map the extent property can be used as well.
+   * If extent is specified, coordinates property is ignored.
+   */
+  coordinates: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
+
+  /**
+   * Extra data, such as copyright, north arrow configuration, or dpi.
    * All extra data is optional.
    *
    * Example 1:
@@ -59,7 +67,6 @@ const propTypes = {
     }
    * Example 2:
    *
-
     {
       northArrow: {
         src: NorthArrowCustom,
@@ -84,6 +91,11 @@ const propTypes = {
         circled, // Display circle around the north arrow (Does not work for custom src)
       },
     }
+   * Example 4:
+   *
+    {
+      dpi: 300, // dpi for exported image, default is 96
+    }
    */
   extraData: PropTypes.object,
 };
@@ -91,11 +103,11 @@ const propTypes = {
 const defaultProps = {
   map: null,
   tabIndex: 0,
-  children: <TiImage focusable={false} />,
-  className: 'tm-canvas-save-button',
+  className: 'tm-canvas-save-button tm-button',
   saveFormat: 'image/png',
   extent: null,
   extraData: null,
+  coordinates: null,
 };
 
 /**
@@ -121,7 +133,18 @@ class CanvasSaveButton extends PureComponent {
 
   createCanvasImage() {
     return new Promise(resolve => {
-      const { map, extent, extraData } = this.props;
+      const { map, extent, extraData, coordinates } = this.props;
+
+      const dpi = extraData && extraData.dpi ? extraData.dpi : 96;
+      const scaleFactor = dpi / 96;
+
+      map.once('precompose', evt => {
+        const { canvas } = evt.context;
+        canvas.width = Math.ceil(canvas.width * scaleFactor);
+        canvas.height = Math.ceil(canvas.height * scaleFactor);
+        const ctx = canvas.getContext('2d');
+        ctx.scale(scaleFactor, scaleFactor);
+      });
 
       map.once('postcompose', evt => {
         const { canvas } = evt.context;
@@ -133,17 +156,40 @@ class CanvasSaveButton extends PureComponent {
           h: canvas.height,
         };
 
+        let firstCoordinate;
+        let oppositeCoordinate;
+
         if (extent) {
-          const pixelTopLeft = map.getPixelFromCoordinate(getTopLeft(extent));
-          const pixelBottomRight = map.getPixelFromCoordinate(
-            getBottomRight(extent),
-          );
+          firstCoordinate = getTopLeft(extent);
+          oppositeCoordinate = getBottomRight(extent);
+        } else if (coordinates) {
+          // In case of coordinates coming from DragBox interaction:
+          //   firstCoordinate is the first coordinate drawn by the user.
+          //   oppositeCoordinate is the coordinate of the point dragged by the user.
+          [firstCoordinate, , oppositeCoordinate] = coordinates;
+        }
+
+        if (firstCoordinate && oppositeCoordinate) {
+          const firstPixel = map.getPixelFromCoordinate(firstCoordinate);
+          const oppositePixel = map.getPixelFromCoordinate(oppositeCoordinate);
+          const pixelTopLeft = [
+            firstPixel[0] <= oppositePixel[0]
+              ? firstPixel[0]
+              : oppositePixel[0],
+            firstPixel[1] <= oppositePixel[1]
+              ? firstPixel[1]
+              : oppositePixel[1],
+          ];
+          const pixelBottomRight = [
+            firstPixel[0] > oppositePixel[0] ? firstPixel[0] : oppositePixel[0],
+            firstPixel[1] > oppositePixel[1] ? firstPixel[1] : oppositePixel[1],
+          ];
 
           clip = {
-            x: pixelTopLeft[0],
-            y: pixelTopLeft[1],
-            w: pixelBottomRight[0] - pixelTopLeft[0],
-            h: pixelBottomRight[1] - pixelTopLeft[1],
+            x: pixelTopLeft[0] * scaleFactor,
+            y: pixelTopLeft[1] * scaleFactor,
+            w: (pixelBottomRight[0] - pixelTopLeft[0]) * scaleFactor,
+            h: (pixelBottomRight[1] - pixelTopLeft[1]) * scaleFactor,
           };
         }
 
@@ -228,6 +274,9 @@ class CanvasSaveButton extends PureComponent {
         } else {
           resolve(destCanvas);
         }
+
+        // Re-render in order to revert to initial dpi
+        map.renderSync();
       });
       map.renderSync();
     });
