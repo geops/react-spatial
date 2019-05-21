@@ -122,6 +122,11 @@ const propTypes = {
     modifyIcon: PropTypes.string,
     modifyIconSize: PropTypes.string,
   }),
+
+  /**
+   * Boolean value to trigger popup re-render.
+   */
+  updateContent: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -198,6 +203,7 @@ const defaultProps = {
     modifyIcon: 'Modify icon',
     modifyIconSize: 'Modify icon size',
   },
+  updateContent: false,
 };
 
 const REGEX_BOLD = /bold /i;
@@ -359,7 +365,7 @@ class FeatureStyler extends PureComponent {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { feature } = this.props;
+    const { feature, updateContent } = this.props;
     const {
       font,
       name,
@@ -378,6 +384,11 @@ class FeatureStyler extends PureComponent {
       feature.getStyleFunction() &&
       feature !== prevProps.feature
     ) {
+      this.updateContent();
+    }
+
+    if (updateContent !== prevProps.updateContent) {
+      // Force to re-render the popup state, if style change.
       this.updateContent();
     }
 
