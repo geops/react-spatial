@@ -296,7 +296,7 @@ class FeatureStyler extends PureComponent {
     }
 
     // Update Text style if it existed;
-    const textStyle = oldStyle.getText();
+    const textStyle = oldStyle.getText() ? oldStyle.getText().clone() : null;
     if (textStyle) {
       textStyle.setText(text);
 
