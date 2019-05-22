@@ -326,6 +326,10 @@ class FeatureStyler extends PureComponent {
         scale: iconSize.scale,
         anchor: icon.anchor,
       });
+
+      // We load the icon manually to be sure the size of the image's size is set asap.
+      // Useful when you use a layer's styleFunction that makes some canvas operations.
+      iconStyle.load();
     }
 
     return new Style({
