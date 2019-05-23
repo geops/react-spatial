@@ -6,22 +6,22 @@ const propTypes = {
   title: PropTypes.string.isRequired,
   className: PropTypes.string,
   classNameTitle: PropTypes.string,
+  icon: PropTypes.string,
 };
 
 const defaultProps = {
-  className: 'tm-menu-item',
-  classNameTitle: 'tm-menu-item-title',
+  className: 'tm-sidebar-item',
+  classNameTitle: 'tm-sidebar-item-title',
 };
 
-const MenuItem = ({ children, title, className, classNameTitle }) => (
+const SidebarItem = ({ children, title, className, classNameTitle }) => (
   <>
     <div className={classNameTitle}>{title}</div>
     <div className={className}>{children}</div>
   </>
 );
 
-MenuItem.propTypes = propTypes;
-MenuItem.defaultProps = defaultProps;
+SidebarItem.propTypes = propTypes;
+SidebarItem.defaultProps = defaultProps;
 
-export default MenuItem;
- 
+export default SidebarItem;   

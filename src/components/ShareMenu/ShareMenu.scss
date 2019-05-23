@@ -1,5 +1,8 @@
 .tm-share-menu {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   .tm-share-menu-icon {
     background-color: #666;

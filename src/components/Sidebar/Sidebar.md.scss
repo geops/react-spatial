@@ -1,0 +1,19 @@
+.tm-sidebar-example {
+  position: relative;
+
+  .tm-sidebar {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    position: absolute;
+    margin: auto;
+  }
+
+  .tm-sidebar-closed {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    position: absolute;
+    margin: auto;
+  }
+}    

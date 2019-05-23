@@ -95,6 +95,8 @@ module.exports = {
             'src/components/ResizeHandler/[A-Z]*.js',
             'src/components/StopEvents/[A-Z]*.js',
             'src/components/ToggleButton/[A-Z]*.js',
+            'src/components/Sidebar/[A-Z]*.js',
+            'src/components/SidebarItem/[A-Z]*.js',
           ],
           exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
           usageMode: 'expand', // 'hide' | 'collapse' | 'expand'
