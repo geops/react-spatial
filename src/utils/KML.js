@@ -77,7 +77,7 @@ const sanitizeFeature = feature => {
         text: feature.get('name'),
         fill: style.getText().getFill(),
         // rotation unsupported by KML, taken instead from custom field.
-        rotation: feature.get('textRotation') || 1,
+        rotation: feature.get('textRotation') || 0,
         stroke: style.getText().getStroke(),
         scale: style.getText().getScale(),
       });
