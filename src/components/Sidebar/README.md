@@ -88,13 +88,13 @@ class SidebarExample extends React.Component {
 
         <div className="tm-sidebar-content">
         {!this.state.showIconOnly ? 
-          <SidebarItem title="Sidebar">
+          <SidebarItem title="Sidebar" iconOnly={this.state.showIconOnly}>
            <p onClick={()=>this.callA()}>Alpha</p>
            <p onClick={()=>this.callB()}>Beta</p>
            <p onClick={()=>this.callC()}>Cheta</p>
            </SidebarItem>
            :
-           <SidebarItem title="Sidebar">
+           <SidebarItem title="Sidebar" iconOnly={this.state.showIconOnly}>
            <p onClick={()=>this.callA()}>A</p>
            <p  onClick={()=>this.callB()}>B</p>
            <p  onClick={()=>this.callC()}>C</p>
@@ -102,7 +102,7 @@ class SidebarExample extends React.Component {
         }
 
         </div>
-        </Sidebar>
+        </Sidebar> 
       </div>
     );
   }

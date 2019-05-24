@@ -6,7 +6,7 @@ const propTypes = {
   title: PropTypes.string.isRequired,
   className: PropTypes.string,
   classNameTitle: PropTypes.string,
-  icon: PropTypes.string,
+  iconOnly: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -14,9 +14,9 @@ const defaultProps = {
   classNameTitle: 'tm-sidebar-item-title',
 };
 
-const SidebarItem = ({ children, title, className, classNameTitle }) => (
+const SidebarItem = ({ children, title, className, classNameTitle, iconOnly }) => (
   <>
-    <div className={classNameTitle}>{title}</div>
+    <div className={classNameTitle}>{iconOnly ? '>>>' : title}</div>
     <div className={className}>{children}</div>
   </>
 );
