@@ -4,12 +4,12 @@ This demonstrates the use of ShareMenu.
 
 ```jsx
 import React from 'react';
+import { TiImage } from 'react-icons/ti';
 import OLMap from 'ol/Map';
 import BasicMap from 'react-spatial/components/BasicMap';
 import ShareMenu from 'react-spatial/components/ShareMenu';
-import ConfigReader from '../../ConfigReader';
-
-import CanvasSaveButton from '../CanvasSaveButton';
+import ConfigReader from 'react-spatial/ConfigReader';
+import CanvasSaveButton from 'react-spatial/components/CanvasSaveButton';
 
 class ShareMenuExample extends React.Component {
   constructor(props) {
@@ -36,7 +36,9 @@ class ShareMenuExample extends React.Component {
             title="Karte als Bild speichern."
             className="tm-canvas-save-button tm-share-menu-icon"
             map={this.map}
-          />
+          >
+            <TiImage focusable={false} />
+          </CanvasSaveButton>
         </ShareMenu>
       </div>
     );
