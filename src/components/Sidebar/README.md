@@ -24,7 +24,7 @@ class SidebarExample extends React.Component {
 
     this.state = {
       open: false,
-      showIconOnly: true
+      showIconOnly: true,
       };
 
        const extent = [599500, 199309, 600714, 200002];
@@ -66,6 +66,7 @@ class SidebarExample extends React.Component {
     });
   }
 
+
   callA() {
     alert('A called')
   }
@@ -80,8 +81,8 @@ class SidebarExample extends React.Component {
 
   render() {
     return (
-     
-      <div className="tm-sidebar-example" onClick={()=>this.toggleSidebar()}>
+      <div className="tm-sidebar-example" 
+      onClick={()=>this.toggleSidebar()}>
    <BasicMap center={this.center} zoom={17} layers={this.layers} />
         <Sidebar className={`${this.state.open ? 'tm-sidebar' : 'tm-sidebar-closed'}`}
         >

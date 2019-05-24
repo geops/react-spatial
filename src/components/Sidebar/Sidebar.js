@@ -8,22 +8,16 @@ const propTypes = {
   className: PropTypes.string,
   closedClassName:  PropTypes.string,
   classNameContent: PropTypes.string,
-  position: PropTypes.string,
-  open: PropTypes.bool,
-  collapsedWidth: PropTypes.number,
-  modal: PropTypes.bool,
   showIconOnly: PropTypes.bool
 };
 
 const defaultProps = {
   className: 'tm-sidebar',
-  classNameContent: 'tm-sidebar-content',
-  collapsedWidth : '50px',
-  position: 'left'
+  classNameContent: 'tm-sidebar-content'
 };
 
-const Sidebar = ({ children, className, classNameContent }) => (
-  <div className={className}>
+const Sidebar = ({ children, className, classNameContent}) => (
+  <div className={className} showIconOnly>
     <div className={classNameContent}>{children}</div>
   </div>
 );
