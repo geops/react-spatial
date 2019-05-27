@@ -13,6 +13,7 @@ import Icon from 'ol/style/Icon';
 import RegularShape from 'ol/style/RegularShape';
 import Collection from 'ol/Collection';
 import Feature from 'ol/Feature';
+import Observable, { unByKey } from 'ol/Observable';
 import { getCenter } from 'ol/extent';
 import {
   Point,
@@ -24,6 +25,8 @@ import {
 } from 'ol/geom';
 import LinearRing from 'ol/geom/LinearRing';
 import { fromExtent } from 'ol/geom/Polygon';
+import * as events from 'ol/events';
+import * as condition from 'ol/events/condition';
 import { OL3Parser } from 'jsts/org/locationtech/jts/io';
 import { BufferOp } from 'jsts/org/locationtech/jts/operation/buffer';
 import { OverlayOp } from 'jsts/org/locationtech/jts/operation/overlay';
@@ -69,6 +72,16 @@ if (!window.ol) {
     },
     extent: {
       getCenter,
+    },
+    Observable: {
+      ...Observable,
+      unByKey,
+    },
+    events: {
+      ...events,
+      condition: {
+        ...condition,
+      },
     },
   };
   window.ol.geom.Polygon.fromExtent = fromExtent;

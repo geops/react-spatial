@@ -41,10 +41,8 @@ describe('OLE', () => {
         drawCustoms={[{}]}
         drawLineString
         drawPolygon
-        move
         rotate
         modify
-        del
         buffer
         union
         intersection
@@ -63,10 +61,8 @@ describe('OLE', () => {
         drawPoint={false}
         drawLineString={false}
         drawPolygon={false}
-        move={false}
         rotate={false}
         modify={false}
-        del={false}
         buffer={false}
         union={false}
         intersection={false}

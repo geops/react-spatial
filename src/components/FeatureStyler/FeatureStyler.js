@@ -13,12 +13,6 @@ const propTypes = {
   feature: PropTypes.instanceOf(Feature),
 
   /**
-   * Index of the style to modify.
-   * Only necessary feature.getStyleFunction() returns an array of styles.
-   */
-  styleIdx: PropTypes.number,
-
-  /**
    * List of colors available for modifcation.
    */
   colors: PropTypes.arrayOf(
@@ -122,12 +116,16 @@ const propTypes = {
     modifyIcon: PropTypes.string,
     modifyIconSize: PropTypes.string,
   }),
+
+  /**
+   * Boolean value to trigger popup re-render.
+   */
+  updateContent: PropTypes.bool,
 };
 
 const defaultProps = {
   t: l => l,
   feature: undefined,
-  styleIdx: 0,
   className: 'tm-feature-styler',
   classNameIcons: 'tm-modify-icons',
   classNameIconSize: 'tm-modify-icon-size',
@@ -198,6 +196,7 @@ const defaultProps = {
     modifyIcon: 'Modify icon',
     modifyIconSize: 'Modify icon size',
   },
+  updateContent: false,
 };
 
 const REGEX_BOLD = /bold /i;
@@ -290,7 +289,7 @@ class FeatureStyler extends PureComponent {
     }
 
     // Update Text style if it existed;
-    const textStyle = oldStyle.getText();
+    const textStyle = oldStyle.getText() ? oldStyle.getText().clone() : null;
     if (textStyle) {
       textStyle.setText(text);
 
@@ -320,6 +319,10 @@ class FeatureStyler extends PureComponent {
         scale: iconSize.scale,
         anchor: icon.anchor,
       });
+
+      // We load the icon manually to be sure the size of the image's size is set asap.
+      // Useful when you use a layer's styleFunction that makes some canvas operations.
+      iconStyle.load();
     }
 
     return new Style({
@@ -359,7 +362,7 @@ class FeatureStyler extends PureComponent {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { feature } = this.props;
+    const { feature, updateContent } = this.props;
     const {
       font,
       name,
@@ -378,6 +381,11 @@ class FeatureStyler extends PureComponent {
       feature.getStyleFunction() &&
       feature !== prevProps.feature
     ) {
+      this.updateContent();
+    }
+
+    if (updateContent !== prevProps.updateContent) {
+      // Force to re-render the popup state, if style change.
       this.updateContent();
     }
 
@@ -405,7 +413,6 @@ class FeatureStyler extends PureComponent {
       colors,
       textSizes,
       iconSizes,
-      styleIdx,
     } = this.props;
     let name;
     let iconCategory;
@@ -419,7 +426,7 @@ class FeatureStyler extends PureComponent {
     let useIconStyle = false;
     let useColorStyle = false;
     let color;
-    const featStyle = FeatureStyler.getStyleAsArray(feature)[styleIdx];
+    const featStyle = FeatureStyler.getStyleAsArray(feature)[0];
 
     if (!featStyle) {
       return;
@@ -477,7 +484,7 @@ class FeatureStyler extends PureComponent {
   }
 
   applyStyle() {
-    const { feature, styleIdx } = this.props;
+    const { feature } = this.props;
     const {
       useTextStyle,
       font,
@@ -496,7 +503,7 @@ class FeatureStyler extends PureComponent {
 
     // Update the style of the feature with the current style
     const oldStyles = FeatureStyler.getStyleAsArray(feature);
-    const style = FeatureStyler.updateStyleFromProperties(oldStyles[styleIdx], {
+    const style = FeatureStyler.updateStyleFromProperties(oldStyles[0], {
       font,
       description,
       color,
@@ -514,11 +521,7 @@ class FeatureStyler extends PureComponent {
     feature.set('description', description);
 
     // Reconstruct the initial styles array.
-    feature.setStyle([
-      ...oldStyles.splice(0, styleIdx),
-      style,
-      ...oldStyles.splice(styleIdx + 1),
-    ]);
+    feature.setStyle([style]);
   }
 
   renderColors(color, classNameColors, classNameSelected, onClick) {
