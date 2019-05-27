@@ -50,6 +50,7 @@ class ConfigReader {
         zIndex: -1,
         source: new WMTSSource({
           url: item.data.url,
+          requestEncoding: item.data.requestEncoding,
           crossOrigin: 'Anonymous',
           tileGrid: new WMTSTileGrid({
             extent: item.data.projectionExtent,
