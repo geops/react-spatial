@@ -271,23 +271,28 @@ const writeFeatures = (layer, featureProjection) => {
 
     // Temporary to locate <ExtendedData> after <Style>
     // TODO: Remove it when https://github.com/openlayers/openlayers/pull/9500 is merged and ol updated.
-    const customFields = featString.match(
-      /<s*ExtendedData[^>]*>(.*?)<\/ExtendedData>/g,
-    );
+    const re = /<s*ExtendedData[^>]*>(.*?)<\/ExtendedData>/g;
+    let matches = [];
 
-    if (customFields) {
-      customFields.forEach(matched => {
+    do {
+      matches.push(re.exec(featString));
+    } while (matches[matches.length - 1]);
+
+    matches = matches.slice(0, matches.length - 1); // Normalize / Remove last null element
+
+    if (matches.length) {
+      matches.forEach(match => {
         const initialMatch = featString.substring(
-          featString.indexOf(matched),
+          match.index,
           featString.length,
         );
         const indexOfStyle =
           initialMatch.indexOf('</Style>') + '</Style>'.length;
         let modifiedMatch =
           initialMatch.slice(0, indexOfStyle) +
-          matched +
+          match[0] +
           initialMatch.slice(indexOfStyle, featString.length);
-        modifiedMatch = modifiedMatch.replace(matched, '');
+        modifiedMatch = modifiedMatch.replace(match[0], '');
         featString = featString.replace(initialMatch, modifiedMatch);
       });
     }
