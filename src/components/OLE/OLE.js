@@ -286,6 +286,14 @@ class OLE extends PureComponent {
         onDeselect(evt.element);
       });
 
+      modifyCtrl.selectModify.getFeatures().on('add', evt => {
+        onSelect(evt.element);
+      });
+
+      modifyCtrl.selectModify.getFeatures().on('remove', evt => {
+        onDeselect(evt.element);
+      });
+
       ctrls.push(modifyCtrl);
     }
 
