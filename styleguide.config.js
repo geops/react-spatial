@@ -51,7 +51,7 @@ module.exports = {
             'src/components/ScaleLine/[A-Z]*.js',
           ],
           exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
-          usageMode: 'expand', // 'hide' | 'collapse' | 'expand'
+          usageMode: 'collapse', // 'hide' | 'collapse' | 'expand'
         },
         {
           name: 'Menu',
@@ -64,7 +64,7 @@ module.exports = {
             'src/components/ShareMenu/[A-Z]*.js',
           ],
           exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
-          usageMode: 'expand', // 'hide' | 'collapse' | 'expand'
+          usageMode: 'collapse', // 'hide' | 'collapse' | 'expand'
         },
         {
           name: 'Form',
@@ -78,7 +78,7 @@ module.exports = {
             'src/components/SearchInput/[A-Z]*.js',
           ],
           exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
-          usageMode: 'expand', // 'hide' | 'collapse' | 'expand'
+          usageMode: 'collapse', // 'hide' | 'collapse' | 'expand'
         },
         {
           name: 'Basic',
@@ -97,7 +97,7 @@ module.exports = {
             'src/components/ToggleButton/[A-Z]*.js',
           ],
           exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
-          usageMode: 'expand', // 'hide' | 'collapse' | 'expand'
+          usageMode: 'collapse', // 'hide' | 'collapse' | 'expand'
         },
       ],
       description:

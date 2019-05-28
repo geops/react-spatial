@@ -30,27 +30,6 @@ class OLEExample extends React.Component {
         source: new VectorSource(),
       })
     ];
-
-    const fill = new Fill({
-      color: 'rgba(255,90,79,0.7)',
-    });
-    const stroke = new Stroke({
-      color: '#FF5A4F',
-      width: 1.25,
-    });
-    const dfltSelectStyle = new Style({
-      image: new Circle({
-        fill,
-        stroke,
-        radius: 10,
-      }),
-      fill,
-      stroke,
-    });
-
-    this.selectStyleFc = feat => {
-      return [dfltSelectStyle];
-    };
   }
 
   render() {
@@ -63,15 +42,10 @@ class OLEExample extends React.Component {
         <OLE
           map={this.map}
           layer={this.layers[1]}
-          selectStyle={this.selectStyleFc}
-          modifyStyle={this.selectStyleFc}
           cad
-          drawPoint
-          drawLineString
           drawPolygon
           move
           rotate
-          modify
           del
           buffer
           union
