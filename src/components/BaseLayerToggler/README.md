@@ -1,6 +1,6 @@
 #
 
-This demonstrates the use of LayerTree.
+This demonstrates the use of BaseLayerToggler.
 
 ```jsx
 import React from 'react';
