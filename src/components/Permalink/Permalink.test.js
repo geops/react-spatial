@@ -96,6 +96,54 @@ describe('Permalink', () => {
     expect(window.location.search).toEqual(search);
   });
 
+  test('shoud limit 2 decimals by default for x, y.', () => {
+    expect(window.location.search).toEqual('');
+    const olMap = new OLMap({
+      controls: [],
+      view: new View({
+        center: [10.555555, 10.5555555],
+        zoom: 5,
+      }),
+    });
+    mount(<Permalink map={olMap} />);
+    olMap.dispatchEvent(new MapEvent('moveend', olMap));
+    const search = '?x=10.56&y=10.56&z=5';
+
+    expect(window.location.search).toEqual(search);
+  });
+
+  test('shoud round values x & y ".00" for readability.', () => {
+    expect(window.location.search).toEqual('');
+    const olMap = new OLMap({
+      controls: [],
+      view: new View({
+        center: [10.99999, 1.000001],
+        zoom: 5,
+      }),
+    });
+    mount(<Permalink map={olMap} />);
+    olMap.dispatchEvent(new MapEvent('moveend', olMap));
+    const search = '?x=11&y=1&z=5';
+
+    expect(window.location.search).toEqual(search);
+  });
+
+  test('shoud limit 4 decimals with props "coordinateDecimals".', () => {
+    expect(window.location.search).toEqual('');
+    const olMap = new OLMap({
+      controls: [],
+      view: new View({
+        center: [10.555555, 10.5555555],
+        zoom: 5,
+      }),
+    });
+    mount(<Permalink map={olMap} coordinateDecimals={4} />);
+    olMap.dispatchEvent(new MapEvent('moveend', olMap));
+    const search = '?x=10.5556&y=10.5556&z=5';
+
+    expect(window.location.search).toEqual(search);
+  });
+
   test('shoud react on layerService change.', () => {
     expect(window.location.search).toEqual('');
     const map = new OLMap({ controls: [] });
