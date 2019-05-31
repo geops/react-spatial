@@ -63,11 +63,17 @@ const propTypes = {
     PropTypes.func,
   ]),
 
-  /* Function triggered when a feature is selected */
+  /** Function triggered when a feature is selected */
   onSelect: PropTypes.func,
 
-  /* Function triggered when a feature is deselected */
+  /** Function triggered when a feature is deselected */
   onDeselect: PropTypes.func,
+
+  /** Function triggered when a contol is activated */
+  onControlActive: PropTypes.func,
+
+  /** Function triggered when a contol is deactivated */
+  onControlDeactive: PropTypes.func,
 
   /* CSS class of the container */
   className: PropTypes.string,
@@ -91,6 +97,8 @@ const defaultProps = {
   modifyStyle: Styles.default,
   onSelect: () => {},
   onDeselect: () => {},
+  onControlActive: () => {},
+  onControlDeactive: () => {},
   className: 'tm-ole',
 };
 
@@ -163,6 +171,8 @@ class OLE extends PureComponent {
       modifyStyle,
       onSelect,
       onDeselect,
+      onControlActive,
+      onControlDeactive,
     } = this.props;
 
     if (
@@ -276,6 +286,14 @@ class OLE extends PureComponent {
         onDeselect(evt.element);
       });
 
+      modifyCtrl.selectModify.getFeatures().on('add', evt => {
+        onSelect(evt.element);
+      });
+
+      modifyCtrl.selectModify.getFeatures().on('remove', evt => {
+        onDeselect(evt.element);
+      });
+
       ctrls.push(modifyCtrl);
     }
 
@@ -339,6 +357,8 @@ class OLE extends PureComponent {
       this.editor = new Editor(map, {
         target: this.ref.current,
       });
+      this.editor.getActiveControls().on('add', onControlActive);
+      this.editor.getActiveControls().on('remove', onControlDeactive);
       this.editor.addControls(ctrls);
     }
   }

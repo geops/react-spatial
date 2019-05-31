@@ -70,6 +70,7 @@ const propTypes = {
   viewOptions: PropTypes.shape({
     minZoom: PropTypes.number,
     maxZoom: PropTypes.number,
+    extent: PropTypes.array,
     projection: PropTypes.string,
   }),
 
@@ -98,6 +99,7 @@ const defaultProps = {
   viewOptions: {
     minZoom: 0,
     maxZoom: 22,
+    extent: undefined,
     projection: 'EPSG:3857',
   },
   zoom: 1,
@@ -188,6 +190,7 @@ class BasicMap extends Component {
       fitOptions,
       layers,
       resolution,
+      viewOptions,
       zoom,
     } = this.props;
 
@@ -216,6 +219,18 @@ class BasicMap extends Component {
       this.map.getView().getResolution() !== resolution
     ) {
       this.map.getView().setResolution(resolution);
+    }
+
+    if (viewOptions && prevProps.viewOptions.extent !== viewOptions.extent) {
+      // Re-create a view, ol doesn't provide any method to setExtent of view.
+      this.map.setView(
+        new View({
+          ...viewOptions,
+          ...{ center },
+          ...{ resolution },
+          ...{ extent: viewOptions.extent },
+        }),
+      );
     }
   }
 

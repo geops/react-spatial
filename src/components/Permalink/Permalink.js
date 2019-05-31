@@ -30,6 +30,11 @@ const propTypes = {
    * Params to be written in url.
    */
   params: PropTypes.object,
+
+  /**
+   * Maximum number of decimals allowed for coordinates.
+   */
+  coordinateDecimals: PropTypes.number,
 };
 
 const defaultProps = {
@@ -37,6 +42,7 @@ const defaultProps = {
   layerService: null,
   map: null,
   params: {},
+  coordinateDecimals: 2,
 };
 
 /**
@@ -99,10 +105,15 @@ class Permalink extends Component {
     const { center } = mapView.getProperties();
 
     this.setState({
-      x: center[0],
-      y: center[1],
+      x: this.roundCoord(center[0]),
+      y: this.roundCoord(center[1]),
       z: mapView.getZoom(),
     });
+  }
+
+  roundCoord(val) {
+    const { coordinateDecimals } = this.props;
+    return parseFloat(val.toFixed(coordinateDecimals));
   }
 
   updateLayerService() {
