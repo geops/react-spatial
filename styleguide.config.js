@@ -60,8 +60,9 @@ module.exports = {
             'src/components/LayerTree/[A-Z]*.js',
             'src/components/Menu/[A-Z]*.js',
             'src/components/MenuItem/[A-Z]*.js',
-            'src/components/TopicList/[A-Z]*.js',
             'src/components/ShareMenu/[A-Z]*.js',
+            'src/components/Sidebar/[A-Z]*.js',
+            'src/components/TopicList/[A-Z]*.js',
           ],
           exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
           usageMode: 'collapse', // 'hide' | 'collapse' | 'expand'

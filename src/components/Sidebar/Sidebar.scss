@@ -1,0 +1,56 @@
+@include keyframes(
+  sidebar-open,
+  width,
+  $sidebar-close-width,
+  $sidebar-open-width
+);
+@include keyframes(
+  sidebar-close,
+  width,
+  $sidebar-open-width,
+  $sidebar-close-width
+);
+@include keyframes(sidebar-modal-open, opacity, 0, 0.6);
+@include keyframes(sidebar-modal-close, opacity, 0.6, 0);
+
+.tm-sidebar {
+  position: absolute;
+  top: 0;
+  background-color: white;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+.tm-sidebar-open {
+  width: $sidebar-open-width;
+  animation: sidebar-open 300ms;
+}
+
+.tm-sidebar-close {
+  width: $sidebar-close-width;
+  animation: sidebar-close 300ms;
+}
+
+.tm-sidebar-left {
+  left: 0;
+  border-right: 2px solid #eee;
+}
+
+.tm-sidebar-right {
+  right: 0;
+  border-left: 2px solid #eee;
+}
+
+.tm-sidebar-modal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: $gray-light;
+  opacity: 0.6;
+  animation: sidebar-modal-open 300ms;
+}
+
+.tm-sidebar-modal-close {
+  opacity: 0;
+  animation: sidebar-modal-close 300ms;
+}
