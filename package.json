@@ -92,7 +92,7 @@
     "test:watch": "jest --watch",
     "coverage": "yarn test --coverage --coverageDirectory=coverage",
     "doc": "styleguidist build && cp -rf src/images/ styleguide",
-    "publish:build": "yarn run build && yarn publish build/",
+    "publish:build": "yarn version && git push origin HEAD && yarn build && yarn publish build/",
     "doc:server": "styleguidist server",
     "start": "yarn doc:server",
     "symlink": "yarn build && cd build && yarn link"
