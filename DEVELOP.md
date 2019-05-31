@@ -50,13 +50,9 @@ Then open the file `coverage/lcov-report/index.html` in your browser.
 Run publish:
 
 ```bash
-yarn version    // Increase the version number.
-git push origin HEAD
-yarn build
-cd build
-yarn publish
+publish:public
 ```
-
+You need to enter the new version number in the command line.
 Then the new version must be published on [npmjs.com](https://www.npmjs.com/package/react-spatial).
 
 ## Publish a development version on [npmjs.com](https://www.npmjs.com/package/react-spatial)
@@ -66,13 +62,11 @@ This version WILL NOT be displayed to other in [npmjs.com](https://www.npmjs.com
 Run publish:
 
 ```bash
-yarn version   // Append `-beta.0` to the current version or increase the beta number.
-git push origin HEAD
-yarn build
-cd build
-yarn publish --tag beta
+publish:beta
 ```
 
+You need to enter the new version number in the command line.
+Append `-beta.0` to the current version or increase the beta number.
 Then the new version must be published on [npmjs.com](https://www.npmjs.com/package/react-spatial) with the tag beta.
 
 ## How to use `npm link`
