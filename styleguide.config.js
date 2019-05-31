@@ -49,6 +49,7 @@ module.exports = {
             'src/components/OLE/[A-Z]*.js',
             'src/components/Popup/[A-Z]*.js',
             'src/components/ScaleLine/[A-Z]*.js',
+            'src/components/Zoom/[A-Z]*.js',
           ],
           exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
           usageMode: 'collapse', // 'hide' | 'collapse' | 'expand'
