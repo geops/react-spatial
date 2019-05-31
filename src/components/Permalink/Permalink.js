@@ -113,7 +113,7 @@ class Permalink extends Component {
 
   roundCoord(val) {
     const { coordinateDecimals } = this.props;
-    return val.toFixed(coordinateDecimals).replace(/[.,]00$/, '');
+    return parseFloat(val.toFixed(coordinateDecimals));
   }
 
   updateLayerService() {
