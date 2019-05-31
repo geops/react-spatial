@@ -8,7 +8,7 @@ const propTypes = {
   /**
    * An ol map.
    */
-  map: PropTypes.instanceOf(OLMap),
+  map: PropTypes.instanceOf(OLMap).isRequired,
 
   /**
    * Title for the zoom in button.
@@ -47,7 +47,6 @@ const propTypes = {
 };
 
 const defaultProps = {
-  map: undefined,
   zoomInTitle: 'Zoom in',
   zoomOutTitle: 'Zoom out',
   className: 'tm-zooms-bar',
