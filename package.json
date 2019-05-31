@@ -93,7 +93,7 @@
     "coverage": "yarn test --coverage --coverageDirectory=coverage",
     "doc": "styleguidist build && cp -rf src/images/ styleguide",
     "publish:public": "yarn version && git push origin HEAD && yarn build && yarn publish build/",
-    "publish:beta": "yarn version && git push origin HEAD && yarn build && yarn publish build/ --tag beta",
+    "publish:beta": "yarn publish:public --tag beta",
     "doc:server": "styleguidist server",
     "start": "yarn doc:server",
     "symlink": "yarn build && cd build && yarn link"
