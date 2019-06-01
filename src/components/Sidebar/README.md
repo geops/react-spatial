@@ -22,11 +22,6 @@ class SidebarExample extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      open: false,
-      showIconOnly: true,
-      };
-
        const extent = [599500, 199309, 600714, 200002];
     const resolutions = [
       6.927661,
@@ -57,27 +52,16 @@ class SidebarExample extends React.Component {
     this.layers = [layer];
   }
 
-   toggleSidebar() {
-    this.setState((prevState,props)=>{
-      return {
-        open: !prevState.open,
-        showIconOnly: !prevState.showIconOnly
-      }
-    });
-  }
-
-
   callA() {
     alert('A called')
   }
 
   render() {
     return (
-      <div className="tm-sidebar-example" 
-      onClick={()=>this.toggleSidebar()}>
+      <div className="tm-sidebar-example">
       
    <BasicMap center={this.center} zoom={17} layers={this.layers} />
-      <Sidebar show> 
+      <Sidebar show > 
           <SidebarItem title="Zoom"/>
           <SidebarItem title="tag" clicked={()=>this.callA()}/>
        </Sidebar > 

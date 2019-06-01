@@ -6,13 +6,13 @@ const propTypes = {
   children: PropTypes.array.isRequired,
   className: PropTypes.string,
   classNameUl: PropTypes.string,
+  // eslint-disable-next-line react/require-default-props
   show: PropTypes.bool,
 };
 
 const defaultProps = {
   className: 'tm-sidebar',
   classNameUl: 'toolbar_navigation-items ul',
-  show: true,
 };
 
 // eslint-disable-next-line react/prefer-stateless-function
@@ -21,7 +21,7 @@ class Sidebar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      show: false,
+      show: true,
     };
 
     this.toggleMenuBar = this.toggleMenuBar.bind(this);
@@ -33,19 +33,20 @@ class Sidebar extends React.Component {
         show: !prevState.show,
       };
     });
-  };
+  }
+
 
   render() {
     const { className, children, classNameUl } = this.props;
     let classes = className;
     // eslint-disable-next-line react/destructuring-assignment
-    if (this.props.show) {
+    if (this.props.show && this.state.show) {
       classes = className + ' Open';
     }
 
     let toggleButton = (
       <div>
-        <button className="toggle-button">
+        <button className="toggle-button" onClick={()=>this.toggleMenuBar()}>
           <div className="toggle-button__line" />
           <div className="toggle-button__line" />
           <div className="toggle-button__line" />
