@@ -1,71 +1,78 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import List from '../List';
-
-// const propTypes = {
-//   title: PropTypes.string,
-//   children: PropTypes.array.isRequired,
-//   className: PropTypes.string,
-//   closedClassName:  PropTypes.string,
-//   classNameContent: PropTypes.string,
-//   showIconOnly: PropTypes.bool
-// };
-
-// const defaultProps = {
-//   className: 'tm-sidebar',
-//   classNameContent: 'tm-sidebar-content'
-// };
-
-// const Sidebar = ({ children, className, classNameContent}) => (
-//   <div className={className} showIconOnly>
-//     <div className={classNameContent}>{children}</div>
-//   </div>
-// );
+import Header from '../Header';
 
 const propTypes = {
-  title: PropTypes.string,
   children: PropTypes.array.isRequired,
   className: PropTypes.string,
-  closedClassName: PropTypes.string,
   classNameUl: PropTypes.string,
-  classNameContent: PropTypes.string,
-  showIconOnly: PropTypes.bool
+  show: PropTypes.bool,
 };
 
 const defaultProps = {
   className: 'tm-sidebar',
-  classNameContent: 'tm-sidebar-content',
-  classNameUl: 'toolbar_navigation-items ul'
+  classNameUl: 'toolbar_navigation-items ul',
+  show: true,
 };
 
+// eslint-disable-next-line react/prefer-stateless-function
 class Sidebar extends React.Component {
+  // eslint-disable-next-line no-useless-constructor
   constructor(props) {
-    super(props)
+    super(props);
+    this.state = {
+      show: false,
+    };
+
+    this.toggleMenuBar = this.toggleMenuBar.bind(this);
   }
+
+  toggleMenuBar() {
+    this.setState(prevState => {
+      return {
+        show: !prevState.show,
+      };
+    });
+  };
 
   render() {
-
-    const { children, classNameUl } = this.props;
-    let classes = ['tm-sidebar'];
+    const { className, children, classNameUl } = this.props;
+    let classes = className;
+    // eslint-disable-next-line react/destructuring-assignment
     if (this.props.show) {
-      classes = ['tm-sidebar', 'Open']
+      classes = className + ' Open';
     }
-    return (
-      <nav className={classes.join(' ')}>
-        <div className="toolbar_navigation-items">
-          <ul className={classNameUl}>
-            {children}
-          </ul>
+
+    let toggleButton = (
+      <div>
+        <button className="toggle-button">
+          <div className="toggle-button__line" />
+          <div className="toggle-button__line" />
+          <div className="toggle-button__line" />
+        </button>
         </div>
-      </nav>
+    )
+
+
+    return (
+      <>
+        <Header className="headerClass">
+          <div className="header__navigation">
+        {toggleButton}
+        </div>
+          </Header>
+        <nav className={classes}>
+
+          <div className="toolbar_navigation-items">
+            <ul className={classNameUl}>{children}</ul>
+          </div>
+        </nav>
+      </>
     );
   }
-};
+}
 
 Sidebar.propTypes = propTypes;
 Sidebar.defaultProps = defaultProps;
 
-
 export default Sidebar;
-
-

@@ -1,39 +1,20 @@
-// .tm-sidebar-example {
-//   position: relative;
-
-//   .tm-sidebar {
-//     top: 0;
-//     left: 0;
-//     bottom: 0;
-//     position: absolute;
-//     margin: auto;
-//   }
-
-//   .tm-sidebar-closed {
-//     top: 0;
-//     left: 0;
-//     bottom: 0;
-//     position: absolute;
-//     margin: auto;
-//   }
-// }   
-
-
-.tm-sidebar-example {
+ .tm-sidebar-example {
   position: relative;
 
 .tm-sidebar {
   position: absolute;
   left: 0;
-  top: 0;
+  top: 55px;
   bottom: 0;
-  width: 20%;
+  width: 12%;
   max-width: 120px;
   background: grey;
   z-index: 200;
   box-shadow: 0 3px 7px rgba(0,0,0,0.5);
-  transform: translateX(-100%);
+  transform: translateX(-100vw);
   transition: transform 0.3s ease-in-out;
+  overflow: hidden;
+  align-items: center;
 }
 
 .tm-sidebar.Open {
@@ -42,19 +23,54 @@
 
 .tm-sidebar ul {
   list-style: none;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
 }
 
 .tm-sidebar li {
   margin: 0.5rem 0;
-}
- 
-
-.tm-sidebar a {
-  text-decoration: none;
   color: white;
 }
+
+.tm-sidebar li:active,
+.tm-sidebar li:hover {
+    color: #fa923f;
+}
+
+.headerClass {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #521751;
+  height: 56px;
+}
+
+.header__navigation {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 1rem;
+}
+
+.toggle-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 24px;
+  width: 36px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.toggle-button__line {
+  width: 30px;
+  height: 2px;
+  background: white;
+}
+
 }

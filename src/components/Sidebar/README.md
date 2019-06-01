@@ -71,14 +71,6 @@ class SidebarExample extends React.Component {
     alert('A called')
   }
 
-  callB() {
-    alert('B called')
-  }
-
-  callC() {
-    alert('C called')
-  }
-
   render() {
     return (
       <div className="tm-sidebar-example" 
@@ -86,8 +78,8 @@ class SidebarExample extends React.Component {
       
    <BasicMap center={this.center} zoom={17} layers={this.layers} />
       <Sidebar show> 
-          <SidebarItem text="gut"/>
-          <SidebarItem text="tag"/>
+          <SidebarItem title="Zoom"/>
+          <SidebarItem title="tag" clicked={()=>this.callA()}/>
        </Sidebar > 
       </div>
     );
