@@ -1,24 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import List from '../List';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
   title: PropTypes.string.isRequired,
   className: PropTypes.string,
   classNameTitle: PropTypes.string,
-  iconOnly: PropTypes.bool,
+  text: PropTypes.string
 };
 
 const defaultProps = {
-  className: 'tm-sidebar-item',
-  classNameTitle: 'tm-sidebar-item-title',
+  classNameItem: 'tm-sidebar li',
+  classNameTitle: 'tm-menu-item-title',
+  text: 'hello'
 };
 
-const SidebarItem = ({ children, title, className, classNameTitle, iconOnly }) => (
-  <>
-    <div className={classNameTitle}>{iconOnly ? '>>>' : title}</div>
-    <div className={className}>{children}</div>
-  </>
+const SidebarItem = ({ title, text, className, children }) => (
+      <li>{text}</li>
 );
 
 SidebarItem.propTypes = propTypes;

@@ -15,7 +15,7 @@ import { getCenter} from 'ol/extent';
 import OLMap from 'ol/Map';
 import Sidebar from 'react-spatial/components/Sidebar';
 import SidebarItem from 'react-spatial/components/SidebarItem';
-import Header from 'react-spatial/components/Header';
+
 
 
 class SidebarExample extends React.Component {
@@ -85,7 +85,10 @@ class SidebarExample extends React.Component {
       onClick={()=>this.toggleSidebar()}>
       
    <BasicMap center={this.center} zoom={17} layers={this.layers} />
-      <Sidebar /> 
+      <Sidebar show> 
+          <SidebarItem text="gut"/>
+          <SidebarItem text="tag"/>
+       </Sidebar > 
       </div>
     );
   }

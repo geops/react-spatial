@@ -41,17 +41,17 @@
 }
 
 .tm-sidebar ul {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   list-style: none;
-  margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
 }
 
 .tm-sidebar li {
   margin: 0.5rem 0;
 }
+ 
 
 .tm-sidebar a {
   text-decoration: none;
