@@ -12,7 +12,7 @@
   z-index: 200;
   box-shadow: 0 3px 7px rgba(0,0,0,0.5);
   transform: translateX(-100vw);
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.4s ease-in;
   overflow: hidden;
   align-items: center;
 }
@@ -55,6 +55,23 @@
   padding: 0 1rem;
 }
 
+.header_navigation__items ul{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.header_navigation__items li {
+  padding: 0 0.5rem;
+  display: inline;
+  color: white;
+}
+
+.spacer {
+  flex: 1;
+}
+
 .toggle-button {
   display: flex;
   flex-direction: column;
@@ -65,6 +82,10 @@
   border: none;
   padding: 0;
   box-sizing: border-box;
+}
+
+.toggle-button:focus {
+  outline: none;
 }
 
 .toggle-button__line {

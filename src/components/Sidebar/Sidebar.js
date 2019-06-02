@@ -60,6 +60,12 @@ class Sidebar extends React.Component {
         <Header className="headerClass">
           <div className="header__navigation">
         {toggleButton}
+        <div className='spacer'></div>
+        <div className="header_navigation__items">
+          <ul>
+            <li>{children}</li>
+          </ul>
+        </div>
         </div>
           </Header>
         <nav className={classes}>
