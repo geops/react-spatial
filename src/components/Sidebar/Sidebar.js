@@ -3,16 +3,58 @@ import PropTypes from 'prop-types';
 import Header from '../Header';
 
 const propTypes = {
+  /**
+   * Especially for SidebarItem component.
+   */
   children: PropTypes.array.isRequired,
-  className: PropTypes.string,
+  /**
+   * CSS class for Sidebar container.
+   */
+  classNameSideMenu: PropTypes.string,
+  /**
+   * CSS class for Header toggle button and  nav items.
+   */
+  classNameSpacer: PropTypes.string,
+  /**
+   * CSS class for SidebarItem ul.
+   */
   classNameUl: PropTypes.string,
-  // eslint-disable-next-line react/require-default-props
-  show: PropTypes.bool,
+  /**
+   * CSS class for Header.
+   */
+  classNameHeader: PropTypes.string,
+  /**
+   * CSS class for Header navItems container.
+   */
+  classNameHeaderNav: PropTypes.string,
+  /**
+   * CSS class for Header navItems.
+   */
+  classNameHeaderNavItems: PropTypes.string,
+  /**
+   * CSS class for Sidebar toggle button.
+   */
+  classNameToggleButton: PropTypes.string,
+  /**
+   * CSS class for Sidebar toggle button line.
+   */
+  classNameToggleButtonLine: PropTypes.string,
+  /**
+   * Boolean for Sidebar container show/hide.
+   */
+  show: PropTypes.bool.isRequired,
 };
 
 const defaultProps = {
-  className: 'tm-sidebar',
-  classNameUl: 'toolbar_navigation-items ul',
+  // eslint-disable-next-line react/default-props-match-prop-types
+  classNameSideMenu: 'tm-sidebar',
+  classNameSpacer: 'spacer',
+  classNameUl: 'toolbar-navigation-items ul',
+  classNameHeader: 'headerClass',
+  classNameHeaderNav: 'header-navigation',
+  classNameHeaderNavItems: 'header-navigation-items',
+  classNameToggleButton: 'toggle-button',
+  classNameToggleButtonLine: 'toggle-button-line',
 };
 
 // eslint-disable-next-line react/prefer-stateless-function
@@ -21,7 +63,8 @@ class Sidebar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      show: true,
+      // eslint-disable-next-line react/destructuring-assignment
+      show: this.props.show,
     };
 
     this.toggleMenuBar = this.toggleMenuBar.bind(this);
@@ -35,44 +78,54 @@ class Sidebar extends React.Component {
     });
   }
 
-
   render() {
-    const { className, children, classNameUl } = this.props;
-    let classes = className;
+    const {
+      children,
+      classNameUl,
+      classNameHeader,
+      classNameHeaderNav,
+      classNameHeaderNavItems,
+      classNameSideMenu,
+      classNameSpacer,
+      classNameToggleButton,
+      classNameToggleButtonLine,
+    } = this.props;
+
+    let classes = classNameSideMenu;
     // eslint-disable-next-line react/destructuring-assignment
-    if (this.props.show && this.state.show) {
-      classes = className + ' Open';
+    if (this.state.show) {
+      classes = `${classNameSideMenu} Open`;
     }
 
-    let toggleButton = (
+    const toggleButton = (
       <div>
-        <button className="toggle-button" onClick={()=>this.toggleMenuBar()}>
-          <div className="toggle-button__line" />
-          <div className="toggle-button__line" />
-          <div className="toggle-button__line" />
+        <button
+          type="button"
+          className={classNameToggleButton}
+          onClick={() => this.toggleMenuBar()}
+        >
+          <div className={classNameToggleButtonLine} />
+          <div className={classNameToggleButtonLine} />
+          <div className={classNameToggleButtonLine} />
         </button>
-        </div>
-    )
-
+      </div>
+    );
 
     return (
       <>
-        <Header className="headerClass">
-          <div className="header__navigation">
-        {toggleButton}
-        <div className='spacer'></div>
-        <div className="header_navigation__items">
-          <ul>
-            <li>{children}</li>
-          </ul>
-        </div>
-        </div>
+        <Header className={classNameHeader}>
+          <div className={classNameHeaderNav}>
+            {toggleButton}
+            <div className={classNameSpacer} />
+            <div className={classNameHeaderNavItems}>
+              <ul>
+                <li>{children}</li>
+              </ul>
+            </div>
+          </div>
           </Header>
         <nav className={classes}>
-
-          <div className="toolbar_navigation-items">
-            <ul className={classNameUl}>{children}</ul>
-          </div>
+          <ul className={classNameUl}>{children}</ul>
         </nav>
       </>
     );

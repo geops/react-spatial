@@ -11,7 +11,10 @@ const defaultProps = {
 };
 
 const SidebarItem = ({ title, clicked }) => (
-  <li onClick={() => clicked()}>{title}</li>
+  // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+  <li onClick={() => clicked()} onKeyPress={() => clicked}>
+    {title}
+  </li>
 );
 
 SidebarItem.propTypes = propTypes;

@@ -1,6 +1,6 @@
 #
 
-This demonstrates the use of Sidebar.
+This demonstrates the use of Responsive Sidebar.
 
 ```jsx
 import React from 'react';
@@ -52,8 +52,8 @@ class SidebarExample extends React.Component {
     this.layers = [layer];
   }
 
-  callA() {
-    alert('A called')
+  sampleFunction() {
+    alert('You can make any handler function.');
   }
 
   render() {
@@ -61,9 +61,10 @@ class SidebarExample extends React.Component {
       <div className="tm-sidebar-example">
       
    <BasicMap center={this.center} zoom={17} layers={this.layers} />
-      <Sidebar show > 
+      <Sidebar show> 
           <SidebarItem title="Zoom"/>
-          <SidebarItem title="tag" clicked={()=>this.callA()}/>
+          <SidebarItem title="Save Map" clicked={()=>this.sampleFunction()}/>
+          <SidebarItem title="Get info" clicked={()=>this.sampleFunction()}/>
        </Sidebar > 
       </div>
     );
