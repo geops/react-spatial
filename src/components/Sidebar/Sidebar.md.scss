@@ -94,4 +94,20 @@
   background: white;
 }
 
+@media (max-width: 768px) {
+  .header_navigation__items {
+      display: none;
+  }
+}
+
+@media (min-width: 769px) {
+  .toggle-button {
+      display: none;
+  }
+
+  .tm-sidebar {
+    display: none;
+  }
+}
+
 }
