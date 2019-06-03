@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { defaults as defaultInteractions } from 'ol/interaction';
-import { DragRotate, PinchRotate } from 'ol/interaction';
+import {
+  defaults as defaultInteractions,
+  DragRotate,
+  PinchRotate,
+} from 'ol/interaction';
 
 import OLMap from 'ol/Map';
 import OLCollection from 'ol/Collection';
