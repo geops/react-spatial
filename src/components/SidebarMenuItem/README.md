@@ -4,7 +4,7 @@ This demonstrates the use of SidebarMenuItem.
 
 ```jsx
 import React, { useState } from 'react';
-import { MdNavigateBefore, MdDomain } from 'react-icons/md';
+import { MdNavigateBefore, MdNavigateNext, MdDomain } from 'react-icons/md';
 import { FaGithub } from 'react-icons/fa';
 import Button from 'react-spatial/components/Button';
 import Sidebar from 'react-spatial/components/Sidebar';
@@ -14,19 +14,21 @@ function SidebarMenuItemExample() {
   const [open, setOpen] = useState(true);
   return (
     <div className="tm-sidebar-example">
-      <Button onClick={() => { setOpen(!open); }}>
-        Open sidebar
-      </Button>
       <Sidebar
         open={open}
+        collapseWidth={40}
         onModalClick={() => { setOpen(false); }}
       >
         <div className="tm-close-wrapper">
           <Button
-            onClick={() => { setOpen(false); }}
+            onClick={() => { setOpen(!open); }}
             className="tm-sidebar-close"
           >
-            <MdNavigateBefore focusable={false} />
+            {
+              open
+              ? <MdNavigateBefore className="tm-closer" />
+              : <MdNavigateNext className="tm-opener" />
+            }
           </Button>
         </div>
         <SidebarMenuItem

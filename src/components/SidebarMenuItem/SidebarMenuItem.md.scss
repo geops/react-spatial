@@ -3,13 +3,23 @@
   width: 100%;
 
   .tm-sidebar-close {
-    height: 30px;
+    height: 40px;
 
-    svg {
+    .tm-closer,
+    .tm-opener {
       position: absolute;
       right: 5px;
+      padding: 5px;
       height: 30px;
       width: 30px;
+    }
+
+    .tm-closer {
+      right: 5px;
+    }
+
+    .tm-opener {
+      left: 0;
     }
   }
 }
