@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Button from '../Button';
 
 const propTypes = {
+  /** Open or close the  */
   open: PropTypes.bool,
   title: PropTypes.string,
   position: PropTypes.oneOf(['left', 'right']),
@@ -10,7 +11,7 @@ const propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
   onModalClick: PropTypes.func,
-  removeEltOnClose: PropTypes.bool,
+  collapseWidth: PropTypes.number,
 };
 
 const defaultProps = {
@@ -20,8 +21,8 @@ const defaultProps = {
   modal: true,
   className: 'tm-sidebar',
   children: null,
-  onModalClick: null,
-  removeEltOnClose: true,
+  onModalClick: () => {},
+  collapseWidth: 0,
 };
 let timeout;
 
@@ -33,44 +34,47 @@ const Sidebar = ({
   className,
   children,
   onModalClick,
-  removeEltOnClose,
+  collapseWidth,
 }) => {
-  if (removeEltOnClose) {
-    const [eltRemoved, setEltRemoved] = useState(!open);
-    useEffect(() => {
-      window.clearTimeout(timeout);
+  const [shouldRemoveElt, setRemoveElt] = useState(!open);
 
-      if (open) {
-        setEltRemoved(false);
-      } else {
-        timeout = window.setTimeout(() => {
-          setEltRemoved(!open);
-        }, 300);
-      }
-    });
+  // We add the SideBar element before opening it.
+  // We remove the SideBar element after closing it.
+  useEffect(() => {
+    window.clearTimeout(timeout);
+    timeout = window.setTimeout(
+      () => {
+        setRemoveElt(!open);
+      },
+      open ? 5 : 300,
+    );
+  });
 
-    if (eltRemoved) {
-      return null;
-    }
+  const isClosed = !open && shouldRemoveElt;
+
+  // If the sidebar is closed and collapseWidth is 0, we remove
+  // completely the SideBar from the tree.
+  if (isClosed && collapseWidth === 0) {
+    return null;
   }
 
-  const classModal = `${className}-modal`;
-  const classToggle = open ? 'open' : 'close';
-  const mainClassName = `${className} ${className}-${position} ${className}-${classToggle}`;
-
+  const isClosing = open && !shouldRemoveElt;
+  const classToggle = isClosing ? 'open' : 'close';
+  const classMain = `${className} ${className}-${position} ${className}-${classToggle}`;
+  const classModal = `${className}-modal ${className}-modal-${classToggle}`;
+  const style = !open ? { width: collapseWidth } : undefined;
   const header = title ? <header>{title}</header> : null;
 
-  const modalBg = modal ? (
-    <Button
-      className={`${classModal} ${classModal}-${classToggle}`}
-      onClick={onModalClick}
-    />
-  ) : null;
+  // If the sidebar is closed, we remove the modal background.
+  const modalBg =
+    !modal || isClosed ? null : (
+      <Button className={classModal} onClick={onModalClick} />
+    );
 
   return (
     <>
       {modalBg}
-      <div className={mainClassName}>
+      <div className={classMain} style={style}>
         {header}
         {children}
       </div>
