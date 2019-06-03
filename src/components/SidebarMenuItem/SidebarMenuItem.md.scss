@@ -1,0 +1,21 @@
+.tm-close-wrapper {
+  padding: 3px 0;
+  width: 100%;
+
+  .tm-sidebar-close {
+    height: 30px;
+
+    svg {
+      position: absolute;
+      right: 5px;
+      height: 30px;
+      width: 30px;
+    }
+  }
+}
+
+.tm-sidebar-item {
+  &:hover {
+    background-color: $gray-lighter;
+  }
+}
