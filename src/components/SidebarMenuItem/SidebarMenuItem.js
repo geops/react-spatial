@@ -4,6 +4,11 @@ import Button from '../Button';
 
 const propTypes = {
   /**
+   * Add an active class to the item.
+   */
+  active: PropTypes.bool,
+
+  /**
    * Function triggered on click event.
    */
   onClick: PropTypes.func.isRequired,
@@ -46,6 +51,7 @@ const defaultProps = {
 class SidebarMenuItem extends PureComponent {
   render() {
     const {
+      active,
       onClick,
       icon,
       showIconOnly,
@@ -57,7 +63,7 @@ class SidebarMenuItem extends PureComponent {
     return (
       <Button
         tabIndex={tabIndex}
-        className={className}
+        className={`${className}${active ? ' tm-item-active' : ''}`}
         title={title}
         onClick={e => onClick(e)}
       >

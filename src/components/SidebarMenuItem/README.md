@@ -4,7 +4,12 @@ This demonstrates the use of SidebarMenuItem.
 
 ```jsx
 import React, { useState } from 'react';
-import { MdNavigateBefore, MdNavigateNext, MdDomain } from 'react-icons/md';
+import {
+  MdGrade,
+  MdNavigateBefore,
+  MdNavigateNext,
+  MdDomain,
+} from 'react-icons/md';
 import { FaGithub } from 'react-icons/fa';
 import Button from 'react-spatial/components/Button';
 import Sidebar from 'react-spatial/components/Sidebar';
@@ -12,6 +17,7 @@ import SidebarMenuItem from 'react-spatial/components/SidebarMenuItem';
 
 function SidebarMenuItemExample() {
   const [open, setOpen] = useState(true);
+  const [active, setActive] = useState(false);
   return (
     <div className="tm-sidebar-example">
       <Sidebar
@@ -31,6 +37,13 @@ function SidebarMenuItemExample() {
             }
           </Button>
         </div>
+        <SidebarMenuItem
+          active={active}
+          icon={<MdGrade focusable={false} />}
+          showIconOnly={!open}
+          title="Click me"
+          onClick={() => { setActive(!active); }}
+        />
         <SidebarMenuItem
           icon={<MdDomain focusable={false} />}
           showIconOnly={!open}
