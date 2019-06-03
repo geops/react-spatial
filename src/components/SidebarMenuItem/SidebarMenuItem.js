@@ -63,18 +63,12 @@ class SidebarMenuItem extends PureComponent {
     return (
       <Button
         tabIndex={tabIndex}
-        className={`${className}${active ? ' tm-item-active' : ''}`}
+        className={`${className}${active ? ' tm-active' : ''}`}
         title={title}
         onClick={e => onClick(e)}
       >
-        {showIconOnly ? (
-          <div>{icon}</div>
-        ) : (
-          <div>
-            {icon}
-            <span>{title}</span>
-          </div>
-        )}
+        <div>{icon}</div>
+        {showIconOnly ? null : <span>{title}</span>}
       </Button>
     );
   }
