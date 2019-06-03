@@ -4,11 +4,11 @@
 
   .tm-sidebar-close {
     height: 40px;
+    width: 0px;
 
     .tm-closer,
     .tm-opener {
       position: absolute;
-      right: 5px;
       padding: 5px;
       height: 30px;
       width: 30px;
