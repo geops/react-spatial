@@ -7,9 +7,17 @@ import Sidebar from './Sidebar';
 configure({ adapter: new Adapter() });
 
 describe('Sidebar', () => {
-  test('should match snapshot.', () => {
-    const component = renderer.create(<Sidebar />);
-    const tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
+  describe('should match snapshot.', () => {
+    test('when closed.', () => {
+      const component = renderer.create(<Sidebar />);
+      const tree = component.toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+
+    test('when opened', () => {
+      const component = renderer.create(<Sidebar open />);
+      const tree = component.toJSON();
+      expect(tree).toMatchSnapshot();
+    });
   });
 });
