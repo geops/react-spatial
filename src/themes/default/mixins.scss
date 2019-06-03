@@ -41,3 +41,18 @@
     }
   }
 }
+
+/**
+* Create a simple @keyframes animation.
+*/
+@mixin keyframes($name, $propName, $start, $end) {
+  @keyframes #{$name} {
+    0% {
+      #{$propName}: $start;
+    }
+
+    100% {
+      #{$propName}: $end;
+    }
+  }
+}

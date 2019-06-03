@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Sidebar should match snapshot. when closed. 1`] = `null`;
+
+exports[`Sidebar should match snapshot. when opened 1`] = `
+Array [
+  <div
+    className="tm-sidebar-modal tm-sidebar-modal-open"
+    onClick={[Function]}
+    onKeyPress={[Function]}
+    role="button"
+    tabIndex={0}
+  />,
+  <div
+    className="tm-sidebar tm-sidebar-left tm-sidebar-open"
+  />,
+]
+`;
