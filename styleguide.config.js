@@ -63,6 +63,8 @@ module.exports = {
             'src/components/MenuItem/[A-Z]*.js',
             'src/components/TopicList/[A-Z]*.js',
             'src/components/ShareMenu/[A-Z]*.js',
+            'src/components/ResponsiveNavSideBar/[A-Z]*.js',
+            'src/components/ResponsiveNavSideBarItem/[A-Z]*.js',
           ],
           exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
           usageMode: 'collapse', // 'hide' | 'collapse' | 'expand'
