@@ -29,6 +29,19 @@ describe('SidebarMenuItem', () => {
     expect(tree).toMatchSnapshot();
   });
 
+  test('should match snapshot with props "active".', () => {
+    const component = renderer.create(
+      <SidebarMenuItem
+        title="Title"
+        icon={<FaGithub />}
+        onClick={() => {}}
+        active
+      />,
+    );
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
   test('Should trigger onClick.', () => {
     const funcs = { onClick: () => {} };
     const spy = jest.spyOn(funcs, 'onClick');
