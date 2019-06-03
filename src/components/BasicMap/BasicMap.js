@@ -136,11 +136,6 @@ class BasicMap extends Component {
       zoom,
     } = this.props;
 
-    this.dfltInteractions = defaultInteractions({
-      altShiftDragRotate: false,
-      pinchRotate: false,
-    });
-
     if (map) {
       if (interactions) {
         interactions.forEach(i => {
@@ -163,7 +158,12 @@ class BasicMap extends Component {
       map ||
       new OLMap({
         controls: [],
-        interactions: interactions || this.dfltInteractions,
+        interactions:
+          interactions ||
+          defaultInteractions({
+            altShiftDragRotate: false,
+            pinchRotate: false,
+          }),
       });
     const view = new View({ ...viewOptions, ...{ center } });
 
