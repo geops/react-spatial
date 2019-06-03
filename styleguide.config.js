@@ -49,6 +49,7 @@ module.exports = {
             'src/components/OLE/[A-Z]*.js',
             'src/components/Popup/[A-Z]*.js',
             'src/components/ScaleLine/[A-Z]*.js',
+            'src/components/Zoom/[A-Z]*.js',
           ],
           exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
           usageMode: 'collapse', // 'hide' | 'collapse' | 'expand'
@@ -95,7 +96,6 @@ module.exports = {
             'src/components/Permalink/[A-Z]*.js',
             'src/components/ResizeHandler/[A-Z]*.js',
             'src/components/StopEvents/[A-Z]*.js',
-            'src/components/ToggleButton/[A-Z]*.js',
           ],
           exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
           usageMode: 'collapse', // 'hide' | 'collapse' | 'expand'
