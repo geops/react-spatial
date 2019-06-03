@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { defaults as defaultInteractions } from 'ol/interaction';
+import { DragRotate, PinchRotate } from 'ol/interaction';
 
 import OLMap from 'ol/Map';
 import OLCollection from 'ol/Collection';
@@ -132,11 +133,34 @@ class BasicMap extends Component {
       zoom,
     } = this.props;
 
+    this.dfltInteractions = defaultInteractions({
+      altShiftDragRotate: false,
+      pinchRotate: false,
+    });
+
+    if (map) {
+      if (interactions) {
+        interactions.forEach(i => {
+          map.addInteraction(i);
+        });
+      } else {
+        // Default interaction without pinch rotate and drag rotate.
+        map
+          .getInteractions()
+          .getArray()
+          .forEach(i => {
+            if (i instanceof DragRotate || i instanceof PinchRotate) {
+              map.removeInteraction(i);
+            }
+          });
+      }
+    }
+
     this.map =
       map ||
       new OLMap({
         controls: [],
-        interactions: interactions || defaultInteractions(),
+        interactions: interactions || this.dfltInteractions,
       });
     const view = new View({ ...viewOptions, ...{ center } });
 
