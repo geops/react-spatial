@@ -16,7 +16,7 @@ const propTypes = {
   /**
    * Show only the icon of the sidebar item.
    */
-  showIconOnly: PropTypes.bool.isRequired,
+  showIconOnly: PropTypes.bool,
 
   /**
    * CSS class of the sidebar item.
@@ -35,6 +35,7 @@ const propTypes = {
 };
 
 const defaultProps = {
+  showIconOnly: false,
   className: 'tm-sidebar-item',
   tabIndex: 0,
 };
