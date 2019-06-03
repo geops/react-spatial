@@ -75,9 +75,9 @@ module.exports = {
             'src/components/Autocomplete/[A-Z]*.js',
             'src/components/Checkbox/[A-Z]*.js',
             'src/components/PermalinkInput/[A-Z]*.js',
+            'src/components/SearchInput/[A-Z]*.js',
             'src/components/Select/[A-Z]*.js',
             'src/components/SelectLinks/[A-Z]*.js',
-            'src/components/SearchInput/[A-Z]*.js',
           ],
           exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
           usageMode: 'collapse', // 'hide' | 'collapse' | 'expand'
@@ -88,6 +88,7 @@ module.exports = {
           components: [
             'src/components/ActionLink/[A-Z]*.js',
             'src/components/BlankLink/[A-Z]*.js',
+            'src/components/Button/[A-Z]*.js',
             'src/components/Dialog/[A-Z]*.js',
             'src/components/Footer/[A-Z]*.js',
             'src/components/Header/[A-Z]*.js',
