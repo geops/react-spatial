@@ -1,0 +1,35 @@
+.tm-close-wrapper {
+  padding: 3px 0;
+  width: 100%;
+
+  .tm-sidebar-close {
+    height: 40px;
+    width: 0;
+
+    .tm-closer,
+    .tm-opener {
+      position: absolute;
+      padding: 5px;
+      height: 30px;
+      width: 30px;
+    }
+
+    .tm-closer {
+      right: 5px;
+    }
+
+    .tm-opener {
+      left: 0;
+    }
+  }
+}
+
+.tm-sidebar-item {
+  &:hover {
+    background-color: $gray-lighter;
+  }
+}
+
+.tm-active {
+  color: $brand-primary;
+}
