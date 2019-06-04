@@ -226,22 +226,22 @@ class BasicMap extends Component {
       this.map.getView().setResolution(resolution);
     }
 
-    if (viewOptions && viewOptions.extent) {
-      if (
-        !prevProps.viewOptions.extent ||
+    if (
+      viewOptions &&
+      viewOptions.extent &&
+      (!prevProps.viewOptions.extent ||
         (prevProps.viewOptions.extent &&
-          !equals(prevProps.viewOptions.extent, viewOptions.extent))
-      ) {
-        // Re-create a view, ol doesn't provide any method to setExtent of view.
-        this.map.setView(
-          new View({
-            ...viewOptions,
-            ...{ center },
-            ...{ resolution },
-            ...{ extent: viewOptions.extent },
-          }),
-        );
-      }
+          !equals(prevProps.viewOptions.extent, viewOptions.extent)))
+    ) {
+      // Re-create a view, ol doesn't provide any method to setExtent of view.
+      this.map.setView(
+        new View({
+          ...viewOptions,
+          ...{ center },
+          ...{ resolution },
+          ...{ extent: viewOptions.extent },
+        }),
+      );
     }
   }
 
