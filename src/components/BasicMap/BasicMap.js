@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { defaults as defaultInteractions } from 'ol/interaction';
-
 import OLMap from 'ol/Map';
 import OLCollection from 'ol/Collection';
 import View from 'ol/View';
@@ -136,7 +135,12 @@ class BasicMap extends Component {
       map ||
       new OLMap({
         controls: [],
-        interactions: interactions || defaultInteractions(),
+        interactions:
+          interactions ||
+          defaultInteractions({
+            altShiftDragRotate: false,
+            pinchRotate: false,
+          }),
       });
     const view = new View({ ...viewOptions, ...{ center } });
 

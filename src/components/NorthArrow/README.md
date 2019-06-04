@@ -42,7 +42,7 @@ class NorthArrowExample extends React.Component {
             `bern_aussenplan/${c[0]}/${c[1]}/${c[2]}.png`,
           tileGrid: new TileGrid({
             origin: [extent[0], extent[1]],
-            resolutions: resolutions,
+            resolutions,
           }),
         }),
       }),
@@ -52,9 +52,7 @@ class NorthArrowExample extends React.Component {
 
     this.map = new OLMap({
       controls: [],
-      interactions: defaultInteractions().extend([
-        new DragRotateAndZoom(),
-      ]),
+      interactions: defaultInteractions().extend([new DragRotateAndZoom()]),
     });
   }
 
@@ -71,10 +69,10 @@ class NorthArrowExample extends React.Component {
           className="tm-north-arrow"
           rotationOffset={20}
           map={this.map}
-          circled={true}
+          circled
         />
       </div>
-    )
+    );
   }
 }
 
