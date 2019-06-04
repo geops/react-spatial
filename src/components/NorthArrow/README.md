@@ -50,8 +50,10 @@ class NorthArrowExample extends React.Component {
     this.center = getCenter(extent);
     this.layers = [layer];
 
-    this.map = new OLMap({ controls: [] });
-    this.interactions = defaultInteractions().extend([new DragRotateAndZoom()]);
+    this.map = new OLMap({
+      controls: [],
+      interactions: defaultInteractions().extend([new DragRotateAndZoom()]),
+    });
   }
 
   render() {
@@ -59,7 +61,6 @@ class NorthArrowExample extends React.Component {
       <div className="tm-north-arrow-example">
         <BasicMap
           map={this.map}
-          interactions={this.interactions}
           center={this.center}
           zoom={17}
           layers={this.layers}

@@ -136,24 +136,6 @@ class BasicMap extends Component {
       zoom,
     } = this.props;
 
-    if (map) {
-      if (interactions) {
-        interactions.forEach(i => {
-          map.addInteraction(i);
-        });
-      } else {
-        // Default interaction without pinch rotate and drag rotate.
-        map
-          .getInteractions()
-          .getArray()
-          .forEach(i => {
-            if (i instanceof DragRotate || i instanceof PinchRotate) {
-              map.removeInteraction(i);
-            }
-          });
-      }
-    }
-
     this.map =
       map ||
       new OLMap({
