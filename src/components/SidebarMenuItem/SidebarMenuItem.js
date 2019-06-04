@@ -40,6 +40,7 @@ const propTypes = {
 };
 
 const defaultProps = {
+  active: false,
   showIconOnly: false,
   className: 'tm-sidebar-item',
   tabIndex: 0,
