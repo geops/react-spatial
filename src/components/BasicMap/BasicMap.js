@@ -136,7 +136,12 @@ class BasicMap extends Component {
       map ||
       new OLMap({
         controls: [],
-        interactions: interactions || defaultInteractions(),
+        interactions:
+          interactions ||
+          defaultInteractions({
+            altShiftDragRotate: false,
+            pinchRotate: false,
+          }),
       });
     const view = new View({ ...viewOptions, ...{ center } });
 

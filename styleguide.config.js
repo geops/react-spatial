@@ -63,6 +63,7 @@ module.exports = {
             'src/components/MenuItem/[A-Z]*.js',
             'src/components/ShareMenu/[A-Z]*.js',
             'src/components/Sidebar/[A-Z]*.js',
+            'src/components/SidebarMenuItem/[A-Z]*.js',
             'src/components/TopicList/[A-Z]*.js',
           ],
           exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
