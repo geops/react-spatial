@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { defaults as defaultInteractions } from 'ol/interaction';
-
+import { equals } from 'ol/extent';
 import OLMap from 'ol/Map';
 import OLCollection from 'ol/Collection';
 import View from 'ol/View';
@@ -221,7 +221,13 @@ class BasicMap extends Component {
       this.map.getView().setResolution(resolution);
     }
 
-    if (viewOptions && prevProps.viewOptions.extent !== viewOptions.extent) {
+    if (
+      (viewOptions && viewOptions.extent && !prevProps.viewOptions.extent) ||
+      (viewOptions &&
+        viewOptions.extent &&
+        prevProps.viewOptions.extent &&
+        !equals(prevProps.viewOptions.extent, viewOptions.extent))
+    ) {
       // Re-create a view, ol doesn't provide any method to setExtent of view.
       this.map.setView(
         new View({
