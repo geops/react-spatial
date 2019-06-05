@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '../Button';
 
@@ -49,30 +49,26 @@ const defaultProps = {
 /**
  * This component displays an Item in the Sidebar.
  */
-class SidebarMenuItem extends PureComponent {
-  render() {
-    const {
-      active,
-      onClick,
-      icon,
-      showIconOnly,
-      className,
-      title,
-      tabIndex,
-    } = this.props;
-
-    return (
-      <Button
-        tabIndex={tabIndex}
-        className={`${className}${active ? ' tm-active' : ''}`}
-        title={title}
-        onClick={e => onClick(e)}
-      >
-        <div>{icon}</div>
-        {showIconOnly ? null : <span>{title}</span>}
-      </Button>
-    );
-  }
+function SidebarMenuItem({
+  active,
+  onClick,
+  icon,
+  showIconOnly,
+  className,
+  title,
+  tabIndex,
+}) {
+  return (
+    <Button
+      tabIndex={tabIndex}
+      className={`${className}${active ? ' tm-active' : ''}`}
+      title={title}
+      onClick={e => onClick(e)}
+    >
+      <div>{icon}</div>
+      {showIconOnly ? null : <span>{title}</span>}
+    </Button>
+  );
 }
 
 SidebarMenuItem.propTypes = propTypes;
