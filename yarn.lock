@@ -6752,10 +6752,10 @@ ol@^5.3.0:
     pixelworks "1.1.0"
     rbush "2.0.2"
 
-ole@^0.0.4-beta.9:
-  version "0.0.4-beta.9"
-  resolved "https://registry.yarnpkg.com/ole/-/ole-0.0.4-beta.9.tgz#dee9506f0c59b7f6bd48ef0a6227ce8d98c2ae59"
-  integrity sha512-u4YWfmhbB3ubdqKwkFeMjqZ4KKmtNKp141eSLgbyuKpdh2bZarnVHzZcTMcaznv30YDAgI9aXGezpN3PFbkgIg==
+ole@^0.0.4-beta.10:
+  version "0.0.4-beta-3"
+  resolved "https://registry.yarnpkg.com/ole/-/ole-0.0.4-beta-3.tgz#6f3e7ce0b5d9298d404225ea40afdd06eb18a559"
+  integrity sha512-cBAfO1rR2ZTN5Uh5lFiR4b4qYWmOH22qfUrn4kaAEx7Fnsjs6+lGu6FCd8iJWECN4Fkv2Ww56lxPI0Hngkmjdw==
 
 on-finished@~2.3.0:
   version "2.3.0"
@@ -9723,10 +9723,10 @@ urix@^0.1.0:
   resolved "https://registry.yarnpkg.com/urix/-/urix-0.1.0.tgz#da937f7a62e21fec1fd18d49b35c2935067a6c72"
   integrity sha1-2pN/emLiH+wf0Y1Js1wpNQZ6bHI=
 
-url-loader@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/url-loader/-/url-loader-1.1.2.tgz#b971d191b83af693c5e3fea4064be9e1f2d7f8d8"
-  integrity sha512-dXHkKmw8FhPqu8asTc1puBfe3TehOCo2+RmOOev5suNCIYBcT626kxiWg1NBVkwc4rO8BGa7gP70W7VXuqHrjg==
+url-loader@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/url-loader/-/url-loader-2.0.0.tgz#600ef36f463e21bd673ad70156d850619d9cd092"
+  integrity sha512-RT3cz+Lw+kFMCKLabMyogFrc/aRoAMJHmY5os1VDBlav+4t5vxUxKDn47zCSFAYAl+hM8YLg4TZwG4TkJaafkg==
   dependencies:
     loader-utils "^1.1.0"
     mime "^2.0.3"
