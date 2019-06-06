@@ -57,6 +57,7 @@ class ConfigReader {
             resolutions: item.data.resolutions,
             matrixIds: item.data.resolutions.map((res, i) => `${i}`),
           }),
+          matrixSet: item.data.matrixSet,
         }),
       }),
     });
