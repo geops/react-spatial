@@ -109,23 +109,13 @@ const defaultProps = {
  * This component displays a [OpenLayers Editor](http://openlayers-editor.geops.de/).
  */
 class OLE extends PureComponent {
-  static defineOptions(type, controls, parameters) {
-    const options = controls.find(obj => {
-      return obj.type === type;
-    });
-    const newOptions = Object.assign(
+  static defineOptions(type, parameters) {
+    return Object.assign(
       {
         type,
       },
       parameters,
     );
-
-    if (options) {
-      // eslint-disable-next-line no-param-reassign
-      controls[controls.indexOf(options)] = newOptions;
-    } else {
-      controls.unshift(newOptions);
-    }
   }
 
   constructor(props) {
@@ -222,11 +212,11 @@ class OLE extends PureComponent {
     }
 
     if (drawPolygon) {
-      OLE.defineOptions('Polygon', drawCustoms, drawPolygon);
+      drawCustoms.unshift(OLE.defineOptions('Polygon', drawPolygon));
     }
 
     if (drawLineString) {
-      OLE.defineOptions('LineString', drawCustoms, drawLineString);
+      drawCustoms.unshift(OLE.defineOptions('LineString', drawLineString));
     }
 
     if (drawPoint) {
@@ -378,7 +368,7 @@ class OLE extends PureComponent {
       const newEditor = new Editor(map, {
         target: this.ref.current,
         // Hide ole toolbar if pass custom one.
-        showToolbar: !(renderControlButton !== null),
+        showToolbar: !renderControlButton,
       });
 
       newEditor.getActiveControls().on('add', onControlActive);
@@ -391,20 +381,23 @@ class OLE extends PureComponent {
   render() {
     const { renderControlButton, className } = this.props;
     const { editor } = this.state;
-    if (renderControlButton) {
-      if (editor) {
-        const controls = editor.getControls().getArray();
-        return (
-          <div ref={this.ref} className={className}>
-            {controls.map(c => {
+    const content =
+      renderControlButton && editor ? (
+        <div ref={this.ref} className={className}>
+          {editor
+            .getControls()
+            .getArray()
+            .map(c => {
               return renderControlButton(c);
             })}
-          </div>
-        );
-      }
-    }
+        </div>
+      ) : null;
 
-    return <div ref={this.ref} className={className} />;
+    return (
+      <div ref={this.ref} className={className}>
+        {content}
+      </div>
+    );
   }
 }
 
