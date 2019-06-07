@@ -5,7 +5,6 @@ import OLMap from 'ol/Map';
 import { Editor, control } from 'ole';
 import { Style } from 'ol/style';
 import VectorLayer from '../../VectorLayer';
-import Styles from '../../utils/Styles';
 
 const propTypes = {
   /** An existing [ol/Map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html). */
@@ -93,8 +92,8 @@ const defaultProps = {
   union: false,
   intersection: false,
   difference: false,
-  selectStyle: Styles.default,
-  modifyStyle: Styles.default,
+  selectStyle: null,
+  modifyStyle: null,
   onSelect: () => {},
   onDeselect: () => {},
   onControlActive: () => {},
