@@ -14,6 +14,9 @@ const propTypes = {
   /** An existing react-spatial VectorLayer, using a valid ol.source.Vector */
   layer: PropTypes.instanceOf(VectorLayer),
 
+  /** Function to render custom button, instead of default toolbar. */
+  renderControlButton: PropTypes.func,
+
   /** Control with snapping functionality for geometry alignment, see [doc](http://openlayers-editor.geops.de/api.html). Default to true. */
   cad: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 
@@ -82,6 +85,7 @@ const propTypes = {
 const defaultProps = {
   map: undefined,
   layer: undefined,
+  renderControlButton: null,
   cad: false,
   drawPoint: true,
   drawCustoms: [],
@@ -106,8 +110,28 @@ const defaultProps = {
  * This component displays a [OpenLayers Editor](http://openlayers-editor.geops.de/).
  */
 class OLE extends PureComponent {
+  static defineOptions(type, controls, parameters) {
+    const options = controls.find(obj => {
+      return obj.type === type;
+    });
+    const newOptions = Object.assign(
+      {
+        type,
+      },
+      parameters,
+    );
+
+    if (options) {
+      // eslint-disable-next-line no-param-reassign
+      controls[controls.indexOf(options)] = newOptions;
+    } else {
+      controls.unshift(newOptions);
+    }
+  }
+
   constructor(props) {
     super(props);
+    this.state = {};
     this.ref = React.createRef();
   }
 
@@ -148,7 +172,8 @@ class OLE extends PureComponent {
   }
 
   componentWillUnmount() {
-    this.editor.remove();
+    const { editor } = this.state;
+    editor.remove();
   }
 
   initializeEditor() {
@@ -156,6 +181,7 @@ class OLE extends PureComponent {
     const {
       map,
       layer,
+      renderControlButton,
       cad,
       drawPoint,
       drawCustoms,
@@ -175,6 +201,8 @@ class OLE extends PureComponent {
       onControlDeactive,
     } = this.props;
 
+    const { editor } = this.state;
+
     if (
       !this.ref ||
       !this.ref.current ||
@@ -189,30 +217,16 @@ class OLE extends PureComponent {
     const source = layer.olLayer.getSource();
     const style = selectStyle;
 
-    if (this.editor) {
-      this.editor.remove();
+    if (editor) {
+      editor.remove();
     }
 
     if (drawPolygon) {
-      drawCustoms.unshift(
-        Object.assign(
-          {
-            type: 'Polygon',
-          },
-          drawLineString,
-        ),
-      );
+      OLE.defineOptions('Polygon', drawCustoms, drawPolygon);
     }
 
     if (drawLineString) {
-      drawCustoms.unshift(
-        Object.assign(
-          {
-            type: 'LineString',
-          },
-          drawLineString,
-        ),
-      );
+      OLE.defineOptions('LineString', drawCustoms, drawLineString);
     }
 
     if (drawPoint) {
@@ -352,19 +366,35 @@ class OLE extends PureComponent {
         ),
       );
     }
-
     if (ctrls.length) {
-      this.editor = new Editor(map, {
+      const newEditor = new Editor(map, {
         target: this.ref.current,
+        // Hide ole toolbar if pass custom one.
+        showToolbar: !(renderControlButton !== null),
       });
-      this.editor.getActiveControls().on('add', onControlActive);
-      this.editor.getActiveControls().on('remove', onControlDeactive);
-      this.editor.addControls(ctrls);
+      newEditor.getActiveControls().on('add', onControlActive);
+      newEditor.getActiveControls().on('remove', onControlDeactive);
+      newEditor.addControls(ctrls);
+      this.setState({ editor: newEditor });
     }
   }
 
   render() {
-    const { className } = this.props;
+    const { renderControlButton, className } = this.props;
+    const { editor } = this.state;
+    if (renderControlButton) {
+      if (editor) {
+        const controls = editor.getControls().getArray();
+        return (
+          <div ref={this.ref} className={className}>
+            {controls.map(c => {
+              return renderControlButton(c);
+            })}
+          </div>
+        );
+      }
+    }
+
     return <div ref={this.ref} className={className} />;
   }
 }
