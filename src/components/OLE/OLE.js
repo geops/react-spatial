@@ -215,6 +215,7 @@ class OLE extends PureComponent {
 
     const source = layer.olLayer.getSource();
     const style = selectStyle;
+    const element = renderControlButton ? document.createElement('div') : null;
 
     if (editor) {
       editor.remove();
@@ -237,6 +238,7 @@ class OLE extends PureComponent {
         Object.assign(
           {
             source,
+            element,
           },
           opt,
         ),
@@ -259,6 +261,7 @@ class OLE extends PureComponent {
           Object.assign(
             {
               source,
+              element,
             },
             cad,
           ),
@@ -272,6 +275,7 @@ class OLE extends PureComponent {
           Object.assign(
             {
               source,
+              element,
             },
             rotate,
           ),
@@ -286,6 +290,7 @@ class OLE extends PureComponent {
             source,
             style,
             modifyStyle,
+            element,
           },
           modify,
         ),
@@ -317,6 +322,7 @@ class OLE extends PureComponent {
             {
               source,
               style,
+              element,
             },
             buffer,
           ),
@@ -331,6 +337,7 @@ class OLE extends PureComponent {
             {
               source,
               style,
+              element,
             },
             union,
           ),
@@ -345,6 +352,7 @@ class OLE extends PureComponent {
             {
               source,
               style,
+              element,
             },
             intersection,
           ),
@@ -359,6 +367,7 @@ class OLE extends PureComponent {
             {
               source,
               style,
+              element,
             },
             difference,
           ),
@@ -371,6 +380,7 @@ class OLE extends PureComponent {
         // Hide ole toolbar if pass custom one.
         showToolbar: !(renderControlButton !== null),
       });
+
       newEditor.getActiveControls().on('add', onControlActive);
       newEditor.getActiveControls().on('remove', onControlDeactive);
       newEditor.addControls(ctrls);
