@@ -20,6 +20,8 @@ class OLEExample extends React.Component {
 
     this.map = new OLMap();
 
+    this.center = [836691, 6049861];
+
     this.layers = [
       new Layer({
         olLayer:new TileLayer({
@@ -38,15 +40,18 @@ class OLEExample extends React.Component {
         <BasicMap
           map={this.map}
           layers={this.layers}
+          center={this.center}
+          zoom={6}
         />
         <OLE
           map={this.map}
           layer={this.layers[1]}
           cad
+          draw
+          drawLineString
           drawPolygon
-          move
+          modify
           rotate
-          del
           buffer
           union
           intersection
