@@ -9,6 +9,7 @@ import Modify from 'ol/interaction/Modify';
 import Style from 'ol/style/Style';
 import Fill from 'ol/style/Fill';
 import Stroke from 'ol/style/Stroke';
+import Circle from 'ol/style/Circle';
 import Icon from 'ol/style/Icon';
 import RegularShape from 'ol/style/RegularShape';
 import Collection from 'ol/Collection';
@@ -58,6 +59,7 @@ if (!window.ol) {
       Style,
       Fill,
       Stroke,
+      Circle,
       RegularShape,
       Icon,
     },
