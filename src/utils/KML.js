@@ -168,12 +168,12 @@ const writeFeatures = (layer, featureProjection) => {
     clone.getGeometry().setProperties(f.getGeometry().getProperties());
     clone.getGeometry().transform(featureProjection, 'EPSG:4326');
 
-    // Extended data breaks KML validity so we remove it for now.
-    for (let i = 0; i < f.getProperties(); i += 1) {
-      if (!/^(geometry|name|description)$/.test(i)) {
-        clone.unset(i, true);
+    // We remove all ExtendedData not related to style.
+    Object.keys(f.getProperties()).forEach(key => {
+      if (!/^(geometry|name|description)$/.test(key)) {
+        clone.unset(key, true);
       }
-    }
+    });
 
     let styles;
 

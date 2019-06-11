@@ -21,7 +21,7 @@ const renderLayerTree = (newData, props) => {
   const layers = ConfigReader.readConfig(new OLMap({}), newData);
   const layerService = new LayerService(layers);
   const component = renderer.create(
-    <LayerTree layerService={layerService} {...props || {}} />,
+    <LayerTree layerService={layerService} {...(props || {})} />,
   );
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
