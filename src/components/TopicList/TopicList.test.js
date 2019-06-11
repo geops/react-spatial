@@ -18,7 +18,7 @@ const mountTopicList = (topics, props) => {
     <TopicList
       topics={topics}
       propsToLayerTree={{ layerService }}
-      {...props || {}}
+      {...(props || {})}
     />,
   );
 };
@@ -33,7 +33,7 @@ const renderTopicList = (topics, props) => {
     <TopicList
       topics={topics}
       propsToLayerTree={{ layerService }}
-      {...props || {}}
+      {...(props || {})}
     />,
   );
   const tree = component.toJSON();
