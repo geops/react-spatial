@@ -10,12 +10,14 @@ import TabItem from 'react-spatial/components/TabItem';
 function TabsExample() {
   return (
     <div className="tm-tabs-example">
-      <div>
         <Tabs>
-          <TabItem/>
-          <TabItem/>
+          <TabItem
+          title="Tab 1"
+          />
+          <TabItem
+          title="Tab 2"
+          />
         </Tabs>
-      </div>
     </div>
   );
 }

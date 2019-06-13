@@ -17,7 +17,7 @@ const Tabs = props => {
   return (
     <>
       <div className={className}>
-        <ul>{children}</ul>
+        <div>{children}</div>
       </div>
     </>
   );

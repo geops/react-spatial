@@ -2,30 +2,31 @@
   position: relative;
   height: 300px;
   border: 2px solid #eee;
-  overflow: hidden;
+  overflow: auto;
 
   .tm-tabs {
+    border: 2px solid #eee;
+    height: 200px;
     position: absolute;
-    background-color: white;
-    border-right: 1px solid #eee;
-    border-bottom: 1px solid #eee;
-    display: flex;
-    flex-direction: column;
     overflow: auto;
     align-items: center;
-
   }
 
-  .tm-tabs ul {
-  list-style: none;
-  display: inline;
-  }
-
-  .tm-tabs li {
+  .tm-tabs-item {
+    width: 500px;
+    height: 100%;
+    background-color: red;
     display: inline;
-    margin: 5;
     cursor: pointer;
-    line-height: 2;
-    font-size: 1rem;
+  }
+
+  .tm-tabs-item {
+    &:hover {
+      background-color: $gray-lighter;
+    }
+  }
+
+  .tm-active {
+    color: $brand-primary;
   }
 }
