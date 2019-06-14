@@ -390,12 +390,10 @@ class FeatureStyler extends PureComponent {
       this.isFocusSet = false;
     }
 
-    if (!this.isFocusSet) {
-      if (this.textareaInput) {
-        this.textareaInput.focus();
-        this.textareaInput.setSelectionRange(0, -1);
-        this.isFocusSet = true;
-      }
+    if (!this.isFocusSet && this.textareaInput) {
+      this.textareaInput.focus();
+      this.textareaInput.setSelectionRange(0, -1);
+      this.isFocusSet = true;
     }
 
     if (updateContent !== prevProps.updateContent) {
