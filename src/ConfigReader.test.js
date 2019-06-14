@@ -5,6 +5,8 @@ import XYZ from 'ol/source/XYZ';
 import OLVectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import WMTSSource from 'ol/source/WMTS';
+import OSMSource from 'ol/source/OSM';
+import TileJSONSource from 'ol/source/TileJSON';
 import ConfigReader from './ConfigReader';
 import Layer from './Layer';
 import VectorLayer from './VectorLayer';
@@ -65,6 +67,42 @@ describe('ConfigReader', () => {
       expect(layers[0]).toBeInstanceOf(Layer);
       expect(layers[0].olLayer).toBeInstanceOf(TileLayer);
       expect(layers[0].olLayer.getSource()).toBeInstanceOf(WMTSSource);
+    });
+
+    test('create tileJSON layer', () => {
+      const map = new OLMap();
+      const layers = ConfigReader.readConfig(map, [
+        {
+          name: 'Custom OSM Layer',
+          visible: true,
+          data: {
+            type: 'tileJSON',
+            url:
+              'https://api.tiles.mapbox.com/' +
+              'v3/mapbox.geography-class.json?secure',
+          },
+        },
+      ]);
+      expect(layers[0]).toBeInstanceOf(Layer);
+      expect(layers[0].olLayer.getSource()).toBeInstanceOf(TileJSONSource);
+    });
+
+    test('create custom layer', () => {
+      const map = new OLMap();
+      const layers = ConfigReader.readConfig(map, [
+        {
+          name: 'Custom OSM Layer',
+          visible: true,
+          data: {
+            type: 'custom',
+            layer: new TileLayer({
+              source: new OSMSource(),
+            }),
+          },
+        },
+      ]);
+      expect(layers[0]).toBeInstanceOf(Layer);
+      expect(layers[0].olLayer.getSource()).toBeInstanceOf(OSMSource);
     });
 
     test('create empty layer', () => {
