@@ -383,6 +383,10 @@ class FeatureStyler extends PureComponent {
       feature !== prevProps.feature
     ) {
       this.updateContent();
+
+      // When the popup is initially opened,
+      // the current feature is the same as the previous feature.
+      // Therefore, we cannot set the focus here.
       this.isFocusSet = false;
     }
 
