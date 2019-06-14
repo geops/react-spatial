@@ -1,23 +1,42 @@
 .tm-tabs-example {
   position: relative;
   height: 300px;
-  border: 2px solid #eee;
-  overflow: auto;
+  width: 300px;
 
   .tm-tabs {
-    border: 2px solid #eee;
-    height: 200px;
     position: absolute;
-    overflow: auto;
+    border: 2px solid #eee;
+    min-height: 50px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     align-items: center;
   }
 
   .tm-tabs-item {
-    width: 500px;
-    height: 100%;
-    background-color: red;
-    display: inline;
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid #eee;
+    border-left: 1px solid #eee;
+    border-bottom: 1px solid #eee;
     cursor: pointer;
+  }
+
+  .tm-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    width: 150px;
+    border-radius: 10px;
+    background-color: white;
+    border: 2px solid #eee;
   }
 
   .tm-tabs-item {

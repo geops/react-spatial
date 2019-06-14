@@ -8,6 +8,7 @@ const propTypes = {
   className: PropTypes.string,
   tabIndex: PropTypes.number,
   title: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 const defaultProps = {
@@ -16,14 +17,13 @@ const defaultProps = {
   tabIndex: 0,
 };
 
-const TabItem = ({ active, className, tabIndex, title }) => {
+const TabItem = ({ active, className, tabIndex, title, onClick }) => {
   return (
     <Button
       tabIndex={tabIndex}
-      className={className}
+      className={`${className}${active ? ' tm-active' : ''}`}
       title={title}
-      active={active}
-      onClick={() => alert(tabIndex)}
+      onClick={onClick}
     >
       {title}
     </Button>
