@@ -23,7 +23,7 @@ const TabItem = ({ active, className, tabIndex, title, onClick }) => {
       tabIndex={tabIndex}
       className={`${className}${active ? ' tm-active' : ''}`}
       title={title}
-      onClick={onClick}
+      onClick={e => onClick(e)}
     >
       {title}
     </Button>
