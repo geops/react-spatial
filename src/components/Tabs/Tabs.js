@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import TabItem from '../TabItem';
 
@@ -13,31 +13,51 @@ const defaultProps = {
   children: null,
 };
 
-const Tabs = props => {
-  const { children, className } = props;
+class Tabs extends Component {
+  constructor(props) {
+    super(props);
+    const { children } = this.props;
+    this.state = {
+      activeTab: children[0].props.title,
+    };
+    console.log(this.state);
+  }
 
-  console.log(children);
-  // const activate = index => {
-  //   console.log(index);
-  // };
+  render() {
+    const {
+      props: { children, className },
+      state: { activeTab },
+    } = this;
 
-  return (
-    <div className={className}>
-      <ol className="tm-tabs-item-list">
-        {children.map(child => {
-          const { title, tabIndex, onClick } = child.props;
-          let { active } = child.props.active;
-          return <TabItem title={title} onClick={() => (console.log(active))} />;
-      })}
-      </ol>
-      <div className="tm-tabs-item-content">
-        {children.map(child => {
-          return child.props.children;
-        })}
+    return (
+      <div className={className}>
+        <ol className="tm-tabs-item-list">
+          {children.map(child => {
+            const { tabIndex, title, i } = child.props;
+            console.log(child.props);
+            return (
+              <TabItem
+                tabIndex={tabIndex}
+                key={i}
+                activeTab={activeTab}
+                title={title}
+                onClick={() => {
+                  this.setState({ activeTab: child.props.title });
+                }}
+              />
+            );
+          })}
+        </ol>
+        <div className="tm-tabs-item-content">
+          {children.map(child => {
+            if (child.props.title !== activeTab) return undefined;
+            return child.props.children;
+          })}
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 Tabs.propTypes = propTypes;
 Tabs.defaultProps = defaultProps;

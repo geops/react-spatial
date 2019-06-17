@@ -4,19 +4,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border-right: 1px solid #eee;
-  border-left: 1px solid #eee;
-  border-bottom: 1px solid #eee;
+  border: 1px solid #eee;
 }
 
 .tm-tabs-item-button {
   &:hover {
     background-color: $gray-lighter;
   }
-}
-
-.tm-tabs-item-content {
-  display: block;
-  padding: 6px 12px;
-  width: 200px;
 }

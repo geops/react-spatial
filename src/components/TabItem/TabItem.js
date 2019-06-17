@@ -5,43 +5,34 @@ import Button from '../Button';
 const propTypes = {
   /** Open or close the  */
   active: PropTypes.bool,
-  tabIndex: PropTypes.number,
+  tabIndex: PropTypes.number.isRequired,
   className: PropTypes.string,
-  classNameContent: PropTypes.string,
   classNameButton: PropTypes.string,
   title: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
-  children: PropTypes.node,
 };
 
 const defaultProps = {
   active: false,
-  tabIndex: null,
   className: 'tm-tabs-item',
   classNameButton: 'tm-tabs-item-button',
-  classNameContent: 'tm-tabs-item-content',
-  children: null,
 };
 
 const TabItem = ({
   active,
-  tabIndex,
   className,
   classNameButton,
-  classNameContent,
   title,
   onClick,
-  children,
+  tabIndex,
 }) => {
-  const activate = () => {
-    onClick(tabIndex);
-  };
   return (
-    <li className={className} tabIndex={tabIndex}>
+    <li className={className}>
       <Button
+        tabIndex={tabIndex}
         className={`${classNameButton}${active ? ' tm-active' : ''}`}
         title={title}
-        onClick={activate}
+        onClick={e => onClick(e)}
       >
         {title}
       </Button>
