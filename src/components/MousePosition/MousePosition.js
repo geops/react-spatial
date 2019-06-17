@@ -17,6 +17,11 @@ const propTypes = {
   className: PropTypes.string,
 
   /**
+   * Position of the scale line relative to the select field.
+   */
+  coordinatePosition: PropTypes.oneOf(['left', 'right']),
+
+  /**
    * List of projections to display.
    */
   projections: PropTypes.arrayOf(
@@ -52,6 +57,7 @@ const defaultProps = {
       value: 'EPSG:3857',
     },
   ],
+  coordinatePosition: 'right',
 };
 
 class MousePosition extends PureComponent {
@@ -126,7 +132,17 @@ class MousePosition extends PureComponent {
   }
 
   render() {
-    const { className } = this.props;
+    const { className, coordinatePosition } = this.props;
+
+    if (coordinatePosition === 'left') {
+      return (
+        <div className={className}>
+          <span ref={this.ref} />
+          {this.renderSelect()}
+        </div>
+      );
+    }
+
     return (
       <div className={className}>
         {this.renderSelect()}
