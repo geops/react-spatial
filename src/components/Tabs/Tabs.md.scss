@@ -15,6 +15,12 @@
     text-align: justify;
   }
 
+  .tm-map {
+    position: relative;
+    height: 200px;
+    width: 100%;
+  }
+
   .tm-active {
     color: $brand-primary;
     border-bottom: none;
