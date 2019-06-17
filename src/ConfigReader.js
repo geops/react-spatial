@@ -2,6 +2,7 @@ import TileLayer from 'ol/layer/Tile';
 import XYZ from 'ol/source/XYZ';
 import VectorSource from 'ol/source/Vector';
 import WMTSSource from 'ol/source/WMTS';
+import TileJSONSource from 'ol/source/TileJSON';
 import WMTSTileGrid from 'ol/tilegrid/WMTS';
 import GeoJSONFormat from 'ol/format/GeoJSON';
 import Layer from './Layer';
@@ -40,6 +41,21 @@ class ConfigReader {
     });
   }
 
+  static createTileJSONLayer(item) {
+    const conf = { ...item };
+    delete conf.data;
+
+    return new Layer({
+      ...conf,
+      olLayer: new TileLayer({
+        source: new TileJSONSource({
+          url: item.data.url,
+          crossorigin: 'anonymous',
+        }),
+      }),
+    });
+  }
+
   static createWMTSLayer(item) {
     const conf = { ...item };
     delete conf.data;
@@ -63,6 +79,16 @@ class ConfigReader {
     });
   }
 
+  static createCustomLayer(item) {
+    const conf = { ...item };
+    delete conf.data;
+
+    return new Layer({
+      ...conf,
+      olLayer: item.data.layer,
+    });
+  }
+
   static createEmptyLayer(item) {
     const conf = { ...item };
     delete conf.data;
@@ -82,8 +108,14 @@ class ConfigReader {
       case 'wmts':
         layer = ConfigReader.createWMTSLayer(item);
         break;
+      case 'tileJSON':
+        layer = ConfigReader.createTileJSONLayer(item);
+        break;
       case 'vectorLayer':
         layer = ConfigReader.createVectorLayer(item);
+        break;
+      case 'custom':
+        layer = ConfigReader.createCustomLayer(item);
         break;
       default:
         layer = ConfigReader.createEmptyLayer(item);
