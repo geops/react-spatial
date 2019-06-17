@@ -7,8 +7,6 @@ import React, { useState } from 'react';
 import Tabs from 'react-spatial/components/Tabs';
 import TabItem from 'react-spatial/components/TabItem';
 
-
-
 function TabsExample() {
   const [active, setActive] = useState(1);
 
@@ -34,10 +32,10 @@ function TabsExample() {
           <TabItem
           key={3}
           active = {3 === active}
-          title="Tab 1"
+          title="Tab 3"
           onClick= {() => setActive(3)}
           >
-          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+          <p>Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. </p>
           </TabItem>
         </Tabs>
     </div>
