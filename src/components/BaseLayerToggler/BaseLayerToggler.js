@@ -181,8 +181,23 @@ class BaseLayerToggler extends Component {
     } = this.props;
     const { layers, idx } = this.state;
 
+    let footer = null;
+
     if (!layers || layers.length < 2) {
       return null;
+    }
+
+    if (layers.length > 2) {
+      footer = (
+        <Footer>
+          <Button className={classNamePrevious} onClick={() => this.previous()}>
+            <FaArrowCircleLeft />
+          </Button>
+          <Button className={classNameNext} onClick={() => this.next()}>
+            <FaArrowCircleRight />
+          </Button>
+        </Footer>
+      );
     }
 
     const nextLayer = layers[idx];
@@ -196,14 +211,7 @@ class BaseLayerToggler extends Component {
           onClick={() => nextLayer.setVisible(true)}
         />
 
-        <Footer>
-          <Button className={classNamePrevious} onClick={() => this.previous()}>
-            <FaArrowCircleLeft />
-          </Button>
-          <Button className={classNameNext} onClick={() => this.next()}>
-            <FaArrowCircleRight />
-          </Button>
-        </Footer>
+        {footer}
       </div>
     );
   }
