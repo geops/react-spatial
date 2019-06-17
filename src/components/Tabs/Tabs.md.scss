@@ -5,32 +5,6 @@
 
   .tm-tabs {
     position: absolute;
-    border: 2px solid #eee;
-    min-height: 50px;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .tm-button {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    margin: auto;
-    width: 150px;
-    border-radius: 10px;
-    background-color: white;
-    border: 2px solid #eee;
-  }
-
-  .tm-tabs-item {
-    &:hover {
-      background-color: $gray-lighter;
-    }
   }
 
   .tm-active {

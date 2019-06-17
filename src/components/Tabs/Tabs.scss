@@ -1,11 +1,13 @@
 /* Style the tab */
 .tm-tabs {
   background-color: white;
-  border-right: 1px solid #eee;
-  border-bottom: 1px solid #eee;
+  border: 2px solid #eee;
+  min-height: 50px;
+  width: 100%;
+}
+
+.tm-tabs-item-list{
   display: flex;
-  flex-direction: column;
-  overflow: auto;
-  max-height: calc((var(--tm-vh, 1vh) * 100) - 82px);
-  max-width: 300px;
+  list-style: none;
+  width: 100%;
 }
