@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import TabItem from '../TabItem';
 
 const propTypes = {
   /** Open or close the  */
@@ -13,50 +12,18 @@ const defaultProps = {
   children: null,
 };
 
-class Tabs extends Component {
-  constructor(props) {
-    super(props);
-    const { children } = this.props;
-    this.state = {
-      activeTab: children[0].props.title,
-    };
-    console.log(this.state);
-  }
-
-  render() {
-    const {
-      props: { children, className },
-      state: { activeTab },
-    } = this;
-
-    return (
-      <div className={className}>
-        <ol className="tm-tabs-item-list">
-          {children.map(child => {
-            const { tabIndex, title, i } = child.props;
-            console.log(child.props);
-            return (
-              <TabItem
-                tabIndex={tabIndex}
-                key={i}
-                activeTab={activeTab}
-                title={title}
-                onClick={() => {
-                  this.setState({ activeTab: child.props.title });
-                }}
-              />
-            );
-          })}
-        </ol>
-        <div className="tm-tabs-item-content">
-          {children.map(child => {
-            if (child.props.title !== activeTab) return undefined;
-            return child.props.children;
-          })}
-        </div>
+function Tabs({ children, className }) {
+  return (
+    <div className={className}>
+      <ol className="tm-tabs-item-list">{children}</ol>
+      <div className="tm-tabs-item-content">
+        {children.map(child => {
+          if (!child.props.active) return null;
+          return child.props.children;
+        })}
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 Tabs.propTypes = propTypes;

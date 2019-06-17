@@ -1,13 +1,19 @@
 .tm-tabs-example {
   position: relative;
   height: 300px;
-  width: 300px;
+  width: 500px;
 
   .tm-tabs {
     position: absolute;
   }
 
+  .tm-tabs ol {
+    margin: 0px;
+  }
+
   .tm-active {
     color: $brand-primary;
+    border-bottom: none;
+    outline: none;
   }
 }
