@@ -25,7 +25,7 @@ function TabsExample() {
     }),
   ];
 
-  const center = [836691, 6049861];
+  const center = [1266691, 5869861];
 
   return (
     <div className="tm-tabs-example">

@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const propTypes = {
-  /** Open or close the  */
+  /** CSS class of the container  */
   className: PropTypes.string,
-  children: PropTypes.node,
+  /** Children content of the Tabs container.  */
+  children: PropTypes.node.isRequired,
 };
 
 const defaultProps = {
   className: 'tm-tabs',
-  children: null,
 };
 
 function Tabs({ children, className }) {
