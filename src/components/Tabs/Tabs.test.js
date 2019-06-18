@@ -9,20 +9,17 @@ configure({ adapter: new Adapter() });
 
 describe('Tabs', () => {
   describe('should match snapshot.', () => {
-    test('when closed.', () => {
+    test('with two tabs.', () => {
       const component = renderer.create(
         <Tabs>
-          <Tab title="Tab 1" onClick={console.log('clicked')}>
+          <Tab title="Tab 1" onClick={() => {}}>
             Tab 1
+          </Tab>
+          <Tab active title="Tab 2" onClick={() => {}}>
+            Tab 2
           </Tab>
         </Tabs>,
       );
-      const tree = component.toJSON();
-      expect(tree).toMatchSnapshot();
-    });
-
-    test('when opened', () => {
-      const component = renderer.create(<Tabs open />);
       const tree = component.toJSON();
       expect(tree).toMatchSnapshot();
     });

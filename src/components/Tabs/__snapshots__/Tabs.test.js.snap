@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tabs should match snapshot. with two tabs. 1`] = `
+<div
+  className="tm-tabs"
+>
+  <ol
+    className="tm-tabs-item-list"
+  >
+    <li
+      className="tm-tabs-item"
+    >
+      <div
+        aria-label="Tab 1"
+        className="tm-tabs-item-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+        title="Tab 1"
+      >
+        Tab 1
+      </div>
+    </li>
+    <li
+      className="tm-tabs-item"
+    >
+      <div
+        aria-label="Tab 2"
+        className="tm-tabs-item-button tm-active"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+        title="Tab 2"
+      >
+        Tab 2
+      </div>
+    </li>
+  </ol>
+  <div
+    className="tm-tabs-item-content"
+  >
+    Tab 2
+  </div>
+</div>
+`;
