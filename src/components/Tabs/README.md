@@ -15,18 +15,6 @@ import BasicMap from 'react-spatial/components/BasicMap';
 function TabsExample() {
   const [active, setActive] = useState(1);
 
-  const map = new OLMap({ controls: [] });
-
-  const layers = [
-    new Layer({
-      olLayer: new TileLayer({
-        source: new OSM(),
-      }),
-    }),
-  ];
-
-  const center = [1266691, 5869861];
-
   return (
     <div className="tm-tabs-example">
       <Tabs>
@@ -50,8 +38,14 @@ function TabsExample() {
           title="Tab 2"
           onClick={() => setActive(2)}
         >
-          <p><strong>Basic Map</strong></p>
-          <BasicMap map={map} layers={layers} center={center} zoom={8} />
+          <p>
+            Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper
+            suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis
+            autem vel eum iriure dolor in hendrerit in vulputate velit esse
+            molestie consequat, vel illum dolore eu feugiat nulla facilisis at
+            vero eros et accumsan et iusto odio dignissim qui blandit praesent
+            luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
+          </p>
         </Tab>
         <Tab
           key={3}
