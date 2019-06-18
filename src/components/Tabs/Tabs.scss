@@ -1,0 +1,23 @@
+/* Style the tab */
+.tm-tabs {
+  background-color: white;
+  border: 2px solid #eee;
+  min-height: 50px;
+}
+
+.tm-tabs-item-list {
+  width: 100%;
+  display: flex;
+  list-style: none;
+  padding: 0;
+
+  li {
+    flex-grow: 1;
+  }
+}
+
+.tm-tabs-item-content {
+  display: block;
+  margin: 20px;
+  width: 90%;
+}
