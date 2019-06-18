@@ -11,3 +11,9 @@
     background-color: $gray-lighter;
   }
 }
+
+.tm-active {
+  color: $brand-primary;
+  border-bottom: none;
+  outline: none;
+}

@@ -9,7 +9,7 @@ import Layer from 'react-spatial/Layer';
 import TileLayer from 'ol/layer/Tile.js';
 import OSM from 'ol/source/OSM.js';
 import Tabs from 'react-spatial/components/Tabs';
-import TabItem from 'react-spatial/components/TabItem';
+import Tab from 'react-spatial/components/Tab';
 import BasicMap from 'react-spatial/components/BasicMap';
 
 function TabsExample() {
@@ -30,7 +30,7 @@ function TabsExample() {
   return (
     <div className="tm-tabs-example">
       <Tabs>
-        <TabItem
+        <Tab
           key={1}
           active={active === 1}
           title="Tab 1"
@@ -43,16 +43,17 @@ function TabsExample() {
             et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
             Lorem ipsum dolor sit amet.
           </p>
-        </TabItem>
-        <TabItem
+        </Tab>
+        <Tab
           key={2}
           active={active === 2}
           title="Tab 2"
           onClick={() => setActive(2)}
         >
+          <p><strong>Basic Map</strong></p>
           <BasicMap map={map} layers={layers} center={center} zoom={8} />
-        </TabItem>
-        <TabItem
+        </Tab>
+        <Tab
           key={3}
           active={active === 3}
           title="Tab 3"
@@ -67,7 +68,7 @@ function TabsExample() {
             ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo
             consequat.
           </p>
-        </TabItem>
+        </Tab>
       </Tabs>
     </div>
   );

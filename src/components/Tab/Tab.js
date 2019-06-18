@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Button from '../Button';
 
 const propTypes = {
-  /** Open or close the  */
   active: PropTypes.bool,
   className: PropTypes.string,
   classNameButton: PropTypes.string,
@@ -17,7 +16,7 @@ const defaultProps = {
   classNameButton: 'tm-tabs-item-button',
 };
 
-const TabItem = ({ onClick, active, className, classNameButton, title }) => {
+const Tab = ({ onClick, active, className, classNameButton, title }) => {
   return (
     <li className={className}>
       <Button
@@ -31,7 +30,7 @@ const TabItem = ({ onClick, active, className, classNameButton, title }) => {
   );
 };
 
-TabItem.propTypes = propTypes;
-TabItem.defaultProps = defaultProps;
+Tab.propTypes = propTypes;
+Tab.defaultProps = defaultProps;
 
-export default TabItem;
+export default Tab;
