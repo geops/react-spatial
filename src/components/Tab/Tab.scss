@@ -1,13 +1,13 @@
 .tm-tabs-item-button {
-  &:hover {
-    background-color: $gray-lighter;
-  }
-
   height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
   border: 1px solid #eee;
+
+  &:hover {
+    background-color: $gray-lighter;
+  }
 }
 
 .tm-active {

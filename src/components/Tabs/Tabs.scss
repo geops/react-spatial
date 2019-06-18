@@ -10,10 +10,10 @@
   display: flex;
   list-style: none;
   padding: 0;
-}
 
-.tm-tabs-item-list li {
-  flex-grow: 1;
+  li {
+    flex-grow: 1;
+  }
 }
 
 .tm-tabs-item-content {
