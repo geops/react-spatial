@@ -12,6 +12,10 @@ export default class LayerService {
     this.listenChangeEvt();
   }
 
+  addLayer(layer) {
+    this.layers.push(layer);
+  }
+
   getLayers() {
     return this.layers;
   }
