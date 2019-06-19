@@ -4,8 +4,6 @@ import { Feature } from 'ol';
 import { Style, Icon } from 'ol/style';
 import Point from 'ol/geom/Point';
 import { asString } from 'ol/color';
-import iconArrowLeft from '../../images/arrowLeft.png';
-import iconArrowRight from '../../images/arrowRight.png';
 import Select from '../Select';
 import Button from '../Button';
 
@@ -63,7 +61,7 @@ const propTypes = {
   lineIcons: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,
-      icon: PropTypes.element,
+      icon: PropTypes.string,
     }),
   ),
 
@@ -146,8 +144,8 @@ const defaultProps = {
   classNameTextRotation: 'tm-modify-text-rotation',
   classNameSelected: 'tm-button tm-selected',
   lineIcons: [
-    { name: 'left', icon: iconArrowLeft },
-    { name: 'right', icon: iconArrowRight },
+    { name: 'left', icon: '/images/arrowLeft.png' },
+    { name: 'right', icon: '/images/arrowRight.png' },
   ],
   colors: [
     { name: 'black', fill: [0, 0, 0], border: 'white' },
@@ -328,12 +326,14 @@ class FeatureStyler extends PureComponent {
       }
 
       if (lineStartIcon) {
+        console.log('###############', lineStartIcon);
         extraStyles.push(
           FeatureStyler.getLineIcon(feature.getGeometry(), lineStartIcon),
         );
       }
 
       if (lineEndIcon) {
+        console.log('###############', lineEndIcon);
         extraStyles.push(
           FeatureStyler.getLineIcon(feature.getGeometry(), lineEndIcon, false),
         );
@@ -614,7 +614,7 @@ class FeatureStyler extends PureComponent {
           {colors.map(c => (
             <Button
               key={c.name}
-              className={color === c ? classNameSelected : undefined}
+              className={`tm-color ${color === c ? classNameSelected : ''}`}
               onClick={e => {
                 onClick(e, c);
               }}

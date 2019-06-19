@@ -404,7 +404,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
     </div>
     <div>
       <div
-        className="tm-button"
+        className="tm-color "
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -421,7 +421,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         />
       </div>
       <div
-        className="tm-button"
+        className="tm-color "
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -438,7 +438,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         />
       </div>
       <div
-        className="tm-button"
+        className="tm-color "
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -455,7 +455,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         />
       </div>
       <div
-        className="tm-button"
+        className="tm-color "
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -472,7 +472,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         />
       </div>
       <div
-        className="tm-button"
+        className="tm-color "
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -489,7 +489,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         />
       </div>
       <div
-        className="tm-button"
+        className="tm-color "
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -506,7 +506,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         />
       </div>
       <div
-        className="tm-button"
+        className="tm-color "
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -523,7 +523,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         />
       </div>
       <div
-        className="tm-button"
+        className="tm-color "
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -601,6 +601,56 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
 <div
   className="tm-feature-styler"
 >
+  Start:
+  <div
+    className="tm-button"
+    onClick={[Function]}
+    onKeyPress={[Function]}
+    role="button"
+    tabIndex={0}
+  >
+    <img
+      alt="left"
+      src="/images/arrowLeft.png"
+    />
+  </div>
+  <div
+    className="tm-button"
+    onClick={[Function]}
+    onKeyPress={[Function]}
+    role="button"
+    tabIndex={0}
+  >
+    <img
+      alt="right"
+      src="/images/arrowRight.png"
+    />
+  </div>
+  End:
+  <div
+    className="tm-button"
+    onClick={[Function]}
+    onKeyPress={[Function]}
+    role="button"
+    tabIndex={0}
+  >
+    <img
+      alt="left"
+      src="/images/arrowLeft.png"
+    />
+  </div>
+  <div
+    className="tm-button"
+    onClick={[Function]}
+    onKeyPress={[Function]}
+    role="button"
+    tabIndex={0}
+  >
+    <img
+      alt="right"
+      src="/images/arrowRight.png"
+    />
+  </div>
   <div
     className="tm-modify-color"
   >
@@ -609,7 +659,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
     </div>
     <div>
       <div
-        className="tm-button"
+        className="tm-color "
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -626,7 +676,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         />
       </div>
       <div
-        className="tm-button"
+        className="tm-color "
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -643,7 +693,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         />
       </div>
       <div
-        className="tm-button"
+        className="tm-color "
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -660,7 +710,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         />
       </div>
       <div
-        className="tm-button"
+        className="tm-color "
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -677,7 +727,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         />
       </div>
       <div
-        className="tm-button"
+        className="tm-color "
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -694,7 +744,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         />
       </div>
       <div
-        className="tm-button"
+        className="tm-color "
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -711,7 +761,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         />
       </div>
       <div
-        className="tm-button tm-selected"
+        className="tm-color tm-button tm-selected"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -728,7 +778,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         />
       </div>
       <div
-        className="tm-button"
+        className="tm-color "
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -784,7 +834,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
     </div>
     <div>
       <div
-        className="tm-button"
+        className="tm-color "
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -801,7 +851,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         />
       </div>
       <div
-        className="tm-button"
+        className="tm-color "
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -818,7 +868,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         />
       </div>
       <div
-        className="tm-button"
+        className="tm-color "
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -835,7 +885,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         />
       </div>
       <div
-        className="tm-button"
+        className="tm-color "
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -852,7 +902,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         />
       </div>
       <div
-        className="tm-button"
+        className="tm-color "
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -869,7 +919,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         />
       </div>
       <div
-        className="tm-button tm-selected"
+        className="tm-color tm-button tm-selected"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -886,7 +936,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         />
       </div>
       <div
-        className="tm-button"
+        className="tm-color "
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -903,7 +953,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         />
       </div>
       <div
-        className="tm-button"
+        className="tm-color "
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
