@@ -2,7 +2,10 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Feature } from 'ol';
 import { Style, Icon } from 'ol/style';
+import Point from 'ol/geom/Point';
 import { asString } from 'ol/color';
+import iconArrowLeft from '../../images/arrowLeft.png';
+import iconArrowRight from '../../images/arrowRight.png';
 import Select from '../Select';
 import Button from '../Button';
 
@@ -54,6 +57,13 @@ const propTypes = {
       type: PropTypes.oneOf(['css', 'img']),
       regex: PropTypes.regex,
       icons: PropTypes.array,
+    }),
+  ),
+
+  lineIcons: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      icon: PropTypes.element,
     }),
   ),
 
@@ -135,6 +145,10 @@ const defaultProps = {
   classNameTextFont: 'tm-modify-text-font',
   classNameTextRotation: 'tm-modify-text-rotation',
   classNameSelected: 'tm-button tm-selected',
+  lineIcons: [
+    { name: 'left', icon: iconArrowLeft },
+    { name: 'right', icon: iconArrowRight },
+  ],
   colors: [
     { name: 'black', fill: [0, 0, 0], border: 'white' },
     { name: 'blue', fill: [0, 0, 255], border: 'white' },
@@ -263,8 +277,27 @@ class FeatureStyler extends PureComponent {
     return colors.find(c => rgb === asString(c.fill));
   }
 
+  static getLineIcon(geom, icon, start = true) {
+    const coords = geom.getCoordinates();
+    const len = coords.length - 1;
+    const coordA = start ? coords[1] : coords[len - 1];
+    const coordB = start ? coords[0] : coords[len];
+    const dx = coordA[0] - coordB[0];
+    const dy = coordA[1] - coordB[1];
+    const rotation = Math.atan2(dy, dx);
+
+    return new Style({
+      geometry: new Point(coordB),
+      image: new Icon({
+        src: icon,
+        rotation: -rotation,
+        rotateWithView: true,
+      }),
+    });
+  }
+
   // Get the current style defined by the properties object
-  static updateStyleFromProperties(oldStyle, properties) {
+  static updateStyleFromProperties(oldStyle, feature, properties) {
     const {
       font,
       color,
@@ -274,7 +307,11 @@ class FeatureStyler extends PureComponent {
       textColor,
       textSize,
       textRotation,
+      lineStartIcon,
+      lineEndIcon,
     } = properties;
+
+    const extraStyles = [];
 
     // Update Fill style if it existed.
     const fillStyle = oldStyle.getFill();
@@ -284,8 +321,23 @@ class FeatureStyler extends PureComponent {
 
     // Update Stroke style if it existed
     const strokeStyle = oldStyle.getStroke();
-    if (strokeStyle && color) {
-      strokeStyle.setColor(color.fill.concat(strokeStyle.getColor()[3]));
+
+    if (strokeStyle) {
+      if (color) {
+        strokeStyle.setColor(color.fill.concat(strokeStyle.getColor()[3]));
+      }
+
+      if (lineStartIcon) {
+        extraStyles.push(
+          FeatureStyler.getLineIcon(feature.getGeometry(), lineStartIcon),
+        );
+      }
+
+      if (lineEndIcon) {
+        extraStyles.push(
+          FeatureStyler.getLineIcon(feature.getGeometry(), lineEndIcon, false),
+        );
+      }
     }
 
     // Update Text style if it existed;
@@ -325,13 +377,16 @@ class FeatureStyler extends PureComponent {
       iconStyle.load();
     }
 
-    return new Style({
-      fill: fillStyle,
-      stroke: strokeStyle,
-      text: textStyle,
-      image: iconStyle,
-      zIndex: oldStyle.getZIndex(),
-    });
+    return [
+      new Style({
+        fill: fillStyle,
+        stroke: strokeStyle,
+        text: textStyle,
+        image: iconStyle,
+        zIndex: oldStyle.getZIndex(),
+      }),
+      ...extraStyles,
+    ];
   }
 
   constructor(props) {
@@ -350,7 +405,9 @@ class FeatureStyler extends PureComponent {
       textRotation: 0,
       useIconStyle: false,
       useTextStyle: false,
-      useColorStyle: false,
+      useStrokeStyle: false,
+      lineStartIcon: null,
+      lineEndIcon: null,
     };
     this.isFocusSet = false;
   }
@@ -374,6 +431,8 @@ class FeatureStyler extends PureComponent {
       textColor,
       textSize,
       textRotation,
+      lineStartIcon,
+      lineEndIcon,
     } = this.state;
 
     // Update the content of the feature style component.
@@ -411,7 +470,9 @@ class FeatureStyler extends PureComponent {
       iconSize !== prevState.iconSize ||
       textColor !== prevState.textColor ||
       textSize !== prevState.textSize ||
-      textRotation !== prevState.textRotation
+      textRotation !== prevState.textRotation ||
+      lineStartIcon !== prevProps.lineStartIcon ||
+      strokeEndIcon !== prevProps.strokeEndIcon
     ) {
       this.applyStyle();
     }
@@ -436,7 +497,7 @@ class FeatureStyler extends PureComponent {
     let textRotation;
     let useTextStyle = false;
     let useIconStyle = false;
-    let useColorStyle = false;
+    let useStrokeStyle = false;
     let color;
     const featStyle = FeatureStyler.getStyleAsArray(feature)[0];
 
@@ -457,7 +518,7 @@ class FeatureStyler extends PureComponent {
     }
 
     if (!useIconStyle && featStyle.getStroke()) {
-      useColorStyle = true;
+      useStrokeStyle = true;
       color = FeatureStyler.findColor(featStyle.getStroke().getColor(), colors);
     }
 
@@ -491,7 +552,7 @@ class FeatureStyler extends PureComponent {
       textRotation,
       useTextStyle,
       useIconStyle,
-      useColorStyle,
+      useStrokeStyle,
     });
   }
 
@@ -509,31 +570,39 @@ class FeatureStyler extends PureComponent {
       textSize,
       textRotation,
       iconCategory,
+      lineStartIcon,
+      lineEndIcon,
     } = this.state;
 
     const text = useTextStyle ? name : undefined;
 
     // Update the style of the feature with the current style
     const oldStyles = FeatureStyler.getStyleAsArray(feature);
-    const style = FeatureStyler.updateStyleFromProperties(oldStyles[0], {
-      font,
-      description,
-      color,
-      icon,
-      iconCategory,
-      iconSize,
-      text,
-      textColor,
-      textSize,
-      textRotation,
-    });
+    const style = FeatureStyler.updateStyleFromProperties(
+      oldStyles[0],
+      feature,
+      {
+        font,
+        description,
+        color,
+        icon,
+        iconCategory,
+        iconSize,
+        text,
+        textColor,
+        textSize,
+        textRotation,
+        lineStartIcon,
+        lineEndIcon,
+      },
+    );
 
     // Set feature's properties
     feature.set('name', text);
     feature.set('description', description);
 
     // Reconstruct the initial styles array.
-    feature.setStyle([style]);
+    feature.setStyle(style);
   }
 
   renderColors(color, classNameColors, classNameSelected, onClick) {
@@ -564,16 +633,34 @@ class FeatureStyler extends PureComponent {
     );
   }
 
-  renderColorStyle() {
-    const { classNameColors, classNameSelected } = this.props;
-    const { useColorStyle, color } = this.state;
+  renderStrokeStyle() {
+    const { classNameColors, classNameSelected, lineIcons } = this.props;
+    const { useStrokeStyle, color } = this.state;
 
-    if (!useColorStyle) {
+    if (!useStrokeStyle) {
       return null;
     }
 
     return (
       <>
+        Start:
+        {lineIcons.map(lc => (
+          <Button
+            key={lc.name}
+            onClick={() => this.setState({ lineStartIcon: lc.icon })}
+          >
+            <img src={lc.icon} alt={lc.name} />
+          </Button>
+        ))}
+        End:
+        {lineIcons.map(lc => (
+          <Button
+            key={lc.name}
+            onClick={() => this.setState({ lineEndIcon: lc.icon })}
+          >
+            <img src={lc.icon} alt={lc.name} />
+          </Button>
+        ))}
         {this.renderColors(
           color,
           classNameColors,
@@ -766,7 +853,7 @@ class FeatureStyler extends PureComponent {
       <div className={className}>
         {this.renderTextStyle()}
         {this.renderIconStyle()}
-        {this.renderColorStyle()}
+        {this.renderStrokeStyle()}
       </div>
     );
   }
