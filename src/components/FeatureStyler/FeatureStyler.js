@@ -627,6 +627,10 @@ class FeatureStyler extends PureComponent {
             onChange={e => {
               this.setState({ name: e.target.value });
             }}
+            onKeyDown={e => {
+              e.stopPropagation();
+              e.nativeEvent.stopImmediatePropagation();
+            }}
           />
         </div>
 
