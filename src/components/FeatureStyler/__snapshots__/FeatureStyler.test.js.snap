@@ -379,6 +379,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
     </div>
     <textarea
       onChange={[Function]}
+      onKeyDown={[Function]}
       rows="1"
       value=""
     />
@@ -809,6 +810,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
     </div>
     <textarea
       onChange={[Function]}
+      onKeyDown={[Function]}
       rows="1"
       value="bar"
     />
