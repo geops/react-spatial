@@ -16,11 +16,7 @@ const shallowComp = (newData, props) => {
   const layers = ConfigReader.readConfig(map, newData || data);
   const layerService = new LayerService(layers);
   return shallow(
-    <BaseLayerToggler
-      layerService={layerService}
-      map={map}
-      {...(props || {})}
-    />,
+    <BaseLayerToggler layerService={layerService} map={map} {...props || {}} />,
   );
 };
 const mountComp = (newData, props) => {
@@ -28,11 +24,7 @@ const mountComp = (newData, props) => {
   const layers = ConfigReader.readConfig(map, newData || data);
   const layerService = new LayerService(layers);
   return mount(
-    <BaseLayerToggler
-      layerService={layerService}
-      map={map}
-      {...(props || {})}
-    />,
+    <BaseLayerToggler layerService={layerService} map={map} {...props || {}} />,
   );
 };
 
@@ -41,11 +33,7 @@ const expectSnapshot = (newData, props) => {
   const layers = ConfigReader.readConfig(map, newData || data);
   const layerService = new LayerService(layers);
   const component = renderer.create(
-    <BaseLayerToggler
-      layerService={layerService}
-      map={map}
-      {...(props || {})}
-    />,
+    <BaseLayerToggler layerService={layerService} map={map} {...props || {}} />,
   );
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
