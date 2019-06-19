@@ -57,6 +57,7 @@ const defaultProps = {
 class MousePosition extends PureComponent {
   constructor(props) {
     super(props);
+    console.log('lala');
     const { projections } = this.props;
     this.state = {
       projection: projections && projections[0],
