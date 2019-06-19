@@ -471,8 +471,8 @@ class FeatureStyler extends PureComponent {
       textColor !== prevState.textColor ||
       textSize !== prevState.textSize ||
       textRotation !== prevState.textRotation ||
-      lineStartIcon !== prevProps.lineStartIcon ||
-      strokeEndIcon !== prevProps.strokeEndIcon
+      lineStartIcon !== prevState.lineStartIcon ||
+      lineEndIcon !== prevState.lineEndIcon
     ) {
       this.applyStyle();
     }
