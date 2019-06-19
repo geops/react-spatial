@@ -326,14 +326,12 @@ class FeatureStyler extends PureComponent {
       }
 
       if (lineStartIcon) {
-        console.log('###############', lineStartIcon);
         extraStyles.push(
           FeatureStyler.getLineIcon(feature.getGeometry(), lineStartIcon),
         );
       }
 
       if (lineEndIcon) {
-        console.log('###############', lineEndIcon);
         extraStyles.push(
           FeatureStyler.getLineIcon(feature.getGeometry(), lineEndIcon, false),
         );
