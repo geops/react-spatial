@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Feature } from 'ol';
 import { Style, Icon } from 'ol/style';
 import { asString } from 'ol/color';
+import StopEvents from '../StopEvents';
 import Select from '../Select';
 import Button from '../Button';
 
@@ -627,11 +628,8 @@ class FeatureStyler extends PureComponent {
             onChange={e => {
               this.setState({ name: e.target.value });
             }}
-            onKeyDown={e => {
-              e.stopPropagation();
-              e.nativeEvent.stopImmediatePropagation();
-            }}
           />
+          <StopEvents observe={this.textareaInput} events={['keydown']} />
         </div>
 
         <div className={classNameTextFont}>
