@@ -1,23 +1,37 @@
-/* Style the tab */
 .tm-tabs {
-  background-color: white;
-  border: 2px solid #eee;
   min-height: 50px;
-}
 
-.tm-tabs-item-list {
-  width: 100%;
-  display: flex;
-  list-style: none;
-  padding: 0;
-
-  li {
-    flex-grow: 1;
+  ol {
+    margin: 0;
   }
-}
 
-.tm-tabs-item-content {
-  display: block;
-  margin: 20px;
-  width: 90%;
+  .tm-tab,
+  .tm-tabs-content {
+    border: 1px solid #eee;
+  }
+
+  .tm-tab {
+    color: $gray;
+
+    &.tm-active {
+      color: $brand-primary;
+      border-bottom: none;
+    }
+  }
+
+  .tm-tabs-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+
+    li {
+      flex-grow: 1;
+    }
+  }
+
+  .tm-tabs-content {
+    padding: 20px;
+    border-top: none;
+    overflow: auto;
+  }
 }

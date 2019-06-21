@@ -1,17 +1,10 @@
-.tm-tabs-item-button {
-  height: 50px;
+.tm-tab {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #eee;
 
-  &:hover {
-    background-color: $gray-lighter;
+  > div {
+    flex-grow: 1;
+    outline: none;
   }
-}
-
-.tm-active {
-  color: $brand-primary;
-  border-bottom: none;
-  outline: none;
 }

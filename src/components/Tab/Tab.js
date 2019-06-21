@@ -7,8 +7,6 @@ const propTypes = {
   active: PropTypes.bool,
   /** CSS class of the Tab */
   className: PropTypes.string,
-  /** CSS class of the Tab button */
-  classNameButton: PropTypes.string,
   /** Title of the Tab */
   title: PropTypes.string.isRequired,
   /** Function triggered on click event */
@@ -17,18 +15,13 @@ const propTypes = {
 
 const defaultProps = {
   active: false,
-  className: 'tm-tabs-item',
-  classNameButton: 'tm-tabs-item-button',
+  className: 'tm-tab',
 };
 
-const Tab = ({ onClick, active, className, classNameButton, title }) => {
+const Tab = ({ onClick, active, className, title }) => {
   return (
-    <li className={className}>
-      <Button
-        className={`${classNameButton}${active ? ' tm-active' : ''}`}
-        title={title}
-        onClick={e => onClick(e)}
-      >
+    <li className={className + (active ? ' tm-active' : '')}>
+      <Button title={title} onClick={e => onClick(e)}>
         {title}
       </Button>
     </li>
