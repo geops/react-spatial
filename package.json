@@ -23,12 +23,15 @@
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.3",
+    "generact": "^0.4.0",
+    "husky": "^2.4.1",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.1.0",
     "jest-canvas-mock": "^2.0.0-alpha.3",
     "jest-environment-jsdom-fourteen": "^0.1.0",
     "jest-serializer-html": "^7.0.0",
     "jest-svg-transformer": "^1.0.0",
+    "lint-staged": "^8.2.1",
     "jsts": "^2.0.3",
     "node-sass": "^4.11.0",
     "ol": "^5.3.0",
@@ -96,7 +99,7 @@
     "publish:beta": "yarn publish:public --tag beta",
     "doc:server": "styleguidist server",
     "start": "yarn doc:server",
-    "symlink": "yarn build && cd build && yarn link"
+    "cp": "generact --root src/components"
   },
   "browserslist": [
     ">0.2%",
