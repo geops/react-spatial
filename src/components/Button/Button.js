@@ -44,7 +44,7 @@ const defaultProps = {
   title: undefined,
   tabIndex: 0,
   style: undefined,
-  accessKey: '',
+  accessKey: undefined,
 };
 
 /**

@@ -49,7 +49,7 @@ const defaultProps = {
   showIconOnly: false,
   className: 'tm-sidebar-item',
   tabIndex: 0,
-  accessKey: '',
+  accessKey: undefined,
 };
 
 /**

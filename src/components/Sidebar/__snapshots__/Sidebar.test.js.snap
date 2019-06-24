@@ -5,7 +5,6 @@ exports[`Sidebar should match snapshot. when closed. 1`] = `null`;
 exports[`Sidebar should match snapshot. when opened 1`] = `
 Array [
   <div
-    accessKey=""
     className="tm-sidebar-modal tm-sidebar-modal-open"
     onClick={[Function]}
     onKeyPress={[Function]}

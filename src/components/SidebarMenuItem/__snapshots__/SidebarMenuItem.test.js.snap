@@ -2,7 +2,6 @@
 
 exports[`SidebarMenuItem should match snapshot with props "active". 1`] = `
 <div
-  accessKey=""
   aria-label="Title"
   className="tm-sidebar-item tm-active"
   onClick={[Function]}
@@ -39,7 +38,6 @@ exports[`SidebarMenuItem should match snapshot with props "active". 1`] = `
 
 exports[`SidebarMenuItem should match snapshot with props "showIconOnly". 1`] = `
 <div
-  accessKey=""
   aria-label="Title"
   className="tm-sidebar-item"
   onClick={[Function]}
@@ -73,7 +71,6 @@ exports[`SidebarMenuItem should match snapshot with props "showIconOnly". 1`] = 
 
 exports[`SidebarMenuItem should match snapshot. 1`] = `
 <div
-  accessKey=""
   aria-label="Title"
   className="tm-sidebar-item"
   onClick={[Function]}

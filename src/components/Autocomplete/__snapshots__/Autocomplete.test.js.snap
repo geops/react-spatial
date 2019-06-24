@@ -20,7 +20,6 @@ exports[`Autocomplete when no properties are set matches snapshot 1`] = `
       value=""
     />
     <div
-      accessKey=""
       aria-label=""
       className="tm-button tm-bt-clear"
       onClick={[Function]}
@@ -55,7 +54,6 @@ exports[`Autocomplete when no properties are set matches snapshot 1`] = `
       </svg>
     </div>
     <div
-      accessKey=""
       aria-label=""
       className="tm-button tm-bt-search"
       onClick={[Function]}
@@ -98,7 +96,6 @@ exports[`Autocomplete when properties are set should match snapshot 1`] = `
       value="fooval"
     />
     <div
-      accessKey=""
       aria-label=""
       className="tm-button tm-bt-clear"
       onClick={[Function]}
@@ -128,7 +125,6 @@ exports[`Autocomplete when properties are set should match snapshot 1`] = `
       </svg>
     </div>
     <div
-      accessKey=""
       aria-label=""
       className="tm-button tm-bt-search"
       onClick={[Function]}
@@ -240,7 +236,6 @@ exports[`Autocomplete when properties are set should match snapshot showing list
       value="fooval"
     />
     <div
-      accessKey=""
       aria-label=""
       className="tm-button tm-bt-clear"
       onClick={[Function]}
@@ -270,7 +265,6 @@ exports[`Autocomplete when properties are set should match snapshot showing list
       </svg>
     </div>
     <div
-      accessKey=""
       aria-label=""
       className="tm-button tm-bt-search"
       onClick={[Function]}
@@ -382,7 +376,6 @@ exports[`Autocomplete when properties are set should match snapshot without defa
       value="fooval"
     />
     <div
-      accessKey=""
       aria-label=""
       className="tm-button tm-bt-clear"
       onClick={[Function]}
@@ -412,7 +405,6 @@ exports[`Autocomplete when properties are set should match snapshot without defa
       </svg>
     </div>
     <div
-      accessKey=""
       aria-label=""
       className="tm-button tm-bt-search"
       onClick={[Function]}
@@ -488,7 +480,6 @@ exports[`Autocomplete when properties are set should match snapshot without item
       value="fooval"
     />
     <div
-      accessKey=""
       aria-label=""
       className="tm-button tm-bt-clear"
       onClick={[Function]}
@@ -518,7 +509,6 @@ exports[`Autocomplete when properties are set should match snapshot without item
       </svg>
     </div>
     <div
-      accessKey=""
       aria-label=""
       className="tm-button tm-bt-search"
       onClick={[Function]}
@@ -594,7 +584,6 @@ exports[`Autocomplete when properties are set should match snapshot without item
       value="fooval"
     />
     <div
-      accessKey=""
       aria-label=""
       className="tm-button tm-bt-clear"
       onClick={[Function]}
@@ -624,7 +613,6 @@ exports[`Autocomplete when properties are set should match snapshot without item
       </svg>
     </div>
     <div
-      accessKey=""
       aria-label=""
       className="tm-button tm-bt-search"
       onClick={[Function]}
@@ -669,7 +657,6 @@ exports[`Autocomplete when properties are set should match snapshot without item
       value="fooval"
     />
     <div
-      accessKey=""
       aria-label=""
       className="tm-button tm-bt-clear"
       onClick={[Function]}
@@ -699,7 +686,6 @@ exports[`Autocomplete when properties are set should match snapshot without item
       </svg>
     </div>
     <div
-      accessKey=""
       aria-label=""
       className="tm-button tm-bt-search"
       onClick={[Function]}

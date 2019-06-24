@@ -2,7 +2,6 @@
 
 exports[`Button should match snapshot. 1`] = `
 <div
-  accessKey=""
   aria-label="Zoom in"
   className="tm-zoom in"
   onClick={[Function]}

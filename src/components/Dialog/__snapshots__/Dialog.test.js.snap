@@ -21,7 +21,6 @@ exports[`Dialog matches snapshots for modal Dialog. 1`] = `
         className="tm-header-left"
       />
       <div
-        accessKey=""
         className="tm-button tm-dialog-close-bt"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -87,7 +86,6 @@ exports[`Dialog matches snapshots for normal Dialog. 1`] = `
         Example Dialog
       </span>
       <div
-        accessKey=""
         className="tm-button tm-dialog-close-bt"
         onClick={[Function]}
         onKeyPress={[Function]}

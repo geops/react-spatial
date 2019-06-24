@@ -2,7 +2,6 @@
 
 exports[`CanvasSaveButton should match snapshot. 1`] = `
 <div
-  accessKey=""
   aria-label="Karte als Bild speichern."
   className="tm-canvas-save-button tm-button"
   onClick={[Function]}

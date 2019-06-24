@@ -16,7 +16,6 @@ exports[`PermalinkInput matches snapshot 2`] = `
     value="http://url.test"
   />
   <div
-    accessKey=""
     aria-label=""
     className="tm-permalink-bt"
     onClick={[Function]}
