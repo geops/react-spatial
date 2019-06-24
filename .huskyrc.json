@@ -1,0 +1,8 @@
+{
+  "hooks": {
+    "post-checkout": "yarn install --frozen-lockfile",
+    "post-merge": "yarn install --frozen-lockfile",
+    "post-rebase": "yarn install --frozen-lockfile",
+    "pre-commit": "CI=true lint-staged"
+  }
+}

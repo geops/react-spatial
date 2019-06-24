@@ -30,3 +30,11 @@ Some rules must be followed:
 - no redux stuff.
 - no hardcoded `className`, only in default props.
 - no translation library specific stuff.
+
+## Create a new component from another
+
+```bash
+yarn cp
+```
+
+then follow the guide.

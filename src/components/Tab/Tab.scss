@@ -1,0 +1,10 @@
+.tm-tab {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  > div {
+    flex-grow: 1;
+    outline: none;
+  }
+}

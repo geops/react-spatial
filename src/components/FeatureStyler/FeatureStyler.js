@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Feature } from 'ol';
 import { Style, Icon } from 'ol/style';
 import { asString } from 'ol/color';
+import StopEvents from '../StopEvents';
 import Select from '../Select';
 import Button from '../Button';
 
@@ -352,6 +353,7 @@ class FeatureStyler extends PureComponent {
       useTextStyle: false,
       useColorStyle: false,
     };
+    this.isFocusSet = false;
   }
 
   componentDidMount() {
@@ -382,6 +384,17 @@ class FeatureStyler extends PureComponent {
       feature !== prevProps.feature
     ) {
       this.updateContent();
+
+      // When the popup is initially opened,
+      // the current feature is the same as the previous feature.
+      // Therefore, we cannot set the focus here.
+      this.isFocusSet = false;
+    }
+
+    if (!this.isFocusSet && this.textareaInput) {
+      this.textareaInput.focus();
+      this.textareaInput.setSelectionRange(0, -1);
+      this.isFocusSet = true;
     }
 
     if (updateContent !== prevProps.updateContent) {
@@ -607,12 +620,16 @@ class FeatureStyler extends PureComponent {
         <div>
           {labels.modifyText ? <div>{t(labels.modifyText)}</div> : null}
           <textarea
+            ref={c => {
+              this.textareaInput = c;
+            }}
             rows="1"
             value={name}
             onChange={e => {
               this.setState({ name: e.target.value });
             }}
           />
+          <StopEvents observe={this.textareaInput} events={['keydown']} />
         </div>
 
         <div className={classNameTextFont}>

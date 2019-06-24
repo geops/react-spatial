@@ -1,0 +1,37 @@
+.tm-tabs {
+  min-height: 50px;
+
+  ol {
+    margin: 0;
+  }
+
+  .tm-tab,
+  .tm-tabs-content {
+    border: 1px solid #eee;
+  }
+
+  .tm-tab {
+    color: $gray;
+
+    &.tm-active {
+      color: $brand-primary;
+      border-bottom: none;
+    }
+  }
+
+  .tm-tabs-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+
+    li {
+      flex-grow: 1;
+    }
+  }
+
+  .tm-tabs-content {
+    padding: 20px;
+    border-top: none;
+    overflow: auto;
+  }
+}

@@ -1,6 +1,6 @@
 {
   "name": "react-spatial",
-  "version": "0.0.14-beta.26",
+  "version": "0.0.14-beta.39",
   "description": "Components to build React map apps.",
   "license": "MIT",
   "devDependencies": {
@@ -18,11 +18,13 @@
     "enzyme-adapter-react-16": "^1.12.0",
     "eslint": "^5.12.0",
     "eslint-config-airbnb": "^17.1.0",
-    "eslint-config-prettier": "^4.1.0",
+    "eslint-config-prettier": "^5.0.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.3",
+    "generact": "^0.4.0",
+    "husky": "^2.4.1",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.1.0",
     "jest-canvas-mock": "^2.0.0-alpha.3",
@@ -30,6 +32,7 @@
     "jest-serializer-html": "^7.0.0",
     "jest-svg-transformer": "^1.0.0",
     "jsts": "^2.0.3",
+    "lint-staged": "^8.2.1",
     "node-sass": "^4.11.0",
     "ol": "^5.3.0",
     "ole": "0.0.4-beta.10",
@@ -96,7 +99,7 @@
     "publish:beta": "yarn publish:public --tag beta",
     "doc:server": "styleguidist server",
     "start": "yarn doc:server",
-    "symlink": "yarn build && cd build && yarn link"
+    "cp": "generact --root src/components"
   },
   "browserslist": [
     ">0.2%",

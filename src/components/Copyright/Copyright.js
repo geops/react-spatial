@@ -15,7 +15,6 @@ class Copyright extends Component {
   }
 
   componentDidMount() {
-    this.updateLayers();
     this.updateLayerService();
   }
 
@@ -33,19 +32,23 @@ class Copyright extends Component {
 
   updateLayerService() {
     const { layerService } = this.props;
-    layerService.on('change:visible', () => this.updateLayers());
+    layerService.on('change:visible', () => this.updateCopyright());
+    this.updateCopyright();
   }
 
-  updateLayers() {
+  updateCopyright() {
     const { layerService } = this.props;
-    const copyrights = layerService.getCopyrights();
     this.setState({
-      copyrights,
+      copyrights: layerService.getCopyrights(),
     });
   }
 
   render() {
     const { copyrights } = this.state;
+    if (!copyrights) {
+      return null;
+    }
+
     return (
       <div className="tm-copyright">
         &copy;&nbsp;
