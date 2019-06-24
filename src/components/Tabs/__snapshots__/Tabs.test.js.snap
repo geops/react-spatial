@@ -11,6 +11,7 @@ exports[`Tabs should match snapshot. with two tabs. 1`] = `
       className="tm-tab"
     >
       <div
+        accessKey=""
         aria-label="Tab 1"
         className="tm-button"
         onClick={[Function]}
@@ -26,6 +27,7 @@ exports[`Tabs should match snapshot. with two tabs. 1`] = `
       className="tm-tab tm-active"
     >
       <div
+        accessKey=""
         aria-label="Tab 2"
         className="tm-button"
         onClick={[Function]}

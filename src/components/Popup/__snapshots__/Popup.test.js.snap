@@ -16,6 +16,7 @@ exports[`Popup should match snapshot with default values. 1`] = `
     tabIndex=""
   >
     <div
+      accessKey=""
       aria-label="Popup Schliessen"
       className="tm-button tm-popup-close-bt"
       onClick={[Function]}
@@ -67,6 +68,7 @@ exports[`Popup should match snapshot with tm-tooltip class. 1`] = `
     tabIndex="0"
   >
     <div
+      accessKey=""
       aria-label="Popup Schliessen"
       className="tm-button tm-popup-close-bt"
       onClick={[Function]}

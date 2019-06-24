@@ -17,6 +17,7 @@ exports[`SearchInput when no properties are set matches snapshot 1`] = `
     value=""
   />
   <div
+    accessKey=""
     aria-label=""
     className="tm-button tm-bt-clear"
     onClick={[Function]}
@@ -51,6 +52,7 @@ exports[`SearchInput when no properties are set matches snapshot 1`] = `
     </svg>
   </div>
   <div
+    accessKey=""
     aria-label=""
     className="tm-button tm-bt-search"
     onClick={[Function]}
@@ -81,6 +83,7 @@ exports[`SearchInput when properties are set matches snapshot  1`] = `
     value="bar"
   />
   <div
+    accessKey=""
     aria-label=""
     className="tm-button tm-bt-clear"
     onClick={[Function]}
@@ -110,6 +113,7 @@ exports[`SearchInput when properties are set matches snapshot  1`] = `
     </svg>
   </div>
   <div
+    accessKey=""
     aria-label=""
     className="tm-button tm-bt-search"
     onClick={[Function]}
@@ -140,6 +144,7 @@ exports[`SearchInput when properties are set matches snapshot  2`] = `
     value="bar"
   />
   <div
+    accessKey=""
     aria-label=""
     className="tm-button tm-bt-clear"
     onClick={[Function]}
@@ -169,6 +174,7 @@ exports[`SearchInput when properties are set matches snapshot  2`] = `
     </svg>
   </div>
   <div
+    accessKey=""
     aria-label=""
     className="tm-button tm-bt-search"
     onClick={[Function]}
@@ -199,6 +205,7 @@ exports[`SearchInput when properties are set matches snapshot when className is 
     value=""
   />
   <div
+    accessKey=""
     aria-label=""
     className="tm-button tm-bt-clear"
     onClick={[Function]}
@@ -233,6 +240,7 @@ exports[`SearchInput when properties are set matches snapshot when className is 
     </svg>
   </div>
   <div
+    accessKey=""
     aria-label=""
     className="tm-button tm-bt-search"
     onClick={[Function]}

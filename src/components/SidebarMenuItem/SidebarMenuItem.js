@@ -34,6 +34,11 @@ const propTypes = {
   tabIndex: PropTypes.number,
 
   /**
+   * Keyboard accesskey shortcut.
+   */
+  accessKey: PropTypes.string,
+
+  /**
    * Title of the sidebar item.
    */
   title: PropTypes.string.isRequired,
@@ -44,6 +49,7 @@ const defaultProps = {
   showIconOnly: false,
   className: 'tm-sidebar-item',
   tabIndex: 0,
+  accessKey: '',
 };
 
 /**
@@ -57,6 +63,7 @@ function SidebarMenuItem({
   className,
   title,
   tabIndex,
+  accessKey,
 }) {
   return (
     <Button
@@ -64,6 +71,7 @@ function SidebarMenuItem({
       className={`${className}${active ? ' tm-active' : ''}`}
       title={title}
       onClick={e => onClick(e)}
+      accessKey={accessKey}
     >
       <div>{icon}</div>
       {showIconOnly ? null : <span>{title}</span>}

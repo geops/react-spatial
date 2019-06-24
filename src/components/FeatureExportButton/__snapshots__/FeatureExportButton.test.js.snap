@@ -2,6 +2,7 @@
 
 exports[`FeatureExportButton should match snapshot with children passed. 1`] = `
 <div
+  accessKey=""
   className="tm-button tm-feature-export"
   onClick={[Function]}
   onKeyPress={[Function]}
@@ -38,6 +39,7 @@ exports[`FeatureExportButton should match snapshot with children passed. 1`] = `
 
 exports[`FeatureExportButton should match snapshot. 1`] = `
 <div
+  accessKey=""
   aria-label="FeatureExport"
   className="tm-feature-export-example"
   onClick={[Function]}

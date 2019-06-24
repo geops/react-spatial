@@ -28,6 +28,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <span />
       </label>
       <div
+        accessKey=""
         className="tm-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -66,6 +67,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <span />
         </label>
         <div
+          accessKey=""
           className="tm-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
@@ -102,6 +104,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <span />
         </label>
         <div
+          accessKey=""
           className="tm-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
@@ -138,6 +141,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <span />
         </label>
         <div
+          accessKey=""
           className="tm-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
@@ -175,6 +179,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <span />
       </label>
       <div
+        accessKey=""
         className="tm-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -213,6 +218,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <span />
         </label>
         <div
+          accessKey=""
           className="tm-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
@@ -249,6 +255,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <span />
         </label>
         <div
+          accessKey=""
           className="tm-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
@@ -286,6 +293,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <span />
       </label>
       <div
+        accessKey=""
         className="tm-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -322,6 +330,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <span />
       </label>
       <div
+        accessKey=""
         className="tm-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -358,6 +367,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <span />
       </label>
       <div
+        accessKey=""
         className="tm-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -401,6 +411,7 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
         <span />
       </label>
       <div
+        accessKey=""
         className="tm-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -437,6 +448,7 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
         <span />
       </label>
       <div
+        accessKey=""
         className="tm-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -473,6 +485,7 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
         <span />
       </label>
       <div
+        accessKey=""
         className="tm-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -516,6 +529,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <span />
       </label>
       <div
+        accessKey=""
         className="quux"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -554,6 +568,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <span />
         </label>
         <div
+          accessKey=""
           className="quux"
           onClick={[Function]}
           onKeyPress={[Function]}
@@ -590,6 +605,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <span />
         </label>
         <div
+          accessKey=""
           className="quux"
           onClick={[Function]}
           onKeyPress={[Function]}
@@ -626,6 +642,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <span />
         </label>
         <div
+          accessKey=""
           className="quux"
           onClick={[Function]}
           onKeyPress={[Function]}
@@ -663,6 +680,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <span />
       </label>
       <div
+        accessKey=""
         className="quux"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -701,6 +719,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <span />
         </label>
         <div
+          accessKey=""
           className="quux"
           onClick={[Function]}
           onKeyPress={[Function]}
@@ -737,6 +756,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <span />
         </label>
         <div
+          accessKey=""
           className="quux"
           onClick={[Function]}
           onKeyPress={[Function]}
@@ -774,6 +794,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <span />
       </label>
       <div
+        accessKey=""
         className="quux"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -810,6 +831,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <span />
       </label>
       <div
+        accessKey=""
         className="quux"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -846,6 +868,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <span />
       </label>
       <div
+        accessKey=""
         className="quux"
         onClick={[Function]}
         onKeyPress={[Function]}

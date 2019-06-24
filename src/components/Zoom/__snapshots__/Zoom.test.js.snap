@@ -5,6 +5,7 @@ exports[`Button should match snapshot. 1`] = `
   className="tm-zooms-bar"
 >
   <div
+    accessKey=""
     aria-label="Zoom in"
     className="tm-button tm-round-blue"
     onClick={[Function]}
@@ -34,6 +35,7 @@ exports[`Button should match snapshot. 1`] = `
     </svg>
   </div>
   <div
+    accessKey=""
     aria-label="Zoom out"
     className="tm-button tm-round-blue"
     onClick={[Function]}

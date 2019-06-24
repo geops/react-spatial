@@ -10,6 +10,7 @@ exports[`BaseLayerToggler matches snapshots using default properties. 1`] = `
     tabIndex={0}
   />
   <div
+    accessKey=""
     className="tm-base-layer-item"
     onClick={[Function]}
     onKeyPress={[Function]}
@@ -20,6 +21,7 @@ exports[`BaseLayerToggler matches snapshots using default properties. 1`] = `
     className="tm-footer"
   >
     <div
+      accessKey=""
       className="tm-base-layer-previous"
       onClick={[Function]}
       onKeyPress={[Function]}
@@ -46,6 +48,7 @@ exports[`BaseLayerToggler matches snapshots using default properties. 1`] = `
       </svg>
     </div>
     <div
+      accessKey=""
       className="tm-base-layer-next"
       onClick={[Function]}
       onKeyPress={[Function]}
