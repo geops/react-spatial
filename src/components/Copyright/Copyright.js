@@ -3,14 +3,27 @@ import PropTypes from 'prop-types';
 import LayerService from '../../LayerService';
 
 const propTypes = {
+  /**
+   * Layer Service.
+   */
   layerService: PropTypes.instanceOf(LayerService).isRequired,
+
+  /**
+   * Format function. Called with an array of copyrights from visible layers
+   * and returns the copyright.
+   */
+  format: PropTypes.func,
+};
+
+const defaultProps = {
+  format: copyrights => <>&copy; {copyrights.join(' | ')}</>,
 };
 
 class Copyright extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      copyrights: null,
+      copyrights: [],
     };
   }
 
@@ -47,24 +60,22 @@ class Copyright extends Component {
     const unique = Array.from(new Set(copyrights));
 
     this.setState({
-      copyrights: unique.join(' | '),
+      copyrights: unique,
     });
   }
 
   render() {
+    const { format } = this.props;
     const { copyrights } = this.state;
-    if (!copyrights) {
+
+    if (!copyrights.length) {
       return null;
     }
 
-    return (
-      <div className="tm-copyright">
-        &copy;&nbsp;
-        {copyrights}
-      </div>
-    );
+    return <div className="tm-copyright">{format(copyrights)}</div>;
   }
 }
 
 Copyright.propTypes = propTypes;
+Copyright.defaultProps = defaultProps;
 export default Copyright;
