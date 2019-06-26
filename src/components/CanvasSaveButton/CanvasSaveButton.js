@@ -64,7 +64,7 @@ const propTypes = {
   scale: PropTypes.number,
 
   /**
-   * Extra data, such as copyright, north arrow configuration, or scale.
+   * Extra data, such as copyright, north arrow configuration.
    * All extra data is optional.
    *
    * Example 1:
