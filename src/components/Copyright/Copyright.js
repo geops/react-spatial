@@ -38,8 +38,16 @@ class Copyright extends Component {
 
   updateCopyright() {
     const { layerService } = this.props;
+
+    const copyrights = layerService
+      .getLayersAsFlatArray()
+      .filter(l => l.getVisible() && l.getCopyright())
+      .map(l => l.getCopyright());
+
+    const unique = Array.from(new Set(copyrights));
+
     this.setState({
-      copyrights: layerService.getCopyrights(),
+      copyrights: unique.join(' | '),
     });
   }
 
