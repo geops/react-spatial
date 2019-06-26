@@ -76,7 +76,6 @@ class ConfigReader {
     delete conf.data;
 
     const sourceOptions = {
-      url: item.data.url2,
       requestEncoding: item.data.requestEncoding,
       crossOrigin: 'Anonymous',
       tileGrid: new WMTSTileGrid({
