@@ -6,17 +6,12 @@ This demonstrates the use of CanvasSaveButton.
 import React from 'react';
 import { TiImage } from 'react-icons/ti';
 import OLMap from 'ol/Map';
-import Layer from 'react-spatial/Layer';
-import VectorLayer from 'react-spatial/VectorLayer';
-import VectorSource from 'ol/source/Vector';
 import CanvasSaveButton from 'react-spatial/components/CanvasSaveButton';
 import BasicMap from 'react-spatial/components/BasicMap';
 import ConfigReader from 'react-spatial/ConfigReader';
 import LayerService from 'react-spatial/LayerService';
 import NorthArrow from '../NorthArrow/NorthArrow';
 import Feature from 'ol/Feature';
-import { Point, LineString } from 'ol/geom';
-import { Style, Fill, Icon, Text, Stroke } from 'ol/style';
 
 
 const map = new OLMap({ controls: [] });
