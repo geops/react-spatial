@@ -93,10 +93,10 @@ const sanitizeFeature = feature => {
       if (image instanceof Icon) {
         applyTextStyleForIcon(image, text);
       }
-
-      fill = undefined;
-      stroke = undefined;
     }
+
+    fill = undefined;
+    stroke = undefined;
 
     styles = [
       new Style({
