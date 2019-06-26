@@ -16,7 +16,12 @@ const propTypes = {
 };
 
 const defaultProps = {
-  format: copyrights => <>&copy; {copyrights.join(' | ')}</>,
+  format: copyrights => (
+    <>
+      &copy;
+      {copyrights.join(' | ')}
+    </>
+  ),
 };
 
 class Copyright extends Component {
