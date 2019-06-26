@@ -316,6 +316,15 @@ class FeatureStyler extends PureComponent {
 
       // Update Icon style if it existed.
       let iconStyle = oldStyle.getImage();
+
+      const newStyle = new Style({
+        fill: fillStyle,
+        stroke: strokeStyle,
+        text: textStyle,
+        image: iconStyle,
+        zIndex: oldStyle.getZIndex(),
+      });
+
       if (iconStyle instanceof Icon && icon) {
         iconStyle = new Icon({
           src: icon.url,
@@ -323,31 +332,18 @@ class FeatureStyler extends PureComponent {
           anchor: icon.anchor,
         });
 
+        newStyle.setImage(iconStyle);
+
         if (!iconStyle.getSize()) {
           // Ensure the image is loaded before applying the style.
           iconStyle.load();
           return iconStyle.getImage().addEventListener('load', () => {
-            resolve(
-              new Style({
-                fill: fillStyle,
-                stroke: strokeStyle,
-                text: textStyle,
-                image: iconStyle,
-                zIndex: oldStyle.getZIndex(),
-              }),
-            );
+            resolve(newStyle);
           });
         }
       }
-      return resolve(
-        new Style({
-          fill: fillStyle,
-          stroke: strokeStyle,
-          text: textStyle,
-          image: iconStyle,
-          zIndex: oldStyle.getZIndex(),
-        }),
-      );
+
+      return resolve(newStyle);
     });
   }
 
@@ -545,11 +541,11 @@ class FeatureStyler extends PureComponent {
       textRotation,
     });
 
-    stylePromise.then(newStyle => {
-      // Set feature's properties
-      feature.set('name', text);
-      feature.set('description', description);
+    // Set feature's properties
+    feature.set('name', text);
+    feature.set('description', description);
 
+    stylePromise.then(newStyle => {
       // Reconstruct the initial styles array.
       feature.setStyle([newStyle]);
     });
