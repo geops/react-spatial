@@ -278,63 +278,64 @@ class FeatureStyler extends PureComponent {
     } = properties;
 
     // Return a promise in case the image needs to be loaded.
-    return new Promise(resolve => {
-      // Update Fill style if it existed.
-      const fillStyle = oldStyle.getFill();
-      if (fillStyle && color) {
-        fillStyle.setColor(color.fill.concat(fillStyle.getColor()[3]));
+
+    // Update Fill style if it existed.
+    const fillStyle = oldStyle.getFill();
+    if (fillStyle && color) {
+      fillStyle.setColor(color.fill.concat(fillStyle.getColor()[3]));
+    }
+
+    // Update Stroke style if it existed
+    const strokeStyle = oldStyle.getStroke();
+    if (strokeStyle && color) {
+      strokeStyle.setColor(color.fill.concat(strokeStyle.getColor()[3]));
+    }
+
+    // Update Text style if it existed;
+    const textStyle = oldStyle.getText() ? oldStyle.getText().clone() : null;
+    if (textStyle) {
+      textStyle.setText(text);
+
+      if (textSize) {
+        textStyle.setScale(textSize.scale);
       }
 
-      // Update Stroke style if it existed
-      const strokeStyle = oldStyle.getStroke();
-      if (strokeStyle && color) {
-        strokeStyle.setColor(color.fill.concat(strokeStyle.getColor()[3]));
+      if (font) {
+        textStyle.setFont(font);
       }
 
-      // Update Text style if it existed;
-      const textStyle = oldStyle.getText() ? oldStyle.getText().clone() : null;
-      if (textStyle) {
-        textStyle.setText(text);
-
-        if (textSize) {
-          textStyle.setScale(textSize.scale);
-        }
-
-        if (font) {
-          textStyle.setFont(font);
-        }
-
-        if (textColor) {
-          const olColor = textColor.fill.concat([1]);
-          const textFill = textStyle.getFill();
-          textFill.setColor(olColor);
-          textStyle.setFill(textFill);
-        }
-
-        textStyle.setRotation(textRotation);
+      if (textColor) {
+        const olColor = textColor.fill.concat([1]);
+        const textFill = textStyle.getFill();
+        textFill.setColor(olColor);
+        textStyle.setFill(textFill);
       }
 
-      // Update Icon style if it existed.
-      let iconStyle = oldStyle.getImage();
+      textStyle.setRotation(textRotation);
+    }
 
-      const newStyle = new Style({
-        fill: fillStyle,
-        stroke: strokeStyle,
-        text: textStyle,
-        image: iconStyle,
-        zIndex: oldStyle.getZIndex(),
+    // Update Icon style if it existed.
+    let iconStyle = oldStyle.getImage();
+
+    const newStyle = new Style({
+      fill: fillStyle,
+      stroke: strokeStyle,
+      text: textStyle,
+      image: iconStyle,
+      zIndex: oldStyle.getZIndex(),
+    });
+
+    if (iconStyle instanceof Icon && icon) {
+      iconStyle = new Icon({
+        src: icon.url,
+        scale: iconSize.scale,
+        anchor: icon.anchor,
       });
 
-      if (iconStyle instanceof Icon && icon) {
-        iconStyle = new Icon({
-          src: icon.url,
-          scale: iconSize.scale,
-          anchor: icon.anchor,
-        });
+      newStyle.setImage(iconStyle);
 
-        newStyle.setImage(iconStyle);
-
-        if (!iconStyle.getSize()) {
+      if (!iconStyle.getSize()) {
+        return new Promise(resolve => {
           // Ensure the image is loaded before applying the style.
           iconStyle.load();
           iconStyle.getImage().addEventListener('load', () => {
@@ -343,12 +344,10 @@ class FeatureStyler extends PureComponent {
           iconStyle.getImage().addEventListener('error', () => {
             resolve(newStyle);
           });
-          return iconStyle;
-        }
+        });
       }
-
-      return resolve(newStyle);
-    });
+    }
+    return Promise.resolve(newStyle);
   }
 
   constructor(props) {
