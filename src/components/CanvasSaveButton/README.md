@@ -6,61 +6,103 @@ This demonstrates the use of CanvasSaveButton.
 import React from 'react';
 import { TiImage } from 'react-icons/ti';
 import OLMap from 'ol/Map';
+import Layer from 'react-spatial/Layer';
+import VectorLayer from 'react-spatial/VectorLayer';
+import VectorSource from 'ol/source/Vector';
 import CanvasSaveButton from 'react-spatial/components/CanvasSaveButton';
 import BasicMap from 'react-spatial/components/BasicMap';
 import ConfigReader from 'react-spatial/ConfigReader';
 import LayerService from 'react-spatial/LayerService';
-import Copyright from '../Copyright/Copyright';
 import NorthArrow from '../NorthArrow/NorthArrow';
+import Feature from 'ol/Feature';
+import { Point, LineString } from 'ol/geom';
+import { Style, Fill, Icon, Text, Stroke } from 'ol/style';
 
-class CanvasSaveButtonExample extends React.Component {
-  constructor(props) {
-    super(props);
-    this.map = new OLMap({ controls: [] });
-    this.center = [-10997148, 4569099];
 
-    const layers = ConfigReader.readConfig(
-      this.map,
-      treeData,
-    );
+const map = new OLMap({ controls: [] });
+const layers = ConfigReader.readConfig(map, hdData);
 
-    this.layerService = new LayerService(layers);
-  }
+const defaultIconStyle = new Style({
+  image: new Icon({
+    src: 'images/marker.png',
+    scale: 0.5,
+  }),
+});
 
-  render() {
-    const extent = [-16681616.919511989, 655523.1517989757, -5312679.080488012, 8482674.848201025];
+const defaultTextStyle = new Style({
+  text: new Text({
+    font: '16px arial',
+    text: 'My custom text',
+    fill: new Fill({
+      color: [255, 0, 0],
+    }),
+    stroke: new Stroke({
+      color: [255, 255, 255],
+      width: 3,
+    }),
+    scale: 1.5,
+    rotation: 0.5,
+  }),
+});
 
-    return (
-      <div className="tm-canvas-save-button-example">
-        <BasicMap
-          map={this.map}
-          center={this.center}
-          zoom={3}
-        />
-        <CanvasSaveButton
-          title="Karte als Bild speichern."
-          className="tm-round-grey-hover-primary tm-button"
-          map={this.map}
-          extent={extent}
-          extraData={{
-            copyright: {
-              text: () => {
-                return this.layerService.getCopyrights();
-              },
+const defaultLineStyle = new Style({
+  stroke: new Stroke({
+    color: 'red',
+    lineDash: [10, 10],
+    width: 3,
+  }),
+});
+const text = new Feature(new Point([-8000000, 3000000]));
+text.setStyle(defaultTextStyle.clone());
+
+const icon = new Feature(new Point([8000000, 3000000]));
+icon.setStyle(defaultIconStyle.clone());
+
+const line = new Feature(new LineString([
+  [-8000000, 3000000], [8000000, 3000000],
+]));
+line.setStyle(defaultLineStyle.clone());
+
+const vectorLayer = new VectorLayer({
+  source: new VectorSource({
+    features: [text, icon, line],
+  }),
+});
+
+const layerService = new LayerService([...layers, vectorLayer]);
+
+function CanvasSaveButtonExample() {
+  return (
+    <div className="tm-canvas-save-button-example">
+      <BasicMap
+        map={map}
+        layers={layerService.getLayers()}
+        zoom={1}
+      />
+      <CanvasSaveButton
+        title="Save the map as PNG"
+        className="tm-round-grey-hover-primary tm-button"
+        map={map}
+        layerService={layerService}
+        scale={2}
+        extraData={{
+          copyright: {
+            text: () => {
+              return layerService.getCopyrights();
             },
-            northArrow: {
-              rotation: () => {
-                return NorthArrow.radToDeg(this.map.getView().getRotation());
-              },
-              circled: true,
+          },
+          northArrow: {
+            rotation: () => {
+              return NorthArrow.radToDeg(map.getView().getRotation());
             },
-          }}
-        >
-          <TiImage focusable={false} />
-        </CanvasSaveButton>
-      </div>
-    );
-  }
+            circled: true,
+          },
+        }}
+      >
+        <TiImage focusable={false} />
+      </CanvasSaveButton>
+    </div>
+  );
 }
 
 <CanvasSaveButtonExample />;

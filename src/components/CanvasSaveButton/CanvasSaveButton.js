@@ -2,6 +2,9 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import OLMap from 'ol/Map';
 import { getTopLeft, getBottomRight } from 'ol/extent';
+import XYZ from 'ol/source/XYZ';
+import WMTS from 'ol/source/WMTS';
+import LayerService from '../../LayerService';
 import Button from '../Button';
 import NorthArrowSimple from '../../images/northArrow.url.svg';
 import NorthArrowCircle from '../../images/northArrowCircle.url.svg';
@@ -36,6 +39,11 @@ const propTypes = {
   map: PropTypes.instanceOf(OLMap),
 
   /**
+   * Layers provider. Only needed if you plan to export HiDpi layers.
+   */
+  layerService: PropTypes.instanceOf(LayerService),
+
+  /**
    * Extent for the export. If no extent is given, the whole map is exported.
    */
   extent: PropTypes.arrayOf(PropTypes.number),
@@ -49,8 +57,14 @@ const propTypes = {
    */
   coordinates: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
 
+  /** Scale the map for better quality. Possible values: 1, 2 or 3.
+   * WARNING: The tiled layer with a WMTS or XYZ source must provides an url
+   * for each scale in the config file.
+   */
+  scale: PropTypes.number,
+
   /**
-   * Extra data, such as copyright, north arrow configuration, or dpi.
+   * Extra data, such as copyright, north arrow configuration, or scale.
    * All extra data is optional.
    *
    * Example 1:
@@ -91,23 +105,20 @@ const propTypes = {
         circled, // Display circle around the north arrow (Does not work for custom src)
       },
     }
-   * Example 4:
-   *
-    {
-      dpi: 300, // dpi for exported image, default is 96
-    }
    */
   extraData: PropTypes.object,
 };
 
 const defaultProps = {
   map: null,
+  layerService: null,
   tabIndex: 0,
   className: 'tm-canvas-save-button tm-button',
   saveFormat: 'image/png',
   extent: null,
   extraData: null,
   coordinates: null,
+  scale: 1,
 };
 
 /**
@@ -124,6 +135,52 @@ class CanvasSaveButton extends PureComponent {
     this.fileExt = this.options.format === 'image/jpeg' ? 'jpg' : 'png';
   }
 
+  onBeforeSave() {
+    const { map, scale, layerService } = this.props;
+
+    if (scale === 1) {
+      return Promise.resolve(map);
+    }
+
+    const mapToExport = new OLMap({ controls: [], pixelRatio: scale });
+    mapToExport.setView(map.getView());
+
+    map.getLayers().forEach(layer => {
+      if (!layer.getVisible()) {
+        return;
+      }
+      if (
+        layerService &&
+        (layer.getSource() instanceof XYZ || layer.getSource() instanceof WMTS)
+      ) {
+        const layerConf = layerService.getLayer(layer.get('name'));
+        if (layerConf && layerConf.olLayersHd[scale]) {
+          mapToExport.addLayer(layerConf.olLayersHd[scale]);
+          return;
+        }
+      }
+      mapToExport.addLayer(layer);
+    });
+    mapToExport.setTarget(map.getTarget());
+    mapToExport.getView().setCenter(map.getView().getCenter());
+    mapToExport.getView().setResolution(map.getView().getResolution());
+
+    return new Promise(resolve => {
+      mapToExport.once('rendercomplete', () => {
+        resolve(mapToExport);
+      });
+    });
+  }
+
+  onAfterSave(mapToExport) {
+    const { scale } = this.props;
+    if (scale === 1) {
+      return;
+    }
+    mapToExport.getLayers().clear();
+    mapToExport.setTarget(null);
+  }
+
   getDownloadImageName() {
     return (
       `${window.document.title.replace(/ /g, '_').toLowerCase()}` +
@@ -131,23 +188,14 @@ class CanvasSaveButton extends PureComponent {
     );
   }
 
-  createCanvasImage() {
+  createCanvasImage(mapToExport) {
     return new Promise(resolve => {
-      const { map, extent, extraData, coordinates } = this.props;
+      const { extent, scale, extraData, coordinates } = this.props;
 
-      const dpi = extraData && extraData.dpi ? extraData.dpi : 96;
-      const scaleFactor = dpi / 96;
-
-      map.once('precompose', evt => {
+      mapToExport.once('rendercomplete', evt => {
         const { canvas } = evt.context;
-        canvas.width = Math.ceil(canvas.width * scaleFactor);
-        canvas.height = Math.ceil(canvas.height * scaleFactor);
         const ctx = canvas.getContext('2d');
-        ctx.scale(scaleFactor, scaleFactor);
-      });
-
-      map.once('postcompose', evt => {
-        const { canvas } = evt.context;
+        ctx.scale(scale, scale);
 
         let clip = {
           x: 0,
@@ -170,8 +218,12 @@ class CanvasSaveButton extends PureComponent {
         }
 
         if (firstCoordinate && oppositeCoordinate) {
-          const firstPixel = map.getPixelFromCoordinate(firstCoordinate);
-          const oppositePixel = map.getPixelFromCoordinate(oppositeCoordinate);
+          const firstPixel = mapToExport.getPixelFromCoordinate(
+            firstCoordinate,
+          );
+          const oppositePixel = mapToExport.getPixelFromCoordinate(
+            oppositeCoordinate,
+          );
           const pixelTopLeft = [
             firstPixel[0] <= oppositePixel[0]
               ? firstPixel[0]
@@ -186,10 +238,10 @@ class CanvasSaveButton extends PureComponent {
           ];
 
           clip = {
-            x: pixelTopLeft[0] * scaleFactor,
-            y: pixelTopLeft[1] * scaleFactor,
-            w: (pixelBottomRight[0] - pixelTopLeft[0]) * scaleFactor,
-            h: (pixelBottomRight[1] - pixelTopLeft[1]) * scaleFactor,
+            x: pixelTopLeft[0] * scale,
+            y: pixelTopLeft[1] * scale,
+            w: (pixelBottomRight[0] - pixelTopLeft[0]) * scale,
+            h: (pixelBottomRight[1] - pixelTopLeft[1]) * scale,
           };
         }
 
@@ -217,6 +269,8 @@ class CanvasSaveButton extends PureComponent {
 
         // Copyright
         if (extraData && extraData.copyright && extraData.copyright.text) {
+          destContext.save();
+          destContext.scale(scale, scale);
           const text =
             typeof extraData.copyright.text === 'function'
               ? extraData.copyright.text()
@@ -224,7 +278,8 @@ class CanvasSaveButton extends PureComponent {
 
           destContext.font = extraData.copyright.font || '12px Arial';
           destContext.fillStyle = extraData.copyright.fillStyle || 'black';
-          destContext.fillText(text, padding, clip.h - padding);
+          destContext.fillText(text, padding, clip.h / scale - padding);
+          destContext.restore();
         }
 
         // North arrow
@@ -241,13 +296,11 @@ class CanvasSaveButton extends PureComponent {
           img.onload = () => {
             destContext.save();
 
-            const arrowWidth = extraData.northArrow.width || 80;
-            const arrowHeight = extraData.northArrow.height || 80;
-            const arrowSize = Math.max(arrowWidth, arrowHeight);
-
+            const arrowWidth = (extraData.northArrow.width || 80) * scale;
+            const arrowHeight = (extraData.northArrow.height || 80) * scale;
             destContext.translate(
-              clip.w - 2 * padding - arrowSize / 2,
-              clip.h - 2 * padding - arrowSize / 2,
+              clip.w - 2 * padding - arrowWidth / 2,
+              clip.h - 2 * padding - arrowHeight / 2,
             );
 
             if (extraData.northArrow.rotation) {
@@ -266,24 +319,24 @@ class CanvasSaveButton extends PureComponent {
               arrowWidth,
               arrowHeight,
             );
-
             destContext.restore();
 
+            resolve(destCanvas);
+          };
+
+          img.onerror = () => {
             resolve(destCanvas);
           };
         } else {
           resolve(destCanvas);
         }
-
-        // Re-render in order to revert to initial dpi
-        map.renderSync();
       });
-      map.renderSync();
+      mapToExport.renderSync();
     });
   }
 
-  downloadCanvasImage(e) {
-    this.createCanvasImage().then(canvas => {
+  downloadCanvasImage(mapToExport, e) {
+    const p = this.createCanvasImage(mapToExport).then(canvas => {
       if (/msie (9|10)/gi.test(window.navigator.userAgent.toLowerCase())) {
         // ie 9 and 10
         const url = canvas.toDataURL(this.options.format);
@@ -316,16 +369,24 @@ class CanvasSaveButton extends PureComponent {
       e.preventDefault();
       e.stopPropagation();
     }
+    return p;
   }
 
   render() {
     const { title, children, tabIndex, className } = this.props;
+
     return (
       <Button
         className={className}
         title={title}
         tabIndex={tabIndex}
-        onClick={e => this.downloadCanvasImage(e)}
+        onClick={e => {
+          this.onBeforeSave().then(mapToExport => {
+            this.downloadCanvasImage(mapToExport, e).then(() => {
+              this.onAfterSave(mapToExport);
+            });
+          });
+        }}
       >
         {children}
       </Button>

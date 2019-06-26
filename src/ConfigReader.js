@@ -15,9 +15,23 @@ class ConfigReader {
     const conf = { ...item };
     delete conf.data;
 
-    return new Layer({
+    const olLayersHd = {};
+    for (let i = 2; i <= 3; i += 1) {
+      olLayersHd[i] = new TileLayer({
+        zIndex: -1,
+        source: new XYZ({
+          tilePixelRatio: i,
+          url: item.data[`url${i}`],
+          crossOrigin: 'Anonymous',
+        }),
+      });
+    }
+
+    const l = new Layer({
       ...conf,
+      olLayersHd,
       olLayer: new TileLayer({
+        ...conf,
         zIndex: -1,
         source: new XYZ({
           url: item.data.url,
@@ -25,6 +39,7 @@ class ConfigReader {
         }),
       }),
     });
+    return l;
   }
 
   static createVectorLayer(item) {
@@ -50,7 +65,7 @@ class ConfigReader {
       olLayer: new TileLayer({
         source: new TileJSONSource({
           url: item.data.url,
-          crossorigin: 'anonymous',
+          crossOrigin: 'Anonymous',
         }),
       }),
     });
@@ -60,9 +75,35 @@ class ConfigReader {
     const conf = { ...item };
     delete conf.data;
 
+    const sourceOptions = {
+      url: item.data.url2,
+      requestEncoding: item.data.requestEncoding,
+      crossOrigin: 'Anonymous',
+      tileGrid: new WMTSTileGrid({
+        extent: item.data.projectionExtent,
+        resolutions: item.data.resolutions,
+        matrixIds: item.data.resolutions.map((res, i) => `${i}`),
+      }),
+      matrixSet: item.data.matrixSet,
+    };
+
+    const olLayersHd = {};
+    for (let i = 2; i <= 3; i += 1) {
+      olLayersHd[i] = new TileLayer({
+        zIndex: -1,
+        source: new WMTSSource({
+          ...sourceOptions,
+          tilePixelRatio: i,
+          url: item.data[`url${i}`],
+        }),
+      });
+    }
+
     return new Layer({
       ...conf,
+      olLayersHd,
       olLayer: new TileLayer({
+        ...conf,
         zIndex: -1,
         source: new WMTSSource({
           url: item.data.url,
