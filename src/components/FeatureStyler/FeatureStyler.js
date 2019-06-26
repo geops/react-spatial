@@ -337,9 +337,13 @@ class FeatureStyler extends PureComponent {
         if (!iconStyle.getSize()) {
           // Ensure the image is loaded before applying the style.
           iconStyle.load();
-          return iconStyle.getImage().addEventListener('load', () => {
+          iconStyle.getImage().addEventListener('load', () => {
             resolve(newStyle);
           });
+          iconStyle.getImage().addEventListener('error', () => {
+            resolve(newStyle);
+          });
+          return iconStyle;
         }
       }
 
