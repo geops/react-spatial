@@ -327,13 +327,15 @@ class FeatureStyler extends PureComponent {
           // Ensure the image is loaded before applying the style.
           iconStyle.load();
           return iconStyle.getImage().addEventListener('load', () => {
-            return new Style({
-              fill: fillStyle,
-              stroke: strokeStyle,
-              text: textStyle,
-              image: iconStyle,
-              zIndex: oldStyle.getZIndex(),
-            });
+            resolve(
+              new Style({
+                fill: fillStyle,
+                stroke: strokeStyle,
+                text: textStyle,
+                image: iconStyle,
+                zIndex: oldStyle.getZIndex(),
+              }),
+            );
           });
         }
       }
