@@ -277,61 +277,75 @@ class FeatureStyler extends PureComponent {
       textRotation,
     } = properties;
 
-    // Update Fill style if it existed.
-    const fillStyle = oldStyle.getFill();
-    if (fillStyle && color) {
-      fillStyle.setColor(color.fill.concat(fillStyle.getColor()[3]));
-    }
-
-    // Update Stroke style if it existed
-    const strokeStyle = oldStyle.getStroke();
-    if (strokeStyle && color) {
-      strokeStyle.setColor(color.fill.concat(strokeStyle.getColor()[3]));
-    }
-
-    // Update Text style if it existed;
-    const textStyle = oldStyle.getText() ? oldStyle.getText().clone() : null;
-    if (textStyle) {
-      textStyle.setText(text);
-
-      if (textSize) {
-        textStyle.setScale(textSize.scale);
+    // Return a promise in case the image needs to be loaded.
+    return new Promise(resolve => {
+      // Update Fill style if it existed.
+      const fillStyle = oldStyle.getFill();
+      if (fillStyle && color) {
+        fillStyle.setColor(color.fill.concat(fillStyle.getColor()[3]));
       }
 
-      if (font) {
-        textStyle.setFont(font);
+      // Update Stroke style if it existed
+      const strokeStyle = oldStyle.getStroke();
+      if (strokeStyle && color) {
+        strokeStyle.setColor(color.fill.concat(strokeStyle.getColor()[3]));
       }
 
-      if (textColor) {
-        const olColor = textColor.fill.concat([1]);
-        const textFill = textStyle.getFill();
-        textFill.setColor(olColor);
-        textStyle.setFill(textFill);
+      // Update Text style if it existed;
+      const textStyle = oldStyle.getText() ? oldStyle.getText().clone() : null;
+      if (textStyle) {
+        textStyle.setText(text);
+
+        if (textSize) {
+          textStyle.setScale(textSize.scale);
+        }
+
+        if (font) {
+          textStyle.setFont(font);
+        }
+
+        if (textColor) {
+          const olColor = textColor.fill.concat([1]);
+          const textFill = textStyle.getFill();
+          textFill.setColor(olColor);
+          textStyle.setFill(textFill);
+        }
+
+        textStyle.setRotation(textRotation);
       }
 
-      textStyle.setRotation(textRotation);
-    }
+      // Update Icon style if it existed.
+      let iconStyle = oldStyle.getImage();
+      if (iconStyle instanceof Icon && icon) {
+        iconStyle = new Icon({
+          src: icon.url,
+          scale: iconSize.scale,
+          anchor: icon.anchor,
+        });
 
-    // Update Icon style if it existed.
-    let iconStyle = oldStyle.getImage();
-    if (iconStyle instanceof Icon && icon) {
-      iconStyle = new Icon({
-        src: icon.url,
-        scale: iconSize.scale,
-        anchor: icon.anchor,
-      });
-
-      // We load the icon manually to be sure the size of the image's size is set asap.
-      // Useful when you use a layer's styleFunction that makes some canvas operations.
-      iconStyle.load();
-    }
-
-    return new Style({
-      fill: fillStyle,
-      stroke: strokeStyle,
-      text: textStyle,
-      image: iconStyle,
-      zIndex: oldStyle.getZIndex(),
+        if (!iconStyle.getSize()) {
+          // Ensure the image is loaded before applying the style.
+          iconStyle.load();
+          return iconStyle.getImage().addEventListener('load', () => {
+            return new Style({
+              fill: fillStyle,
+              stroke: strokeStyle,
+              text: textStyle,
+              image: iconStyle,
+              zIndex: oldStyle.getZIndex(),
+            });
+          });
+        }
+      }
+      return resolve(
+        new Style({
+          fill: fillStyle,
+          stroke: strokeStyle,
+          text: textStyle,
+          image: iconStyle,
+          zIndex: oldStyle.getZIndex(),
+        }),
+      );
     });
   }
 
@@ -516,7 +530,7 @@ class FeatureStyler extends PureComponent {
 
     // Update the style of the feature with the current style
     const oldStyles = FeatureStyler.getStyleAsArray(feature);
-    const style = FeatureStyler.updateStyleFromProperties(oldStyles[0], {
+    const stylePromise = FeatureStyler.updateStyleFromProperties(oldStyles[0], {
       font,
       description,
       color,
@@ -529,12 +543,14 @@ class FeatureStyler extends PureComponent {
       textRotation,
     });
 
-    // Set feature's properties
-    feature.set('name', text);
-    feature.set('description', description);
+    stylePromise.then(newStyle => {
+      // Set feature's properties
+      feature.set('name', text);
+      feature.set('description', description);
 
-    // Reconstruct the initial styles array.
-    feature.setStyle([style]);
+      // Reconstruct the initial styles array.
+      feature.setStyle([newStyle]);
+    });
   }
 
   renderColors(color, classNameColors, classNameSelected, onClick) {
