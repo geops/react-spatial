@@ -19,7 +19,7 @@ const defaultProps = {
   format: copyrights => (
     <>
       &copy;
-      {copyrights.join(' | ')}
+      {` ${copyrights.join(' | ')}`}
     </>
   ),
 };
