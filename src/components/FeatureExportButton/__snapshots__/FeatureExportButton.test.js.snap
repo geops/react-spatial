@@ -78,6 +78,9 @@ exports[`FeatureExportButton triggers onClick should export gpx format. 1`] = `
   <wpt lat="48.07903229472336"
        lon="7.358136177061042"
   >
+    <name>
+      test name
+    </name>
   </wpt>
 </gpx>
 `;
@@ -93,6 +96,9 @@ exports[`FeatureExportButton triggers onClick should export kml by default. 1`] 
       ExportLayer
     </name>
     <Placemark>
+      <name>
+        test name
+      </name>
       <Style>
         <IconStyle>
         <Icon>
