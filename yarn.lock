@@ -5891,7 +5891,7 @@ jss@^9.8.7:
     symbol-observable "^1.1.0"
     warning "^3.0.0"
 
-jsts@^2.0.3, jsts@^2.0.4:
+jsts@^2.0.3:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/jsts/-/jsts-2.0.4.tgz#5fb91aaea070ebedf0121454ed90b074027e8241"
   integrity sha512-YCfCuEgG9ynMFazjIH0YAtliFlaIcYmRqBY6EQP+VjNDEjuu4Il+91RDQWP4hAS7TXOeN/NYF/OL7Fmvg69pKg==
@@ -7130,13 +7130,10 @@ ol@^5.3.0:
     pixelworks "1.1.0"
     rbush "2.0.2"
 
-ole@^1.0.0-beta.6:
-  version "1.0.0-beta.6"
-  resolved "https://registry.yarnpkg.com/ole/-/ole-1.0.0-beta.6.tgz#f5e590deb2b9ddba528658d9e45ea19f45ceb612"
-  integrity sha512-6KEPfmYwhOb1jQabs6ayqh+XlIgFsNkJ7Ie3SQiB55TRqt0zHiGliyaGjB7cphvaSGOJ5LQjuBwk79DpqzxLNg==
-  dependencies:
-    jsts "^2.0.4"
-    ol "^5.3.0"
+ole@0.0.4-beta.9:
+  version "0.0.4-beta.9"
+  resolved "https://registry.yarnpkg.com/ole/-/ole-0.0.4-beta.9.tgz#dee9506f0c59b7f6bd48ef0a6227ce8d98c2ae59"
+  integrity sha512-u4YWfmhbB3ubdqKwkFeMjqZ4KKmtNKp141eSLgbyuKpdh2bZarnVHzZcTMcaznv30YDAgI9aXGezpN3PFbkgIg==
 
 on-finished@~2.3.0:
   version "2.3.0"

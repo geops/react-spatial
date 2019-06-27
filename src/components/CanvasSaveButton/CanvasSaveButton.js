@@ -202,10 +202,6 @@ class CanvasSaveButton extends PureComponent {
 
   addCopyright(destContext, clip) {
     const { extraData, scale } = this.props;
-
-    if (!extraData || !extraData.copyright || !extraData.copyright.text) {
-      return;
-    }
     const { text, font, fillStyle } = extraData.copyright;
     const copyright = typeof text === 'function' ? text() : text;
 
@@ -221,6 +217,50 @@ class CanvasSaveButton extends PureComponent {
       clip.h / scale - this.padding,
     );
     destContext.restore();
+  }
+
+  addNorthArrow(destContext, clip) {
+    const { scale, extraData } = this.props;
+    const { src, circled, width, height, rotation } = extraData.northArrow;
+
+    return new Promise(resolve => {
+      const img = new Image();
+      if (src) {
+        img.src = src;
+      } else {
+        img.src = circled ? NorthArrowCircle : NorthArrowSimple;
+      }
+
+      img.onload = () => {
+        destContext.save();
+        const arrowWidth = (width || 80) * scale;
+        const arrowHeight = (height || 80) * scale;
+        destContext.translate(
+          clip.w - 2 * this.padding - arrowWidth / 2,
+          clip.h - 2 * this.padding - arrowHeight / 2,
+        );
+
+        if (rotation) {
+          const angle = typeof rotation === 'function' ? rotation() : rotation;
+          destContext.rotate(angle * (Math.PI / 180));
+        }
+
+        destContext.drawImage(
+          img,
+          -arrowWidth / 2,
+          -arrowHeight / 2,
+          arrowWidth,
+          arrowHeight,
+        );
+        destContext.restore();
+
+        resolve();
+      };
+
+      img.onerror = () => {
+        resolve();
+      };
+    });
   }
 
   createCanvasImage() {
@@ -301,59 +341,20 @@ class CanvasSaveButton extends PureComponent {
           clip.h,
         );
 
-        const padding = 5;
-
         // Copyright
-        this.addCopyright(destContext, clip);
+        if (extraData && extraData.copyright && extraData.copyright.text) {
+          this.addCopyright(destContext, clip);
+        }
 
         // North arrow
+        let p = Promise.resolve();
         if (extraData && extraData.northArrow) {
-          const img = new Image();
-          if (extraData.northArrow.src) {
-            img.src = extraData.northArrow.src;
-          } else {
-            img.src = extraData.northArrow.circled
-              ? NorthArrowCircle
-              : NorthArrowSimple;
-          }
-
-          img.onload = () => {
-            destContext.save();
-
-            const arrowWidth = (extraData.northArrow.width || 80) * scale;
-            const arrowHeight = (extraData.northArrow.height || 80) * scale;
-            destContext.translate(
-              clip.w - 2 * padding - arrowWidth / 2,
-              clip.h - 2 * padding - arrowHeight / 2,
-            );
-
-            if (extraData.northArrow.rotation) {
-              const rotation =
-                typeof extraData.northArrow.rotation === 'function'
-                  ? extraData.northArrow.rotation()
-                  : extraData.northArrow.rotation;
-
-              destContext.rotate(rotation * (Math.PI / 180));
-            }
-
-            destContext.drawImage(
-              img,
-              -arrowWidth / 2,
-              -arrowHeight / 2,
-              arrowWidth,
-              arrowHeight,
-            );
-            destContext.restore();
-
-            resolve(destCanvas);
-          };
-
-          img.onerror = () => {
-            resolve(destCanvas);
-          };
-        } else {
-          resolve(destCanvas);
+          p = this.addNorthArrow(destContext, clip);
         }
+
+        p.then(() => {
+          resolve(destCanvas);
+        });
       });
       mapToExport.renderSync();
     });
