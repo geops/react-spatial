@@ -20,6 +20,11 @@ export default class LayerService {
     return this.layers;
   }
 
+  setLayers(layers) {
+    this.layers = layers;
+    this.listenChangeEvt();
+  }
+
   getLayersAsFlatArray(optLayers) {
     let layers = [];
     (optLayers || this.getLayers() || []).forEach(l => {
@@ -31,9 +36,7 @@ export default class LayerService {
   }
 
   getLayer(name) {
-    return this.getLayersAsFlatArray().find(l => {
-      return l.getName() === name;
-    });
+    return this.getLayersAsFlatArray().find(l => l.getName() === name);
   }
 
   getParent(child) {
