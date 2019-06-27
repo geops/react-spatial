@@ -238,11 +238,14 @@ const writeFeatures = (layer, featureProjection) => {
     const olStyle = new Style(newStyle);
     clone.setStyle(olStyle);
 
-    // Don't save empty text feature
     if (
-      !clone.getStyle().getText() ||
-      (clone.getStyle().getText() && clone.get('name').length)
+      clone.getGeometry() instanceof Point &&
+      olStyle.getText() &&
+      !olStyle.getText().getText().length
     ) {
+      // Don't save empty text feature
+      exportFeatures.push(new Feature());
+    } else {
       exportFeatures.push(clone);
     }
   });

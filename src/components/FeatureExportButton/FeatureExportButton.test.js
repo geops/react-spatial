@@ -62,7 +62,6 @@ describe('FeatureExportButton', () => {
         featsArray.push(
           new Feature({
             geometry: new Point([819103.972418, 6120013.078324]),
-            name: 'test name',
           }),
         );
       }
@@ -76,6 +75,17 @@ describe('FeatureExportButton', () => {
     };
 
     const iconLayer = renderLayer(1);
+
+    const textStyle = new Style({
+      text: new Text({
+        text: 'text name',
+        font: 'normal 16px Helvetica',
+        stroke: new Stroke({
+          color: [255, 255, 255, 1],
+          width: 3,
+        }),
+      }),
+    });
 
     test('should be trigger click function.', () => {
       const wrapper = shallow(<FeatureExportButton layer={iconLayer} />);
@@ -143,16 +153,6 @@ describe('FeatureExportButton', () => {
     test('should export text style in kml.', () => {
       const textlayer = renderLayer(2);
 
-      const textStyle = new Style({
-        text: new Text({
-          font: 'normal 16px Helvetica',
-          stroke: new Stroke({
-            color: [255, 255, 255, 1],
-            width: 3,
-          }),
-        }),
-      });
-
       textlayer.olLayer.getSource().forEachFeature(f => {
         f.setStyle(textStyle);
       });
@@ -170,16 +170,6 @@ describe('FeatureExportButton', () => {
     test('should only export none-empty text style in kml.', () => {
       const textlayer = renderLayer(2);
 
-      const textStyle = new Style({
-        text: new Text({
-          font: 'normal 16px Helvetica',
-          stroke: new Stroke({
-            color: [255, 255, 255, 1],
-            width: 3,
-          }),
-        }),
-      });
-
       textlayer.olLayer.getSource().forEachFeature(f => {
         f.setStyle(textStyle);
       });
@@ -191,8 +181,18 @@ describe('FeatureExportButton', () => {
         2,
       );
 
+      const newStyle = new Style({
+        text: new Text({
+          text: '',
+          font: 'normal 16px Helvetica',
+          stroke: new Stroke({
+            color: [255, 255, 255, 1],
+            width: 3,
+          }),
+        }),
+      });
       // Set empty string as name for first feature
-      textlayer.getFeatures()[0].set('name', '');
+      textlayer.getFeatures()[0].setStyle(newStyle);
 
       const exportString2 = wrapper.instance().createFeatureString(textlayer);
 
@@ -244,6 +244,7 @@ describe('FeatureExportButton', () => {
           lineDash: [40, 40],
         }),
         text: new Text({
+          text: 'text name',
           font: 'normal 18px Arial',
           rotation: 0.5,
           backgroundFill: new Fill({
@@ -279,6 +280,7 @@ describe('FeatureExportButton', () => {
           lineDash: [40, 40],
         }),
         text: new Text({
+          text: 'text name',
           font: 'normal 18px Arial',
           rotation: 0.5,
           backgroundFill: new Fill({
