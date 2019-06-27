@@ -62,6 +62,7 @@ class Copyright extends Component {
       .filter(l => l.getVisible() && l.getCopyright())
       .map(l => l.getCopyright());
 
+    // remove duplicates
     const unique = Array.from(new Set(copyrights));
 
     this.setState({
