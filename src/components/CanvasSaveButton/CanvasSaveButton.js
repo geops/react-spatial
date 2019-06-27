@@ -200,7 +200,7 @@ class CanvasSaveButton extends PureComponent {
     mapToExport.setTarget(null);
   }
 
-  addCopyright(destContext, clip) {
+  drawCopyright(destContext, clip) {
     const { extraData, scale } = this.props;
     const { text, font, fillStyle } = extraData.copyright;
     const copyright = typeof text === 'function' ? text() : text;
@@ -219,7 +219,7 @@ class CanvasSaveButton extends PureComponent {
     destContext.restore();
   }
 
-  addNorthArrow(destContext, clip) {
+  drawNorthArrow(destContext, clip) {
     const { scale, extraData } = this.props;
     const { src, circled, width, height, rotation } = extraData.northArrow;
 
@@ -263,8 +263,52 @@ class CanvasSaveButton extends PureComponent {
     });
   }
 
+  calculatePixelsToExport(mapToExport, canvas) {
+    const { extent, scale, coordinates } = this.props;
+    let firstCoordinate;
+    let oppositeCoordinate;
+
+    if (extent) {
+      firstCoordinate = getTopLeft(extent);
+      oppositeCoordinate = getBottomRight(extent);
+    } else if (coordinates) {
+      // In case of coordinates coming from DragBox interaction:
+      //   firstCoordinate is the first coordinate drawn by the user.
+      //   oppositeCoordinate is the coordinate of the point dragged by the user.
+      [firstCoordinate, , oppositeCoordinate] = coordinates;
+    }
+
+    if (firstCoordinate && oppositeCoordinate) {
+      const firstPixel = mapToExport.getPixelFromCoordinate(firstCoordinate);
+      const oppositePixel = mapToExport.getPixelFromCoordinate(
+        oppositeCoordinate,
+      );
+      const pixelTopLeft = [
+        firstPixel[0] <= oppositePixel[0] ? firstPixel[0] : oppositePixel[0],
+        firstPixel[1] <= oppositePixel[1] ? firstPixel[1] : oppositePixel[1],
+      ];
+      const pixelBottomRight = [
+        firstPixel[0] > oppositePixel[0] ? firstPixel[0] : oppositePixel[0],
+        firstPixel[1] > oppositePixel[1] ? firstPixel[1] : oppositePixel[1],
+      ];
+
+      return {
+        x: pixelTopLeft[0] * scale,
+        y: pixelTopLeft[1] * scale,
+        w: (pixelBottomRight[0] - pixelTopLeft[0]) * scale,
+        h: (pixelBottomRight[1] - pixelTopLeft[1]) * scale,
+      };
+    }
+    return {
+      x: 0,
+      y: 0,
+      w: canvas.width,
+      h: canvas.height,
+    };
+  }
+
   createCanvasImage() {
-    const { extent, scale, extraData, coordinates } = this.props;
+    const { scale, extraData } = this.props;
     const mapToExport = this.buildMapHd();
 
     return new Promise(resolve => {
@@ -273,54 +317,10 @@ class CanvasSaveButton extends PureComponent {
         const ctx = canvas.getContext('2d');
         ctx.scale(scale, scale);
 
-        let clip = {
-          x: 0,
-          y: 0,
-          w: canvas.width,
-          h: canvas.height,
-        };
+        // Define the zone to export in pixels.
+        const clip = this.calculatePixelsToExport(mapToExport);
 
-        let firstCoordinate;
-        let oppositeCoordinate;
-
-        if (extent) {
-          firstCoordinate = getTopLeft(extent);
-          oppositeCoordinate = getBottomRight(extent);
-        } else if (coordinates) {
-          // In case of coordinates coming from DragBox interaction:
-          //   firstCoordinate is the first coordinate drawn by the user.
-          //   oppositeCoordinate is the coordinate of the point dragged by the user.
-          [firstCoordinate, , oppositeCoordinate] = coordinates;
-        }
-
-        if (firstCoordinate && oppositeCoordinate) {
-          const firstPixel = mapToExport.getPixelFromCoordinate(
-            firstCoordinate,
-          );
-          const oppositePixel = mapToExport.getPixelFromCoordinate(
-            oppositeCoordinate,
-          );
-          const pixelTopLeft = [
-            firstPixel[0] <= oppositePixel[0]
-              ? firstPixel[0]
-              : oppositePixel[0],
-            firstPixel[1] <= oppositePixel[1]
-              ? firstPixel[1]
-              : oppositePixel[1],
-          ];
-          const pixelBottomRight = [
-            firstPixel[0] > oppositePixel[0] ? firstPixel[0] : oppositePixel[0],
-            firstPixel[1] > oppositePixel[1] ? firstPixel[1] : oppositePixel[1],
-          ];
-
-          clip = {
-            x: pixelTopLeft[0] * scale,
-            y: pixelTopLeft[1] * scale,
-            w: (pixelBottomRight[0] - pixelTopLeft[0]) * scale,
-            h: (pixelBottomRight[1] - pixelTopLeft[1]) * scale,
-          };
-        }
-
+        // Create the canvas to export with the good size.
         const destCanvas = document.createElement('canvas');
         destCanvas.width = clip.w;
         destCanvas.height = clip.h;
@@ -328,7 +328,7 @@ class CanvasSaveButton extends PureComponent {
 
         // Draw map
         destContext.fillStyle = 'white';
-        destContext.fillRect(0, 0, destCanvas.width, clip.h);
+        destContext.fillRect(0, 0, clip.w, clip.h);
         destContext.drawImage(
           canvas,
           clip.x,
@@ -343,13 +343,13 @@ class CanvasSaveButton extends PureComponent {
 
         // Copyright
         if (extraData && extraData.copyright && extraData.copyright.text) {
-          this.addCopyright(destContext, clip);
+          this.drawCopyright(destContext, clip);
         }
 
         // North arrow
         let p = Promise.resolve();
         if (extraData && extraData.northArrow) {
-          p = this.addNorthArrow(destContext, clip);
+          p = this.drawNorthArrow(destContext, clip);
         }
 
         p.then(() => {
