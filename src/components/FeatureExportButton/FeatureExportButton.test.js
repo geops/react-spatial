@@ -147,7 +147,9 @@ describe('FeatureExportButton', () => {
       delete unnamedlayer.name;
       const wrapper = mount(<FeatureExportButton layer={unnamedlayer} />);
       const exportString = wrapper.instance().createFeatureString(unnamedlayer);
-      expect(/<name>ExportLayer<\/name>/g.test(exportString)).toBe(false);
+      expect(/<document><name>ExportLayer<\/name>/g.test(exportString)).toBe(
+        false,
+      );
     });
 
     test('should export text style in kml.', () => {
