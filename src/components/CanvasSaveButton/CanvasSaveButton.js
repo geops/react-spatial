@@ -360,40 +360,31 @@ class CanvasSaveButton extends PureComponent {
     });
   }
 
-  downloadCanvasImage(e) {
-    const p = this.createCanvasImage().then(canvas => {
-      if (/msie (9|10)/gi.test(window.navigator.userAgent.toLowerCase())) {
-        // ie 9 and 10
-        const url = canvas.toDataURL(this.options.format);
-        const w = window.open('about:blank', '');
-        w.document.write(`<img src="${url}" alt="from canvas"/>`);
-      } else if (window.navigator.msSaveBlob) {
-        // ie 11 and higher
-        const image = canvas.msToBlob();
-        window.navigator.msSaveBlob(
-          new Blob([image], {
-            type: this.options.format,
-          }),
-          this.getDownloadImageName(),
-        );
-      } else {
-        const link = document.createElement('a');
-        link.download = this.getDownloadImageName();
+  downloadCanvasImage(canvas) {
+    if (/msie (9|10)/gi.test(window.navigator.userAgent.toLowerCase())) {
+      // ie 9 and 10
+      const url = canvas.toDataURL(this.options.format);
+      const w = window.open('about:blank', '');
+      w.document.write(`<img src="${url}" alt="from canvas"/>`);
+    } else if (window.navigator.msSaveBlob) {
+      // ie 11 and higher
+      const image = canvas.msToBlob();
+      window.navigator.msSaveBlob(
+        new Blob([image], {
+          type: this.options.format,
+        }),
+        this.getDownloadImageName(),
+      );
+    } else {
+      const link = document.createElement('a');
+      link.download = this.getDownloadImageName();
 
-        // Use blob for large images
-        canvas.toBlob(blob => {
-          link.href = URL.createObjectURL(blob);
-          link.click();
-        }, this.options.format);
-      }
-    });
-
-    if (window.navigator.msSaveBlob) {
-      // ie only
-      e.preventDefault();
-      e.stopPropagation();
+      // Use blob for large images
+      canvas.toBlob(blob => {
+        link.href = URL.createObjectURL(blob);
+        link.click();
+      }, this.options.format);
     }
-    return p;
   }
 
   render() {
@@ -412,10 +403,21 @@ class CanvasSaveButton extends PureComponent {
         title={title}
         tabIndex={tabIndex}
         onClick={e => {
+          if (window.navigator.msSaveBlob) {
+            // ie only
+            e.preventDefault();
+            e.stopPropagation();
+          }
+
           onSaveStart();
-          this.downloadCanvasImage(e).then(() => {
-            onSaveEnd();
-          });
+          this.createCanvasImage()
+            .then(canvas => {
+              this.downloadCanvasImage(canvas);
+              onSaveEnd();
+            })
+            .catch(err => {
+              onSaveEnd(err);
+            });
         }}
       >
         {children}
