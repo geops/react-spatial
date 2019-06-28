@@ -122,7 +122,6 @@ class PermalinkInput extends PureComponent {
         <div className={className}>
           <input
             value={permalinkValue}
-            readOnly
             type="text"
             tabIndex="0"
             title={titleInputField}
