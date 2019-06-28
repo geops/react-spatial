@@ -36,6 +36,11 @@ const propTypes = {
    * HTML style attribute
    */
   style: PropTypes.object,
+
+  /**
+   * HTML disabled attribute
+   */
+  disabled: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -45,6 +50,7 @@ const defaultProps = {
   tabIndex: 0,
   style: undefined,
   accessKey: undefined,
+  disabled: undefined,
 };
 
 /**
@@ -60,6 +66,7 @@ class Button extends PureComponent {
       tabIndex,
       style,
       accessKey,
+      disabled,
     } = this.props;
 
     return (
@@ -73,6 +80,7 @@ class Button extends PureComponent {
         onClick={e => onClick(e)}
         onKeyPress={e => e.which === 13 && onClick(e)}
         accessKey={accessKey}
+        disabled={disabled}
       >
         {children}
       </div>

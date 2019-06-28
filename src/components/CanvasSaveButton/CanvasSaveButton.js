@@ -31,6 +31,11 @@ const propTypes = {
   tabIndex: PropTypes.number,
 
   /**
+   * HTML disabled attribute
+   */
+  disabled: PropTypes.bool,
+
+  /**
    * Format to save the image.
    */
   saveFormat: PropTypes.oneOf(['image/jpeg', 'image/png']),
@@ -132,6 +137,7 @@ const defaultProps = {
   extraData: null,
   coordinates: null,
   scale: 1,
+  disabled: undefined,
   onSaveStart: () => {},
   onSaveEnd: () => {},
 };
@@ -393,6 +399,7 @@ class CanvasSaveButton extends PureComponent {
       children,
       tabIndex,
       className,
+      disabled,
       onSaveStart,
       onSaveEnd,
     } = this.props;
@@ -402,6 +409,7 @@ class CanvasSaveButton extends PureComponent {
         className={className}
         title={title}
         tabIndex={tabIndex}
+        disabled={disabled}
         onClick={e => {
           if (window.navigator.msSaveBlob) {
             // ie only
