@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { MdContentCopy } from 'react-icons/md';
 import Button from '../Button';
@@ -63,89 +63,60 @@ const defaultProps = {
 /**
  * This component displays a permalink field.
  */
-class PermalinkInput extends PureComponent {
-  static selectInput() {
-    document.execCommand('selectall');
-  }
 
-  constructor(props) {
-    super(props);
-    this.state = { permalinkValue: null };
-    this.inputRef = null;
-  }
+const selectInput = inputRef => {
+  inputRef.current.select();
+  document.execCommand('selectall');
+};
 
-  componentDidMount() {
-    const { value } = this.props;
+const onClickCopyButton = inputRef => {
+  inputRef.current.select();
+  document.execCommand('copy');
+};
 
-    if (value) {
-      this.updatePermalinkValue();
-    }
-  }
+function PermalinkInput({
+  value,
+  button,
+  className,
+  classNameInputField,
+  classNameCopyBt,
+  titleCopyBt,
+  titleInputField,
+  getShortenedUrl,
+}) {
+  const [permalinkValue, setPermalinkValue] = useState(null);
+  const inputRef = useRef(null);
 
-  componentDidUpdate(prevProps) {
-    const { value } = this.props;
-
-    if (value !== prevProps.value) {
-      this.updatePermalinkValue();
-    }
-  }
-
-  onClickCopyButton() {
-    if (this.inputRef) {
-      this.inputRef.select();
-    }
-    document.execCommand('copy');
-  }
-
-  updatePermalinkValue() {
-    const { value, getShortenedUrl } = this.props;
-
-    return getShortenedUrl(value).then(v => {
-      this.setState({ permalinkValue: v });
+  useEffect(() => {
+    getShortenedUrl(value).then(v => {
+      setPermalinkValue(v);
     });
+  });
+
+  if (permalinkValue) {
+    return (
+      <div className={className}>
+        <input
+          value={permalinkValue}
+          readOnly
+          type="text"
+          tabIndex="0"
+          title={titleInputField}
+          className={classNameInputField}
+          ref={inputRef}
+          onClick={() => selectInput(inputRef)}
+        />
+        <Button
+          className={classNameCopyBt}
+          title={titleCopyBt}
+          onClick={() => onClickCopyButton(inputRef)}
+        >
+          {button}
+        </Button>
+      </div>
+    );
   }
-
-  render() {
-    const {
-      button,
-      className,
-      classNameInputField,
-      classNameCopyBt,
-      titleCopyBt,
-      titleInputField,
-    } = this.props;
-
-    const { permalinkValue } = this.state;
-
-    if (permalinkValue) {
-      return (
-        <div className={className}>
-          <input
-            value={permalinkValue}
-            readOnly
-            type="text"
-            tabIndex="0"
-            title={titleInputField}
-            className={classNameInputField}
-            ref={node => {
-              this.inputRef = node;
-            }}
-            onClick={() => PermalinkInput.selectInput()}
-          />
-          <Button
-            className={classNameCopyBt}
-            title={titleCopyBt}
-            onClick={() => {
-              this.onClickCopyButton();
-            }}
-          >
-            {button}
-          </Button>
-        </div>
-      );
-    }
-    return null;
-  }
+  return null;
 }
 
 PermalinkInput.propTypes = propTypes;
