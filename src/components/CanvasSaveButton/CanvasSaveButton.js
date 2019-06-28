@@ -231,11 +231,7 @@ class CanvasSaveButton extends PureComponent {
 
     return new Promise(resolve => {
       const img = new Image();
-      if (src) {
-        img.src = src;
-      } else {
-        img.src = circled ? NorthArrowCircle : NorthArrowSimple;
-      }
+      img.src = src || circled ? NorthArrowCircle : NorthArrowSimple;
 
       img.onload = () => {
         destContext.save();
