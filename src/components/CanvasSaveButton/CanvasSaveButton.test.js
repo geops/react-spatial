@@ -3,22 +3,41 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import OLMap from 'ol/Map';
-import OLView from 'ol/View';
+import Map from 'ol/Map';
+import View from 'ol/View';
 import { TiImage } from 'react-icons/ti';
+import RenderEvent from 'ol/render/Event';
 import CanvasSaveButton from './CanvasSaveButton';
 
 configure({ adapter: new Adapter() });
 
 describe('CanvasSaveButton', () => {
+  let olMap;
   const conf = {
     title: 'Karte als Bild speichern.',
     icon: <TiImage focusable={false} />,
     className: 'ta-example',
     saveFormat: 'image/jpeg',
   };
-  const olView = new OLView({});
-  const olMap = new OLMap({ view: olView });
+
+  beforeEach(() => {
+    const target = document.createElement('div');
+    target.style.width = '100px';
+    target.style.height = '100px';
+    document.body.appendChild(target);
+    olMap = new Map({
+      target,
+      view: new View({
+        center: [0, 0],
+        zoom: 0,
+      }),
+    });
+  });
+
+  afterEach(() => {
+    document.body.removeChild(olMap.getTargetElement());
+    olMap.setTarget(null);
+  });
 
   test('should match snapshot.', () => {
     const component = renderer.create(
@@ -34,7 +53,7 @@ describe('CanvasSaveButton', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  test('should call onSaveBefore then download then onSaveEnd function on click.', done => {
+  test('should call onSaveBefore then download then onSaveEnd function on click.', async done => {
     const saveStart = jest.fn();
     const saveEnd = jest.fn();
     const wrapper = shallow(
@@ -49,23 +68,17 @@ describe('CanvasSaveButton', () => {
         {conf.icon}
       </CanvasSaveButton>,
     );
-    const canvas = document.createElement('canvas');
-    canvas.toBlob = jest.fn();
-    const p = new Promise(resolve => {
-      resolve(canvas);
-    });
-    const spy = jest
-      .spyOn(CanvasSaveButton.prototype, 'createCanvasImage')
-      .mockReturnValue(p);
-
-    wrapper.find('.ta-example').simulate('click');
-    expect(spy).toHaveBeenCalledTimes(1);
-    expect(saveStart).toHaveBeenCalledTimes(1);
-    p.then(() => {
-      expect(canvas.toBlob).toHaveBeenCalledWith(
-        expect.any(Function),
-        'image/jpeg',
-      );
+    global.URL.createObjectURL = jest.fn();
+    const spy = jest.spyOn(CanvasSaveButton.prototype, 'createCanvasImage');
+    await wrapper.find('.ta-example').simulate('click');
+    await olMap.dispatchEvent(
+      new RenderEvent('rendercomplete', undefined, undefined, {
+        canvas: document.createElement('canvas'),
+      }),
+    );
+    await window.setTimeout(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(saveStart).toHaveBeenCalledTimes(1);
       expect(saveEnd).toHaveBeenCalledTimes(1);
       done();
     });
