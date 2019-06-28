@@ -13,7 +13,6 @@ import LayerService from 'react-spatial/LayerService';
 import NorthArrow from '../NorthArrow/NorthArrow';
 import Feature from 'ol/Feature';
 
-
 const map = new OLMap({ controls: [] });
 const layers = ConfigReader.readConfig(map, hdData);
 const layerService = new LayerService([...layers]);
@@ -35,7 +34,7 @@ function CanvasSaveButtonExample() {
         extraData={{
           copyright: {
             text: () => {
-              return layerService.getCopyrights();
+              return 'Test copyright';
             },
           },
           northArrow: {
