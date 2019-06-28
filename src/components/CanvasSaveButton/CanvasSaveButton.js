@@ -359,6 +359,7 @@ class CanvasSaveButton extends PureComponent {
         }
 
         p.then(() => {
+          this.clean(mapToExport);
           resolve(destCanvas);
         });
       });
@@ -382,11 +383,10 @@ class CanvasSaveButton extends PureComponent {
         this.getDownloadImageName(),
       );
     } else {
-      const link = document.createElement('a');
-      link.download = this.getDownloadImageName();
-
       // Use blob for large images
       canvas.toBlob(blob => {
+        const link = document.createElement('a');
+        link.download = this.getDownloadImageName();
         link.href = URL.createObjectURL(blob);
         link.click();
       }, this.options.format);
