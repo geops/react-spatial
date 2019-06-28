@@ -76,6 +76,17 @@ describe('FeatureExportButton', () => {
 
     const iconLayer = renderLayer(1);
 
+    const textStyle = new Style({
+      text: new Text({
+        text: 'text name',
+        font: 'normal 16px Helvetica',
+        stroke: new Stroke({
+          color: [255, 255, 255, 1],
+          width: 3,
+        }),
+      }),
+    });
+
     test('should be trigger click function.', () => {
       const wrapper = shallow(<FeatureExportButton layer={iconLayer} />);
       const spy = jest.spyOn(FeatureExportButton.prototype, 'exportFeatures');
@@ -136,21 +147,13 @@ describe('FeatureExportButton', () => {
       delete unnamedlayer.name;
       const wrapper = mount(<FeatureExportButton layer={unnamedlayer} />);
       const exportString = wrapper.instance().createFeatureString(unnamedlayer);
-      expect(/<name>/g.test(exportString)).toBe(false);
+      expect(/<document><name>ExportLayer<\/name>/g.test(exportString)).toBe(
+        false,
+      );
     });
 
     test('should export text style in kml.', () => {
       const textlayer = renderLayer(2);
-
-      const textStyle = new Style({
-        text: new Text({
-          font: 'normal 16px Helvetica',
-          stroke: new Stroke({
-            color: [255, 255, 255, 1],
-            width: 3,
-          }),
-        }),
-      });
 
       textlayer.olLayer.getSource().forEachFeature(f => {
         f.setStyle(textStyle);
@@ -163,6 +166,40 @@ describe('FeatureExportButton', () => {
         '<LabelStyle><color>ff333333</color></LabelStyle></Style>';
       expect(exportString.match(/<Style>(.*?)<\/Style>/g)[0]).toBe(
         expectedStyle,
+      );
+    });
+
+    test('should only export none-empty text style in kml.', () => {
+      const textlayer = renderLayer(2);
+
+      textlayer.olLayer.getSource().forEachFeature(f => {
+        f.setStyle(textStyle);
+      });
+
+      const wrapper = mount(<FeatureExportButton layer={textlayer} />);
+      const exportString1 = wrapper.instance().createFeatureString(textlayer);
+
+      expect(exportString1.match(/<Placemark>(.*?)<\/Placemark>/g).length).toBe(
+        2,
+      );
+
+      const newStyle = new Style({
+        text: new Text({
+          text: '',
+          font: 'normal 16px Helvetica',
+          stroke: new Stroke({
+            color: [255, 255, 255, 1],
+            width: 3,
+          }),
+        }),
+      });
+      // Set empty string as name for first feature
+      textlayer.getFeatures()[0].setStyle(newStyle);
+
+      const exportString2 = wrapper.instance().createFeatureString(textlayer);
+
+      expect(exportString2.match(/<Placemark>(.*?)<\/Placemark>/g).length).toBe(
+        1,
       );
     });
 
@@ -209,6 +246,7 @@ describe('FeatureExportButton', () => {
           lineDash: [40, 40],
         }),
         text: new Text({
+          text: 'text name',
           font: 'normal 18px Arial',
           rotation: 0.5,
           backgroundFill: new Fill({
@@ -244,6 +282,7 @@ describe('FeatureExportButton', () => {
           lineDash: [40, 40],
         }),
         text: new Text({
+          text: 'text name',
           font: 'normal 18px Arial',
           rotation: 0.5,
           backgroundFill: new Fill({

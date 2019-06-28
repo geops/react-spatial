@@ -237,7 +237,16 @@ const writeFeatures = (layer, featureProjection) => {
 
     const olStyle = new Style(newStyle);
     clone.setStyle(olStyle);
-    exportFeatures.push(clone);
+
+    if (
+      !(
+        clone.getGeometry() instanceof Point &&
+        olStyle.getText() &&
+        !olStyle.getText().getText()
+      )
+    ) {
+      exportFeatures.push(clone);
+    }
   });
 
   if (exportFeatures.length > 0) {
