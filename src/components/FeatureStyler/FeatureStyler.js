@@ -277,6 +277,8 @@ class FeatureStyler extends PureComponent {
       textRotation,
     } = properties;
 
+    // Return a promise in case the image needs to be loaded.
+
     // Update Fill style if it existed.
     const fillStyle = oldStyle.getFill();
     if (fillStyle && color) {
@@ -314,6 +316,15 @@ class FeatureStyler extends PureComponent {
 
     // Update Icon style if it existed.
     let iconStyle = oldStyle.getImage();
+
+    const newStyle = new Style({
+      fill: fillStyle,
+      stroke: strokeStyle,
+      text: textStyle,
+      image: iconStyle,
+      zIndex: oldStyle.getZIndex(),
+    });
+
     if (iconStyle instanceof Icon && icon) {
       iconStyle = new Icon({
         src: icon.url,
@@ -321,18 +332,22 @@ class FeatureStyler extends PureComponent {
         anchor: icon.anchor,
       });
 
-      // We load the icon manually to be sure the size of the image's size is set asap.
-      // Useful when you use a layer's styleFunction that makes some canvas operations.
-      iconStyle.load();
-    }
+      newStyle.setImage(iconStyle);
 
-    return new Style({
-      fill: fillStyle,
-      stroke: strokeStyle,
-      text: textStyle,
-      image: iconStyle,
-      zIndex: oldStyle.getZIndex(),
-    });
+      if (!iconStyle.getSize()) {
+        return new Promise(resolve => {
+          // Ensure the image is loaded before applying the style.
+          iconStyle.load();
+          iconStyle.getImage().addEventListener('load', () => {
+            resolve(newStyle);
+          });
+          iconStyle.getImage().addEventListener('error', () => {
+            resolve(newStyle);
+          });
+        });
+      }
+    }
+    return Promise.resolve(newStyle);
   }
 
   constructor(props) {
@@ -516,7 +531,7 @@ class FeatureStyler extends PureComponent {
 
     // Update the style of the feature with the current style
     const oldStyles = FeatureStyler.getStyleAsArray(feature);
-    const style = FeatureStyler.updateStyleFromProperties(oldStyles[0], {
+    const stylePromise = FeatureStyler.updateStyleFromProperties(oldStyles[0], {
       font,
       description,
       color,
@@ -533,8 +548,10 @@ class FeatureStyler extends PureComponent {
     feature.set('name', text);
     feature.set('description', description);
 
-    // Reconstruct the initial styles array.
-    feature.setStyle([style]);
+    stylePromise.then(newStyle => {
+      // Reconstruct the initial styles array.
+      feature.setStyle([newStyle]);
+    });
   }
 
   renderColors(color, classNameColors, classNameSelected, onClick) {

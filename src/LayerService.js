@@ -31,7 +31,9 @@ export default class LayerService {
   }
 
   getLayer(name) {
-    return this.getLayersAsFlatArray().find(l => l.getName() === name);
+    return this.getLayersAsFlatArray().find(l => {
+      return l.getName() === name;
+    });
   }
 
   getParent(child) {
