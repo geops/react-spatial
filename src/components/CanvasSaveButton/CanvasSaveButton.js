@@ -324,7 +324,7 @@ class CanvasSaveButton extends PureComponent {
         ctx.scale(scale, scale);
 
         // Define the zone to export in pixels.
-        const clip = this.calculatePixelsToExport(mapToExport);
+        const clip = this.calculatePixelsToExport(mapToExport, canvas);
 
         // Create the canvas to export with the good size.
         const destCanvas = document.createElement('canvas');
