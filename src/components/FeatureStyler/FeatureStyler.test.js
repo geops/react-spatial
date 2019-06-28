@@ -33,6 +33,8 @@ const simpleIcon = new Style({
   }),
 });
 
+document.execCommand = jest.fn();
+
 describe('FeatureStyler', () => {
   describe('matches snapshot', () => {
     test('when no feature provided', () => {
