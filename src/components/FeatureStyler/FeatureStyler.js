@@ -410,6 +410,8 @@ class FeatureStyler extends PureComponent {
     if (!this.isFocusSet && this.textareaInput) {
       this.textareaInput.focus();
       this.textareaInput.setSelectionRange(0, -1);
+      // Select for ie
+      document.execCommand('selectall');
       this.isFocusSet = true;
     }
 

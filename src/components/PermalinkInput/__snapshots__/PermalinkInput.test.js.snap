@@ -9,7 +9,6 @@ exports[`PermalinkInput matches snapshot 2`] = `
   <input
     className="tm-permalink-input"
     onClick={[Function]}
-    readOnly={true}
     tabIndex="0"
     title=""
     type="text"
