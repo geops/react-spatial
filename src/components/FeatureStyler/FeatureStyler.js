@@ -330,6 +330,7 @@ class FeatureStyler extends PureComponent {
         src: icon.url,
         scale: iconSize.scale,
         anchor: icon.anchor,
+        imgSize: icon.originalSize, // ie 11
       });
 
       newStyle.setImage(iconStyle);
