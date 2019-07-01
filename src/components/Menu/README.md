@@ -10,7 +10,6 @@ import LayerService from 'react-spatial/LayerService';
 import OLMap from 'ol/Map';
 import Menu from 'react-spatial/components/Menu';
 import MenuItem from 'react-spatial/components/MenuItem';
-import ShareMenu from 'react-spatial/components/ShareMenu';
 import LayerTree from 'react-spatial/components/LayerTree';
 
 class MenuExample extends React.Component {
@@ -35,9 +34,6 @@ class MenuExample extends React.Component {
           zoom={3}
         />
         <Menu>
-          <MenuItem title="Share">
-            <ShareMenu url={window.location.href} />
-          </MenuItem>
           <MenuItem title="Layers">
             <LayerTree layerService={this.layerService} />
           </MenuItem>
