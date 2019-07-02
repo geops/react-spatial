@@ -8,6 +8,7 @@ exports[`PermalinkInput matches snapshot 2`] = `
 >
   <input
     className="tm-permalink-input"
+    onChange={[Function]}
     onClick={[Function]}
     tabIndex="0"
     title=""

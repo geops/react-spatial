@@ -130,6 +130,7 @@ class PermalinkInput extends PureComponent {
               this.inputRef = node;
             }}
             onClick={() => PermalinkInput.selectInput()}
+            onChange={() => {}}
           />
           <Button
             className={classNameCopyBt}
