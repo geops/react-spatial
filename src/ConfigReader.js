@@ -16,7 +16,6 @@ const createXYZLayer = item => {
   const olLayersHd = {};
   for (let i = 2; i <= 3; i += 1) {
     olLayersHd[i] = new TileLayer({
-      zIndex: -1,
       source: new XYZ({
         tilePixelRatio: i,
         url: item.data[`url${i}`],
@@ -30,7 +29,6 @@ const createXYZLayer = item => {
     olLayersHd,
     olLayer: new TileLayer({
       name: conf.name,
-      zIndex: -1,
       source: new XYZ({
         url: item.data.url,
         crossOrigin: 'Anonymous',
@@ -71,25 +69,40 @@ const createTileJSONLayer = item => {
 };
 
 const createWMTSLayer = item => {
-  const conf = { ...item };
-  delete conf.data;
+  const { data } = item;
+
+  if (data.type === 'wmts') {
+    const proj = projections[data.projection || 'EPSG:3857'];
+    if (!data.projectionExtent && proj) {
+      data.projectionExtent = proj.projectionExtent;
+    }
+    if (!data.resolutions && proj) {
+      data.resolutions = proj.resolutions;
+    }
+  }
+
+  if (!data.resolutions) {
+    // eslint-disable-next-line no-console
+    console.log(
+      `The resolutions array is missing for the WMTS layer: ${item.name}`,
+    );
+  }
 
   const sourceOptions = {
-    url: item.data.url,
-    requestEncoding: item.data.requestEncoding,
+    url: data.url,
+    matrixSet: data.matrixSet,
+    requestEncoding: data.requestEncoding,
     crossOrigin: 'Anonymous',
     tileGrid: new WMTSTileGrid({
-      extent: item.data.projectionExtent,
-      resolutions: item.data.resolutions,
-      matrixIds: item.data.resolutions.map((res, i) => `${i}`),
+      extent: data.projectionExtent,
+      resolutions: data.resolutions,
+      matrixIds: (data.resolutions || []).map((res, i) => `${i}`),
     }),
-    matrixSet: item.data.matrixSet,
   };
 
   const olLayersHd = {};
   for (let i = 2; i <= 3; i += 1) {
     olLayersHd[i] = new TileLayer({
-      zIndex: -1,
       source: new WMTSSource({
         ...sourceOptions,
         tilePixelRatio: i,
@@ -98,12 +111,13 @@ const createWMTSLayer = item => {
     });
   }
 
+  const conf = { ...item };
+  delete conf.data;
   return new Layer({
     ...conf,
     olLayersHd,
     olLayer: new TileLayer({
       name: conf.name,
-      zIndex: -1,
       source: new WMTSSource(sourceOptions),
     }),
   });
@@ -163,13 +177,6 @@ const loadLayerFromConfig = (map, config) => {
     ...config,
   };
 
-  if (item.data && item.data.type === 'wmts') {
-    const proj = projections[item.data.projection || 'EPSG:3857'];
-    if (proj) {
-      item.data.projectionExtent = proj.projectionExtent;
-      item.data.resolutions = proj.resolutions;
-    }
-  }
   const layer = createLayer(item);
   layer.init(map);
 
