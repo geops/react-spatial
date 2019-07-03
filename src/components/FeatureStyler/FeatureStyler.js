@@ -652,6 +652,17 @@ class FeatureStyler extends PureComponent {
           <StopEvents observe={this.textareaInput} events={['keydown']} />
         </div>
 
+        <div className={classNameTextSize}>
+          {labels.modifyTextSize ? <div>{t(labels.modifyTextSize)}</div> : null}
+          <Select
+            options={textSizes}
+            value={textSize}
+            onChange={(e, newSize) => {
+              this.setState({ textSize: newSize });
+            }}
+          />
+        </div>
+
         <div className={classNameTextFont}>
           <Button
             className={`tm-button${isBold ? ' tm-button-text-bold' : ''}`}
@@ -672,16 +683,6 @@ class FeatureStyler extends PureComponent {
             });
           },
         )}
-        <div className={classNameTextSize}>
-          {labels.modifyTextSize ? <div>{t(labels.modifyTextSize)}</div> : null}
-          <Select
-            options={textSizes}
-            value={textSize}
-            onChange={(e, newSize) => {
-              this.setState({ textSize: newSize });
-            }}
-          />
-        </div>
 
         <div className={classNameTextRotation}>
           {labels.modifyTextRotation ? (
