@@ -122,7 +122,6 @@ class PermalinkInput extends PureComponent {
         <div className={className}>
           <input
             value={permalinkValue}
-            readOnly
             type="text"
             tabIndex="0"
             title={titleInputField}
@@ -131,6 +130,7 @@ class PermalinkInput extends PureComponent {
               this.inputRef = node;
             }}
             onClick={() => PermalinkInput.selectInput()}
+            onChange={() => {}}
           />
           <Button
             className={classNameCopyBt}

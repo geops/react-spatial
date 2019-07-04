@@ -330,6 +330,7 @@ class FeatureStyler extends PureComponent {
         src: icon.url,
         scale: iconSize.scale,
         anchor: icon.anchor,
+        imgSize: icon.originalSize, // ie 11
       });
 
       newStyle.setImage(iconStyle);
@@ -409,6 +410,8 @@ class FeatureStyler extends PureComponent {
     if (!this.isFocusSet && this.textareaInput) {
       this.textareaInput.focus();
       this.textareaInput.setSelectionRange(0, -1);
+      // Select for ie
+      document.execCommand('selectall');
       this.isFocusSet = true;
     }
 
@@ -649,6 +652,17 @@ class FeatureStyler extends PureComponent {
           <StopEvents observe={this.textareaInput} events={['keydown']} />
         </div>
 
+        <div className={classNameTextSize}>
+          {labels.modifyTextSize ? <div>{t(labels.modifyTextSize)}</div> : null}
+          <Select
+            options={textSizes}
+            value={textSize}
+            onChange={(e, newSize) => {
+              this.setState({ textSize: newSize });
+            }}
+          />
+        </div>
+
         <div className={classNameTextFont}>
           <Button
             className={`tm-button${isBold ? ' tm-button-text-bold' : ''}`}
@@ -669,16 +683,6 @@ class FeatureStyler extends PureComponent {
             });
           },
         )}
-        <div className={classNameTextSize}>
-          {labels.modifyTextSize ? <div>{t(labels.modifyTextSize)}</div> : null}
-          <Select
-            options={textSizes}
-            value={textSize}
-            onChange={(e, newSize) => {
-              this.setState({ textSize: newSize });
-            }}
-          />
-        </div>
 
         <div className={classNameTextRotation}>
           {labels.modifyTextRotation ? (
