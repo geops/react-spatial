@@ -384,6 +384,34 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
     />
   </div>
   <div
+    className="tm-modify-text-size"
+  >
+    <div>
+      Modify text size
+    </div>
+    <select
+      className="tm-select"
+      onChange={[Function]}
+      value="1"
+    >
+      <option
+        value={1}
+      >
+        small size
+      </option>
+      <option
+        value={1.5}
+      >
+        medium size
+      </option>
+      <option
+        value={2}
+      >
+        big size
+      </option>
+    </select>
+  </div>
+  <div
     className="tm-modify-text-font"
   >
     <div
@@ -540,34 +568,6 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         />
       </div>
     </div>
-  </div>
-  <div
-    className="tm-modify-text-size"
-  >
-    <div>
-      Modify text size
-    </div>
-    <select
-      className="tm-select"
-      onChange={[Function]}
-      value="1"
-    >
-      <option
-        value={1}
-      >
-        small size
-      </option>
-      <option
-        value={1.5}
-      >
-        medium size
-      </option>
-      <option
-        value={2}
-      >
-        big size
-      </option>
-    </select>
   </div>
   <div
     className="tm-modify-text-rotation"
@@ -764,6 +764,34 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
     />
   </div>
   <div
+    className="tm-modify-text-size"
+  >
+    <div>
+      Modify text size
+    </div>
+    <select
+      className="tm-select"
+      onChange={[Function]}
+      value="1.5"
+    >
+      <option
+        value={1}
+      >
+        small size
+      </option>
+      <option
+        value={1.5}
+      >
+        medium size
+      </option>
+      <option
+        value={2}
+      >
+        big size
+      </option>
+    </select>
+  </div>
+  <div
     className="tm-modify-text-font"
   >
     <div
@@ -920,34 +948,6 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         />
       </div>
     </div>
-  </div>
-  <div
-    className="tm-modify-text-size"
-  >
-    <div>
-      Modify text size
-    </div>
-    <select
-      className="tm-select"
-      onChange={[Function]}
-      value="1.5"
-    >
-      <option
-        value={1}
-      >
-        small size
-      </option>
-      <option
-        value={1.5}
-      >
-        medium size
-      </option>
-      <option
-        value={2}
-      >
-        big size
-      </option>
-    </select>
   </div>
   <div
     className="tm-modify-text-rotation"
