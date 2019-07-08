@@ -226,18 +226,18 @@ class CanvasSaveButton extends PureComponent {
       destContext.measureText(copyright).width * scale >
         destContext.canvas.width - arrowWidth
     );
+    return destContext.font;
   }
 
   // If minimal fontsize is reached, divide copyright in two lines.
-  splitCopyrightLine(destContext, clip, arrowWidth, copyright, scale) {
+  splitCopyrightLine(destContext, clip, maxWidth, copyright, scale) {
     let newCopyright = copyright;
-    const limitWidth = destContext.canvas.width - arrowWidth;
     const wordNumber = copyright.split(' ').length;
 
     for (let i = 0; i < wordNumber; i += 1) {
       newCopyright = newCopyright.substring(0, newCopyright.lastIndexOf(' '));
       // Stop removing word when fits within one line.
-      if (destContext.measureText(newCopyright).width * scale < limitWidth) {
+      if (destContext.measureText(newCopyright).width * scale < maxWidth) {
         break;
       }
     }
@@ -257,7 +257,7 @@ class CanvasSaveButton extends PureComponent {
     );
   }
 
-  drawCopyright(destContext, clip, arrowWidth) {
+  drawCopyright(destContext, clip, maxWidth) {
     const { extraData, scale } = this.props;
     const { text, font, fillStyle } = extraData.copyright;
     const copyright = typeof text === 'function' ? text() : text;
@@ -270,16 +270,10 @@ class CanvasSaveButton extends PureComponent {
     // eslint-disable-next-line no-param-reassign
     destContext.fillStyle = fillStyle || 'black';
 
-    this.decreaseFontSize(destContext, arrowWidth * scale, copyright, scale);
+    this.decreaseFontSize(destContext, maxWidth * scale, copyright, scale);
 
     if (this.multilineCopyright) {
-      this.splitCopyrightLine(
-        destContext,
-        clip,
-        arrowWidth * scale,
-        copyright,
-        scale,
-      );
+      this.splitCopyrightLine(destContext, clip, maxWidth, copyright, scale);
     } else {
       destContext.fillText(
         copyright,
@@ -419,7 +413,8 @@ class CanvasSaveButton extends PureComponent {
         p.then(arrowWidth => {
           // Copyright
           if (extraData && extraData.copyright && extraData.copyright.text) {
-            this.drawCopyright(destContext, clip, arrowWidth);
+            const maxWidth = destContext.canvas.width - arrowWidth;
+            this.drawCopyright(destContext, clip, maxWidth);
           }
 
           this.clean(mapToExport);
