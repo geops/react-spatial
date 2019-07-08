@@ -206,10 +206,62 @@ class CanvasSaveButton extends PureComponent {
     mapToExport.setTarget(null);
   }
 
-  drawCopyright(destContext, clip) {
+  // Ensure the font size fita with the image width.
+  decreaseFontSize(destContext, arrowWidth, copyright, scale) {
+    const minFontSize = 8;
+    let sizeMatch = destContext.font.match(/[0-9]+(?:\.[0-9]+)?(px)/i);
+    let fontSize = parseInt(sizeMatch[0].replace(sizeMatch[1], ''), 10);
+    do {
+      sizeMatch = destContext.font.match(/[0-9]+(?:\.[0-9]+)?(px)/i);
+      fontSize = parseInt(sizeMatch[0].replace(sizeMatch[1], ''), 10);
+
+      // eslint-disable-next-line no-param-reassign
+      destContext.font = destContext.font.replace(fontSize, fontSize - 1);
+
+      if (fontSize - 1 === minFontSize) {
+        this.multilineCopyright = true;
+      }
+    } while (
+      fontSize - 1 > minFontSize &&
+      destContext.measureText(copyright).width * scale >
+        destContext.canvas.width - arrowWidth
+    );
+  }
+
+  // If minimal fontsize is reached, divide copyright in two lines.
+  splitCopyrightLine(destContext, clip, arrowWidth, copyright, scale) {
+    let newCopyright = copyright;
+    const limitWidth = destContext.canvas.width - arrowWidth;
+    const wordNumber = copyright.split(' ').length;
+
+    for (let i = 0; i < wordNumber; i += 1) {
+      newCopyright = newCopyright.substring(0, newCopyright.lastIndexOf(' '));
+      // Stop removing word when fits within one line.
+      if (destContext.measureText(newCopyright).width * scale < limitWidth) {
+        break;
+      }
+    }
+
+    // Draw fist line (line break isn't supported for fillText).
+    destContext.fillText(
+      newCopyright,
+      this.padding,
+      clip.h / scale - 3 * this.padding,
+    );
+
+    // Draw second line.
+    destContext.fillText(
+      copyright.replace(newCopyright, ''),
+      this.padding,
+      clip.h / scale - this.padding,
+    );
+  }
+
+  drawCopyright(destContext, clip, arrowWidth) {
     const { extraData, scale } = this.props;
     const { text, font, fillStyle } = extraData.copyright;
     const copyright = typeof text === 'function' ? text() : text;
+    this.multilineCopyright = false;
 
     destContext.save();
     destContext.scale(scale, scale);
@@ -217,11 +269,24 @@ class CanvasSaveButton extends PureComponent {
     destContext.font = font || '12px Arial';
     // eslint-disable-next-line no-param-reassign
     destContext.fillStyle = fillStyle || 'black';
-    destContext.fillText(
-      copyright,
-      this.padding,
-      clip.h / scale - this.padding,
-    );
+
+    this.decreaseFontSize(destContext, arrowWidth * scale, copyright, scale);
+
+    if (this.multilineCopyright) {
+      this.splitCopyrightLine(
+        destContext,
+        clip,
+        arrowWidth * scale,
+        copyright,
+        scale,
+      );
+    } else {
+      destContext.fillText(
+        copyright,
+        this.padding,
+        clip.h / scale - this.padding,
+      );
+    }
     destContext.restore();
   }
 
@@ -256,7 +321,9 @@ class CanvasSaveButton extends PureComponent {
         );
         destContext.restore();
 
-        resolve();
+        // Return the pixels width of the arrow and the margin right,
+        // that must not be occupied by the copyright.
+        resolve(clip.w - (clip.w - 2 * this.padding - arrowWidth));
       };
 
       img.onerror = () => {
@@ -343,18 +410,19 @@ class CanvasSaveButton extends PureComponent {
           clip.h,
         );
 
-        // Copyright
-        if (extraData && extraData.copyright && extraData.copyright.text) {
-          this.drawCopyright(destContext, clip);
-        }
-
         // North arrow
         let p = Promise.resolve();
         if (extraData && extraData.northArrow) {
           p = this.drawNorthArrow(destContext, clip);
         }
 
-        p.then(() => {
+        p.then(res => {
+          const arrowWidth = res || 0;
+          // Copyright
+          if (extraData && extraData.copyright && extraData.copyright.text) {
+            this.drawCopyright(destContext, clip, arrowWidth);
+          }
+
           this.clean(mapToExport);
           resolve(destCanvas);
         });
