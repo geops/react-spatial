@@ -323,7 +323,7 @@ class CanvasSaveButton extends PureComponent {
 
         // Return the pixels width of the arrow and the margin right,
         // that must not be occupied by the copyright.
-        resolve(clip.w - (clip.w - 2 * this.padding - arrowWidth));
+        resolve(arrowWidth + 2 * this.padding);
       };
 
       img.onerror = () => {
