@@ -416,7 +416,7 @@ class CanvasSaveButton extends PureComponent {
           p = this.drawNorthArrow(destContext, clip);
         }
 
-        p.then(res => {
+        p.then(arrowWidth => {
           // Copyright
           if (extraData && extraData.copyright && extraData.copyright.text) {
             this.drawCopyright(destContext, clip, arrowWidth);
