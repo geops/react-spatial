@@ -13,20 +13,8 @@ const createXYZLayer = item => {
   const conf = { ...item };
   delete conf.data;
 
-  const olLayersHd = {};
-  for (let i = 2; i <= 3; i += 1) {
-    olLayersHd[i] = new TileLayer({
-      source: new XYZ({
-        tilePixelRatio: i,
-        url: item.data[`url${i}`],
-        crossOrigin: 'Anonymous',
-      }),
-    });
-  }
-
   const l = new Layer({
     ...conf,
-    olLayersHd,
     olLayer: new TileLayer({
       name: conf.name,
       source: new XYZ({
@@ -88,37 +76,23 @@ const createWMTSLayer = item => {
     );
   }
 
-  const sourceOptions = {
-    url: data.url,
-    matrixSet: data.matrixSet,
-    requestEncoding: data.requestEncoding,
-    crossOrigin: 'Anonymous',
-    tileGrid: new WMTSTileGrid({
-      extent: data.projectionExtent,
-      resolutions: data.resolutions,
-      matrixIds: (data.resolutions || []).map((res, i) => `${i}`),
-    }),
-  };
-
-  const olLayersHd = {};
-  for (let i = 2; i <= 3; i += 1) {
-    olLayersHd[i] = new TileLayer({
-      source: new WMTSSource({
-        ...sourceOptions,
-        tilePixelRatio: i,
-        url: item.data[`url${i}`],
-      }),
-    });
-  }
-
   const conf = { ...item };
   delete conf.data;
   return new Layer({
     ...conf,
-    olLayersHd,
     olLayer: new TileLayer({
       name: conf.name,
-      source: new WMTSSource(sourceOptions),
+      source: new WMTSSource({
+        url: data.url,
+        matrixSet: data.matrixSet,
+        requestEncoding: data.requestEncoding,
+        crossOrigin: 'Anonymous',
+        tileGrid: new WMTSTileGrid({
+          extent: data.projectionExtent,
+          resolutions: data.resolutions,
+          matrixIds: (data.resolutions || []).map((res, i) => `${i}`),
+        }),
+      }),
     }),
   });
 };
