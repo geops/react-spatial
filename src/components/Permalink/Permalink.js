@@ -129,12 +129,9 @@ class Permalink extends Component {
       layers: layerService
         .getLayersAsFlatArray()
         .filter(
-          l =>
-            l.isBaseLayer !== true &&
-            l.getVisible() &&
-            l.hasVisibleChildren() === false,
+          l => !l.getIsBaseLayer() && l.getVisible() && !l.hasVisibleChildren(),
         )
-        .map(l => l.id)
+        .map(l => l.getKey())
         .join(','),
     });
   }

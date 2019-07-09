@@ -132,14 +132,6 @@ describe('ConfigReader', () => {
       expect(layers[0].getChildren().length).toBe(2);
     });
 
-    test('apply some default (we test here that there is no error with an empty object)', () => {
-      const map = new OLMap();
-      const layers = ConfigReader.readConfig(map, [{}]);
-      expect(layers[0]).toBeInstanceOf(Layer);
-      expect(layers[0].olLayer).toBe();
-      expect(layers[0].getChildren().length).toBe(0);
-    });
-
     test('returns an empty array', () => {
       const map = new OLMap();
       const layers = ConfigReader.readConfig(map, []);
