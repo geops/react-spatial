@@ -9,7 +9,6 @@ export default class Layer extends Observable {
     id,
     name,
     olLayer,
-    olLayersHd,
     radioGroup,
     isBaseLayer,
     visible,
@@ -18,7 +17,6 @@ export default class Layer extends Observable {
     super();
     this.id = id;
     this.name = name;
-    this.olLayersHd = olLayersHd;
     this.olLayer = olLayer;
     this.isBaseLayer = isBaseLayer;
     this.radioGroup = radioGroup;
