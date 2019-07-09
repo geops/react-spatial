@@ -209,7 +209,7 @@ class CanvasSaveButton extends PureComponent {
   // Ensure the font size fita with the image width.
   decreaseFontSize(destContext, arrowWidth, copyright, scale) {
     const minFontSize = 8;
-    let sizeMatch = destContext.font.match(/[0-9]+(?:\.[0-9]+)?(px)/i);
+    let sizeMatch;
     let fontSize = parseInt(sizeMatch[0].replace(sizeMatch[1], ''), 10);
     do {
       sizeMatch = destContext.font.match(/[0-9]+(?:\.[0-9]+)?(px)/i);
