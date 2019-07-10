@@ -53,6 +53,45 @@ describe('CanvasSaveButton', () => {
     expect(tree).toMatchSnapshot();
   });
 
+  test('Should split too long copyright into two lines.', async done => {
+    const wrapper = shallow(
+      <CanvasSaveButton
+        className="ta-example"
+        title={conf.title}
+        map={olMap}
+        extraData={{
+          copyright: {
+            text: () => {
+              return (
+                'contributors, SRTM | map style: © OpenTopoMap (CC-BY-SA)' +
+                'contributors, SRTM | map style: © OpenTopoMap (CC-BY-SA)' +
+                'contributors, SRTM | map style: © OpenTopoMap (CC-BY-SA)' +
+                'contributors, SRTM | map style: © OpenTopoMap (CC-BY-SA)' +
+                'contributors, SRTM | map style: © OpenTopoMap (CC-BY-SA)' +
+                'contributors, SRTM | map style: © OpenTopoMap (CC-BY-SA)' +
+                'contributors, SRTM | map style: © OpenTopoMap (CC-BY-SA)'
+              );
+            },
+          },
+        }}
+      >
+        {conf.icon}
+      </CanvasSaveButton>,
+    );
+    global.URL.createObjectURL = jest.fn();
+    const spy = jest.spyOn(CanvasSaveButton.prototype, 'splitCopyrightLine');
+    await wrapper.find('.ta-example').simulate('click');
+    await olMap.dispatchEvent(
+      new RenderEvent('rendercomplete', undefined, undefined, {
+        canvas: document.createElement('canvas'),
+      }),
+    );
+    await window.setTimeout(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
   test('should call onSaveBefore then download then onSaveEnd function on click.', async done => {
     const saveStart = jest.fn();
     const saveEnd = jest.fn();
