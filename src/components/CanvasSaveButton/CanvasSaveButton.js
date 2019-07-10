@@ -218,7 +218,7 @@ class CanvasSaveButton extends PureComponent {
     // eslint-disable-next-line no-param-reassign
     destContext.fillStyle = fillStyle || 'black';
 
-    this.decreaseFontSize(destContext, maxWidth * scale, copyright, scale);
+    this.decreaseFontSize(destContext, maxWidth, copyright, scale);
 
     if (this.multilineCopyright) {
       this.splitCopyrightLine(destContext, clip, maxWidth, copyright, scale);
