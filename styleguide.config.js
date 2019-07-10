@@ -22,7 +22,6 @@ module.exports = {
   },
   context: {
     exampleData: path.join(__dirname, 'data/ExampleData'),
-    hdData: path.join(__dirname, 'data/HdData'),
     treeData: path.join(__dirname, 'data/TreeData'),
     topicData: path.join(__dirname, 'data/TopicData'),
   },

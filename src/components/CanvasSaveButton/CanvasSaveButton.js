@@ -2,9 +2,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import OLMap from 'ol/Map';
 import { getTopLeft, getBottomRight } from 'ol/extent';
-import XYZ from 'ol/source/XYZ';
-import WMTS from 'ol/source/WMTS';
-import LayerService from '../../LayerService';
 import Button from '../Button';
 import NorthArrowSimple from '../../images/northArrow.url.svg';
 import NorthArrowCircle from '../../images/northArrowCircle.url.svg';
@@ -42,11 +39,6 @@ const propTypes = {
 
   /** An existing [ol/Map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html). */
   map: PropTypes.instanceOf(OLMap),
-
-  /**
-   * Layers provider. Only needed if you plan to export HiDpi layers.
-   */
-  layerService: PropTypes.instanceOf(LayerService),
 
   /**
    * Extent for the export. If no extent is given, the whole map is exported.
@@ -129,7 +121,6 @@ const propTypes = {
 
 const defaultProps = {
   map: null,
-  layerService: null,
   tabIndex: 0,
   className: 'tm-canvas-save-button tm-button',
   saveFormat: 'image/png',
@@ -162,48 +153,6 @@ class CanvasSaveButton extends PureComponent {
       `${window.document.title.replace(/ /g, '_').toLowerCase()}` +
       `.${this.fileExt}`
     );
-  }
-
-  buildMapHd() {
-    const { map, scale, layerService } = this.props;
-
-    if (scale === 1) {
-      return map;
-    }
-
-    const mapToExport = new OLMap({ controls: [], pixelRatio: scale });
-    mapToExport.setView(map.getView());
-
-    map.getLayers().forEach(layer => {
-      if (!layer.getVisible()) {
-        return;
-      }
-      if (
-        layerService &&
-        (layer.getSource() instanceof XYZ || layer.getSource() instanceof WMTS)
-      ) {
-        const layerConf = layerService.getLayer(layer.get('name'));
-        if (layerConf && layerConf.olLayersHd[scale]) {
-          mapToExport.addLayer(layerConf.olLayersHd[scale]);
-          return;
-        }
-      }
-      mapToExport.addLayer(layer);
-    });
-    mapToExport.setTarget(map.getTarget());
-    mapToExport.getView().setCenter(map.getView().getCenter());
-    mapToExport.getView().setResolution(map.getView().getResolution());
-
-    return mapToExport;
-  }
-
-  clean(mapToExport) {
-    const { scale } = this.props;
-    if (scale === 1) {
-      return;
-    }
-    mapToExport.getLayers().clear();
-    mapToExport.setTarget(null);
   }
 
   // Ensure the font size fita with the image width.
@@ -369,9 +318,8 @@ class CanvasSaveButton extends PureComponent {
     };
   }
 
-  createCanvasImage() {
+  createCanvasImage(mapToExport) {
     const { scale, extraData } = this.props;
-    const mapToExport = this.buildMapHd();
 
     return new Promise(resolve => {
       mapToExport.once('rendercomplete', evt => {
@@ -418,7 +366,6 @@ class CanvasSaveButton extends PureComponent {
             this.drawCopyright(destContext, clip, maxWidth);
           }
 
-          this.clean(mapToExport);
           resolve(destCanvas);
         });
       });
@@ -455,6 +402,7 @@ class CanvasSaveButton extends PureComponent {
   render() {
     const {
       title,
+      map,
       children,
       tabIndex,
       className,
@@ -476,14 +424,14 @@ class CanvasSaveButton extends PureComponent {
             e.stopPropagation();
           }
 
-          onSaveStart();
-          this.createCanvasImage()
+          const mapToExport = onSaveStart(map);
+          this.createCanvasImage(mapToExport || map)
             .then(canvas => {
               this.downloadCanvasImage(canvas);
-              onSaveEnd();
+              onSaveEnd(mapToExport);
             })
             .catch(err => {
-              onSaveEnd(err);
+              onSaveEnd(mapToExport, err);
             });
         }}
       >
