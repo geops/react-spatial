@@ -207,7 +207,7 @@ class CanvasSaveButton extends PureComponent {
   }
 
   // Ensure the font size fita with the image width.
-  decreaseFontSize(destContext, arrowWidth, copyright, scale) {
+  decreaseFontSize(destContext, maxWidth, copyright, scale) {
     const minFontSize = 8;
     let sizeMatch;
     let fontSize;
@@ -224,7 +224,7 @@ class CanvasSaveButton extends PureComponent {
     } while (
       fontSize - 1 > minFontSize &&
       destContext.measureText(copyright).width * scale >
-        destContext.canvas.width - arrowWidth
+        destContext.canvas.width - maxWidth
     );
     return destContext.font;
   }
@@ -413,7 +413,9 @@ class CanvasSaveButton extends PureComponent {
         p.then(arrowWidth => {
           // Copyright
           if (extraData && extraData.copyright && extraData.copyright.text) {
-            const maxWidth = destContext.canvas.width - arrowWidth;
+            const maxWidth = arrowWidth
+              ? destContext.canvas.width - arrowWidth
+              : destContext.canvas.width;
             this.drawCopyright(destContext, clip, maxWidth);
           }
 
