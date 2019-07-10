@@ -223,8 +223,7 @@ class CanvasSaveButton extends PureComponent {
       }
     } while (
       fontSize - 1 > minFontSize &&
-      destContext.measureText(copyright).width * scale >
-        destContext.canvas.width - maxWidth
+      destContext.measureText(copyright).width * scale > maxWidth
     );
     return destContext.font;
   }
