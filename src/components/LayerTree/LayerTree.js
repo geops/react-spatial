@@ -59,6 +59,12 @@ const propTypes = {
    * @return {node} A jsx node.
    */
   renderItem: PropTypes.func,
+
+  /**
+   * Translation function.
+   * @param {function} Translation function returning the translated string.
+   */
+  t: PropTypes.func,
 };
 
 const defaultProps = {
@@ -71,6 +77,7 @@ const defaultProps = {
   padding: 30,
   isItemHidden: () => false,
   renderItem: null,
+  t: s => s,
 };
 
 class LayerTree extends Component {
@@ -106,11 +113,11 @@ class LayerTree extends Component {
 
   onToggle(layer) {
     const { expandedLayerNames } = this.state;
-    const pos = expandedLayerNames.indexOf(layer.getName());
+    const pos = expandedLayerNames.indexOf(layer.getKey());
     if (pos > -1) {
       expandedLayerNames.splice(pos, 1);
     } else {
-      expandedLayerNames.push(layer.getName());
+      expandedLayerNames.push(layer.getKey());
     }
 
     this.setState({ expandedLayerNames });
@@ -162,7 +169,7 @@ class LayerTree extends Component {
     return (
       <div
         className={`${classNameArrow} ${classNameArrow}${
-          expandedLayerNames.includes(layer.getName())
+          expandedLayerNames.includes(layer.getKey())
             ? '-collapsed'
             : '-expanded'
         }`}
@@ -173,7 +180,7 @@ class LayerTree extends Component {
   // Render a button which expands/collapse the layer if there is children
   // or simulate a click on the input otherwise.
   renderToggleButton(layer) {
-    const { classNameToggle } = this.props;
+    const { t, classNameToggle } = this.props;
     const tabIndex = 0;
 
     return (
@@ -184,7 +191,7 @@ class LayerTree extends Component {
           this.onInputClick(layer, layer.getChildren().length);
         }}
       >
-        <div>{layer.getName()}</div>
+        <div>{t(layer.getName())}</div>
         {this.renderArrow(layer)}
       </Button>
     );
@@ -194,7 +201,7 @@ class LayerTree extends Component {
     const { renderItem, classNameItem, padding } = this.props;
     const { expandedLayerNames } = this.state;
 
-    const children = expandedLayerNames.includes(layer.getName())
+    const children = expandedLayerNames.includes(layer.getKey())
       ? []
       : [...layer.getChildren()];
 
@@ -203,7 +210,7 @@ class LayerTree extends Component {
     }
 
     return (
-      <div key={layer.getName()}>
+      <div key={layer.getKey()}>
         <div
           className={classNameItem}
           style={{

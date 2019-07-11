@@ -14,20 +14,24 @@ import Stroke from 'ol/style/Stroke';
 import Circle from 'ol/geom/Circle';
 import Point from 'ol/geom/Point';
 import Feature from 'ol/Feature';
-import VectorLayer from '../../VectorLayer';
+import VectorLayer from 'ol/layer/Vector';
+import Layer from '../../Layer';
 
 import FeatureExportButton from '.';
 
 configure({ adapter: new Adapter() });
 
 describe('FeatureExportButton', () => {
-  const layer = new VectorLayer({
-    source: new VectorSource({
-      features: [
-        new Feature({
-          geometry: new Point([819103.972418, 6120013.078324]),
-        }),
-      ],
+  const layer = new Layer({
+    name: 'Sample layer',
+    olLayer: new VectorLayer({
+      source: new VectorSource({
+        features: [
+          new Feature({
+            geometry: new Point([819103.972418, 6120013.078324]),
+          }),
+        ],
+      }),
     }),
   });
 
@@ -66,10 +70,12 @@ describe('FeatureExportButton', () => {
         );
       }
 
-      return new VectorLayer({
+      return new Layer({
         name: 'ExportLayer',
-        source: new VectorSource({
-          features: featsArray,
+        olLayer: new VectorLayer({
+          source: new VectorSource({
+            features: featsArray,
+          }),
         }),
       });
     };
@@ -194,7 +200,10 @@ describe('FeatureExportButton', () => {
         }),
       });
       // Set empty string as name for first feature
-      textlayer.getFeatures()[0].setStyle(newStyle);
+      textlayer.olLayer
+        .getSource()
+        .getFeatures()[0]
+        .setStyle(newStyle);
 
       const exportString2 = wrapper.instance().createFeatureString(textlayer);
 
@@ -204,17 +213,19 @@ describe('FeatureExportButton', () => {
     });
 
     test("should not export 'Cirle geom' (kml unsupported).", () => {
-      const circleLayer = new VectorLayer({
+      const circleLayer = new Layer({
         name: 'ExportLayer',
-        source: new VectorSource({
-          features: [
-            new Feature({
-              geometry: new Circle({
-                center: [843119.531243, 6111943.000197],
-                radius: 1000,
+        olLayer: new VectorLayer({
+          source: new VectorSource({
+            features: [
+              new Feature({
+                geometry: new Circle({
+                  center: [843119.531243, 6111943.000197],
+                  radius: 1000,
+                }),
               }),
-            }),
-          ],
+            ],
+          }),
         }),
       });
 

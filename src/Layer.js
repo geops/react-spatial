@@ -6,7 +6,7 @@ import Observable from 'ol/Observable';
  */
 export default class Layer extends Observable {
   constructor({
-    id,
+    key,
     name,
     olLayer,
     radioGroup,
@@ -15,7 +15,7 @@ export default class Layer extends Observable {
     copyright,
   }) {
     super();
-    this.id = id;
+    this.key = key || name.toLowerCase();
     this.name = name;
     this.olLayer = olLayer;
     this.isBaseLayer = isBaseLayer;
@@ -42,6 +42,10 @@ export default class Layer extends Observable {
 
   getName() {
     return this.name;
+  }
+
+  getKey() {
+    return this.key;
   }
 
   getVisible() {
