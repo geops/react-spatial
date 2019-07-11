@@ -238,8 +238,8 @@ class CanvasSaveButton extends PureComponent {
 
     return new Promise(resolve => {
       const img = new Image();
-      img.src = src || circled ? NorthArrowCircle : NorthArrowSimple;
-
+      img.crossOrigin = 'Anonymous';
+      img.src = src || (circled ? NorthArrowCircle : NorthArrowSimple);
       img.onload = () => {
         destContext.save();
         const arrowWidth = (width || 80) * scale;
@@ -381,7 +381,12 @@ class CanvasSaveButton extends PureComponent {
       w.document.write(`<img src="${url}" alt="from canvas"/>`);
     } else if (window.navigator.msSaveBlob) {
       // ie 11 and higher
-      const image = canvas.msToBlob();
+      let image;
+      try {
+        image = canvas.msToBlob();
+      } catch (e) {
+        console.log(e);
+      }
       window.navigator.msSaveBlob(
         new Blob([image], {
           type: this.options.format,
