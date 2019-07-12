@@ -117,7 +117,7 @@ module.exports = {
         {
           test: [
             /\/node_modules\/(regexpu-core|unicode-.*|acorn-.*|query-string|strict-uri-encode)/,
-            /\/node_modules\/(split-on-first|react-dev-utils|ansi-styles|jsts)/,
+            /\/node_modules\/(split-on-first|react-dev-utils|ansi-styles|jsts|estree-walker)/,
           ],
           loader: 'babel-loader',
         },

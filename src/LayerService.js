@@ -20,6 +20,11 @@ export default class LayerService {
     return this.layers;
   }
 
+  setLayers(layers) {
+    this.layers = layers;
+    this.listenChangeEvt();
+  }
+
   getLayersAsFlatArray(optLayers) {
     let layers = [];
     (optLayers || this.getLayers() || []).forEach(l => {
@@ -48,17 +53,6 @@ export default class LayerService {
     }
 
     return null;
-  }
-
-  getCopyrights() {
-    const layers = this.getLayersAsFlatArray();
-    const copyrights = layers
-      .filter(l => l.getVisible() && l.getCopyright())
-      .map(l => l.getCopyright());
-
-    const unique = Array.from(new Set(copyrights));
-
-    return unique.join(' | ');
   }
 
   on(evt, callback) {

@@ -4,6 +4,7 @@ import { Feature } from 'ol';
 import { Style, Icon } from 'ol/style';
 import Point from 'ol/geom/Point';
 import { asString } from 'ol/color';
+import StopEvents from '../StopEvents';
 import Select from '../Select';
 import Button from '../Button';
 
@@ -311,6 +312,8 @@ class FeatureStyler extends PureComponent {
 
     const extraStyles = [];
 
+    // Return a promise in case the image needs to be loaded.
+
     // Update Fill style if it existed.
     const fillStyle = oldStyle.getFill();
     if (fillStyle && color) {
@@ -363,28 +366,44 @@ class FeatureStyler extends PureComponent {
 
     // Update Icon style if it existed.
     let iconStyle = oldStyle.getImage();
+
+    const newStyle = new Style({
+      fill: fillStyle,
+      stroke: strokeStyle,
+      text: textStyle,
+      image: iconStyle,
+      zIndex: oldStyle.getZIndex(),
+    });
+
     if (iconStyle instanceof Icon && icon) {
       iconStyle = new Icon({
         src: icon.url,
         scale: iconSize.scale,
         anchor: icon.anchor,
+        imgSize: icon.originalSize, // ie 11
       });
 
-      // We load the icon manually to be sure the size of the image's size is set asap.
-      // Useful when you use a layer's styleFunction that makes some canvas operations.
-      iconStyle.load();
+      newStyle.setImage(iconStyle);
+
+      if (!iconStyle.getSize()) {
+        return new Promise(resolve => {
+          // Ensure the image is loaded before applying the style.
+          // We load the icon manually to be sure the size of the image's size is set asap.
+          // Useful when you use a layer's styleFunction that makes some canvas operations.
+          iconStyle.load();
+          iconStyle.getImage().addEventListener('load', () => {
+            resolve(newStyle);
+          });
+          iconStyle.getImage().addEventListener('error', () => {
+            resolve(newStyle);
+          });
+        });
+      }
     }
 
-    return [
-      new Style({
-        fill: fillStyle,
-        stroke: strokeStyle,
-        text: textStyle,
-        image: iconStyle,
-        zIndex: oldStyle.getZIndex(),
-      }),
-      ...extraStyles,
-    ];
+    const styleArray = [newStyle, ...extraStyles];
+
+    return Promise.resolve(styleArray);
   }
 
   constructor(props) {
@@ -450,6 +469,8 @@ class FeatureStyler extends PureComponent {
     if (!this.isFocusSet && this.textareaInput) {
       this.textareaInput.focus();
       this.textareaInput.setSelectionRange(0, -1);
+      // Select for ie
+      document.execCommand('selectall');
       this.isFocusSet = true;
     }
 
@@ -576,7 +597,7 @@ class FeatureStyler extends PureComponent {
 
     // Update the style of the feature with the current style
     const oldStyles = FeatureStyler.getStyleAsArray(feature);
-    const style = FeatureStyler.updateStyleFromProperties(
+    const stylePromise = FeatureStyler.updateStyleFromProperties(
       oldStyles[0],
       feature,
       {
@@ -599,8 +620,10 @@ class FeatureStyler extends PureComponent {
     feature.set('name', text);
     feature.set('description', description);
 
-    // Reconstruct the initial styles array.
-    feature.setStyle(style);
+    stylePromise.then(newStyle => {
+      // Reconstruct the initial styles array.
+      feature.setStyle(newStyle);
+    });
   }
 
   renderColors(color, classNameColors, classNameSelected, onClick) {
@@ -712,9 +735,17 @@ class FeatureStyler extends PureComponent {
             onChange={e => {
               this.setState({ name: e.target.value });
             }}
-            onKeyDown={e => {
-              e.stopPropagation();
-              e.nativeEvent.stopImmediatePropagation();
+          />
+          <StopEvents observe={this.textareaInput} events={['keydown']} />
+        </div>
+
+        <div className={classNameTextSize}>
+          {labels.modifyTextSize ? <div>{t(labels.modifyTextSize)}</div> : null}
+          <Select
+            options={textSizes}
+            value={textSize}
+            onChange={(e, newSize) => {
+              this.setState({ textSize: newSize });
             }}
           />
         </div>
@@ -739,16 +770,6 @@ class FeatureStyler extends PureComponent {
             });
           },
         )}
-        <div className={classNameTextSize}>
-          {labels.modifyTextSize ? <div>{t(labels.modifyTextSize)}</div> : null}
-          <Select
-            options={textSizes}
-            value={textSize}
-            onChange={(e, newSize) => {
-              this.setState({ textSize: newSize });
-            }}
-          />
-        </div>
 
         <div className={classNameTextRotation}>
           {labels.modifyTextRotation ? (

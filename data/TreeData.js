@@ -16,6 +16,7 @@ export default [
   },
   {
     name: 'OSM Baselayer Hot',
+    key: 'osm.baselayer.hot',
     visible: false,
     isBaseLayer: true,
     copyright: '© OSM Contributors',
@@ -26,9 +27,11 @@ export default [
   },
   {
     name: 'OpenTopoMap',
+    key: 'open.topo.map',
     visible: false,
     isBaseLayer: true,
-    copyright: 'map data: © OpenStreetMap contributors, SRTM | map style: © OpenTopoMap (CC-BY-SA)',
+    copyright:
+      'map data: © OpenStreetMap contributors, SRTM | map style: © OpenTopoMap (CC-BY-SA)',
     data: {
       type: 'xyz',
       url: 'https://a.tile.opentopomap.org/{z}/{x}/{y}.png',
@@ -36,11 +39,13 @@ export default [
   },
   {
     name: 'Others layers',
+    key: 'other.layers',
     visible: true,
     type: 'parent',
     children: [
       {
         name: 'Countries Borders',
+        key: 'country.borders',
         visible: false,
         data: {
           type: 'vectorLayer',
@@ -50,8 +55,8 @@ export default [
         },
       },
       {
-        id: 'usaPop',
         name: 'USA Population Density',
+        key: 'usa.population.density',
         visible: true,
         copyright: '© Esri',
         data: {
@@ -68,12 +73,13 @@ export default [
   },
   {
     name: 'Vector sample layers',
+    key: 'vector.sample.layers',
     visible: true,
     radioGroup: 'radio',
     children: [
       {
-        id: 'pointSamples',
         name: 'Points Samples',
+        key: 'point.samples',
         radioGroup: 'vectorLayers',
         visible: false,
         data: {
@@ -93,8 +99,8 @@ export default [
         },
       },
       {
-        id: 'lineSamples',
         name: 'Lines Samples',
+        key: 'lines.samples',
         radioGroup: 'vectorLayers',
         visible: true,
         data: {
@@ -112,8 +118,8 @@ export default [
         },
       },
       {
-        id: 'polySamples',
         name: 'Polygons Samples',
+        key: 'polygon.samples',
         radioGroup: 'vectorLayers',
         visible: false,
         data: {

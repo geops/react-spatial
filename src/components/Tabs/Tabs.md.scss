@@ -1,18 +1,19 @@
 .tm-tabs-example {
   position: relative;
-  height: 300px;
+  height: 250px;
   width: 500px;
 
   .tm-tabs {
     position: absolute;
     width: 400px;
-
-    ol {
-      margin-top: 0;
-    }
   }
 
-  .tm-tabs-item-content {
+  .tm-tabs-content {
     text-align: justify;
+    height: 150px;
+
+    p {
+      margin: 0;
+    }
   }
 }

@@ -4,17 +4,21 @@ import { configure, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import renderer from 'react-test-renderer';
 import VectorSource from 'ol/source/Vector';
+import VectorLayer from 'ol/layer/Vector';
 import OLMap from 'ol/Map';
 import View from 'ol/View';
-import VectorLayer from '../../VectorLayer';
+import Layer from '../../Layer';
 import OLE from '.';
 
 configure({ adapter: new Adapter() });
 
 const map = new OLMap({ view: new View() });
-const vectorLayer = new VectorLayer({
-  source: new VectorSource({
-    features: [],
+const vectorLayer = new Layer({
+  name: 'Sample',
+  olLayer: new VectorLayer({
+    source: new VectorSource({
+      features: [],
+    }),
   }),
 });
 

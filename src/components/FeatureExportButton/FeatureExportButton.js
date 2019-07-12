@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { FaCloudDownloadAlt } from 'react-icons/fa';
 import KMLFormat from 'ol/format/KML';
-import VectorLayer from '../../VectorLayer';
+import Layer from '../../Layer';
 import Button from '../Button';
 import KML from '../../utils/KML';
 
@@ -23,8 +23,8 @@ const propTypes = {
    */
   format: PropTypes.func,
 
-  /** An existing react-spatial VectorLayer, using a valid ol.source.Vector */
-  layer: PropTypes.instanceOf(VectorLayer).isRequired,
+  /** An existing react-spatial Layer , using a valid ol.source.Vector */
+  layer: PropTypes.instanceOf(Layer).isRequired,
 
   /**
    * Map projection.

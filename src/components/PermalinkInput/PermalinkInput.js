@@ -116,35 +116,31 @@ class PermalinkInput extends PureComponent {
     } = this.props;
 
     const { permalinkValue } = this.state;
-
-    if (permalinkValue) {
-      return (
-        <div className={className}>
-          <input
-            value={permalinkValue}
-            readOnly
-            type="text"
-            tabIndex="0"
-            title={titleInputField}
-            className={classNameInputField}
-            ref={node => {
-              this.inputRef = node;
-            }}
-            onClick={() => PermalinkInput.selectInput()}
-          />
-          <Button
-            className={classNameCopyBt}
-            title={titleCopyBt}
-            onClick={() => {
-              this.onClickCopyButton();
-            }}
-          >
-            {button}
-          </Button>
-        </div>
-      );
-    }
-    return null;
+    return (
+      <div className={className}>
+        <input
+          value={permalinkValue || ''}
+          type="text"
+          tabIndex="0"
+          title={titleInputField}
+          className={classNameInputField}
+          ref={node => {
+            this.inputRef = node;
+          }}
+          onClick={() => PermalinkInput.selectInput()}
+          onChange={() => {}}
+        />
+        <Button
+          className={classNameCopyBt}
+          title={titleCopyBt}
+          onClick={() => {
+            this.onClickCopyButton();
+          }}
+        >
+          {button}
+        </Button>
+      </div>
+    );
   }
 }
 

@@ -28,9 +28,19 @@ const propTypes = {
   title: PropTypes.string,
 
   /**
+   * Keyboard accesskey shortcut.
+   */
+  accessKey: PropTypes.string,
+
+  /**
    * HTML style attribute
    */
   style: PropTypes.object,
+
+  /**
+   * HTML disabled attribute
+   */
+  disabled: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -39,6 +49,8 @@ const defaultProps = {
   title: undefined,
   tabIndex: 0,
   style: undefined,
+  accessKey: undefined,
+  disabled: undefined,
 };
 
 /**
@@ -46,7 +58,16 @@ const defaultProps = {
  */
 class Button extends PureComponent {
   render() {
-    const { onClick, children, className, title, tabIndex, style } = this.props;
+    const {
+      onClick,
+      children,
+      className,
+      title,
+      tabIndex,
+      style,
+      accessKey,
+      disabled,
+    } = this.props;
 
     return (
       <div
@@ -58,6 +79,8 @@ class Button extends PureComponent {
         aria-label={title}
         onClick={e => onClick(e)}
         onKeyPress={e => e.which === 13 && onClick(e)}
+        accessKey={accessKey}
+        disabled={disabled}
       >
         {children}
       </div>

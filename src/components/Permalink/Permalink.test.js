@@ -75,7 +75,7 @@ describe('Permalink', () => {
     const layers = ConfigReader.readConfig(map, data);
     const layerService = new LayerService(layers);
     mount(<Permalink layerService={layerService} />);
-    const search = '?layers=usaPop,lineSamples';
+    const search = '?layers=usa.population.density,lines.samples';
 
     expect(window.location.search).toEqual(search);
   });
@@ -150,7 +150,7 @@ describe('Permalink', () => {
     const layers = ConfigReader.readConfig(map, data);
     const layerService = new LayerService(layers);
     const permalink = mount(<Permalink layerService={layerService} />);
-    const search = '?layers=lineSamples';
+    const search = '?layers=lines%20samples';
 
     const layers2 = ConfigReader.readConfig(map, data2);
     const layerService2 = new LayerService(layers2);
@@ -165,7 +165,7 @@ describe('Permalink', () => {
     const layers = ConfigReader.readConfig(map, data);
     const layerService = new LayerService(layers);
     mount(<Permalink layerService={layerService} />);
-    const search = '?layers=usaPop,polySamples';
+    const search = '?layers=usa.population.density,polygon.samples';
     const callback = jest.fn(() => 42);
     layerService.on('change:visible', callback);
     layerService.getLayer('Polygons Samples').setVisible(true);

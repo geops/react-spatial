@@ -1,6 +1,49 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PermalinkInput matches snapshot 1`] = `null`;
+exports[`PermalinkInput matches snapshot 1`] = `
+<div
+  className="tm-permalink-field"
+>
+  <input
+    className="tm-permalink-input"
+    onChange={[Function]}
+    onClick={[Function]}
+    tabIndex="0"
+    title=""
+    type="text"
+    value=""
+  />
+  <div
+    aria-label=""
+    className="tm-permalink-bt"
+    onClick={[Function]}
+    onKeyPress={[Function]}
+    role="button"
+    tabIndex={0}
+    title=""
+  >
+    <svg
+      fill="currentColor"
+      focusable={false}
+      height="1em"
+      stroke="currentColor"
+      strokeWidth="0"
+      style={
+        Object {
+          "color": undefined,
+        }
+      }
+      viewBox="0 0 24 24"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"
+      />
+    </svg>
+  </div>
+</div>
+`;
 
 exports[`PermalinkInput matches snapshot 2`] = `
 <div
@@ -8,8 +51,8 @@ exports[`PermalinkInput matches snapshot 2`] = `
 >
   <input
     className="tm-permalink-input"
+    onChange={[Function]}
     onClick={[Function]}
-    readOnly={true}
     tabIndex="0"
     title=""
     type="text"

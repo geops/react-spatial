@@ -1,10 +1,11 @@
 {
   "name": "react-spatial",
-  "version": "0.0.14-beta.35",
+  "version": "0.0.14-beta.49",
   "description": "Components to build React map apps.",
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.2.2",
+    "@babel/plugin-transform-runtime": "^7.4.4",
     "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
     "babel-core": "^7.0.0-0",
@@ -16,13 +17,15 @@
     "css-loader": "^3.0.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.0",
-    "eslint": "^5.12.0",
+    "eslint": "^6.0.1",
     "eslint-config-airbnb": "^17.1.0",
-    "eslint-config-prettier": "^5.0.0",
+    "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.3",
+    "generact": "^0.4.0",
+    "husky": "^3.0.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.1.0",
     "jest-canvas-mock": "^2.0.0-alpha.3",
@@ -30,6 +33,7 @@
     "jest-serializer-html": "^7.0.0",
     "jest-svg-transformer": "^1.0.0",
     "jsts": "^2.0.3",
+    "lint-staged": "^9.2.0",
     "node-sass": "^4.11.0",
     "ol": "^5.3.0",
     "ole": "0.0.4-beta.10",
@@ -53,7 +57,7 @@
   },
   "peerDependency": {
     "ol": "^5.3.0",
-    "ole": "^0.0.4-beta.9"
+    "ole": "^0.0.4-beta.10"
   },
   "dependencies": {
     "query-string": "^6.4.2",
@@ -84,7 +88,7 @@
   },
   "scripts": {
     "prebuild": "rm -rf build/",
-    "build": "buble --no modules -i src -o build --objectAssign Object.assign --sourcemap && cp -t build package.json README.md LICENSE && cp -rf src/images build",
+    "build": "buble --no modules,asyncAwait -i src -o build --objectAssign Object.assign --sourcemap, && cp -t build package.json README.md LICENSE && cp -rf src/images build",
     "postbuild": "cp package.json build/ && cd src && find .  -name '*.scss' | cpio -pdm ../build",
     "format": "prettier --write 'src/**/*.js' && stylelint 'src/**/*.css' 'src/**/*.scss' --fix",
     "lint": "eslint 'src/**/*.js' && stylelint 'src/**/*.css' 'src/**/*.scss'",
@@ -96,7 +100,7 @@
     "publish:beta": "yarn publish:public --tag beta",
     "doc:server": "styleguidist server",
     "start": "yarn doc:server",
-    "symlink": "yarn build && cd build && yarn link"
+    "cp": "generact --root src/components"
   },
   "browserslist": [
     ">0.2%",

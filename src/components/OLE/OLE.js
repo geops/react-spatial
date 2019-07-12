@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import OLMap from 'ol/Map';
 import { Editor, control } from 'ole';
 import { Style } from 'ol/style';
-import VectorLayer from '../../VectorLayer';
+import Layer from '../../Layer';
 
 const propTypes = {
   /** An existing [ol/Map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html). */
   map: PropTypes.instanceOf(OLMap),
 
   /** An existing react-spatial VectorLayer, using a valid ol.source.Vector */
-  layer: PropTypes.instanceOf(VectorLayer),
+  layer: PropTypes.instanceOf(Layer),
 
   /** Function to render custom button, instead of default toolbar. */
   renderControlButton: PropTypes.func,

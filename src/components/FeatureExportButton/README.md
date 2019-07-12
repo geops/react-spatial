@@ -30,6 +30,7 @@ class FeatureExportButtonExample extends React.Component {
         anchorXUnits: 'fraction',
         anchorYUnits: 'pixels',
         src: 'https://openlayers.org/en/latest/examples/data/icon.png',
+        imgSize: [32, 48]
       }),
     });
 
