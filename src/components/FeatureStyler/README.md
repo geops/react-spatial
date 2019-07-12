@@ -103,11 +103,13 @@ class FeatureStylerExample extends React.Component {
 
     this.layers = [
       new Layer({
+        name: 'OSM layer',
         olLayer: new TileLayer({
           source: new OSM(),
         }),
       }),
       new VectorLayer({
+        name: 'Sample layer',
         source: new VectorSource({
           features: [text, icon, line],
         }),

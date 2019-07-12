@@ -635,7 +635,7 @@ class FeatureStyler extends PureComponent {
           {colors.map(c => (
             <Button
               key={c.name}
-              className={`tm-color ${color === c ? classNameSelected : ''}`}
+              className={`tm-button tm-color ${color === c ? classNameSelected : ''}`}
               onClick={e => {
                 onClick(e, c);
               }}

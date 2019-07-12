@@ -283,7 +283,7 @@ describe('FeatureStyler', () => {
         FeatureStyler.defaultProps.colors[1],
       );
       wrapper
-        .find('Button.tm-color')
+        .find('Button.tm-button.tm-color')
         .at(1)
         .simulate('click');
       expect(wrapper.state().color).toEqual(
@@ -325,7 +325,7 @@ describe('FeatureStyler', () => {
       );
       wrapper
         .find('.tm-modify-text-color')
-        .find('Button.tm-color')
+        .find('Button.tm-button')
         .at(1)
         .simulate('click');
       expect(wrapper.state().textColor).toEqual(
