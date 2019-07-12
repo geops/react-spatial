@@ -52,6 +52,7 @@ class PopupExample extends React.Component {
       }),
     });
     const vectorLayer = new VectorLayer({
+      name: 'Popup layer',
       source: new VectorSource({
         features: [
           new Feature({

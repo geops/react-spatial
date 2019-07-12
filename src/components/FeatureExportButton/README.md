@@ -36,6 +36,7 @@ class FeatureExportButtonExample extends React.Component {
 
     this.layers = [
       new Layer({
+        name: 'OSM layer',
         olLayer: new TileLayer({
           source: new OSM(),
         }),
