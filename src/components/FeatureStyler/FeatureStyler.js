@@ -63,6 +63,7 @@ const propTypes = {
     PropTypes.shape({
       name: PropTypes.string,
       icon: PropTypes.string,
+      buttonIcon: PropTypes.string,
     }),
   ),
 
@@ -110,6 +111,11 @@ const propTypes = {
   classNameTextRotation: PropTypes.string,
 
   /**
+   * CSS class for the container of the list of stroke settings.
+   */
+  classNameStroke: PropTypes.string,
+
+  /**
    * CSS class of the selected values.
    */
   classNameSelected: PropTypes.string,
@@ -143,10 +149,19 @@ const defaultProps = {
   classNameTextSize: 'tm-modify-text-size',
   classNameTextFont: 'tm-modify-text-font',
   classNameTextRotation: 'tm-modify-text-rotation',
+  classNameStroke: 'tm-modify-stroke',
   classNameSelected: 'tm-button tm-selected',
   lineIcons: [
-    { name: 'left', icon: '/images/arrowLeft.png' },
-    { name: 'right', icon: '/images/arrowRight.png' },
+    {
+      name: 'left',
+      icon: 'images/arrowLeft.png',
+      buttonIcon: 'images/arrowLeftBlack.png',
+    },
+    {
+      name: 'right',
+      icon: 'images/arrowRight.png',
+      buttonIcon: 'images/arrowRightBlack.png',
+    },
   ],
   colors: [
     { name: 'black', fill: [0, 0, 0], border: 'white' },
@@ -276,11 +291,15 @@ class FeatureStyler extends PureComponent {
     return colors.find(c => rgb === asString(c.fill));
   }
 
-  static getLineIcon(geom, icon, start = true) {
+  static getVertexCoord(geom, start = true, index = 0) {
     const coords = geom.getCoordinates();
     const len = coords.length - 1;
-    const coordA = start ? coords[1] : coords[len - 1];
-    const coordB = start ? coords[0] : coords[len];
+    return start ? coords[index] : coords[len - index];
+  }
+
+  static getLineIcon(geom, icon, color, start = true) {
+    const coordA = FeatureStyler.getVertexCoord(geom, start, 1);
+    const coordB = FeatureStyler.getVertexCoord(geom, start);
     const dx = coordA[0] - coordB[0];
     const dy = coordA[1] - coordB[1];
     const rotation = Math.atan2(dy, dx);
@@ -289,6 +308,7 @@ class FeatureStyler extends PureComponent {
       geometry: new Point(coordB),
       image: new Icon({
         src: icon,
+        color,
         rotation: -rotation,
         rotateWithView: true,
       }),
@@ -328,15 +348,26 @@ class FeatureStyler extends PureComponent {
         strokeStyle.setColor(color.fill.concat(strokeStyle.getColor()[3]));
       }
 
+      const iconColor = color ? color.fill : strokeStyle.getColor();
+
       if (lineStartIcon) {
         extraStyles.push(
-          FeatureStyler.getLineIcon(feature.getGeometry(), lineStartIcon),
+          FeatureStyler.getLineIcon(
+            feature.getGeometry(),
+            lineStartIcon,
+            iconColor,
+          ),
         );
       }
 
       if (lineEndIcon) {
         extraStyles.push(
-          FeatureStyler.getLineIcon(feature.getGeometry(), lineEndIcon, false),
+          FeatureStyler.getLineIcon(
+            feature.getGeometry(),
+            lineEndIcon,
+            iconColor,
+            false,
+          ),
         );
       }
     }
@@ -504,8 +535,10 @@ class FeatureStyler extends PureComponent {
       iconCategories,
       colors,
       textSizes,
+      lineIcons,
       iconSizes,
     } = this.props;
+    const { lineStartIcon, lineEndIcon } = this.state;
     let name;
     let iconCategory;
     let icon;
@@ -558,6 +591,30 @@ class FeatureStyler extends PureComponent {
       textRotation = featStyle.getText().getRotation();
     }
 
+    const oldStyles = FeatureStyler.getStyleAsArray(feature);
+
+    if (oldStyles.length > 1) {
+      for (let i = 1; i < oldStyles.length; i += 1) {
+        if (oldStyles[i].getImage() && oldStyles[i].getImage().getSrc()) {
+          for (let j = 0; j < lineIcons.length; j += 1) {
+            if (oldStyles[i].getImage().getSrc() === lineIcons[j].icon) {
+              const coord = oldStyles[i].getGeometry().getCoordinates();
+              const startCoord = FeatureStyler.getVertexCoord(
+                feature.getGeometry(),
+              );
+              if (coord[0] === startCoord[0] && coord[1] === startCoord[1]) {
+                if (!lineStartIcon) {
+                  this.setState({ lineStartIcon: lineIcons[j].icon });
+                }
+              } else if (!lineEndIcon) {
+                this.setState({ lineEndIcon: lineIcons[j].icon });
+              }
+            }
+          }
+        }
+      }
+    }
+
     this.setState({
       name: name || feature.get('name') || '',
       description: feature.get('description') || '',
@@ -576,7 +633,7 @@ class FeatureStyler extends PureComponent {
   }
 
   applyStyle() {
-    const { feature } = this.props;
+    const { feature, lineIcons } = this.props;
     const {
       useTextStyle,
       font,
@@ -597,6 +654,7 @@ class FeatureStyler extends PureComponent {
 
     // Update the style of the feature with the current style
     const oldStyles = FeatureStyler.getStyleAsArray(feature);
+
     const stylePromise = FeatureStyler.updateStyleFromProperties(
       oldStyles[0],
       feature,
@@ -611,6 +669,7 @@ class FeatureStyler extends PureComponent {
         textColor,
         textSize,
         textRotation,
+        lineIcons,
         lineStartIcon,
         lineEndIcon,
       },
@@ -635,7 +694,9 @@ class FeatureStyler extends PureComponent {
           {colors.map(c => (
             <Button
               key={c.name}
-              className={`tm-button tm-color ${color === c ? classNameSelected : ''}`}
+              className={`tm-button tm-color ${
+                color === c ? classNameSelected : ''
+              }`}
               onClick={e => {
                 onClick(e, c);
               }}
@@ -655,8 +716,14 @@ class FeatureStyler extends PureComponent {
   }
 
   renderStrokeStyle() {
-    const { classNameColors, classNameSelected, lineIcons } = this.props;
-    const { useStrokeStyle, color } = this.state;
+    const {
+      iconSizes,
+      classNameStroke,
+      classNameColors,
+      classNameSelected,
+      lineIcons,
+    } = this.props;
+    const { useStrokeStyle, color, lineStartIcon, lineEndIcon } = this.state;
 
     if (!useStrokeStyle) {
       return null;
@@ -664,24 +731,48 @@ class FeatureStyler extends PureComponent {
 
     return (
       <>
-        Start:
-        {lineIcons.map(lc => (
-          <Button
-            key={lc.name}
-            onClick={() => this.setState({ lineStartIcon: lc.icon })}
-          >
-            <img src={lc.icon} alt={lc.name} />
-          </Button>
-        ))}
-        End:
-        {lineIcons.map(lc => (
-          <Button
-            key={lc.name}
-            onClick={() => this.setState({ lineEndIcon: lc.icon })}
-          >
-            <img src={lc.icon} alt={lc.name} />
-          </Button>
-        ))}
+        <div className={classNameStroke}>
+          <div>Start:</div>
+          {lineIcons.map(lc => (
+            <Button
+              key={lc.name}
+              className={`tm-button
+                ${lineStartIcon === lc.icon ? classNameSelected : ''}`}
+              style={{
+                width: iconSizes[0].value[0],
+                height: iconSizes[0].value[1],
+              }}
+              onClick={() =>
+                this.setState({
+                  lineStartIcon: lineStartIcon === lc.icon ? null : lc.icon,
+                })
+              }
+            >
+              <img src={lc.buttonIcon} alt={lc.name} />
+            </Button>
+          ))}
+        </div>
+        <div className={classNameStroke}>
+          <div>End:</div>
+          {lineIcons.map(lc => (
+            <Button
+              key={lc.name}
+              className={`tm-button
+                ${lineEndIcon === lc.icon ? classNameSelected : ''}`}
+              style={{
+                width: iconSizes[0].value[0],
+                height: iconSizes[0].value[1],
+              }}
+              onClick={() =>
+                this.setState({
+                  lineEndIcon: lineEndIcon === lc.icon ? null : lc.icon,
+                })
+              }
+            >
+              <img src={lc.buttonIcon} alt={lc.name} />
+            </Button>
+          ))}
+        </div>
         {this.renderColors(
           color,
           classNameColors,

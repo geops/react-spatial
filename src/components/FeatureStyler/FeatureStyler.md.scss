@@ -61,7 +61,8 @@
     }
   }
 
-  .tm-modify-icons {
+  .tm-modify-icons,
+  .tm-modify-stroke {
     margin: 5px 0;
 
     div[role='button'] {
@@ -75,6 +76,13 @@
       &:hover {
         background-color: gray;
       }
+    }
+  }
+
+  .tm-modify-stroke {
+    img {
+      margin-left: 6px;
+      margin-top: 2px;
     }
   }
 }
