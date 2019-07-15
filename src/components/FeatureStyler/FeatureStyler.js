@@ -752,8 +752,9 @@ class FeatureStyler extends PureComponent {
           {lineIcons.map(lc => (
             <Button
               key={lc.name}
-              className={`tm-button
-                ${lineStartIcon === lc.icon ? classNameSelected : ''}`}
+              className={`tm-button ${
+                lineStartIcon === lc.icon ? classNameSelected : ''
+              }`}
               style={{
                 width: iconSizes[0].value[0],
                 height: iconSizes[0].value[1],
@@ -773,8 +774,9 @@ class FeatureStyler extends PureComponent {
           {lineIcons.map(lc => (
             <Button
               key={lc.name}
-              className={`tm-button
-                ${lineEndIcon === lc.icon ? classNameSelected : ''}`}
+              className={`tm-button ${
+                lineEndIcon === lc.icon ? classNameSelected : ''
+              }`}
               style={{
                 width: iconSizes[0].value[0],
                 height: iconSizes[0].value[1],
