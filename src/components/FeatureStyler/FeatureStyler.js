@@ -297,7 +297,8 @@ class FeatureStyler extends PureComponent {
     return start ? coords[index] : coords[len - index];
   }
 
-  static getLineIcon(geom, icon, color, start = true) {
+  static getLineIcon(feature, icon, color, start = true) {
+    const geom = feature.getGeometry();
     const coordA = FeatureStyler.getVertexCoord(geom, start, 1);
     const coordB = FeatureStyler.getVertexCoord(geom, start);
     const dx = coordA[0] - coordB[0];
@@ -305,7 +306,10 @@ class FeatureStyler extends PureComponent {
     const rotation = Math.atan2(dy, dx);
 
     return new Style({
-      geometry: new Point(coordB),
+      geometry: feat => {
+        const ge = feat.getGeometry();
+        return new Point(FeatureStyler.getVertexCoord(ge, start));
+      },
       image: new Icon({
         src: icon,
         color,
@@ -352,22 +356,13 @@ class FeatureStyler extends PureComponent {
 
       if (lineStartIcon) {
         extraStyles.push(
-          FeatureStyler.getLineIcon(
-            feature.getGeometry(),
-            lineStartIcon,
-            iconColor,
-          ),
+          FeatureStyler.getLineIcon(feature, lineStartIcon, iconColor),
         );
       }
 
       if (lineEndIcon) {
         extraStyles.push(
-          FeatureStyler.getLineIcon(
-            feature.getGeometry(),
-            lineEndIcon,
-            iconColor,
-            false,
-          ),
+          FeatureStyler.getLineIcon(feature, lineEndIcon, iconColor, false),
         );
       }
     }
@@ -437,12 +432,15 @@ class FeatureStyler extends PureComponent {
     return Promise.resolve(styleArray);
   }
 
-  static findLineIcon(styles, geom, lineIcons, start = true) {
+  static findLineIcon(styles, feature, lineIcons, start = true) {
+    const geom = feature.getGeometry();
     for (let i = 1; i < styles.length; i += 1) {
       if (styles[i].getImage() && styles[i].getImage().getSrc()) {
         for (let j = 0; j < lineIcons.length; j += 1) {
           if (styles[i].getImage().getSrc() === lineIcons[j].icon) {
-            const coord = styles[i].getGeometry().getCoordinates();
+            const coord = styles[i]
+              .getGeometry()(feature)
+              .getCoordinates();
             const startCoord = FeatureStyler.getVertexCoord(geom);
             const endCoord = FeatureStyler.getVertexCoord(geom, false);
             if (
@@ -617,13 +615,13 @@ class FeatureStyler extends PureComponent {
 
     const newLineStartIcon = FeatureStyler.findLineIcon(
       oldStyles,
-      feature.getGeometry(),
+      feature,
       lineIcons,
     );
 
     const newLineEndIcon = FeatureStyler.findLineIcon(
       oldStyles,
-      feature.getGeometry(),
+      feature,
       lineIcons,
       false,
     );
