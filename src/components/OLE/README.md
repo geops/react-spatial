@@ -24,11 +24,13 @@ class OLEExample extends React.Component {
 
     this.layers = [
       new Layer({
+        name: 'OSM layer',
         olLayer:new TileLayer({
           source: new OSM()
         })
       }),
       new VectorLayer({
+        name: 'OLE layer',
         source: new VectorSource(),
       })
     ];
