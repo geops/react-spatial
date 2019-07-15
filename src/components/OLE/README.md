@@ -6,7 +6,7 @@ This demonstrates the use of OLE.
 import React from 'react';
 import BasicMap from 'react-spatial/components/BasicMap';
 import Layer from 'react-spatial/Layer';
-import VectorLayer from 'react-spatial/VectorLayer';
+import VectorLayer from 'ol/layer/Vector';
 import OLMap from 'ol/Map';
 import VectorSource from 'ol/source/Vector';
 import TileLayer from 'ol/layer/Tile';
@@ -25,13 +25,15 @@ class OLEExample extends React.Component {
     this.layers = [
       new Layer({
         name: 'OSM layer',
-        olLayer:new TileLayer({
+        olLayer: new TileLayer({
           source: new OSM()
         })
       }),
-      new VectorLayer({
+      new Layer({
         name: 'OLE layer',
-        source: new VectorSource(),
+        olLayer: new VectorLayer({
+          source: new VectorSource(),
+        })
       })
     ];
   }

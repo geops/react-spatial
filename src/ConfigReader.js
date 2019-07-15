@@ -1,4 +1,5 @@
 import TileLayer from 'ol/layer/Tile';
+import VectorLayer from 'ol/layer/Vector';
 import XYZ from 'ol/source/XYZ';
 import VectorSource from 'ol/source/Vector';
 import WMTSSource from 'ol/source/WMTS';
@@ -6,7 +7,6 @@ import TileJSONSource from 'ol/source/TileJSON';
 import WMTSTileGrid from 'ol/tilegrid/WMTS';
 import GeoJSONFormat from 'ol/format/GeoJSON';
 import Layer from './Layer';
-import VectorLayer from './VectorLayer';
 import projections from './Projections';
 
 const createXYZLayer = item => {
@@ -30,13 +30,16 @@ const createVectorLayer = item => {
   const conf = { ...item };
   delete conf.data;
 
-  return new VectorLayer({
+  return new Layer({
     ...conf,
-    source: new VectorSource({
-      url: item.data.url,
-      format: new GeoJSONFormat(),
+    olLayer: new VectorLayer({
+      name: conf.name,
+      source: new VectorSource({
+        url: item.data.url,
+        format: new GeoJSONFormat(),
+      }),
+      style: item.data.style,
     }),
-    style: item.data.style,
   });
 };
 

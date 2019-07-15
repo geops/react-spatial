@@ -8,7 +8,7 @@ import BasicMap from 'react-spatial/components/BasicMap';
 import Popup from 'react-spatial/components/Popup';
 import ResizeHandler from 'react-spatial/components/ResizeHandler';
 import Layer from 'react-spatial/Layer';
-import VectorLayer from 'react-spatial/VectorLayer';
+import VectorLayer from 'ol/layer/Vector';
 import OLMap from 'ol/Map';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
@@ -51,20 +51,22 @@ class PopupExample extends React.Component {
         }),
       }),
     });
-    const vectorLayer = new VectorLayer({
+    const vectorLayer = new Layer({
       name: 'Popup layer',
-      source: new VectorSource({
-        features: [
-          new Feature({
-            geometry: new Point(getCenter(extent)),
-          }),
-        ],
-      }),
-      style: new Style({
-        image: new Circle({
-          radius: 40,
-          fill: new Fill({
-            color: '#ff0000',
+      olLayer: new VectorLayer({
+        source: new VectorSource({
+          features: [
+            new Feature({
+              geometry: new Point(getCenter(extent)),
+            }),
+          ],
+        }),
+        style: new Style({
+          image: new Circle({
+            radius: 40,
+            fill: new Fill({
+              color: '#ff0000',
+            }),
           }),
         }),
       }),
