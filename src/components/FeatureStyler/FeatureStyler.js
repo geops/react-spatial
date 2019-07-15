@@ -437,6 +437,29 @@ class FeatureStyler extends PureComponent {
     return Promise.resolve(styleArray);
   }
 
+  static findLineIcon(styles, geom, lineIcons, start = true) {
+    for (let i = 1; i < styles.length; i += 1) {
+      if (styles[i].getImage() && styles[i].getImage().getSrc()) {
+        for (let j = 0; j < lineIcons.length; j += 1) {
+          if (styles[i].getImage().getSrc() === lineIcons[j].icon) {
+            const coord = styles[i].getGeometry().getCoordinates();
+            const startCoord = FeatureStyler.getVertexCoord(geom);
+            const endCoord = FeatureStyler.getVertexCoord(geom, false);
+            if (
+              (coord[0] === startCoord[0] &&
+                coord[1] === startCoord[1] &&
+                start) ||
+              (coord[0] === endCoord[0] && coord[1] === endCoord[1] && !start)
+            ) {
+              return lineIcons[j].icon;
+            }
+          }
+        }
+      }
+    }
+    return null;
+  }
+
   constructor(props) {
     super(props);
     const { iconCategories, colors, textSizes, iconSizes } = this.props;
@@ -593,27 +616,18 @@ class FeatureStyler extends PureComponent {
 
     const oldStyles = FeatureStyler.getStyleAsArray(feature);
 
-    if (oldStyles.length > 1) {
-      for (let i = 1; i < oldStyles.length; i += 1) {
-        if (oldStyles[i].getImage() && oldStyles[i].getImage().getSrc()) {
-          for (let j = 0; j < lineIcons.length; j += 1) {
-            if (oldStyles[i].getImage().getSrc() === lineIcons[j].icon) {
-              const coord = oldStyles[i].getGeometry().getCoordinates();
-              const startCoord = FeatureStyler.getVertexCoord(
-                feature.getGeometry(),
-              );
-              if (coord[0] === startCoord[0] && coord[1] === startCoord[1]) {
-                if (!lineStartIcon) {
-                  this.setState({ lineStartIcon: lineIcons[j].icon });
-                }
-              } else if (!lineEndIcon) {
-                this.setState({ lineEndIcon: lineIcons[j].icon });
-              }
-            }
-          }
-        }
-      }
-    }
+    const newLineStartIcon =
+      lineStartIcon ||
+      FeatureStyler.findLineIcon(oldStyles, feature.getGeometry(), lineIcons);
+
+    const newLineEndIcon =
+      lineEndIcon ||
+      FeatureStyler.findLineIcon(
+        oldStyles,
+        feature.getGeometry(),
+        lineIcons,
+        false,
+      );
 
     this.setState({
       name: name || feature.get('name') || '',
@@ -629,6 +643,8 @@ class FeatureStyler extends PureComponent {
       useTextStyle,
       useIconStyle,
       useStrokeStyle,
+      lineStartIcon: newLineStartIcon,
+      lineEndIcon: newLineEndIcon,
     });
   }
 
