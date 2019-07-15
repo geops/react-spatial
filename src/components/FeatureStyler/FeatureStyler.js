@@ -561,7 +561,6 @@ class FeatureStyler extends PureComponent {
       lineIcons,
       iconSizes,
     } = this.props;
-    const { lineStartIcon, lineEndIcon } = this.state;
     let name;
     let iconCategory;
     let icon;
@@ -616,18 +615,18 @@ class FeatureStyler extends PureComponent {
 
     const oldStyles = FeatureStyler.getStyleAsArray(feature);
 
-    const newLineStartIcon =
-      lineStartIcon ||
-      FeatureStyler.findLineIcon(oldStyles, feature.getGeometry(), lineIcons);
+    const newLineStartIcon = FeatureStyler.findLineIcon(
+      oldStyles,
+      feature.getGeometry(),
+      lineIcons,
+    );
 
-    const newLineEndIcon =
-      lineEndIcon ||
-      FeatureStyler.findLineIcon(
-        oldStyles,
-        feature.getGeometry(),
-        lineIcons,
-        false,
-      );
+    const newLineEndIcon = FeatureStyler.findLineIcon(
+      oldStyles,
+      feature.getGeometry(),
+      lineIcons,
+      false,
+    );
 
     this.setState({
       name: name || feature.get('name') || '',
