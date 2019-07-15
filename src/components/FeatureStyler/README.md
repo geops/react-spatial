@@ -35,7 +35,7 @@ class FeatureStylerExample extends React.Component {
       image: new Icon({
         src: 'images/marker.png',
         scale: 0.5,
-        imgSize: [24, 24], // ie 11
+        imgSize: [48, 48], // ie 11
       }),
     });
 
