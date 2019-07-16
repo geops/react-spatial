@@ -161,13 +161,13 @@ const defaultProps = {
       id: 'arrow-left',
       url: 'images/arrowLeft.png',
       buttonUrl: 'images/arrowLeftBlack.png',
-      originalSize: [48, 48],
+      originalSize: [12, 19],
     },
     {
       id: 'arrow-right',
       url: 'images/arrowRight.png',
       buttonUrl: 'images/arrowRightBlack.png',
-      originalSize: [48, 48],
+      originalSize: [12, 19],
     },
   ],
   colors: [
@@ -327,6 +327,7 @@ class FeatureStyler extends PureComponent {
         color,
         rotation: -rotation,
         rotateWithView: true,
+        imgSize: icon.originalSize, // ie 11
       }),
     });
   }
