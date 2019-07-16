@@ -169,6 +169,7 @@ const defaultProps = {
         {
           id: 26,
           url: 'images/marker.png',
+          originalSize: [48, 48],
         },
       ],
     },
@@ -181,10 +182,12 @@ const defaultProps = {
         {
           id: 1,
           url: 'images/airport.png',
+          originalSize: [48, 48],
         },
         {
           id: 2,
           url: 'images/fuel.png',
+          originalSize: [48, 48],
         },
       ],
     },
