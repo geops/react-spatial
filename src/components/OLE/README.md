@@ -6,7 +6,7 @@ This demonstrates the use of OLE.
 import React from 'react';
 import BasicMap from 'react-spatial/components/BasicMap';
 import Layer from 'react-spatial/Layer';
-import VectorLayer from 'ol/layer/Vector';
+import { Vector as VectorLayer } from 'ol/layer';
 import OLMap from 'ol/Map';
 import VectorSource from 'ol/source/Vector';
 import TileLayer from 'ol/layer/Tile';
