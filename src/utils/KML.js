@@ -22,6 +22,35 @@ const applyTextStyleForIcon = (olIcon, olText) => {
   olText.setTextAlign('left');
 };
 
+const getVertexCoord = (geom, start = true, index = 0) => {
+  const coords = geom.getCoordinates();
+  const len = coords.length - 1;
+  return start ? coords[index] : coords[len - index];
+};
+
+const getLineIcon = (feature, url, color, start = true) => {
+  const geom = feature.getGeometry();
+  const coordA = getVertexCoord(geom, start, 1);
+  const coordB = getVertexCoord(geom, start);
+  const dx = coordA[0] - coordB[0];
+  const dy = coordA[1] - coordB[1];
+  const rotation = Math.atan2(dy, dx);
+
+  return new Style({
+    geometry: feat => {
+      const ge = feat.getGeometry();
+      return new Point(getVertexCoord(ge, start));
+    },
+    image: new Icon({
+      src: url,
+      color,
+      rotation: -rotation,
+      rotateWithView: true,
+      // imgSize: icon.originalSize, // ie 11
+    }),
+  });
+};
+
 // Clean the uneeded feature's style and properties created by the KML parser.
 const sanitizeFeature = feature => {
   const geom = feature.getGeometry();
@@ -30,7 +59,6 @@ const sanitizeFeature = feature => {
   // The use of clone is part of the scale fix line 156
   const style = styles(feature)[0].clone();
 
-  // The canvas draws a stroke width=1 by default if width=0, so we
   let stroke = style.getStroke();
   if (stroke && feature.get('lineDash')) {
     stroke.setLineDash(
@@ -41,6 +69,7 @@ const sanitizeFeature = feature => {
     );
   }
 
+  // The canvas draws a stroke width=1 by default if width=0, so we
   // remove the stroke style in that case.
   if (stroke && stroke.getWidth() === 0) {
     stroke = undefined;
@@ -127,6 +156,24 @@ const sanitizeFeature = feature => {
         zIndex: style.getZIndex(),
       }),
     ];
+
+    // Add line's icons styles
+    if (feature.get('lineStartIcon')) {
+      styles.push(
+        getLineIcon(feature, feature.get('lineStartIcon'), stroke.getColor()),
+      );
+    }
+
+    if (feature.get('lineEndIcon')) {
+      styles.push(
+        getLineIcon(
+          feature,
+          feature.get('lineEndIcon'),
+          stroke.getColor(),
+          false,
+        ),
+      );
+    }
     feature.setStyle(styles);
   }
 };
@@ -234,6 +281,26 @@ const writeFeatures = (layer, featureProjection) => {
         scale: 0,
       });
     }
+
+    // In case we use line's icon .
+    const extraLineStyles = styles.slice(1);
+    extraLineStyles.forEach(extraLineStyle => {
+      if (
+        extraLineStyle &&
+        extraLineStyle.getImage() instanceof Icon &&
+        extraLineStyle.getGeometry()
+      ) {
+        const coord = extraLineStyle
+          .getGeometry()(f)
+          .getCoordinates();
+        const startCoord = f.getGeometry().getFirstCoordinate();
+        if (coord[0] === startCoord[0] && coord[1] === startCoord[1]) {
+          clone.set('lineStartIcon', extraLineStyle.getImage().getSrc());
+        } else {
+          clone.set('lineEndIcon', extraLineStyle.getImage().getSrc());
+        }
+      }
+    });
 
     const olStyle = new Style(newStyle);
     clone.setStyle(olStyle);

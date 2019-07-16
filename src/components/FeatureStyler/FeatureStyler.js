@@ -769,7 +769,7 @@ class FeatureStyler extends PureComponent {
                 }}
                 className={`tm-button ${isSelected ? classNameSelected : ''}`}
               >
-                <img src={i.buttonUrl} alt={i.buttonUrl} />
+                <img src={i.buttonUrl || i.url} alt={i.buttonUrl} />
               </Button>
             );
           })}
