@@ -6,7 +6,7 @@ This demonstrates the use of FeatureStyler.
 import React from 'react';
 import BasicMap from 'react-spatial/components/BasicMap';
 import Layer from 'react-spatial/Layer';
-import VectorLayer from 'ol/layer/Vector';
+import { Vector as VectorLayer } from 'ol/layer';
 import OLMap from 'ol/Map';
 import Feature from 'ol/Feature';
 import { Point, LineString } from 'ol/geom';

@@ -8,7 +8,7 @@ import BasicMap from 'react-spatial/components/BasicMap';
 import Popup from 'react-spatial/components/Popup';
 import ResizeHandler from 'react-spatial/components/ResizeHandler';
 import Layer from 'react-spatial/Layer';
-import VectorLayer from 'ol/layer/Vector';
+import { Vector as VectorLayer } from 'ol/layer';
 import OLMap from 'ol/Map';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
