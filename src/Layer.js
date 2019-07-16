@@ -21,7 +21,7 @@ export default class Layer extends Observable {
     this.isBaseLayer = isBaseLayer;
     this.radioGroup = radioGroup;
     this.children = [];
-    this.visible = typeof visible === 'undefined' ? true : visible;
+    this.visible = visible === undefined ? true : visible;
     this.copyright = copyright;
 
     if (this.olLayer) {
@@ -70,12 +70,6 @@ export default class Layer extends Observable {
   changed() {
     if (this.olLayer) {
       this.olLayer.changed();
-    }
-  }
-
-  setStyle(style) {
-    if (this.olLayer) {
-      this.olLayer.setStyle(style);
     }
   }
 

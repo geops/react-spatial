@@ -6,7 +6,7 @@ This demonstrates the use of FeatureExportButton.
 import React from 'react';
 import BasicMap from 'react-spatial/components/BasicMap';
 import Layer from 'react-spatial/Layer';
-import VectorLayer from 'react-spatial/VectorLayer';
+import VectorLayer from 'ol/layer/Vector';
 import OLMap from 'ol/Map';
 import VectorSource from 'ol/source/Vector';
 import TileLayer from 'ol/layer/Tile';
@@ -41,17 +41,19 @@ class FeatureExportButtonExample extends React.Component {
           source: new OSM(),
         }),
       }),
-      new VectorLayer({
-        name: 'ExportLayer',
-        source: new VectorSource({
-          features: [
-            new Feature({
-              geometry: new Point([819103.972418, 6120013.078324]),
-            }),
-            new Feature({
-              geometry: new Point([873838.856313, 6106009.575876]),
-            }),
-          ],
+      new Layer({
+        name:  'ExportLayer',
+        olLayer: new VectorLayer({
+          source: new VectorSource({
+            features: [
+              new Feature({
+                geometry: new Point([819103.972418, 6120013.078324]),
+              }),
+              new Feature({
+                geometry: new Point([873838.856313, 6106009.575876]),
+              }),
+            ],
+          }),
         }),
       }),
     ];

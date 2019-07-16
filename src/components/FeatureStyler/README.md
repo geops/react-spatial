@@ -6,7 +6,7 @@ This demonstrates the use of FeatureStyler.
 import React from 'react';
 import BasicMap from 'react-spatial/components/BasicMap';
 import Layer from 'react-spatial/Layer';
-import VectorLayer from 'react-spatial/VectorLayer';
+import VectorLayer from 'ol/layer/Vector';
 import OLMap from 'ol/Map';
 import Feature from 'ol/Feature';
 import { Point, LineString } from 'ol/geom';
@@ -35,7 +35,7 @@ class FeatureStylerExample extends React.Component {
       image: new Icon({
         src: 'images/marker.png',
         scale: 0.5,
-        imgSize: [24, 24], // ie 11
+        imgSize: [48, 48], // ie 11
       }),
     });
 
@@ -108,10 +108,12 @@ class FeatureStylerExample extends React.Component {
           source: new OSM(),
         }),
       }),
-      new VectorLayer({
+      new Layer({
         name: 'Sample layer',
-        source: new VectorSource({
-          features: [text, icon, line],
+        olLayer: new VectorLayer({
+          source: new VectorSource({
+            features: [text, icon, line],
+          }),
         }),
       }),
     ];

@@ -9,7 +9,6 @@ import OSMSource from 'ol/source/OSM';
 import TileJSONSource from 'ol/source/TileJSON';
 import ConfigReader from './ConfigReader';
 import Layer from './Layer';
-import VectorLayer from './VectorLayer';
 
 describe('ConfigReader', () => {
   describe('readConfig()', () => {
@@ -42,7 +41,7 @@ describe('ConfigReader', () => {
           },
         },
       ]);
-      expect(layers[0]).toBeInstanceOf(VectorLayer);
+      expect(layers[0]).toBeInstanceOf(Layer);
       expect(layers[0].olLayer).toBeInstanceOf(OLVectorLayer);
       expect(layers[0].olLayer.getSource()).toBeInstanceOf(VectorSource);
     });

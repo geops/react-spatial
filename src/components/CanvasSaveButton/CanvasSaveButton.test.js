@@ -53,12 +53,17 @@ describe('CanvasSaveButton', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  test('Should split too long copyright into two lines.', async done => {
+  test('should call onSaveBefore then download then onSaveEnd function on click.', async done => {
+    const saveStart = jest.fn();
+    const saveEnd = jest.fn();
     const wrapper = shallow(
       <CanvasSaveButton
         className="ta-example"
         title={conf.title}
         map={olMap}
+        saveFormat={conf.saveFormat}
+        onSaveStart={saveStart}
+        onSaveEnd={saveEnd}
         extraData={{
           copyright: {
             text: () => {
@@ -78,47 +83,49 @@ describe('CanvasSaveButton', () => {
         {conf.icon}
       </CanvasSaveButton>,
     );
-    global.URL.createObjectURL = jest.fn();
-    const spy = jest.spyOn(CanvasSaveButton.prototype, 'splitCopyrightLine');
-    await wrapper.find('.ta-example').simulate('click');
-    await olMap.dispatchEvent(
-      new RenderEvent('rendercomplete', undefined, undefined, {
-        canvas: document.createElement('canvas'),
-      }),
-    );
-    await window.setTimeout(() => {
-      expect(spy).toHaveBeenCalledTimes(1);
-      done();
-    });
-  });
-
-  test('should call onSaveBefore then download then onSaveEnd function on click.', async done => {
-    const saveStart = jest.fn();
-    const saveEnd = jest.fn();
-    const wrapper = shallow(
-      <CanvasSaveButton
-        className="ta-example"
-        title={conf.title}
-        map={olMap}
-        saveFormat={conf.saveFormat}
-        onSaveStart={saveStart}
-        onSaveEnd={saveEnd}
-      >
-        {conf.icon}
-      </CanvasSaveButton>,
-    );
-    global.URL.createObjectURL = jest.fn();
+    const link = { click: jest.fn() };
+    const div = document.createElement('div');
+    const canvas = document.createElement('canvas');
+    canvas.toBlob = jest.fn(callback => callback());
+    global.URL.createObjectURL = jest.fn(() => 'fooblob');
+    // We use a spy here to be able to correctly restore the initial function
+    const spy3 = jest
+      .spyOn(global.document, 'createElement')
+      .mockImplementation(elt => {
+        if (elt === 'canvas') {
+          return canvas;
+        }
+        if (elt === 'div') {
+          return div;
+        }
+        if (elt === 'a') {
+          return link;
+        }
+        return {};
+      });
     const spy = jest.spyOn(CanvasSaveButton.prototype, 'createCanvasImage');
+    const spy2 = jest.spyOn(CanvasSaveButton.prototype, 'downloadCanvasImage');
+    const spy4 = jest.spyOn(CanvasSaveButton.prototype, 'splitCopyrightLine');
     await wrapper.find('.ta-example').simulate('click');
     await olMap.dispatchEvent(
       new RenderEvent('rendercomplete', undefined, undefined, {
-        canvas: document.createElement('canvas'),
+        canvas,
       }),
     );
     await window.setTimeout(() => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(saveStart).toHaveBeenCalledTimes(1);
       expect(saveEnd).toHaveBeenCalledTimes(1);
+      expect(spy2.mock.calls[0][0]).toBe(canvas);
+      expect(spy2.mock.calls[0][0].toBlob).toHaveBeenCalledTimes(1);
+      expect(link.href).toBe('fooblob');
+      expect(link.download).toBe('.jpg');
+      expect(link.click).toHaveBeenCalledTimes(1);
+      expect(spy4).toHaveBeenCalledTimes(1);
+      spy.mockRestore();
+      spy2.mockRestore();
+      spy3.mockRestore();
+      spy4.mockRestore();
       done();
     });
   });
@@ -137,7 +144,6 @@ describe('CanvasSaveButton', () => {
     window.navigator.msSaveBlob = true;
 
     const canvas = document.createElement('canvas');
-    canvas.msToBlob = jest.fn();
     const p = new Promise(resolve => {
       resolve(canvas);
     });
@@ -150,6 +156,5 @@ describe('CanvasSaveButton', () => {
     expect(evt.preventDefault).toHaveBeenCalledTimes(1);
 
     window.navigator.msSaveBlob = false;
-    canvas.msToBlob = undefined;
   });
 });
