@@ -438,9 +438,10 @@ class FeatureStyler extends PureComponent {
   static findLineIcon(styles, feature, lineIcons, start = true) {
     const geom = feature.getGeometry();
     for (let i = 1; i < styles.length; i += 1) {
-      if (styles[i].getImage() && styles[i].getImage().getSrc()) {
+      const iconStyle = styles[i].getImage();
+      if (iconStyle instanceof Icon && iconStyle.getSrc()) {
         for (let j = 0; j < lineIcons.length; j += 1) {
-          if (styles[i].getImage().getSrc() === lineIcons[j].icon) {
+          if (iconStyle.getSrc() === lineIcons[j].icon) {
             const coord = styles[i]
               .getGeometry()(feature)
               .getCoordinates();
@@ -570,6 +571,8 @@ class FeatureStyler extends PureComponent {
     let textColor;
     let textSize;
     let textRotation;
+    let lineStartIcon;
+    let lineEndIcon;
     let useTextStyle = false;
     let useIconStyle = false;
     let useStrokeStyle = false;
@@ -614,20 +617,16 @@ class FeatureStyler extends PureComponent {
       textRotation = featStyle.getText().getRotation();
     }
 
-    const oldStyles = FeatureStyler.getStyleAsArray(feature);
-
-    const newLineStartIcon = FeatureStyler.findLineIcon(
-      oldStyles,
-      feature,
-      lineIcons,
-    );
-
-    const newLineEndIcon = FeatureStyler.findLineIcon(
-      oldStyles,
-      feature,
-      lineIcons,
-      false,
-    );
+    if (useStrokeStyle) {
+      const oldStyles = FeatureStyler.getStyleAsArray(feature);
+      lineStartIcon = FeatureStyler.findLineIcon(oldStyles, feature, lineIcons);
+      lineEndIcon = FeatureStyler.findLineIcon(
+        oldStyles,
+        feature,
+        lineIcons,
+        false,
+      );
+    }
 
     this.setState({
       name: name || feature.get('name') || '',
@@ -643,8 +642,8 @@ class FeatureStyler extends PureComponent {
       useTextStyle,
       useIconStyle,
       useStrokeStyle,
-      lineStartIcon: newLineStartIcon,
-      lineEndIcon: newLineEndIcon,
+      lineStartIcon,
+      lineEndIcon,
     });
   }
 
