@@ -32,8 +32,8 @@ const getLineIcon = (feature, url, color, start = true) => {
   const geom = feature.getGeometry();
   const coordA = getVertexCoord(geom, start, 1);
   const coordB = getVertexCoord(geom, start);
-  const dx = coordA[0] - coordB[0];
-  const dy = coordA[1] - coordB[1];
+  const dx = start ? coordA[0] - coordB[0] : coordB[0] - coordA[0];
+  const dy = start ? coordA[1] - coordB[1] : coordB[1] - coordA[1];
   const rotation = Math.atan2(dy, dx);
 
   return new Style({

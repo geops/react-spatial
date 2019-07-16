@@ -20,8 +20,6 @@ import FeatureStyler from 'react-spatial/components/FeatureStyler';
 import Button from 'react-spatial/components/Button';
 import AddTextIcon from 'react-spatial/images/text.png';
 
-import FeatureExportButton from 'react-spatial/components/FeatureExportButton';
-
 
 const defaultIconStyle = new Style({
   image: new Icon({
@@ -138,9 +136,6 @@ function FeatureStylerExample() {
         onDeselect={() => setSelectedFeature(null)}
       />
       {featureStyler}
-          <FeatureExportButton layer={layers[1]}>
-            Export as KML
-          </FeatureExportButton>
     </div>
   );
 }

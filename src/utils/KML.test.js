@@ -47,7 +47,9 @@ describe('KML', () => {
 
       // line end icon
       const lineEndStyle = styles[2];
-      expect(lineEndStyle.getImage().getRotation()).toEqual(2.646040980103965);
+      expect(lineEndStyle.getImage().getRotation()).toEqual(
+        -0.49555167348582857,
+      );
       expect(lineEndStyle.getImage().getRotateWithView()).toBe(true);
       expect(lineEndStyle.getImage().getColor()).toEqual([0, 102, 5, 1]);
       expect(

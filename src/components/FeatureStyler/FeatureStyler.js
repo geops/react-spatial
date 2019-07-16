@@ -313,8 +313,8 @@ class FeatureStyler extends PureComponent {
     const geom = feature.getGeometry();
     const coordA = FeatureStyler.getVertexCoord(geom, start, 1);
     const coordB = FeatureStyler.getVertexCoord(geom, start);
-    const dx = coordA[0] - coordB[0];
-    const dy = coordA[1] - coordB[1];
+    const dx = start ? coordA[0] - coordB[0] : coordB[0] - coordA[0];
+    const dy = start ? coordA[1] - coordB[1] : coordB[1] - coordA[1];
     const rotation = Math.atan2(dy, dx);
 
     return new Style({
