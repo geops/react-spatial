@@ -62,6 +62,17 @@
     }
   }
 
+  .tm-modify-stroke {
+    > div:not(:first-child) {
+      display: flex;
+    }
+
+    div[role='button'] {
+      display: flex !important;
+      align-items: center;
+    }
+  }
+
   .tm-modify-icons,
   .tm-modify-stroke {
     margin: 5px 0;
@@ -77,13 +88,6 @@
       &:hover {
         background-color: gray;
       }
-    }
-  }
-
-  .tm-modify-stroke {
-    img {
-      margin-left: 6px;
-      margin-top: 2px;
     }
   }
 }

@@ -59,11 +59,14 @@ const propTypes = {
     }),
   ),
 
+  /**
+   * List of icons to add to at the begin or at the end of a line.
+   */
   lineIcons: PropTypes.arrayOf(
     PropTypes.shape({
-      name: PropTypes.string,
-      icon: PropTypes.string,
-      buttonIcon: PropTypes.string,
+      id: PropTypes.string,
+      url: PropTypes.string,
+      buttonUrl: PropTypes.string,
     }),
   ),
 
@@ -130,6 +133,8 @@ const propTypes = {
     modifyTextRotation: PropTypes.string,
     modifyIcon: PropTypes.string,
     modifyIconSize: PropTypes.string,
+    modifyLineIconStart: PropTypes.string,
+    modifyLineIconEnd: PropTypes.string,
   }),
 
   /**
@@ -153,14 +158,16 @@ const defaultProps = {
   classNameSelected: 'tm-button tm-selected',
   lineIcons: [
     {
-      name: 'left',
-      icon: 'images/arrowLeft.png',
-      buttonIcon: 'images/arrowLeftBlack.png',
+      id: 'arrow-left',
+      url: 'images/arrowLeft.png',
+      buttonUrl: 'images/arrowLeftBlack.png',
+      originalSize: [48, 48],
     },
     {
-      name: 'right',
-      icon: 'images/arrowRight.png',
-      buttonIcon: 'images/arrowRightBlack.png',
+      id: 'arrow-right',
+      url: 'images/arrowRight.png',
+      buttonUrl: 'images/arrowRightBlack.png',
+      originalSize: [48, 48],
     },
   ],
   colors: [
@@ -226,6 +233,8 @@ const defaultProps = {
     modifyTextRotation: 'Modify text rotation',
     modifyIcon: 'Modify icon',
     modifyIconSize: 'Modify icon size',
+    modifyLineIconStart: 'Modify starting icon',
+    modifyLineIconEnd: 'Modify ending icon',
   },
   updateContent: false,
 };
@@ -314,7 +323,7 @@ class FeatureStyler extends PureComponent {
         return new Point(FeatureStyler.getVertexCoord(ge, start));
       },
       image: new Icon({
-        src: icon,
+        src: icon.url,
         color,
         rotation: -rotation,
         rotateWithView: true,
@@ -440,21 +449,22 @@ class FeatureStyler extends PureComponent {
     for (let i = 1; i < styles.length; i += 1) {
       const iconStyle = styles[i].getImage();
       if (iconStyle instanceof Icon && iconStyle.getSrc()) {
-        for (let j = 0; j < lineIcons.length; j += 1) {
-          if (iconStyle.getSrc() === lineIcons[j].icon) {
-            const coord = styles[i]
-              .getGeometry()(feature)
-              .getCoordinates();
-            const startCoord = FeatureStyler.getVertexCoord(geom);
-            const endCoord = FeatureStyler.getVertexCoord(geom, false);
-            if (
-              (coord[0] === startCoord[0] &&
-                coord[1] === startCoord[1] &&
-                start) ||
-              (coord[0] === endCoord[0] && coord[1] === endCoord[1] && !start)
-            ) {
-              return lineIcons[j].icon;
-            }
+        const lineIcon = lineIcons.find(
+          icon => iconStyle.getSrc() === icon.url,
+        );
+        if (lineIcon) {
+          const coord = styles[i]
+            .getGeometry()(feature)
+            .getCoordinates();
+          const startCoord = FeatureStyler.getVertexCoord(geom);
+          const endCoord = FeatureStyler.getVertexCoord(geom, false);
+          if (
+            (coord[0] === startCoord[0] &&
+              coord[1] === startCoord[1] &&
+              start) ||
+            (coord[0] === endCoord[0] && coord[1] === endCoord[1] && !start)
+          ) {
+            return lineIcon;
           }
         }
       }
@@ -730,14 +740,45 @@ class FeatureStyler extends PureComponent {
     );
   }
 
-  renderStrokeStyle() {
+  renderLineIcons(stateProp, lineIcon, label) {
     const {
+      lineIcons,
       iconSizes,
       classNameStroke,
-      classNameColors,
       classNameSelected,
-      lineIcons,
+      t,
     } = this.props;
+    return (
+      <div className={classNameStroke}>
+        <div>{t(label)}</div>
+        <div>
+          {lineIcons.map(i => {
+            const isSelected = lineIcon && lineIcon.url === i.url;
+            return (
+              <Button
+                key={i.url}
+                onClick={() => {
+                  const newState = {};
+                  newState[stateProp] = isSelected ? null : i;
+                  this.setState(newState);
+                }}
+                style={{
+                  width: iconSizes[0].value[0],
+                  height: iconSizes[0].value[1],
+                }}
+                className={`tm-button ${isSelected ? classNameSelected : ''}`}
+              >
+                <img src={i.buttonUrl} alt={i.buttonUrl} />
+              </Button>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  renderStrokeStyle() {
+    const { labels, classNameColors, classNameSelected } = this.props;
     const { useStrokeStyle, color, lineStartIcon, lineEndIcon } = this.state;
 
     if (!useStrokeStyle) {
@@ -746,50 +787,16 @@ class FeatureStyler extends PureComponent {
 
     return (
       <>
-        <div className={classNameStroke}>
-          <div>Start:</div>
-          {lineIcons.map(lc => (
-            <Button
-              key={lc.name}
-              className={`tm-button ${
-                lineStartIcon === lc.icon ? classNameSelected : ''
-              }`}
-              style={{
-                width: iconSizes[0].value[0],
-                height: iconSizes[0].value[1],
-              }}
-              onClick={() =>
-                this.setState({
-                  lineStartIcon: lineStartIcon === lc.icon ? null : lc.icon,
-                })
-              }
-            >
-              <img src={lc.buttonIcon} alt={lc.name} />
-            </Button>
-          ))}
-        </div>
-        <div className={classNameStroke}>
-          <div>End:</div>
-          {lineIcons.map(lc => (
-            <Button
-              key={lc.name}
-              className={`tm-button ${
-                lineEndIcon === lc.icon ? classNameSelected : ''
-              }`}
-              style={{
-                width: iconSizes[0].value[0],
-                height: iconSizes[0].value[1],
-              }}
-              onClick={() =>
-                this.setState({
-                  lineEndIcon: lineEndIcon === lc.icon ? null : lc.icon,
-                })
-              }
-            >
-              <img src={lc.buttonIcon} alt={lc.name} />
-            </Button>
-          ))}
-        </div>
+        {this.renderLineIcons(
+          'lineStartIcon',
+          lineStartIcon,
+          labels.modifyLineIconStart,
+        )}
+        {this.renderLineIcons(
+          'lineEndIcon',
+          lineEndIcon,
+          labels.modifyLineIconEnd,
+        )}
         {this.renderColors(
           color,
           classNameColors,

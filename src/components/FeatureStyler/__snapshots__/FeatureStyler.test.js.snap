@@ -605,86 +605,90 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
     className="tm-modify-stroke"
   >
     <div>
-      Start:
+      Modify starting icon
     </div>
-    <div
-      className="tm-button "
-      onClick={[Function]}
-      onKeyPress={[Function]}
-      role="button"
-      style={
-        Object {
-          "height": 24,
-          "width": 24,
+    <div>
+      <div
+        className="tm-button "
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "height": 24,
+            "width": 24,
+          }
         }
-      }
-      tabIndex={0}
-    >
-      <img
-        alt="left"
-        src="images/arrowLeftBlack.png"
-      />
-    </div>
-    <div
-      className="tm-button "
-      onClick={[Function]}
-      onKeyPress={[Function]}
-      role="button"
-      style={
-        Object {
-          "height": 24,
-          "width": 24,
+        tabIndex={0}
+      >
+        <img
+          alt="images/arrowLeftBlack.png"
+          src="images/arrowLeftBlack.png"
+        />
+      </div>
+      <div
+        className="tm-button "
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "height": 24,
+            "width": 24,
+          }
         }
-      }
-      tabIndex={0}
-    >
-      <img
-        alt="right"
-        src="images/arrowRightBlack.png"
-      />
+        tabIndex={0}
+      >
+        <img
+          alt="images/arrowRightBlack.png"
+          src="images/arrowRightBlack.png"
+        />
+      </div>
     </div>
   </div>
   <div
     className="tm-modify-stroke"
   >
     <div>
-      End:
+      Modify ending icon
     </div>
-    <div
-      className="tm-button "
-      onClick={[Function]}
-      onKeyPress={[Function]}
-      role="button"
-      style={
-        Object {
-          "height": 24,
-          "width": 24,
+    <div>
+      <div
+        className="tm-button "
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "height": 24,
+            "width": 24,
+          }
         }
-      }
-      tabIndex={0}
-    >
-      <img
-        alt="left"
-        src="images/arrowLeftBlack.png"
-      />
-    </div>
-    <div
-      className="tm-button "
-      onClick={[Function]}
-      onKeyPress={[Function]}
-      role="button"
-      style={
-        Object {
-          "height": 24,
-          "width": 24,
+        tabIndex={0}
+      >
+        <img
+          alt="images/arrowLeftBlack.png"
+          src="images/arrowLeftBlack.png"
+        />
+      </div>
+      <div
+        className="tm-button "
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "height": 24,
+            "width": 24,
+          }
         }
-      }
-      tabIndex={0}
-    >
-      <img
-        alt="right"
-        src="images/arrowRightBlack.png"
-      />
+        tabIndex={0}
+      >
+        <img
+          alt="images/arrowRightBlack.png"
+          src="images/arrowRightBlack.png"
+        />
+      </div>
     </div>
   </div>
   <div
