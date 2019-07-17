@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { MdClose } from 'react-icons/md';
 import OLMap from 'ol/Map';
 import Feature from 'ol/Feature';
-import Point from 'ol/geom/Point';
 import { getCenter } from 'ol/extent';
 import { unByKey } from 'ol/Observable';
 import Button from '../Button';
@@ -69,13 +68,7 @@ class Popup extends PureComponent {
     let coord = popupCoordinate;
 
     if (feature && !coord) {
-      const geom = feature.getGeometry();
-
-      if (geom instanceof Point) {
-        coord = geom.getCoordinates();
-      } else {
-        coord = getCenter(geom.getExtent());
-      }
+      coord = getCenter(feature.getGeometry().getExtent());
     }
 
     if (coord) {
