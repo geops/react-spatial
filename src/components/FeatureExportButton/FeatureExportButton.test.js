@@ -13,6 +13,7 @@ import Fill from 'ol/style/Fill';
 import Stroke from 'ol/style/Stroke';
 import Circle from 'ol/geom/Circle';
 import Point from 'ol/geom/Point';
+import LineString from 'ol/geom/LineString';
 import Feature from 'ol/Feature';
 import VectorLayer from 'ol/layer/Vector';
 import Layer from '../../Layer';
@@ -316,6 +317,56 @@ describe('FeatureExportButton', () => {
         '<Data name="textBackgroundFillColor"><value>rgba(255,255,255,0.01)</value></Data>' +
         '<Data name="textFont"><value>normal 18px Arial</value></Data>' +
         '<Data name="textRotation"><value>0.5</value></Data></ExtendedData>';
+      expect(
+        exportString.match(/<ExtendedData>(.*?)<\/ExtendedData>/g)[0],
+      ).toBe(expectedStyle);
+    });
+
+    test('should export lineStartIcon and lineEndIcon style.', () => {
+      const extendedLayer = renderLayer(1);
+      const line = new Feature({
+        geometry: new LineString([[0, 1], [2, 3], [4, 5]]),
+      });
+      extendedLayer.olLayer.getSource().addFeatures([line]);
+
+      const style = [
+        new Style({
+          stroke: new Stroke({
+            color: [0, 0, 0, 1],
+            lineDash: [40, 40],
+          }),
+        }),
+        new Style({
+          geometry: () => {
+            return new Point([4, 5]);
+          },
+          image: new Icon({
+            src: 'fooarrowend.png',
+          }),
+        }),
+        new Style({
+          geometry: () => {
+            return new Point([0, 1]);
+          },
+          image: new Icon({
+            src: 'fooarrowstart.png',
+          }),
+        }),
+      ];
+      line.setStyle(style);
+
+      const wrapper = mount(<FeatureExportButton layer={extendedLayer} />);
+      const exportString = wrapper
+        .instance()
+        .createFeatureString(extendedLayer);
+      const expectedStyle =
+        '<ExtendedData><Data name="lineDash"><value>40,40</value></Data>' +
+        '<Data name="lineEndIcon">' +
+        '<value>{"url":"fooarrowend.png","scale":1,"size":null}</value></Data>' +
+        '<Data name="lineStartIcon">' +
+        '<value>{"url":"fooarrowstart.png","scale":1,"size":null}</value></Data>' +
+        '</ExtendedData>';
+
       expect(
         exportString.match(/<ExtendedData>(.*?)<\/ExtendedData>/g)[0],
       ).toBe(expectedStyle);

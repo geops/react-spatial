@@ -37,6 +37,7 @@
     padding: 10px;
     width: 200px;
     overflow-y: auto;
+    height: 260px;
 
     > .tm-button {
       position: absolute;
@@ -61,7 +62,19 @@
     }
   }
 
-  .tm-modify-icons {
+  .tm-modify-stroke {
+    > div:not(:first-child) {
+      display: flex;
+    }
+
+    div[role='button'] {
+      display: flex !important;
+      align-items: center;
+    }
+  }
+
+  .tm-modify-icons,
+  .tm-modify-stroke {
     margin: 5px 0;
 
     div[role='button'] {
