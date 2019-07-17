@@ -67,12 +67,6 @@ export default class Layer extends Observable {
     this.radioGroup = radioGroup;
   }
 
-  changed() {
-    if (this.olLayer) {
-      this.olLayer.changed();
-    }
-  }
-
   setVisible(
     visible,
     stopPropagationDown = false,
@@ -129,13 +123,5 @@ export default class Layer extends Observable {
 
   hasChildren(visible) {
     return !!this.children.find(l => visible === l.getVisible());
-  }
-
-  getProperties() {
-    if (this.olLayer) {
-      return this.olLayer.getProperties();
-    }
-
-    return null;
   }
 }
