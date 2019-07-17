@@ -46,6 +46,7 @@ class Popup extends PureComponent {
 
   componentDidMount() {
     const { map } = this.props;
+    this.updatePixelPosition();
     this.postrenderKey = map.on('postrender', () => {
       this.updatePixelPosition();
     });
@@ -79,10 +80,13 @@ class Popup extends PureComponent {
 
     if (coord) {
       const pos = map.getPixelFromCoordinate(coord);
-      this.setState({
-        left: pos[0],
-        top: pos[1],
-      });
+
+      if (pos && pos.length === 2) {
+        this.setState({
+          left: pos[0],
+          top: pos[1],
+        });
+      }
     }
   }
 
