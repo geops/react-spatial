@@ -28,7 +28,7 @@ const getVertexCoord = (geom, start = true, index = 0) => {
   return start ? coords[index] : coords[len - index];
 };
 
-const getLineIcon = (feature, url, color, start = true) => {
+const getLineIcon = (feature, icon, color, start = true) => {
   const geom = feature.getGeometry();
   const coordA = getVertexCoord(geom, start, 1);
   const coordB = getVertexCoord(geom, start);
@@ -42,11 +42,12 @@ const getLineIcon = (feature, url, color, start = true) => {
       return new Point(getVertexCoord(ge, start));
     },
     image: new Icon({
-      src: url,
+      src: icon.url,
       color,
       rotation: -rotation,
       rotateWithView: true,
-      // imgSize: icon.originalSize, // ie 11
+      scale: icon.scale,
+      imgSize: icon.size, // ie 11
     }),
   });
 };
@@ -160,7 +161,11 @@ const sanitizeFeature = feature => {
     // Add line's icons styles
     if (feature.get('lineStartIcon')) {
       styles.push(
-        getLineIcon(feature, feature.get('lineStartIcon'), stroke.getColor()),
+        getLineIcon(
+          feature,
+          JSON.parse(feature.get('lineStartIcon')),
+          stroke.getColor(),
+        ),
       );
     }
 
@@ -168,7 +173,7 @@ const sanitizeFeature = feature => {
       styles.push(
         getLineIcon(
           feature,
-          feature.get('lineEndIcon'),
+          JSON.parse(feature.get('lineEndIcon')),
           stroke.getColor(),
           false,
         ),
@@ -295,9 +300,23 @@ const writeFeatures = (layer, featureProjection) => {
           .getCoordinates();
         const startCoord = f.getGeometry().getFirstCoordinate();
         if (coord[0] === startCoord[0] && coord[1] === startCoord[1]) {
-          clone.set('lineStartIcon', extraLineStyle.getImage().getSrc());
+          clone.set(
+            'lineStartIcon',
+            JSON.stringify({
+              url: extraLineStyle.getImage().getSrc(),
+              scale: extraLineStyle.getImage().getScale(),
+              size: extraLineStyle.getImage().getSize(),
+            }),
+          );
         } else {
-          clone.set('lineEndIcon', extraLineStyle.getImage().getSrc());
+          clone.set(
+            'lineEndIcon',
+            JSON.stringify({
+              url: extraLineStyle.getImage().getSrc(),
+              scale: extraLineStyle.getImage().getScale(),
+              size: extraLineStyle.getImage().getSize(),
+            }),
+          );
         }
       }
     });

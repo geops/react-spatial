@@ -15,8 +15,8 @@ describe('KML', () => {
                     <Style><LineStyle><color>ff056600</color></LineStyle></Style>
                     <ExtendedData>
                         <Data name="lineDash"><value>40,40</value></Data>
-                        <Data name="lineEndIcon"><value>fooarrowend.png</value></Data>
-                        <Data name="lineStartIcon"><value>fooarrowstart.png</value></Data>
+                        <Data name="lineEndIcon"><value>{"url":"fooarrowend.png","scale":0.35,"size":[36,58]}</value></Data>
+                        <Data name="lineStartIcon"><value>{"url":"fooarrowstart.png","scale":0.35,"size":[36,58]}</value></Data>
                     </ExtendedData>
                     <LineString><coordinates>0,1 3,5 40,25</coordinates></LineString>
                 </Placemark>

@@ -361,8 +361,10 @@ describe('FeatureExportButton', () => {
         .createFeatureString(extendedLayer);
       const expectedStyle =
         '<ExtendedData><Data name="lineDash"><value>40,40</value></Data>' +
-        '<Data name="lineEndIcon"><value>fooarrowend.png</value></Data>' +
-        '<Data name="lineStartIcon"><value>fooarrowstart.png</value></Data>' +
+        '<Data name="lineEndIcon">' +
+        '<value>{"url":"fooarrowend.png","scale":1,"size":null}</value></Data>' +
+        '<Data name="lineStartIcon">' +
+        '<value>{"url":"fooarrowstart.png","scale":1,"size":null}</value></Data>' +
         '</ExtendedData>';
 
       expect(
