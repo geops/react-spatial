@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { MdClose } from 'react-icons/md';
 import OLMap from 'ol/Map';
 import Feature from 'ol/Feature';
-import Point from 'ol/geom/Point';
 import { getCenter } from 'ol/extent';
 import { unByKey } from 'ol/Observable';
 import Button from '../Button';
@@ -13,6 +12,7 @@ const propTypes = {
   children: PropTypes.node.isRequired,
   map: PropTypes.instanceOf(OLMap).isRequired,
   feature: PropTypes.instanceOf(Feature),
+  popupCoordinate: PropTypes.arrayOf(PropTypes.number),
   className: PropTypes.string,
   classNameCloseBt: PropTypes.string,
   onCloseClick: PropTypes.func,
@@ -24,6 +24,7 @@ const propTypes = {
 
 const defaultProps = {
   feature: null,
+  popupCoordinate: null,
   className: 'tm-popup',
   classNameCloseBt: 'tm-button tm-popup-close-bt',
   showCloseButton: true,
@@ -44,6 +45,7 @@ class Popup extends PureComponent {
 
   componentDidMount() {
     const { map } = this.props;
+    this.updatePixelPosition();
     this.postrenderKey = map.on('postrender', () => {
       this.updatePixelPosition();
     });
@@ -62,20 +64,22 @@ class Popup extends PureComponent {
   }
 
   updatePixelPosition() {
-    const { map, feature } = this.props;
-    if (feature) {
-      let coord;
-      const geom = feature.getGeometry();
-      if (geom instanceof Point) {
-        coord = geom.getCoordinates();
-      } else {
-        coord = getCenter(geom.getExtent());
-      }
+    const { map, feature, popupCoordinate } = this.props;
+    let coord = popupCoordinate;
+
+    if (feature && !coord) {
+      coord = getCenter(feature.getGeometry().getExtent());
+    }
+
+    if (coord) {
       const pos = map.getPixelFromCoordinate(coord);
-      this.setState({
-        left: pos[0],
-        top: pos[1],
-      });
+
+      if (pos && pos.length === 2) {
+        this.setState({
+          left: pos[0],
+          top: pos[1],
+        });
+      }
     }
   }
 
