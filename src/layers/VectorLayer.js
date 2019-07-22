@@ -4,21 +4,24 @@ class VectorLayer extends Layer {
   constructor(options = {}) {
     super(options);
 
-    // Object of callbacks
-    this.callbacks = {};
+    // Array of click callbacks
+    this.clickCallbacks = [];
+
+    // Add click callback
+    if (options.onClick) {
+      this.onClick(options.onClick);
+    }
   }
 
   /**
-   * Listens to events.
-   * @param {string} type Callback type. Allowed is 'click'.
-   * @param {function} callback Callback function, called with the
+   * Listens to click events on the layer.
+   * @param {function} callback Callback function, called with the clicked
    *   features (https://openlayers.org/en/latest/apidoc/module-ol_Feature.html),
-   *   the layer instance and the event.
+   *   the layer instance and the click event.
    */
-  on(type, callback) {
+  onClick(callback) {
     if (typeof callback === 'function') {
-      this.callbacks[type] = this.callbacks[type] || [];
-      this.callbacks[type].push(callback);
+      this.clickCallbacks.push(callback);
     } else {
       throw new Error('callback must be of type function.');
     }
@@ -43,7 +46,9 @@ class VectorLayer extends Layer {
         }
       });
 
-      (this.callbacks.click || []).forEach(c => c(clickedFeatures, this, e));
+      if (clickedFeatures.length) {
+        this.clickCallbacks.forEach(c => c(clickedFeatures, this, e));
+      }
     });
   }
 }
