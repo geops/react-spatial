@@ -37,6 +37,10 @@ class VectorLayer extends Layer {
 
     // Listen to click events
     this.map.on('singleclick', e => {
+      if (!this.clickCallbacks.length) {
+        return;
+      }
+
       const clickedFeatures = [];
       const layerFeatures = this.olLayer.getSource().getFeatures();
 
@@ -46,9 +50,7 @@ class VectorLayer extends Layer {
         }
       });
 
-      if (clickedFeatures.length) {
-        this.clickCallbacks.forEach(c => c(clickedFeatures, this, e));
-      }
+      this.clickCallbacks.forEach(c => c(clickedFeatures, this, e));
     });
   }
 }
