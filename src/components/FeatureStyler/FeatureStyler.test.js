@@ -279,15 +279,15 @@ describe('FeatureStyler', () => {
         }),
       );
       const wrapper = mount(<FeatureStyler feature={feature} />);
-      expect(wrapper.state().color).not.toEqual(
+      expect(wrapper.state().lineColor).not.toEqual(
         FeatureStyler.defaultProps.colors[1],
       );
       wrapper
-        .find('Button.tm-button.tm-color')
+        .find('Button.tm-color')
         .at(1)
         .simulate('click');
-      expect(wrapper.state().color).toEqual(
-        FeatureStyler.defaultProps.colors[1],
+      expect(wrapper.state().lineColor).toEqual(
+        FeatureStyler.defaultProps.lineColors[1],
       );
     });
   });
@@ -325,7 +325,7 @@ describe('FeatureStyler', () => {
       );
       wrapper
         .find('.tm-modify-text-color')
-        .find('Button.tm-button')
+        .find('Button.tm-color')
         .at(1)
         .simulate('click');
       expect(wrapper.state().textColor).toEqual(

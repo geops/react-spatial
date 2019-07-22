@@ -385,6 +385,7 @@ class CanvasSaveButton extends PureComponent {
       try {
         image = canvas.msToBlob();
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.log(e);
       }
       window.navigator.msSaveBlob(
