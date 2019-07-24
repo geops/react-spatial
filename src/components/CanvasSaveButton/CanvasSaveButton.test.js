@@ -24,7 +24,6 @@ describe('CanvasSaveButton', () => {
     const target = document.createElement('div');
     target.style.width = '100px';
     target.style.height = '100px';
-    // document.body.appendChild(target);
     olMap = new Map({
       target,
       view: new View({
@@ -35,8 +34,6 @@ describe('CanvasSaveButton', () => {
   });
 
   afterEach(() => {
-    // console.log(olMap.getTargetElement());
-    // document.body.removeChild(olMap.getTargetElement());
     olMap.setTarget(null);
   });
 
