@@ -400,6 +400,8 @@ class CanvasSaveButton extends PureComponent {
         const link = document.createElement('a');
         link.download = this.getDownloadImageName();
         link.href = URL.createObjectURL(blob);
+        // append child to document for firefox to be able to download.
+        document.body.appendChild(link);
         link.click();
       }, this.options.format);
     }
