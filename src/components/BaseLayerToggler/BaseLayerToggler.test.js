@@ -6,6 +6,7 @@ import OLMap from 'ol/Map';
 import renderer from 'react-test-renderer';
 import BaseLayerToggler from './BaseLayerToggler';
 import data from '../../../data/TreeData';
+import exampleData from '../../../data/ExampleData';
 import ConfigReader from '../../ConfigReader';
 import LayerService from '../../LayerService';
 
@@ -116,5 +117,10 @@ describe('BaseLayerToggler', () => {
     expect(comp.state.layers[1].getVisible()).toBe(true);
     expect(comp.state.layerVisible).toBe(comp.state.layers[1]);
     expect(comp.state.idx).toBe(2);
+  });
+
+  test('hide baseLayerToggler if only one baselayer', () => {
+    const wrapper = mountComp(exampleData);
+    expect(wrapper.find('.tm-base-layer-item').exists()).toBe(false);
   });
 });
