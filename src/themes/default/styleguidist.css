@@ -1,0 +1,8 @@
+/* Overwrtie styleguidist styles */
+.rsg--logo-5 {
+  display: none;
+}
+
+.rsg--sidebar-4 {
+  bottom: 50px !important;
+}

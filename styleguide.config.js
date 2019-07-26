@@ -7,18 +7,16 @@ module.exports = {
     favicon: 'src/images/favicon.png',
   },
   assetsDir: 'src/',
+  styleguideDir: 'doc',
   require: [
     path.join(__dirname, 'src/themes/default/examples.scss'),
+    path.join(__dirname, 'src/themes/default/styleguidist.css'),
     'ol/ol.css',
     'react-app-polyfill/ie11',
     'react-app-polyfill/stable',
   ],
   moduleAliases: {
     'react-spatial': path.resolve(__dirname, 'src'),
-  },
-  ribbon: {
-    url: 'https://github.com/geops/react-spatial',
-    text: 'Fork me on GitHub',
   },
   context: {
     exampleData: path.join(__dirname, 'data/ExampleData'),
