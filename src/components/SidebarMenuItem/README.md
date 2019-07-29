@@ -10,7 +10,7 @@ import {
   MdNavigateNext,
   MdDomain,
 } from 'react-icons/md';
-import { FaGithub, FaSearch } from 'react-icons/fa';
+import { FaGithub } from 'react-icons/fa';
 import Button from 'react-spatial/components/Button';
 import Sidebar from 'react-spatial/components/Sidebar';
 import SidebarMenuItem from 'react-spatial/components/SidebarMenuItem';
