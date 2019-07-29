@@ -83,6 +83,7 @@ a.active {
 }
 
 #brand {
+  text-decoration: none;
   font-size: 20px;
   font-weight: bold;
   height: 60px;
@@ -95,20 +96,19 @@ a.active {
 #promo {
   position: absolute;
   bottom: 50px;
-  background-color: red;
+  background-color: #e90;
   right: -65px;
   transform: rotate(-45deg);
   z-index: 1;
 }
 
 #promo-text {
-  border: 2px solid white;
   color: white;
-  font-size: 14px;
+  font-size: 15px;
   font-family: Sans-Serif;
   font-weight: bold;
   margin: 2px;
-  padding: 0 70px;
+  padding: 3px 70px;
 }
 
 #promo a:hover {
