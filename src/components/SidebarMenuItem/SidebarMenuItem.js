@@ -39,6 +39,11 @@ const propTypes = {
   accessKey: PropTypes.string,
 
   /**
+   * Content of the sidebar item, overwrites title.
+   */
+  body: PropTypes.element,
+
+  /**
    * Title of the sidebar item.
    */
   title: PropTypes.string.isRequired,
@@ -50,6 +55,7 @@ const defaultProps = {
   className: 'tm-sidebar-item',
   tabIndex: 0,
   accessKey: undefined,
+  body: undefined,
 };
 
 /**
@@ -64,6 +70,7 @@ function SidebarMenuItem({
   title,
   tabIndex,
   accessKey,
+  body,
 }) {
   return (
     <Button
@@ -74,7 +81,7 @@ function SidebarMenuItem({
       accessKey={accessKey}
     >
       <div>{icon}</div>
-      {showIconOnly ? null : <span>{title}</span>}
+      {showIconOnly ? null : <span>{body || title}</span>}
     </Button>
   );
 }
