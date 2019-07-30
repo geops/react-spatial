@@ -23,6 +23,14 @@ module.exports = {
     treeData: path.join(__dirname, 'data/TreeData'),
     topicData: path.join(__dirname, 'data/TopicData'),
   },
+  styles: {
+    StyleGuide: {
+      '@global body': {
+        overflowY: 'hidden',
+      },
+    },
+  },
+  showSidebar: true,
   sections: [
     {
       name: '',
@@ -161,5 +169,6 @@ module.exports = {
   },
   styleguideComponents: {
     ComponentsList: path.join(__dirname, 'src/styleguidist/ComponentsList'),
+    StyleGuideRenderer: path.join(__dirname, 'src/styleguidist/StyleGuide'),
   },
 };

@@ -62,14 +62,6 @@ a.active {
     margin-right: 0;
 }
 
-#map {
-  position: absolute;
-  left: 0;
-  top: 62px;
-  bottom: 0;
-  right: 0;
- }
-
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

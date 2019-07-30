@@ -29,14 +29,6 @@ else
   exit 1
 fi
 
-# Rename styleguidist index.
-if mv doc/index.html doc/styleguide.html; then
-  echo "Renamed styleguidist index file."
-else
-  echo "Renaming styleguidist index failed."
-  exit 1
-fi
-
 # Copy documentation templates files and styles
 if cp -rf doc_templates/templates/* doc/; then
   echo "doc_templates files copy suceeds."
