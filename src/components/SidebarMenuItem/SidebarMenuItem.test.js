@@ -3,6 +3,7 @@ import renderer from 'react-test-renderer';
 import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { FaGithub } from 'react-icons/fa';
+import ActionLink from '../ActionLink';
 import SidebarMenuItem from './SidebarMenuItem';
 
 configure({ adapter: new Adapter() });
@@ -37,6 +38,16 @@ describe('SidebarMenuItem', () => {
         onClick={() => {}}
         active
       />,
+    );
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  test('should match snapshot with ActionLink as body.', () => {
+    const component = renderer.create(
+      <SidebarMenuItem title="Title" icon={<FaGithub />} onClick={() => {}}>
+        <ActionLink onClick={() => {}}>Click Me!</ActionLink>
+      </SidebarMenuItem>,
     );
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();

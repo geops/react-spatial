@@ -39,7 +39,12 @@ const propTypes = {
   accessKey: PropTypes.string,
 
   /**
-   * Title of the sidebar item.
+   * Content of the sidebar item.
+   */
+  children: PropTypes.node,
+
+  /**
+   * Title of the sidebar item, used in content if no children are provided.
    */
   title: PropTypes.string.isRequired,
 };
@@ -50,6 +55,7 @@ const defaultProps = {
   className: 'tm-sidebar-item',
   tabIndex: 0,
   accessKey: undefined,
+  children: undefined,
 };
 
 /**
@@ -64,6 +70,7 @@ function SidebarMenuItem({
   title,
   tabIndex,
   accessKey,
+  children,
 }) {
   return (
     <Button
@@ -74,7 +81,7 @@ function SidebarMenuItem({
       accessKey={accessKey}
     >
       <div>{icon}</div>
-      {showIconOnly ? null : <span>{title}</span>}
+      {showIconOnly ? null : <span>{children || title}</span>}
     </Button>
   );
 }
