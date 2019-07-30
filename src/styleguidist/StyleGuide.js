@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Logo from 'react-styleguidist/lib/client/rsg-components/Logo';
 import Styled from 'react-styleguidist/lib/client/rsg-components/Styled';
@@ -11,6 +11,9 @@ const styles = ({ font, mq }) => ({
   },
   header: {
     height: 60,
+    position: 'absolute',
+    top: 0,
+    width: '100%',
     color: '#61849c',
     borderBottom: '2px solid #61849c',
     backgroundColor: 'white',
@@ -51,6 +54,7 @@ const styles = ({ font, mq }) => ({
     },
   },
   content: {
+    marginTop: 60,
     height: '100vh',
     position: 'relative',
   },
@@ -85,10 +89,17 @@ const styles = ({ font, mq }) => ({
 });
 
 export function StyleGuideRenderer({ classes, children, toc, hasSidebar }) {
+  const headerRef = useRef(null);
+  useEffect(() => {
+    if (headerRef.current) {
+      headerRef.current.scrollIntoView();
+    }
+  });
+
   /* eslint-disable jsx-a11y/anchor-is-valid */
   return (
     <div className={classes.root}>
-      <header className={classes.header}>
+      <header className={classes.header} ref={headerRef}>
         <div className={classes.bar}>
           <Logo>
             <a
