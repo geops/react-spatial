@@ -46,6 +46,9 @@ a.active {
 }
 
 #header {
+  display: flex;
+  align-items: center;
+  height: 100%;
   height: 60px;
   color: #61849c;
   border-bottom: 2px solid #61849c;
@@ -54,12 +57,6 @@ a.active {
 
 #header a {
   color: #61849c;
-}
-
-nav {
-  display: flex;
-  align-items: center;
-  height: 100%;
 }
 
 .nav-div {

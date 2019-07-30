@@ -1,0 +1,49 @@
+body {
+  margin: 0;
+}
+#header {
+  height: 60px;
+  color: #61849c;
+  border-bottom: 2px solid #61849c;
+  background-color: white;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+}
+
+#brand {
+  text-decoration: none;
+  font-size: 20px !important;
+  font-weight: bold;
+  height: 60px;
+  line-height: 60px;
+  left: 30px;
+  position: absolute;
+  top: 0;
+}
+
+#header a {
+  color: #61849c;
+  font-size: 16px;
+}
+
+.active {
+  font-weight: bold;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.nav-div {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  margin-left: auto;
+  margin-right: 1.5em;
+}
+
+.nav-bt {
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+
+

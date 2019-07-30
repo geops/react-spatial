@@ -29,14 +29,6 @@ else
   exit 1
 fi
 
-# Copy documentation templates files and styles
-if cp -rf doc_templates/templates/* doc/; then
-  echo "doc_templates files copy suceeds."
-else
-  echo "doc_templates files copy failed."
-  exit 1
-fi
-
 # Empty jsdoc folder.
 if rm -rf jsdoc/*; then
   echo "jsdoc folder emptied."
@@ -54,7 +46,7 @@ else
 fi
 
 # Move jsdoc in doc folder.
-mv jsdoc doc/jsdoc
-
-# Rename html templates.
-mv doc/jsdoc/index.html doc/jsdoc/jsdoc.html && mv doc/jsdoc-index.html doc/jsdoc/index.html
+mkdir doc/jsdoc
+mv jsdoc/index.html doc/jsdoc/
+mv jsdoc/* doc/
+rm -r jsdoc
