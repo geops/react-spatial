@@ -25,6 +25,8 @@ const styles = ({ font, mq }) => ({
     },
   },
   title: {
+    fontFamily: 'Avenir, Helvetica, Arial, sans-serif',
+    fontSize: 20,
     marginLeft: '1.5em',
     color: '#61849c',
     fontWeight: 'bold',

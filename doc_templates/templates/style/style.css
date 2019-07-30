@@ -46,20 +46,31 @@ a.active {
 }
 
 #header {
-  border-bottom: 2px solid #61849c;
+  height: 60px;
   color: #61849c;
-  height: 20px;
-  padding: 20px;
-  text-align: right;
+  border-bottom: 2px solid #61849c;
+  background-color: white;
 }
 
 #header a {
   color: #61849c;
-  margin-right: 10px;
 }
 
-#header a:last-child {
-    margin-right: 0;
+nav {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.nav-div {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  margin-left: auto;
+  margin-right: 1.5em;
+}
+
+.nav-bt {
+  margin-left: 0.5em;
+  margin-right: 0.5em;
 }
 
 #app {
