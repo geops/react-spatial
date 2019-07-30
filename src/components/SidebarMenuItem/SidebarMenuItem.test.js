@@ -46,7 +46,7 @@ describe('SidebarMenuItem', () => {
   test('should match snapshot with ActionLink as body.', () => {
     const component = renderer.create(
       <SidebarMenuItem title="Title" icon={<FaGithub />} onClick={() => {}}>
-        {<ActionLink onClick={() => {}}>Click Me!</ActionLink>}
+        <ActionLink onClick={() => {}}>Click Me!</ActionLink>
       </SidebarMenuItem>,
     );
     const tree = component.toJSON();
