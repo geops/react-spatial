@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Logo from 'react-styleguidist/lib/client/rsg-components/Logo';
 import Styled from 'react-styleguidist/lib/client/rsg-components/Styled';
@@ -56,7 +56,8 @@ const styles = ({ font, mq }) => ({
   content: {
     marginTop: 60,
     height: '100vh',
-    position: 'relative',
+    position: 'fixed',
+    width: '100%',
   },
   scrollable: {
     overflowY: 'scroll',
@@ -89,36 +90,31 @@ const styles = ({ font, mq }) => ({
 });
 
 export function StyleGuideRenderer({ classes, children, toc, hasSidebar }) {
-  const headerRef = useRef(null);
-  useEffect(() => {
-    if (headerRef.current) {
-      headerRef.current.scrollIntoView();
-    }
-  });
-
   /* eslint-disable jsx-a11y/anchor-is-valid */
   return (
     <div className={classes.root}>
-      <header className={classes.header} ref={headerRef}>
-        <div className={classes.bar}>
-          <Logo>
-            <a
-              className={classes.title}
-              href="https://github.com/geops/react-spatial"
-            >
-              react-spatial
-            </a>
-          </Logo>
-          <nav className={classes.nav}>
-            <a className={`${classes.headerLink} link-active`} href="/">
-              Components
-            </a>
-            <a className={classes.headerLink} href="./jsdoc/index.html">
-              Layers
-            </a>
-          </nav>
-        </div>
-      </header>
+      <div>
+        <header className={classes.header}>
+          <div className={classes.bar}>
+            <Logo>
+              <a
+                className={classes.title}
+                href="https://github.com/geops/react-spatial"
+              >
+                react-spatial
+              </a>
+            </Logo>
+            <nav className={classes.nav}>
+              <a className={`${classes.headerLink} link-active`} href="/">
+                Components
+              </a>
+              <a className={classes.headerLink} href="./jsdoc/index.html">
+                Layers
+              </a>
+            </nav>
+          </div>
+        </header>
+      </div>
       <div className={classes.content}>
         <div className={classes.scrollable}>
           <div className={classes.sidebar}>{hasSidebar ? toc : null}</div>
