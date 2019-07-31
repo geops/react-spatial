@@ -55,13 +55,13 @@ const styles = ({ font, mq }) => ({
   },
   content: {
     marginTop: 60,
-    height: '100vh',
+    height: 'calc(100% - 60px)',
     position: 'fixed',
     width: '100%',
   },
   scrollable: {
     overflowY: 'scroll',
-    height: '100vh',
+    height: 'calc(100vh - 60px)',
   },
   main: {
     maxWidth: 1000,
