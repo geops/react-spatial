@@ -4,7 +4,7 @@ const { version } = require('./package.json');
 module.exports = {
   title: `React-spatial ${version}`,
   template: {
-    favicon: 'src/images/favicon.png',
+    favicon: 'images/favicon.png',
   },
   assetsDir: 'src/',
   styleguideDir: 'doc',
