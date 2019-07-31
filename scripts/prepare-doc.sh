@@ -45,8 +45,7 @@ else
   exit 1
 fi
 
-# Move jsdoc in doc folder.
-mkdir doc/jsdoc
-mv jsdoc/index.html doc/jsdoc/
+# Rename jsdoc index.html and move it to /doc
+mv jsdoc/index.html jsdoc/jsdoc.html
 mv jsdoc/* doc/
 rm -r jsdoc
