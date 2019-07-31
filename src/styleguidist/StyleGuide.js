@@ -108,7 +108,7 @@ export function StyleGuideRenderer({ classes, children, toc, hasSidebar }) {
               <a className={`${classes.headerLink} link-active`} href="/">
                 Components
               </a>
-              <a className={classes.headerLink} href="./jsdoc/index.html">
+              <a className={classes.headerLink} href="/jsdoc.html">
                 Layers
               </a>
             </nav>
