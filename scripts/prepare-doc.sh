@@ -2,11 +2,11 @@
 
 ###
 # This script build creates the documentation page, made with
-# styleguidist for the components, and jsdoc for the layers.
+# styleguidist for the components, and documentation.js.
 ###
 
 # Remove the old files from doc folder.
-if rm -rf doc/*; then
+if rm -rf doc/build; then
   echo "Documentation folder emptied."
 else
   echo "Empty doc folder failed."
@@ -21,31 +21,50 @@ else
   exit 1
 fi
 
+# Move all styleguidist build in in documentation folder.
+if mv styleguide-build doc/build; then
+  echo "Move Styleguidist build suceeds."
+else
+  echo "Move styleguidist build failed."
+  exit 1
+fi
+
 # Copy images in documentation folder.
-if cp -rf src/images/ doc; then
+if cp -rf src/images/ doc/build; then
   echo "Copy images in doc folder suceeds."
 else
   echo "Copy images in doc folder failed."
   exit 1
 fi
 
-# Empty jsdoc folder.
-if rm -rf jsdoc/*; then
-  echo "jsdoc folder emptied."
-else
-  echo "Empty jsdoc folder failed."
-  exit 1
-fi
-
 # Build jsdoc documentation for layers, in jsdoc folder (based on jsdoc_conf.json).
-if jsdoc -c jsdoc_conf.json src/layers -d jsdoc -t doc_templates/jsdoc_template -r doc_templates/templates/README.md; then
+if node ./scripts/doc.js; then
   echo "jsdoc build suceeds."
 else
   echo "Building jsdoc failed."
   exit 1
 fi
 
-# Rename jsdoc index.html and move it to /doc
-mv jsdoc/index.html jsdoc/jsdoc.html
-mv jsdoc/* doc/
-rm -r jsdoc
+# Rename jsdoc index.html and move in documentation folder.
+if mv docjs/index.html doc/build/docjs.html; then
+  echo "Move and rename docjs index suceeds."
+else
+  echo "Move and rename docjs index failed."
+  exit 1
+fi
+
+# Move all jsdoc build in documentation folder.
+if mv docjs/* doc/build; then
+  echo "Move docjs build suceeds."
+else
+  echo "Move docjs build failed."
+  exit 1
+fi
+
+# Remove emtpy folder.
+if rm -r docjs; then
+  echo "Remove emtpy folder suceeds."
+else
+  echo "Remove emtpy folder failed."
+  exit 1
+fi

@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Logo from 'react-styleguidist/lib/client/rsg-components/Logo';
+import Version from 'react-styleguidist/lib/client/rsg-components/Version';
 import Styled from 'react-styleguidist/lib/client/rsg-components/Styled';
+import docConfig from '../../doc/doc-config.json';
 
 const xsmall = '@media (max-width: 600px)';
 
@@ -34,10 +36,14 @@ const styles = ({ font, mq }) => ({
     color: '#61849c',
     fontWeight: 'bold',
   },
+  version: {
+    padding: '10px 0 0 10px',
+  },
   nav: {
     fontFamily: 'Avenir, Helvetica, Arial, sans-serif',
     marginLeft: 'auto',
     marginRight: '1.5em',
+    fontSize: 16,
     [xsmall]: {
       margin: [[10, 0, 0]],
     },
@@ -89,26 +95,28 @@ const styles = ({ font, mq }) => ({
   },
 });
 
-export function StyleGuideRenderer({ classes, children, toc, hasSidebar }) {
-  /* eslint-disable jsx-a11y/anchor-is-valid */
+export function StyleGuideRenderer({
+  classes,
+  children,
+  version,
+  toc,
+  hasSidebar,
+}) {
   return (
     <div className={classes.root}>
       <div>
         <header className={classes.header}>
           <div className={classes.bar}>
             <Logo>
-              <a
-                className={classes.title}
-                href="https://github.com/geops/react-spatial"
-              >
-                react-spatial
+              <a className={classes.title} href="/">
+                {docConfig.appName}
               </a>
             </Logo>
             <nav className={classes.nav}>
               <a className={`${classes.headerLink} link-active`} href="/">
                 Components
               </a>
-              <a className={classes.headerLink} href="/jsdoc.html">
+              <a className={classes.headerLink} href="/docjs.html">
                 Layers
               </a>
             </nav>
@@ -117,18 +125,36 @@ export function StyleGuideRenderer({ classes, children, toc, hasSidebar }) {
       </div>
       <div className={classes.content}>
         <div className={classes.scrollable}>
-          <div className={classes.sidebar}>{hasSidebar ? toc : null}</div>
+          <div className={classes.sidebar}>
+            <header className={classes.version}>
+              {version && <Version>{version}</Version>}
+            </header>
+            {hasSidebar ? toc : null}
+          </div>
           <main className={classes.main}>{children}</main>
         </div>
       </div>
+      <div id="promo">
+        <a
+          href={docConfig.githubRepo}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <div id="promo-text">Fork me on GitHub</div>
+        </a>
+      </div>
     </div>
   );
-  /* eslint-enable */
 }
+
+StyleGuideRenderer.defaultProps = {
+  version: null,
+};
 
 StyleGuideRenderer.propTypes = {
   classes: PropTypes.object.isRequired,
   children: PropTypes.node.isRequired,
+  version: PropTypes.string,
   toc: PropTypes.node.isRequired,
   hasSidebar: PropTypes.bool.isRequired,
 };

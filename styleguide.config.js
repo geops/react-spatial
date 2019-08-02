@@ -2,15 +2,15 @@ const path = require('path');
 const { version } = require('./package.json');
 
 module.exports = {
-  title: `React-spatial ${version}`,
+  version,
   template: {
     favicon: 'images/favicon.png',
   },
   assetsDir: 'src/',
-  styleguideDir: 'doc',
+  styleguideDir: 'styleguide-build',
   require: [
     path.join(__dirname, 'src/themes/default/examples.scss'),
-    path.join(__dirname, 'src/themes/default/styleguidist.css'),
+    path.join(__dirname, 'src/styleguidist/styleguidist.css'),
     'ol/ol.css',
     'react-app-polyfill/ie11',
     'react-app-polyfill/stable',
@@ -23,14 +23,6 @@ module.exports = {
     treeData: path.join(__dirname, 'data/TreeData'),
     topicData: path.join(__dirname, 'data/TopicData'),
   },
-  styles: {
-    StyleGuide: {
-      '@global body': {
-        overflowY: 'hidden',
-      },
-    },
-  },
-  showSidebar: true,
   sections: [
     {
       name: '',
@@ -167,6 +159,15 @@ module.exports = {
       ],
     },
   },
+  styles: {
+    StyleGuide: {
+      '@global body': {
+        overflowY: 'hidden',
+        overflowX: 'hidden',
+      },
+    },
+  },
+  showSidebar: true,
   styleguideComponents: {
     ComponentsList: path.join(__dirname, 'src/styleguidist/ComponentsList'),
     StyleGuideRenderer: path.join(__dirname, 'src/styleguidist/StyleGuide'),
