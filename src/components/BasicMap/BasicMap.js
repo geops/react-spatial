@@ -143,16 +143,9 @@ class BasicMap extends Component {
             pinchRotate: false,
           }),
       });
-    const view = new View({ ...viewOptions, ...{ center } });
+    const view = new View({ ...viewOptions, ...{ center, zoom, resolution } });
 
     this.map.setView(view);
-
-    if (zoom || zoom === 0) {
-      view.setZoom(zoom);
-    }
-    if (resolution) {
-      view.setResolution(resolution);
-    }
     window.map = this.map;
 
     this.node = React.createRef();

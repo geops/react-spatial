@@ -322,8 +322,10 @@ class CanvasSaveButton extends PureComponent {
     const { scale, extraData } = this.props;
 
     return new Promise(resolve => {
-      mapToExport.once('rendercomplete', evt => {
-        const { canvas } = evt.context;
+      mapToExport.once('rendercomplete', () => {
+        const canvas = mapToExport
+          .getTargetElement()
+          .getElementsByTagName('canvas')[0];
         const ctx = canvas.getContext('2d');
         ctx.scale(scale, scale);
 

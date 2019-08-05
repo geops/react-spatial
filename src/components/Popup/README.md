@@ -15,7 +15,7 @@ import Point from 'ol/geom/Point';
 import VectorSource from 'ol/source/Vector';
 import TileLayer from 'ol/layer/Tile';
 import TileGrid from 'ol/tilegrid/TileGrid';
-import TileImageSource from 'ol/source/TileImage';
+import OSM from 'ol/source/OSM';
 import { getCenter } from 'ol/extent';
 import Style from 'ol/style/Style';
 import Circle from 'ol/style/Circle';
@@ -25,39 +25,20 @@ class PopupExample extends React.Component {
   constructor(props) {
     super(props);
 
-    const extent = [599500, 199309, 600714, 200002];
-    const resolutions = [
-      6.927661,
-      3.4638305,
-      1.73191525,
-      0.865957625,
-      0.4329788125,
-      0.21648940625,
-      0.108244703125,
-    ];
-
     const layer = new Layer({
       name: 'Layer',
       olLayer: new TileLayer({
-        extent,
-        source: new TileImageSource({
-          tileUrlFunction: c =>
-            '//plans.trafimage.ch/static/tiles/' +
-            `bern_aussenplan/${c[0]}/${c[1]}/${c[2]}.png`,
-          tileGrid: new TileGrid({
-            origin: [extent[0], extent[1]],
-            resolutions,
-          }),
-        }),
-      }),
+        source: new OSM(),
+      })
     });
+
     const vectorLayer = new Layer({
       name: 'Popup layer',
       olLayer: new VectorLayer({
         source: new VectorSource({
           features: [
             new Feature({
-              geometry: new Point(getCenter(extent)),
+              geometry: new Point([874105.13, 6106172.77]),
             }),
           ],
         }),
@@ -71,7 +52,7 @@ class PopupExample extends React.Component {
         }),
       }),
     });
-    this.center = getCenter(extent);
+    this.center = [874105.13, 6106172.77];
     this.layers = [layer, vectorLayer];
     this.map = new OLMap();
     this.onFeaturesClick = this.onFeaturesClick.bind(this);

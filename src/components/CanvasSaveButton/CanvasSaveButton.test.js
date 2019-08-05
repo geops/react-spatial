@@ -22,18 +22,24 @@ describe('CanvasSaveButton', () => {
 
   beforeEach(() => {
     const target = document.createElement('div');
+    document.body.appendChild(target);
     target.style.width = '100px';
     target.style.height = '100px';
     olMap = new Map({
       target,
+      controls: [],
       view: new View({
         center: [0, 0],
         zoom: 0,
       }),
     });
+    olMap.getView().setCenter([1, 1]);
   });
 
   afterEach(() => {
+    if (olMap.getTargetElement()) {
+      document.body.removeChild(olMap.getTargetElement());
+    }
     olMap.setTarget(null);
   });
 
@@ -104,6 +110,9 @@ describe('CanvasSaveButton', () => {
     const spy = jest.spyOn(CanvasSaveButton.prototype, 'createCanvasImage');
     const spy2 = jest.spyOn(CanvasSaveButton.prototype, 'downloadCanvasImage');
     const spy4 = jest.spyOn(CanvasSaveButton.prototype, 'splitCopyrightLine');
+    jest
+      .spyOn(olMap.getTargetElement(), 'getElementsByTagName')
+      .mockReturnValue([canvas]);
     await wrapper.find('.ta-example').simulate('click');
     await olMap.dispatchEvent(
       new RenderEvent('rendercomplete', undefined, undefined, {

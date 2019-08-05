@@ -33,7 +33,7 @@ class BasicMapExample extends React.Component {
         source: new TileImageSource({
           tileUrlFunction: c =>
             '//plans.trafimage.ch/static/tiles/' +
-            `bern_aussenplan/${c[0]}/${c[1]}/${c[2]}.png`,
+            `bern_aussenplan/${c[0]}/${c[1]}/${-c[2]-1}.png`,
           tileGrid: new TileGrid({
             origin: [extent[0], extent[1]],
             resolutions: resolutions,
