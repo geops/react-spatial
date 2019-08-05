@@ -125,7 +125,6 @@ class BasicMap extends Component {
       extent,
       map,
       interactions,
-      layers,
       onMapMoved,
       resolution,
       viewOptions,
@@ -139,7 +138,7 @@ class BasicMap extends Component {
         interactions:
           interactions ||
           defaultInteractions({
-            altShiftDragRotate: false,
+            altShiftDragRotate: true,
             pinchRotate: false,
           }),
       });
@@ -149,10 +148,6 @@ class BasicMap extends Component {
     window.map = this.map;
 
     this.node = React.createRef();
-
-    if (layers.length) {
-      this.setLayers(layers);
-    }
 
     if (extent) {
       this.map.getView().fit(extent);
@@ -164,8 +159,12 @@ class BasicMap extends Component {
   }
 
   componentDidMount() {
-    const { onFeaturesClick, onFeaturesHover } = this.props;
+    const { onFeaturesClick, onFeaturesHover, layers } = this.props;
     this.map.setTarget(this.node.current);
+
+    if (layers.length) {
+      this.setLayers(layers);
+    }
 
     this.singleClickRef = this.map.on('singleclick', evt => {
       const features = evt.map.getFeaturesAtPixel(evt.pixel);

@@ -35,9 +35,9 @@ module.exports = {
           name: 'Spatial',
           description: 'Spatial components',
           components: [
-            'src/components/BaseLayerToggler/[A-Z]*.js',
+            // 'src/components/BaseLayerToggler/[A-Z]*.js',
             'src/components/BasicMap/[A-Z]*.js',
-            'src/components/CanvasSaveButton/[A-Z]*.js',
+            /* 'src/components/CanvasSaveButton/[A-Z]*.js',
             'src/components/Copyright/[A-Z]*.js',
             'src/components/FeatureExportButton/[A-Z]*.js',
             'src/components/FeatureStyler/[A-Z]*.js',
@@ -47,12 +47,12 @@ module.exports = {
             'src/components/OLE/[A-Z]*.js',
             'src/components/Popup/[A-Z]*.js',
             'src/components/ScaleLine/[A-Z]*.js',
-            'src/components/Zoom/[A-Z]*.js',
+            'src/components/Zoom/[A-Z]*.js', */
           ],
           exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
           usageMode: 'collapse', // 'hide' | 'collapse' | 'expand'
         },
-        {
+        /* {
           name: 'Menu',
           description: 'Menu components',
           components: [
@@ -101,7 +101,7 @@ module.exports = {
           ],
           exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
           usageMode: 'collapse', // 'hide' | 'collapse' | 'expand'
-        },
+        }, */
       ],
       description:
         'A collection of react components for spatial web development.',

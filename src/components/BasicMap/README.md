@@ -6,6 +6,7 @@ This demonstrates the use of BasicMap.
 import React from 'react';
 import BasicMap from 'react-spatial/components/BasicMap';
 import Layer from 'react-spatial/Layer';
+import MapboxLayer from 'react-spatial/layers/MapboxLayer';
 import TileLayer from 'ol/layer/Tile';
 import TileGrid from 'ol/tilegrid/TileGrid';
 import TileImageSource from 'ol/source/TileImage';
@@ -42,11 +43,14 @@ class BasicMapExample extends React.Component {
       }),
     });
     this.center = getCenter(extent);
-    this.layers = [layer];
+    this.layers = [
+    new MapboxLayer('https://maps.style-dev.geops.io/styles/trafimage_perimeter_v2/style.json', {
+      name: 'Layer',
+    })];
   }
 
   render() {
-    return <BasicMap center={this.center} zoom={17} layers={this.layers} />;
+    return <BasicMap layers={this.layers} />;
   }
 }
 
