@@ -2,23 +2,21 @@ const path = require('path');
 const { version } = require('./package.json');
 
 module.exports = {
-  title: `React-spatial ${version}`,
+  version,
   template: {
-    favicon: 'src/images/favicon.png',
+    favicon: 'images/favicon.png',
   },
   assetsDir: 'src/',
+  styleguideDir: 'styleguide-build',
   require: [
     path.join(__dirname, 'src/themes/default/examples.scss'),
+    path.join(__dirname, 'src/styleguidist/styleguidist.css'),
     'ol/ol.css',
     'react-app-polyfill/ie11',
     'react-app-polyfill/stable',
   ],
   moduleAliases: {
     'react-spatial': path.resolve(__dirname, 'src'),
-  },
-  ribbon: {
-    url: 'https://github.com/geops/react-spatial',
-    text: 'Fork me on GitHub',
   },
   context: {
     exampleData: path.join(__dirname, 'data/ExampleData'),
@@ -161,7 +159,17 @@ module.exports = {
       ],
     },
   },
+  styles: {
+    StyleGuide: {
+      '@global body': {
+        overflowY: 'hidden',
+        overflowX: 'hidden',
+      },
+    },
+  },
+  showSidebar: true,
   styleguideComponents: {
     ComponentsList: path.join(__dirname, 'src/styleguidist/ComponentsList'),
+    StyleGuideRenderer: path.join(__dirname, 'src/styleguidist/StyleGuide'),
   },
 };

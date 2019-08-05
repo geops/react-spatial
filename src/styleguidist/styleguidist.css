@@ -1,0 +1,29 @@
+/* Overwrtie styleguidist styles */
+
+.link-active {
+  font-weight: bold !important;
+}
+
+#promo {
+  position: absolute;
+  bottom: 50px;
+  background-color: #e90;
+  right: -65px;
+  transform: rotate(-45deg);
+  z-index: 1;
+  line-height: 1.2;
+}
+
+#promo-text {
+  color: white;
+  font-size: 14px;
+  font-family: Sans-Serif;
+  font-weight: bold;
+  margin: 0;
+  padding: 3px 70px;
+}
+
+#promo a,
+#promo a:hover {
+  text-decoration: none;
+}
