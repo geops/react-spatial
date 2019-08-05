@@ -39,8 +39,8 @@ class WMSLayer extends Layer {
    * @param {Number} resolution The resolution of the view.
    * @param {<ol.Projection|String>} projection The projection used by the map.
    */
-  getFeatureInfoFeatures(layer, coord, res, proj) {
-    const url = this.getFeatureInfoUrl(layer, coord, res, proj);
+  getFeatureInfoFeatures(coord, res, proj) {
+    const url = this.getFeatureInfoUrl(coord, res, proj);
     const promise = fetch(url)
       .then(resp => resp.json())
       .then(r => r.features);
