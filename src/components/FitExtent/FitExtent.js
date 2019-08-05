@@ -11,22 +11,22 @@ const propTypes = {
   map: PropTypes.instanceOf(OLMap).isRequired,
 
   /**
-   * An extent to zoom to.
+   * The extent to be zoomed.
    */
   extent: PropTypes.arrayOf(PropTypes.number).isRequired,
 
   /**
-   * Title for the zoom in button.
+   * Title for the fitExtent button.
    */
   title: PropTypes.string,
 
   /**
-   * CSS class of the button.
+   * CSS class of the fitExtent button.
    */
   className: PropTypes.string,
 
   /**
-   * Children content of the button.
+   * Children content of the fitExtent button.
    */
   children: PropTypes.node,
 };
