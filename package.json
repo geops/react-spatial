@@ -1,6 +1,6 @@
 {
   "name": "react-spatial",
-  "version": "0.0.14-beta.57",
+  "version": "0.0.14-beta.60",
   "description": "Components to build React map apps.",
   "license": "MIT",
   "devDependencies": {
@@ -57,7 +57,7 @@
     "stylelint-scss": "^3.4.0",
     "url-loader": "^2.0.0",
     "vinyl-fs": "^3.0.3",
-    "webpack": "^4.28.4"
+    "webpack": "^4.39.1"
   },
   "peerDependency": {
     "ol": "^5.3.3",

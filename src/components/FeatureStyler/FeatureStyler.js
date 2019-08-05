@@ -800,7 +800,7 @@ class FeatureStyler extends PureComponent {
             >
               <div
                 style={{
-                  backgroundColor: `rgb(${c.fill})`,
+                  backgroundColor: `rgba(${c.fill})`,
                   width: '100%',
                   height: '100%',
                 }}
