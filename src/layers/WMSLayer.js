@@ -2,6 +2,18 @@ import GeoJSON from 'ol/format/GeoJSON';
 import Layer from '../Layer';
 
 class WMSLayer extends Layer {
+  constructor(options = {}) {
+    super(options);
+
+    // Array of click callbacks
+    this.clickCallbacks = [];
+
+    // Add click callback
+    if (options.onClick) {
+      this.onClick(options.onClick);
+    }
+  }
+
   /**
    * Get features infos' Url.
    * @param {ol.layer} layer ol.layer (https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer.html)
@@ -9,9 +21,9 @@ class WMSLayer extends Layer {
    * @param {Number} resolution The resolution of the view.
    * @param {<ol.Projection|String>} projection The projection used by the map.
    */
-  static getFeatureInfoUrl(layer, coord, resolution, projection) {
-    if (layer.olLayer.getSource().getGetFeatureInfoUrl) {
-      return layer.olLayer
+  getFeatureInfoUrl(coord, resolution, projection) {
+    if (this.olLayer.getSource().getGetFeatureInfoUrl) {
+      return this.olLayer
         .getSource()
         .getGetFeatureInfoUrl(coord, resolution, projection, {
           info_format: 'application/json',
@@ -27,8 +39,8 @@ class WMSLayer extends Layer {
    * @param {Number} resolution The resolution of the view.
    * @param {<ol.Projection|String>} projection The projection used by the map.
    */
-  static getFeatureInfoFeatures(layer, coord, res, proj) {
-    const url = WMSLayer.getFeatureInfoUrl(layer, coord, res, proj);
+  getFeatureInfoFeatures(layer, coord, res, proj) {
+    const url = this.getFeatureInfoUrl(layer, coord, res, proj);
     const promise = fetch(url)
       .then(resp => resp.json())
       .then(r => r.features);
@@ -38,18 +50,6 @@ class WMSLayer extends Layer {
       const features = data.map(d => format.readFeatures(d));
       return features;
     });
-  }
-
-  constructor(options = {}) {
-    super(options);
-
-    // Array of click callbacks
-    this.clickCallbacks = [];
-
-    // Add click callback
-    if (options.onClick) {
-      this.onClick(options.onClick);
-    }
   }
 
   /**
@@ -82,14 +82,11 @@ class WMSLayer extends Layer {
       if (!this.clickCallbacks.length) {
         return;
       }
-      WMSLayer.getFeatureInfoFeatures(
-        this,
-        e.coordinate,
-        resolution,
-        projection,
-      ).then(clickedFeatures => {
-        this.clickCallbacks.forEach(c => c(clickedFeatures, this, e));
-      });
+      this.getFeatureInfoFeatures(e.coordinate, resolution, projection).then(
+        clickedFeatures => {
+          this.clickCallbacks.forEach(c => c(clickedFeatures, this, e));
+        },
+      );
     });
   }
 }
