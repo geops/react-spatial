@@ -96,7 +96,7 @@ const defaultProps = {
   title: undefined,
   position: null,
   onDragStop: () => {},
-  onClickedOutside: () => {},
+  onClickOutside: () => {},
 };
 
 /**
