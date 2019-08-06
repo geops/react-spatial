@@ -1,3 +1,15 @@
 .tm-zoom-example {
   position: relative;
+
+  .tm-map {
+    height: 400px;
+  }
+}
+
+.tm-zooms-bar {
+  right: 10px;
+
+  .ol-zoomslider-thumb {
+    position: relative !important;
+  }
 }

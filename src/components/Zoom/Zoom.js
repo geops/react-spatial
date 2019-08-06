@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FaPlus, FaMinus } from 'react-icons/fa';
+import { ZoomSlider } from 'ol/control';
 import OLMap from 'ol/Map';
 import Button from '../Button';
 
@@ -44,6 +45,11 @@ const propTypes = {
    * Children content of the zoom out button.
    */
   zoomOutChildren: PropTypes.node,
+
+  /**
+   * Display a slider to zoom.
+   */
+  zoomSlider: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -54,12 +60,30 @@ const defaultProps = {
   zoomOutClassName: 'tm-button tm-round-blue',
   zoomInChildren: <FaPlus focusable={false} />,
   zoomOutChildren: <FaMinus focusable={false} />,
+  zoomSlider: false,
 };
 
 /**
  * This component creates a zoom wrapper.
  */
 class Zoom extends Component {
+  constructor(props) {
+    super(props);
+    this.ref = React.createRef();
+  }
+
+  componentDidMount() {
+    const { map, zoomSlider } = this.props;
+    const olZoomSlider = zoomSlider ? new ZoomSlider() : null;
+
+    if (olZoomSlider) {
+      olZoomSlider.element.classList.remove('ol-control');
+      // Set the zoom slider in the custom control wrapper.
+      olZoomSlider.setTarget(this.ref.current);
+      map.addControl(olZoomSlider);
+    }
+  }
+
   updateZoom(zoomAction) {
     const { map } = this.props;
     map.getView().cancelAnimations();
@@ -79,6 +103,7 @@ class Zoom extends Component {
       zoomOutClassName,
       zoomInChildren,
       zoomOutChildren,
+      zoomSlider,
     } = this.props;
 
     return (
@@ -90,6 +115,9 @@ class Zoom extends Component {
         >
           {zoomInChildren}
         </Button>
+        {zoomSlider ? (
+          <div className="wkp-zoomslider-wrapper" ref={this.ref} />
+        ) : null}
         <Button
           className={zoomOutClassName}
           title={zoomOutTitle}

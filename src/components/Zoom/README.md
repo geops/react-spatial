@@ -16,7 +16,7 @@ function ZoomExample() {
   return (
     <div className="tm-zoom-example">
       <BasicMap map={map} />
-      <Zoom map={map} />
+      <Zoom map={map} zoomSlider={true}/>
     </div>
   );
 };
