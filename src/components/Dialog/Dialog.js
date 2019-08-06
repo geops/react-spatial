@@ -78,7 +78,7 @@ const propTypes = {
   onDragStop: PropTypes.func,
 
   /**
-   * Function triggered on clicke outside of an open dialog.
+   * Function triggered on click outside of an open dialog.
    */
   onClickedOutside: PropTypes.func,
 };
