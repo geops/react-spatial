@@ -80,7 +80,7 @@ const propTypes = {
   /**
    * Function triggered on click outside of an open dialog.
    */
-  onClickedOutside: PropTypes.func,
+  onClickOutside: PropTypes.func,
 };
 
 const defaultProps = {
@@ -111,37 +111,41 @@ class Dialog extends Component {
   }
 
   componentDidMount() {
-    const { onClickedOutside, isOpen } = this.props;
-    if (isOpen && onClickedOutside) {
-      document.addEventListener('mousedown', this.handleClickOutside);
+    const { onClickOutside, isOpen } = this.props;
+    if (isOpen && onClickOutside) {
+      this.activateHandleClickOutside();
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { onClickedOutside, isOpen } = this.props;
-    if (onClickedOutside && prevProps.isOpen !== isOpen) {
+    const { onClickOutside, isOpen } = this.props;
+    if (onClickOutside && prevProps.isOpen !== isOpen) {
       if (isOpen) {
-        document.addEventListener('mousedown', this.handleClickOutside);
+        this.activateHandleClickOutside();
       } else {
-        document.removeEventListener(
-          'mousedown',
-          this.handleClickOutside,
-          false,
-        );
+        this.deactivateHandleClickOutside();
       }
     }
   }
 
   componentWillUnmount() {
+    this.deactivateHandleClickOutside();
+  }
+
+  activateHandleClickOutside() {
+    document.addEventListener('mousedown', this.handleClickOutside);
+  }
+
+  deactivateHandleClickOutside() {
     document.removeEventListener('mousedown', this.handleClickOutside, false);
   }
 
   handleClickOutside(event) {
-    const { onClickedOutside } = this.props;
+    const { onClickOutside } = this.props;
 
     if (this.ref && !this.ref.current.contains(event.target)) {
       // Callback if click outside of the dialog.
-      onClickedOutside();
+      onClickOutside();
     }
   }
 
