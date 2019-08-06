@@ -37,7 +37,9 @@ function ComponentsList({
           anchor: !useRouterLinks,
           hashPath: useRouterLinks ? hashPath : false,
           id: useRouterLinks ? useHashId : false,
-        }).replace(/^\/+/g, ''),
+        })
+          .replace(/^\/index.html+/g, '')
+          .replace(/^\/+/g, ''),
   }));
   return <ComponentsListRenderer classes={classes} items={mappedItems} />;
 }
