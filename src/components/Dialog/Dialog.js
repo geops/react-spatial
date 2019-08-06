@@ -76,6 +76,11 @@ const propTypes = {
    * Function triggered on drag stop (Only available if isDraggable is true).
    */
   onDragStop: PropTypes.func,
+
+  /**
+   * Function triggered on clicke outside of an open dialog.
+   */
+  onClickedOutside: PropTypes.func,
 };
 
 const defaultProps = {
@@ -91,12 +96,55 @@ const defaultProps = {
   title: undefined,
   position: null,
   onDragStop: () => {},
+  onClickedOutside: () => {},
 };
 
 /**
  * This component creates a Dialog window.
  */
 class Dialog extends Component {
+  constructor(props) {
+    super(props);
+    this.ref = React.createRef();
+    // Bind the function to be able to removeEventListener.
+    this.handleClickOutside = this.handleClickOutside.bind(this);
+  }
+
+  componentDidMount() {
+    const { onClickedOutside, isOpen } = this.props;
+    if (isOpen && onClickedOutside) {
+      document.addEventListener('mousedown', this.handleClickOutside);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { onClickedOutside, isOpen } = this.props;
+    if (onClickedOutside && prevProps.isOpen !== isOpen) {
+      if (isOpen) {
+        document.addEventListener('mousedown', this.handleClickOutside);
+      } else {
+        document.removeEventListener(
+          'mousedown',
+          this.handleClickOutside,
+          false,
+        );
+      }
+    }
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickOutside, false);
+  }
+
+  handleClickOutside(event) {
+    const { onClickedOutside } = this.props;
+
+    if (this.ref && !this.ref.current.contains(event.target)) {
+      // Callback if click outside of the dialog.
+      onClickedOutside();
+    }
+  }
+
   renderDialogTitle() {
     const {
       title,
@@ -132,7 +180,7 @@ class Dialog extends Component {
         className={isModal ? 'tm-modal' : 'tm-dialog'}
         style={{ display: isOpen ? 'block' : 'none' }}
       >
-        <div className={className}>
+        <div className={className} ref={this.ref}>
           {this.renderDialogTitle()}
           <div className={classNameChildren}>{children}</div>
         </div>
