@@ -37,11 +37,6 @@ const defaultProps = {
   children: <FaExpand focusable={false} />,
 };
 
-const fitExtentFc = (map, extent) => {
-  map.getView().cancelAnimations();
-  map.getView().fit(extent, map.getSize());
-};
-
 /**
  * This component creates a button to zoom to the given extent.
  */
@@ -50,7 +45,10 @@ function FitExtent({ map, extent, title, className, children }) {
     <Button
       className={className}
       title={title}
-      onClick={() => fitExtentFc(map, extent)}
+      onClick={() => {
+        map.getView().cancelAnimations();
+        map.getView().fit(extent, map.getSize());
+      }}
     >
       {children}
     </Button>
