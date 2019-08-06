@@ -16,8 +16,7 @@ class WMSLayer extends Layer {
 
   /**
    * Get features infos' Url.
-   * @param {ol.layer} layer ol.layer (https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer.html)
-   * @param {ol.coordinate} coord ol.coordinate (https://openlayers.org/en/latest/apidoc/module-ol_coordinate.html)
+   * @param {ol.Coordinate} coord ol.coordinate (https://openlayers.org/en/latest/apidoc/module-ol_coordinate.html)
    * @param {Number} resolution The resolution of the view.
    * @param {<ol.Projection|String>} projection The projection used by the map.
    */
@@ -34,22 +33,20 @@ class WMSLayer extends Layer {
 
   /**
    * Get features infos for WMS layer.
-   * @param {ol.layer} layer ol.layer (https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer.html)
-   * @param {ol.coordinate} coord ol.coordinate (https://openlayers.org/en/latest/apidoc/module-ol_coordinate.html)
+   * @param {ol.Coordinate} coord ol.coordinate (https://openlayers.org/en/latest/apidoc/module-ol_coordinate.html)
    * @param {Number} resolution The resolution of the view.
    * @param {<ol.Projection|String>} projection The projection used by the map.
    */
   getFeatureInfoFeatures(coord, res, proj) {
     const url = this.getFeatureInfoUrl(coord, res, proj);
-    const promise = fetch(url)
+    return fetch(url)
       .then(resp => resp.json())
-      .then(r => r.features);
-
-    return promise.then(data => {
-      const format = new GeoJSON();
-      const features = data.map(d => format.readFeatures(d));
-      return features;
-    });
+      .then(r => r.features)
+      .then(data => {
+        const format = new GeoJSON();
+        const features = data.map(d => format.readFeatures(d));
+        return features;
+      });
   }
 
   /**
