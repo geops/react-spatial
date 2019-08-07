@@ -72,12 +72,6 @@ class Zoom extends Component {
     this.ref = React.createRef();
   }
 
-  componentWillMount() {
-    if (this.olZoomSlider) {
-      this.removeZoomSlider();
-    }
-  }
-
   componentDidMount() {
     const { zoomSlider } = this.props;
     if (zoomSlider) {
@@ -93,6 +87,12 @@ class Zoom extends Component {
       } else {
         this.removeZoomSlider();
       }
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.olZoomSlider) {
+      this.removeZoomSlider();
     }
   }
 
