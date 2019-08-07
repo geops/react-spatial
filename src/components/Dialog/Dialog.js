@@ -76,6 +76,11 @@ const propTypes = {
    * Function triggered on drag stop (Only available if isDraggable is true).
    */
   onDragStop: PropTypes.func,
+
+  /**
+   * Function triggered on click outside of an open dialog.
+   */
+  onClickOutside: PropTypes.func,
 };
 
 const defaultProps = {
@@ -91,12 +96,59 @@ const defaultProps = {
   title: undefined,
   position: null,
   onDragStop: () => {},
+  onClickOutside: () => {},
 };
 
 /**
  * This component creates a Dialog window.
  */
 class Dialog extends Component {
+  constructor(props) {
+    super(props);
+    this.ref = React.createRef();
+    // Bind the function to be able to removeEventListener.
+    this.handleClickOutside = this.handleClickOutside.bind(this);
+  }
+
+  componentDidMount() {
+    const { onClickOutside, isOpen } = this.props;
+    if (isOpen && onClickOutside) {
+      this.activateHandleClickOutside();
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { onClickOutside, isOpen } = this.props;
+    if (onClickOutside && prevProps.isOpen !== isOpen) {
+      if (isOpen) {
+        this.activateHandleClickOutside();
+      } else {
+        this.deactivateHandleClickOutside();
+      }
+    }
+  }
+
+  componentWillUnmount() {
+    this.deactivateHandleClickOutside();
+  }
+
+  activateHandleClickOutside() {
+    document.addEventListener('mousedown', this.handleClickOutside);
+  }
+
+  deactivateHandleClickOutside() {
+    document.removeEventListener('mousedown', this.handleClickOutside, false);
+  }
+
+  handleClickOutside(event) {
+    const { onClickOutside } = this.props;
+
+    if (this.ref && !this.ref.current.contains(event.target)) {
+      // Callback if click outside of the dialog.
+      onClickOutside();
+    }
+  }
+
   renderDialogTitle() {
     const {
       title,
@@ -132,7 +184,7 @@ class Dialog extends Component {
         className={isModal ? 'tm-modal' : 'tm-dialog'}
         style={{ display: isOpen ? 'block' : 'none' }}
       >
-        <div className={className}>
+        <div className={className} ref={this.ref}>
           {this.renderDialogTitle()}
           <div className={classNameChildren}>{children}</div>
         </div>
