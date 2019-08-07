@@ -72,16 +72,42 @@ class Zoom extends Component {
     this.ref = React.createRef();
   }
 
-  componentDidMount() {
-    const { map, zoomSlider } = this.props;
-    const olZoomSlider = zoomSlider ? new ZoomSlider() : null;
-
-    if (olZoomSlider) {
-      olZoomSlider.element.classList.remove('ol-control');
-      // Set the zoom slider in the custom control wrapper.
-      olZoomSlider.setTarget(this.ref.current);
-      map.addControl(olZoomSlider);
+  componentWillMount() {
+    if (this.olZoomSlider) {
+      this.removeZoomSlider();
     }
+  }
+
+  componentDidMount() {
+    const { zoomSlider } = this.props;
+    if (zoomSlider) {
+      this.displayZoomSlider();
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { zoomSlider } = this.props;
+    if (prevProps.zoomSlider !== zoomSlider) {
+      if (zoomSlider) {
+        this.displayZoomSlider();
+      } else {
+        this.removeZoomSlider();
+      }
+    }
+  }
+
+  displayZoomSlider() {
+    const { map } = this.props;
+    this.olZoomSlider = new ZoomSlider();
+    this.olZoomSlider.element.classList.remove('ol-control');
+    // Set the zoom slider in the custom control wrapper.
+    this.olZoomSlider.setTarget(this.ref.current);
+    map.addControl(this.olZoomSlider);
+  }
+
+  removeZoomSlider() {
+    const { map } = this.props;
+    map.removeControl(this.olZoomSlider);
   }
 
   updateZoom(zoomAction) {
@@ -116,7 +142,7 @@ class Zoom extends Component {
           {zoomInChildren}
         </Button>
         {zoomSlider ? (
-          <div className="wkp-zoomslider-wrapper" ref={this.ref} />
+          <div className="tm-zoomslider-wrapper" ref={this.ref} />
         ) : null}
         <Button
           className={zoomOutClassName}
