@@ -190,7 +190,7 @@ class Geolocation extends PureComponent {
               color: 'rgba(255, 255, 255, 0.01)',
             }),
             stroke: new Stroke({
-              lineDash: [30, 5],
+              lineDash: [30, 10],
               width: 6,
               color: `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${opacity})`,
             }),
