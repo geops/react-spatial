@@ -7,4 +7,42 @@
   div {
     margin: 10px 0;
   }
+
+  .tm-zoomslider-wrapper {
+    display: flex;
+    justify-content: center;
+
+    .ol-zoomslider {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      background-color: rgba(255, 255, 255, 0.4);
+      border: 1px solid $brand-secondary;
+      border-radius: 3px;
+      outline: none;
+      overflow: hidden;
+      width: 14px;
+      height: 200px;
+      margin: 0;
+      z-index: 1;
+
+      .ol-zoomslider-thumb {
+        -webkit-user-select: none;
+        -moz-user-select: -moz-none;
+        -ms-user-select: none;
+        position: relative;
+        display: block;
+        background: $brand-secondary;
+        outline: none;
+        overflow: hidden;
+        cursor: pointer;
+        font-size: 1.14em;
+        height: 20px;
+        width: 14px;
+        margin: 0;
+        padding: 0;
+        border: none;
+      }
+    }
+  }
 }

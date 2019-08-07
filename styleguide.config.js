@@ -41,6 +41,7 @@ module.exports = {
             'src/components/Copyright/[A-Z]*.js',
             'src/components/FeatureExportButton/[A-Z]*.js',
             'src/components/FeatureStyler/[A-Z]*.js',
+            'src/components/FitExtent/[A-Z]*.js',
             'src/components/Geolocation/[A-Z]*.js',
             'src/components/MousePosition/[A-Z]*.js',
             'src/components/NorthArrow/[A-Z]*.js',
