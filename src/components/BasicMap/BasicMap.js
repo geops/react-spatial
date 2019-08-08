@@ -138,7 +138,7 @@ class BasicMap extends Component {
         interactions:
           interactions ||
           defaultInteractions({
-            altShiftDragRotate: true,
+            altShiftDragRotate: false,
             pinchRotate: false,
           }),
       });

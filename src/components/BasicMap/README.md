@@ -43,14 +43,11 @@ class BasicMapExample extends React.Component {
       }),
     });
     this.center = getCenter(extent);
-    this.layers = [
-    new MapboxLayer('https://maps.style-dev.geops.io/styles/trafimage_perimeter_v2/style.json', {
-      name: 'Layer',
-    })];
+    this.layers = [layer];
   }
 
   render() {
-    return <BasicMap layers={this.layers} />;
+    return <BasicMap layers={this.layers} center={this.center} zoom={17} />;
   }
 }
 
