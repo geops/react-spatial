@@ -129,7 +129,7 @@ const defaultProps = {
   coordinates: null,
   scale: 1,
   disabled: undefined,
-  onSaveStart: () => {},
+  onSaveStart: map => Promise.resolve(map),
   onSaveEnd: () => {},
 };
 
@@ -178,7 +178,7 @@ class CanvasSaveButton extends PureComponent {
   }
 
   // If minimal fontsize is reached, divide copyright in two lines.
-  splitCopyrightLine(destContext, clip, maxWidth, copyright, scale) {
+  splitCopyrightLine(destContext, destCanvas, maxWidth, copyright, scale) {
     let newCopyright = copyright;
     const wordNumber = copyright.split(' ').length;
 
@@ -194,18 +194,18 @@ class CanvasSaveButton extends PureComponent {
     destContext.fillText(
       newCopyright,
       this.padding,
-      clip.h / scale - 3 * this.padding,
+      destCanvas.height / scale - 3 * this.padding,
     );
 
     // Draw second line.
     destContext.fillText(
       copyright.replace(newCopyright, ''),
       this.padding,
-      clip.h / scale - this.padding,
+      destCanvas.height / scale - this.padding,
     );
   }
 
-  drawCopyright(destContext, clip, maxWidth) {
+  drawCopyright(destContext, destCanvas, maxWidth) {
     const { extraData, scale } = this.props;
     const { text, font, fillStyle } = extraData.copyright;
     const copyright = typeof text === 'function' ? text() : text;
@@ -221,18 +221,24 @@ class CanvasSaveButton extends PureComponent {
     this.decreaseFontSize(destContext, maxWidth, copyright, scale);
 
     if (this.multilineCopyright) {
-      this.splitCopyrightLine(destContext, clip, maxWidth, copyright, scale);
+      this.splitCopyrightLine(
+        destContext,
+        destCanvas,
+        maxWidth,
+        copyright,
+        scale,
+      );
     } else {
       destContext.fillText(
         copyright,
         this.padding,
-        clip.h / scale - this.padding,
+        destCanvas.height / scale - this.padding,
       );
     }
     destContext.restore();
   }
 
-  drawNorthArrow(destContext, clip) {
+  drawNorthArrow(destContext, destCanvas) {
     const { scale, extraData } = this.props;
     const { src, circled, width, height, rotation } = extraData.northArrow;
 
@@ -245,8 +251,8 @@ class CanvasSaveButton extends PureComponent {
         const arrowWidth = (width || 80) * scale;
         const arrowHeight = (height || 80) * scale;
         destContext.translate(
-          clip.w - 2 * this.padding - arrowWidth / 2,
-          clip.h - 2 * this.padding - arrowHeight / 2,
+          destCanvas.width - 2 * this.padding - arrowWidth / 2,
+          destCanvas.height - 2 * this.padding - arrowHeight / 2,
         );
 
         if (rotation) {
@@ -274,8 +280,8 @@ class CanvasSaveButton extends PureComponent {
     });
   }
 
-  calculatePixelsToExport(mapToExport, canvas) {
-    const { extent, scale, coordinates } = this.props;
+  calculatePixelsToExport(mapToExport) {
+    const { extent, coordinates } = this.props;
     let firstCoordinate;
     let oppositeCoordinate;
 
@@ -304,70 +310,80 @@ class CanvasSaveButton extends PureComponent {
       ];
 
       return {
-        x: pixelTopLeft[0] * scale,
-        y: pixelTopLeft[1] * scale,
-        w: (pixelBottomRight[0] - pixelTopLeft[0]) * scale,
-        h: (pixelBottomRight[1] - pixelTopLeft[1]) * scale,
+        x: pixelTopLeft[0],
+        y: pixelTopLeft[1],
+        w: pixelBottomRight[0] - pixelTopLeft[0],
+        h: pixelBottomRight[1] - pixelTopLeft[1],
       };
     }
-    return {
-      x: 0,
-      y: 0,
-      w: canvas.width,
-      h: canvas.height,
-    };
+    return null;
   }
 
   createCanvasImage(mapToExport) {
-    const { scale, extraData } = this.props;
+    const { extraData } = this.props;
 
     return new Promise(resolve => {
       mapToExport.once('rendercomplete', () => {
-        const canvas = mapToExport
+        // Find all layer canvases and add it to dest canvas.
+        const canvases = mapToExport
           .getTargetElement()
-          .getElementsByTagName('canvas')[0];
-        const ctx = canvas.getContext('2d');
-        ctx.scale(scale, scale);
-
-        // Define the zone to export in pixels.
-        const clip = this.calculatePixelsToExport(mapToExport, canvas);
+          .getElementsByTagName('canvas');
 
         // Create the canvas to export with the good size.
-        const destCanvas = document.createElement('canvas');
-        destCanvas.width = clip.w;
-        destCanvas.height = clip.h;
-        const destContext = destCanvas.getContext('2d');
+        let destCanvas;
+        let destContext;
 
-        // Draw map
-        destContext.fillStyle = 'white';
-        destContext.fillRect(0, 0, clip.w, clip.h);
-        destContext.drawImage(
-          canvas,
-          clip.x,
-          clip.y,
-          clip.w,
-          clip.h,
-          0,
-          0,
-          clip.w,
-          clip.h,
-        );
+        canvases.forEach(canvas => {
+          if (!canvas.width || !canvas.height) {
+            return;
+          }
+          const clip = this.calculatePixelsToExport(mapToExport) || {
+            x: 0,
+            y: 0,
+            w: canvas.width,
+            h: canvas.height,
+          };
+
+          if (!destCanvas) {
+            destCanvas = document.createElement('canvas');
+            destCanvas.width = clip.w;
+            destCanvas.height = clip.h;
+            destContext = destCanvas.getContext('2d');
+          }
+
+          // Draw canvas to the canvas to export.
+          destContext.drawImage(
+            canvas,
+            clip.x,
+            clip.y,
+            clip.w,
+            clip.h,
+            0,
+            0,
+            destCanvas.width,
+            destCanvas.height,
+          );
+        });
 
         // North arrow
         let p = Promise.resolve();
-        if (extraData && extraData.northArrow) {
-          p = this.drawNorthArrow(destContext, clip);
+        if (destContext && extraData && extraData.northArrow) {
+          p = this.drawNorthArrow(destContext, destCanvas);
         }
 
         p.then(arrowWidth => {
           // Copyright
-          if (extraData && extraData.copyright && extraData.copyright.text) {
+          if (
+            destContext &&
+            extraData &&
+            extraData.copyright &&
+            extraData.copyright.text
+          ) {
             const maxWidth = arrowWidth
               ? destContext.canvas.width - arrowWidth
               : destContext.canvas.width;
-            this.drawCopyright(destContext, clip, maxWidth);
+            this.drawCopyright(destContext, destCanvas, maxWidth);
           }
-
           resolve(destCanvas);
         });
       });
@@ -433,16 +449,16 @@ class CanvasSaveButton extends PureComponent {
             e.preventDefault();
             e.stopPropagation();
           }
-
-          const mapToExport = onSaveStart(map);
-          this.createCanvasImage(mapToExport || map)
-            .then(canvas => {
-              this.downloadCanvasImage(canvas);
-              onSaveEnd(mapToExport);
-            })
-            .catch(err => {
-              onSaveEnd(mapToExport, err);
-            });
+          onSaveStart(map).then(mapToExport => {
+            return this.createCanvasImage(mapToExport || map)
+              .then(canvas => {
+                this.downloadCanvasImage(canvas);
+                onSaveEnd(mapToExport);
+              })
+              .catch(err => {
+                onSaveEnd(mapToExport, err);
+              });
+          });
         }}
       >
         {children}

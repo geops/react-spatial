@@ -2,6 +2,7 @@ import 'jest-canvas-mock';
 import OLMap from 'ol/Map';
 import TileLayer from 'ol/layer/Tile';
 import XYZ from 'ol/source/XYZ';
+import OLLayer from 'ol/layer/Layer';
 import OLVectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import WMTSSource from 'ol/source/WMTS';
@@ -84,6 +85,24 @@ describe('ConfigReader', () => {
       ]);
       expect(layers[0]).toBeInstanceOf(Layer);
       expect(layers[0].olLayer.getSource()).toBeInstanceOf(TileJSONSource);
+    });
+
+    test('create Mapbox layer', () => {
+      const map = new OLMap();
+      const layers = ConfigReader.readConfig(map, [
+        {
+          name: 'OSM Baselayer',
+          data: {
+            type: 'mapbox',
+            url: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
+          },
+        },
+      ]);
+      expect(layers[0]).toBeInstanceOf(Layer);
+      expect(layers[0].olLayer).toBeInstanceOf(OLLayer);
+      expect(layers[0].styleUrl).toBe(
+        'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      );
     });
 
     test('create custom layer', () => {

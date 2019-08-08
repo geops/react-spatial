@@ -7,6 +7,7 @@ import TileJSONSource from 'ol/source/TileJSON';
 import WMTSTileGrid from 'ol/tilegrid/WMTS';
 import GeoJSONFormat from 'ol/format/GeoJSON';
 import Layer from './Layer';
+import MapboxLayer from './layers/MapboxLayer';
 import projections from './Projections';
 
 const createXYZLayer = item => {
@@ -40,6 +41,16 @@ const createVectorLayer = item => {
       }),
       style: item.data.style,
     }),
+  });
+};
+
+const createMapboxLayer = item => {
+  const conf = { ...item };
+  delete conf.data;
+
+  return new MapboxLayer({
+    ...conf,
+    url: item.data.url,
   });
 };
 
@@ -135,6 +146,9 @@ const createLayer = item => {
     case 'vectorLayer':
       layer = createVectorLayer(item);
       break;
+    case 'mapbox':
+      layer = createMapboxLayer(item);
+      break;
     case 'custom':
       layer = createCustomLayer(item);
       break;
@@ -155,7 +169,6 @@ const loadLayerFromConfig = (map, config) => {
   };
 
   const layer = createLayer(item);
-  layer.init(map);
 
   if (item.children) {
     item.children.forEach(childConfig => {

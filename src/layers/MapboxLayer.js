@@ -9,9 +9,9 @@ import Layer from '../Layer';
  * @class
  */
 export default class MapboxLayer extends Layer {
-  constructor(styleUrl, options = {}) {
+  constructor(options = {}) {
     super(options);
-    this.styleUrl = styleUrl;
+    this.styleUrl = options.url;
 
     const that = this;
     const mbLayer = new OLLayer({

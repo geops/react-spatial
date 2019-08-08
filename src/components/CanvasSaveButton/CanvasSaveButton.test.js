@@ -58,7 +58,9 @@ describe('CanvasSaveButton', () => {
   });
 
   test('should call onSaveBefore then download then onSaveEnd function on click.', async done => {
-    const saveStart = jest.fn();
+    const saveStart = jest.fn(m => {
+      return Promise.resolve(m);
+    });
     const saveEnd = jest.fn();
     const wrapper = shallow(
       <CanvasSaveButton
