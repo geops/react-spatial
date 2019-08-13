@@ -38,7 +38,7 @@ export default [
     },
   },
   {
-    name: 'Others layers',
+    name: 'Other layers',
     key: 'other.layers',
     visible: true,
     type: 'parent',

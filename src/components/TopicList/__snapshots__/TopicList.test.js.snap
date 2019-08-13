@@ -240,7 +240,7 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
               tabIndex={0}
             >
               <div>
-                Others layers
+                Other layers
               </div>
               <div
                 className="tm-layer-tree-arrow tm-layer-tree-arrow-expanded"
@@ -655,7 +655,7 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
               tabIndex={0}
             >
               <div>
-                Others layers
+                Other layers
               </div>
               <div
                 className="tm-layer-tree-arrow tm-layer-tree-arrow-expanded"
