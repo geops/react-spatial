@@ -11,6 +11,7 @@ export default class Layer extends Observable {
     olLayer,
     radioGroup,
     isBaseLayer,
+    hideInLegend,
     visible,
     copyright,
   }) {
@@ -19,6 +20,7 @@ export default class Layer extends Observable {
     this.name = name;
     this.olLayer = olLayer;
     this.isBaseLayer = isBaseLayer;
+    this.hideInLegend = hideInLegend;
     this.radioGroup = radioGroup;
     this.children = [];
     this.visible = visible === undefined ? true : visible;
@@ -54,6 +56,10 @@ export default class Layer extends Observable {
 
   getIsBaseLayer() {
     return this.isBaseLayer;
+  }
+
+  getHideInLegend() {
+    return this.hideInLegend;
   }
 
   getRadioGroup() {

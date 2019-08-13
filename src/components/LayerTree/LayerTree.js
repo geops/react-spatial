@@ -205,6 +205,10 @@ class LayerTree extends Component {
       ? []
       : [...layer.getChildren()];
 
+    if (layer.getHideInLegend()) {
+      return null;
+    }
+
     if (renderItem) {
       return renderItem(layer, this.onInputClick, this.onToggle);
     }
