@@ -1,3 +1,4 @@
+import { buffer } from 'ol/extent';
 import Layer from '../Layer';
 
 /**
@@ -21,7 +22,7 @@ class VectorLayer extends Layer {
    * Listens to click events on the layer.
    * @param {function} callback Callback function, called with the clicked
    *   features (https://openlayers.org/en/latest/apidoc/module-ol_Feature.html),
-   *   the layer instance and the click event.
+   *   the layer instance and the click coordinate.
    */
   onClick(callback) {
     if (typeof callback === 'function') {
@@ -29,6 +30,25 @@ class VectorLayer extends Layer {
     } else {
       throw new Error('callback must be of type function.');
     }
+  }
+
+  /**
+   * Request feature information for a given coordinate.
+   * @param {ol.Coordinate} coordinate Coordinate to request the information at.
+   * @returns {Promise<Object>} Promise with features, layer and coordinate
+   *  or null if no feature was hit.
+   * eslint-disable-next-line class-methods-use-this
+   */
+  getFeatureInfoAtCoordinate(coordinate) {
+    const res = this.map.getView().getResolution();
+    const extent = buffer([...coordinate, ...coordinate], 5 * res);
+    const features = this.olLayer.getSource().getFeaturesInExtent(extent);
+
+    return Promise.resolve({
+      features,
+      layer: this,
+      coordinate,
+    });
   }
 
   /**
@@ -45,16 +65,13 @@ class VectorLayer extends Layer {
         return;
       }
 
-      const clickedFeatures = [];
-      const layerFeatures = this.olLayer.getSource().getFeatures();
-
-      this.map.forEachFeatureAtPixel(e.pixel, f => {
-        if (layerFeatures.includes(f)) {
-          clickedFeatures.push(f);
-        }
-      });
-
-      this.clickCallbacks.forEach(c => c(clickedFeatures, this, e));
+      this.getFeatureInfoAtCoordinate(e.coordinate)
+        .then(features => {
+          this.clickCallbacks.forEach(c => c(features, this, e));
+        })
+        .catch(() => {
+          this.clickCallbacks.forEach(c => c([], this, e));
+        });
     });
   }
 }

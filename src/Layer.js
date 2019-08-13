@@ -130,4 +130,26 @@ export default class Layer extends Observable {
   hasChildren(visible) {
     return !!this.children.find(l => visible === l.getVisible());
   }
+
+  // eslint-disable-next-line class-methods-use-this
+  onClick() {
+    // This layer has no onClick.
+    // The function is implemented by inheriting layers.
+  }
+
+  /**
+   * Request feature information for a given coordinate.
+   * @param {ol.Coordinate} coordinate Coordinate to request the information at.
+   * @returns {Promise<Object>} Promise with features, layer and coordinate
+   *  or null if no feature was hit.
+   * eslint-disable-next-line class-methods-use-this
+   */
+  getFeatureInfoAtCoordinate() {
+    // This layer returns no feature info.
+    // The function is implemented by inheriting layers.
+    return Promise.resolve({
+      layer: this,
+      features: [],
+    });
+  }
 }

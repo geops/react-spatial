@@ -20,8 +20,11 @@ class WMSLayer extends Layer {
    * @param {Number} resolution The resolution of the view.
    * @param {<ol.Projection|String>} projection The projection used by the map.
    */
-  getFeatureInfoUrl(coord, resolution, projection) {
+  getFeatureInfoUrl(coord) {
     if (this.olLayer.getSource().getGetFeatureInfoUrl) {
+      const resolution = this.map.getView().getResolution();
+      const projection = this.map.getView().getProjection();
+
       return this.olLayer
         .getSource()
         .getGetFeatureInfoUrl(coord, resolution, projection, {
@@ -32,20 +35,25 @@ class WMSLayer extends Layer {
   }
 
   /**
-   * Get features infos for WMS layer.
-   * @param {ol.Coordinate} coord ol.coordinate (https://openlayers.org/en/latest/apidoc/module-ol_coordinate.html)
-   * @param {Number} resolution The resolution of the view.
-   * @param {<ol.Projection|String>} projection The projection used by the map.
+   * Request feature information for a given coordinate.
+   * @param {ol.Coordinate} coordinate Coordinate to request the information at.
+   * @returns {Promise<Object>} Promise with features, layer and coordinate
+   *  or null if no feature was hit.
+   * eslint-disable-next-line class-methods-use-this
    */
-  getFeatureInfoFeatures(coord, res, proj) {
-    const url = this.getFeatureInfoUrl(coord, res, proj);
-    return fetch(url)
+  getFeatureInfoAtCoordinate(coordinate) {
+    return fetch(this.getFeatureInfoUrl(coordinate))
       .then(resp => resp.json())
       .then(r => r.features)
       .then(data => {
         const format = new GeoJSON();
         const features = data.map(d => format.readFeatures(d));
-        return features;
+
+        return {
+          features,
+          coordinate,
+          layer: this,
+        };
       });
   }
 
@@ -71,19 +79,15 @@ class WMSLayer extends Layer {
     super.init(map);
     this.map = map;
 
-    const resolution = this.map.getView().getResolution();
-    const projection = this.map.getView().getProjection();
-
     // Listen to click events
     this.map.on('singleclick', e => {
       if (!this.clickCallbacks.length) {
         return;
       }
-      this.getFeatureInfoFeatures(e.coordinate, resolution, projection).then(
-        clickedFeatures => {
-          this.clickCallbacks.forEach(c => c(clickedFeatures, this, e));
-        },
-      );
+
+      this.getFeatureInfoAtCoordinate(e.coordinate).then(clickedFeatures => {
+        this.clickCallbacks.forEach(c => c(clickedFeatures, this, e));
+      });
     });
   }
 }
