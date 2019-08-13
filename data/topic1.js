@@ -18,7 +18,7 @@ const topic1 = {
       },
     },
     {
-      name: 'Others layers',
+      name: 'Other layers',
       visible: true,
       type: 'parent',
       children: [

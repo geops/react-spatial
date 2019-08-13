@@ -151,6 +151,7 @@ const loadLayerFromConfig = (map, config) => {
     data: [],
     visible: false,
     isBaseLayer: false,
+    hideInLegend: false,
     ...config,
   };
 

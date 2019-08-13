@@ -38,7 +38,7 @@ export default [
     },
   },
   {
-    name: 'Others layers',
+    name: 'Other layers',
     key: 'other.layers',
     visible: true,
     type: 'parent',
@@ -67,6 +67,31 @@ export default [
             '&style=default&tilematrixset=EPSG%3A3857&Service=WMTS&' +
             'Request=GetTile&Version=1.0.0&Format=image%2Fpng&',
           projection: 'EPSG:3857',
+        },
+      },
+      {
+        name: 'Switzerland',
+        key: 'switzerland.samples',
+        visible: true,
+        hideInLegend: true,
+        data: {
+          style: new Style({
+            image: new Circle({
+              radius: 5,
+              fill: new Fill({
+                color: '#ff0000',
+              }),
+            }),
+            stroke: new Stroke({
+              color: '#ffcc33',
+              width: 2,
+            }),
+          }),
+          type: 'vectorLayer',
+          url:
+            'https://raw.githubusercontent.com/openlayers/openlayers/' +
+            '3c64018b3754cf605ea19cbbe4c8813304da2539/examples/data/geojson/' +
+            'switzerland.geojson',
         },
       },
     ],
