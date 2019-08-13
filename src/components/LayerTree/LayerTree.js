@@ -198,16 +198,16 @@ class LayerTree extends Component {
   }
 
   renderItem(layer, level) {
+    if (layer.getHideInLegend()) {
+      return null;
+    }
+
     const { renderItem, classNameItem, padding } = this.props;
     const { expandedLayerNames } = this.state;
 
     const children = expandedLayerNames.includes(layer.getKey())
       ? []
       : [...layer.getChildren()];
-
-    if (layer.getHideInLegend()) {
-      return null;
-    }
 
     if (renderItem) {
       return renderItem(layer, this.onInputClick, this.onToggle);
