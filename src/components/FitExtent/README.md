@@ -16,7 +16,7 @@ const extent = [-15380353.1391, 2230738.2886, -6496535.908, 6927029.2369];
 function FitExtentExample() {
   return (
     <div className="tm-fitextent-example">
-      <BasicMap map={map} />
+      <BasicMap map={map} layers={layers} />
       <FitExtent map={map} extent={extent} />
     </div>
   );

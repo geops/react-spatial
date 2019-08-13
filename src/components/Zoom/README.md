@@ -15,7 +15,7 @@ const layers = ConfigReader.readConfig(map, treeData);
 function ZoomExample() {
   return (
     <div className="tm-zoom-example">
-      <BasicMap map={map} />
+      <BasicMap map={map} layers={layers} />
       <Zoom map={map} zoomSlider />
     </div>
   );

@@ -24,6 +24,7 @@ function CanvasSaveButtonExample() {
         map={map}
         center={[874105.13, 6106172.77]}
         zoom={10}
+        layers={layers}
       />
       <CanvasSaveButton
         title="Save the map as PNG"
