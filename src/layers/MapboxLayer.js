@@ -13,10 +13,9 @@ export default class MapboxLayer extends Layer {
     super(options);
     this.styleUrl = options.url;
 
-    const that = this;
     const mbLayer = new OLLayer({
-      render(frameState) {
-        const canvas = that.mbMap.getCanvas();
+      render: frameState => {
+        const canvas = this.mbMap.getCanvas();
         const { viewState } = frameState;
 
         const visible = mbLayer.getVisible();
@@ -28,11 +27,11 @@ export default class MapboxLayer extends Layer {
         // adjust view parameters in mapbox
         const { rotation } = viewState;
         if (rotation) {
-          that.mbMap.rotateTo((-rotation * 180) / Math.PI, {
+          this.mbMap.rotateTo((-rotation * 180) / Math.PI, {
             animate: false,
           });
         }
-        that.mbMap.jumpTo({
+        this.mbMap.jumpTo({
           center: toLonLat(viewState.center),
           zoom: viewState.zoom - 1,
           animate: false,
@@ -41,11 +40,11 @@ export default class MapboxLayer extends Layer {
         // cancel the scheduled update & trigger synchronous redraw
         // see https://github.com/mapbox/mapbox-gl-js/issues/7893#issue-408992184
         // NOTE: THIS MIGHT BREAK WHEN UPDATING MAPBOX
-        if (that.mbMap._frame) {
-          that.mbMap._frame.cancel();
-          that.mbMap._frame = null;
+        if (this.mbMap._frame) {
+          this.mbMap._frame.cancel();
+          this.mbMap._frame = null;
         }
-        that.mbMap._render();
+        this.mbMap._render();
 
         return canvas;
       },
