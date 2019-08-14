@@ -256,11 +256,9 @@ class BasicMap extends Component {
 
   initLayer(layer) {
     layer.init(this.map);
-    if (layer.getChildren()) {
-      const layers = layer.getChildren();
-      for (let i = 0; i < layers.length; i += 1) {
-        this.initLayer(layers[i]);
-      }
+    const layers = layer.getChildren() || [];
+    for (let i = 0; i < layers.length; i += 1) {
+      this.initLayer(layers[i]);
     }
   }
 

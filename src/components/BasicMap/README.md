@@ -17,9 +17,5 @@ const layers = ConfigReader.readConfig([{
   },
 }]);
 
-function BasicMapExample() {
-  return <BasicMap layers={layers} />;
-}
-
-<BasicMapExample />;
+<BasicMap layers={layers} />;
 ```
