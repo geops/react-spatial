@@ -18,10 +18,7 @@ class MenuExample extends React.Component {
     this.map = new OLMap({ controls: [] });
     this.center = [-10997148, 4569099];
 
-    const layers = ConfigReader.readConfig(
-      this.map,
-      treeData,
-    );
+    const layers = ConfigReader.readConfig(treeData);
     this.layerService = new LayerService(layers);
   }
 

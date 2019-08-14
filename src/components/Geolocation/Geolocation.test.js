@@ -4,11 +4,10 @@ import { configure, mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
 import 'jest-canvas-mock';
-import OLMap from 'ol/Map';
+import Map from 'ol/Map';
+import View from 'ol/View';
 import MapEvent from 'ol/MapEvent';
 import Geolocation from './Geolocation';
-
-const map = new OLMap({});
 
 configure({ adapter: new Adapter() });
 
@@ -42,6 +41,38 @@ const restoreGeolocation = () => {
 };
 
 describe('Geolocation', () => {
+  let map;
+
+  beforeEach(() => {
+    const target = document.createElement('div');
+    const { style } = target;
+    style.position = 'absolute';
+    style.left = '-1000px';
+    style.top = '-1000px';
+    style.width = '100px';
+    style.height = '100px';
+    document.body.appendChild(target);
+
+    map = new Map({
+      target,
+      view: new View({
+        center: [0, 0],
+        resolutions: [1],
+        zoom: 0,
+      }),
+    });
+    map.renderSync();
+  });
+
+  afterEach(() => {
+    const target = map.getTarget();
+    map.setTarget(null);
+    if (target && target.parentNode) {
+      target.parentNode.removeChild(target);
+    }
+    map.dispose();
+  });
+
   describe('should match snapshot', () => {
     test('minimum props', () => {
       const component = renderer.create(<Geolocation map={map} />);
@@ -160,7 +191,6 @@ describe('Geolocation', () => {
 
       const component = shallow(<Geolocation map={map} noCenterAfterDrag />);
       map.dispatchEvent(new MapEvent('pointerdrag', map));
-
       component.instance().toggle();
 
       const center2 = map.getView().getCenter();

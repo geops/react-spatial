@@ -14,7 +14,7 @@ import NorthArrow from '../NorthArrow/NorthArrow';
 import Feature from 'ol/Feature';
 
 const map = new Map();
-const layers = ConfigReader.readConfig(map, treeData);
+const layers = ConfigReader.readConfig(treeData);
 const layerService = new LayerService([...layers]);
 
 function CanvasSaveButtonExample() {
@@ -24,6 +24,7 @@ function CanvasSaveButtonExample() {
         map={map}
         center={[874105.13, 6106172.77]}
         zoom={10}
+        layers={layers}
       />
       <CanvasSaveButton
         title="Save the map as PNG"

@@ -1,8 +1,8 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { configure, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import 'jest-canvas-mock';
-import OLMap from 'ol/Map';
 import renderer from 'react-test-renderer';
 import LayerTree from './LayerTree';
 import data from '../../../data/TreeData';
@@ -12,13 +12,13 @@ import LayerService from '../../LayerService';
 configure({ adapter: new Adapter() });
 
 const mountLayerTree = newData => {
-  const layers = ConfigReader.readConfig(new OLMap({}), newData);
+  const layers = ConfigReader.readConfig(newData);
   const layerService = new LayerService(layers);
   return mount(<LayerTree layerService={layerService} />);
 };
 
 const renderLayerTree = (newData, props) => {
-  const layers = ConfigReader.readConfig(new OLMap({}), newData);
+  const layers = ConfigReader.readConfig(newData);
   const layerService = new LayerService(layers);
   const component = renderer.create(
     <LayerTree layerService={layerService} {...(props || {})} />,

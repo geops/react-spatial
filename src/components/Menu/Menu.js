@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const propTypes = {
-  children: PropTypes.array.isRequired,
+  children: PropTypes.node.isRequired,
   className: PropTypes.string,
   classNameContent: PropTypes.string,
 };

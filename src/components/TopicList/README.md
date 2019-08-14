@@ -25,7 +25,6 @@ class TopicListExample extends React.Component {
 
   componentDidMount() {
     const layers = ConfigReader.readConfig(
-      this.map,
       ConfigReader.getVisibleTopic(topicData).children,
     );
 
@@ -44,9 +43,7 @@ class TopicListExample extends React.Component {
       return t;
     });
 
-    const layers = ConfigReader.readConfig(
-      this.map,
-      ConfigReader.getVisibleTopic(topics).children,
+    const layers = ConfigReader.readConfig(ConfigReader.getVisibleTopic(topics).children,
     );
 
     this.setState({
