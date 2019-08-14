@@ -10,7 +10,7 @@ import BasicMap from 'react-spatial/components/BasicMap';
 import ConfigReader from 'react-spatial/ConfigReader';
 
 const map = new OLMap({ controls: [] });
-const layers = ConfigReader.readConfig(map, treeData);
+const layers = ConfigReader.readConfig(treeData);
 
 function GeolocationExample() {
   return (

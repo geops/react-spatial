@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 /* eslint-disable  react/no-multi-comp,react/prefer-stateless-function,react/prop-types */
 import React from 'react';
 import { configure, mount, shallow } from 'enzyme';

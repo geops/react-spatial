@@ -10,7 +10,7 @@ import OLMap from 'ol/Map';
 import ConfigReader from 'react-spatial/ConfigReader';
 
 const map = new OLMap({ controls: [] });
-const layers = ConfigReader.readConfig(map, treeData);
+const layers = ConfigReader.readConfig(treeData);
 const extent = [-15380353.1391, 2230738.2886, -6496535.908, 6927029.2369];
 
 function FitExtentExample() {

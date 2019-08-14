@@ -159,7 +159,7 @@ const createLayer = item => {
   return layer;
 };
 
-const loadLayerFromConfig = (map, config) => {
+const loadLayerFromConfig = config => {
   // apply default values
   const item = {
     data: [],
@@ -172,15 +172,15 @@ const loadLayerFromConfig = (map, config) => {
 
   if (item.children) {
     item.children.forEach(childConfig => {
-      layer.addChild(loadLayerFromConfig(map, childConfig));
+      layer.addChild(loadLayerFromConfig(childConfig));
     });
   }
 
   return layer;
 };
 
-const readConfig = (map, data) => {
-  return data.map(config => loadLayerFromConfig(map, config));
+const readConfig = data => {
+  return data.map(config => loadLayerFromConfig(config));
 };
 
 const getVisibleTopic = topicList => {

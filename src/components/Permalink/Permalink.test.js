@@ -71,8 +71,7 @@ describe('Permalink', () => {
 
   test('shoud initialize Permalink with layerService.', () => {
     expect(window.location.search).toEqual('');
-    const map = new OLMap({ controls: [] });
-    const layers = ConfigReader.readConfig(map, data);
+    const layers = ConfigReader.readConfig(data);
     const layerService = new LayerService(layers);
     mount(<Permalink layerService={layerService} />);
     const search = '?layers=usa.population.density,lines.samples';
@@ -146,13 +145,12 @@ describe('Permalink', () => {
 
   test('shoud react on layerService change.', () => {
     expect(window.location.search).toEqual('');
-    const map = new OLMap({ controls: [] });
-    const layers = ConfigReader.readConfig(map, data);
+    const layers = ConfigReader.readConfig(data);
     const layerService = new LayerService(layers);
     const permalink = mount(<Permalink layerService={layerService} />);
     const search = '?layers=lines%20samples';
 
-    const layers2 = ConfigReader.readConfig(map, data2);
+    const layers2 = ConfigReader.readConfig(data2);
     const layerService2 = new LayerService(layers2);
     permalink.setProps({ layerService: layerService2 }).update();
 
@@ -161,8 +159,7 @@ describe('Permalink', () => {
 
   test('shoud react on layer visiblity change.', () => {
     expect(window.location.search).toEqual('');
-    const map = new OLMap({ controls: [] });
-    const layers = ConfigReader.readConfig(map, data);
+    const layers = ConfigReader.readConfig(data);
     const layerService = new LayerService(layers);
     mount(<Permalink layerService={layerService} />);
     const search = '?layers=usa.population.density,polygon.samples';

@@ -110,12 +110,7 @@ const defaultProps = {
  */
 class OLE extends PureComponent {
   static defineOptions(type, parameters) {
-    return Object.assign(
-      {
-        type,
-      },
-      parameters,
-    );
+    return { type, ...parameters };
   }
 
   constructor(props) {
@@ -224,15 +219,11 @@ class OLE extends PureComponent {
     }
 
     drawCustoms.forEach(opt => {
-      const draw = new control.Draw(
-        Object.assign(
-          {
-            source,
-            element,
-          },
-          opt,
-        ),
-      );
+      const draw = new control.Draw({
+        source,
+        element,
+        ...opt,
+      });
 
       if (opt.onDrawStart) {
         draw.drawInteraction.on('drawstart', opt.onDrawStart);
@@ -247,44 +238,32 @@ class OLE extends PureComponent {
 
     if (cad) {
       ctrls.push(
-        new control.CAD(
-          Object.assign(
-            {
-              source,
-              element,
-            },
-            cad,
-          ),
-        ),
+        new control.CAD({
+          source,
+          element,
+          ...cad,
+        }),
       );
     }
 
     if (rotate) {
       ctrls.push(
-        new control.Rotate(
-          Object.assign(
-            {
-              source,
-              element,
-            },
-            rotate,
-          ),
-        ),
+        new control.Rotate({
+          source,
+          element,
+          ...rotate,
+        }),
       );
     }
 
     if (modify) {
-      const modifyCtrl = new control.Modify(
-        Object.assign(
-          {
-            source,
-            style,
-            modifyStyle,
-            element,
-          },
-          modify,
-        ),
-      );
+      const modifyCtrl = new control.Modify({
+        source,
+        style,
+        modifyStyle,
+        element,
+        ...modify,
+      });
 
       modifyCtrl.selectMove.getFeatures().on('add', evt => {
         onSelect(evt.element);
@@ -307,61 +286,45 @@ class OLE extends PureComponent {
 
     if (buffer) {
       ctrls.push(
-        new control.Buffer(
-          Object.assign(
-            {
-              source,
-              style,
-              element,
-            },
-            buffer,
-          ),
-        ),
+        new control.Buffer({
+          source,
+          style,
+          element,
+          ...buffer,
+        }),
       );
     }
 
     if (union) {
       ctrls.push(
-        new control.Union(
-          Object.assign(
-            {
-              source,
-              style,
-              element,
-            },
-            union,
-          ),
-        ),
+        new control.Union({
+          source,
+          style,
+          element,
+          ...union,
+        }),
       );
     }
 
     if (intersection) {
       ctrls.push(
-        new control.Intersection(
-          Object.assign(
-            {
-              source,
-              style,
-              element,
-            },
-            intersection,
-          ),
-        ),
+        new control.Intersection({
+          source,
+          style,
+          element,
+          ...intersection,
+        }),
       );
     }
 
     if (difference) {
       ctrls.push(
-        new control.Difference(
-          Object.assign(
-            {
-              source,
-              style,
-              element,
-            },
-            difference,
-          ),
-        ),
+        new control.Difference({
+          source,
+          style,
+          element,
+          ...difference,
+        }),
       );
     }
     if (ctrls.length) {

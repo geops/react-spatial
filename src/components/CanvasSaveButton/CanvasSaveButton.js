@@ -15,7 +15,7 @@ const propTypes = {
   /**
    *  Children content of the button.
    */
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
 
   /**
    * CSS class of the button.

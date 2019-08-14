@@ -11,7 +11,7 @@ import MousePosition from 'react-spatial/components/MousePosition';
 
 const center = [1149722.7037660484, 6618091.313553318];
 const map = new OLMap({ controls: [] });
-const layers = ConfigReader.readConfig(map, treeData);
+const layers = ConfigReader.readConfig(treeData);
 
 function MousePositionExample(){
   return (

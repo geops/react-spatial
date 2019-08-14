@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { configure, shallow, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
@@ -5,8 +6,8 @@ import 'jest-canvas-mock';
 import OLMap from 'ol/Map';
 import renderer from 'react-test-renderer';
 import BaseLayerToggler from './BaseLayerToggler';
-import data from '../../../data/TreeData';
 import exampleData from '../../../data/ExampleData';
+import data from '../../../data/TreeData';
 import ConfigReader from '../../ConfigReader';
 import LayerService from '../../LayerService';
 
@@ -14,7 +15,7 @@ configure({ adapter: new Adapter() });
 
 const shallowComp = (newData, props) => {
   const map = new OLMap({});
-  const layers = ConfigReader.readConfig(map, newData || data);
+  const layers = ConfigReader.readConfig(newData || data);
   const layerService = new LayerService(layers);
   return shallow(
     <BaseLayerToggler
@@ -26,7 +27,7 @@ const shallowComp = (newData, props) => {
 };
 const mountComp = (newData, props) => {
   const map = new OLMap({});
-  const layers = ConfigReader.readConfig(map, newData || data);
+  const layers = ConfigReader.readConfig(newData || data);
   const layerService = new LayerService(layers);
   return mount(
     <BaseLayerToggler
@@ -39,7 +40,7 @@ const mountComp = (newData, props) => {
 
 const expectSnapshot = (newData, props) => {
   const map = new OLMap({});
-  const layers = ConfigReader.readConfig(map, newData || data);
+  const layers = ConfigReader.readConfig(newData || data);
   const layerService = new LayerService(layers);
   const component = renderer.create(
     <BaseLayerToggler

@@ -14,7 +14,7 @@ import NorthArrow from '../NorthArrow/NorthArrow';
 import Feature from 'ol/Feature';
 
 const map = new Map();
-const layers = ConfigReader.readConfig(map, treeData);
+const layers = ConfigReader.readConfig(treeData);
 const layerService = new LayerService([...layers]);
 
 function CanvasSaveButtonExample() {

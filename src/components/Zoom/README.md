@@ -10,7 +10,7 @@ import OLMap from 'ol/Map';
 import ConfigReader from 'react-spatial/ConfigReader';
 
 const map = new OLMap({ controls: [] });
-const layers = ConfigReader.readConfig(map, treeData);
+const layers = ConfigReader.readConfig(treeData);
 
 function ZoomExample() {
   return (
