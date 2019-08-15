@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Feature } from 'ol';
-import { Style, Icon } from 'ol/style';
+import { Style, Icon, Fill } from 'ol/style';
 import Point from 'ol/geom/Point';
 import { asString } from 'ol/color';
 import { FaCaretUp, FaCaretDown } from 'react-icons/fa';
@@ -45,6 +45,17 @@ const propTypes = {
     PropTypes.shape({
       label: PropTypes.string,
       scale: PropTypes.number,
+    }),
+  ),
+
+  /**
+   * List of colors available for text background.
+   */
+  textBgColors: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string,
+      value: PropTypes.array,
+      border: PropTypes.string,
     }),
   ),
 
@@ -123,6 +134,11 @@ const propTypes = {
   classNameTextSize: PropTypes.string,
 
   /**
+   * CSS class for the container of the list of text background colors.
+   */
+  classNameTextBgColors: PropTypes.string,
+
+  /**
    * CSS class for the container of the text font toggler.
    */
   classNameTextFont: PropTypes.string,
@@ -150,6 +166,7 @@ const propTypes = {
     modifyText: PropTypes.string,
     modifyTextSize: PropTypes.string,
     modifyTextRotation: PropTypes.string,
+    modifyTextBgColor: PropTypes.string,
     modifyIcon: PropTypes.string,
     modifyIconSize: PropTypes.string,
     modifyLineIconClosure: PropTypes.string,
@@ -171,6 +188,7 @@ const defaultProps = {
   classNameColors: 'tm-modify-color',
   classNameTextColors: 'tm-modify-text-color',
   classNameTextSize: 'tm-modify-text-size',
+  classNameTextBgColors: 'tm-modify-text-bg-color',
   classNameTextFont: 'tm-modify-text-font',
   classNameTextRotation: 'tm-modify-text-rotation',
   classNameStroke: 'tm-modify-stroke',
@@ -217,6 +235,17 @@ const defaultProps = {
     { label: 'medium size', value: 1.5, scale: 1.5 },
     { label: 'big size', value: 2, scale: 2 },
   ],
+  textBgColors: [
+    { name: 'none', fill: [255, 255, 255, 0.01], border: 'white' },
+    { name: 'black', fill: [0, 0, 0, 1], border: 'white' },
+    { name: 'blue', fill: [0, 0, 255, 1], border: 'white' },
+    { name: 'gray', fill: [128, 128, 128, 1], border: 'white' },
+    { name: 'green', fill: [0, 128, 0, 1], border: 'white' },
+    { name: 'orange', fill: [255, 165, 0, 1], border: 'black' },
+    { name: 'red', fill: [255, 0, 0, 1], border: 'white' },
+    { name: 'white', fill: [255, 255, 255, 1], border: 'black' },
+    { name: 'yellow', fill: [255, 255, 0, 1], border: 'black' },
+  ],
   iconSizes: [
     { label: 'small size', value: [24, 24], scale: 0.5 },
     { label: 'medium size', value: [36, 36], scale: 0.75 },
@@ -262,6 +291,7 @@ const defaultProps = {
     modifyColor: 'Modify color',
     modifyText: 'Modify text',
     modifyTextSize: 'Modify text size',
+    modifyTextBgColor: 'Modify text background',
     modifyTextRotation: 'Modify text rotation',
     modifyIcon: 'Modify icon',
     modifyIconSize: 'Modify icon size',
@@ -332,7 +362,7 @@ class FeatureStyler extends PureComponent {
   // Search for the current color in a color list.
   static findColor(olColor, colors) {
     const rgb = asString(
-      typeof olColor === 'string' ? olColor : olColor.slice(0, 3),
+      typeof olColor === 'string' ? olColor : olColor.slice(0, olColor.length),
     );
     return colors.find(c => rgb === asString(c.fill));
   }
@@ -379,6 +409,7 @@ class FeatureStyler extends PureComponent {
       iconSize,
       text,
       textColor,
+      textBgColor,
       textSize,
       textRotation,
       lineStartIcon,
@@ -437,6 +468,21 @@ class FeatureStyler extends PureComponent {
         const textFill = textStyle.getFill();
         textFill.setColor(olColor);
         textStyle.setFill(textFill);
+      }
+
+      if (textBgColor) {
+        const olBgColor = textBgColor.fill;
+        const textBgFill = textStyle.getBackgroundFill();
+        if (textBgFill) {
+          textBgFill.setColor(olBgColor);
+          textStyle.setBackgroundFill(textBgFill);
+        } else {
+          textStyle.setBackgroundFill(
+            new Fill({
+              color: olBgColor,
+            }),
+          );
+        }
       }
 
       textStyle.setRotation(textRotation);
@@ -520,6 +566,7 @@ class FeatureStyler extends PureComponent {
       lineColors,
       textSizes,
       iconSizes,
+      textBgColors,
     } = this.props;
 
     this.state = {
@@ -534,6 +581,7 @@ class FeatureStyler extends PureComponent {
       textColor: colors[0],
       textSize: textSizes[0],
       textRotation: 0,
+      textBgColor: textBgColors[0],
       useIconStyle: false,
       useTextStyle: false,
       useStrokeStyle: false,
@@ -574,6 +622,7 @@ class FeatureStyler extends PureComponent {
       icon,
       iconSize,
       textColor,
+      textBgColor,
       textSize,
       textRotation,
       lineStartIcon,
@@ -617,6 +666,7 @@ class FeatureStyler extends PureComponent {
       icon !== prevState.icon ||
       iconSize !== prevState.iconSize ||
       textColor !== prevState.textColor ||
+      textBgColor !== prevState.textBgColor ||
       textSize !== prevState.textSize ||
       textRotation !== prevState.textRotation ||
       lineStartIcon !== prevState.lineStartIcon ||
@@ -634,6 +684,7 @@ class FeatureStyler extends PureComponent {
       colors,
       lineColors,
       textSizes,
+      textBgColors,
       lineIcons,
       iconSizes,
     } = this.props;
@@ -643,6 +694,7 @@ class FeatureStyler extends PureComponent {
     let font;
     let iconSize;
     let textColor;
+    let textBgColor;
     let textSize;
     let textRotation;
     let lineStartIcon;
@@ -686,6 +738,13 @@ class FeatureStyler extends PureComponent {
         .getText()
         .getFill()
         .getColor();
+      if (featStyle.getText().getBackgroundFill()) {
+        const bgColor = featStyle
+          .getText()
+          .getBackgroundFill()
+          .getColor();
+        textBgColor = FeatureStyler.findColor(bgColor, textBgColors);
+      }
       textColor = FeatureStyler.findColor(currColor, colors);
       textSize = FeatureStyler.findSize(
         featStyle.getText(),
@@ -716,6 +775,7 @@ class FeatureStyler extends PureComponent {
       icon,
       iconSize,
       textColor,
+      textBgColor,
       textSize,
       textRotation,
       useTextStyle,
@@ -738,6 +798,7 @@ class FeatureStyler extends PureComponent {
       icon,
       iconSize,
       textColor,
+      textBgColor,
       textSize,
       textRotation,
       iconCategory,
@@ -763,6 +824,7 @@ class FeatureStyler extends PureComponent {
         iconSize,
         text,
         textColor,
+        textBgColor,
         textSize,
         textRotation,
         lineIcons,
@@ -782,8 +844,16 @@ class FeatureStyler extends PureComponent {
   }
 
   renderColors(color, classNameColors, classNameSelected, onClick, label) {
-    const { t, colors, lineColors, labels } = this.props;
-    const colorsList = label === labels.modifyLineColor ? lineColors : colors;
+    const { t, colors, textBgColors, lineColors, labels } = this.props;
+    // const colorsList = label === labels.modifyLineColor ? lineColors : colors;
+    let colorsList;
+    if (label === labels.modifyTextBgColor) {
+      colorsList = textBgColors;
+    } else if (label === labels.modifyLineColor) {
+      colorsList = lineColors;
+    } else {
+      colorsList = colors;
+    }
     return (
       <div className={classNameColors}>
         {label ? <div className="tm-color-label">{t(label)}</div> : null}
@@ -953,6 +1023,7 @@ class FeatureStyler extends PureComponent {
       font,
       name,
       textColor,
+      textBgColor,
       textSize,
       textRotation,
     } = this.state;
@@ -963,6 +1034,7 @@ class FeatureStyler extends PureComponent {
       classNameTextFont,
       classNameTextRotation,
       classNameTextColors,
+      classNameTextBgColors,
       classNameSelected,
       labels,
     } = this.props;
@@ -1022,7 +1094,17 @@ class FeatureStyler extends PureComponent {
           },
           labels.modifyColor,
         )}
-
+        {this.renderColors(
+          textBgColor,
+          classNameTextBgColors,
+          classNameSelected,
+          (e, newColor) => {
+            this.setState({
+              textBgColor: newColor,
+            });
+          },
+          labels.modifyTextBgColor,
+        )}
         <div className={classNameTextRotation}>
           {labels.modifyTextRotation ? (
             <div>{t(labels.modifyTextRotation)}</div>
