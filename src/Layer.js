@@ -1,9 +1,21 @@
 import Observable from 'ol/Observable';
+
 /**
  * A class representing layer to display on BasicMap with a name, a visibility,
  * a radioGroup, astatus and
- * an [ol/layer/Layer](https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html)
+ * an ol.layer(https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html)
+ * @class
+ * @param {Object} options
+ * @param {string} options.key information about the key
+ * @param {string} options.name The name of the new layer
+ * @param {ol.layer} options.olLayer the ol.Layer
+ * @param {radioGroup} options.radioGroup radioGroup
+ * @param {boolean} options.isBaseLayer if true this layer is the baseLayer
+ * @param {boolean} options.hideInLegend If true hidden legend
+ * @param {boolean} options.visible If true layer is visible
+ * @param {string} options.copyright Copyright-Statement
  */
+
 export default class Layer extends Observable {
   constructor({
     key,
@@ -31,6 +43,11 @@ export default class Layer extends Observable {
     }
   }
 
+  /**
+   * Initialize the layer and listen to feature clicks.
+   * @param {ol.map} map ol.map (https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html)
+   */
+
   init(map) {
     this.map = map;
     if (this.map && this.olLayer) {
@@ -38,29 +55,64 @@ export default class Layer extends Observable {
     }
   }
 
+  /**
+   * Get the Layer's Copyright Statment.
+   * @returns {string}
+   */
+
   getCopyright() {
     return this.copyright;
   }
+
+  /**
+   * Get the Layername.
+   * @returns {string}
+   */
 
   getName() {
     return this.name;
   }
 
+  /**
+   * Get the Layers Key.
+   * @returns {string}
+   */
+
   getKey() {
     return this.key;
   }
+
+  /**
+   * Return whether the layer is visible or not.
+   * @returns {boolean}
+   */
 
   getVisible() {
     return this.visible;
   }
 
+  /**
+   * Returns whether the layer is the BaseLayer or not.
+   * @returns {boolean}
+   */
+
   getIsBaseLayer() {
     return this.isBaseLayer;
   }
 
+  /**
+   * Returns whether the legend is hidden or not.
+   * @returns {boolean}
+   */
+
   getHideInLegend() {
     return this.hideInLegend;
   }
+
+  /**
+   * Get the layers radioGroup
+   * @returns {string}
+   */
 
   getRadioGroup() {
     if (!this.radioGroup && this.isBaseLayer) {
@@ -72,6 +124,14 @@ export default class Layer extends Observable {
   setRadioGroup(radioGroup) {
     this.radioGroup = radioGroup;
   }
+
+  /**
+   * Change the visibility of the layer
+   * @param {boolean} visible defines the visibility of the layer
+   * @param {boolean} stopPropagationDown
+   * @param {boolean} stopPropagationUp
+   * @param {boolean} stopPropagationSiblings
+   */
 
   setVisible(
     visible,
@@ -98,21 +158,51 @@ export default class Layer extends Observable {
     });
   }
 
+  /**
+   * returns an array with childlayers
+   *
+   * @returns {Array<ol.layer>}
+   */
+
   getChildren() {
     return this.children;
   }
+
+  /**
+   * sets the child layers
+   *
+   * @param {Array<ol.layer>} layers
+   */
 
   setChildren(layers) {
     this.children = layers;
   }
 
+  /**
+   * returns an array with visible child layers
+   *
+   * @returns {Array<ol.layer>}
+   */
+
   getVisibleChildren() {
     return this.children.filter(c => c.getVisible() === true);
   }
 
+  /**
+   * add a child layer
+   *
+   * @param {ol.layer} layer
+   */
+
   addChild(layer) {
     this.children.unshift(layer);
   }
+
+  /**
+   * removes a child layer by layer name
+   *
+   * @param {string} name
+   */
 
   removeChild(name) {
     for (let i = 0; i < this.children.length; i += 1) {
@@ -123,9 +213,21 @@ export default class Layer extends Observable {
     }
   }
 
+  /**
+   * checks whether the layer has child layers with visible set to True
+   *
+   * @returns {boolean}
+   */
+
   hasVisibleChildren() {
     return !!this.children.find(l => l.getVisible());
   }
+
+  /**
+   * checks whether the layer has any child layers with visible equal to the input parameter
+   * @param {boolean} visible The state to check the childlayers against
+   * @returns {boolean}
+   */
 
   hasChildren(visible) {
     return !!this.children.find(l => visible === l.getVisible());
