@@ -23,7 +23,7 @@ const propTypes = {
   /**
    *  Children content of the north arrow.
    */
-  children: PropTypes.element,
+  children: PropTypes.node,
 
   /**
    * An ol map.

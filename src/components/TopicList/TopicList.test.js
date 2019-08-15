@@ -1,8 +1,8 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { configure, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import 'jest-canvas-mock';
-import OLMap from 'ol/Map';
 import renderer from 'react-test-renderer';
 import TopicList from './TopicList';
 import topicData from '../../../data/TopicData';
@@ -12,7 +12,7 @@ import LayerService from '../../LayerService';
 configure({ adapter: new Adapter() });
 
 const mountTopicList = (topics, props) => {
-  const layers = ConfigReader.readConfig(new OLMap({}), topics);
+  const layers = ConfigReader.readConfig(topics);
   const layerService = new LayerService(layers);
   return mount(
     <TopicList
@@ -25,7 +25,6 @@ const mountTopicList = (topics, props) => {
 
 const renderTopicList = (topics, props) => {
   const layers = ConfigReader.readConfig(
-    new OLMap({}),
     ConfigReader.getVisibleTopic(topics).children,
   );
   const layerService = new LayerService(layers);

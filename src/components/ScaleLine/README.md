@@ -22,7 +22,7 @@ class ScaleLineExample extends Component {
     }];
 
     this.map = new OLMap();
-    this.layers = ConfigReader.readConfig(this.map, layerConf);
+    this.layers = ConfigReader.readConfig(layerConf);
   }
 
   render() {
@@ -44,4 +44,3 @@ class ScaleLineExample extends Component {
 
 <ScaleLineExample />
 ```
-

@@ -1,12 +1,10 @@
 import 'jest-canvas-mock';
-import OLMap from 'ol/Map';
 import LayerService from './LayerService';
 import ConfigReader from './ConfigReader';
 
 describe('LayerService', () => {
   const instantiateLayerService = data => {
-    const map = new OLMap();
-    const layers = ConfigReader.readConfig(map, data);
+    const layers = ConfigReader.readConfig(data);
     return new LayerService(layers);
   };
 

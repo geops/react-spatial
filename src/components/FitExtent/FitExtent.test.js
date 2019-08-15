@@ -28,10 +28,5 @@ test('Should fit the extent.', () => {
     .simulate('click');
   const calculatedExtent = map.getView().calculateExtent(map.getSize());
 
-  expect(calculatedExtent).toStrictEqual([
-    0.13386161413143904,
-    1.133861614131439,
-    3.866138385868561,
-    4.866138385868561,
-  ]);
+  expect(calculatedExtent).toStrictEqual([1, 2, 3, 4]);
 });

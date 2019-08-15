@@ -2,7 +2,6 @@ import React from 'react';
 import { configure, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import 'jest-canvas-mock';
-import OLMap from 'ol/Map';
 import Copyright from './Copyright';
 import ConfigReader from '../../ConfigReader';
 import LayerService from '../../LayerService';
@@ -37,7 +36,7 @@ const initLayerService = () => {
     },
   ];
 
-  const layers = ConfigReader.readConfig(new OLMap({}), data);
+  const layers = ConfigReader.readConfig(data);
   return new LayerService(layers);
 };
 

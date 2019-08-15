@@ -24,7 +24,7 @@ class CopyrightExample extends Component {
     }];
 
     this.map = new OLMap();
-    this.layers = ConfigReader.readConfig(this.map, layerConf);
+    this.layers = ConfigReader.readConfig(layerConf);
     this.layerService = new LayerService(this.layers);
   }
 

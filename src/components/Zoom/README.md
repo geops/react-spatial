@@ -10,12 +10,12 @@ import OLMap from 'ol/Map';
 import ConfigReader from 'react-spatial/ConfigReader';
 
 const map = new OLMap({ controls: [] });
-const layers = ConfigReader.readConfig(map, treeData);
+const layers = ConfigReader.readConfig(treeData);
 
 function ZoomExample() {
   return (
     <div className="tm-zoom-example">
-      <BasicMap map={map} />
+      <BasicMap map={map} layers={layers} />
       <Zoom map={map} zoomSlider />
     </div>
   );

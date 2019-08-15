@@ -125,7 +125,6 @@ class BasicMap extends Component {
       extent,
       map,
       interactions,
-      layers,
       onMapMoved,
       resolution,
       viewOptions,
@@ -143,23 +142,12 @@ class BasicMap extends Component {
             pinchRotate: false,
           }),
       });
-    const view = new View({ ...viewOptions, ...{ center } });
+    const view = new View({ ...viewOptions, ...{ center, zoom, resolution } });
 
     this.map.setView(view);
-
-    if (zoom || zoom === 0) {
-      view.setZoom(zoom);
-    }
-    if (resolution) {
-      view.setResolution(resolution);
-    }
     window.map = this.map;
 
     this.node = React.createRef();
-
-    if (layers.length) {
-      this.setLayers(layers);
-    }
 
     if (extent) {
       this.map.getView().fit(extent);
@@ -171,8 +159,12 @@ class BasicMap extends Component {
   }
 
   componentDidMount() {
-    const { onFeaturesClick, onFeaturesHover } = this.props;
+    const { onFeaturesClick, onFeaturesHover, layers } = this.props;
     this.map.setTarget(this.node.current);
+
+    if (layers.length) {
+      this.setLayers(layers);
+    }
 
     this.singleClickRef = this.map.on('singleclick', evt => {
       const features = evt.map.getFeaturesAtPixel(evt.pixel);
@@ -258,7 +250,15 @@ class BasicMap extends Component {
   setLayers(layers) {
     this.map.getLayers().clear();
     for (let i = 0; i < layers.length; i += 1) {
-      layers[i].init(this.map);
+      this.initLayer(layers[i]);
+    }
+  }
+
+  initLayer(layer) {
+    layer.init(this.map);
+    const layers = layer.getChildren() || [];
+    for (let i = 0; i < layers.length; i += 1) {
+      this.initLayer(layers[i]);
     }
   }
 
