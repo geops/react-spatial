@@ -9,7 +9,7 @@ const propTypes = {
   /**
    * Children content of the Dialog.
    */
-  children: PropTypes.element,
+  children: PropTypes.node,
 
   /**
    * CSS class of the dialog.
@@ -215,6 +215,7 @@ class Dialog extends Component {
           draggableProps.position = position;
         }
 
+        // eslint-disable-next-line react/jsx-props-no-spreading
         return <Draggable {...draggableProps}>{this.renderDialog()}</Draggable>;
       }
       return <>{this.renderDialog()}</>;

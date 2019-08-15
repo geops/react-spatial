@@ -1,7 +1,7 @@
 import 'jest-canvas-mock';
-import OLMap from 'ol/Map';
 import TileLayer from 'ol/layer/Tile';
 import XYZ from 'ol/source/XYZ';
+import OLLayer from 'ol/layer/Layer';
 import OLVectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import WMTSSource from 'ol/source/WMTS';
@@ -13,8 +13,7 @@ import Layer from './Layer';
 describe('ConfigReader', () => {
   describe('readConfig()', () => {
     test('create XYZ layer', () => {
-      const map = new OLMap();
-      const layers = ConfigReader.readConfig(map, [
+      const layers = ConfigReader.readConfig([
         {
           name: 'OSM Baselayer',
           data: {
@@ -29,8 +28,7 @@ describe('ConfigReader', () => {
     });
 
     test('create Vector layer', () => {
-      const map = new OLMap();
-      const layers = ConfigReader.readConfig(map, [
+      const layers = ConfigReader.readConfig([
         {
           name: 'Countries Borders',
           data: {
@@ -47,8 +45,7 @@ describe('ConfigReader', () => {
     });
 
     test('create WMTS layer', () => {
-      const map = new OLMap();
-      const layers = ConfigReader.readConfig(map, [
+      const layers = ConfigReader.readConfig([
         {
           name: 'USA Population Density',
           visible: true,
@@ -69,8 +66,7 @@ describe('ConfigReader', () => {
     });
 
     test('create tileJSON layer', () => {
-      const map = new OLMap();
-      const layers = ConfigReader.readConfig(map, [
+      const layers = ConfigReader.readConfig([
         {
           name: 'Custom OSM Layer',
           visible: true,
@@ -86,9 +82,25 @@ describe('ConfigReader', () => {
       expect(layers[0].olLayer.getSource()).toBeInstanceOf(TileJSONSource);
     });
 
+    test('create Mapbox layer', () => {
+      const layers = ConfigReader.readConfig([
+        {
+          name: 'OSM Baselayer',
+          data: {
+            type: 'mapbox',
+            url: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
+          },
+        },
+      ]);
+      expect(layers[0]).toBeInstanceOf(Layer);
+      expect(layers[0].olLayer).toBeInstanceOf(OLLayer);
+      expect(layers[0].styleUrl).toBe(
+        'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      );
+    });
+
     test('create custom layer', () => {
-      const map = new OLMap();
-      const layers = ConfigReader.readConfig(map, [
+      const layers = ConfigReader.readConfig([
         {
           name: 'Custom OSM Layer',
           visible: true,
@@ -105,8 +117,7 @@ describe('ConfigReader', () => {
     });
 
     test('create empty layer', () => {
-      const map = new OLMap();
-      const layers = ConfigReader.readConfig(map, [
+      const layers = ConfigReader.readConfig([
         {
           name: 'USA Population Density',
           visible: true,
@@ -118,8 +129,7 @@ describe('ConfigReader', () => {
     });
 
     test('add children', () => {
-      const map = new OLMap();
-      const layers = ConfigReader.readConfig(map, [
+      const layers = ConfigReader.readConfig([
         {
           name: 'USA Population Density',
           visible: true,
@@ -132,8 +142,7 @@ describe('ConfigReader', () => {
     });
 
     test('returns an empty array', () => {
-      const map = new OLMap();
-      const layers = ConfigReader.readConfig(map, []);
+      const layers = ConfigReader.readConfig([]);
       expect(layers.length).toEqual(0);
     });
   });

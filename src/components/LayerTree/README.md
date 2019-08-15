@@ -4,41 +4,24 @@ This demonstrates the use of LayerTree.
 
 ```jsx
 import React from 'react'
+import OLMap from 'ol/Map';
 import LayerTree from 'react-spatial/components/LayerTree';
 import BasicMap from 'react-spatial/components/BasicMap';
 import LayerService from 'react-spatial/LayerService';
-import OLMap from 'ol/Map';
 import ConfigReader from 'react-spatial/ConfigReader';
 
-class LayerTreeExample extends React.Component {
-  constructor(props) {
-    super(props);
+const center = [-10997148, 4569099];
+const map = new OLMap({ controls: [] });
+const layers = ConfigReader.readConfig(treeData);
+const layerService = new LayerService(layers);
 
-    this.center = [-10997148, 4569099];
-    this.map = new OLMap({ controls: [] });
-
-    const layers = ConfigReader.readConfig(
-      this.map,
-      treeData,
-    );
-
-    this.layerService = new LayerService(layers);
-  }
-
-  render() {
-    return (
-      <div className="tm-layer-tree-example">
-        <BasicMap
-          map={this.map}
-          center={this.center}
-          zoom={3}
-        />
-        <LayerTree
-          layerService={this.layerService}
-        />
-      </div>
-    );
-  }
+function LayerTreeExample() {
+  return (
+    <div className="tm-layer-tree-example">
+      <BasicMap map={map} layers={layers} center={center} zoom={3} />
+      <LayerTree layerService={layerService} />
+    </div>
+  );
 }
 
 <LayerTreeExample />;

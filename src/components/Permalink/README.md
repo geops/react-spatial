@@ -18,7 +18,7 @@ class PermalinkExample extends React.Component {
     this.center = [-10997148, 4569099];
     this.zoom = 3;
 
-    this.layers = ConfigReader.readConfig(this.map, treeData);
+    this.layers = ConfigReader.readConfig(treeData);
     this.layerService = new LayerService(this.layers);
 
     this.params = {

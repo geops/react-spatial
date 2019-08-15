@@ -119,6 +119,7 @@ class TopicList extends Component {
     const { onTopicClick } = this.props;
 
     return (
+      // eslint-disable-next-line jsx-a11y/control-has-associated-label
       <div
         style={{
           position: 'absolute',
@@ -181,6 +182,7 @@ class TopicList extends Component {
         </div>
         <div style={{ paddingLeft: `${padding}px` }}>
           {topic.visible && topic.id === expandedTopic ? (
+            // eslint-disable-next-line react/jsx-props-no-spreading
             <LayerTree key={index} {...propsToLayerTree} />
           ) : null}
         </div>
