@@ -3,13 +3,13 @@ import Observable from 'ol/Observable';
 /**
  * A class representing layer to display on BasicMap with a name, a visibility,
  * a radioGroup, astatus and
- * an ol.layer(https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html)
+ * an ol.layer (https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html)
  * @class
  * @param {Object} options
  * @param {string} options.key information about the key
  * @param {string} options.name The name of the new layer
  * @param {ol.layer} options.olLayer the ol.Layer
- * @param {radioGroup} options.radioGroup radioGroup
+ * @param {radioGroup} options.radioGroup identifier to group layer in a group, toggle via a radio
  * @param {boolean} options.isBaseLayer if true this layer is the baseLayer
  * @param {boolean} options.hideInLegend If true hidden legend
  * @param {boolean} options.visible If true layer is visible
@@ -66,7 +66,7 @@ export default class Layer extends Observable {
 
   /**
    * Get the Layername.
-   * @returns {string}
+   * @returns {string} Layername
    */
 
   getName() {
@@ -84,7 +84,7 @@ export default class Layer extends Observable {
 
   /**
    * Return whether the layer is visible or not.
-   * @returns {boolean}
+   * @returns {boolean} If true, the layer is visible.
    */
 
   getVisible() {
@@ -93,7 +93,7 @@ export default class Layer extends Observable {
 
   /**
    * Returns whether the layer is the BaseLayer or not.
-   * @returns {boolean}
+   * @returns {boolean} If true, the layer is the BaseLayer.
    */
 
   getIsBaseLayer() {
@@ -101,8 +101,8 @@ export default class Layer extends Observable {
   }
 
   /**
-   * Returns whether the legend is hidden or not.
-   * @returns {boolean}
+   * Returns whether the layer is shown in the legend.
+   * @returns {boolean} If true, layer is not shown in legend.
    */
 
   getHideInLegend() {
@@ -110,7 +110,7 @@ export default class Layer extends Observable {
   }
 
   /**
-   * Get the layers radioGroup
+   * Get the layers radioGroup identifier
    * @returns {string}
    */
 
@@ -120,6 +120,10 @@ export default class Layer extends Observable {
     }
     return this.radioGroup;
   }
+  /**
+   *
+   * @param {string} radioGroup Set a new identifier to group layer in a group, toggle via a radio
+   */
 
   setRadioGroup(radioGroup) {
     this.radioGroup = radioGroup;
