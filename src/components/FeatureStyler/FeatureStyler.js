@@ -843,22 +843,20 @@ class FeatureStyler extends PureComponent {
     });
   }
 
-  renderColors(color, classNameColors, classNameSelected, onClick, label) {
-    const { t, colors, textBgColors, lineColors, labels } = this.props;
-    // const colorsList = label === labels.modifyLineColor ? lineColors : colors;
-    let colorsList;
-    if (label === labels.modifyTextBgColor) {
-      colorsList = textBgColors;
-    } else if (label === labels.modifyLineColor) {
-      colorsList = lineColors;
-    } else {
-      colorsList = colors;
-    }
+  renderColors(
+    color,
+    colorOptions,
+    classNameColors,
+    classNameSelected,
+    onClick,
+    label,
+  ) {
+    const { t } = this.props;
     return (
       <div className={classNameColors}>
         {label ? <div className="tm-color-label">{t(label)}</div> : null}
         <div>
-          {colorsList.map(c => (
+          {colorOptions.map(c => (
             <Button
               key={c.name}
               className={`tm-button tm-color ${
@@ -983,7 +981,12 @@ class FeatureStyler extends PureComponent {
   }
 
   renderStrokeStyle() {
-    const { labels, classNameColors, classNameSelected } = this.props;
+    const {
+      labels,
+      lineColors,
+      classNameColors,
+      classNameSelected,
+    } = this.props;
     const {
       useStrokeStyle,
       lineColor,
@@ -1004,6 +1007,7 @@ class FeatureStyler extends PureComponent {
         )}
         {this.renderColors(
           lineColor,
+          lineColors,
           classNameColors,
           classNameSelected,
           (e, newColor) => {
@@ -1029,6 +1033,8 @@ class FeatureStyler extends PureComponent {
     } = this.state;
     const {
       textSizes,
+      colors,
+      textBgColors,
       t,
       classNameTextSize,
       classNameTextFont,
@@ -1085,6 +1091,7 @@ class FeatureStyler extends PureComponent {
         </div>
         {this.renderColors(
           textColor,
+          colors,
           classNameTextColors,
           classNameSelected,
           (e, newColor) => {
@@ -1096,6 +1103,7 @@ class FeatureStyler extends PureComponent {
         )}
         {this.renderColors(
           textBgColor,
+          textBgColors,
           classNameTextBgColors,
           classNameSelected,
           (e, newColor) => {
