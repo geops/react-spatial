@@ -11,9 +11,9 @@ import Observable from 'ol/Observable';
  * @param {ol.layer} options.olLayer the ol.Layer
  * @param {radioGroup} options.radioGroup identifier to group layer in a group, toggle via a radio
  * @param {boolean} options.isBaseLayer if true this layer is the baseLayer
- * @param {boolean} options.hideInLegend If true hidden legend
  * @param {boolean} options.visible If true layer is visible
  * @param {string} options.copyright Copyright-Statement
+ * @param {Object} [properites] Application-specific layer properties.
  */
 
 export default class Layer extends Observable {
@@ -23,20 +23,20 @@ export default class Layer extends Observable {
     olLayer,
     radioGroup,
     isBaseLayer,
-    hideInLegend,
     visible,
     copyright,
+    properties,
   }) {
     super();
     this.key = key || name.toLowerCase();
     this.name = name;
     this.olLayer = olLayer;
     this.isBaseLayer = isBaseLayer;
-    this.hideInLegend = hideInLegend;
     this.radioGroup = radioGroup;
     this.children = [];
     this.visible = visible === undefined ? true : visible;
     this.copyright = copyright;
+    this.properties = properties || {};
 
     if (this.olLayer) {
       this.olLayer.setVisible(this.visible);
@@ -53,6 +53,23 @@ export default class Layer extends Observable {
     if (this.map && this.olLayer) {
       map.addLayer(this.olLayer);
     }
+  }
+
+  /**
+   * Get a layer property.
+   * @param {string} name Property name.
+   */
+  get(name) {
+    return this.properties[name];
+  }
+
+  /**
+   * Set a layer property.
+   * @param {string} name Property name.
+   * @param {string} value Value.
+   */
+  set(name, val) {
+    this.properties[name] = val;
   }
 
   /**
@@ -98,15 +115,6 @@ export default class Layer extends Observable {
 
   getIsBaseLayer() {
     return this.isBaseLayer;
-  }
-
-  /**
-   * Returns whether the layer is shown in the legend.
-   * @returns {boolean} If true, layer is not shown in legend.
-   */
-
-  getHideInLegend() {
-    return this.hideInLegend;
   }
 
   /**
