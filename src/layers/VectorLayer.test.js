@@ -30,16 +30,4 @@ describe('VectorLayer', () => {
   test('should initialize.', () => {
     expect(layer).toBeInstanceOf(VectorLayer);
   });
-
-  test('should return a promise resolving a feature.', async () => {
-    const data = await layer.getFeatureInfoAtCoordinate([50, 50]);
-    expect(data.features.length).toBe(1);
-    expect(data.features[0].get('attribute')).toBe('foo');
-  });
-
-  test('should return a layer instance and a coordinate.', async () => {
-    const data = await layer.getFeatureInfoAtCoordinate([50, 50]);
-    expect(data.coordinate).toEqual([50, 50]);
-    expect(data.layer).toBeInstanceOf(VectorLayer);
-  });
 });

@@ -54,6 +54,14 @@ class WMSLayer extends Layer {
           coordinate,
           layer: this,
         };
+      })
+      .catch(() => {
+        // resolve an empty feature array something fails
+        Promise.resolve({
+          features: [],
+          coordinate,
+          layer: this,
+        });
       });
   }
 
@@ -85,8 +93,10 @@ class WMSLayer extends Layer {
         return;
       }
 
-      this.getFeatureInfoAtCoordinate(e.coordinate).then(clickedFeatures => {
-        this.clickCallbacks.forEach(c => c(clickedFeatures, this, e));
+      this.getFeatureInfoAtCoordinate(e.coordinate).then(data => {
+        this.clickCallbacks.forEach(c =>
+          c(data.features, data.layer, data.coordinate),
+        );
       });
     });
   }

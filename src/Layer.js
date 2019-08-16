@@ -149,6 +149,7 @@ export default class Layer extends Observable {
     return Promise.resolve({
       layer: this,
       features: [],
+      coordinate: null,
     });
   }
 }

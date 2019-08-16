@@ -1,4 +1,3 @@
-import { buffer } from 'ol/extent';
 import Layer from '../Layer';
 
 /**
@@ -40,9 +39,15 @@ class VectorLayer extends Layer {
    * eslint-disable-next-line class-methods-use-this
    */
   getFeatureInfoAtCoordinate(coordinate) {
-    const res = this.map.getView().getResolution();
-    const extent = buffer([...coordinate, ...coordinate], 5 * res);
-    const features = this.olLayer.getSource().getFeaturesInExtent(extent);
+    const pixel = this.map.getPixelFromCoordinate(coordinate);
+    const layerFeatures = this.olLayer.getSource().getFeatures();
+    const features = [];
+
+    this.map.forEachFeatureAtPixel(pixel, f => {
+      if (layerFeatures.indexOf(f) > -1) {
+        features.push(f);
+      }
+    });
 
     return Promise.resolve({
       features,
@@ -66,11 +71,13 @@ class VectorLayer extends Layer {
       }
 
       this.getFeatureInfoAtCoordinate(e.coordinate)
-        .then(features => {
-          this.clickCallbacks.forEach(c => c(features, this, e));
+        .then(data => {
+          this.clickCallbacks.forEach(c =>
+            c(data.features, data.layer, data.coordinate),
+          );
         })
         .catch(() => {
-          this.clickCallbacks.forEach(c => c([], this, e));
+          this.clickCallbacks.forEach(c => c([], this, e.coordinate));
         });
     });
   }
