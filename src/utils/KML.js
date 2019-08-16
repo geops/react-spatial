@@ -4,6 +4,7 @@ import Point from 'ol/geom/Point';
 import MultiPoint from 'ol/geom/MultiPoint';
 import GeometryCollection from 'ol/geom/GeometryCollection';
 import { Style, Text, Icon, Circle, Fill, Stroke } from 'ol/style';
+import { asString } from 'ol/color';
 import { kmlStyle } from './Styles';
 
 const applyTextStyleForIcon = (olIcon, olText) => {
@@ -255,7 +256,7 @@ const writeFeatures = (layer, featureProjection) => {
     if (newStyle.text && newStyle.text.getBackgroundFill()) {
       clone.set(
         'textBackgroundFillColor',
-        newStyle.text.getBackgroundFill().getColor(),
+        asString(newStyle.text.getBackgroundFill().getColor()),
       );
     }
 
