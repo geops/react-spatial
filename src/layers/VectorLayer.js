@@ -3,6 +3,7 @@ import Layer from '../Layer';
 /**
  * A class representing vector layer to display on BasicMap
  * @class
+ * @inheritDoc
  */
 class VectorLayer extends Layer {
   constructor(options = {}) {
@@ -33,7 +34,7 @@ class VectorLayer extends Layer {
 
   /**
    * Initialize the layer and listen to feature clicks.
-   * @inheritDoc
+   * @param {ol.map} map ol.map (https://openlayers.org/en/latest/apidoc/module-ol_Map.html)
    */
   init(map) {
     super.init(map);

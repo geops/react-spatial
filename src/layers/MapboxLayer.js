@@ -5,8 +5,9 @@ import OLLayer from 'ol/layer/Layer';
 import Layer from '../Layer';
 
 /**
- * A class representing vector layer to display on BasicMap
+ * A class representing Mapboxlayer to display on BasicMap
  * @class
+ * @inheritDoc
  */
 export default class MapboxLayer extends Layer {
   constructor(options = {}) {
@@ -54,7 +55,7 @@ export default class MapboxLayer extends Layer {
 
   /**
    * Initialize the layer and listen to feature clicks.
-   * @inheritDoc
+   * @param {ol.map} map ol.map (https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html)
    */
   init(map) {
     super.init(map);

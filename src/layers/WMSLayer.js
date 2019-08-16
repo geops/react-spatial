@@ -1,6 +1,12 @@
 import GeoJSON from 'ol/format/GeoJSON';
 import Layer from '../Layer';
 
+/**
+ * A class representing WMS layer to display on BasicMap
+ * @class
+ * @inheritDoc
+ */
+
 class WMSLayer extends Layer {
   constructor(options = {}) {
     super(options);
@@ -18,7 +24,7 @@ class WMSLayer extends Layer {
    * Get features infos' Url.
    * @param {ol.Coordinate} coord ol.coordinate (https://openlayers.org/en/latest/apidoc/module-ol_coordinate.html)
    * @param {Number} resolution The resolution of the view.
-   * @param {<ol.Projection|String>} projection The projection used by the map.
+   * @param {ol.Projection|String} projection The projection used by the map.
    */
   getFeatureInfoUrl(coord, resolution, projection) {
     if (this.olLayer.getSource().getGetFeatureInfoUrl) {
@@ -34,8 +40,9 @@ class WMSLayer extends Layer {
   /**
    * Get features infos for WMS layer.
    * @param {ol.Coordinate} coord ol.coordinate (https://openlayers.org/en/latest/apidoc/module-ol_coordinate.html)
-   * @param {Number} resolution The resolution of the view.
-   * @param {<ol.Projection|String>} projection The projection used by the map.
+   * @param {number} res The resolution of the view.
+   * @param {ol.Projection|String} proj The projection used by the map.
+   * @returns {Array<ol.Feature>}
    */
   getFeatureInfoFeatures(coord, res, proj) {
     const url = this.getFeatureInfoUrl(coord, res, proj);
@@ -55,6 +62,7 @@ class WMSLayer extends Layer {
    *   features (https://openlayers.org/en/latest/apidoc/module-ol_Feature.html),
    *   the layer instance and the click event.
    */
+
   onClick(callback) {
     if (typeof callback === 'function') {
       this.clickCallbacks.push(callback);
@@ -65,8 +73,9 @@ class WMSLayer extends Layer {
 
   /**
    * Initialize the layer and listen to feature clicks.
-   * @inheritDoc
+   * @param {ol.map} map ol.map (https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html)
    */
+
   init(map) {
     super.init(map);
     this.map = map;
