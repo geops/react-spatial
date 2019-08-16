@@ -6,7 +6,6 @@ import Layer from '../Layer';
  * @class
  * @inheritDoc
  */
-
 class WMSLayer extends Layer {
   constructor(options = {}) {
     super(options);
@@ -23,10 +22,11 @@ class WMSLayer extends Layer {
   /**
    * Get features infos' Url.
    * @param {ol.Coordinate} coord ol.coordinate (https://openlayers.org/en/latest/apidoc/module-ol_coordinate.html)
-   * @param {Number} resolution The resolution of the view.
-   * @param {ol.Projection|String} projection The projection used by the map.
    */
-  getFeatureInfoUrl(coord, resolution, projection) {
+  getFeatureInfoUrl(coord) {
+    const projection = this.map.getView().getProjection();
+    const resolution = this.map.getView().getResolution();
+
     if (this.olLayer.getSource().getGetFeatureInfoUrl) {
       return this.olLayer
         .getSource()
@@ -38,21 +38,33 @@ class WMSLayer extends Layer {
   }
 
   /**
-   * Get features infos for WMS layer.
-   * @param {ol.Coordinate} coord ol.coordinate (https://openlayers.org/en/latest/apidoc/module-ol_coordinate.html)
-   * @param {number} res The resolution of the view.
-   * @param {ol.Projection|String} proj The projection used by the map.
-   * @returns {Array<ol.Feature>}
+   * Request feature information for a given coordinate.
+   * @param {ol.Coordinate} coordinate Coordinate to request the information at.
+   * @returns {Promise<Object>} Promise with features, layer and coordinate
+   *  or null if no feature was hit.
+   * eslint-disable-next-line class-methods-use-this
    */
-  getFeatureInfoFeatures(coord, res, proj) {
-    const url = this.getFeatureInfoUrl(coord, res, proj);
-    return fetch(url)
+  getFeatureInfoAtCoordinate(coordinate) {
+    return fetch(this.getFeatureInfoUrl(coordinate))
       .then(resp => resp.json())
       .then(r => r.features)
       .then(data => {
         const format = new GeoJSON();
         const features = data.map(d => format.readFeatures(d));
-        return features;
+
+        return {
+          features,
+          coordinate,
+          layer: this,
+        };
+      })
+      .catch(() => {
+        // resolve an empty feature array something fails
+        Promise.resolve({
+          features: [],
+          coordinate,
+          layer: this,
+        });
       });
   }
 
@@ -62,7 +74,6 @@ class WMSLayer extends Layer {
    *   features (https://openlayers.org/en/latest/apidoc/module-ol_Feature.html),
    *   the layer instance and the click event.
    */
-
   onClick(callback) {
     if (typeof callback === 'function') {
       this.clickCallbacks.push(callback);
@@ -73,26 +84,23 @@ class WMSLayer extends Layer {
 
   /**
    * Initialize the layer and listen to feature clicks.
-   * @param {ol.map} map ol.map (https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html)
+   * @inheritDoc
    */
-
   init(map) {
     super.init(map);
     this.map = map;
-
-    const resolution = this.map.getView().getResolution();
-    const projection = this.map.getView().getProjection();
 
     // Listen to click events
     this.map.on('singleclick', e => {
       if (!this.clickCallbacks.length) {
         return;
       }
-      this.getFeatureInfoFeatures(e.coordinate, resolution, projection).then(
-        clickedFeatures => {
-          this.clickCallbacks.forEach(c => c(clickedFeatures, this, e));
-        },
-      );
+
+      this.getFeatureInfoAtCoordinate(e.coordinate).then(data => {
+        this.clickCallbacks.forEach(c =>
+          c(data.features, data.layer, data.coordinate),
+        );
+      });
     });
   }
 }
