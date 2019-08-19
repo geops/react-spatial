@@ -11,10 +11,11 @@ import Observable from 'ol/Observable';
  * @param {ol.layer} options.olLayer the ol.Layer
  * @param {radioGroup} options.radioGroup identifier to group layer in a group, toggle via a radio
  * @param {boolean} options.isBaseLayer if true this layer is the baseLayer
- * @param {boolean} options.hideInLegend If true hidden legend
  * @param {boolean} options.visible If true layer is visible
  * @param {string} options.copyright Copyright-Statement
+ * @param {Object} [properites] Application-specific layer properties.
  */
+
 export default class Layer extends Observable {
   constructor({
     key,
@@ -22,20 +23,20 @@ export default class Layer extends Observable {
     olLayer,
     radioGroup,
     isBaseLayer,
-    hideInLegend,
     visible,
     copyright,
+    properties,
   }) {
     super();
     this.key = key || name.toLowerCase();
     this.name = name;
     this.olLayer = olLayer;
     this.isBaseLayer = isBaseLayer;
-    this.hideInLegend = hideInLegend;
     this.radioGroup = radioGroup;
     this.children = [];
     this.visible = visible === undefined ? true : visible;
     this.copyright = copyright;
+    this.properties = properties || {};
 
     if (this.olLayer) {
       this.olLayer.setVisible(this.visible);
@@ -51,6 +52,23 @@ export default class Layer extends Observable {
     if (this.map && this.olLayer) {
       map.addLayer(this.olLayer);
     }
+  }
+
+  /**
+   * Get a layer property.
+   * @param {string} name Property name.
+   */
+  get(name) {
+    return this.properties[name];
+  }
+
+  /**
+   * Set a layer property.
+   * @param {string} name Property name.
+   * @param {string} value Value.
+   */
+  set(name, val) {
+    this.properties[name] = val;
   }
 
   /**
@@ -94,14 +112,6 @@ export default class Layer extends Observable {
   }
 
   /**
-   * Returns whether the layer is shown in the legend.
-   * @returns {boolean} If true, layer is not shown in legend.
-   */
-  getHideInLegend() {
-    return this.hideInLegend;
-  }
-
-  /**
    * Get the layers radioGroup identifier
    * @returns {string}
    */
@@ -111,6 +121,10 @@ export default class Layer extends Observable {
     }
     return this.radioGroup;
   }
+  /**
+   *
+   * @param {string} radioGroup Set a new identifier to group layer in a group, toggle via a radio
+   */
 
   /**
    *
@@ -127,6 +141,7 @@ export default class Layer extends Observable {
    * @param {boolean} stopPropagationUp
    * @param {boolean} stopPropagationSiblings
    */
+
   setVisible(
     visible,
     stopPropagationDown = false,
@@ -218,5 +233,27 @@ export default class Layer extends Observable {
    */
   hasChildren(visible) {
     return !!this.children.find(l => visible === l.getVisible());
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  onClick() {
+    // This layer has no onClick.
+    // The function is implemented by inheriting layers.
+  }
+
+  /**
+   * Request feature information for a given coordinate.
+   * @param {ol.Coordinate} coordinate Coordinate to request the information at.
+   * @returns {Promise<Object>} Promise with features, layer and coordinate
+   *  or null if no feature was hit.
+   */
+  getFeatureInfoAtCoordinate() {
+    // This layer returns no feature info.
+    // The function is implemented by inheriting layers.
+    return Promise.resolve({
+      layer: this,
+      features: [],
+      coordinate: null,
+    });
   }
 }

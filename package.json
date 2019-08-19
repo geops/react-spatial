@@ -1,8 +1,15 @@
 {
   "name": "react-spatial",
-  "version": "0.1.0-beta.1",
+  "version": "0.1.0-beta.4",
   "description": "Components to build React map apps.",
   "license": "MIT",
+  "dependencies": {
+    "query-string": "^6.4.2",
+    "mapbox-gl": "^1.2.0",
+    "react-draggable": "^3.3.1",
+    "react-icons": "^3.4.0",
+    "resize-observer-polyfill": "^1.5.1"
+  },
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/plugin-transform-runtime": "^7.4.4",
@@ -21,10 +28,11 @@
     "eslint": "^6.0.1",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^6.0.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.0.1",
-    "eslint-plugin-react": "^7.12.3",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.7.0",
     "generact": "^0.4.0",
     "geops-docjs-template": "^1.0.0",
     "husky": "^3.0.0",
@@ -32,6 +40,7 @@
     "jest": "^24.1.0",
     "jest-canvas-mock": "^2.0.0-alpha.3",
     "jest-environment-jsdom-fourteen": "^0.1.0",
+    "jest-fetch-mock": "^2.1.2",
     "jest-serializer-html": "^7.0.0",
     "jest-svg-transformer": "^1.0.0",
     "jsts": "^2.0.3",
@@ -60,15 +69,9 @@
     "webpack": "^4.39.1"
   },
   "peerDependency": {
-    "ol": "^5.3.3",
-    "ole": "^0.0.4-beta.10"
-  },
-  "dependencies": {
     "mapbox-gl": "^1.2.0",
-    "query-string": "^6.4.2",
-    "react-draggable": "^3.3.1",
-    "react-icons": "^3.4.0",
-    "resize-observer-polyfill": "^1.5.1"
+    "ol": "^6.0.0-beta.11",
+    "ole": "^0.0.4-beta.10"
   },
   "jest": {
     "transform": {

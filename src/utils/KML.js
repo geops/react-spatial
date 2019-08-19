@@ -4,6 +4,7 @@ import Point from 'ol/geom/Point';
 import MultiPoint from 'ol/geom/MultiPoint';
 import GeometryCollection from 'ol/geom/GeometryCollection';
 import { Style, Text, Icon, Circle, Fill, Stroke } from 'ol/style';
+import { asString } from 'ol/color';
 import { kmlStyle } from './Styles';
 
 const applyTextStyleForIcon = (olIcon, olText) => {
@@ -255,7 +256,7 @@ const writeFeatures = (layer, featureProjection) => {
     if (newStyle.text && newStyle.text.getBackgroundFill()) {
       clone.set(
         'textBackgroundFillColor',
-        newStyle.text.getBackgroundFill().getColor(),
+        asString(newStyle.text.getBackgroundFill().getColor()),
       );
     }
 
@@ -362,34 +363,6 @@ const writeFeatures = (layer, featureProjection) => {
         /<Document>/,
         `<Document><name>${layer.getName()}</name>`,
       );
-    }
-
-    // Temporary to locate <ExtendedData> after <Style>
-    // TODO: Remove it when https://github.com/openlayers/openlayers/pull/9500 is merged and ol updated.
-    const re = /<s*ExtendedData[^>]*>(.*?)<\/ExtendedData>/g;
-    let matches = [];
-
-    do {
-      matches.push(re.exec(featString));
-    } while (matches[matches.length - 1]);
-
-    matches = matches.slice(0, matches.length - 1); // Normalize / Remove last null element
-
-    if (matches.length) {
-      matches.forEach(match => {
-        const initialMatch = featString.substring(
-          match.index,
-          featString.length,
-        );
-        const indexOfStyle =
-          initialMatch.indexOf('</Style>') + '</Style>'.length;
-        let modifiedMatch =
-          initialMatch.slice(0, indexOfStyle) +
-          match[0] +
-          initialMatch.slice(indexOfStyle, featString.length);
-        modifiedMatch = modifiedMatch.replace(match[0], '');
-        featString = featString.replace(initialMatch, modifiedMatch);
-      });
     }
   }
 

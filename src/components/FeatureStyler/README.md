@@ -115,7 +115,22 @@ function FeatureStylerExample() {
   if (selectedFeature && selectedFeature.getStyleFunction()) {
     featureStyler = (
       <div className="tm-feature-styler-popup">
-        <FeatureStyler feature={selectedFeature} />
+        <FeatureStyler
+            feature={selectedFeature}
+            colors={[
+              { name: 'black', fill: [0, 0, 0] },
+              { name: 'blue', fill: [32, 52, 126] },
+              { name: 'orange', fill: [255, 165, 0] },
+              { name: 'red', fill: [255, 0, 0] },
+            ]}
+            textBgColors={[
+              { name: 'none', fill: [255, 255, 255, 0.01] }, // #FFFFFF
+              { name: 'black', fill: [0, 0, 0, 1] }, // #000000
+              { name: 'yellow', fill: [255, 255, 0, 1] },
+              { name: 'darkgrey', fill: [90, 92, 90, 1] }, // #5A5C5A
+              { name: 'lightblue', fill: [23, 137, 202, 1] }, // #1789CA
+            ]}
+            />
       </div>
     );
   }
