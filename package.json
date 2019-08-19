@@ -3,6 +3,12 @@
   "version": "0.1.0-beta.4",
   "description": "Components to build React map apps.",
   "license": "MIT",
+  "dependencies": {
+    "query-string": "^6.4.2",
+    "react-draggable": "^3.3.1",
+    "react-icons": "^3.4.0",
+    "resize-observer-polyfill": "^1.5.1"
+  },
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/plugin-transform-runtime": "^7.4.4",
@@ -62,15 +68,9 @@
     "webpack": "^4.39.1"
   },
   "peerDependency": {
-    "ol": "^5.3.3",
-    "ole": "^0.0.4-beta.10"
-  },
-  "dependencies": {
     "mapbox-gl": "^1.2.0",
-    "query-string": "^6.4.2",
-    "react-draggable": "^3.3.1",
-    "react-icons": "^3.4.0",
-    "resize-observer-polyfill": "^1.5.1"
+    "ol": "^6.0.0-beta.11",
+    "ole": "^0.0.4-beta.10"
   },
   "jest": {
     "transform": {
