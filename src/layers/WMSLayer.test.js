@@ -1,4 +1,3 @@
-/* eslint-disable  import/no-unresolved */
 import 'jest-canvas-mock';
 import OLMap from 'ol/Map';
 import OLView from 'ol/View';
