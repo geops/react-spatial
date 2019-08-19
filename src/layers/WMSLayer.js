@@ -51,7 +51,7 @@ class WMSLayer extends Layer {
       .then(r => r.features)
       .then(data => {
         const format = new GeoJSON();
-        const features = data.map(d => format.readFeatures(d));
+        const features = data.map(d => format.readFeature(d));
 
         return {
           features,
