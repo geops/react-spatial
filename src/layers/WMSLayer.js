@@ -84,7 +84,7 @@ class WMSLayer extends Layer {
 
   /**
    * Initialize the layer and listen to feature clicks.
-   * @inheritDoc
+   * @param {ol.map} map ol.map (https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html)
    */
   init(map) {
     super.init(map);

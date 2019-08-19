@@ -5,6 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "query-string": "^6.4.2",
+    "mapbox-gl": "^1.2.0",
     "react-draggable": "^3.3.1",
     "react-icons": "^3.4.0",
     "resize-observer-polyfill": "^1.5.1"
