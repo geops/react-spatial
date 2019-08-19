@@ -32,6 +32,7 @@ class WMSLayer extends Layer {
         .getSource()
         .getGetFeatureInfoUrl(coord, resolution, projection, {
           info_format: 'application/json',
+          query_layers: this.olLayer.getSource().getParams().layers,
         });
     }
     return false;
