@@ -6,7 +6,6 @@ import Layer from '../Layer';
  * @class
  * @inheritDoc
  */
-
 class WMSLayer extends Layer {
   constructor(options = {}) {
     super(options);
@@ -62,7 +61,6 @@ class WMSLayer extends Layer {
    *   features (https://openlayers.org/en/latest/apidoc/module-ol_Feature.html),
    *   the layer instance and the click event.
    */
-
   onClick(callback) {
     if (typeof callback === 'function') {
       this.clickCallbacks.push(callback);
@@ -75,7 +73,6 @@ class WMSLayer extends Layer {
    * Initialize the layer and listen to feature clicks.
    * @param {ol.map} map ol.map (https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html)
    */
-
   init(map) {
     super.init(map);
     this.map = map;

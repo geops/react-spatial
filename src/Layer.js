@@ -15,7 +15,6 @@ import Observable from 'ol/Observable';
  * @param {boolean} options.visible If true layer is visible
  * @param {string} options.copyright Copyright-Statement
  */
-
 export default class Layer extends Observable {
   constructor({
     key,
@@ -47,7 +46,6 @@ export default class Layer extends Observable {
    * Initialize the layer and listen to feature clicks.
    * @param {ol.map} map ol.map (https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html)
    */
-
   init(map) {
     this.map = map;
     if (this.map && this.olLayer) {
@@ -59,7 +57,6 @@ export default class Layer extends Observable {
    * Get the Layer's Copyright Statment.
    * @returns {string}
    */
-
   getCopyright() {
     return this.copyright;
   }
@@ -68,7 +65,6 @@ export default class Layer extends Observable {
    * Get the Layername.
    * @returns {string} Layername
    */
-
   getName() {
     return this.name;
   }
@@ -77,7 +73,6 @@ export default class Layer extends Observable {
    * Get the Layers Key.
    * @returns {string}
    */
-
   getKey() {
     return this.key;
   }
@@ -86,7 +81,6 @@ export default class Layer extends Observable {
    * Return whether the layer is visible or not.
    * @returns {boolean} If true, the layer is visible.
    */
-
   getVisible() {
     return this.visible;
   }
@@ -95,7 +89,6 @@ export default class Layer extends Observable {
    * Returns whether the layer is the BaseLayer or not.
    * @returns {boolean} If true, the layer is the BaseLayer.
    */
-
   getIsBaseLayer() {
     return this.isBaseLayer;
   }
@@ -104,7 +97,6 @@ export default class Layer extends Observable {
    * Returns whether the layer is shown in the legend.
    * @returns {boolean} If true, layer is not shown in legend.
    */
-
   getHideInLegend() {
     return this.hideInLegend;
   }
@@ -113,18 +105,17 @@ export default class Layer extends Observable {
    * Get the layers radioGroup identifier
    * @returns {string}
    */
-
   getRadioGroup() {
     if (!this.radioGroup && this.isBaseLayer) {
       return 'baseLayer';
     }
     return this.radioGroup;
   }
+
   /**
    *
    * @param {string} radioGroup Set a new identifier to group layer in a group, toggle via a radio
    */
-
   setRadioGroup(radioGroup) {
     this.radioGroup = radioGroup;
   }
@@ -136,7 +127,6 @@ export default class Layer extends Observable {
    * @param {boolean} stopPropagationUp
    * @param {boolean} stopPropagationSiblings
    */
-
   setVisible(
     visible,
     stopPropagationDown = false,
@@ -167,7 +157,6 @@ export default class Layer extends Observable {
    *
    * @returns {Array<ol.layer>}
    */
-
   getChildren() {
     return this.children;
   }
@@ -177,7 +166,6 @@ export default class Layer extends Observable {
    *
    * @param {Array<ol.layer>} layers
    */
-
   setChildren(layers) {
     this.children = layers;
   }
@@ -187,7 +175,6 @@ export default class Layer extends Observable {
    *
    * @returns {Array<ol.layer>}
    */
-
   getVisibleChildren() {
     return this.children.filter(c => c.getVisible() === true);
   }
@@ -197,7 +184,6 @@ export default class Layer extends Observable {
    *
    * @param {ol.layer} layer
    */
-
   addChild(layer) {
     this.children.unshift(layer);
   }
@@ -207,7 +193,6 @@ export default class Layer extends Observable {
    *
    * @param {string} name
    */
-
   removeChild(name) {
     for (let i = 0; i < this.children.length; i += 1) {
       if (this.children[i].getName() === name) {
@@ -222,7 +207,6 @@ export default class Layer extends Observable {
    *
    * @returns {boolean}
    */
-
   hasVisibleChildren() {
     return !!this.children.find(l => l.getVisible());
   }
@@ -232,7 +216,6 @@ export default class Layer extends Observable {
    * @param {boolean} visible The state to check the childlayers against
    * @returns {boolean}
    */
-
   hasChildren(visible) {
     return !!this.children.find(l => visible === l.getVisible());
   }
