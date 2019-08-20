@@ -34,7 +34,7 @@
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.7.0",
     "generact": "^0.4.0",
-    "geops-docjs-template": "^1.0.0",
+    "geops-docjs-template": "^1.0.1",
     "husky": "^3.0.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.1.0",

@@ -13,7 +13,7 @@ import Observable from 'ol/Observable';
  * @param {boolean} options.isBaseLayer if true this layer is the baseLayer
  * @param {boolean} options.visible If true layer is visible
  * @param {string} options.copyright Copyright-Statement
- * @param {Object} [properites] Application-specific layer properties.
+ * @param {Object} options.properties Application-specific layer properties.
  */
 
 export default class Layer extends Observable {
@@ -57,6 +57,7 @@ export default class Layer extends Observable {
   /**
    * Get a layer property.
    * @param {string} name Property name.
+   *
    */
   get(name) {
     return this.properties[name];
@@ -67,8 +68,8 @@ export default class Layer extends Observable {
    * @param {string} name Property name.
    * @param {string} value Value.
    */
-  set(name, val) {
-    this.properties[name] = val;
+  set(name, value) {
+    this.properties[name] = value;
   }
 
   /**
@@ -121,10 +122,6 @@ export default class Layer extends Observable {
     }
     return this.radioGroup;
   }
-  /**
-   *
-   * @param {string} radioGroup Set a new identifier to group layer in a group, toggle via a radio
-   */
 
   /**
    *
@@ -141,7 +138,6 @@ export default class Layer extends Observable {
    * @param {boolean} stopPropagationUp
    * @param {boolean} stopPropagationSiblings
    */
-
   setVisible(
     visible,
     stopPropagationDown = false,
