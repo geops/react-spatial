@@ -32,6 +32,7 @@ class WMSLayer extends Layer {
         .getSource()
         .getGetFeatureInfoUrl(coord, resolution, projection, {
           info_format: 'application/json',
+          query_layers: this.olLayer.getSource().getParams().layers,
         });
     }
     return false;
@@ -50,7 +51,7 @@ class WMSLayer extends Layer {
       .then(r => r.features)
       .then(data => {
         const format = new GeoJSON();
-        const features = data.map(d => format.readFeatures(d));
+        const features = data.map(d => format.readFeature(d));
 
         return {
           features,
