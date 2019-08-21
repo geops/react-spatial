@@ -21,7 +21,7 @@ class WMSLayer extends Layer {
 
   /**
    * Get features infos' Url.
-   * @param {ol.Coordinate} coord ol.coordinate (https://openlayers.org/en/latest/apidoc/module-ol_coordinate.html)
+   * @param {ol.Coordinate} coord  {@link https://openlayers.org/en/latest/apidoc/module-ol_coordinate.html ol.Coordinate}
    */
   getFeatureInfoUrl(coord) {
     const projection = this.map.getView().getProjection();
@@ -84,7 +84,7 @@ class WMSLayer extends Layer {
 
   /**
    * Initialize the layer and listen to feature clicks.
-   * @param {ol.map} map ol.map (https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html)
+   * @param {ol.map} map {@link https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html ol/Map}
    */
   init(map) {
     super.init(map);
