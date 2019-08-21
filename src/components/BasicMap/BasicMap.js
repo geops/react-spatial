@@ -7,7 +7,7 @@ import OLCollection from 'ol/Collection';
 import View from 'ol/View';
 import { unByKey } from 'ol/Observable';
 import Interaction from 'ol/interaction/Interaction';
-import Layer from '../../Layer';
+import Layer from '../../layers/Layer';
 import ResizeHandler from '../ResizeHandler';
 
 const propTypes = {

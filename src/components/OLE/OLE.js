@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import OLMap from 'ol/Map';
 import { Editor, control } from 'ole';
 import { Style } from 'ol/style';
-import Layer from '../../Layer';
+import Layer from '../../layers/Layer';
 
 const propTypes = {
   /** An existing [ol/Map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html). */

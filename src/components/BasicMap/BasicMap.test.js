@@ -10,7 +10,7 @@ import OLLayer from 'ol/layer/Vector';
 import OLMap from 'ol/Map';
 import OLView from 'ol/View';
 import BasicMap from './BasicMap';
-import Layer from '../../Layer';
+import Layer from '../../layers/Layer';
 
 proj4.defs(
   'EPSG:21781',

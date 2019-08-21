@@ -6,7 +6,7 @@ import WMTSSource from 'ol/source/WMTS';
 import TileJSONSource from 'ol/source/TileJSON';
 import WMTSTileGrid from 'ol/tilegrid/WMTS';
 import GeoJSONFormat from 'ol/format/GeoJSON';
-import Layer from './Layer';
+import Layer from './layers/Layer';
 import MapboxLayer from './layers/MapboxLayer';
 import projections from './Projections';
 

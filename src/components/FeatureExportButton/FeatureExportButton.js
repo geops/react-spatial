@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { FaCloudDownloadAlt } from 'react-icons/fa';
 import KMLFormat from 'ol/format/KML';
-import Layer from '../../Layer';
+import Layer from '../../layers/Layer';
 import Button from '../Button';
 import KML from '../../utils/KML';
 

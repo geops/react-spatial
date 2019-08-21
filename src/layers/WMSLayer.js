@@ -1,5 +1,5 @@
 import GeoJSON from 'ol/format/GeoJSON';
-import Layer from '../Layer';
+import Layer from './Layer';
 
 /**
  * A class representing WMS layer to display on BasicMap

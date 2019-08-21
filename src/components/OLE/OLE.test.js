@@ -7,7 +7,7 @@ import VectorSource from 'ol/source/Vector';
 import VectorLayer from 'ol/layer/Vector';
 import OLMap from 'ol/Map';
 import View from 'ol/View';
-import Layer from '../../Layer';
+import Layer from '../../layers/Layer';
 import OLE from '.';
 
 configure({ adapter: new Adapter() });

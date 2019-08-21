@@ -2,7 +2,7 @@
 import { toLonLat } from 'ol/proj';
 import mapboxgl from 'mapbox-gl';
 import OLLayer from 'ol/layer/Layer';
-import Layer from '../Layer';
+import Layer from './Layer';
 
 /**
  * A class representing Mapboxlayer to display on BasicMap

@@ -1,4 +1,4 @@
-import Layer from '../Layer';
+import Layer from './Layer';
 
 /**
  * A class representing vector layer to display on BasicMap
