@@ -8,7 +8,7 @@ import WMTSSource from 'ol/source/WMTS';
 import OSMSource from 'ol/source/OSM';
 import TileJSONSource from 'ol/source/TileJSON';
 import ConfigReader from './ConfigReader';
-import Layer from './Layer';
+import Layer from './layers/Layer';
 
 describe('ConfigReader', () => {
   describe('readConfig()', () => {

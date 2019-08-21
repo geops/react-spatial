@@ -16,7 +16,7 @@ import Point from 'ol/geom/Point';
 import LineString from 'ol/geom/LineString';
 import Feature from 'ol/Feature';
 import VectorLayer from 'ol/layer/Vector';
-import Layer from '../../Layer';
+import Layer from '../../layers/Layer';
 
 import FeatureExportButton from '.';
 

@@ -2,7 +2,7 @@
 import { toLonLat } from 'ol/proj';
 import mapboxgl from 'mapbox-gl';
 import OLLayer from 'ol/layer/Layer';
-import Layer from '../Layer';
+import Layer from './Layer';
 
 /**
  * A class representing Mapboxlayer to display on BasicMap
@@ -11,9 +11,6 @@ import Layer from '../Layer';
  */
 export default class MapboxLayer extends Layer {
   constructor(options = {}) {
-    super(options);
-    this.styleUrl = options.url;
-
     const mbLayer = new OLLayer({
       render: frameState => {
         const canvas = this.mbMap.getCanvas();
@@ -49,8 +46,14 @@ export default class MapboxLayer extends Layer {
 
         return canvas;
       },
+      zIndex: options.zIndex,
     });
-    this.olLayer = mbLayer;
+
+    super({
+      ...options,
+      olLayer: mbLayer,
+    });
+    this.styleUrl = options.url;
   }
 
   /**

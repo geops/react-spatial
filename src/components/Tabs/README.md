@@ -5,7 +5,7 @@ This demonstrates the use of Tabs
 ```jsx
 import React, { useState } from 'react';
 import OLMap from 'ol/Map';
-import Layer from 'react-spatial/Layer';
+import Layer from 'react-spatial/layers/Layer';
 import TileLayer from 'ol/layer/Tile.js';
 import OSM from 'ol/source/OSM.js';
 import Tabs from 'react-spatial/components/Tabs';
