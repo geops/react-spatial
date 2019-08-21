@@ -48,9 +48,19 @@ export default class Layer extends Observable {
    * @param {ol.map} map ol.map (https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html)
    */
   init(map) {
+    this.terminate();
     this.map = map;
     if (this.map && this.olLayer) {
-      map.addLayer(this.olLayer);
+      this.map.addLayer(this.olLayer);
+    }
+  }
+
+  /**
+   * Terminate what was initialized in init function. Remove layer, events...
+   */
+  terminate() {
+    if (this.map && this.olLayer) {
+      this.map.removeLayer(this.olLayer);
     }
   }
 

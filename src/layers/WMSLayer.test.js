@@ -30,6 +30,19 @@ describe('WMSLayer', () => {
     expect(layer).toBeInstanceOf(WMSLayer);
   });
 
+  test('should called terminate on initalization.', () => {
+    const spy = jest.spyOn(layer, 'terminate');
+    layer.init();
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  test('should add the layer on initialization.', () => {
+    const spy = jest.spyOn(map, 'addLayer');
+    layer.init(map);
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(layer.olLayer);
+  });
+
   test('should return a promise resolving features.', async () => {
     const data = await layer.getFeatureInfoAtCoordinate([50, 50]);
     const params = qs.parse(fetch.mock.calls[0][0].split('?')[1]);
