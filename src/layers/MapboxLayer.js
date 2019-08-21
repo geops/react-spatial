@@ -11,9 +11,6 @@ import Layer from '../Layer';
  */
 export default class MapboxLayer extends Layer {
   constructor(options = {}) {
-    super(options);
-    this.styleUrl = options.url;
-
     const mbLayer = new OLLayer({
       render: frameState => {
         const canvas = this.mbMap.getCanvas();
@@ -50,7 +47,12 @@ export default class MapboxLayer extends Layer {
         return canvas;
       },
     });
-    this.olLayer = mbLayer;
+
+    super({
+      ...options,
+      olLayer: mbLayer,
+    });
+    this.styleUrl = options.url;
   }
 
   /**
