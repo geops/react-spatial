@@ -3,12 +3,12 @@ import Observable from 'ol/Observable';
 /**
  * A class representing layer to display on BasicMap with a name, a visibility,
  * a radioGroup, astatus and
- * an {@link https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html ol/Layer}
+ * an ol.layer (https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html)
  * @class
  * @param {Object} options
  * @param {string} options.key information about the key
  * @param {string} options.name The name of the new layer
- * @param {ol.layer} options.olLayer the {@link https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html ol/Layer}
+ * @param {ol.layer} options.olLayer the ol.Layer
  * @param {radioGroup} options.radioGroup identifier to group layer in a group, toggle via a radio
  * @param {boolean} options.isBaseLayer if true this layer is the baseLayer
  * @param {boolean} options.visible If true layer is visible
@@ -45,7 +45,7 @@ export default class Layer extends Observable {
 
   /**
    * Initialize the layer and listen to feature clicks.
-   * @param {ol.map} map {@link https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html ol/Map}
+   * @param {ol.map} map ol.map (https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html)
    */
   init(map) {
     this.map = map;
