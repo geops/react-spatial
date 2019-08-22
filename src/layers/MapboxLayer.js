@@ -62,13 +62,17 @@ export default class MapboxLayer extends Layer {
    */
   init(map) {
     super.init(map);
-    this.map = map;
+
+    if (!this.map || !this.map.getTargetElement()) {
+      return;
+    }
+
     this.mbMap = new mapboxgl.Map({
       style: this.styleUrl,
       attributionControl: false,
       boxZoom: false,
       center: toLonLat(map.getView().getCenter()),
-      container: map.getTargetElement(),
+      container: this.map.getTargetElement(),
       doubleClickZoom: false,
       dragPan: false,
       dragRotate: false,
@@ -78,5 +82,15 @@ export default class MapboxLayer extends Layer {
       scrollZoom: false,
       touchZoomRotate: false,
     });
+  }
+
+  /**
+   * Terminate what was initialized in init function. Remove layer, events...
+   */
+  terminate() {
+    super.terminate();
+    if (this.mbMap) {
+      this.mbMap.destroy();
+    }
   }
 }

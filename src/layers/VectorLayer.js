@@ -1,3 +1,4 @@
+import { unByKey } from 'ol/Observable';
 import Layer from './Layer';
 
 /**
@@ -8,6 +9,8 @@ import Layer from './Layer';
 class VectorLayer extends Layer {
   constructor(options = {}) {
     super(options);
+
+    this.hitTolerance = options.hitTolerance || 5;
 
     // Array of click callbacks
     this.clickCallbacks = [];
@@ -41,14 +44,11 @@ class VectorLayer extends Layer {
    */
   getFeatureInfoAtCoordinate(coordinate) {
     const pixel = this.map.getPixelFromCoordinate(coordinate);
-    const layerFeatures = this.olLayer.getSource().getFeatures();
-    const features = [];
-
-    this.map.forEachFeatureAtPixel(pixel, f => {
-      if (layerFeatures.indexOf(f) > -1) {
-        features.push(f);
-      }
-    });
+    const features = this.map.getFeaturesAtPixel(
+      pixel,
+      l => l === this.olLayer,
+      this.hitTolerance,
+    );
 
     return Promise.resolve({
       features,
@@ -63,10 +63,13 @@ class VectorLayer extends Layer {
    */
   init(map) {
     super.init(map);
-    this.map = map;
+
+    if (!this.map) {
+      return;
+    }
 
     // Listen to click events
-    this.map.on('singleclick', e => {
+    this.singleClickRef = this.map.on('singleclick', e => {
       if (!this.clickCallbacks.length) {
         return;
       }
@@ -81,6 +84,16 @@ class VectorLayer extends Layer {
           this.clickCallbacks.forEach(c => c([], this, e.coordinate));
         });
     });
+  }
+
+  /**
+   * Terminate what was initialized in init function. Remove layer, events...
+   */
+  terminate() {
+    super.terminate();
+    if (this.singleClickRef) {
+      unByKey(this.singleClickRef);
+    }
   }
 }
 

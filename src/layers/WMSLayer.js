@@ -1,4 +1,5 @@
 import GeoJSON from 'ol/format/GeoJSON';
+import { unByKey } from 'ol/Observable';
 import Layer from './Layer';
 
 /**
@@ -89,10 +90,13 @@ class WMSLayer extends Layer {
    */
   init(map) {
     super.init(map);
-    this.map = map;
+
+    if (!this.map) {
+      return;
+    }
 
     // Listen to click events
-    this.map.on('singleclick', e => {
+    this.singleClickRef = this.map.on('singleclick', e => {
       if (!this.clickCallbacks.length) {
         return;
       }
@@ -103,6 +107,16 @@ class WMSLayer extends Layer {
         );
       });
     });
+  }
+
+  /**
+   * Terminate what was initialized in init function. Remove layer, events...
+   */
+  terminate() {
+    super.terminate();
+    if (this.singleClickRef) {
+      unByKey(this.singleClickRef);
+    }
   }
 }
 

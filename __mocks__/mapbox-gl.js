@@ -1,1 +1,4 @@
-module.exports = {};
+class Map {}
+module.exports = {
+  Map,
+};
