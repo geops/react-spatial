@@ -42,6 +42,7 @@
     "jest-fetch-mock": "^2.1.2",
     "jest-serializer-html": "^7.0.0",
     "jest-svg-transformer": "^1.0.0",
+    "jest-transform-file": "^1.1.1",
     "jsts": "^2.0.3",
     "lint-staged": "^9.2.0",
     "mapbox-gl": "^1.2.0",
@@ -76,7 +77,8 @@
   "jest": {
     "transform": {
       "^.+\\.js$": "babel-jest",
-      "^.+\\.svg$": "jest-svg-transformer"
+      "^.+\\.svg$": "jest-svg-transformer",
+      "\\.(jpg|jpeg|png|gif|webp)$": "jest-transform-file"
     },
     "transformIgnorePatterns": [
       "node_modules/(?!(jsts|ol)/)"
@@ -93,20 +95,19 @@
     "testEnvironment": "jest-environment-jsdom-fourteen"
   },
   "scripts": {
-    "prebuild": "rm -rf build/",
     "build": "buble --no modules,asyncAwait -i src -o build --objectAssign Object.assign --sourcemap, && cp -t build package.json README.md LICENSE && cp -rf src/images build",
-    "postbuild": "cp package.json build/ && cd src && find .  -name '*.scss' | cpio -pdm ../build",
-    "format": "prettier --write 'src/**/*.js' && stylelint 'src/**/*.css' 'src/**/*.scss' --fix",
-    "lint": "eslint 'src/**/*.js' && stylelint 'src/**/*.css' 'src/**/*.scss'",
-    "test": "jest",
-    "test:watch": "jest --watch",
     "coverage": "yarn test --coverage --coverageDirectory=coverage",
+    "cp": "generact --root src/components",
     "doc": "bash ./scripts/prepare-doc.sh",
+    "doc:server": "styleguidist server",
+    "format": "prettier --write 'src/**/*.js' && eslint 'src/**/*.js' --fix && stylelint 'src/**/*.css' 'src/**/*.scss' --fix",
+    "lint": "eslint 'src/**/*.js' && stylelint 'src/**/*.css' 'src/**/*.scss'",
+    "prebuild": "rm -rf build/",
+    "postbuild": "cp package.json build/ && cd src && find .  -name '*.scss' | cpio -pdm ../build",
     "publish:public": "yarn version && git push origin HEAD && yarn build && yarn publish build/",
     "publish:beta": "yarn publish:public --tag beta",
-    "doc:server": "styleguidist server",
-    "start": "yarn doc:server",
-    "cp": "generact --root src/components"
+    "test": "jest",
+    "start": "yarn doc:server"
   },
   "browserslist": [
     ">0.2%",
