@@ -90,7 +90,7 @@ export default class MapboxLayer extends Layer {
   terminate() {
     super.terminate();
     if (this.mbMap) {
-      this.mbMap.destroy();
+      this.mbMap.remove();
     }
   }
 }
