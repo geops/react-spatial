@@ -4,16 +4,15 @@
   "version": "0.1.0-beta.6",
   "license": "MIT",
   "dependencies": {
+    "mapbox-gl": "^1.2.0",
+    "ol": "^6.0.0-beta.11",
+    "ole": "^0.0.4-beta.10",
     "query-string": "^6.4.2",
     "react-draggable": "^3.3.1",
     "react-icons": "^3.4.0",
     "resize-observer-polyfill": "^1.5.1"
   },
-  "peerDependencies": {
-    "mapbox-gl": "^1.2.0",
-    "ol": "^6.0.0-beta.11",
-    "ole": "^0.0.4-beta.10"
-  },
+  "peerDependencies": {},
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/plugin-transform-runtime": "^7.4.4",
@@ -96,7 +95,7 @@
     "not ie <= 10",
     "not op_mini all"
   ],
-  "eslint": {
+  "eslintConfig": {
     "env": {
       "node": true,
       "browser": true,
