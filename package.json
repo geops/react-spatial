@@ -1,13 +1,16 @@
 {
   "name": "react-spatial",
   "version": "0.1.0-beta.6",
-  "description": "Components to build React map apps.",
-  "license": "MIT",
   "dependencies": {
     "query-string": "^6.4.2",
     "react-draggable": "^3.3.1",
     "react-icons": "^3.4.0",
     "resize-observer-polyfill": "^1.5.1"
+  },
+  "peerDependencies": {
+    "mapbox-gl": "^1.2.0",
+    "ol": "^6.0.0-beta.11",
+    "ole": "^0.0.4-beta.10"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
@@ -32,6 +35,7 @@
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.7.0",
+    "fixpack": "^2.3.1",
     "generact": "^0.4.0",
     "geops-docjs-template": "^1.0.0",
     "husky": "^3.0.0",
@@ -69,10 +73,71 @@
     "vinyl-fs": "^3.0.3",
     "webpack": "^4.39.1"
   },
-  "peerDependency": {
-    "mapbox-gl": "^1.2.0",
-    "ol": "^6.0.0-beta.11",
-    "ole": "^0.0.4-beta.10"
+  "scripts": {
+    "build": "buble --no modules,asyncAwait -i src -o build --objectAssign Object.assign --sourcemap, && cp -t build package.json README.md LICENSE && cp -rf src/images build",
+    "coverage": "yarn test --coverage --coverageDirectory=coverage",
+    "cp": "generact --root src/components",
+    "doc": "bash ./scripts/prepare-doc.sh",
+    "doc:server": "styleguidist server",
+    "format": "prettier --write 'src/**/*.js' && eslint 'src/**/*.js' --fix && stylelint 'src/**/*.css' 'src/**/*.scss' --fix",
+    "lint": "eslint 'src/**/*.js' && stylelint 'src/**/*.css' 'src/**/*.scss'",
+    "postbuild": "cp package.json build/ && cd src && find .  -name '*.scss' | cpio -pdm ../build",
+    "prebuild": "rm -rf build/",
+    "publish:beta": "yarn publish:public --tag beta",
+    "publish:public": "yarn version && git push origin HEAD && yarn build && yarn publish build/",
+    "start": "yarn doc:server",
+    "test": "jest"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 10",
+    "not op_mini all"
+  ],
+  "description": "Components to build React map apps.",
+  "eslint": {
+    "env": {
+      "node": true,
+      "browser": true,
+      "es6": true,
+      "jest": true
+    },
+    "parser": "babel-eslint",
+    "extends": [
+      "airbnb",
+      "prettier"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "import/no-extraneous-dependencies": [
+        "error",
+        {
+          "devDependencies": true
+        }
+      ],
+      "react/jsx-filename-extension": [
+        1,
+        {
+          "extensions": [
+            ".js",
+            ".jsx"
+          ]
+        }
+      ],
+      "react/forbid-prop-types": "Off",
+      "prettier/prettier": "error",
+      "jsx-a11y/no-access-key": "Off"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "post-checkout": "yarn install --frozen-lockfile",
+      "post-merge": "yarn install --frozen-lockfile",
+      "post-rebase": "yarn install --frozen-lockfile",
+      "pre-commit": "sort && CI=true lint-staged   "
+    }
   },
   "jest": {
     "transform": {
@@ -94,25 +159,34 @@
     ],
     "testEnvironment": "jest-environment-jsdom-fourteen"
   },
-  "scripts": {
-    "build": "buble --no modules,asyncAwait -i src -o build --objectAssign Object.assign --sourcemap, && cp -t build package.json README.md LICENSE && cp -rf src/images build",
-    "coverage": "yarn test --coverage --coverageDirectory=coverage",
-    "cp": "generact --root src/components",
-    "doc": "bash ./scripts/prepare-doc.sh",
-    "doc:server": "styleguidist server",
-    "format": "prettier --write 'src/**/*.js' && eslint 'src/**/*.js' --fix && stylelint 'src/**/*.css' 'src/**/*.scss' --fix",
-    "lint": "eslint 'src/**/*.js' && stylelint 'src/**/*.css' 'src/**/*.scss'",
-    "prebuild": "rm -rf build/",
-    "postbuild": "cp package.json build/ && cd src && find .  -name '*.scss' | cpio -pdm ../build",
-    "publish:public": "yarn version && git push origin HEAD && yarn build && yarn publish build/",
-    "publish:beta": "yarn publish:public --tag beta",
-    "test": "jest",
-    "start": "yarn doc:server"
+  "license": "MIT",
+  "lint-staged": {
+    "(src|__mocks__)/**/*.js": [
+      "eslint --fix",
+      "prettier --write",
+      "git add",
+      "yarn test --bail --findRelatedTests"
+    ],
+    "package.json": [
+      "fixpack --sortToTop name --sortToTop descrpition --sortToTop version --sortToTop author --sortToTop main --sortToTop proxy --sortToTop dependencies --sortToTop peerDependencies --sortToTop devDependencies --sortToTop scripts",
+      "git add"
+    ],
+    "src/**/*.{css,scss}": [
+      "stylelint --fix",
+      "git add"
+    ]
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 10",
-    "not op_mini all"
-  ]
+  "prettier": {
+    "trailingComma": "all",
+    "singleQuote": true
+  },
+  "stylelint": {
+    "plugins": [
+      "stylelint-scss"
+    ],
+    "extends": [
+      "stylelint-config-standard",
+      "stylelint-config-recommended-scss"
+    ]
+  }
 }

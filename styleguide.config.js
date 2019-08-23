@@ -100,7 +100,7 @@ module.exports = {
             'src/components/Tabs/[A-Z]*.js',
             'src/components/Tab/[A-Z]*.js',
           ],
-          exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
+          exampleMode: 'collapse', // 'hide' | 'collapse' | 'expand'
           usageMode: 'collapse', // 'hide' | 'collapse' | 'expand'
         },
       ],
@@ -115,8 +115,8 @@ module.exports = {
         // Transpile node dependencies, node deps are often not transpiled for IE11
         {
           test: [
-            /\/node_modules\/(regexpu-core|unicode-.*|acorn-.*|query-string|strict-uri-encode)/,
-            /\/node_modules\/(split-on-first|react-dev-utils|ansi-styles|jsts|estree-walker)/,
+            /\/node_modules\/(regexpu-core|unicode-.*|chalk|acorn-.*|query-string|strict-uri-encode)/,
+            /\/node_modules\/(split-on-first|react-dev-utils|ansi-styles|jsts|estree-walker|strip-ansi)/,
           ],
           loader: 'babel-loader',
         },
