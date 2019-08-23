@@ -1,6 +1,8 @@
 {
   "name": "react-spatial",
+  "description": "Components to build React map apps.",
   "version": "0.1.0-beta.6",
+  "license": "MIT",
   "dependencies": {
     "query-string": "^6.4.2",
     "react-draggable": "^3.3.1",
@@ -52,7 +54,7 @@
     "mapbox-gl": "^1.2.0",
     "node-sass": "^4.11.0",
     "ol": "^6.0.0-beta.11",
-    "ole": "0.0.4-beta.10",
+    "ole": "^0.0.4-beta.10",
     "prettier": "^1.16.1",
     "proj4": "^2.5.0",
     "prop-types": "^15.6.2",
@@ -94,7 +96,6 @@
     "not ie <= 10",
     "not op_mini all"
   ],
-  "description": "Components to build React map apps.",
   "eslint": {
     "env": {
       "node": true,
@@ -159,7 +160,6 @@
     ],
     "testEnvironment": "jest-environment-jsdom-fourteen"
   },
-  "license": "MIT",
   "lint-staged": {
     "(src|__mocks__)/**/*.js": [
       "eslint --fix",
@@ -168,7 +168,7 @@
       "yarn test --bail --findRelatedTests"
     ],
     "package.json": [
-      "fixpack --sortToTop name --sortToTop descrpition --sortToTop version --sortToTop author --sortToTop main --sortToTop proxy --sortToTop dependencies --sortToTop peerDependencies --sortToTop devDependencies --sortToTop scripts",
+      "fixpack --sortToTop name --sortToTop description --sortToTop version --sortToTop license --sortToTop author --sortToTop main --sortToTop files --sortToTop proxy --sortToTop dependencies --sortToTop peerDependencies --sortToTop devDependencies --sortToTop scripts",
       "git add"
     ],
     "src/**/*.{css,scss}": [
