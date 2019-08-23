@@ -1,9 +1,0 @@
-{
-  "src/**/*.js": [
-    "eslint --fix",
-    "prettier --write",
-    "git add",
-    "yarn test --bail --findRelatedTests"
-  ],
-  "src/**/*.{css,scss}": ["stylelint --fix", "git add"]
-}
