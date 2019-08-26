@@ -64,7 +64,7 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
       >
         <div>
           <div
-            className="tm-layer-tree-item"
+            className="tm-layer-tree-item tm-visible"
             style={
               Object {
                 "paddingLeft": "0px",
@@ -102,7 +102,7 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
           </div>
           <div>
             <div
-              className="tm-layer-tree-item"
+              className="tm-layer-tree-item "
               style={
                 Object {
                   "paddingLeft": "30px",
@@ -138,7 +138,7 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
           </div>
           <div>
             <div
-              className="tm-layer-tree-item"
+              className="tm-layer-tree-item tm-visible"
               style={
                 Object {
                   "paddingLeft": "30px",
@@ -174,7 +174,7 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
           </div>
           <div>
             <div
-              className="tm-layer-tree-item"
+              className="tm-layer-tree-item "
               style={
                 Object {
                   "paddingLeft": "30px",
@@ -211,7 +211,7 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
         </div>
         <div>
           <div
-            className="tm-layer-tree-item"
+            className="tm-layer-tree-item tm-visible"
             style={
               Object {
                 "paddingLeft": "0px",
@@ -249,7 +249,7 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
           </div>
           <div>
             <div
-              className="tm-layer-tree-item"
+              className="tm-layer-tree-item "
               style={
                 Object {
                   "paddingLeft": "30px",
@@ -285,7 +285,7 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
           </div>
           <div>
             <div
-              className="tm-layer-tree-item"
+              className="tm-layer-tree-item tm-visible"
               style={
                 Object {
                   "paddingLeft": "30px",
@@ -322,7 +322,7 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
         </div>
         <div>
           <div
-            className="tm-layer-tree-item"
+            className="tm-layer-tree-item tm-visible"
             style={
               Object {
                 "paddingLeft": "0px",
@@ -479,7 +479,7 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
       >
         <div>
           <div
-            className="tm-layer-tree-item"
+            className="tm-layer-tree-item tm-visible"
             style={
               Object {
                 "paddingLeft": "0px",
@@ -517,7 +517,7 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
           </div>
           <div>
             <div
-              className="tm-layer-tree-item"
+              className="tm-layer-tree-item "
               style={
                 Object {
                   "paddingLeft": "30px",
@@ -553,7 +553,7 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
           </div>
           <div>
             <div
-              className="tm-layer-tree-item"
+              className="tm-layer-tree-item tm-visible"
               style={
                 Object {
                   "paddingLeft": "30px",
@@ -589,7 +589,7 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
           </div>
           <div>
             <div
-              className="tm-layer-tree-item"
+              className="tm-layer-tree-item "
               style={
                 Object {
                   "paddingLeft": "30px",
@@ -626,7 +626,7 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
         </div>
         <div>
           <div
-            className="tm-layer-tree-item"
+            className="tm-layer-tree-item tm-visible"
             style={
               Object {
                 "paddingLeft": "0px",
@@ -664,7 +664,7 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
           </div>
           <div>
             <div
-              className="tm-layer-tree-item"
+              className="tm-layer-tree-item "
               style={
                 Object {
                   "paddingLeft": "30px",
@@ -700,7 +700,7 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
           </div>
           <div>
             <div
-              className="tm-layer-tree-item"
+              className="tm-layer-tree-item tm-visible"
               style={
                 Object {
                   "paddingLeft": "30px",
@@ -737,7 +737,7 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
         </div>
         <div>
           <div
-            className="tm-layer-tree-item"
+            className="tm-layer-tree-item tm-visible"
             style={
               Object {
                 "paddingLeft": "0px",

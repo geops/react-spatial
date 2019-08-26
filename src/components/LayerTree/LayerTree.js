@@ -212,7 +212,9 @@ class LayerTree extends Component {
     return (
       <div key={layer.getKey()}>
         <div
-          className={classNameItem}
+          className={`${classNameItem} ${
+            layer.getVisible() ? 'tm-visible' : ''
+          }`}
           style={{
             paddingLeft: `${padding * level}px`,
           }}
