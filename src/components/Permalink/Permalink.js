@@ -70,6 +70,15 @@ class Permalink extends Component {
 
     if (layerService) {
       this.updateLayerService();
+
+      // set layer visibility based on 'layers' parameter.
+      const urlParams = qs.parse(window.location.search);
+      const visibleLayers = (urlParams.layers || '').split(',');
+      layerService.getLayersAsFlatArray().forEach(l => {
+        if (visibleLayers.includes(l.getKey())) {
+          l.setVisible(true);
+        }
+      });
     }
   }
 
