@@ -82,9 +82,8 @@ describe('VectorLayer', () => {
     expect(spy2).toHaveBeenCalledWith(coordinate);
     expect(spy3).toHaveBeenCalledTimes(1);
     expect(spy3.mock.calls[0][0]).toBe(px);
-    expect(spy3.mock.calls[0][1](layer.olLayer)).toBe(true);
-    expect(spy3.mock.calls[0][1]({})).toBe(false);
-    expect(spy3.mock.calls[0][2]).toBe(layer.hitTolerance);
+    expect(spy3.mock.calls[0][1].layerFilter(layer.olLayer)).toBe(true);
+    expect(spy3.mock.calls[0][1].layerFilter({})).toBe(false);
     expect(onClick).toHaveBeenCalledTimes(1);
     expect(onClick).toHaveBeenCalledWith(features, layer, coordinate);
   });
