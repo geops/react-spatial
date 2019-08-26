@@ -61,6 +61,15 @@ const propTypes = {
   renderItem: PropTypes.func,
 
   /**
+   * Custom function to render only the content of an item in the tree.
+   *
+   * @param {object} item The item to render.
+   *
+   * @return {node} A jsx node.
+   */
+  renderItemContent: PropTypes.func,
+
+  /**
    * Translation function.
    * @param {function} Translation function returning the translated string.
    */
@@ -77,6 +86,7 @@ const defaultProps = {
   padding: 30,
   isItemHidden: () => false,
   renderItem: null,
+  renderItemContent: null,
   t: s => s,
 };
 
@@ -197,8 +207,22 @@ class LayerTree extends Component {
     );
   }
 
+  renderItemContent(layer) {
+    return (
+      <>
+        {this.renderInput(layer)}
+        {this.renderToggleButton(layer)}
+      </>
+    );
+  }
+
   renderItem(layer, level) {
-    const { renderItem, classNameItem, padding } = this.props;
+    const {
+      renderItem,
+      renderItemContent,
+      classNameItem,
+      padding,
+    } = this.props;
     const { expandedLayerNames } = this.state;
 
     const children = expandedLayerNames.includes(layer.getKey())
@@ -219,8 +243,9 @@ class LayerTree extends Component {
             paddingLeft: `${padding * level}px`,
           }}
         >
-          {this.renderInput(layer)}
-          {this.renderToggleButton(layer)}
+          {renderItemContent
+            ? renderItemContent(layer, this)
+            : this.renderItemContent(layer)}
         </div>
         {[...children]
           .reverse()

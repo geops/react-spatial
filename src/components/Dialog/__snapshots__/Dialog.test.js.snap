@@ -48,7 +48,9 @@ exports[`Dialog matches snapshots for modal Dialog. 1`] = `
         </svg>
       </div>
     </div>
-    <div>
+    <div
+      className="tm-dialog-body"
+    >
       <span>
         content
       </span>
@@ -113,7 +115,9 @@ exports[`Dialog matches snapshots for normal Dialog. 1`] = `
         </svg>
       </div>
     </div>
-    <div>
+    <div
+      className="tm-dialog-body"
+    >
       <span>
         content
       </span>
