@@ -86,7 +86,7 @@ const propTypes = {
 const defaultProps = {
   children: undefined,
   className: 'tm-dialog-container',
-  classNameChildren: undefined,
+  classNameChildren: 'tm-dialog-body',
   classNameHeader: 'tm-dialog-header',
   classNameCloseBt: 'tm-button tm-dialog-close-bt',
   cancelDraggable: undefined,
