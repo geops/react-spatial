@@ -38,116 +38,8 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           Vector sample layers
         </div>
         <div
-          className="tm-layer-tree-arrow tm-layer-tree-arrow-expanded"
+          className="tm-layer-tree-arrow tm-layer-tree-arrow-collapsed"
         />
-      </div>
-    </div>
-    <div>
-      <div
-        className="tm-layer-tree-item "
-        style={
-          Object {
-            "paddingLeft": "30px",
-          }
-        }
-      >
-        <label
-          className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
-          onKeyPress={[Function]}
-          tabIndex={-1}
-        >
-          <input
-            checked={false}
-            onChange={[Function]}
-            onClick={[Function]}
-            tabIndex={-1}
-            type="radio"
-          />
-          <span />
-        </label>
-        <div
-          className="tm-layer-tree-toggle"
-          onClick={[Function]}
-          onKeyPress={[Function]}
-          role="button"
-          tabIndex={0}
-        >
-          <div>
-            Points Samples
-          </div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <div
-        className="tm-layer-tree-item tm-visible"
-        style={
-          Object {
-            "paddingLeft": "30px",
-          }
-        }
-      >
-        <label
-          className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
-          onKeyPress={[Function]}
-          tabIndex={-1}
-        >
-          <input
-            checked={true}
-            onChange={[Function]}
-            onClick={[Function]}
-            tabIndex={-1}
-            type="radio"
-          />
-          <span />
-        </label>
-        <div
-          className="tm-layer-tree-toggle"
-          onClick={[Function]}
-          onKeyPress={[Function]}
-          role="button"
-          tabIndex={0}
-        >
-          <div>
-            Lines Samples
-          </div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <div
-        className="tm-layer-tree-item "
-        style={
-          Object {
-            "paddingLeft": "30px",
-          }
-        }
-      >
-        <label
-          className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
-          onKeyPress={[Function]}
-          tabIndex={-1}
-        >
-          <input
-            checked={false}
-            onChange={[Function]}
-            onClick={[Function]}
-            tabIndex={-1}
-            type="radio"
-          />
-          <span />
-        </label>
-        <div
-          className="tm-layer-tree-toggle"
-          onClick={[Function]}
-          onKeyPress={[Function]}
-          role="button"
-          tabIndex={0}
-        >
-          <div>
-            Polygons Samples
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -185,116 +77,8 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           Other layers
         </div>
         <div
-          className="tm-layer-tree-arrow tm-layer-tree-arrow-expanded"
+          className="tm-layer-tree-arrow tm-layer-tree-arrow-collapsed"
         />
-      </div>
-    </div>
-    <div>
-      <div
-        className="tm-layer-tree-item "
-        style={
-          Object {
-            "paddingLeft": "30px",
-          }
-        }
-      >
-        <label
-          className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
-          onKeyPress={[Function]}
-          tabIndex={-1}
-        >
-          <input
-            checked={false}
-            onChange={[Function]}
-            onClick={[Function]}
-            tabIndex={-1}
-            type="checkbox"
-          />
-          <span />
-        </label>
-        <div
-          className="tm-layer-tree-toggle"
-          onClick={[Function]}
-          onKeyPress={[Function]}
-          role="button"
-          tabIndex={0}
-        >
-          <div>
-            Countries Borders
-          </div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <div
-        className="tm-layer-tree-item tm-visible"
-        style={
-          Object {
-            "paddingLeft": "30px",
-          }
-        }
-      >
-        <label
-          className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
-          onKeyPress={[Function]}
-          tabIndex={-1}
-        >
-          <input
-            checked={true}
-            onChange={[Function]}
-            onClick={[Function]}
-            tabIndex={-1}
-            type="checkbox"
-          />
-          <span />
-        </label>
-        <div
-          className="tm-layer-tree-toggle"
-          onClick={[Function]}
-          onKeyPress={[Function]}
-          role="button"
-          tabIndex={0}
-        >
-          <div>
-            USA Population Density
-          </div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <div
-        className="tm-layer-tree-item tm-visible"
-        style={
-          Object {
-            "paddingLeft": "30px",
-          }
-        }
-      >
-        <label
-          className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
-          onKeyPress={[Function]}
-          tabIndex={-1}
-        >
-          <input
-            checked={true}
-            onChange={[Function]}
-            onClick={[Function]}
-            tabIndex={-1}
-            type="checkbox"
-          />
-          <span />
-        </label>
-        <div
-          className="tm-layer-tree-toggle"
-          onClick={[Function]}
-          onKeyPress={[Function]}
-          role="button"
-          tabIndex={0}
-        >
-          <div>
-            Switzerland
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -562,116 +346,8 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           Vector sample layers
         </div>
         <div
-          className="ged ged-expanded"
+          className="ged ged-collapsed"
         />
-      </div>
-    </div>
-    <div>
-      <div
-        className="bar "
-        style={
-          Object {
-            "paddingLeft": "30px",
-          }
-        }
-      >
-        <label
-          className="qux qux-radio tm-radio"
-          onKeyPress={[Function]}
-          tabIndex={-1}
-        >
-          <input
-            checked={false}
-            onChange={[Function]}
-            onClick={[Function]}
-            tabIndex={-1}
-            type="radio"
-          />
-          <span />
-        </label>
-        <div
-          className="quux"
-          onClick={[Function]}
-          onKeyPress={[Function]}
-          role="button"
-          tabIndex={0}
-        >
-          <div>
-            Points Samples
-          </div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <div
-        className="bar tm-visible"
-        style={
-          Object {
-            "paddingLeft": "30px",
-          }
-        }
-      >
-        <label
-          className="qux qux-radio tm-radio"
-          onKeyPress={[Function]}
-          tabIndex={-1}
-        >
-          <input
-            checked={true}
-            onChange={[Function]}
-            onClick={[Function]}
-            tabIndex={-1}
-            type="radio"
-          />
-          <span />
-        </label>
-        <div
-          className="quux"
-          onClick={[Function]}
-          onKeyPress={[Function]}
-          role="button"
-          tabIndex={0}
-        >
-          <div>
-            Lines Samples
-          </div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <div
-        className="bar "
-        style={
-          Object {
-            "paddingLeft": "30px",
-          }
-        }
-      >
-        <label
-          className="qux qux-radio tm-radio"
-          onKeyPress={[Function]}
-          tabIndex={-1}
-        >
-          <input
-            checked={false}
-            onChange={[Function]}
-            onClick={[Function]}
-            tabIndex={-1}
-            type="radio"
-          />
-          <span />
-        </label>
-        <div
-          className="quux"
-          onClick={[Function]}
-          onKeyPress={[Function]}
-          role="button"
-          tabIndex={0}
-        >
-          <div>
-            Polygons Samples
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -709,116 +385,8 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           Other layers
         </div>
         <div
-          className="ged ged-expanded"
+          className="ged ged-collapsed"
         />
-      </div>
-    </div>
-    <div>
-      <div
-        className="bar "
-        style={
-          Object {
-            "paddingLeft": "30px",
-          }
-        }
-      >
-        <label
-          className="qux qux-checkbox tm-checkbox"
-          onKeyPress={[Function]}
-          tabIndex={-1}
-        >
-          <input
-            checked={false}
-            onChange={[Function]}
-            onClick={[Function]}
-            tabIndex={-1}
-            type="checkbox"
-          />
-          <span />
-        </label>
-        <div
-          className="quux"
-          onClick={[Function]}
-          onKeyPress={[Function]}
-          role="button"
-          tabIndex={0}
-        >
-          <div>
-            Countries Borders
-          </div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <div
-        className="bar tm-visible"
-        style={
-          Object {
-            "paddingLeft": "30px",
-          }
-        }
-      >
-        <label
-          className="qux qux-checkbox tm-checkbox"
-          onKeyPress={[Function]}
-          tabIndex={-1}
-        >
-          <input
-            checked={true}
-            onChange={[Function]}
-            onClick={[Function]}
-            tabIndex={-1}
-            type="checkbox"
-          />
-          <span />
-        </label>
-        <div
-          className="quux"
-          onClick={[Function]}
-          onKeyPress={[Function]}
-          role="button"
-          tabIndex={0}
-        >
-          <div>
-            USA Population Density
-          </div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <div
-        className="bar tm-visible"
-        style={
-          Object {
-            "paddingLeft": "30px",
-          }
-        }
-      >
-        <label
-          className="qux qux-checkbox tm-checkbox"
-          onKeyPress={[Function]}
-          tabIndex={-1}
-        >
-          <input
-            checked={true}
-            onChange={[Function]}
-            onClick={[Function]}
-            tabIndex={-1}
-            type="checkbox"
-          />
-          <span />
-        </label>
-        <div
-          className="quux"
-          onClick={[Function]}
-          onKeyPress={[Function]}
-          role="button"
-          tabIndex={0}
-        >
-          <div>
-            Switzerland
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -957,6 +525,121 @@ exports[`LayerTree matches snapshots when renderItem is used. 1`] = `
   </div>
   <div>
     OSM Baselayer
+  </div>
+</div>
+`;
+
+exports[`LayerTree matches snapshots when setting 'isItemExpanded' 1`] = `
+<div
+  className="tm-layer-tree"
+>
+  <div>
+    <div
+      className="tm-layer-tree-item "
+      style={
+        Object {
+          "paddingLeft": "0px",
+        }
+      }
+    >
+      <label
+        className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
+        onKeyPress={[Function]}
+        tabIndex={-1}
+      >
+        <input
+          checked={false}
+          onChange={[Function]}
+          onClick={[Function]}
+          tabIndex={-1}
+          type="radio"
+        />
+        <span />
+      </label>
+      <div
+        className="tm-layer-tree-toggle"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div>
+          OpenTopoMap
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div
+      className="tm-layer-tree-item "
+      style={
+        Object {
+          "paddingLeft": "0px",
+        }
+      }
+    >
+      <label
+        className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
+        onKeyPress={[Function]}
+        tabIndex={-1}
+      >
+        <input
+          checked={false}
+          onChange={[Function]}
+          onClick={[Function]}
+          tabIndex={-1}
+          type="radio"
+        />
+        <span />
+      </label>
+      <div
+        className="tm-layer-tree-toggle"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div>
+          OSM Baselayer Hot
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div
+      className="tm-layer-tree-item tm-visible"
+      style={
+        Object {
+          "paddingLeft": "0px",
+        }
+      }
+    >
+      <label
+        className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
+        onKeyPress={[Function]}
+        tabIndex={-1}
+      >
+        <input
+          checked={true}
+          onChange={[Function]}
+          onClick={[Function]}
+          tabIndex={-1}
+          type="radio"
+        />
+        <span />
+      </label>
+      <div
+        className="tm-layer-tree-toggle"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div>
+          OSM Baselayer
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 `;

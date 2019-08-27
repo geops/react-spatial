@@ -172,7 +172,7 @@ class TopicList extends Component {
   renderTopic(topic, index) {
     const { classNameItem, padding, propsToLayerTree } = this.props;
     const { expandedTopic } = this.state;
-
+    console.log(propsToLayerTree);
     return (
       <div key={topic.id}>
         <div className={classNameItem}>
@@ -181,7 +181,9 @@ class TopicList extends Component {
           {this.renderToggleButton(topic)}
         </div>
         <div style={{ paddingLeft: `${padding}px` }}>
-          {topic.visible && topic.id === expandedTopic ? (
+          {topic.visible &&
+          topic.id === expandedTopic &&
+          propsToLayerTree.layerService.getLayers() ? (
             // eslint-disable-next-line react/jsx-props-no-spreading
             <LayerTree key={index} {...propsToLayerTree} />
           ) : null}

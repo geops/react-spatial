@@ -52,6 +52,15 @@ const propTypes = {
   isItemHidden: PropTypes.func,
 
   /**
+   * Determine if the item is initially expanded in the tree or not.
+   *
+   * @param {object} item The item to expand or not.
+   *
+   * @return {bool} true if the item is expanded in the tree
+   */
+  isItemExpanded: PropTypes.func,
+
+  /**
    * Custom function to render an item in the tree.
    *
    * @param {object} item The item to render.
@@ -85,6 +94,7 @@ const defaultProps = {
   classNameArrow: 'tm-layer-tree-arrow',
   padding: 30,
   isItemHidden: () => false,
+  isItemExpanded: () => false,
   renderItem: null,
   renderItemContent: null,
   t: s => s,
@@ -93,9 +103,20 @@ const defaultProps = {
 class LayerTree extends Component {
   constructor(props) {
     super(props);
+    const { layerService, isItemHidden, isItemExpanded } = this.props;
+
+    const initialExpandedLayerNames =
+      layerService && layerService.getLayers()
+        ? layerService
+            .getLayers()
+            .filter(l => !isItemHidden(l))
+            .filter(l => isItemExpanded(l))
+            .map(l => l.getKey())
+        : [];
+
     this.state = {
-      layers: props.layerService ? props.layerService.getLayers() : [],
-      expandedLayerNames: [],
+      layers: layerService ? layerService.getLayers() : [],
+      expandedLayerNames: initialExpandedLayerNames,
     };
 
     this.olKeys = [];
@@ -179,7 +200,7 @@ class LayerTree extends Component {
     return (
       <div
         className={`${classNameArrow} ${classNameArrow}${
-          expandedLayerNames.includes(layer.getKey())
+          !expandedLayerNames.includes(layer.getKey())
             ? '-collapsed'
             : '-expanded'
         }`}
@@ -226,8 +247,8 @@ class LayerTree extends Component {
     const { expandedLayerNames } = this.state;
 
     const children = expandedLayerNames.includes(layer.getKey())
-      ? []
-      : [...layer.getChildren()];
+      ? [...layer.getChildren()]
+      : [];
 
     if (renderItem) {
       return renderItem(layer, this.onInputClick, this.onToggle);

@@ -19,7 +19,11 @@ function LayerTreeExample() {
   return (
     <div className="tm-layer-tree-example">
       <BasicMap map={map} layers={layers} center={center} zoom={3} />
-      <LayerTree layerService={layerService} />
+      <LayerTree
+        layerService={layerService}
+        isItemHidden={l => l.getIsBaseLayer() || l.get('hideInLegend')}
+        isItemExpanded={l => l.get('expandedInLegend')}
+      />
     </div>
   );
 }

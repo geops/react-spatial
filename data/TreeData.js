@@ -42,6 +42,9 @@ export default [
     key: 'other.layers',
     visible: true,
     type: 'parent',
+    properties: {
+      expandedInLegend: true,
+    },
     children: [
       {
         name: 'Countries Borders',
@@ -73,7 +76,6 @@ export default [
         name: 'Switzerland',
         key: 'switzerland.samples',
         visible: true,
-        hideInLegend: true,
         data: {
           style: new Style({
             image: new Circle({
@@ -101,6 +103,9 @@ export default [
     key: 'vector.sample.layers',
     visible: true,
     radioGroup: 'radio',
+    properties: {
+      expandedInLegend: true,
+    },
     children: [
       {
         name: 'Points Samples',

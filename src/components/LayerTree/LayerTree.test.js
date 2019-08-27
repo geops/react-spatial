@@ -66,6 +66,13 @@ describe('LayerTree', () => {
         isItemHidden: item => !!item.children.length,
       });
     });
+
+    test("when setting 'isItemExpanded'", () => {
+      renderLayerTree(data, {
+        isItemHidden: item => !!item.children.length,
+        isItemExpanded: l => l.get('expandedInLegend'),
+      });
+    });
   });
 
   describe('triggers onInputClick', () => {
