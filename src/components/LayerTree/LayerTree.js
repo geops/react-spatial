@@ -100,7 +100,6 @@ class LayerTree extends Component {
             .getLayers()
             .filter(l => !isItemHidden(l))
             .filter(l => l.getVisibleChildren().length)
-            .map(l => l.getKey())
         : [];
 
     this.state = {
@@ -133,11 +132,11 @@ class LayerTree extends Component {
 
   onToggle(layer) {
     const { expandedLayerNames } = this.state;
-    const pos = expandedLayerNames.indexOf(layer.getKey());
+    const pos = expandedLayerNames.indexOf(layer);
     if (pos > -1) {
       expandedLayerNames.splice(pos, 1);
     } else {
-      expandedLayerNames.push(layer.getKey());
+      expandedLayerNames.push(layer);
     }
 
     this.setState({ expandedLayerNames });
@@ -189,9 +188,7 @@ class LayerTree extends Component {
     return (
       <div
         className={`${classNameArrow} ${classNameArrow}${
-          !expandedLayerNames.includes(layer.getKey())
-            ? '-collapsed'
-            : '-expanded'
+          !expandedLayerNames.includes(layer) ? '-collapsed' : '-expanded'
         }`}
       />
     );
@@ -235,7 +232,7 @@ class LayerTree extends Component {
     } = this.props;
     const { expandedLayerNames } = this.state;
 
-    const children = expandedLayerNames.includes(layer.getKey())
+    const children = expandedLayerNames.includes(layer)
       ? [...layer.getChildren()]
       : [];
 
