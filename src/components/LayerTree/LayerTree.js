@@ -98,8 +98,7 @@ class LayerTree extends Component {
       layerService && layerService.getLayers()
         ? layerService
             .getLayers()
-            .filter(l => !isItemHidden(l))
-            .filter(l => l.getVisibleChildren().length)
+            .filter(l => !isItemHidden(l) && l.getVisibleChildren().length)
         : [];
 
     this.state = {
