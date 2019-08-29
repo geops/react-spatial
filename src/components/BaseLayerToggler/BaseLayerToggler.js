@@ -91,20 +91,13 @@ class BaseLayerToggler extends Component {
 
     if (this.map && idx !== prevState.idx) {
       this.map.getLayers().clear();
+
       const children = layers[idx].getChildren();
-      if (children.length) {
-        children.forEach(childLayer => {
-          this.map.addLayer(
-            new TileLayer({
-              source: childLayer.olLayer.getSource(),
-            }),
-          );
-        });
-      } else {
-        let layer = layers[idx];
-        if (layers[idx] instanceof MapboxLayer) {
-          layer = layer.clone();
-          layer.init(this.map); // Including addLayer
+      const childLayers = children.length ? children : [layers[idx]];
+
+      childLayers.forEach(layer => {
+        if (layer instanceof MapboxLayer) {
+          layer.clone().init(this.map); // Including addLayer
         } else {
           this.map.addLayer(
             new TileLayer({
@@ -112,7 +105,7 @@ class BaseLayerToggler extends Component {
             }),
           );
         }
-      }
+      });
     }
   }
 
