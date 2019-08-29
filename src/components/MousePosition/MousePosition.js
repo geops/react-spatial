@@ -17,6 +17,13 @@ const propTypes = {
   className: PropTypes.string,
 
   /**
+   * Function triggered on projection's change event.
+   * @param {Event} event The change event object.
+   * @param {Object} projection The selected projection object.
+   */
+  onChange: PropTypes.func,
+
+  /**
    * List of projections to display.
    */
   projections: PropTypes.arrayOf(
@@ -42,6 +49,7 @@ const propTypes = {
 
 const defaultProps = {
   className: 'tm-mouse-position',
+  onChange: () => {},
   projections: [
     {
       label: 'EPSG:4326',
@@ -57,10 +65,13 @@ const defaultProps = {
 class MousePosition extends PureComponent {
   constructor(props) {
     super(props);
-    const { projections } = this.props;
+    const { projections, onChange } = this.props;
+
+    const initialProjection = projections && projections[0];
     this.state = {
-      projection: projections && projections[0],
+      projection: initialProjection,
     };
+    onChange(null, initialProjection);
     this.ref = React.createRef();
   }
 
@@ -106,7 +117,7 @@ class MousePosition extends PureComponent {
   }
 
   renderSelect() {
-    const { projections } = this.props;
+    const { projections, onChange } = this.props;
     const { projection } = this.state;
     if (!projections.length) {
       return null;
@@ -120,6 +131,7 @@ class MousePosition extends PureComponent {
           this.setState({
             projection: proj,
           });
+          onChange(evt, proj);
         }}
       />
     );
