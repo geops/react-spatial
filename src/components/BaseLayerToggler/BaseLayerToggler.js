@@ -7,6 +7,7 @@ import LayerService from '../../LayerService';
 import Button from '../Button';
 import Footer from '../Footer';
 import BasicMap from '../BasicMap';
+import MapboxLayer from '../../layers/MapboxLayer';
 
 const propTypes = {
   /**
@@ -90,11 +91,21 @@ class BaseLayerToggler extends Component {
 
     if (this.map && idx !== prevState.idx) {
       this.map.getLayers().clear();
-      this.map.addLayer(
-        new TileLayer({
-          source: layers[idx].olLayer.getSource(),
-        }),
-      );
+
+      const children = layers[idx].getChildren();
+      const childLayers = children.length ? children : [layers[idx]];
+
+      childLayers.forEach(layer => {
+        if (layer instanceof MapboxLayer) {
+          layer.clone().init(this.map); // Including addLayer
+        } else {
+          this.map.addLayer(
+            new TileLayer({
+              source: layer.olLayer.getSource(),
+            }),
+          );
+        }
+      });
     }
   }
 
