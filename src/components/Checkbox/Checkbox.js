@@ -5,7 +5,7 @@ const propTypes = {
   /**
    * Function triggered on button's click event.
    */
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
 
   /**
    * Function triggered on input change event.
@@ -37,6 +37,7 @@ const defaultProps = {
   className: 'tm-check',
   inputType: 'checkbox',
   onChange: () => {},
+  onClick:() => {},
   checked: false,
   tabIndex: 0,
 };
