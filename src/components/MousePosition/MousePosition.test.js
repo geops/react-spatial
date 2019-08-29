@@ -97,4 +97,27 @@ describe('MousePosition', () => {
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy.mock.calls[0][0]).toBe(spy2.mock.calls[0][0]);
   });
+
+  test('Triggers onChange when select projection.', () => {
+    const map = new OLMap({});
+    const onChange = () => {};
+    const onChangeMock = jest.fn(onChange);
+    const wrapper = mount(
+      <MousePosition
+        map={map}
+        onChange={onChangeMock}
+        projections={[
+          {
+            label: 'EPSG:4326',
+            value: 'EPSG:4326',
+            format: jest.fn(),
+          },
+        ]}
+      />,
+    );
+    // onChange triggered on instantiation.
+    expect(onChangeMock).toHaveBeenCalledTimes(1);
+    wrapper.find('select').simulate('change', {});
+    expect(onChangeMock).toHaveBeenCalledTimes(2);
+  });
 });
