@@ -90,11 +90,22 @@ class BaseLayerToggler extends Component {
 
     if (this.map && idx !== prevState.idx) {
       this.map.getLayers().clear();
-      this.map.addLayer(
-        new TileLayer({
-          source: layers[idx].olLayer.getSource(),
-        }),
-      );
+      const children = layers[idx].getChildren();
+      if (children.length) {
+        children.forEach(childLayer => {
+          this.map.addLayer(
+            new TileLayer({
+              source: childLayer.olLayer.getSource(),
+            }),
+          );
+        });
+      } else {
+        this.map.addLayer(
+          new TileLayer({
+            source: layers[idx].olLayer.getSource(),
+          }),
+        );
+      }
     }
   }
 
