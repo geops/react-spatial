@@ -68,6 +68,12 @@ export default class MapboxLayer extends Layer {
       return;
     }
 
+    this.map.getLayers().on('remove', evt => {
+      if (evt.element === this.olLayer) {
+        this.terminate();
+      }
+    });
+
     this.mbMap = new mapboxgl.Map({
       style: this.styleUrl,
       attributionControl: false,
