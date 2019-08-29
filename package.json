@@ -64,7 +64,7 @@
     "react-styleguidist": "^9.0.0",
     "react-svg-loader": "^3.0.0",
     "react-test-renderer": "^16.7.0",
-    "sass-loader": "^7.1.0",
+    "sass-loader": "^8.0.0",
     "stream-array": "^1.1.2",
     "style-loader": "^1.0.0",
     "stylelint": "^10.0.0",
