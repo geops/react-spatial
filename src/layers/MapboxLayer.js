@@ -53,6 +53,7 @@ export default class MapboxLayer extends Layer {
       ...options,
       olLayer: mbLayer,
     });
+    this.options = options;
     this.styleUrl = options.url;
   }
 
@@ -92,5 +93,9 @@ export default class MapboxLayer extends Layer {
     if (this.mbMap) {
       this.mbMap.remove();
     }
+  }
+
+  clone() {
+    return new MapboxLayer(this.options);
   }
 }

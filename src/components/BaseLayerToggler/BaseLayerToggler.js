@@ -7,6 +7,7 @@ import LayerService from '../../LayerService';
 import Button from '../Button';
 import Footer from '../Footer';
 import BasicMap from '../BasicMap';
+import MapboxLayer from '../../layers/MapboxLayer';
 
 const propTypes = {
   /**
@@ -100,11 +101,17 @@ class BaseLayerToggler extends Component {
           );
         });
       } else {
-        this.map.addLayer(
-          new TileLayer({
-            source: layers[idx].olLayer.getSource(),
-          }),
-        );
+        let layer = layers[idx];
+        if (layers[idx] instanceof MapboxLayer) {
+          layer = layer.clone();
+          layer.init(this.map); // Including addLayer
+        } else {
+          this.map.addLayer(
+            new TileLayer({
+              source: layer.olLayer.getSource(),
+            }),
+          );
+        }
       }
     }
   }
