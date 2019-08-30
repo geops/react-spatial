@@ -330,7 +330,7 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
             }
           >
             <label
-              className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
+              className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
               onKeyPress={[Function]}
               tabIndex={-1}
             >
@@ -339,7 +339,7 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
                 onChange={[Function]}
                 onClick={[Function]}
                 tabIndex={-1}
-                type="radio"
+                type="checkbox"
               />
               <span />
             </label>
@@ -745,7 +745,7 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
             }
           >
             <label
-              className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
+              className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
               onKeyPress={[Function]}
               tabIndex={-1}
             >
@@ -754,7 +754,7 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
                 onChange={[Function]}
                 onClick={[Function]}
                 tabIndex={-1}
-                type="radio"
+                type="checkbox"
               />
               <span />
             </label>

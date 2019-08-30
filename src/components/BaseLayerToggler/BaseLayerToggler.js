@@ -124,7 +124,7 @@ class BaseLayerToggler extends Component {
 
   updateState() {
     const { layerService } = this.props;
-    const baseLayers = layerService.getRadioGroupLayers('baseLayer');
+    const baseLayers = layerService.getBaseLayers();
     const layers = baseLayers.length > 1 ? baseLayers : null;
     const idx = layers ? layers.findIndex(l => l.getVisible()) : 0;
     this.setState({
