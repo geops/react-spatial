@@ -97,7 +97,9 @@ class BaseLayerToggler extends Component {
 
       childLayers.forEach(layer => {
         if (layer instanceof MapboxLayer) {
-          layer.clone().init(this.map); // Including addLayer
+          const ml = layer.clone();
+          ml.init(this.map); // Including addLayer
+          ml.setVisible(true);
         } else {
           this.map.addLayer(
             new TileLayer({
