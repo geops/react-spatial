@@ -85,8 +85,10 @@ class BaseLayerToggler extends Component {
       this.updateMap();
     }
 
-    if (layerVisible !== prevState.layerVisible) {
+    if (layerVisible && !prevState.layerVisible) {
       this.next();
+    } else if (layerVisible !== prevState.layerVisible) {
+      this.toggle(prevState.layerVisible);
     }
 
     if (this.map && idx !== prevState.idx) {
@@ -151,6 +153,19 @@ class BaseLayerToggler extends Component {
         ]);
         this.map.getView().setCenter(coord);
       }
+    });
+  }
+
+  toggle(layer) {
+    const { layers } = this.state;
+
+    let index = 0;
+    while (layer !== layers[index]) {
+      index += 1;
+    }
+
+    this.setState({
+      idx: index,
     });
   }
 
