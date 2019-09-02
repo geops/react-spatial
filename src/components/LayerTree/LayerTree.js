@@ -93,9 +93,17 @@ const defaultProps = {
 class LayerTree extends Component {
   constructor(props) {
     super(props);
+    const { layerService, isItemHidden } = this.props;
+    const initialExpandedLayerNames =
+      layerService && layerService.getLayers()
+        ? layerService
+            .getLayers()
+            .filter(l => !isItemHidden(l) && l.getVisibleChildren().length)
+        : [];
+
     this.state = {
-      layers: props.layerService ? props.layerService.getLayers() : [],
-      expandedLayerNames: [],
+      layers: layerService ? layerService.getLayers() : [],
+      expandedLayerNames: initialExpandedLayerNames,
     };
 
     this.olKeys = [];
@@ -123,11 +131,11 @@ class LayerTree extends Component {
 
   onToggle(layer) {
     const { expandedLayerNames } = this.state;
-    const pos = expandedLayerNames.indexOf(layer.getKey());
+    const pos = expandedLayerNames.indexOf(layer);
     if (pos > -1) {
       expandedLayerNames.splice(pos, 1);
     } else {
-      expandedLayerNames.push(layer.getKey());
+      expandedLayerNames.push(layer);
     }
 
     this.setState({ expandedLayerNames });
@@ -179,9 +187,7 @@ class LayerTree extends Component {
     return (
       <div
         className={`${classNameArrow} ${classNameArrow}${
-          expandedLayerNames.includes(layer.getKey())
-            ? '-collapsed'
-            : '-expanded'
+          !expandedLayerNames.includes(layer) ? '-collapsed' : '-expanded'
         }`}
       />
     );
@@ -225,9 +231,9 @@ class LayerTree extends Component {
     } = this.props;
     const { expandedLayerNames } = this.state;
 
-    const children = expandedLayerNames.includes(layer.getKey())
-      ? []
-      : [...layer.getChildren()];
+    const children = expandedLayerNames.includes(layer)
+      ? [...layer.getChildren()]
+      : [];
 
     if (renderItem) {
       return renderItem(layer, this.onInputClick, this.onToggle);

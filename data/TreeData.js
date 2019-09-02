@@ -8,6 +8,7 @@ export default [
     name: 'OSM Baselayer',
     visible: true,
     isBaseLayer: true,
+    radioGroup: 'baseLayer',
     copyright: '© OSM Contributors',
     data: {
       type: 'xyz',
@@ -19,6 +20,7 @@ export default [
     key: 'osm.baselayer.hot',
     visible: false,
     isBaseLayer: true,
+    radioGroup: 'baseLayer',
     copyright: '© OSM Contributors',
     data: {
       type: 'xyz',
@@ -30,6 +32,7 @@ export default [
     key: 'open.topo.map',
     visible: false,
     isBaseLayer: true,
+    radioGroup: 'baseLayer',
     copyright:
       'map data: © OpenStreetMap contributors, SRTM | map style: © OpenTopoMap (CC-BY-SA)',
     data: {

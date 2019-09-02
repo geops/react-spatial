@@ -8,6 +8,7 @@ import LayerService from '../../LayerService';
 import Button from '../Button';
 import Footer from '../Footer';
 import BasicMap from '../BasicMap';
+import MapboxLayer from '../../layers/MapboxLayer';
 
 const propTypes = {
   /**
@@ -91,11 +92,23 @@ class BaseLayerToggler extends Component {
 
     if (this.map && idx !== prevState.idx) {
       this.map.getLayers().clear();
-      this.map.addLayer(
-        new TileLayer({
-          source: layers[idx].olLayer.getSource(),
-        }),
-      );
+
+      const children = layers[idx].getChildren();
+      const childLayers = children.length ? children : [layers[idx]];
+
+      childLayers.forEach(layer => {
+        if (layer instanceof MapboxLayer) {
+          const ml = layer.clone();
+          ml.init(this.map); // Including addLayer
+          ml.setVisible(true);
+        } else {
+          this.map.addLayer(
+            new TileLayer({
+              source: layer.olLayer.getSource(),
+            }),
+          );
+        }
+      });
     }
   }
 
@@ -116,7 +129,7 @@ class BaseLayerToggler extends Component {
 
   updateState() {
     const { layerService } = this.props;
-    const baseLayers = layerService.getRadioGroupLayers('baseLayer');
+    const baseLayers = layerService.getBaseLayers();
     const layers = baseLayers.length > 1 ? baseLayers : null;
     const idx = layers ? layers.findIndex(l => l.getVisible()) : 0;
     this.setState({

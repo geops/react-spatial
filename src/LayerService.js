@@ -55,6 +55,10 @@ export default class LayerService {
     return null;
   }
 
+  getBaseLayers() {
+    return this.getLayersAsFlatArray().filter(l => l.getIsBaseLayer());
+  }
+
   on(evt, callback) {
     this.callbacks[evt] = this.callbacks[evt] || [];
     this.callbacks[evt].push(callback);
