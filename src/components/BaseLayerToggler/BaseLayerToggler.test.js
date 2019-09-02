@@ -117,7 +117,7 @@ describe('BaseLayerToggler', () => {
     expect(comp.state.layers[0].getVisible()).toBe(false);
     expect(comp.state.layers[1].getVisible()).toBe(true);
     expect(comp.state.layerVisible).toBe(comp.state.layers[1]);
-    expect(comp.state.idx).toBe(2);
+    expect(comp.state.idx).toBe(0); // Toggle
   });
 
   test('hide baseLayerToggler if only one baselayer', () => {

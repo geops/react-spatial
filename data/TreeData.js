@@ -6,6 +6,7 @@ import Fill from 'ol/style/Fill';
 export default [
   {
     name: 'OSM Baselayer',
+    key: 'osm.baselayer',
     visible: true,
     isBaseLayer: true,
     radioGroup: 'baseLayer',

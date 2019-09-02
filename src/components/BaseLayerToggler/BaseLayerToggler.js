@@ -4,6 +4,7 @@ import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
 import OLMap from 'ol/Map';
 import { unByKey } from 'ol/Observable';
 import TileLayer from 'ol/layer/Tile';
+import { containsExtent } from 'ol/extent';
 import LayerService from '../../LayerService';
 import Button from '../Button';
 import Footer from '../Footer';
@@ -40,6 +41,16 @@ const propTypes = {
    * CSS class to apply to the next button.
    */
   classNameNext: PropTypes.string,
+
+  /**
+   * Path to the directory which includes the fallback images
+   */
+  fallbackImgDir: PropTypes.string,
+
+  /**
+   * Outside of this valid extent the fallback image is loaded
+   */
+  validExtent: PropTypes.arrayOf(PropTypes.number),
 };
 
 const defaultProps = {
@@ -48,6 +59,8 @@ const defaultProps = {
   classNameItem: 'tm-base-layer-item',
   classNamePrevious: 'tm-base-layer-previous',
   classNameNext: 'tm-base-layer-next',
+  fallbackImgDir: '../../images/baselayer/',
+  validExtent: [-Infinity, -Infinity, Infinity, Infinity],
 };
 
 class BaseLayerToggler extends Component {
@@ -57,6 +70,8 @@ class BaseLayerToggler extends Component {
       layers: null,
       layerVisible: null,
       idx: 0,
+      fallbackImg: null,
+      fallbackImgOpacity: 0,
     };
     this.map = null;
     this.ref = React.createRef();
@@ -86,8 +101,11 @@ class BaseLayerToggler extends Component {
       this.updateMap();
     }
 
-    if (layerVisible !== prevState.layerVisible) {
+    if (layerVisible && !prevState.layerVisible) {
       this.next();
+    } else if (layerVisible !== prevState.layerVisible) {
+      // In case the visibility of the background Layer is change from another component.
+      this.toggle(prevState.layerVisible);
     }
 
     if (this.map && idx !== prevState.idx) {
@@ -108,12 +126,13 @@ class BaseLayerToggler extends Component {
             }),
           );
         }
+        this.checkExtent();
       });
     }
   }
 
   componentWillUnmount() {
-    unByKey(this.postRenderKey);
+    unByKey([this.postRenderKey, this.moveEndKey]);
   }
 
   updateLayerService() {
@@ -145,7 +164,7 @@ class BaseLayerToggler extends Component {
       this.map = new OLMap({ controls: [], interactions: [] });
     }
     this.map.setView(map.getView());
-    unByKey(this.postRenderKey);
+    unByKey([this.postRenderKey, this.moveEndKey]);
     this.postRenderKey = map.on('postrender', e => {
       this.map.getView().setZoom(e.target.getView().getZoom());
       if (this.ref && this.ref.current) {
@@ -156,6 +175,23 @@ class BaseLayerToggler extends Component {
         ]);
         this.map.getView().setCenter(coord);
       }
+    });
+
+    this.moveEndKey = map.on('moveend', () => {
+      this.checkExtent();
+    });
+  }
+
+  toggle(layer) {
+    const { layers } = this.state;
+
+    let index = 0;
+    while (layer !== layers[index]) {
+      index += 1;
+    }
+
+    this.setState({
+      idx: index,
     });
   }
 
@@ -191,6 +227,44 @@ class BaseLayerToggler extends Component {
     });
   }
 
+  /**
+   * Check if the next layer is inside the global extent.
+   * If not, try setting a global image.
+   */
+  checkExtent() {
+    const { validExtent, map, fallbackImgDir } = this.props;
+    const { idx, layers, fallbackImg } = this.state;
+    const nextLayer = layers[idx];
+    let opacity = 0;
+    let img = fallbackImg;
+
+    if (validExtent && this.ref && this.ref.current && nextLayer) {
+      const elt = this.ref.current;
+      const blCoord = map.getCoordinateFromPixel([
+        elt.offsetLeft,
+        elt.offsetTop + elt.offsetHeight,
+      ]);
+      const trCoord = map.getCoordinateFromPixel([
+        elt.offsetLeft + elt.offsetWidth,
+        elt.offsetTop,
+      ]);
+
+      if (!blCoord || !trCoord) {
+        return;
+      }
+
+      if (!containsExtent(validExtent, [...blCoord, ...trCoord])) {
+        opacity = 1;
+        img = `${fallbackImgDir}${nextLayer.getKey()}.png`;
+      }
+    }
+
+    this.setState({
+      fallbackImg: img,
+      fallbackImgOpacity: opacity,
+    });
+  }
+
   render() {
     const {
       className,
@@ -198,7 +272,7 @@ class BaseLayerToggler extends Component {
       classNamePrevious,
       classNameNext,
     } = this.props;
-    const { layers, idx } = this.state;
+    const { layers, idx, fallbackImg, fallbackImgOpacity } = this.state;
 
     let footer = null;
 
@@ -224,7 +298,12 @@ class BaseLayerToggler extends Component {
     return (
       <div className={className} ref={this.ref}>
         <BasicMap map={this.map} />
-
+        <img
+          src={fallbackImg}
+          alt={fallbackImg}
+          style={{ opacity: fallbackImgOpacity }}
+          className={classNameItem}
+        />
         <Button
           className={classNameItem}
           onClick={() => nextLayer.setVisible(true)}
