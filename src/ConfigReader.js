@@ -21,6 +21,7 @@ const createXYZLayer = item => {
       source: new XYZ({
         url: item.data.url,
         crossOrigin: 'Anonymous',
+        transition: 0,
       }),
     }),
   });
