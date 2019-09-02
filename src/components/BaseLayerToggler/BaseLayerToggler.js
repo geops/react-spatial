@@ -104,6 +104,7 @@ class BaseLayerToggler extends Component {
     if (layerVisible && !prevState.layerVisible) {
       this.next();
     } else if (layerVisible !== prevState.layerVisible) {
+      // In case the visibility of the background Layer is change from another component.
       this.toggle(prevState.layerVisible);
     }
 
@@ -131,7 +132,7 @@ class BaseLayerToggler extends Component {
   }
 
   componentWillUnmount() {
-    unByKey(this.postRenderKey);
+    unByKey([this.postRenderKey, this.moveEndKey]);
   }
 
   updateLayerService() {
@@ -163,7 +164,7 @@ class BaseLayerToggler extends Component {
       this.map = new OLMap({ controls: [], interactions: [] });
     }
     this.map.setView(map.getView());
-    unByKey(this.postRenderKey);
+    unByKey([this.postRenderKey, this.moveEndKey]);
     this.postRenderKey = map.on('postrender', e => {
       this.map.getView().setZoom(e.target.getView().getZoom());
       if (this.ref && this.ref.current) {
@@ -176,7 +177,7 @@ class BaseLayerToggler extends Component {
       }
     });
 
-    map.on('moveend', () => {
+    this.moveEndKey = map.on('moveend', () => {
       this.checkExtent();
     });
   }
@@ -233,33 +234,26 @@ class BaseLayerToggler extends Component {
   checkExtent() {
     const { validExtent, map, fallbackImgDir } = this.props;
     const { idx, layers, fallbackImg } = this.state;
-
     const nextLayer = layers[idx];
     let opacity = 0;
     let img = fallbackImg;
-    let rect = null;
 
-    if (this.ref && this.ref.current) {
+    if (validExtent && this.ref && this.ref.current && nextLayer) {
       const elt = this.ref.current;
-      rect = {
-        top: elt.offsetTop,
-        left: elt.offsetLeft,
-        width: elt.offsetWidth,
-        height: elt.offsetHeight,
-      };
-    }
+      const blCoord = map.getCoordinateFromPixel([
+        elt.offsetLeft,
+        elt.offsetTop + elt.offsetHeight,
+      ]);
+      const trCoord = map.getCoordinateFromPixel([
+        elt.offsetLeft + elt.offsetWidth,
+        elt.offsetTop,
+      ]);
 
-    if (rect && nextLayer) {
-      const tl = [rect.left, rect.top + rect.height];
-      const br = [rect.left + rect.width, rect.top];
-      const tlCoord = map.getCoordinateFromPixel(tl);
-      const brCoord = map.getCoordinateFromPixel(br);
-      if (!tlCoord || !brCoord) {
+      if (!blCoord || !trCoord) {
         return;
       }
-      const spyExt = [tlCoord[0], tlCoord[1], brCoord[0], brCoord[1]];
 
-      if (validExtent && !containsExtent(validExtent, spyExt)) {
+      if (!containsExtent(validExtent, [...blCoord, ...trCoord])) {
         opacity = 1;
         img = `${fallbackImgDir}${nextLayer.getKey()}.png`;
       }

@@ -15,22 +15,16 @@ const map = new OLMap({ controls: [] });
 const layers = ConfigReader.readConfig(treeData);
 const layerService = new LayerService(layers);
 
-function BaseLayerTogglerExample() {
-  return (
-    <div className="tm-base-layer-example">
-      <BasicMap
-        map={map}
-        center={center}
-        zoom={6}
-        layers={layers}
-      />
-      <BaseLayerToggler
-        map={map}
-        layerService={layerService}
-      />
-    </div>
-  )
-};
-
-<BaseLayerTogglerExample />;
+<div className="tm-base-layer-example">
+  <BasicMap
+    map={map}
+    center={center}
+    zoom={6}
+    layers={layers}
+  />
+  <BaseLayerToggler
+    map={map}
+    layerService={layerService}
+  />
+</div>;
 ```
