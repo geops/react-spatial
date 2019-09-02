@@ -55,12 +55,6 @@ export default class MapboxLayer extends Layer {
     });
     this.options = options;
     this.styleUrl = options.url;
-
-    this.onRemove = evt => {
-      if (evt.element === this.olLayer) {
-        this.terminate();
-      }
-    };
   }
 
   /**
@@ -73,8 +67,6 @@ export default class MapboxLayer extends Layer {
     if (!this.map || !this.map.getTargetElement()) {
       return;
     }
-
-    this.map.getLayers().on('remove', this.onRemove);
 
     this.mbMap = new mapboxgl.Map({
       style: this.styleUrl,
@@ -100,9 +92,6 @@ export default class MapboxLayer extends Layer {
     super.terminate();
     if (this.mbMap) {
       this.mbMap.remove();
-    }
-    if (this.map) {
-      this.map.getLayers().un('remove', this.onRemove);
     }
   }
 

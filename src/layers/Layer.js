@@ -1,4 +1,4 @@
-import Observable from 'ol/Observable';
+import Observable, { unByKey } from 'ol/Observable';
 
 /**
  * A class representing layer to display on BasicMap with a name, a visibility,
@@ -52,6 +52,12 @@ export default class Layer extends Observable {
     this.map = map;
     if (this.map && this.olLayer) {
       this.map.addLayer(this.olLayer);
+
+      this.onRemoveKey = this.map.getLayers().on('remove', evt => {
+        if (evt.element === this.olLayer) {
+          this.terminate();
+        }
+      });
     }
   }
 
@@ -59,6 +65,7 @@ export default class Layer extends Observable {
    * Terminate what was initialized in init function. Remove layer, events...
    */
   terminate() {
+    unByKey(this.onRemoveKey);
     if (this.map && this.olLayer) {
       this.map.removeLayer(this.olLayer);
     }
