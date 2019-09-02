@@ -17,7 +17,7 @@ function CheckboxExample() {
   }
 
   return (
-    <div class="tm-checkbox-example">
+    <div className="tm-checkbox-example">
       <Checkbox
         checked={check}
         onClick={() => setCheck(!check)}

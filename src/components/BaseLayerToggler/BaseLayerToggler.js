@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
 import OLMap from 'ol/Map';
+import { unByKey } from 'ol/Observable';
 import TileLayer from 'ol/layer/Tile';
 import { containsExtent } from 'ol/extent';
 import LayerService from '../../LayerService';
@@ -129,6 +130,10 @@ class BaseLayerToggler extends Component {
     }
   }
 
+  componentWillUnmount() {
+    unByKey(this.postRenderKey);
+  }
+
   updateLayerService() {
     const { layerService } = this.props;
 
@@ -158,8 +163,8 @@ class BaseLayerToggler extends Component {
       this.map = new OLMap({ controls: [], interactions: [] });
     }
     this.map.setView(map.getView());
-
-    map.on('postrender', e => {
+    unByKey(this.postRenderKey);
+    this.postRenderKey = map.on('postrender', e => {
       this.map.getView().setZoom(e.target.getView().getZoom());
       if (this.ref && this.ref.current) {
         const elt = this.ref.current;
