@@ -103,10 +103,8 @@ describe('LayerService', () => {
       try {
         layerService.un('foo', cb);
         done();
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.log(e);
-      }
+        // eslint-disable-next-line no-empty
+      } catch (e) {}
     });
 
     test('remove a callback on event.', () => {
