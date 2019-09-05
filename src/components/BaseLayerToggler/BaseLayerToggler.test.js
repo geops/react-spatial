@@ -104,6 +104,21 @@ describe('BaseLayerToggler', () => {
     expect(comp.state.idx).toBe(1);
   });
 
+  test('displays always a baseLayer on the map.', () => {
+    const wrapper = shallowComp();
+    const comp = wrapper.instance();
+    const layerVisible = comp.state.layers[0];
+    expect(comp.state.layers.length).toBe(3);
+    expect(comp.state.layerVisible).toBe(layerVisible);
+    expect(comp.state.idx).toBe(1);
+    comp.state.layers[0].setVisible(false);
+
+    expect(comp.state.layers.length).toBe(3);
+    expect(comp.state.layerVisible).toBe(layerVisible);
+    expect(comp.state.layerVisible.getVisible()).toBe(true);
+    expect(comp.state.idx).toBe(0);
+  });
+
   test('display on the map the layer clicked', () => {
     const wrapper = mountComp(data);
     const comp = wrapper.instance();

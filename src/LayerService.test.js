@@ -86,4 +86,44 @@ describe('LayerService', () => {
     layerService.getLayer('2').setVisible(true);
     expect(callback.mock.calls.length).toBe(3);
   });
+
+  describe('#on() ', () => {
+    test('add a callback on event.', () => {
+      const layerService = instantiateLayerService(layerData);
+      const cb = () => {};
+      layerService.on('foo', cb);
+      expect(layerService.callbacks.foo[0]).toBe(cb);
+    });
+
+    test("doesn't add twice the same callback .", () => {
+      const layerService = instantiateLayerService(layerData);
+      const cb = () => {};
+      layerService.on('foo', cb);
+      expect(layerService.callbacks.foo[0]).toBe(cb);
+      layerService.on('foo', cb);
+      expect(layerService.callbacks.foo[0]).toBe(cb);
+      expect(layerService.callbacks.foo[1]).toBe(undefined);
+    });
+  });
+
+  describe('#un() ', () => {
+    test("doesn't failed if callback doesn't exists.", done => {
+      const layerService = instantiateLayerService(layerData);
+      const cb = () => {};
+      try {
+        layerService.un('foo', cb);
+        done();
+        // eslint-disable-next-line no-empty
+      } catch (e) {}
+    });
+
+    test('remove a callback on event.', () => {
+      const layerService = instantiateLayerService(layerData);
+      const cb = () => {};
+      layerService.on('foo', cb);
+      expect(layerService.callbacks.foo[0]).toBe(cb);
+      layerService.un('foo', cb);
+      expect(layerService.callbacks.foo[0]).toBe(undefined);
+    });
+  });
 });
