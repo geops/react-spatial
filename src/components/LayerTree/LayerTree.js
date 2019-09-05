@@ -52,6 +52,11 @@ const propTypes = {
   isItemHidden: PropTypes.func,
 
   /**
+   * Determine the className used by the div containing the parent and its children.
+   */
+  getParentClassName: PropTypes.func,
+
+  /**
    * Custom function to render an item in the tree.
    *
    * @param {object} item The item to render.
@@ -85,6 +90,7 @@ const defaultProps = {
   classNameArrow: 'tm-layer-tree-arrow',
   padding: 30,
   isItemHidden: () => false,
+  getParentClassName: () => undefined,
   renderItem: null,
   renderItemContent: null,
   t: s => s,
@@ -228,6 +234,7 @@ class LayerTree extends Component {
       renderItemContent,
       classNameItem,
       padding,
+      getParentClassName,
     } = this.props;
     const { expandedLayerNames } = this.state;
 
@@ -240,7 +247,7 @@ class LayerTree extends Component {
     }
 
     return (
-      <div key={layer.getKey()}>
+      <div className={getParentClassName()} key={layer.getKey()}>
         <div
           className={`${classNameItem} ${
             layer.getVisible() ? 'tm-visible' : ''
