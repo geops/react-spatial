@@ -114,24 +114,6 @@ describe('Popup', () => {
   });
 
   describe(`updates position`, () => {
-    [feat, featLine].forEach(f => {
-      test(`on feature's update.`, () => {
-        map.getPixelFromCoordinate = jest.fn(() => [10, 200]);
-        const component = shallow(
-          <Popup map={map}>
-            <div id="gux" />
-          </Popup>,
-        );
-        const spy = jest.spyOn(component.instance(), 'updatePixelPosition');
-
-        component.setProps({
-          feature: f,
-        });
-
-        expect(spy).toHaveBeenCalledTimes(2);
-      });
-    });
-
     test(`on map postrender event.`, () => {
       map.getPixelFromCoordinate = jest.fn(() => [10, 200]);
       const component = shallow(
@@ -148,7 +130,7 @@ describe('Popup', () => {
   test(`deregisters postrender on unmount.`, () => {
     map.getPixelFromCoordinate = jest.fn(() => [10, 200]);
     const component = shallow(
-      <Popup map={map} feature={feat}>
+      <Popup map={map} feature={featLine}>
         <div id="gux" />
       </Popup>,
     );

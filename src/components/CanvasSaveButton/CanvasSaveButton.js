@@ -135,7 +135,6 @@ const defaultProps = {
 
 /**
  * This component displays a button to save canvas as an image.
- * It is a sub-component of the ShareMenu.
  */
 class CanvasSaveButton extends PureComponent {
   constructor(props) {
