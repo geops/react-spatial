@@ -94,6 +94,16 @@ describe('LayerService', () => {
       layerService.on('foo', cb);
       expect(layerService.callbacks.foo[0]).toBe(cb);
     });
+
+    test("doesn't add twice the same callback .", () => {
+      const layerService = instantiateLayerService(layerData);
+      const cb = () => {};
+      layerService.on('foo', cb);
+      expect(layerService.callbacks.foo[0]).toBe(cb);
+      layerService.on('foo', cb);
+      expect(layerService.callbacks.foo[0]).toBe(cb);
+      expect(layerService.callbacks.foo[1]).toBe(undefined);
+    });
   });
 
   describe('#un() ', () => {

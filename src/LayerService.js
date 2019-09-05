@@ -59,6 +59,7 @@ export default class LayerService {
   }
 
   on(evt, callback) {
+    this.un(evt, callback);
     this.callbacks[evt] = this.callbacks[evt] || [];
     this.callbacks[evt].push(callback);
   }
