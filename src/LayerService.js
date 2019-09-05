@@ -7,7 +7,6 @@ export default class LayerService {
   constructor(layers) {
     this.layers = layers;
     this.callbacks = {};
-    this.callbacks = {};
     this.keys = [];
     this.listenChangeEvt();
   }
@@ -62,6 +61,15 @@ export default class LayerService {
   on(evt, callback) {
     this.callbacks[evt] = this.callbacks[evt] || [];
     this.callbacks[evt].push(callback);
+  }
+
+  un(evt, callback) {
+    for (let i = 0; i < (this.callbacks[evt] || []).length; i += 1) {
+      if (callback === this.callbacks[evt][i]) {
+        this.callbacks[evt].splice(i);
+        break;
+      }
+    }
   }
 
   listenChangeEvt() {

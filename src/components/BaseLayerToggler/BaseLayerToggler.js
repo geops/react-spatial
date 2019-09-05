@@ -148,16 +148,16 @@ class BaseLayerToggler extends Component {
 
   updateState() {
     const { layerService } = this.props;
-    const layers = layerService.getBaseLayers();
-    let idx = (layers || []).findIndex(l => l.getVisible());
-    if (idx === -1) {
+    const layers = layerService.getBaseLayers() || [];
+    let idx = layers.findIndex(l => l.getVisible());
+    if (idx === -1 && layers.length > 1) {
       idx = 0;
       layers[idx].setVisible(true);
     }
     this.setState({
       layers,
       idx,
-      layerVisible: layers[idx],
+      layerVisible: layers.length > 1 ? layers[idx] : null,
     });
   }
 

@@ -137,6 +137,6 @@ describe('BaseLayerToggler', () => {
 
   test('hide baseLayerToggler if only one baselayer', () => {
     const wrapper = mountComp(exampleData);
-    expect(wrapper.find('.tm-base-layer-item')).toBe(false);
+    expect(wrapper.find('.tm-base-layer-item').exists()).toBe(false);
   });
 });
