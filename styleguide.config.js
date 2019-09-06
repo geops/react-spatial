@@ -128,7 +128,7 @@ module.exports = {
         // Load css and scss files.
         {
           test: /\.s?css$/,
-          use: ['style-loader', 'css-loader', 'sass-loader?modules'],
+          use: ['style-loader', 'css-loader', 'sass-loader'],
         },
         {
           test: /^((?!url).)*\.svg$/,
