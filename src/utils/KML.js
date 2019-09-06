@@ -94,6 +94,7 @@ const sanitizeFeature = feature => {
       style.getText() &&
       style.getText().getScale() !== 0
     ) {
+      console.log(`readFeatures${feature.get('name')}`);
       if (image && image.getScale() === 0) {
         // transparentCircle is used to allow selection
         image = new Circle({
@@ -101,6 +102,13 @@ const sanitizeFeature = feature => {
           fill: new Fill({ color: [0, 0, 0, 0] }),
           stroke: new Stroke({ color: [0, 0, 0, 0] }),
         });
+      }
+
+      // We replace empty white spaces used to keep mormal spaces before and after the name.
+      let name = feature.get('name');
+      if (/\u200B/g.test(name)) {
+        name = name.replace(/\u200B/g, '');
+        feature.set('name', name);
       }
 
       text = new Text({
@@ -252,6 +260,12 @@ const writeFeatures = (layer, featureProjection) => {
       image: styles[0].getImage(),
       zIndex: styles[0].getZIndex(),
     };
+
+    // If we see spaces at the beginning or at the end we add a empty
+    // white space at the beginning and at the end.
+    if (newStyle.text && /^\s|\s$/g.test(newStyle.text.getText())) {
+      newStyle.text.setText(`\u200B${newStyle.text.getText()}\u200B`);
+    }
 
     // Set custom properties to be converted in extendedData in KML.
     if (newStyle.text && newStyle.text.getRotation()) {
