@@ -73,7 +73,9 @@
     "stylelint-scss": "^3.4.0",
     "url-loader": "^2.0.0",
     "vinyl-fs": "^3.0.3",
-    "webpack": "^4.39.1"
+    "webpack": "^4.39.1",
+    "xml-beautifier": "^0.4.2",
+    "xml-formatter": "^1.1.0"
   },
   "scripts": {
     "build": "buble --no modules,asyncAwait -i src -o build --objectAssign Object.assign --sourcemap, && cp -t build package.json README.md LICENSE && cp -rf src/images build",

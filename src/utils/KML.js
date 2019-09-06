@@ -122,7 +122,12 @@ const sanitizeFeature = feature => {
       }
 
       if (feature.get('textPadding')) {
-        text.setPadding(feature.get('textPadding').split(','));
+        text.setPadding(
+          feature
+            .get('textPadding')
+            .split(',')
+            .map(n => parseFloat(n)),
+        );
       }
 
       if (image instanceof Icon) {
