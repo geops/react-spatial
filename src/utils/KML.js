@@ -121,6 +121,15 @@ const sanitizeFeature = feature => {
         );
       }
 
+      if (feature.get('textPadding')) {
+        text.setPadding(
+          feature
+            .get('textPadding')
+            .split(',')
+            .map(n => parseFloat(n)),
+        );
+      }
+
       if (image instanceof Icon) {
         applyTextStyleForIcon(image, text);
       }
@@ -258,6 +267,10 @@ const writeFeatures = (layer, featureProjection) => {
         'textBackgroundFillColor',
         asString(newStyle.text.getBackgroundFill().getColor()),
       );
+    }
+
+    if (newStyle.text && newStyle.text.getPadding()) {
+      clone.set('textPadding', newStyle.text.getPadding().join());
     }
 
     if (newStyle.stroke && newStyle.stroke.getLineDash()) {

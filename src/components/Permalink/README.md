@@ -11,51 +11,39 @@ import Button from 'react-spatial/components/Button';
 import OLMap from 'ol/Map';
 import ConfigReader from '../../ConfigReader';
 
-class PermalinkExample extends React.Component {
-  constructor(props) {
-    super(props);
-    this.map = new OLMap({ controls: [] });
-    this.center = [-10997148, 4569099];
-    this.zoom = 3;
+const layers = ConfigReader.readConfig(treeData);
+const layerService = new LayerService(layers);
+const map = new OLMap({ controls: [] });
 
-    this.layers = ConfigReader.readConfig(treeData);
-    this.layerService = new LayerService(this.layers);
+const populationLayer = layerService.getLayer('USA Population Density');
+const baseLayers = layerService.getBaseLayers();
 
-    this.params = {
+<div className="tm-permalink-example">
+  <BasicMap map={map} layers={layers}/>
+  <Permalink
+    map={map}
+    layerService={layerService}
+    params={{
       mode: 'custom',
-    };
-  }
-
-  toggleVisibility() {
-    const lineLayer = this.layerService.getLayer('USA Population Density');
-    lineLayer.setVisible(!lineLayer.getVisible())
-  }
-
-  render() {
-    return (
-      <div className="tm-permalink-example">
-        <BasicMap
-          map={this.map}
-          center={this.center}
-          zoom={this.zoom}
-        />
-        <Permalink
-          layerService={this.layerService}
-          map={this.map}
-          params={this.params}
-        />
-        <div>
-          <Button
-            className="tm-button tm-permalink-button"
-            onClick={() => this.toggleVisibility()}
-          >
-            Toggle population layer
-          </Button>
-        </div>
-      </div>
-    );
-  }
-}
-
-<PermalinkExample />;
+    }}
+  />
+  <Button
+    onClick={() => {
+      populationLayer.setVisible(!populationLayer.getVisible())
+    }}
+  >
+    Toggle population layer
+  </Button>
+  <Button
+    onClick={() => {
+      if (baseLayers[1].getVisible()) {
+        baseLayers[0].setVisible(true);
+      } else {
+        baseLayers[1].setVisible(true);
+      }
+    }}
+  >
+    Change base layer
+  </Button>
+</div>;
 ```
