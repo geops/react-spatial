@@ -74,7 +74,7 @@ export default class Layer extends Observable {
   /**
    * Get a layer property.
    * @param {string} name Property name.
-   * @returns {propertie}
+   * @returns {property}
    */
   get(name) {
     return this.properties[name];
