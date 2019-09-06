@@ -101,7 +101,7 @@ describe('KML', () => {
           <Document>
             <name>lala</name>
             <Placemark>
-              <name>bar</name>
+              <name>\u200B   bar  \u200B</name>
               <Style>
                 <IconStyle>
                   <scale>0</scale>
@@ -139,7 +139,7 @@ describe('KML', () => {
 
       // Text
       const style = styles[0].getText();
-      expect(style.getText()).toEqual('bar');
+      expect(style.getText()).toBe('   bar  ');
       expect(style.getFont()).toEqual('bold 16px arial');
       expect(style.getFill()).toEqual({ color_: [32, 52, 126, 1] });
       expect(style.getScale()).toEqual(2);
