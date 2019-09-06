@@ -1,11 +1,11 @@
 .tm-permalink-example {
-  display: flex;
-  padding: 15px 0;
-
-  .tm-permalink-button {
-    margin-left: 15px;
+  div[role='button'] {
+    display: inline-block;
     width: 200px;
-    padding: 5px;
+    height: 20px;
+    text-align: center;
+    padding: 10px;
+    margin: 10px;
     border-radius: 10px;
     border: 2px solid $gray-lighter;
 

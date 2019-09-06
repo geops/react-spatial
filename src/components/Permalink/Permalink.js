@@ -56,6 +56,7 @@ class Permalink extends Component {
       y: undefined,
       z: undefined,
       layers: undefined,
+      baseLayers: undefined,
     };
     this.moveEndRef = null;
   }
@@ -77,6 +78,14 @@ class Permalink extends Component {
       layerService.getLayersAsFlatArray().forEach(l => {
         if (visibleLayers.includes(l.getKey())) {
           l.setVisible(true);
+        }
+      });
+
+      // Set baser layer visibility based on 'baseLayers' parameter.
+      const visibleBaseLayers = (urlParams.baseLayers || '').split(',');
+      layerService.getBaseLayers().forEach(baseLayer => {
+        if (baseLayer.getKey() === visibleBaseLayers[0]) {
+          baseLayer.setVisible(true); // The radio group will hide the others baseLayers automatically
         }
       });
     }
@@ -134,6 +143,13 @@ class Permalink extends Component {
   }
 
   updateLayers(layerService) {
+    const baseLayers = layerService.getBaseLayers();
+    const idx = baseLayers.findIndex(l => l.getVisible());
+    if (idx !== -1) {
+      const baseLayerVisible = baseLayers.splice(idx, 1);
+      baseLayers.unshift(baseLayerVisible[0]);
+    }
+
     this.setState({
       layers: layerService
         .getLayersAsFlatArray()
@@ -141,7 +157,11 @@ class Permalink extends Component {
           l => !l.getIsBaseLayer() && l.getVisible() && !l.hasVisibleChildren(),
         )
         .map(l => l.getKey())
-        .join(','),
+        .join(),
+      baseLayers:
+        baseLayers.length > 1
+          ? baseLayers.map(l => l.getKey()).join()
+          : undefined,
     });
   }
 

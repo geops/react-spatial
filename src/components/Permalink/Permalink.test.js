@@ -75,7 +75,7 @@ describe('Permalink', () => {
     const layerService = new LayerService(layers);
     mount(<Permalink layerService={layerService} />);
     const search =
-      '?layers=switzerland.samples,usa.population.density,lines.samples';
+      '?baseLayers=osm.baselayer,osm.baselayer.hot,open.topo.map&layers=switzerland.samples,usa.population.density,lines.samples';
 
     expect(window.location.search).toEqual(search);
   });
@@ -163,12 +163,32 @@ describe('Permalink', () => {
     const layers = ConfigReader.readConfig(data);
     const layerService = new LayerService(layers);
     mount(<Permalink layerService={layerService} />);
-    const search =
-      '?layers=switzerland.samples,usa.population.density,polygon.samples';
-    const callback = jest.fn(() => 42);
-    layerService.on('change:visible', callback);
     layerService.getLayer('Polygons Samples').setVisible(true);
 
-    expect(window.location.search).toEqual(search);
+    expect(
+      /layers=switzerland\.samples,usa\.population\.density,polygon\.samples/.test(
+        window.location.search,
+      ),
+    ).toBe(true);
+  });
+
+  test('shoud react on base layer visiblity change.', () => {
+    expect(window.location.search).toEqual('');
+    const layers = ConfigReader.readConfig(data);
+    const layerService = new LayerService(layers);
+    mount(<Permalink layerService={layerService} />);
+    expect(
+      /baseLayers=osm\.baselayer,osm\.baselayer\.hot,open\.topo\.map/.test(
+        window.location.search,
+      ),
+    ).toBe(true);
+
+    layerService.getLayer('OSM Baselayer Hot').setVisible(true);
+
+    expect(
+      /baseLayers=osm\.baselayer\.hot,osm\.baselayer,open\.topo\.map/.test(
+        window.location.search,
+      ),
+    ).toBe(true);
   });
 });

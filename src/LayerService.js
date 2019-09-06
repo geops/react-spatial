@@ -121,7 +121,9 @@ export default class LayerService {
             parentLayer.setVisible(visible, true, false, false);
           }
 
-          (this.callbacks['change:visible'] || []).forEach(cb => cb());
+          (this.callbacks['change:visible'] || []).forEach(cb =>
+            cb(evt.target),
+          );
         }),
       );
     });
