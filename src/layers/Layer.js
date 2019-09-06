@@ -5,15 +5,15 @@ import Observable, { unByKey } from 'ol/Observable';
  * a radioGroup, astatus and
  * an {@link https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html ol/Layer}
  * @class
- * @param {Object} options
- * @param {string} options.key information about the key
- * @param {string} options.name The name of the new layer
- * @param {ol.layer} options.olLayer the {@link https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html ol/Layer}
- * @param {radioGroup} options.radioGroup identifier to group layer in a group, toggle via a radio
- * @param {boolean} options.isBaseLayer if true this layer is the baseLayer
- * @param {boolean} options.visible If true layer is visible
- * @param {string} options.copyright Copyright-Statement
- * @param {Object} options.properties Application-specific layer properties.
+ * @param {Object} [options]
+ * @param {string} [options.key] information about the key
+ * @param {string} [options.name] The name of the new layer
+ * @param {ol.layer} [options.olLayer] the {@link https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html ol/Layer}
+ * @param {radioGroup} [options.radioGroup] identifier to group layer in a group, toggle via a radio
+ * @param {boolean} [options.isBaseLayer] if true this layer is the baseLayer
+ * @param {boolean} [options.visible] If true layer is visible
+ * @param {string} [options.copyright] Copyright-Statement
+ * @param {Object} [options.properties] Application-specific layer properties.
  */
 
 export default class Layer extends Observable {
@@ -74,6 +74,7 @@ export default class Layer extends Observable {
   /**
    * Get a layer property.
    * @param {string} name Property name.
+   * @returns {propertie}
    */
   get(name) {
     return this.properties[name];

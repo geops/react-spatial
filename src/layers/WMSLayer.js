@@ -6,6 +6,7 @@ import Layer from './Layer';
  * A class representing WMS layer to display on BasicMap
  * @class
  * @inheritDoc
+ * @param {Object} [options]
  */
 class WMSLayer extends Layer {
   constructor(options = {}) {
@@ -23,6 +24,7 @@ class WMSLayer extends Layer {
   /**
    * Get features infos' Url.
    * @param {ol.Coordinate} coord  {@link https://openlayers.org/en/latest/apidoc/module-ol_coordinate.html ol/Coordinate}
+   * @returns {ol.Layer}
    */
   getFeatureInfoUrl(coord) {
     const projection = this.map.getView().getProjection();
