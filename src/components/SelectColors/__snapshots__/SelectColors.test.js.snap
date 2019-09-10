@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SelectColors when no properties are set matches snapshot 1`] = `null`;
+
+exports[`SelectColors when options are objects with a value property. matches snapshot 1`] = `
+<select
+  className="tm-selectcolors"
+  onChange={[Function]}
+>
+  <option
+    style={
+      Object {
+        "backgroundColor": "rgba(255,255,255,0.01)",
+      }
+    }
+    value="none"
+  />
+  <option
+    style={
+      Object {
+        "backgroundColor": "rgba(0,0,0,1)",
+      }
+    }
+    value="black"
+  />
+  <option
+    style={
+      Object {
+        "backgroundColor": "rgba(0,0,255,1)",
+      }
+    }
+    value="blue"
+  />
+</select>
+`;
+
+exports[`SelectColors when options are strings matches snapshot 1`] = `
+<select
+  className="tm-selectcolors"
+  onChange={[Function]}
+>
+  <option
+    style={
+      Object {
+        "backgroundColor": "rgba(undefined)",
+      }
+    }
+  />
+  <option
+    style={
+      Object {
+        "backgroundColor": "rgba(undefined)",
+      }
+    }
+  />
+  <option
+    style={
+      Object {
+        "backgroundColor": "rgba(undefined)",
+      }
+    }
+  />
+</select>
+`;
