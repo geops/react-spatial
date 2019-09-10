@@ -10,9 +10,7 @@ class SelectColorsExample extends React.Component {
   constructor(props) {
     super(props);
     this.colors = [
-      { name: 'none', fill: [255, 255, 255, 0.01] },
       { name: 'black', fill: [0, 0, 0, 1] },
-      { name: 'lightgrey', fill: [247, 244, 244, 1] },
       { name: 'darkblue', fill: [0, 61, 133, 1] },
       { name: 'lightgreen', fill: [123, 181, 76, 1] },
       { name: 'darkgreen', fill: [19, 111, 62, 1] },
@@ -32,7 +30,13 @@ class SelectColorsExample extends React.Component {
             this.setState({ color: selectedColor });
           }}
         />
-        <div>You selected "{this.state.color.name}".</div>
+        <div>
+          You selected{' '}
+          <span style={{ color: `rgba(${this.state.color.fill})` }}>
+            "{this.state.color.name}"
+          </span>
+          .
+        </div>
       </div>
     );
   }
