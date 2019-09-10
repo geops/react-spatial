@@ -177,7 +177,7 @@ class Permalink extends Component {
         window.history.replaceState(
           undefined,
           undefined,
-          `${search === '?' ? '' : search}${hash || ''}`,
+          `${search}${hash || ''}`,
         );
       }
     }
