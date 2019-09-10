@@ -76,6 +76,7 @@ module.exports = {
             'src/components/PermalinkInput/[A-Z]*.js',
             'src/components/SearchInput/[A-Z]*.js',
             'src/components/Select/[A-Z]*.js',
+            'src/components/SelectColors/[A-Z]*.js',
             'src/components/SelectLinks/[A-Z]*.js',
           ],
           exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
