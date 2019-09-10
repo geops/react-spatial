@@ -42,8 +42,7 @@ const defaultProps = {
 /**
  * This component displays a simple selectColors HTML element.
  */
-const SelectColors = props => {
-  const { options, className, onChange } = props;
+const SelectColors = ({ options, className, onChange }) => {
   if (!options) {
     return null;
   }
