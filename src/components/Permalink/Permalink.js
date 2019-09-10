@@ -51,13 +51,7 @@ const defaultProps = {
 class Permalink extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      x: undefined,
-      y: undefined,
-      z: undefined,
-      layers: undefined,
-      baseLayers: undefined,
-    };
+    this.state = {};
     this.moveEndRef = null;
   }
 
@@ -167,42 +161,23 @@ class Permalink extends Component {
 
   updateHistory() {
     const { params, history } = this.props;
-
-    const parameters = {
-      ...params,
-      ...this.state,
-    };
-
-    Object.keys(parameters).forEach(key => {
-      if (parameters[key] === undefined) {
-        delete parameters[key];
-      }
-    });
-
-    const qsStr = qs.stringify(
-      {
-        ...params,
-        ...parameters,
-      },
-      { encode: false },
-    );
-
-    const locSearch = `?${qsStr}`;
+    const oldParams = qs.parse(window.location.search);
+    const parameters = { ...oldParams, ...params, ...this.state };
+    const qStr = qs.stringify(parameters, { encode: false });
+    const search = qStr ? `?${qStr}` : '';
 
     if (
-      (!qsStr && window.location.search) ||
-      (qsStr && locSearch !== window.location.search)
+      (!qStr && window.location.search) ||
+      (qStr && search !== window.location.search)
     ) {
       if (history) {
-        history.replace({
-          search: locSearch === '?' ? '' : locSearch,
-        });
+        history.replace({ search });
       } else {
         const { hash } = window.location;
         window.history.replaceState(
           undefined,
           undefined,
-          `${locSearch === '?' ? '' : locSearch}${hash || ''}`,
+          `${search === '?' ? '' : search}${hash || ''}`,
         );
       }
     }
