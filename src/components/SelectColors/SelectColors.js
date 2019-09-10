@@ -42,29 +42,28 @@ const defaultProps = {
 /**
  * This component displays a simple selectColors HTML element.
  */
-const SelectColors = function(props) {
-  const { options } = props;
-  const { className } = props;
-  const { onChange } = props;
+const SelectColors = props => {
+  const { options, className, onChange } = props;
   if (!options) {
     return null;
   }
 
-  return React.createElement(
-    'select',
-    {
-      className,
-      onChange(evt) {
+  return (
+    <select
+      className={className}
+      onChange={evt => {
         onChange(evt.target.value);
-      },
-    },
-    (options || []).map(function(c) {
-      return React.createElement('option', {
-        key: c.name,
-        value: c.name,
-        style: { backgroundColor: `rgba(${c.fill})` },
-      });
-    }),
+      }}
+    >
+      {(options || []).map(c => (
+        // eslint-disable-next-line jsx-a11y/control-has-associated-label
+        <option
+          key={c.name}
+          value={c.name}
+          style={{ backgroundColor: `rgba(${c.fill})` }}
+        />
+      ))}
+    </select>
   );
 };
 
