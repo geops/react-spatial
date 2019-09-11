@@ -30,6 +30,7 @@ class Copyright extends Component {
     this.state = {
       copyrights: [],
     };
+    this.updateCopyright = this.updateCopyright.bind(this);
   }
 
   componentDidMount() {
@@ -46,15 +47,13 @@ class Copyright extends Component {
   componentWillUnmount() {
     const { layerService } = this.props;
     if (layerService) {
-      layerService.un('change:visible', this.onChangeRef);
+      layerService.un('change:visible', this.updateCopyright);
     }
   }
 
   updateLayerService() {
     const { layerService } = this.props;
-    this.onChangeRef = layerService.on('change:visible', () =>
-      this.updateCopyright(),
-    );
+    layerService.on('change:visible', () => this.updateCopyright());
     this.updateCopyright();
   }
 
