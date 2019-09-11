@@ -111,8 +111,15 @@ class LayerTree extends Component {
       layers: layerService ? layerService.getLayers() : [],
       expandedLayerNames: initialExpandedLayerNames,
     };
-
+    this.updateLayers = this.updateLayers.bind(this);
     this.olKeys = [];
+  }
+
+  componentWillMount() {
+    const { layerService } = this.props;
+    if (layerService) {
+      layerService.un('change:visible', this.updateLayers);
+    }
   }
 
   componentDidMount() {

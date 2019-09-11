@@ -1,5 +1,3 @@
-import { unByKey } from 'ol/Observable';
-
 /**
  * A layer service class to handle layer adding, removing and visiblity.
  */
@@ -126,12 +124,6 @@ export default class LayerService {
           );
         }),
       );
-    });
-  }
-
-  unlistenChangeEvt() {
-    this.keys.forEach(key => {
-      unByKey(key);
     });
   }
 }
