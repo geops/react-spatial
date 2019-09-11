@@ -120,10 +120,18 @@ describe('LayerService', () => {
     test('remove a callback on event.', () => {
       const layerService = instantiateLayerService(layerData);
       const cb = () => {};
+      const cb1 = () => {};
+      const cb2 = () => {};
       layerService.on('foo', cb);
+      layerService.on('foo', cb1);
+      layerService.on('foo', cb2);
       expect(layerService.callbacks.foo[0]).toBe(cb);
-      layerService.un('foo', cb);
-      expect(layerService.callbacks.foo[0]).toBe(undefined);
+      expect(layerService.callbacks.foo[1]).toBe(cb1);
+      expect(layerService.callbacks.foo[2]).toBe(cb2);
+      layerService.un('foo', cb1);
+      expect(layerService.callbacks.foo[0]).toBe(cb);
+      expect(layerService.callbacks.foo[1]).toBe(cb2);
+      expect(layerService.callbacks.foo[2]).toBe(undefined);
     });
   });
 });
