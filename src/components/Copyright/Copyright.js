@@ -45,12 +45,16 @@ class Copyright extends Component {
 
   componentWillUnmount() {
     const { layerService } = this.props;
-    layerService.unlistenChangeEvt('change:visible');
+    if (layerService) {
+      layerService.un('change:visible', this.onChangeRef);
+    }
   }
 
   updateLayerService() {
     const { layerService } = this.props;
-    layerService.on('change:visible', () => this.updateCopyright());
+    this.onChangeRef = layerService.on('change:visible', () =>
+      this.updateCopyright(),
+    );
     this.updateCopyright();
   }
 

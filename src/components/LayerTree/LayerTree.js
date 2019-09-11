@@ -115,6 +115,13 @@ class LayerTree extends Component {
     this.olKeys = [];
   }
 
+  componentWillMount() {
+    const { layerService } = this.props;
+    if (layerService) {
+      layerService.un('change:visible', this.onChangeRef);
+    }
+  }
+
   componentDidMount() {
     this.updateLayerService();
   }
@@ -151,7 +158,9 @@ class LayerTree extends Component {
     const { layerService } = this.props;
     if (layerService) {
       this.updateLayers(layerService);
-      layerService.on('change:visible', () => this.updateLayers(layerService));
+      this.onChangeRef = layerService.on('change:visible', () =>
+        this.updateLayers(layerService),
+      );
     }
   }
 

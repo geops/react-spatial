@@ -107,7 +107,7 @@ class Permalink extends Component {
     }
 
     if (layerService) {
-      layerService.unlistenChangeEvt('change:visible');
+      layerService.un('change:visible', this.onChangeRef);
     }
   }
 
@@ -132,7 +132,9 @@ class Permalink extends Component {
     const { layerService } = this.props;
     if (layerService) {
       this.updateLayers(layerService);
-      layerService.on('change:visible', () => this.updateLayers(layerService));
+      this.onChangeRef = layerService.on('change:visible', () =>
+        this.updateLayers(layerService),
+      );
     }
   }
 
