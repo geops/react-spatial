@@ -67,7 +67,7 @@ export default class LayerService {
   un(evt, callback) {
     for (let i = 0; i < (this.callbacks[evt] || []).length; i += 1) {
       if (callback === this.callbacks[evt][i]) {
-        this.callbacks[evt].splice(i);
+        this.callbacks[evt].splice(i, 1);
         break;
       }
     }
