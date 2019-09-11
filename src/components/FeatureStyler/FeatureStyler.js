@@ -9,6 +9,7 @@ import StopEvents from '../StopEvents';
 import Select from '../Select';
 import List from '../List';
 import Button from '../Button';
+import ColorPicker from '../ColorPicker/ColorPicker';
 
 const propTypes = {
   /**
@@ -856,25 +857,12 @@ class FeatureStyler extends PureComponent {
       <div className={classNameColors}>
         {label ? <div className="tm-color-label">{t(label)}</div> : null}
         <div>
-          {colorOptions.map(c => (
-            <Button
-              key={c.name}
-              className={`tm-button tm-color ${
-                color === c ? classNameSelected : ''
-              }`}
-              onClick={e => {
-                onClick(e, c);
-              }}
-            >
-              <div
-                style={{
-                  backgroundColor: `rgba(${c.fill})`,
-                  width: '100%',
-                  height: '100%',
-                }}
-              />
-            </Button>
-          ))}
+          <ColorPicker
+            label="Pick color"
+            onChange={c => {
+              onClick(null, c);
+            }}
+          />
         </div>
       </div>
     );
@@ -1215,10 +1203,12 @@ class FeatureStyler extends PureComponent {
       return null;
     }
     return (
-      <div className={className}>
-        {this.renderTextStyle()}
-        {this.renderIconStyle()}
-        {this.renderStrokeStyle()}
+      <div>
+        <div className={className}>
+          {this.renderTextStyle()}
+          {this.renderIconStyle()}
+          {this.renderStrokeStyle()}
+        </div>
       </div>
     );
   }
