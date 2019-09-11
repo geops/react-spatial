@@ -89,7 +89,8 @@ describe('CanvasSaveButton', () => {
         {conf.icon}
       </CanvasSaveButton>,
     );
-    const link = { click: jest.fn() };
+    const link = document.createElement('a');
+    link.click = jest.fn();
     const div = document.createElement('div');
     const canvas = document.createElement('canvas');
     canvas.toBlob = jest.fn(callback => callback());
@@ -127,10 +128,9 @@ describe('CanvasSaveButton', () => {
       expect(saveEnd).toHaveBeenCalledTimes(1);
       expect(spy2.mock.calls[0][0]).toBe(canvas);
       expect(spy2.mock.calls[0][0].toBlob).toHaveBeenCalledTimes(1);
-      expect(link.href).toBe('fooblob');
+      expect(link.href).toBe('http://localhost/fooblob');
       expect(link.download).toBe('.jpg');
-      // TODO fix this test for click.
-      // expect(link.click).toHaveBeenCalledTimes(1);
+      expect(link.click).toHaveBeenCalledTimes(1);
       expect(spy4).toHaveBeenCalledTimes(1);
       spy.mockRestore();
       spy2.mockRestore();

@@ -94,7 +94,6 @@ const sanitizeFeature = feature => {
       style.getText() &&
       style.getText().getScale() !== 0
     ) {
-      console.log(`readFeatures${feature.get('name')}`);
       if (image && image.getScale() === 0) {
         // transparentCircle is used to allow selection
         image = new Circle({
