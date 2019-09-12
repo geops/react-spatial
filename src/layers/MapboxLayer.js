@@ -8,6 +8,7 @@ import Layer from './Layer';
  * A class representing Mapboxlayer to display on BasicMap
  * @class
  * @inheritDoc
+ * @param {Object} [options]
  */
 export default class MapboxLayer extends Layer {
   constructor(options = {}) {
@@ -95,6 +96,10 @@ export default class MapboxLayer extends Layer {
     }
   }
 
+  /**
+   * Create exact copy of the MapboxLayer
+   * @returns {MapboxLayer}
+   */
   clone() {
     return new MapboxLayer(this.options);
   }
