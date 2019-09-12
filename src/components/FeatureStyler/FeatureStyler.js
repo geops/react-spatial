@@ -859,8 +859,10 @@ class FeatureStyler extends PureComponent {
         <div>
           <ColorPicker
             label="Pick color"
-            onChange={c => {
-              onClick(null, c);
+            selectedColor={color}
+            colors={colorOptions}
+            onChange={(c, evt) => {
+              onClick(evt, c);
             }}
           />
         </div>
