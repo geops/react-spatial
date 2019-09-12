@@ -32,7 +32,6 @@ function ColorPickerExample() {
         label="Choose Color"
         onChange={c => handleChange(c)}
       />
-      {console.log('color', color)}
       <div>
         You selected <span style={{ color: color.name }}>color</span>.
       </div>
