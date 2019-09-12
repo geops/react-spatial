@@ -149,7 +149,6 @@ function FeatureStylerExample() {
         onSelect={f => setSelectedFeature(f)}
         onDeselect={() => setSelectedFeature(null)}
       />
-      <ColorPicker />
       {featureStyler}
     </div>
   );

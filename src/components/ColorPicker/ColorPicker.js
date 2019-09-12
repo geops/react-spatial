@@ -12,10 +12,6 @@ const propTypes = {
    */
   className: PropTypes.string,
   /**
-   * Label for the container.
-   */
-  label: PropTypes.string,
-  /**
    * onChange event handler.
    */
   onChange: PropTypes.func,
@@ -41,7 +37,6 @@ const propTypes = {
 
 const defaultProps = {
   className: 'tm-color-picker',
-  label: 'Pick Color',
   onChange: () => {},
   colors: [
     { name: 'none', fill: [255, 255, 255, 0.01], border: 'white' },
@@ -54,7 +49,7 @@ const defaultProps = {
     { name: 'white', fill: [255, 255, 255, 1], border: 'black' },
     { name: 'yellow', fill: [255, 255, 0, 1], border: 'black' },
   ],
-  selectedColor: { name: 'none', fill: [255, 255, 255, 0.01], border: 'white' },
+  selectedColor: { name: 'black', fill: [0, 0, 0, 1], border: 'white' },
 };
 
 const cover = {
@@ -65,7 +60,7 @@ const cover = {
   left: '0px',
 };
 
-const ColorPicker = ({ colors, selectedColor, className, label, onChange }) => {
+const ColorPicker = ({ colors, selectedColor, className, onChange }) => {
   const [displayColorPicker, setdisplayColorPicker] = useState(false);
 
   const handleClick = () => setdisplayColorPicker(!displayColorPicker);
@@ -83,11 +78,14 @@ const ColorPicker = ({ colors, selectedColor, className, label, onChange }) => {
     <div className={className}>
       <Button
         className="tm-color-button"
-        style={{ backgroundColor: selectedColor && selectedColor.name }}
+        style={{
+          backgroundColor: selectedColor && selectedColor.name,
+        }}
         onClick={() => handleClick()}
       >
-        {label}
+        <span />
       </Button>
+
       {displayColorPicker ? (
         <div>
           <div style={cover} onClick={() => handleClose()} />

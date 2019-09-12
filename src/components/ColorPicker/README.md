@@ -19,7 +19,7 @@ const colors = [
   { name: 'yellow', fill: [255, 255, 0, 1], border: 'black' },
 ];
 function ColorPickerExample() {
-  const [color, setColor] = useState(colors[0]);
+  const [color, setColor] = useState(colors[1]);
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
 
   const handleChange = c => setColor(c);

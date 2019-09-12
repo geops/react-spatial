@@ -1,643 +1,631 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`FeatureStyler matches snapshot when feature has a styleFunction() which returns  a style object. 1`] = `
-<div>
+<div
+  className="tm-feature-styler"
+>
   <div
-    className="tm-feature-styler"
+    className="tm-modify-icons"
   >
-    <div
-      className="tm-modify-icons"
-    >
-      <div>
-        Modify icon
-      </div>
-      <div>
-        <div
-          className="tm-button"
-          onClick={[Function]}
-          onKeyPress={[Function]}
-          role="button"
-          style={
-            Object {
-              "height": 24,
-              "width": 24,
-            }
-          }
-          tabIndex={0}
-        >
-          <img
-            alt="images/marker.png"
-            height={24}
-            src="images/marker.png"
-            width={24}
-          />
-        </div>
-      </div>
-      <div>
-        <div
-          className="tm-button"
-          onClick={[Function]}
-          onKeyPress={[Function]}
-          role="button"
-          style={
-            Object {
-              "height": 24,
-              "width": 24,
-            }
-          }
-          tabIndex={0}
-        >
-          <img
-            alt="images/airport.png"
-            height={24}
-            src="images/airport.png"
-            width={24}
-          />
-        </div>
-        <div
-          className="tm-button"
-          onClick={[Function]}
-          onKeyPress={[Function]}
-          role="button"
-          style={
-            Object {
-              "height": 24,
-              "width": 24,
-            }
-          }
-          tabIndex={0}
-        >
-          <img
-            alt="images/fuel.png"
-            height={24}
-            src="images/fuel.png"
-            width={24}
-          />
-        </div>
-      </div>
+    <div>
+      Modify icon
     </div>
-    <div
-      className="tm-modify-icon-size"
-    >
-      <div>
-        Modify icon size
-      </div>
-      <select
-        className="tm-select"
-        onChange={[Function]}
-        value="48,48"
+    <div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "height": 24,
+            "width": 24,
+          }
+        }
+        tabIndex={0}
       >
-        <option
-          value={
-            Array [
-              24,
-              24,
-            ]
-          }
-        >
-          small size
-        </option>
-        <option
-          value={
-            Array [
-              36,
-              36,
-            ]
-          }
-        >
-          medium size
-        </option>
-        <option
-          value={
-            Array [
-              48,
-              48,
-            ]
-          }
-        >
-          big size
-        </option>
-      </select>
+        <img
+          alt="images/marker.png"
+          height={24}
+          src="images/marker.png"
+          width={24}
+        />
+      </div>
     </div>
+    <div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "height": 24,
+            "width": 24,
+          }
+        }
+        tabIndex={0}
+      >
+        <img
+          alt="images/airport.png"
+          height={24}
+          src="images/airport.png"
+          width={24}
+        />
+      </div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "height": 24,
+            "width": 24,
+          }
+        }
+        tabIndex={0}
+      >
+        <img
+          alt="images/fuel.png"
+          height={24}
+          src="images/fuel.png"
+          width={24}
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    className="tm-modify-icon-size"
+  >
+    <div>
+      Modify icon size
+    </div>
+    <select
+      className="tm-select"
+      onChange={[Function]}
+      value="48,48"
+    >
+      <option
+        value={
+          Array [
+            24,
+            24,
+          ]
+        }
+      >
+        small size
+      </option>
+      <option
+        value={
+          Array [
+            36,
+            36,
+          ]
+        }
+      >
+        medium size
+      </option>
+      <option
+        value={
+          Array [
+            48,
+            48,
+          ]
+        }
+      >
+        big size
+      </option>
+    </select>
   </div>
 </div>
 `;
 
 exports[`FeatureStyler matches snapshot when feature has a styleFunction() which returns  an array of 3 styles targeting the one at index 1. 1`] = `
-<div>
+<div
+  className="tm-feature-styler"
+>
   <div
-    className="tm-feature-styler"
+    className="tm-modify-icons"
   >
-    <div
-      className="tm-modify-icons"
-    >
-      <div>
-        Modify icon
-      </div>
-      <div>
-        <div
-          className="tm-button"
-          onClick={[Function]}
-          onKeyPress={[Function]}
-          role="button"
-          style={
-            Object {
-              "height": 24,
-              "width": 24,
-            }
-          }
-          tabIndex={0}
-        >
-          <img
-            alt="images/marker.png"
-            height={24}
-            src="images/marker.png"
-            width={24}
-          />
-        </div>
-      </div>
-      <div>
-        <div
-          className="tm-button"
-          onClick={[Function]}
-          onKeyPress={[Function]}
-          role="button"
-          style={
-            Object {
-              "height": 24,
-              "width": 24,
-            }
-          }
-          tabIndex={0}
-        >
-          <img
-            alt="images/airport.png"
-            height={24}
-            src="images/airport.png"
-            width={24}
-          />
-        </div>
-        <div
-          className="tm-button"
-          onClick={[Function]}
-          onKeyPress={[Function]}
-          role="button"
-          style={
-            Object {
-              "height": 24,
-              "width": 24,
-            }
-          }
-          tabIndex={0}
-        >
-          <img
-            alt="images/fuel.png"
-            height={24}
-            src="images/fuel.png"
-            width={24}
-          />
-        </div>
-      </div>
+    <div>
+      Modify icon
     </div>
-    <div
-      className="tm-modify-icon-size"
-    >
-      <div>
-        Modify icon size
-      </div>
-      <select
-        className="tm-select"
-        onChange={[Function]}
-        value="48,48"
+    <div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "height": 24,
+            "width": 24,
+          }
+        }
+        tabIndex={0}
       >
-        <option
-          value={
-            Array [
-              24,
-              24,
-            ]
-          }
-        >
-          small size
-        </option>
-        <option
-          value={
-            Array [
-              36,
-              36,
-            ]
-          }
-        >
-          medium size
-        </option>
-        <option
-          value={
-            Array [
-              48,
-              48,
-            ]
-          }
-        >
-          big size
-        </option>
-      </select>
+        <img
+          alt="images/marker.png"
+          height={24}
+          src="images/marker.png"
+          width={24}
+        />
+      </div>
     </div>
+    <div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "height": 24,
+            "width": 24,
+          }
+        }
+        tabIndex={0}
+      >
+        <img
+          alt="images/airport.png"
+          height={24}
+          src="images/airport.png"
+          width={24}
+        />
+      </div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "height": 24,
+            "width": 24,
+          }
+        }
+        tabIndex={0}
+      >
+        <img
+          alt="images/fuel.png"
+          height={24}
+          src="images/fuel.png"
+          width={24}
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    className="tm-modify-icon-size"
+  >
+    <div>
+      Modify icon size
+    </div>
+    <select
+      className="tm-select"
+      onChange={[Function]}
+      value="48,48"
+    >
+      <option
+        value={
+          Array [
+            24,
+            24,
+          ]
+        }
+      >
+        small size
+      </option>
+      <option
+        value={
+          Array [
+            36,
+            36,
+          ]
+        }
+      >
+        medium size
+      </option>
+      <option
+        value={
+          Array [
+            48,
+            48,
+          ]
+        }
+      >
+        big size
+      </option>
+    </select>
   </div>
 </div>
 `;
 
 exports[`FeatureStyler matches snapshot when feature has a styleFunction() which returns  an array of one style. 1`] = `
-<div>
+<div
+  className="tm-feature-styler"
+>
   <div
-    className="tm-feature-styler"
+    className="tm-modify-icons"
   >
-    <div
-      className="tm-modify-icons"
-    >
-      <div>
-        Modify icon
-      </div>
-      <div>
-        <div
-          className="tm-button"
-          onClick={[Function]}
-          onKeyPress={[Function]}
-          role="button"
-          style={
-            Object {
-              "height": 24,
-              "width": 24,
-            }
-          }
-          tabIndex={0}
-        >
-          <img
-            alt="images/marker.png"
-            height={24}
-            src="images/marker.png"
-            width={24}
-          />
-        </div>
-      </div>
-      <div>
-        <div
-          className="tm-button"
-          onClick={[Function]}
-          onKeyPress={[Function]}
-          role="button"
-          style={
-            Object {
-              "height": 24,
-              "width": 24,
-            }
-          }
-          tabIndex={0}
-        >
-          <img
-            alt="images/airport.png"
-            height={24}
-            src="images/airport.png"
-            width={24}
-          />
-        </div>
-        <div
-          className="tm-button"
-          onClick={[Function]}
-          onKeyPress={[Function]}
-          role="button"
-          style={
-            Object {
-              "height": 24,
-              "width": 24,
-            }
-          }
-          tabIndex={0}
-        >
-          <img
-            alt="images/fuel.png"
-            height={24}
-            src="images/fuel.png"
-            width={24}
-          />
-        </div>
-      </div>
+    <div>
+      Modify icon
     </div>
-    <div
-      className="tm-modify-icon-size"
-    >
-      <div>
-        Modify icon size
-      </div>
-      <select
-        className="tm-select"
-        onChange={[Function]}
-        value="48,48"
+    <div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "height": 24,
+            "width": 24,
+          }
+        }
+        tabIndex={0}
       >
-        <option
-          value={
-            Array [
-              24,
-              24,
-            ]
-          }
-        >
-          small size
-        </option>
-        <option
-          value={
-            Array [
-              36,
-              36,
-            ]
-          }
-        >
-          medium size
-        </option>
-        <option
-          value={
-            Array [
-              48,
-              48,
-            ]
-          }
-        >
-          big size
-        </option>
-      </select>
+        <img
+          alt="images/marker.png"
+          height={24}
+          src="images/marker.png"
+          width={24}
+        />
+      </div>
     </div>
+    <div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "height": 24,
+            "width": 24,
+          }
+        }
+        tabIndex={0}
+      >
+        <img
+          alt="images/airport.png"
+          height={24}
+          src="images/airport.png"
+          width={24}
+        />
+      </div>
+      <div
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "height": 24,
+            "width": 24,
+          }
+        }
+        tabIndex={0}
+      >
+        <img
+          alt="images/fuel.png"
+          height={24}
+          src="images/fuel.png"
+          width={24}
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    className="tm-modify-icon-size"
+  >
+    <div>
+      Modify icon size
+    </div>
+    <select
+      className="tm-select"
+      onChange={[Function]}
+      value="48,48"
+    >
+      <option
+        value={
+          Array [
+            24,
+            24,
+          ]
+        }
+      >
+        small size
+      </option>
+      <option
+        value={
+          Array [
+            36,
+            36,
+          ]
+        }
+      >
+        medium size
+      </option>
+      <option
+        value={
+          Array [
+            48,
+            48,
+          ]
+        }
+      >
+        big size
+      </option>
+    </select>
   </div>
 </div>
 `;
 
 exports[`FeatureStyler matches snapshot when feature has a styleFunction() which returns  an empty array. 1`] = `
-<div>
-  <div
-    className="tm-feature-styler"
-  />
-</div>
+<div
+  className="tm-feature-styler"
+/>
 `;
 
 exports[`FeatureStyler matches snapshot when feature has a styleFunction() which returns a style with bold font. 1`] = `
-<div>
+<div
+  className="tm-feature-styler"
+>
+  <div>
+    <div>
+      Modify text
+    </div>
+    <textarea
+      onChange={[Function]}
+      rows="1"
+      value=""
+    />
+  </div>
   <div
-    className="tm-feature-styler"
+    className="tm-modify-text-size"
   >
     <div>
-      <div>
-        Modify text
-      </div>
-      <textarea
-        onChange={[Function]}
-        rows="1"
-        value=""
-      />
+      Modify text size
     </div>
-    <div
-      className="tm-modify-text-size"
+    <select
+      className="tm-select"
+      onChange={[Function]}
+      value="1"
     >
-      <div>
-        Modify text size
-      </div>
-      <select
-        className="tm-select"
-        onChange={[Function]}
-        value="1"
+      <option
+        value={1}
       >
-        <option
-          value={1}
-        >
-          small size
-        </option>
-        <option
-          value={1.5}
-        >
-          medium size
-        </option>
-        <option
-          value={2}
-        >
-          big size
-        </option>
-      </select>
-    </div>
+        small size
+      </option>
+      <option
+        value={1.5}
+      >
+        medium size
+      </option>
+      <option
+        value={2}
+      >
+        big size
+      </option>
+    </select>
+  </div>
+  <div
+    className="tm-modify-text-font"
+  >
     <div
-      className="tm-modify-text-font"
+      className="tm-button tm-button-text-bold"
+      onClick={[Function]}
+      onKeyPress={[Function]}
+      role="button"
+      tabIndex={0}
     >
+      F
+    </div>
+  </div>
+  <div
+    className="tm-modify-text-color"
+  >
+    <div
+      className="tm-color-label"
+    >
+      Modify color
+    </div>
+    <div>
       <div
-        className="tm-button tm-button-text-bold"
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
+        className="tm-color-picker"
       >
-        F
-      </div>
-    </div>
-    <div
-      className="tm-modify-text-color"
-    >
-      <div
-        className="tm-color-label"
-      >
-        Modify color
-      </div>
-      <div>
         <div
-          className="tm-color-picker"
-        >
-          <div
-            className="tm-color-button"
-            onClick={[Function]}
-            onKeyPress={[Function]}
-            role="button"
-            style={
-              Object {
-                "backgroundColor": "none",
-              }
+          className="tm-color-button"
+          onClick={[Function]}
+          onKeyPress={[Function]}
+          role="button"
+          style={
+            Object {
+              "backgroundColor": "black",
             }
-            tabIndex={0}
-          >
-            Pick color
-          </div>
+          }
+          tabIndex={0}
+        >
+          <span />
         </div>
       </div>
     </div>
+  </div>
+  <div
+    className="tm-modify-text-bg-color"
+  >
     <div
-      className="tm-modify-text-bg-color"
+      className="tm-color-label"
     >
+      Modify text background
+    </div>
+    <div>
       <div
-        className="tm-color-label"
+        className="tm-color-picker"
       >
-        Modify text background
-      </div>
-      <div>
         <div
-          className="tm-color-picker"
-        >
-          <div
-            className="tm-color-button"
-            onClick={[Function]}
-            onKeyPress={[Function]}
-            role="button"
-            style={
-              Object {
-                "backgroundColor": "none",
-              }
+          className="tm-color-button"
+          onClick={[Function]}
+          onKeyPress={[Function]}
+          role="button"
+          style={
+            Object {
+              "backgroundColor": "black",
             }
-            tabIndex={0}
-          >
-            Pick color
-          </div>
+          }
+          tabIndex={0}
+        >
+          <span />
         </div>
       </div>
     </div>
-    <div
-      className="tm-modify-text-rotation"
-    >
-      <div>
-        Modify text rotation
-      </div>
-      <input
-        max="360"
-        min="0"
-        onChange={[Function]}
-        type="number"
-        value="0"
-      />
-      <div>
-        °
-      </div>
-      <input
-        max="360"
-        min="0"
-        onChange={[Function]}
-        rows="1"
-        type="range"
-        value="0"
-      />
+  </div>
+  <div
+    className="tm-modify-text-rotation"
+  >
+    <div>
+      Modify text rotation
     </div>
+    <input
+      max="360"
+      min="0"
+      onChange={[Function]}
+      type="number"
+      value="0"
+    />
+    <div>
+      °
+    </div>
+    <input
+      max="360"
+      min="0"
+      onChange={[Function]}
+      rows="1"
+      type="range"
+      value="0"
+    />
   </div>
 </div>
 `;
 
 exports[`FeatureStyler matches snapshot when feature has a styleFunction() which returns a style with color values selected from properties. 1`] = `
-<div>
+<div
+  className="tm-feature-styler"
+>
   <div
-    className="tm-feature-styler"
+    className="tm-modify-stroke"
   >
     <div
-      className="tm-modify-stroke"
+      className="tm-line-icon-label"
     >
-      <div
-        className="tm-line-icon-label"
-      >
-        Modify line closure
-      </div>
-      <div
-        className="tm-line-icon-wrapper"
-      >
-        <div>
-          <div
-            className="tm-line-icon-sel"
-            onClick={[Function]}
-            onKeyPress={[Function]}
-            role="button"
-            tabIndex={0}
-          >
-            <div
-              className="tm-line-icon-current"
-            >
-              <img
-                alt="images/noArrow.png"
-                src="images/noArrow.png"
-              />
-            </div>
-            <svg
-              fill="currentColor"
-              focusable={false}
-              height="1em"
-              stroke="currentColor"
-              strokeWidth="0"
-              style={
-                Object {
-                  "color": undefined,
-                }
-              }
-              viewBox="0 0 320 512"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
-              />
-            </svg>
-          </div>
-        </div>
-        <div>
-          <div
-            className="tm-line-icon-sel"
-            onClick={[Function]}
-            onKeyPress={[Function]}
-            role="button"
-            tabIndex={0}
-          >
-            <div
-              className="tm-line-icon-current"
-            >
-              <img
-                alt="images/noArrow.png"
-                src="images/noArrow.png"
-              />
-            </div>
-            <svg
-              fill="currentColor"
-              focusable={false}
-              height="1em"
-              stroke="currentColor"
-              strokeWidth="0"
-              style={
-                Object {
-                  "color": undefined,
-                }
-              }
-              viewBox="0 0 320 512"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
-              />
-            </svg>
-          </div>
-        </div>
-      </div>
+      Modify line closure
     </div>
     <div
-      className="tm-modify-color"
+      className="tm-line-icon-wrapper"
     >
-      <div
-        className="tm-color-label"
-      >
-        Modify line color
+      <div>
+        <div
+          className="tm-line-icon-sel"
+          onClick={[Function]}
+          onKeyPress={[Function]}
+          role="button"
+          tabIndex={0}
+        >
+          <div
+            className="tm-line-icon-current"
+          >
+            <img
+              alt="images/noArrow.png"
+              src="images/noArrow.png"
+            />
+          </div>
+          <svg
+            fill="currentColor"
+            focusable={false}
+            height="1em"
+            stroke="currentColor"
+            strokeWidth="0"
+            style={
+              Object {
+                "color": undefined,
+              }
+            }
+            viewBox="0 0 320 512"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+            />
+          </svg>
+        </div>
       </div>
       <div>
         <div
-          className="tm-color-picker"
+          className="tm-line-icon-sel"
+          onClick={[Function]}
+          onKeyPress={[Function]}
+          role="button"
+          tabIndex={0}
         >
           <div
-            className="tm-color-button"
-            onClick={[Function]}
-            onKeyPress={[Function]}
-            role="button"
+            className="tm-line-icon-current"
+          >
+            <img
+              alt="images/noArrow.png"
+              src="images/noArrow.png"
+            />
+          </div>
+          <svg
+            fill="currentColor"
+            focusable={false}
+            height="1em"
+            stroke="currentColor"
+            strokeWidth="0"
             style={
               Object {
-                "backgroundColor": "white",
+                "color": undefined,
               }
             }
-            tabIndex={0}
+            viewBox="0 0 320 512"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            Pick color
-          </div>
+            <path
+              d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="tm-modify-color"
+  >
+    <div
+      className="tm-color-label"
+    >
+      Modify line color
+    </div>
+    <div>
+      <div
+        className="tm-color-picker"
+      >
+        <div
+          className="tm-color-button"
+          onClick={[Function]}
+          onKeyPress={[Function]}
+          role="button"
+          style={
+            Object {
+              "backgroundColor": "white",
+            }
+          }
+          tabIndex={0}
+        >
+          <span />
         </div>
       </div>
     </div>
@@ -646,258 +634,256 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
 `;
 
 exports[`FeatureStyler matches snapshot when feature has a styleFunction() which returns a style with icon and text values selected from properties. 1`] = `
-<div>
+<div
+  className="tm-feature-styler"
+>
+  <div>
+    <div>
+      Modify text
+    </div>
+    <textarea
+      onChange={[Function]}
+      rows="1"
+      value="bar"
+    />
+  </div>
   <div
-    className="tm-feature-styler"
+    className="tm-modify-text-size"
   >
     <div>
-      <div>
-        Modify text
-      </div>
-      <textarea
-        onChange={[Function]}
-        rows="1"
-        value="bar"
-      />
+      Modify text size
     </div>
-    <div
-      className="tm-modify-text-size"
+    <select
+      className="tm-select"
+      onChange={[Function]}
+      value="1.5"
     >
-      <div>
-        Modify text size
-      </div>
-      <select
-        className="tm-select"
-        onChange={[Function]}
-        value="1.5"
+      <option
+        value={1}
       >
-        <option
-          value={1}
-        >
-          small size
-        </option>
-        <option
-          value={1.5}
-        >
-          medium size
-        </option>
-        <option
-          value={2}
-        >
-          big size
-        </option>
-      </select>
-    </div>
+        small size
+      </option>
+      <option
+        value={1.5}
+      >
+        medium size
+      </option>
+      <option
+        value={2}
+      >
+        big size
+      </option>
+    </select>
+  </div>
+  <div
+    className="tm-modify-text-font"
+  >
     <div
-      className="tm-modify-text-font"
+      className="tm-button"
+      onClick={[Function]}
+      onKeyPress={[Function]}
+      role="button"
+      tabIndex={0}
     >
+      F
+    </div>
+  </div>
+  <div
+    className="tm-modify-text-color"
+  >
+    <div
+      className="tm-color-label"
+    >
+      Modify color
+    </div>
+    <div>
+      <div
+        className="tm-color-picker"
+      >
+        <div
+          className="tm-color-button"
+          onClick={[Function]}
+          onKeyPress={[Function]}
+          role="button"
+          style={
+            Object {
+              "backgroundColor": "red",
+            }
+          }
+          tabIndex={0}
+        >
+          <span />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="tm-modify-text-bg-color"
+  >
+    <div
+      className="tm-color-label"
+    >
+      Modify text background
+    </div>
+    <div>
+      <div
+        className="tm-color-picker"
+      >
+        <div
+          className="tm-color-button"
+          onClick={[Function]}
+          onKeyPress={[Function]}
+          role="button"
+          style={
+            Object {
+              "backgroundColor": "black",
+            }
+          }
+          tabIndex={0}
+        >
+          <span />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="tm-modify-text-rotation"
+  >
+    <div>
+      Modify text rotation
+    </div>
+    <input
+      max="360"
+      min="0"
+      onChange={[Function]}
+      type="number"
+      value="29"
+    />
+    <div>
+      °
+    </div>
+    <input
+      max="360"
+      min="0"
+      onChange={[Function]}
+      rows="1"
+      type="range"
+      value="29"
+    />
+  </div>
+  <div
+    className="tm-modify-icons"
+  >
+    <div>
+      Modify icon
+    </div>
+    <div>
+      <div
+        className="tm-button tm-selected"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "height": 24,
+            "width": 24,
+          }
+        }
+        tabIndex={0}
+      >
+        <img
+          alt="images/marker.png"
+          height={24}
+          src="images/marker.png"
+          width={24}
+        />
+      </div>
+    </div>
+    <div>
       <div
         className="tm-button"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
+        style={
+          Object {
+            "height": 24,
+            "width": 24,
+          }
+        }
         tabIndex={0}
       >
-        F
+        <img
+          alt="images/airport.png"
+          height={24}
+          src="images/airport.png"
+          width={24}
+        />
       </div>
-    </div>
-    <div
-      className="tm-modify-text-color"
-    >
       <div
-        className="tm-color-label"
+        className="tm-button"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        style={
+          Object {
+            "height": 24,
+            "width": 24,
+          }
+        }
+        tabIndex={0}
       >
-        Modify color
-      </div>
-      <div>
-        <div
-          className="tm-color-picker"
-        >
-          <div
-            className="tm-color-button"
-            onClick={[Function]}
-            onKeyPress={[Function]}
-            role="button"
-            style={
-              Object {
-                "backgroundColor": "red",
-              }
-            }
-            tabIndex={0}
-          >
-            Pick color
-          </div>
-        </div>
+        <img
+          alt="images/fuel.png"
+          height={24}
+          src="images/fuel.png"
+          width={24}
+        />
       </div>
     </div>
-    <div
-      className="tm-modify-text-bg-color"
+  </div>
+  <div
+    className="tm-modify-icon-size"
+  >
+    <div>
+      Modify icon size
+    </div>
+    <select
+      className="tm-select"
+      onChange={[Function]}
+      value="24,24"
     >
-      <div
-        className="tm-color-label"
+      <option
+        value={
+          Array [
+            24,
+            24,
+          ]
+        }
       >
-        Modify text background
-      </div>
-      <div>
-        <div
-          className="tm-color-picker"
-        >
-          <div
-            className="tm-color-button"
-            onClick={[Function]}
-            onKeyPress={[Function]}
-            role="button"
-            style={
-              Object {
-                "backgroundColor": "none",
-              }
-            }
-            tabIndex={0}
-          >
-            Pick color
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      className="tm-modify-text-rotation"
-    >
-      <div>
-        Modify text rotation
-      </div>
-      <input
-        max="360"
-        min="0"
-        onChange={[Function]}
-        type="number"
-        value="29"
-      />
-      <div>
-        °
-      </div>
-      <input
-        max="360"
-        min="0"
-        onChange={[Function]}
-        rows="1"
-        type="range"
-        value="29"
-      />
-    </div>
-    <div
-      className="tm-modify-icons"
-    >
-      <div>
-        Modify icon
-      </div>
-      <div>
-        <div
-          className="tm-button tm-selected"
-          onClick={[Function]}
-          onKeyPress={[Function]}
-          role="button"
-          style={
-            Object {
-              "height": 24,
-              "width": 24,
-            }
-          }
-          tabIndex={0}
-        >
-          <img
-            alt="images/marker.png"
-            height={24}
-            src="images/marker.png"
-            width={24}
-          />
-        </div>
-      </div>
-      <div>
-        <div
-          className="tm-button"
-          onClick={[Function]}
-          onKeyPress={[Function]}
-          role="button"
-          style={
-            Object {
-              "height": 24,
-              "width": 24,
-            }
-          }
-          tabIndex={0}
-        >
-          <img
-            alt="images/airport.png"
-            height={24}
-            src="images/airport.png"
-            width={24}
-          />
-        </div>
-        <div
-          className="tm-button"
-          onClick={[Function]}
-          onKeyPress={[Function]}
-          role="button"
-          style={
-            Object {
-              "height": 24,
-              "width": 24,
-            }
-          }
-          tabIndex={0}
-        >
-          <img
-            alt="images/fuel.png"
-            height={24}
-            src="images/fuel.png"
-            width={24}
-          />
-        </div>
-      </div>
-    </div>
-    <div
-      className="tm-modify-icon-size"
-    >
-      <div>
-        Modify icon size
-      </div>
-      <select
-        className="tm-select"
-        onChange={[Function]}
-        value="24,24"
+        small size
+      </option>
+      <option
+        value={
+          Array [
+            36,
+            36,
+          ]
+        }
       >
-        <option
-          value={
-            Array [
-              24,
-              24,
-            ]
-          }
-        >
-          small size
-        </option>
-        <option
-          value={
-            Array [
-              36,
-              36,
-            ]
-          }
-        >
-          medium size
-        </option>
-        <option
-          value={
-            Array [
-              48,
-              48,
-            ]
-          }
-        >
-          big size
-        </option>
-      </select>
-    </div>
+        medium size
+      </option>
+      <option
+        value={
+          Array [
+            48,
+            48,
+          ]
+        }
+      >
+        big size
+      </option>
+    </select>
   </div>
 </div>
 `;

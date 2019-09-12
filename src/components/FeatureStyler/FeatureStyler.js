@@ -1205,12 +1205,10 @@ class FeatureStyler extends PureComponent {
       return null;
     }
     return (
-      <div>
-        <div className={className}>
-          {this.renderTextStyle()}
-          {this.renderIconStyle()}
-          {this.renderStrokeStyle()}
-        </div>
+      <div className={className}>
+        {this.renderTextStyle()}
+        {this.renderIconStyle()}
+        {this.renderStrokeStyle()}
       </div>
     );
   }
