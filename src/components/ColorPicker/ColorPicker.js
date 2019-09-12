@@ -57,10 +57,20 @@ const defaultProps = {
   selectedColor: { name: 'none', fill: [255, 255, 255, 0.01], border: 'white' },
 };
 
+const cover = {
+  position: 'fixed',
+  top: '0px',
+  right: '0px',
+  bottom: '0px',
+  left: '0px',
+};
+
 const ColorPicker = ({ colors, selectedColor, className, label, onChange }) => {
   const [displayColorPicker, setdisplayColorPicker] = useState(false);
 
   const handleClick = () => setdisplayColorPicker(!displayColorPicker);
+
+  const handleClose = () => setdisplayColorPicker(false);
 
   if (!colors) {
     return null;
@@ -80,6 +90,7 @@ const ColorPicker = ({ colors, selectedColor, className, label, onChange }) => {
       </Button>
       {displayColorPicker ? (
         <div>
+          <div style={cover} onClick={() => handleClose()} />
           <GithubPicker
             colors={arrHexa}
             triangle="top-left"
