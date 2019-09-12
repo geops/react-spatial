@@ -83,6 +83,8 @@ export default class MapboxLayer extends Layer {
       pitchWithRotate: false,
       scrollZoom: false,
       touchZoomRotate: false,
+      // Needs to be true to able to export the canvas, but could lead to performance issue on mobile.
+      preserveDrawingBuffer: this.options.preserveDrawingBuffer || false,
     });
   }
 
