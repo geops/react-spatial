@@ -88,7 +88,7 @@ const ColorPicker = ({ colors, selectedColor, className, onChange }) => {
 
       {displayColorPicker ? (
         <div>
-          <div style={cover} onClick={() => handleClose()} />
+          <div style={cover} onClick={() => setDisplayColorPicker(false)} />
           <GithubPicker
             colors={arrHexa}
             triangle="top-left"
