@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-no-comment-textnodes, jsx-a11y/interactive-supports-focus, jsx-a11y/control-has-associated-label,jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { GithubPicker } from 'react-color';
 import { asString } from 'ol/color';
 import Button from '../Button/Button';
