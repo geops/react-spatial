@@ -61,7 +61,7 @@ const cover = {
 };
 
 const ColorPicker = ({ colors, selectedColor, className, onChange }) => {
-  const [displayColorPicker, setdisplayColorPicker] = useState(false);
+  const [displayColorPicker, setDisplayColorPicker] = useState(false);
 
   const handleClick = () => setdisplayColorPicker(!displayColorPicker);
 
