@@ -61,14 +61,14 @@ const cover = {
 const ColorPicker = ({ colors, selectedColor, className, onChange }) => {
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
 
-
-
   if (!colors) {
     return null;
   }
+  
   const arrHexa = colors.map(c => {
     return asString(c.fill);
   });
+  
   return (
     // eslint-disable-next-line react/jsx-no-comment-textnodes
     <div className={className}>
