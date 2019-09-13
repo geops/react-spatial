@@ -1,7 +1,5 @@
-/* eslint-disable react/jsx-no-comment-textnodes, jsx-a11y/interactive-supports-focus, jsx-a11y/control-has-associated-label,jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { GithubPicker } from 'react-color';
 import { asString } from 'ol/color';
 import Button from '../Button/Button';
@@ -61,18 +59,16 @@ const cover = {
 };
 
 const ColorPicker = ({ colors, selectedColor, className, onChange }) => {
-  const [displayColorPicker, setdisplayColorPicker] = useState(false);
-
-  const handleClick = () => setdisplayColorPicker(!displayColorPicker);
-
-  const handleClose = () => setdisplayColorPicker(false);
+  const [displayColorPicker, setDisplayColorPicker] = useState(false);
 
   if (!colors) {
     return null;
   }
+  
   const arrHexa = colors.map(c => {
     return asString(c.fill);
   });
+  
   return (
     // eslint-disable-next-line react/jsx-no-comment-textnodes
     <div className={className}>
@@ -81,14 +77,14 @@ const ColorPicker = ({ colors, selectedColor, className, onChange }) => {
         style={{
           backgroundColor: selectedColor && selectedColor.name,
         }}
-        onClick={() => handleClick()}
+        onClick={() => setDisplayColorPicker(!displayColorPicker)}
       >
         <span />
       </Button>
 
       {displayColorPicker ? (
         <div>
-          <div style={cover} onClick={() => handleClose()} />
+          <div style={cover} onClick={() => setDisplayColorPicker(false)} />
           <GithubPicker
             colors={arrHexa}
             onChange={(c, evt) => {

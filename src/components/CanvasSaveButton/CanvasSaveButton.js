@@ -455,6 +455,10 @@ class CanvasSaveButton extends PureComponent {
                 onSaveEnd(mapToExport);
               })
               .catch(err => {
+                if (err) {
+                  // eslint-disable-next-line no-console
+                  console.error(err);
+                }
                 onSaveEnd(mapToExport, err);
               });
           });
