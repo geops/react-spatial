@@ -53,6 +53,7 @@ class Permalink extends Component {
     super(props);
     this.state = {};
     this.moveEndRef = null;
+    this.updateLayers = this.updateLayers.bind(this);
   }
 
   componentDidMount() {
@@ -107,7 +108,7 @@ class Permalink extends Component {
     }
 
     if (layerService) {
-      layerService.unlistenChangeEvt('change:visible');
+      layerService.un('change:visible', this.updateLayers);
     }
   }
 

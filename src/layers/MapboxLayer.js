@@ -8,6 +8,7 @@ import Layer from './Layer';
  * A class representing Mapboxlayer to display on BasicMap
  * @class
  * @inheritDoc
+ * @param {Object} [options]
  */
 export default class MapboxLayer extends Layer {
   constructor(options = {}) {
@@ -82,6 +83,8 @@ export default class MapboxLayer extends Layer {
       pitchWithRotate: false,
       scrollZoom: false,
       touchZoomRotate: false,
+      // Needs to be true to able to export the canvas, but could lead to performance issue on mobile.
+      preserveDrawingBuffer: this.options.preserveDrawingBuffer || false,
     });
   }
 
@@ -95,6 +98,10 @@ export default class MapboxLayer extends Layer {
     }
   }
 
+  /**
+   * Create exact copy of the MapboxLayer
+   * @returns {MapboxLayer}
+   */
   clone() {
     return new MapboxLayer(this.options);
   }

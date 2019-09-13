@@ -5,6 +5,7 @@ import Layer from './Layer';
  * A class representing vector layer to display on BasicMap
  * @class
  * @inheritDoc
+ * @param {Object} [options]
  */
 class VectorLayer extends Layer {
   constructor(options = {}) {
