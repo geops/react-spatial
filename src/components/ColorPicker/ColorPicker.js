@@ -65,7 +65,6 @@ const ColorPicker = ({ colors, selectedColor, className, onChange }) => {
 
   const handleClick = () => setDisplayColorPicker(!displayColorPicker);
 
-  const handleClose = () => setdisplayColorPicker(false);
 
   if (!colors) {
     return null;
