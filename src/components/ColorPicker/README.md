@@ -19,21 +19,22 @@ const colors = [
   { name: 'yellow', fill: [255, 255, 0, 1], border: 'black' },
 ];
 function ColorPickerExample() {
-  const [color, setColor] = useState(colors[1]);
+  const [color, setColor] = useState(colors[6]);
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
 
   const handleChange = c => setColor(c);
   return (
     <div className="tm-colorpicker-example">
-      <ColorPicker
-        selectedColor={color}
-        colors={colors}
-        className="tm-color-button"
-        label="Choose Color"
-        onChange={c => handleChange(c)}
-      />
-      <div>
-        You selected <span style={{ color: color.name }}>color</span>.
+      <div className="tm-colorpicker-swatch">
+        <ColorPicker
+          selectedColor={color}
+          colors={colors}
+          className="tm-colorpicker-button"
+          onChange={c => handleChange(c)}
+        />
+      </div>
+      <div style={{ marginTop: '10px' }}>
+        You have selected <strong>{color.name}</strong> color.
       </div>
     </div>
   );

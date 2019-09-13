@@ -3,22 +3,29 @@
   height: 110px;
   border: 2px solid #eee;
   overflow: hidden;
+  background-color: #ddd;
 
   .tm-color-button {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    width: 25px;
-    height: 25px;
-    border-radius: 10px;
-    background-color: black;
-    border: 2px solid #eee;
+    width: 36px;
+    height: 14px;
+    border-radius: 2px;
   }
 
   .github-picker {
     position: absolute;
-    top: 45px;
+    top: 10px;
+  }
+
+  .tm-colorpicker-swatch {
+    position: absolute;
+    padding: 5px;
+    background-color: #fff;
+    border-radius: 1px;
+    display: inline-block;
+    cursor: pointer;
+    left: 20rem;
+    margin-top: 10px;
+    height: 15px;
+    width: 36px;
   }
 }

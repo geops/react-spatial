@@ -432,7 +432,9 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
     >
       Modify color
     </div>
-    <div>
+    <div
+      className="tm-colorpicker-swatch"
+    >
       <div
         className="tm-color-picker"
       >
@@ -461,7 +463,9 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
     >
       Modify text background
     </div>
-    <div>
+    <div
+      className="tm-colorpicker-swatch"
+    >
       <div
         className="tm-color-picker"
       >
@@ -609,7 +613,9 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
     >
       Modify line color
     </div>
-    <div>
+    <div
+      className="tm-colorpicker-swatch"
+    >
       <div
         className="tm-color-picker"
       >
@@ -696,7 +702,9 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
     >
       Modify color
     </div>
-    <div>
+    <div
+      className="tm-colorpicker-swatch"
+    >
       <div
         className="tm-color-picker"
       >
@@ -725,7 +733,9 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
     >
       Modify text background
     </div>
-    <div>
+    <div
+      className="tm-colorpicker-swatch"
+    >
       <div
         className="tm-color-picker"
       >

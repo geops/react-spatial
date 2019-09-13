@@ -91,7 +91,6 @@ const ColorPicker = ({ colors, selectedColor, className, onChange }) => {
           <div style={cover} onClick={() => handleClose()} />
           <GithubPicker
             colors={arrHexa}
-            triangle="top-left"
             onChange={(c, evt) => {
               const { r, g, b, a } = c.rgb;
               const idx = arrHexa.indexOf(asString([r, g, b, a]));
