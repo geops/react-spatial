@@ -81,7 +81,7 @@ const ColorPicker = ({ colors, selectedColor, className, onChange }) => {
         style={{
           backgroundColor: selectedColor && selectedColor.name,
         }}
-        onClick={() => handleClick()}
+        onClick={() => setDisplayColorPicker(!displayColorPicker)}
       >
         <span />
       </Button>
