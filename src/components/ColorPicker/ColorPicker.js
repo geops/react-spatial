@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { GithubPicker } from 'react-color';
@@ -64,11 +65,11 @@ const ColorPicker = ({ colors, selectedColor, className, onChange }) => {
   if (!colors) {
     return null;
   }
-  
+
   const arrHexa = colors.map(c => {
     return asString(c.fill);
   });
-  
+
   return (
     // eslint-disable-next-line react/jsx-no-comment-textnodes
     <div className={className}>
