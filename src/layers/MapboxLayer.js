@@ -107,15 +107,6 @@ export default class MapboxLayer extends Layer {
   }
 
   /**
-   * Force mapBox layer to resize.
-   */
-  resize() {
-    if (this.mbMap) {
-      this.mbMap.resize();
-    }
-  }
-
-  /**
    * Create exact copy of the MapboxLayer
    * @returns {MapboxLayer}
    */
