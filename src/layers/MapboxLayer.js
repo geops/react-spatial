@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { toLonLat } from 'ol/proj';
+import { unByKey } from 'ol/Observable';
 import mapboxgl from 'mapbox-gl';
 import OLLayer from 'ol/layer/Layer';
 import Layer from './Layer';
@@ -86,6 +87,10 @@ export default class MapboxLayer extends Layer {
       // Needs to be true to able to export the canvas, but could lead to performance issue on mobile.
       preserveDrawingBuffer: this.options.preserveDrawingBuffer || false,
     });
+
+    this.changeSizeRef = this.map.on('change:size', () => {
+      this.mbMap.resize();
+    });
   }
 
   /**
@@ -93,6 +98,9 @@ export default class MapboxLayer extends Layer {
    */
   terminate() {
     super.terminate();
+    if (this.changeSizeRef) {
+      unByKey(this.changeSizeRef);
+    }
     if (this.mbMap) {
       this.mbMap.remove();
     }
