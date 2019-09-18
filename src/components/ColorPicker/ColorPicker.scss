@@ -1,0 +1,23 @@
+.tm-color-picker {
+  position: relative;
+  width: 60px;
+  height: 30px;
+
+  div[role='button'] {
+    display: flex;
+    background-color: #eee;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+
+    div {
+      width: 80%;
+      height: 60%;
+    }
+  }
+
+  .github-picker[style] {
+    position: absolute !important;
+    z-index: 1;
+  }
+}

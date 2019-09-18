@@ -98,6 +98,7 @@ module.exports = {
             'src/components/StopEvents/[A-Z]*.js',
             'src/components/Tabs/[A-Z]*.js',
             'src/components/Tab/[A-Z]*.js',
+            'src/components/ColorPicker/[A-Z]*.js',
           ],
           exampleMode: 'collapse', // 'hide' | 'collapse' | 'expand'
           usageMode: 'collapse', // 'hide' | 'collapse' | 'expand'

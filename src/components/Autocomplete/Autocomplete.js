@@ -120,6 +120,7 @@ class Autocomplete extends PureComponent {
 
   componentDidUpdate(prevProps, prevState) {
     // Close the list when clicking outside the list or the input
+    document.removeEventListener('click', this.onDocClick);
     document.addEventListener('click', this.onDocClick);
 
     // Trigger onFocus and onBlur event

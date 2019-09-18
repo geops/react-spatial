@@ -432,9 +432,11 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
     >
       Modify color
     </div>
-    <div>
+    <div
+      className="tm-color-picker"
+    >
       <div
-        className="tm-button tm-color "
+        className="tm-button"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -443,128 +445,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         <div
           style={
             Object {
-              "backgroundColor": "rgba(0,0,0)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(0,0,255)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(128,128,128)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(0,128,0)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(255,165,0)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(255,0,0)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(255,255,255)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(255,255,0)",
-              "height": "100%",
-              "width": "100%",
+              "backgroundColor": "black",
             }
           }
         />
@@ -579,9 +460,11 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
     >
       Modify text background
     </div>
-    <div>
+    <div
+      className="tm-color-picker"
+    >
       <div
-        className="tm-button tm-color "
+        className="tm-button"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -590,145 +473,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         <div
           style={
             Object {
-              "backgroundColor": "rgba(255,255,255,0.01)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(0,0,0,1)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(0,0,255,1)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(128,128,128,1)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(0,128,0,1)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(255,165,0,1)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(255,0,0,1)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(255,255,255,1)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(255,255,0,1)",
-              "height": "100%",
-              "width": "100%",
+              "backgroundColor": "black",
             }
           }
         />
@@ -862,9 +607,11 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
     >
       Modify line color
     </div>
-    <div>
+    <div
+      className="tm-color-picker"
+    >
       <div
-        className="tm-button tm-color "
+        className="tm-button"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -873,128 +620,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         <div
           style={
             Object {
-              "backgroundColor": "rgba(0,0,0)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(0,0,255)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(128,128,128)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(0,128,0)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(255,165,0)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(255,0,0)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color tm-button tm-selected"
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(255,255,255)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(255,255,0)",
-              "height": "100%",
-              "width": "100%",
+              "backgroundColor": "white",
             }
           }
         />
@@ -1067,9 +693,11 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
     >
       Modify color
     </div>
-    <div>
+    <div
+      className="tm-color-picker"
+    >
       <div
-        className="tm-button tm-color "
+        className="tm-button"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -1078,128 +706,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         <div
           style={
             Object {
-              "backgroundColor": "rgba(0,0,0)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(0,0,255)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(128,128,128)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(0,128,0)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(255,165,0)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color tm-button tm-selected"
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(255,0,0)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(255,255,255)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(255,255,0)",
-              "height": "100%",
-              "width": "100%",
+              "backgroundColor": "red",
             }
           }
         />
@@ -1214,9 +721,11 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
     >
       Modify text background
     </div>
-    <div>
+    <div
+      className="tm-color-picker"
+    >
       <div
-        className="tm-button tm-color "
+        className="tm-button"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -1225,145 +734,7 @@ exports[`FeatureStyler matches snapshot when feature has a styleFunction() which
         <div
           style={
             Object {
-              "backgroundColor": "rgba(255,255,255,0.01)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(0,0,0,1)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(0,0,255,1)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(128,128,128,1)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(0,128,0,1)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(255,165,0,1)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(255,0,0,1)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(255,255,255,1)",
-              "height": "100%",
-              "width": "100%",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tm-button tm-color "
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-      >
-        <div
-          style={
-            Object {
-              "backgroundColor": "rgba(255,255,0,1)",
-              "height": "100%",
-              "width": "100%",
+              "backgroundColor": "black",
             }
           }
         />

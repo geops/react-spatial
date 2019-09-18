@@ -283,7 +283,14 @@ describe('FeatureStyler', () => {
         FeatureStyler.defaultProps.colors[1],
       );
       wrapper
-        .find('Button.tm-color')
+        .find('.tm-color-picker')
+        .at(0)
+        .find('Button')
+        .at(0)
+        .simulate('click');
+      wrapper
+        .find('.github-picker')
+        .find('span div span div')
         .at(1)
         .simulate('click');
       expect(wrapper.state().lineColor).toEqual(
@@ -325,7 +332,15 @@ describe('FeatureStyler', () => {
       );
       wrapper
         .find('.tm-modify-text-color')
-        .find('Button.tm-color')
+        .find('.tm-color-picker')
+        .at(1)
+        .find('Button')
+        .at(0)
+        .simulate('click');
+      wrapper
+        .find('.tm-modify-text-color')
+        .find('.github-picker')
+        .find('span div span div')
         .at(1)
         .simulate('click');
       expect(wrapper.state().textColor).toEqual(

@@ -17,6 +17,7 @@ import OLE from 'react-spatial/components/OLE';
 import OSM from 'ol/source/OSM';
 import FeatureStyler from 'react-spatial/components/FeatureStyler';
 import AddTextIcon from 'react-spatial/images/text.png';
+import ColorPicker from 'react-spatial/components/ColorPicker';
 
 const defaultIconStyle = new Style({
   image: new Icon({
@@ -116,21 +117,21 @@ function FeatureStylerExample() {
     featureStyler = (
       <div className="tm-feature-styler-popup">
         <FeatureStyler
-            feature={selectedFeature}
-            colors={[
-              { name: 'black', fill: [0, 0, 0] },
-              { name: 'blue', fill: [32, 52, 126] },
-              { name: 'orange', fill: [255, 165, 0] },
-              { name: 'red', fill: [255, 0, 0] },
-            ]}
-            textBgColors={[
-              { name: 'none', fill: [255, 255, 255, 0.01] }, // #FFFFFF
-              { name: 'black', fill: [0, 0, 0, 1] }, // #000000
-              { name: 'yellow', fill: [255, 255, 0, 1] },
-              { name: 'darkgrey', fill: [90, 92, 90, 1] }, // #5A5C5A
-              { name: 'lightblue', fill: [23, 137, 202, 1] }, // #1789CA
-            ]}
-            />
+          feature={selectedFeature}
+          colors={[
+            { name: 'black', fill: [0, 0, 0] },
+            { name: 'blue', fill: [32, 52, 126] },
+            { name: 'orange', fill: [255, 165, 0] },
+            { name: 'red', fill: [255, 0, 0] },
+          ]}
+          textBgColors={[
+            { name: 'none', fill: [255, 255, 255, 0.01] }, // #FFFFFF
+            { name: 'black', fill: [0, 0, 0, 1] }, // #000000
+            { name: 'yellow', fill: [255, 255, 0, 1] },
+            { name: 'darkgrey', fill: [90, 92, 90, 1] }, // #5A5C5A
+            { name: 'lightblue', fill: [23, 137, 202, 1] }, // #1789CA
+          ]}
+        />
       </div>
     );
   }
@@ -138,13 +139,14 @@ function FeatureStylerExample() {
   return (
     <div className="tm-feature-styler-example">
       <BasicMap map={map} layers={layers} />
+
       <OLE
         map={map}
         drawPoint={drawIconOptions}
         drawLineString={drawLineOptions}
         drawCustoms={drawCustomsOptions}
         layer={layers[1]}
-        onSelect={(f) => setSelectedFeature(f)}
+        onSelect={f => setSelectedFeature(f)}
         onDeselect={() => setSelectedFeature(null)}
       />
       {featureStyler}
