@@ -8342,9 +8342,9 @@ ol@^6.0.0-beta.11:
     rbush "^3.0.0"
 
 ole@^0.0.4-beta.10:
-  version "0.0.4-beta-3"
-  resolved "https://registry.yarnpkg.com/ole/-/ole-0.0.4-beta-3.tgz#6f3e7ce0b5d9298d404225ea40afdd06eb18a559"
-  integrity sha512-cBAfO1rR2ZTN5Uh5lFiR4b4qYWmOH22qfUrn4kaAEx7Fnsjs6+lGu6FCd8iJWECN4Fkv2Ww56lxPI0Hngkmjdw==
+  version "0.0.4-beta.12"
+  resolved "https://registry.yarnpkg.com/ole/-/ole-0.0.4-beta.12.tgz#86fe80781fa7b539718c39adca2c1be5b1aebfcf"
+  integrity sha512-AAzkIPEvcIWScio29RXB+SSe8AxrsrL4+lKkhaA4LQ00yunRwbpXxQeeXzcFo5dnz6EL104ykllGy5UnZGGUIw==
 
 on-finished@~2.3.0:
   version "2.3.0"
