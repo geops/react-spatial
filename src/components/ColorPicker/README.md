@@ -24,7 +24,7 @@ function ColorPickerExample() {
 
   const handleChange = c => setColor(c);
   return (
-    <div className="tm-colorpicker-example">
+    <div className="tm-color-picker-example">
       <ColorPicker
         selectedColor={color}
         colors={colors}
