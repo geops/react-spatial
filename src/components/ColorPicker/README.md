@@ -25,14 +25,11 @@ function ColorPickerExample() {
   const handleChange = c => setColor(c);
   return (
     <div className="tm-colorpicker-example">
-      <div className="tm-colorpicker-swatch">
-        <ColorPicker
-          selectedColor={color}
-          colors={colors}
-          className="tm-colorpicker-button"
-          onChange={c => handleChange(c)}
-        />
-      </div>
+      <ColorPicker
+        selectedColor={color}
+        colors={colors}
+        onChange={c => handleChange(c)}
+      />
       <div style={{ marginTop: '10px' }}>
         You have selected <strong>{color.name}</strong> color.
       </div>

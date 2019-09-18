@@ -28,26 +28,8 @@
     }
   }
 
-  .tm-color-button {
-    padding: 5px;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    width: 25px;
-    height: 5px;
-  }
-
-  .tm-colorpicker-swatch {
-    padding: 5px;
-    background-color: #d0cbc0;
-    border-radius: 1px;
-    display: inline-block;
-    cursor: pointer;
-    width: 36px;
-    height: 16px;
-  }
-
-  .github-picker {
-    width: max-content !important;
+  .tm-color-picker {
+    margin: 5px;
   }
 
   .tm-feature-styler-popup {

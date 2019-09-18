@@ -283,8 +283,10 @@ describe('FeatureStyler', () => {
         FeatureStyler.defaultProps.colors[1],
       );
       wrapper
-        .find('.tm-color-button')
-        .at(1)
+        .find('.tm-color-picker')
+        .at(0)
+        .find('Button')
+        .at(0)
         .simulate('click');
       wrapper
         .find('.github-picker')
@@ -330,8 +332,10 @@ describe('FeatureStyler', () => {
       );
       wrapper
         .find('.tm-modify-text-color')
-        .find('.tm-color-button')
+        .find('.tm-color-picker')
         .at(1)
+        .find('Button')
+        .at(0)
         .simulate('click');
       wrapper
         .find('.tm-modify-text-color')

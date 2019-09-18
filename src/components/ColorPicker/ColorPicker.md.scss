@@ -1,31 +1,4 @@
-.tm-colorpicker-example {
+.tm-color-picker-example {
   position: relative;
   height: 110px;
-  border: 2px solid #eee;
-  overflow: hidden;
-  background-color: #ddd;
-
-  .tm-color-button {
-    width: 36px;
-    height: 14px;
-    border-radius: 2px;
-  }
-
-  .github-picker {
-    position: absolute;
-    top: 10px;
-  }
-
-  .tm-colorpicker-swatch {
-    position: absolute;
-    padding: 5px;
-    background-color: #fff;
-    border-radius: 1px;
-    display: inline-block;
-    cursor: pointer;
-    left: 20rem;
-    margin-top: 10px;
-    height: 15px;
-    width: 36px;
-  }
 }

@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { GithubPicker } from 'react-color';
 import { asString } from 'ol/color';
@@ -32,6 +32,11 @@ const propTypes = {
     fill: PropTypes.array,
     border: PropTypes.string,
   }),
+
+  /**
+   * Render method to render a different color picker.
+   */
+  renderColorPicker: PropTypes.func,
 };
 
 const defaultProps = {
@@ -49,53 +54,76 @@ const defaultProps = {
     { name: 'yellow', fill: [255, 255, 0, 1], border: 'black' },
   ],
   selectedColor: { name: 'black', fill: [0, 0, 0, 1], border: 'white' },
+  renderColorPicker: null,
 };
 
-const cover = {
-  position: 'fixed',
-  top: '0px',
-  right: '0px',
-  bottom: '0px',
-  left: '0px',
-};
-
-const ColorPicker = ({ colors, selectedColor, className, onChange }) => {
-  const [displayColorPicker, setDisplayColorPicker] = useState(false);
-
-  if (!colors) {
-    return null;
-  }
-
+const defaultRenderColorPicker = (selectedColor, colors, onChange) => {
   const arrHexa = colors.map(c => {
     return asString(c.fill);
   });
 
   return (
-    // eslint-disable-next-line react/jsx-no-comment-textnodes
-    <div className={className}>
-      <Button
-        className="tm-color-button"
-        style={{
-          backgroundColor: selectedColor && selectedColor.name,
-        }}
-        onClick={() => setDisplayColorPicker(!displayColorPicker)}
-      >
-        <span />
-      </Button>
+    <GithubPicker
+      colors={arrHexa}
+      width={150}
+      onChange={(c, evt) => {
+        const { r, g, b, a } = c.rgb;
+        const idx = arrHexa.indexOf(asString([r, g, b, a]));
+        onChange(colors[idx], evt);
+      }}
+    />
+  );
+};
 
-      {displayColorPicker ? (
-        <div>
-          <div style={cover} onClick={() => setDisplayColorPicker(false)} />
-          <GithubPicker
-            colors={arrHexa}
-            onChange={(c, evt) => {
-              const { r, g, b, a } = c.rgb;
-              const idx = arrHexa.indexOf(asString([r, g, b, a]));
-              onChange(colors[idx], evt);
-            }}
-          />
-        </div>
-      ) : null}
+const ColorPicker = ({
+  colors,
+  selectedColor,
+  className,
+  onChange,
+  renderColorPicker,
+}) => {
+  const [displayColorPicker, setDisplayColorPicker] = useState(false);
+  const ref = useRef();
+
+  if (!colors) {
+    return null;
+  }
+  // Close the list when clicking outside the list or the input
+  useEffect(() => {
+    const onDocClick = e => {
+      // If the click comes from an element of Autocomplete, don't close the list.
+      if (ref && ref.current && ref.current.contains(e.target)) {
+        return;
+      }
+      setDisplayColorPicker(false);
+    };
+    if (displayColorPicker) {
+      document.addEventListener('click', onDocClick);
+    }
+    return function cleanup() {
+      document.removeEventListener('click', onDocClick);
+    };
+  }, [displayColorPicker]);
+
+  return (
+    // eslint-disable-next-line react/jsx-no-comment-textnodes
+    <div className={className} ref={ref}>
+      <Button onClick={() => setDisplayColorPicker(!displayColorPicker)}>
+        <div
+          style={{
+            backgroundColor: selectedColor && selectedColor.name,
+          }}
+        />
+      </Button>
+      {displayColorPicker && (
+        <>
+          {(renderColorPicker || defaultRenderColorPicker)(
+            selectedColor,
+            colors,
+            onChange,
+          )}
+        </>
+      )}
     </div>
   );
 };

@@ -856,15 +856,13 @@ class FeatureStyler extends PureComponent {
     return (
       <div className={classNameColors}>
         {label ? <div className="tm-color-label">{t(label)}</div> : null}
-        <div className="tm-colorpicker-swatch">
-          <ColorPicker
-            selectedColor={color}
-            colors={colorOptions}
-            onChange={(c, evt) => {
-              onClick(evt, c);
-            }}
-          />
-        </div>
+        <ColorPicker
+          selectedColor={color}
+          colors={colorOptions}
+          onChange={(c, evt) => {
+            onClick(evt, c);
+          }}
+        />
       </div>
     );
   }
