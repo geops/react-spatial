@@ -75,15 +75,18 @@ class VectorLayer extends Layer {
       }
 
       this.getFeatureInfoAtCoordinate(e.coordinate)
-        .then(data => {
-          this.clickCallbacks.forEach(c =>
-            c(data.features, data.layer, data.coordinate),
-          );
-        })
-        .catch(() => {
-          this.clickCallbacks.forEach(c => c([], this, e.coordinate));
-        });
+        .then(d => this.callClickCallbacks(d.features, d.layer, d.coordinate))
+        .catch(() => this.callClickCallbacks([], this, e.coordinate));
     });
+  }
+
+  /**
+   * Call click callbacks with given parameters.
+   * This is done in a separate function for being able to modify the response.
+   * @private
+   */
+  callClickCallbacks(features, layer, coordinate) {
+    this.clickCallbacks.forEach(c => c(features, layer, coordinate));
   }
 
   /**
