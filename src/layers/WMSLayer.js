@@ -103,12 +103,19 @@ class WMSLayer extends Layer {
         return;
       }
 
-      this.getFeatureInfoAtCoordinate(e.coordinate).then(data => {
-        this.clickCallbacks.forEach(c =>
-          c(data.features, data.layer, data.coordinate),
-        );
-      });
+      this.getFeatureInfoAtCoordinate(e.coordinate).then(data =>
+        this.callClickCallbacks(data.features, data.layer, data.coordinate),
+      );
     });
+  }
+
+  /**
+   * Call click callbacks with given parameters.
+   * This is done in a separate function for being able to modify the response.
+   * @private
+   */
+  callClickCallbacks(features, layer, coordinate) {
+    this.clickCallbacks.forEach(c => c(features, layer, coordinate));
   }
 
   /**
