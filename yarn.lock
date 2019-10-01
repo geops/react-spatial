@@ -1214,6 +1214,11 @@
     "@nodelib/fs.scandir" "2.1.2"
     fastq "^1.6.0"
 
+"@openlayers/pepjs@^0.5.3":
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/@openlayers/pepjs/-/pepjs-0.5.3.tgz#298c5994cc12de5f149f841affdd8a3e506228b5"
+  integrity sha512-Bgvi5c14BS0FJWyYWWFstNEnXsB30nK8Jt8hkAAdqr7E0gDdBBWVDglF3Ub19wTxvgJ/CVHyTY6VuCtnyRzglg==
+
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@samverschueren/stream-to-observable/-/stream-to-observable-0.3.0.tgz#ecdf48d532c58ea477acfcab80348424f8d0662f"
@@ -8333,10 +8338,11 @@ obuf@^1.0.0, obuf@^1.1.2:
   integrity sha512-PX1wu0AmAdPqOL1mWhqmlOd8kOIZQwGZw6rh7uby9fTc5lhaOWFLX3I6R1hrF9k3zUY40e6igsLGkDXK92LJNg==
 
 ol@^6.0.0-beta.11:
-  version "6.0.0-beta.15"
-  resolved "https://registry.yarnpkg.com/ol/-/ol-6.0.0-beta.15.tgz#f648566784749f8a3c12717ba4d28e0ee652e8ac"
-  integrity sha512-J0gZ5pYGrER2WJSuIBh6QDNMn15xPRmpJJACnsgexSbaapOBOWEbv8z+yaYkTtWq+I1/quzBs9e4cLUB7R/I3w==
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/ol/-/ol-6.0.1.tgz#acef0f29dfbe079637eac85568efbb6394ff2bf2"
+  integrity sha512-gjTziZlJWwOhPkCFW9eT0uscrWnF7DlxPutmgorDE1lYGqpLF/XTnb/5f+2ikHXay7S1EDIi/9U3ccuMeY/4HQ==
   dependencies:
+    "@openlayers/pepjs" "^0.5.3"
     pbf "3.2.0"
     pixelworks "1.1.0"
     rbush "^3.0.0"
