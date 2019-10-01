@@ -1214,6 +1214,11 @@
     "@nodelib/fs.scandir" "2.1.2"
     fastq "^1.6.0"
 
+"@openlayers/pepjs@^0.5.3":
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/@openlayers/pepjs/-/pepjs-0.5.3.tgz#298c5994cc12de5f149f841affdd8a3e506228b5"
+  integrity sha512-Bgvi5c14BS0FJWyYWWFstNEnXsB30nK8Jt8hkAAdqr7E0gDdBBWVDglF3Ub19wTxvgJ/CVHyTY6VuCtnyRzglg==
+
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@samverschueren/stream-to-observable/-/stream-to-observable-0.3.0.tgz#ecdf48d532c58ea477acfcab80348424f8d0662f"
@@ -6961,7 +6966,7 @@ jss@^9.8.7:
     symbol-observable "^1.1.0"
     warning "^3.0.0"
 
-jsts@^2.0.3:
+jsts@^2.0.3, jsts@^2.0.6:
   version "2.0.8"
   resolved "https://registry.yarnpkg.com/jsts/-/jsts-2.0.8.tgz#433c8f14e0537e2bfb46acadfd98884017aec06c"
   integrity sha512-JsVWANyeQ2j8XLiPPdz1fTaaBnji8P6P95w/Rg487MW7qMAMKgc+86nw5iW/9kC5OlYvbOf4oG380Vyn90H9/g==
@@ -8341,10 +8346,23 @@ ol@^6.0.0-beta.11:
     pixelworks "1.1.0"
     rbush "^3.0.0"
 
-ole@^0.0.4-beta.10:
-  version "0.0.4-beta-3"
-  resolved "https://registry.yarnpkg.com/ole/-/ole-0.0.4-beta-3.tgz#6f3e7ce0b5d9298d404225ea40afdd06eb18a559"
-  integrity sha512-cBAfO1rR2ZTN5Uh5lFiR4b4qYWmOH22qfUrn4kaAEx7Fnsjs6+lGu6FCd8iJWECN4Fkv2Ww56lxPI0Hngkmjdw==
+ol@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/ol/-/ol-6.0.1.tgz#acef0f29dfbe079637eac85568efbb6394ff2bf2"
+  integrity sha512-gjTziZlJWwOhPkCFW9eT0uscrWnF7DlxPutmgorDE1lYGqpLF/XTnb/5f+2ikHXay7S1EDIi/9U3ccuMeY/4HQ==
+  dependencies:
+    "@openlayers/pepjs" "^0.5.3"
+    pbf "3.2.0"
+    pixelworks "1.1.0"
+    rbush "^3.0.0"
+
+ole@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/ole/-/ole-1.1.0.tgz#a565bc91882f2b2507e04ddd897e0a97f236e0ac"
+  integrity sha512-OKeHPUavzjDTO4jz1zrlJNkar+gt7hLJtBhVmv8o3raFr3Ayc6S6vAsnMny1HapH1DjXEIojko9wd5qQKE4zRA==
+  dependencies:
+    jsts "^2.0.6"
+    ol "^6.0.1"
 
 on-finished@~2.3.0:
   version "2.3.0"
