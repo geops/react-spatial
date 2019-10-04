@@ -40,12 +40,10 @@ module.exports = {
             'src/components/CanvasSaveButton/[A-Z]*.js',
             'src/components/Copyright/[A-Z]*.js',
             'src/components/FeatureExportButton/[A-Z]*.js',
-            'src/components/FeatureStyler/[A-Z]*.js',
             'src/components/FitExtent/[A-Z]*.js',
             'src/components/Geolocation/[A-Z]*.js',
             'src/components/MousePosition/[A-Z]*.js',
             'src/components/NorthArrow/[A-Z]*.js',
-            'src/components/OLE/[A-Z]*.js',
             'src/components/Popup/[A-Z]*.js',
             'src/components/ScaleLine/[A-Z]*.js',
             'src/components/Zoom/[A-Z]*.js',
@@ -98,7 +96,6 @@ module.exports = {
             'src/components/StopEvents/[A-Z]*.js',
             'src/components/Tabs/[A-Z]*.js',
             'src/components/Tab/[A-Z]*.js',
-            'src/components/ColorPicker/[A-Z]*.js',
           ],
           exampleMode: 'collapse', // 'hide' | 'collapse' | 'expand'
           usageMode: 'collapse', // 'hide' | 'collapse' | 'expand'

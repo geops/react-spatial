@@ -30,10 +30,10 @@ class WMSLayer extends Layer {
     const projection = this.map.getView().getProjection();
     const resolution = this.map.getView().getResolution();
 
-    if (this.olLayer.getSource().getGetFeatureInfoUrl) {
+    if (this.olLayer.getSource().getFeatureInfoUrl) {
       return this.olLayer
         .getSource()
-        .getGetFeatureInfoUrl(coord, resolution, projection, {
+        .getFeatureInfoUrl(coord, resolution, projection, {
           info_format: 'application/json',
           query_layers: this.olLayer.getSource().getParams().layers,
         });
