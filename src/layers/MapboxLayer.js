@@ -91,6 +91,11 @@ export default class MapboxLayer extends Layer {
     this.changeSizeRef = this.map.on('change:size', () => {
       this.mbMap.resize();
     });
+
+    const mapboxCanvas = this.mbMap.getCanvas();
+    if (mapboxCanvas && this.options.tabIndex) {
+      mapboxCanvas.setAttribute('tabindex', this.options.tabIndex);
+    }
   }
 
   /**
