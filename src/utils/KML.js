@@ -217,7 +217,7 @@ const readFeatures = (kmlString, featureProjection) => {
 
 /**
  * Create a KML string.
- * @param {VectorLayer} layer a react-spatial VectorLayer.
+ * @param {VectorLayer} layer A react-spatial VectorLayer.
  * @param {<ol.Projection|String>} featureProjection The current projection used by the features.
  */
 const writeFeatures = (layer, featureProjection) => {
