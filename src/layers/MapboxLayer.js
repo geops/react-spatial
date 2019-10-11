@@ -113,7 +113,7 @@ export default class MapboxLayer extends Layer {
 
   /**
    * Create exact copy of the MapboxLayer
-   * @returns {MapboxLayer}
+   * @returns {MapboxLayer} MapboxLayer
    */
   clone() {
     return new MapboxLayer(this.options);
