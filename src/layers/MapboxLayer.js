@@ -91,6 +91,26 @@ export default class MapboxLayer extends Layer {
     this.changeSizeRef = this.map.on('change:size', () => {
       this.mbMap.resize();
     });
+    this.mbMap.on('click', evt => {
+      console.log(evt, evt.features);
+    });
+  }
+
+  /**
+   * Request feature information for a given coordinate.
+   * @param {ol.Coordinate} coordinate Coordinate to request the information at.
+   * @returns {Promise<Object>} Promise with features, layer and coordinate
+   *  or null if no feature was hit.
+   */
+  getFeatureInfoAtCoordinate(coordinate) {
+    const features = this.mbMap.queryRenderedFeatures(coordinate);
+    // This layer returns no feature info.
+    // The function is implemented by inheriting layers.
+    return Promise.resolve({
+      layer: this,
+      features,
+      coordinate,
+    });
   }
 
   /**
