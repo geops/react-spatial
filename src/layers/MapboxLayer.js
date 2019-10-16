@@ -3,6 +3,7 @@ import { toLonLat } from 'ol/proj';
 import { unByKey } from 'ol/Observable';
 import mapboxgl from 'mapbox-gl';
 import OLLayer from 'ol/layer/Layer';
+import GeoJSON from 'ol/format/GeoJSON';
 import Layer from './Layer';
 
 /**
@@ -70,6 +71,10 @@ export default class MapboxLayer extends Layer {
       return;
     }
 
+    this.format = new GeoJSON({
+      featureProjection: this.map.getView().getProjection(),
+    });
+
     this.mbMap = new mapboxgl.Map({
       style: this.styleUrl,
       attributionControl: false,
@@ -91,9 +96,6 @@ export default class MapboxLayer extends Layer {
     this.changeSizeRef = this.map.on('change:size', () => {
       this.mbMap.resize();
     });
-    this.mbMap.on('click', evt => {
-      console.log(evt, evt.features);
-    });
   }
 
   /**
@@ -103,9 +105,15 @@ export default class MapboxLayer extends Layer {
    *  or null if no feature was hit.
    */
   getFeatureInfoAtCoordinate(coordinate) {
-    const features = this.mbMap.queryRenderedFeatures(coordinate);
-    // This layer returns no feature info.
-    // The function is implemented by inheriting layers.
+    let features = [];
+    if (this.mbMap && this.format) {
+      const pixel = this.mbMap.project(toLonLat(coordinate));
+      // At this point we get GosJSON Mapbox feature, we transform it to an Openlayers
+      // feature to be consistent with other layers.
+      features = this.mbMap
+        .queryRenderedFeatures(pixel)
+        .map(feature => this.format.readFeature(feature));
+    }
     return Promise.resolve({
       layer: this,
       features,
