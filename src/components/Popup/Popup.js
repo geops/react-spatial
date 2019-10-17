@@ -51,6 +51,16 @@ class Popup extends PureComponent {
     });
   }
 
+  componentDidUpdate(prevProps) {
+    const { feature, popupCoordinate } = this.props;
+    if (
+      feature !== prevProps.feature ||
+      popupCoordinate !== prevProps.popupCoordinate
+    ) {
+      this.updatePixelPosition();
+    }
+  }
+
   componentWillUnmount() {
     unByKey(this.postrenderKey);
   }
