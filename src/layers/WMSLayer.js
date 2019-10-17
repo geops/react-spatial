@@ -30,10 +30,10 @@ class WMSLayer extends Layer {
     const projection = this.map.getView().getProjection();
     const resolution = this.map.getView().getResolution();
 
-    if (this.olLayer.getSource().getGetFeatureInfoUrl) {
+    if (this.olLayer.getSource().getFeatureInfoUrl) {
       return this.olLayer
         .getSource()
-        .getGetFeatureInfoUrl(coord, resolution, projection, {
+        .getFeatureInfoUrl(coord, resolution, projection, {
           info_format: 'application/json',
           query_layers: this.olLayer.getSource().getParams().layers,
         });
@@ -43,7 +43,7 @@ class WMSLayer extends Layer {
 
   /**
    * Request feature information for a given coordinate.
-   * @param {ol.Coordinate} coordinate {@link https://openlayers.org/en/latest/apidoc/module-ol_coordinate.html ol/Coordinate} Coordinate to request the information at.
+   * @param {ol.Coordinate} coordinate {@link https://openlayers.org/en/latest/apidoc/module-ol_coordinate.html ol/Coordinate} to request the information at.
    * @returns {Promise<Object>} Promise with features, layer and coordinate
    *  or null if no feature was hit.
    * eslint-disable-next-line class-methods-use-this

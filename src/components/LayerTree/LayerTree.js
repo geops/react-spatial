@@ -115,13 +115,6 @@ class LayerTree extends Component {
     this.olKeys = [];
   }
 
-  componentWillMount() {
-    const { layerService } = this.props;
-    if (layerService) {
-      layerService.un('change:visible', this.updateLayers);
-    }
-  }
-
   componentDidMount() {
     this.updateLayerService();
   }
@@ -132,6 +125,11 @@ class LayerTree extends Component {
     if (layerService !== prevProps.layerService) {
       this.updateLayerService();
     }
+  }
+
+  componentWillUnmount() {
+    const { layerService } = this.props;
+    layerService.un('change:visible', this.updateLayers);
   }
 
   onInputClick(layer, toggle = false) {
@@ -157,12 +155,14 @@ class LayerTree extends Component {
   updateLayerService() {
     const { layerService } = this.props;
     if (layerService) {
-      this.updateLayers(layerService);
-      layerService.on('change:visible', () => this.updateLayers(layerService));
+      layerService.un('change:visible', this.updateLayers);
+      this.updateLayers();
+      layerService.on('change:visible', this.updateLayers);
     }
   }
 
-  updateLayers(layerService) {
+  updateLayers() {
+    const { layerService } = this.props;
     this.setState({
       layers: layerService.getLayers(),
     });

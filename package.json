@@ -1,19 +1,17 @@
 {
   "name": "react-spatial",
   "description": "Components to build React map apps.",
-  "version": "0.1.0-beta.24",
+  "version": "0.1.0-beta.25",
   "license": "MIT",
   "dependencies": {
     "query-string": "^6.4.2",
-    "react-color": "^2.17.3",
     "react-draggable": "^4.0.3",
     "react-icons": "^3.4.0",
     "resize-observer-polyfill": "^1.5.1"
   },
   "peerDependencies": {
     "mapbox-gl": "^1.2.0",
-    "ol": "^6.0.0-beta.11",
-    "ole": "^0.0.4-beta.10"
+    "ol": "^6.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
@@ -54,8 +52,7 @@
     "lint-staged": "^9.2.0",
     "mapbox-gl": "^1.2.0",
     "node-sass": "^4.11.0",
-    "ol": "^6.0.0-beta.11",
-    "ole": "^0.0.4-beta.10",
+    "ol": "^6.0.1",
     "prettier": "^1.16.1",
     "proj4": "^2.5.0",
     "prop-types": "^15.6.2",
@@ -69,7 +66,7 @@
     "stream-array": "^1.1.2",
     "style-loader": "^1.0.0",
     "stylelint": "^11.0.0",
-    "stylelint-config-recommended-scss": "^3.2.0",
+    "stylelint-config-recommended-scss": "^4.0.0",
     "stylelint-config-standard": "^19.0.0",
     "stylelint-scss": "^3.11.0",
     "url-loader": "^2.0.0",
@@ -78,7 +75,7 @@
     "xml-beautifier": "^0.4.2"
   },
   "scripts": {
-    "build": "buble --no modules,asyncAwait -i src -o build --objectAssign Object.assign --sourcemap, && cp -t build package.json README.md LICENSE && cp -rf src/images build",
+    "build": "buble --no modules,asyncAwait -i src -o build --objectAssign Object.assign --sourcemap && cp -t build package.json README.md LICENSE && cp -rf src/images build",
     "coverage": "yarn test --coverage --coverageDirectory=coverage",
     "cp": "generact --root src/components",
     "doc": "bash ./scripts/prepare-doc.sh",
@@ -108,7 +105,8 @@
     "parser": "babel-eslint",
     "extends": [
       "airbnb",
-      "prettier"
+      "prettier",
+      "prettier/react"
     ],
     "plugins": [
       "prettier"
