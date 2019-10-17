@@ -37,6 +37,8 @@ export default class Layer extends Observable {
     this.visible = visible === undefined ? true : visible;
     this.copyright = copyright;
     this.properties = properties || {};
+    // This array contains openlayers listeners keys to unlisten in terminate function.
+    this.olListenersKeys = [];
 
     if (this.olLayer) {
       this.olLayer.setVisible(this.visible);
@@ -50,22 +52,25 @@ export default class Layer extends Observable {
   init(map) {
     this.terminate();
     this.map = map;
-    if (this.map && this.olLayer) {
-      this.map.addLayer(this.olLayer);
+    if (!this.map || !this.olLayer) {
+      return;
+    }
+    this.map.addLayer(this.olLayer);
 
-      this.onRemoveKey = this.map.getLayers().on('remove', evt => {
+    this.olListenersKeys.push(
+      this.map.getLayers().on('remove', evt => {
         if (evt.element === this.olLayer) {
           this.terminate();
         }
-      });
-    }
+      }),
+    );
   }
 
   /**
    * Terminate what was initialized in init function. Remove layer, events...
    */
   terminate() {
-    unByKey(this.onRemoveKey);
+    unByKey(this.olListenersKeys);
     if (this.map && this.olLayer) {
       this.map.removeLayer(this.olLayer);
     }

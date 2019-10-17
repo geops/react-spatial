@@ -101,17 +101,18 @@ export default class MapboxLayer extends Layer {
   /**
    * Request feature information for a given coordinate.
    * @param {ol.Coordinate} coordinate Coordinate to request the information at.
+   * @param {Object} options A mapbox {@link https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html options object}.
    * @returns {Promise<Object>} Promise with features, layer and coordinate
    *  or null if no feature was hit.
    */
-  getFeatureInfoAtCoordinate(coordinate) {
+  getFeatureInfoAtCoordinate(coordinate, options) {
     let features = [];
-    if (this.mbMap && this.format) {
+    if (this.mbMap && this.format && options) {
       const pixel = this.mbMap.project(toLonLat(coordinate));
       // At this point we get GosJSON Mapbox feature, we transform it to an Openlayers
       // feature to be consistent with other layers.
       features = this.mbMap
-        .queryRenderedFeatures(pixel)
+        .queryRenderedFeatures(pixel, options)
         .map(feature => this.format.readFeature(feature));
     }
     return Promise.resolve({

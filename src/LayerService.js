@@ -56,6 +56,23 @@ export default class LayerService {
     return this.getLayersAsFlatArray().filter(l => l.getIsBaseLayer());
   }
 
+  getQueryableLayers() {
+    return this.getLayersAsFlatArray().filter(
+      layer => layer.getVisible() && !layer.isBaseLayer,
+    );
+  }
+
+  getFeatureInfoAtCoordinate(coordinate) {
+    const promises = this.getQueryableLayers().map(layer => {
+      return layer
+        .getFeatureInfoAtCoordinate(coordinate, layer.filter)
+        .then(featureInfo => {
+          return featureInfo;
+        });
+    });
+    return Promise.all(promises);
+  }
+
   on(evt, callback) {
     this.un(evt, callback);
     this.callbacks[evt] = this.callbacks[evt] || [];
