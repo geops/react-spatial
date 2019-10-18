@@ -51,6 +51,16 @@ const propTypes = {
    * Outside of this valid extent the fallback image is loaded
    */
   validExtent: PropTypes.arrayOf(PropTypes.number),
+
+  /**
+   *  The tabIndex of the map.
+   */
+  mapTabIndex: PropTypes.number,
+
+  /**
+   * HTML tabIndex attribute of the button.
+   */
+  tabIndex: PropTypes.number,
 };
 
 const defaultProps = {
@@ -61,6 +71,8 @@ const defaultProps = {
   classNameNext: 'tm-base-layer-next',
   fallbackImgDir: '../../images/baselayer/',
   validExtent: [-Infinity, -Infinity, Infinity, Infinity],
+  mapTabIndex: 0,
+  tabIndex: 0,
 };
 
 class BaseLayerToggler extends Component {
@@ -274,6 +286,8 @@ class BaseLayerToggler extends Component {
       classNameItem,
       classNamePrevious,
       classNameNext,
+      mapTabIndex,
+      tabIndex,
     } = this.props;
     const { layers, idx, fallbackImg, fallbackImgOpacity } = this.state;
 
@@ -300,7 +314,7 @@ class BaseLayerToggler extends Component {
 
     return (
       <div className={className} ref={this.ref}>
-        <BasicMap map={this.map} />
+        <BasicMap map={this.map} tabIndex={mapTabIndex} />
         <img
           src={fallbackImg}
           alt={fallbackImg}
@@ -309,6 +323,7 @@ class BaseLayerToggler extends Component {
         />
         <Button
           className={classNameItem}
+          tabIndex={tabIndex}
           onClick={() => nextLayer.setVisible(true)}
         />
 

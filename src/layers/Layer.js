@@ -82,7 +82,7 @@ export default class Layer extends Observable {
   /**
    * Get a layer property.
    * @param {string} name Property name.
-   * @returns {property}
+   * @returns {property} Property
    */
   get(name) {
     return this.properties[name];
@@ -99,7 +99,7 @@ export default class Layer extends Observable {
 
   /**
    * Get the Layer's Copyright Statment.
-   * @returns {string}
+   * @returns {string} Copyright
    */
   getCopyright() {
     return this.copyright;
@@ -115,7 +115,7 @@ export default class Layer extends Observable {
 
   /**
    * Get the Layers Key.
-   * @returns {string}
+   * @returns {string} Key
    */
   getKey() {
     return this.key;
@@ -139,7 +139,7 @@ export default class Layer extends Observable {
 
   /**
    * Get the layers radioGroup identifier
-   * @returns {string}
+   * @returns {string} RadioGroup identifier
    */
   getRadioGroup() {
     return this.radioGroup;
@@ -155,7 +155,7 @@ export default class Layer extends Observable {
 
   /**
    * Change the visibility of the layer
-   * @param {boolean} visible defines the visibility of the layer
+   * @param {boolean} visible Defines the visibility of the layer
    * @param {boolean} [stopPropagationDown]
    * @param {boolean} [stopPropagationUp]
    * @param {boolean} [stopPropagationSiblings]
@@ -186,16 +186,16 @@ export default class Layer extends Observable {
   }
 
   /**
-   * returns an array with childlayers
+   * Returns an array with childlayers
    *
-   * @returns {Array<ol.layer>}
+   * @returns {Array<ol.layer>} Children
    */
   getChildren() {
     return this.children;
   }
 
   /**
-   * sets the child layers
+   * Sets the child layers
    *
    * @param {Array<ol.layer>} layers
    */
@@ -204,27 +204,27 @@ export default class Layer extends Observable {
   }
 
   /**
-   * returns an array with visible child layers
+   * Returns an array with visible child layers
    *
-   * @returns {Array<ol.layer>}
+   * @returns {Array<ol.layer>} Visible children
    */
   getVisibleChildren() {
     return this.children.filter(c => c.getVisible() === true);
   }
 
   /**
-   * add a child layer
+   * Add a child layer
    *
-   * @param {ol.layer} layer
+   * @param {ol.layer} layer Child layer
    */
   addChild(layer) {
     this.children.unshift(layer);
   }
 
   /**
-   * removes a child layer by layer name
+   * Removes a child layer by layer name
    *
-   * @param {string} name
+   * @param {string} name Layer name
    */
   removeChild(name) {
     for (let i = 0; i < this.children.length; i += 1) {
@@ -236,18 +236,18 @@ export default class Layer extends Observable {
   }
 
   /**
-   * checks whether the layer has child layers with visible set to True
+   * Checks whether the layer has child layers with visible set to True
    *
-   * @returns {boolean}
+   * @returns {boolean} True if the layer has visible child layers
    */
   hasVisibleChildren() {
     return !!this.children.find(l => l.getVisible());
   }
 
   /**
-   * checks whether the layer has any child layers with visible equal to the input parameter
+   * Checks whether the layer has any child layers with visible equal to the input parameter
    * @param {boolean} visible The state to check the childlayers against
-   * @returns {boolean}
+   * @returns {boolean} True if the layer has children with the given visibility
    */
   hasChildren(visible) {
     return !!this.children.find(l => visible === l.getVisible());
