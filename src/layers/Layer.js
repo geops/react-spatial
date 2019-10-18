@@ -26,6 +26,7 @@ export default class Layer extends Observable {
     visible,
     copyright,
     properties,
+    isQueryable,
   }) {
     super();
     this.key = key || name.toLowerCase();
@@ -37,6 +38,8 @@ export default class Layer extends Observable {
     this.visible = visible === undefined ? true : visible;
     this.copyright = copyright;
     this.properties = properties || {};
+    this.isQueryable = isQueryable !== false;
+
     // This array contains openlayers listeners keys to unlisten in terminate function.
     this.olListenersKeys = [];
 

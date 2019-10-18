@@ -58,7 +58,7 @@ export default class LayerService {
 
   getQueryableLayers() {
     return this.getLayersAsFlatArray().filter(
-      layer => layer.getVisible() && !layer.isBaseLayer,
+      layer => layer.getVisible() && layer.isQueryable,
     );
   }
 
