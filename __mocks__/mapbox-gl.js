@@ -1,5 +1,7 @@
+/* eslint-disable class-methods-use-this */
 class Map {
-  // eslint-disable-next-line class-methods-use-this
+  isStyleLoaded() {}
+
   getCanvas() {}
 }
 module.exports = {

@@ -19,6 +19,7 @@ class WMSLayer extends Layer {
     if (options.onClick) {
       this.onClick(options.onClick);
     }
+    this.format = new GeoJSON();
   }
 
   /**
@@ -53,18 +54,15 @@ class WMSLayer extends Layer {
       .then(resp => resp.json())
       .then(r => r.features)
       .then(data => {
-        const format = new GeoJSON();
-        const features = data.map(d => format.readFeature(d));
-
         return {
-          features,
-          coordinate,
           layer: this,
+          coordinate,
+          features: data.map(d => this.format.readFeature(d)),
         };
       })
       .catch(() => {
         // resolve an empty feature array something fails
-        Promise.resolve({
+        return Promise.resolve({
           features: [],
           coordinate,
           layer: this,
