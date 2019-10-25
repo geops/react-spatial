@@ -111,15 +111,23 @@ export default class MapboxLayer extends Layer {
    *  or null if no feature was hit.
    */
   getFeatureInfoAtCoordinate(coordinate, options) {
-    let features = [];
-    if (this.mbMap && this.format && options) {
-      const pixel = this.mbMap.project(toLonLat(coordinate));
-      // At this point we get GosJSON Mapbox feature, we transform it to an Openlayers
-      // feature to be consistent with other layers.
-      features = this.mbMap
-        .queryRenderedFeatures(pixel, options)
-        .map(feature => this.format.readFeature(feature));
+    // Ignore the getFeatureInfo until the mapbox map is loaded
+    if (
+      !options ||
+      !this.format ||
+      !this.mbMap ||
+      !this.mbMap.isStyleLoaded()
+    ) {
+      return Promise.resolve({ coordinate, features: [], layer: this });
     }
+
+    const pixel = this.mbMap.project(toLonLat(coordinate));
+    // At this point we get GosJSON Mapbox feature, we transform it to an Openlayers
+    // feature to be consistent with other layers.
+    const features = this.mbMap
+      .queryRenderedFeatures(pixel, options)
+      .map(feature => this.format.readFeature(feature));
+
     return Promise.resolve({
       layer: this,
       features,
