@@ -122,7 +122,7 @@ export default class MapboxLayer extends Layer {
     }
 
     const pixel = this.mbMap.project(toLonLat(coordinate));
-    // At this point we get GosJSON Mapbox feature, we transform it to an Openlayers
+    // At this point we get GeoJSON Mapbox feature, we transform it to an Openlayers
     // feature to be consistent with other layers.
     const features = this.mbMap
       .queryRenderedFeatures(pixel, options)
