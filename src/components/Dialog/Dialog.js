@@ -145,7 +145,7 @@ class Dialog extends Component {
 
     if (this.ref && !this.ref.current.contains(event.target)) {
       // Callback if click outside of the dialog.
-      onClickOutside();
+      onClickOutside(event);
     }
   }
 
