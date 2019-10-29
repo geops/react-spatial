@@ -100,6 +100,8 @@ class Zoom extends Component {
     const { map } = this.props;
     this.olZoomSlider = new ZoomSlider();
     this.olZoomSlider.element.classList.remove('ol-control');
+    // Unset tabIndex on zoom slider button.
+    this.olZoomSlider.element.firstElementChild.tabIndex = -1;
     // Set the zoom slider in the custom control wrapper.
     this.olZoomSlider.setTarget(this.ref.current);
     map.addControl(this.olZoomSlider);
