@@ -75,23 +75,23 @@ const propTypes = {
   renderItemContent: PropTypes.func,
 
   /**
-   * Object holding aria labels for the layer tree.
+   * Object holding title for the layer tree's buttons.
    */
-  ariaLabels: PropTypes.shape({
+  buttonTitles: PropTypes.shape({
     /**
-     * aria-label on button to show layer.
+     * aria-label on checkbox to show layer.
      */
     layerShow: PropTypes.string,
     /**
-     * aria-label on button to hide layer.
+     * aria-label on checkbox to hide layer.
      */
     layerHide: PropTypes.string,
     /**
-     * aria-label on button to show sublayers.
+     * title on button to show sublayers.
      */
     subLayerShow: PropTypes.string,
     /**
-     * aria-label on button to show sublayers.
+     * title on button to show sublayers.
      */
     subLayerHide: PropTypes.string,
   }),
@@ -115,7 +115,7 @@ const defaultProps = {
   getParentClassName: () => undefined,
   renderItem: null,
   renderItemContent: null,
-  ariaLabels: {
+  buttonTitles: {
     layerShow: null,
     layerHide: null,
     subLayerShow: null,
@@ -197,7 +197,7 @@ class LayerTree extends Component {
   }
 
   renderInput(layer) {
-    const { classNameInput, ariaLabels } = this.props;
+    const { classNameInput, buttonTitles } = this.props;
     let tabIndex = 0;
 
     if (!layer.getChildren().length) {
@@ -212,7 +212,7 @@ class LayerTree extends Component {
         inputType={inputType}
         checked={layer.getVisible()}
         ariaLabel={
-          layer.getVisible() ? ariaLabels.layerHide : ariaLabels.layerShow
+          layer.getVisible() ? buttonTitles.layerHide : buttonTitles.layerShow
         }
         className={`${classNameInput} ${classNameInput}-${inputType}`}
         onClick={() => this.onInputClick(layer)}
@@ -240,7 +240,7 @@ class LayerTree extends Component {
   // Render a button which expands/collapse the layer if there is children
   // or simulate a click on the input otherwise.
   renderToggleButton(layer) {
-    const { t, classNameToggle, ariaLabels } = this.props;
+    const { t, classNameToggle, buttonTitles } = this.props;
     const { expandedLayerNames } = this.state;
     const tabIndex = 0;
 
@@ -249,8 +249,8 @@ class LayerTree extends Component {
         tabIndex={tabIndex}
         title={`${layer.getName()} ${
           !expandedLayerNames.includes(layer)
-            ? ariaLabels.subLayerShow
-            : ariaLabels.subLayerHide
+            ? buttonTitles.subLayerShow
+            : buttonTitles.subLayerHide
         }`}
         className={classNameToggle}
         onClick={() => {

@@ -63,19 +63,19 @@ const propTypes = {
   tabIndex: PropTypes.number,
 
   /**
-   * aria-label attribute of the baselayer button.
+   * title attribute of the baselayer button.
    */
-  ariaLabel: PropTypes.string,
+  titleButton: PropTypes.string,
 
   /**
-   * aria-label attribute of the next baselayer button.
+   * title attribute of the next baselayer button.
    */
-  ariaLabelNext: PropTypes.string,
+  titleButtonNext: PropTypes.string,
 
   /**
-   * aria-label attribute of the previous baselayer button.
+   * title attribute of the previous baselayer button.
    */
-  ariaLabelPrevious: PropTypes.string,
+  titleButtonPrevious: PropTypes.string,
 };
 
 const defaultProps = {
@@ -88,9 +88,9 @@ const defaultProps = {
   validExtent: [-Infinity, -Infinity, Infinity, Infinity],
   mapTabIndex: 0,
   tabIndex: 0,
-  ariaLabel: null,
-  ariaLabelNext: null,
-  ariaLabelPrevious: null,
+  titleButton: null,
+  titleButtonNext: null,
+  titleButtonPrevious: null,
 };
 
 class BaseLayerToggler extends Component {
@@ -306,9 +306,9 @@ class BaseLayerToggler extends Component {
       classNameNext,
       mapTabIndex,
       tabIndex,
-      ariaLabel,
-      ariaLabelNext,
-      ariaLabelPrevious,
+      titleButton,
+      titleButtonNext,
+      titleButtonPrevious,
     } = this.props;
     const { layers, idx, fallbackImg, fallbackImgOpacity } = this.state;
 
@@ -324,14 +324,14 @@ class BaseLayerToggler extends Component {
           <Button
             className={classNamePrevious}
             onClick={() => this.previous()}
-            title={ariaLabelPrevious}
+            title={titleButtonPrevious}
           >
             <FaArrowCircleLeft />
           </Button>
           <Button
             className={classNameNext}
             onClick={() => this.next()}
-            title={ariaLabelNext}
+            title={titleButtonNext}
           >
             <FaArrowCircleRight />
           </Button>
@@ -353,7 +353,7 @@ class BaseLayerToggler extends Component {
         <Button
           className={classNameItem}
           tabIndex={tabIndex}
-          title={ariaLabel}
+          title={titleButton}
           onClick={() => nextLayer.setVisible(true)}
         />
 
