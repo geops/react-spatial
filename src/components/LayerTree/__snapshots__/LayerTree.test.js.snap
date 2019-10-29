@@ -14,6 +14,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       }
     >
       <label
+        aria-label={null}
         className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={0}
@@ -28,11 +29,13 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <span />
       </label>
       <div
+        aria-label="Vector sample layers null"
         className="tm-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
+        title="Vector sample layers null"
       >
         <div>
           Vector sample layers
@@ -52,6 +55,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         }
       >
         <label
+          aria-label={null}
           className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
           onKeyPress={[Function]}
           tabIndex={-1}
@@ -66,11 +70,13 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <span />
         </label>
         <div
+          aria-label="Points Samples null"
           className="tm-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
+          title="Points Samples null"
         >
           <div>
             Points Samples
@@ -88,6 +94,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         }
       >
         <label
+          aria-label={null}
           className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
           onKeyPress={[Function]}
           tabIndex={-1}
@@ -102,11 +109,13 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <span />
         </label>
         <div
+          aria-label="Lines Samples null"
           className="tm-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
+          title="Lines Samples null"
         >
           <div>
             Lines Samples
@@ -124,6 +133,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         }
       >
         <label
+          aria-label={null}
           className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
           onKeyPress={[Function]}
           tabIndex={-1}
@@ -138,11 +148,13 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <span />
         </label>
         <div
+          aria-label="Polygons Samples null"
           className="tm-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
+          title="Polygons Samples null"
         >
           <div>
             Polygons Samples
@@ -161,6 +173,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       }
     >
       <label
+        aria-label={null}
         className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
         onKeyPress={[Function]}
         tabIndex={0}
@@ -175,11 +188,13 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <span />
       </label>
       <div
+        aria-label="Other layers null"
         className="tm-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
+        title="Other layers null"
       >
         <div>
           Other layers
@@ -199,6 +214,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         }
       >
         <label
+          aria-label={null}
           className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
           onKeyPress={[Function]}
           tabIndex={-1}
@@ -213,11 +229,13 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <span />
         </label>
         <div
+          aria-label="Countries Borders null"
           className="tm-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
+          title="Countries Borders null"
         >
           <div>
             Countries Borders
@@ -235,6 +253,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         }
       >
         <label
+          aria-label={null}
           className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
           onKeyPress={[Function]}
           tabIndex={-1}
@@ -249,11 +268,13 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <span />
         </label>
         <div
+          aria-label="USA Population Density null"
           className="tm-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
+          title="USA Population Density null"
         >
           <div>
             USA Population Density
@@ -271,6 +292,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         }
       >
         <label
+          aria-label={null}
           className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
           onKeyPress={[Function]}
           tabIndex={-1}
@@ -285,11 +307,13 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <span />
         </label>
         <div
+          aria-label="Switzerland null"
           className="tm-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
+          title="Switzerland null"
         >
           <div>
             Switzerland
@@ -308,6 +332,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       }
     >
       <label
+        aria-label={null}
         className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
@@ -322,11 +347,13 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <span />
       </label>
       <div
+        aria-label="OpenTopoMap null"
         className="tm-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
+        title="OpenTopoMap null"
       >
         <div>
           OpenTopoMap
@@ -344,6 +371,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       }
     >
       <label
+        aria-label={null}
         className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
@@ -358,11 +386,13 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <span />
       </label>
       <div
+        aria-label="OSM Baselayer Hot null"
         className="tm-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
+        title="OSM Baselayer Hot null"
       >
         <div>
           OSM Baselayer Hot
@@ -380,6 +410,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       }
     >
       <label
+        aria-label={null}
         className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
@@ -394,11 +425,13 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <span />
       </label>
       <div
+        aria-label="OSM Baselayer null"
         className="tm-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
+        title="OSM Baselayer null"
       >
         <div>
           OSM Baselayer
@@ -423,6 +456,7 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
       }
     >
       <label
+        aria-label={null}
         className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
@@ -437,11 +471,13 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
         <span />
       </label>
       <div
+        aria-label="OpenTopoMap null"
         className="tm-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
+        title="OpenTopoMap null"
       >
         <div>
           OpenTopoMap
@@ -459,6 +495,7 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
       }
     >
       <label
+        aria-label={null}
         className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
@@ -473,11 +510,13 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
         <span />
       </label>
       <div
+        aria-label="OSM Baselayer Hot null"
         className="tm-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
+        title="OSM Baselayer Hot null"
       >
         <div>
           OSM Baselayer Hot
@@ -495,6 +534,7 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
       }
     >
       <label
+        aria-label={null}
         className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
@@ -509,11 +549,13 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
         <span />
       </label>
       <div
+        aria-label="OSM Baselayer null"
         className="tm-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
+        title="OSM Baselayer null"
       >
         <div>
           OSM Baselayer
@@ -538,6 +580,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       }
     >
       <label
+        aria-label={null}
         className="qux qux-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={0}
@@ -552,11 +595,13 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <span />
       </label>
       <div
+        aria-label="Vector sample layers null"
         className="quux"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
+        title="Vector sample layers null"
       >
         <div>
           Vector sample layers
@@ -576,6 +621,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         }
       >
         <label
+          aria-label={null}
           className="qux qux-radio tm-radio"
           onKeyPress={[Function]}
           tabIndex={-1}
@@ -590,11 +636,13 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <span />
         </label>
         <div
+          aria-label="Points Samples null"
           className="quux"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
+          title="Points Samples null"
         >
           <div>
             Points Samples
@@ -612,6 +660,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         }
       >
         <label
+          aria-label={null}
           className="qux qux-radio tm-radio"
           onKeyPress={[Function]}
           tabIndex={-1}
@@ -626,11 +675,13 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <span />
         </label>
         <div
+          aria-label="Lines Samples null"
           className="quux"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
+          title="Lines Samples null"
         >
           <div>
             Lines Samples
@@ -648,6 +699,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         }
       >
         <label
+          aria-label={null}
           className="qux qux-radio tm-radio"
           onKeyPress={[Function]}
           tabIndex={-1}
@@ -662,11 +714,13 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <span />
         </label>
         <div
+          aria-label="Polygons Samples null"
           className="quux"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
+          title="Polygons Samples null"
         >
           <div>
             Polygons Samples
@@ -685,6 +739,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       }
     >
       <label
+        aria-label={null}
         className="qux qux-checkbox tm-checkbox"
         onKeyPress={[Function]}
         tabIndex={0}
@@ -699,11 +754,13 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <span />
       </label>
       <div
+        aria-label="Other layers null"
         className="quux"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
+        title="Other layers null"
       >
         <div>
           Other layers
@@ -723,6 +780,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         }
       >
         <label
+          aria-label={null}
           className="qux qux-checkbox tm-checkbox"
           onKeyPress={[Function]}
           tabIndex={-1}
@@ -737,11 +795,13 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <span />
         </label>
         <div
+          aria-label="Countries Borders null"
           className="quux"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
+          title="Countries Borders null"
         >
           <div>
             Countries Borders
@@ -759,6 +819,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         }
       >
         <label
+          aria-label={null}
           className="qux qux-checkbox tm-checkbox"
           onKeyPress={[Function]}
           tabIndex={-1}
@@ -773,11 +834,13 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <span />
         </label>
         <div
+          aria-label="USA Population Density null"
           className="quux"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
+          title="USA Population Density null"
         >
           <div>
             USA Population Density
@@ -795,6 +858,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         }
       >
         <label
+          aria-label={null}
           className="qux qux-checkbox tm-checkbox"
           onKeyPress={[Function]}
           tabIndex={-1}
@@ -809,11 +873,13 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <span />
         </label>
         <div
+          aria-label="Switzerland null"
           className="quux"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
+          title="Switzerland null"
         >
           <div>
             Switzerland
@@ -832,6 +898,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       }
     >
       <label
+        aria-label={null}
         className="qux qux-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
@@ -846,11 +913,13 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <span />
       </label>
       <div
+        aria-label="OpenTopoMap null"
         className="quux"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
+        title="OpenTopoMap null"
       >
         <div>
           OpenTopoMap
@@ -868,6 +937,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       }
     >
       <label
+        aria-label={null}
         className="qux qux-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
@@ -882,11 +952,13 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <span />
       </label>
       <div
+        aria-label="OSM Baselayer Hot null"
         className="quux"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
+        title="OSM Baselayer Hot null"
       >
         <div>
           OSM Baselayer Hot
@@ -904,6 +976,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       }
     >
       <label
+        aria-label={null}
         className="qux qux-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
@@ -918,11 +991,13 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <span />
       </label>
       <div
+        aria-label="OSM Baselayer null"
         className="quux"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
+        title="OSM Baselayer null"
       >
         <div>
           OSM Baselayer

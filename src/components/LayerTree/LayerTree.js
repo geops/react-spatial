@@ -75,6 +75,28 @@ const propTypes = {
   renderItemContent: PropTypes.func,
 
   /**
+   * Object holding aria labels for the layer tree.
+   */
+  ariaLabels: PropTypes.shape({
+    /**
+     * aria-label on button to show layer.
+     */
+    layerShow: PropTypes.string,
+    /**
+     * aria-label on button to hide layer.
+     */
+    layerHide: PropTypes.string,
+    /**
+     * aria-label on button to show sublayers.
+     */
+    subLayerShow: PropTypes.string,
+    /**
+     * aria-label on button to show sublayers.
+     */
+    subLayerHide: PropTypes.string,
+  }),
+
+  /**
    * Translation function.
    * @param {function} Translation function returning the translated string.
    */
@@ -93,6 +115,12 @@ const defaultProps = {
   getParentClassName: () => undefined,
   renderItem: null,
   renderItemContent: null,
+  ariaLabels: {
+    layerShow: null,
+    layerHide: null,
+    subLayerShow: null,
+    subLayerHide: null,
+  },
   t: s => s,
 };
 
@@ -169,7 +197,7 @@ class LayerTree extends Component {
   }
 
   renderInput(layer) {
-    const { classNameInput } = this.props;
+    const { classNameInput, ariaLabels } = this.props;
     let tabIndex = 0;
 
     if (!layer.getChildren().length) {
@@ -183,6 +211,9 @@ class LayerTree extends Component {
         tabIndex={tabIndex}
         inputType={inputType}
         checked={layer.getVisible()}
+        ariaLabel={
+          layer.getVisible() ? ariaLabels.layerHide : ariaLabels.layerShow
+        }
         className={`${classNameInput} ${classNameInput}-${inputType}`}
         onClick={() => this.onInputClick(layer)}
       />
@@ -209,12 +240,18 @@ class LayerTree extends Component {
   // Render a button which expands/collapse the layer if there is children
   // or simulate a click on the input otherwise.
   renderToggleButton(layer) {
-    const { t, classNameToggle } = this.props;
+    const { t, classNameToggle, ariaLabels } = this.props;
+    const { expandedLayerNames } = this.state;
     const tabIndex = 0;
 
     return (
       <Button
         tabIndex={tabIndex}
+        title={`${layer.getName()} ${
+          !expandedLayerNames.includes(layer)
+            ? ariaLabels.subLayerShow
+            : ariaLabels.subLayerHide
+        }`}
         className={classNameToggle}
         onClick={() => {
           this.onInputClick(layer, layer.getChildren().length);
