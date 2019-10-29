@@ -20,21 +20,25 @@ exports[`BaseLayerToggler matches snapshots using default properties. 1`] = `
     }
   />
   <div
+    aria-label={null}
     className="tm-base-layer-item"
     onClick={[Function]}
     onKeyPress={[Function]}
     role="button"
     tabIndex={0}
+    title={null}
   />
   <div
     className="tm-footer"
   >
     <div
+      aria-label={null}
       className="tm-base-layer-previous"
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
       tabIndex={0}
+      title={null}
     >
       <svg
         fill="currentColor"
@@ -56,11 +60,13 @@ exports[`BaseLayerToggler matches snapshots using default properties. 1`] = `
       </svg>
     </div>
     <div
+      aria-label={null}
       className="tm-base-layer-next"
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
       tabIndex={0}
+      title={null}
     >
       <svg
         fill="currentColor"
