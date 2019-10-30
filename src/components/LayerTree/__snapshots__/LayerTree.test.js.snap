@@ -14,11 +14,11 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       }
     >
       <label
-        aria-label="checkbox"
+        aria-label="Hide layer"
         className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={0}
-        title="checkbox"
+        title="Hide layer"
       >
         <input
           checked={true}
@@ -56,11 +56,11 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         }
       >
         <label
-          aria-label="checkbox"
+          aria-label="Show layer"
           className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
           onKeyPress={[Function]}
           tabIndex={-1}
-          title="checkbox"
+          title="Show layer"
         >
           <input
             checked={false}
@@ -96,11 +96,11 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         }
       >
         <label
-          aria-label="checkbox"
+          aria-label="Hide layer"
           className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
           onKeyPress={[Function]}
           tabIndex={-1}
-          title="checkbox"
+          title="Hide layer"
         >
           <input
             checked={true}
@@ -136,11 +136,11 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         }
       >
         <label
-          aria-label="checkbox"
+          aria-label="Show layer"
           className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
           onKeyPress={[Function]}
           tabIndex={-1}
-          title="checkbox"
+          title="Show layer"
         >
           <input
             checked={false}
@@ -177,11 +177,11 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       }
     >
       <label
-        aria-label="checkbox"
+        aria-label="Hide layer"
         className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
         onKeyPress={[Function]}
         tabIndex={0}
-        title="checkbox"
+        title="Hide layer"
       >
         <input
           checked={true}
@@ -219,11 +219,11 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         }
       >
         <label
-          aria-label="checkbox"
+          aria-label="Show layer"
           className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
           onKeyPress={[Function]}
           tabIndex={-1}
-          title="checkbox"
+          title="Show layer"
         >
           <input
             checked={false}
@@ -259,11 +259,11 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         }
       >
         <label
-          aria-label="checkbox"
+          aria-label="Hide layer"
           className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
           onKeyPress={[Function]}
           tabIndex={-1}
-          title="checkbox"
+          title="Hide layer"
         >
           <input
             checked={true}
@@ -299,11 +299,11 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         }
       >
         <label
-          aria-label="checkbox"
+          aria-label="Hide layer"
           className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
           onKeyPress={[Function]}
           tabIndex={-1}
-          title="checkbox"
+          title="Hide layer"
         >
           <input
             checked={true}
@@ -340,11 +340,11 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       }
     >
       <label
-        aria-label="checkbox"
+        aria-label="Show layer"
         className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
-        title="checkbox"
+        title="Show layer"
       >
         <input
           checked={false}
@@ -380,11 +380,11 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       }
     >
       <label
-        aria-label="checkbox"
+        aria-label="Show layer"
         className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
-        title="checkbox"
+        title="Show layer"
       >
         <input
           checked={false}
@@ -420,11 +420,11 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       }
     >
       <label
-        aria-label="checkbox"
+        aria-label="Hide layer"
         className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
-        title="checkbox"
+        title="Hide layer"
       >
         <input
           checked={true}
@@ -467,11 +467,11 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
       }
     >
       <label
-        aria-label="checkbox"
+        aria-label="Show layer"
         className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
-        title="checkbox"
+        title="Show layer"
       >
         <input
           checked={false}
@@ -507,11 +507,11 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
       }
     >
       <label
-        aria-label="checkbox"
+        aria-label="Show layer"
         className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
-        title="checkbox"
+        title="Show layer"
       >
         <input
           checked={false}
@@ -547,11 +547,11 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
       }
     >
       <label
-        aria-label="checkbox"
+        aria-label="Hide layer"
         className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
-        title="checkbox"
+        title="Hide layer"
       >
         <input
           checked={true}
@@ -594,11 +594,11 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       }
     >
       <label
-        aria-label="checkbox"
+        aria-label="Hide layer"
         className="qux qux-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={0}
-        title="checkbox"
+        title="Hide layer"
       >
         <input
           checked={true}
@@ -636,11 +636,11 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         }
       >
         <label
-          aria-label="checkbox"
+          aria-label="Show layer"
           className="qux qux-radio tm-radio"
           onKeyPress={[Function]}
           tabIndex={-1}
-          title="checkbox"
+          title="Show layer"
         >
           <input
             checked={false}
@@ -676,11 +676,11 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         }
       >
         <label
-          aria-label="checkbox"
+          aria-label="Hide layer"
           className="qux qux-radio tm-radio"
           onKeyPress={[Function]}
           tabIndex={-1}
-          title="checkbox"
+          title="Hide layer"
         >
           <input
             checked={true}
@@ -716,11 +716,11 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         }
       >
         <label
-          aria-label="checkbox"
+          aria-label="Show layer"
           className="qux qux-radio tm-radio"
           onKeyPress={[Function]}
           tabIndex={-1}
-          title="checkbox"
+          title="Show layer"
         >
           <input
             checked={false}
@@ -757,11 +757,11 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       }
     >
       <label
-        aria-label="checkbox"
+        aria-label="Hide layer"
         className="qux qux-checkbox tm-checkbox"
         onKeyPress={[Function]}
         tabIndex={0}
-        title="checkbox"
+        title="Hide layer"
       >
         <input
           checked={true}
@@ -799,11 +799,11 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         }
       >
         <label
-          aria-label="checkbox"
+          aria-label="Show layer"
           className="qux qux-checkbox tm-checkbox"
           onKeyPress={[Function]}
           tabIndex={-1}
-          title="checkbox"
+          title="Show layer"
         >
           <input
             checked={false}
@@ -839,11 +839,11 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         }
       >
         <label
-          aria-label="checkbox"
+          aria-label="Hide layer"
           className="qux qux-checkbox tm-checkbox"
           onKeyPress={[Function]}
           tabIndex={-1}
-          title="checkbox"
+          title="Hide layer"
         >
           <input
             checked={true}
@@ -879,11 +879,11 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         }
       >
         <label
-          aria-label="checkbox"
+          aria-label="Hide layer"
           className="qux qux-checkbox tm-checkbox"
           onKeyPress={[Function]}
           tabIndex={-1}
-          title="checkbox"
+          title="Hide layer"
         >
           <input
             checked={true}
@@ -920,11 +920,11 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       }
     >
       <label
-        aria-label="checkbox"
+        aria-label="Show layer"
         className="qux qux-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
-        title="checkbox"
+        title="Show layer"
       >
         <input
           checked={false}
@@ -960,11 +960,11 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       }
     >
       <label
-        aria-label="checkbox"
+        aria-label="Show layer"
         className="qux qux-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
-        title="checkbox"
+        title="Show layer"
       >
         <input
           checked={false}
@@ -1000,11 +1000,11 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       }
     >
       <label
-        aria-label="checkbox"
+        aria-label="Hide layer"
         className="qux qux-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
-        title="checkbox"
+        title="Hide layer"
       >
         <input
           checked={true}
