@@ -2,10 +2,11 @@
 
 exports[`Checkbox matches snapshots for inputType Checkbox. 1`] = `
 <label
-  aria-label={null}
+  aria-label="checkbox"
   className="tm-checkbox-chbx-example tm-checkbox"
   onKeyPress={[Function]}
   tabIndex={0}
+  title="checkbox"
 >
   <input
     checked={false}
@@ -20,10 +21,11 @@ exports[`Checkbox matches snapshots for inputType Checkbox. 1`] = `
 
 exports[`Checkbox matches snapshots for inputType Radio. 1`] = `
 <label
-  aria-label={null}
+  aria-label="checkbox"
   className="tm-checkbox-radio-ex tm-radio"
   onKeyPress={[Function]}
   tabIndex={0}
+  title="checkbox"
 >
   <input
     checked={true}

@@ -88,9 +88,9 @@ const defaultProps = {
   validExtent: [-Infinity, -Infinity, Infinity, Infinity],
   mapTabIndex: 0,
   tabIndex: 0,
-  titleButton: null,
-  titleButtonNext: null,
-  titleButtonPrevious: null,
+  titleButton: 'Baselayer button',
+  titleButtonNext: 'Next baselayer',
+  titleButtonPrevious: 'Previous baselayer',
 };
 
 class BaseLayerToggler extends Component {

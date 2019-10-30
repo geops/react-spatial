@@ -14,10 +14,11 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       }
     >
       <label
-        aria-label={null}
+        aria-label="checkbox"
         className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={0}
+        title="checkbox"
       >
         <input
           checked={true}
@@ -29,13 +30,13 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <span />
       </label>
       <div
-        aria-label="Vector sample layers null"
+        aria-label="Vector sample layers Hide sublayer"
         className="tm-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="Vector sample layers null"
+        title="Vector sample layers Hide sublayer"
       >
         <div>
           Vector sample layers
@@ -55,10 +56,11 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         }
       >
         <label
-          aria-label={null}
+          aria-label="checkbox"
           className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
           onKeyPress={[Function]}
           tabIndex={-1}
+          title="checkbox"
         >
           <input
             checked={false}
@@ -70,13 +72,13 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <span />
         </label>
         <div
-          aria-label="Points Samples null"
+          aria-label="Points Samples Show sublayer"
           className="tm-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="Points Samples null"
+          title="Points Samples Show sublayer"
         >
           <div>
             Points Samples
@@ -94,10 +96,11 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         }
       >
         <label
-          aria-label={null}
+          aria-label="checkbox"
           className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
           onKeyPress={[Function]}
           tabIndex={-1}
+          title="checkbox"
         >
           <input
             checked={true}
@@ -109,13 +112,13 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <span />
         </label>
         <div
-          aria-label="Lines Samples null"
+          aria-label="Lines Samples Show sublayer"
           className="tm-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="Lines Samples null"
+          title="Lines Samples Show sublayer"
         >
           <div>
             Lines Samples
@@ -133,10 +136,11 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         }
       >
         <label
-          aria-label={null}
+          aria-label="checkbox"
           className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
           onKeyPress={[Function]}
           tabIndex={-1}
+          title="checkbox"
         >
           <input
             checked={false}
@@ -148,13 +152,13 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <span />
         </label>
         <div
-          aria-label="Polygons Samples null"
+          aria-label="Polygons Samples Show sublayer"
           className="tm-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="Polygons Samples null"
+          title="Polygons Samples Show sublayer"
         >
           <div>
             Polygons Samples
@@ -173,10 +177,11 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       }
     >
       <label
-        aria-label={null}
+        aria-label="checkbox"
         className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
         onKeyPress={[Function]}
         tabIndex={0}
+        title="checkbox"
       >
         <input
           checked={true}
@@ -188,13 +193,13 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <span />
       </label>
       <div
-        aria-label="Other layers null"
+        aria-label="Other layers Hide sublayer"
         className="tm-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="Other layers null"
+        title="Other layers Hide sublayer"
       >
         <div>
           Other layers
@@ -214,10 +219,11 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         }
       >
         <label
-          aria-label={null}
+          aria-label="checkbox"
           className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
           onKeyPress={[Function]}
           tabIndex={-1}
+          title="checkbox"
         >
           <input
             checked={false}
@@ -229,13 +235,13 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <span />
         </label>
         <div
-          aria-label="Countries Borders null"
+          aria-label="Countries Borders Show sublayer"
           className="tm-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="Countries Borders null"
+          title="Countries Borders Show sublayer"
         >
           <div>
             Countries Borders
@@ -253,10 +259,11 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         }
       >
         <label
-          aria-label={null}
+          aria-label="checkbox"
           className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
           onKeyPress={[Function]}
           tabIndex={-1}
+          title="checkbox"
         >
           <input
             checked={true}
@@ -268,13 +275,13 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <span />
         </label>
         <div
-          aria-label="USA Population Density null"
+          aria-label="USA Population Density Show sublayer"
           className="tm-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="USA Population Density null"
+          title="USA Population Density Show sublayer"
         >
           <div>
             USA Population Density
@@ -292,10 +299,11 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         }
       >
         <label
-          aria-label={null}
+          aria-label="checkbox"
           className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
           onKeyPress={[Function]}
           tabIndex={-1}
+          title="checkbox"
         >
           <input
             checked={true}
@@ -307,13 +315,13 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <span />
         </label>
         <div
-          aria-label="Switzerland null"
+          aria-label="Switzerland Show sublayer"
           className="tm-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="Switzerland null"
+          title="Switzerland Show sublayer"
         >
           <div>
             Switzerland
@@ -332,10 +340,11 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       }
     >
       <label
-        aria-label={null}
+        aria-label="checkbox"
         className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
+        title="checkbox"
       >
         <input
           checked={false}
@@ -347,13 +356,13 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <span />
       </label>
       <div
-        aria-label="OpenTopoMap null"
+        aria-label="OpenTopoMap Show sublayer"
         className="tm-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="OpenTopoMap null"
+        title="OpenTopoMap Show sublayer"
       >
         <div>
           OpenTopoMap
@@ -371,10 +380,11 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       }
     >
       <label
-        aria-label={null}
+        aria-label="checkbox"
         className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
+        title="checkbox"
       >
         <input
           checked={false}
@@ -386,13 +396,13 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <span />
       </label>
       <div
-        aria-label="OSM Baselayer Hot null"
+        aria-label="OSM Baselayer Hot Show sublayer"
         className="tm-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="OSM Baselayer Hot null"
+        title="OSM Baselayer Hot Show sublayer"
       >
         <div>
           OSM Baselayer Hot
@@ -410,10 +420,11 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       }
     >
       <label
-        aria-label={null}
+        aria-label="checkbox"
         className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
+        title="checkbox"
       >
         <input
           checked={true}
@@ -425,13 +436,13 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <span />
       </label>
       <div
-        aria-label="OSM Baselayer null"
+        aria-label="OSM Baselayer Show sublayer"
         className="tm-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="OSM Baselayer null"
+        title="OSM Baselayer Show sublayer"
       >
         <div>
           OSM Baselayer
@@ -456,10 +467,11 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
       }
     >
       <label
-        aria-label={null}
+        aria-label="checkbox"
         className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
+        title="checkbox"
       >
         <input
           checked={false}
@@ -471,13 +483,13 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
         <span />
       </label>
       <div
-        aria-label="OpenTopoMap null"
+        aria-label="OpenTopoMap Show sublayer"
         className="tm-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="OpenTopoMap null"
+        title="OpenTopoMap Show sublayer"
       >
         <div>
           OpenTopoMap
@@ -495,10 +507,11 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
       }
     >
       <label
-        aria-label={null}
+        aria-label="checkbox"
         className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
+        title="checkbox"
       >
         <input
           checked={false}
@@ -510,13 +523,13 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
         <span />
       </label>
       <div
-        aria-label="OSM Baselayer Hot null"
+        aria-label="OSM Baselayer Hot Show sublayer"
         className="tm-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="OSM Baselayer Hot null"
+        title="OSM Baselayer Hot Show sublayer"
       >
         <div>
           OSM Baselayer Hot
@@ -534,10 +547,11 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
       }
     >
       <label
-        aria-label={null}
+        aria-label="checkbox"
         className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
+        title="checkbox"
       >
         <input
           checked={true}
@@ -549,13 +563,13 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
         <span />
       </label>
       <div
-        aria-label="OSM Baselayer null"
+        aria-label="OSM Baselayer Show sublayer"
         className="tm-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="OSM Baselayer null"
+        title="OSM Baselayer Show sublayer"
       >
         <div>
           OSM Baselayer
@@ -580,10 +594,11 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       }
     >
       <label
-        aria-label={null}
+        aria-label="checkbox"
         className="qux qux-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={0}
+        title="checkbox"
       >
         <input
           checked={true}
@@ -595,13 +610,13 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <span />
       </label>
       <div
-        aria-label="Vector sample layers null"
+        aria-label="Vector sample layers Hide sublayer"
         className="quux"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="Vector sample layers null"
+        title="Vector sample layers Hide sublayer"
       >
         <div>
           Vector sample layers
@@ -621,10 +636,11 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         }
       >
         <label
-          aria-label={null}
+          aria-label="checkbox"
           className="qux qux-radio tm-radio"
           onKeyPress={[Function]}
           tabIndex={-1}
+          title="checkbox"
         >
           <input
             checked={false}
@@ -636,13 +652,13 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <span />
         </label>
         <div
-          aria-label="Points Samples null"
+          aria-label="Points Samples Show sublayer"
           className="quux"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="Points Samples null"
+          title="Points Samples Show sublayer"
         >
           <div>
             Points Samples
@@ -660,10 +676,11 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         }
       >
         <label
-          aria-label={null}
+          aria-label="checkbox"
           className="qux qux-radio tm-radio"
           onKeyPress={[Function]}
           tabIndex={-1}
+          title="checkbox"
         >
           <input
             checked={true}
@@ -675,13 +692,13 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <span />
         </label>
         <div
-          aria-label="Lines Samples null"
+          aria-label="Lines Samples Show sublayer"
           className="quux"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="Lines Samples null"
+          title="Lines Samples Show sublayer"
         >
           <div>
             Lines Samples
@@ -699,10 +716,11 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         }
       >
         <label
-          aria-label={null}
+          aria-label="checkbox"
           className="qux qux-radio tm-radio"
           onKeyPress={[Function]}
           tabIndex={-1}
+          title="checkbox"
         >
           <input
             checked={false}
@@ -714,13 +732,13 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <span />
         </label>
         <div
-          aria-label="Polygons Samples null"
+          aria-label="Polygons Samples Show sublayer"
           className="quux"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="Polygons Samples null"
+          title="Polygons Samples Show sublayer"
         >
           <div>
             Polygons Samples
@@ -739,10 +757,11 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       }
     >
       <label
-        aria-label={null}
+        aria-label="checkbox"
         className="qux qux-checkbox tm-checkbox"
         onKeyPress={[Function]}
         tabIndex={0}
+        title="checkbox"
       >
         <input
           checked={true}
@@ -754,13 +773,13 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <span />
       </label>
       <div
-        aria-label="Other layers null"
+        aria-label="Other layers Hide sublayer"
         className="quux"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="Other layers null"
+        title="Other layers Hide sublayer"
       >
         <div>
           Other layers
@@ -780,10 +799,11 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         }
       >
         <label
-          aria-label={null}
+          aria-label="checkbox"
           className="qux qux-checkbox tm-checkbox"
           onKeyPress={[Function]}
           tabIndex={-1}
+          title="checkbox"
         >
           <input
             checked={false}
@@ -795,13 +815,13 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <span />
         </label>
         <div
-          aria-label="Countries Borders null"
+          aria-label="Countries Borders Show sublayer"
           className="quux"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="Countries Borders null"
+          title="Countries Borders Show sublayer"
         >
           <div>
             Countries Borders
@@ -819,10 +839,11 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         }
       >
         <label
-          aria-label={null}
+          aria-label="checkbox"
           className="qux qux-checkbox tm-checkbox"
           onKeyPress={[Function]}
           tabIndex={-1}
+          title="checkbox"
         >
           <input
             checked={true}
@@ -834,13 +855,13 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <span />
         </label>
         <div
-          aria-label="USA Population Density null"
+          aria-label="USA Population Density Show sublayer"
           className="quux"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="USA Population Density null"
+          title="USA Population Density Show sublayer"
         >
           <div>
             USA Population Density
@@ -858,10 +879,11 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         }
       >
         <label
-          aria-label={null}
+          aria-label="checkbox"
           className="qux qux-checkbox tm-checkbox"
           onKeyPress={[Function]}
           tabIndex={-1}
+          title="checkbox"
         >
           <input
             checked={true}
@@ -873,13 +895,13 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <span />
         </label>
         <div
-          aria-label="Switzerland null"
+          aria-label="Switzerland Show sublayer"
           className="quux"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="Switzerland null"
+          title="Switzerland Show sublayer"
         >
           <div>
             Switzerland
@@ -898,10 +920,11 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       }
     >
       <label
-        aria-label={null}
+        aria-label="checkbox"
         className="qux qux-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
+        title="checkbox"
       >
         <input
           checked={false}
@@ -913,13 +936,13 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <span />
       </label>
       <div
-        aria-label="OpenTopoMap null"
+        aria-label="OpenTopoMap Show sublayer"
         className="quux"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="OpenTopoMap null"
+        title="OpenTopoMap Show sublayer"
       >
         <div>
           OpenTopoMap
@@ -937,10 +960,11 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       }
     >
       <label
-        aria-label={null}
+        aria-label="checkbox"
         className="qux qux-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
+        title="checkbox"
       >
         <input
           checked={false}
@@ -952,13 +976,13 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <span />
       </label>
       <div
-        aria-label="OSM Baselayer Hot null"
+        aria-label="OSM Baselayer Hot Show sublayer"
         className="quux"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="OSM Baselayer Hot null"
+        title="OSM Baselayer Hot Show sublayer"
       >
         <div>
           OSM Baselayer Hot
@@ -976,10 +1000,11 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       }
     >
       <label
-        aria-label={null}
+        aria-label="checkbox"
         className="qux qux-radio tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
+        title="checkbox"
       >
         <input
           checked={true}
@@ -991,13 +1016,13 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <span />
       </label>
       <div
-        aria-label="OSM Baselayer null"
+        aria-label="OSM Baselayer Show sublayer"
         className="quux"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="OSM Baselayer null"
+        title="OSM Baselayer Show sublayer"
       >
         <div>
           OSM Baselayer

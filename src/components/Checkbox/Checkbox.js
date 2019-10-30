@@ -33,9 +33,9 @@ const propTypes = {
   tabIndex: PropTypes.number,
 
   /**
-   * aria-label of the checkbox.
+   * title of the checkbox.
    */
-  ariaLabel: PropTypes.string,
+  title: PropTypes.string,
 };
 
 const defaultProps = {
@@ -44,7 +44,7 @@ const defaultProps = {
   onChange: () => {},
   checked: false,
   tabIndex: 0,
-  ariaLabel: null,
+  title: 'checkbox',
 };
 
 class Checkbox extends PureComponent {
@@ -56,7 +56,7 @@ class Checkbox extends PureComponent {
       tabIndex,
       inputType,
       checked,
-      ariaLabel,
+      title,
     } = this.props;
 
     /*
@@ -67,7 +67,8 @@ class Checkbox extends PureComponent {
       <label
         className={`${className} tm-${inputType}`}
         tabIndex={tabIndex}
-        aria-label={ariaLabel}
+        title={title}
+        aria-label={title}
         onKeyPress={e => {
           if (e.which === 13) {
             onClick(e);

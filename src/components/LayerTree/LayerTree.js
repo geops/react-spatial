@@ -116,10 +116,10 @@ const defaultProps = {
   renderItem: null,
   renderItemContent: null,
   buttonTitles: {
-    layerShow: null,
-    layerHide: null,
-    subLayerShow: null,
-    subLayerHide: null,
+    layerShow: 'Show layer',
+    layerHide: 'Hide layer',
+    subLayerShow: 'Show sublayer',
+    subLayerHide: 'Hide sublayer',
   },
   t: s => s,
 };
