@@ -211,7 +211,7 @@ class LayerTree extends Component {
         tabIndex={tabIndex}
         inputType={inputType}
         checked={layer.getVisible()}
-        ariaLabel={
+        title={
           layer.getVisible() ? buttonTitles.layerHide : buttonTitles.layerShow
         }
         className={`${classNameInput} ${classNameInput}-${inputType}`}
