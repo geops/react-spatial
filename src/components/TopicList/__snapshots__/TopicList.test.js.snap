@@ -24,9 +24,11 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
         tabIndex={0}
       />
       <label
+        aria-label="checkbox"
         className="tm-check tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
+        title="checkbox"
       >
         <input
           checked={true}
@@ -72,9 +74,11 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
             }
           >
             <label
+              aria-label="Hide layer"
               className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
               onKeyPress={[Function]}
               tabIndex={0}
+              title="Hide layer"
             >
               <input
                 checked={true}
@@ -86,11 +90,13 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
               <span />
             </label>
             <div
+              aria-label="Vector sample layers Hide sublayer"
               className="tm-layer-tree-toggle"
               onClick={[Function]}
               onKeyPress={[Function]}
               role="button"
               tabIndex={0}
+              title="Vector sample layers Hide sublayer"
             >
               <div>
                 Vector sample layers
@@ -110,9 +116,11 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
               }
             >
               <label
+                aria-label="Show layer"
                 className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
                 onKeyPress={[Function]}
                 tabIndex={-1}
+                title="Show layer"
               >
                 <input
                   checked={false}
@@ -124,11 +132,13 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
                 <span />
               </label>
               <div
+                aria-label="Points Samples Show sublayer"
                 className="tm-layer-tree-toggle"
                 onClick={[Function]}
                 onKeyPress={[Function]}
                 role="button"
                 tabIndex={0}
+                title="Points Samples Show sublayer"
               >
                 <div>
                   Points Samples
@@ -146,9 +156,11 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
               }
             >
               <label
+                aria-label="Hide layer"
                 className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
                 onKeyPress={[Function]}
                 tabIndex={-1}
+                title="Hide layer"
               >
                 <input
                   checked={true}
@@ -160,11 +172,13 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
                 <span />
               </label>
               <div
+                aria-label="Lines Samples Show sublayer"
                 className="tm-layer-tree-toggle"
                 onClick={[Function]}
                 onKeyPress={[Function]}
                 role="button"
                 tabIndex={0}
+                title="Lines Samples Show sublayer"
               >
                 <div>
                   Lines Samples
@@ -182,9 +196,11 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
               }
             >
               <label
+                aria-label="Show layer"
                 className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
                 onKeyPress={[Function]}
                 tabIndex={-1}
+                title="Show layer"
               >
                 <input
                   checked={false}
@@ -196,11 +212,13 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
                 <span />
               </label>
               <div
+                aria-label="Polygons Samples Show sublayer"
                 className="tm-layer-tree-toggle"
                 onClick={[Function]}
                 onKeyPress={[Function]}
                 role="button"
                 tabIndex={0}
+                title="Polygons Samples Show sublayer"
               >
                 <div>
                   Polygons Samples
@@ -219,9 +237,11 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
             }
           >
             <label
+              aria-label="Hide layer"
               className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
               onKeyPress={[Function]}
               tabIndex={0}
+              title="Hide layer"
             >
               <input
                 checked={true}
@@ -233,11 +253,13 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
               <span />
             </label>
             <div
+              aria-label="Other layers Hide sublayer"
               className="tm-layer-tree-toggle"
               onClick={[Function]}
               onKeyPress={[Function]}
               role="button"
               tabIndex={0}
+              title="Other layers Hide sublayer"
             >
               <div>
                 Other layers
@@ -257,9 +279,11 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
               }
             >
               <label
+                aria-label="Show layer"
                 className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
                 onKeyPress={[Function]}
                 tabIndex={-1}
+                title="Show layer"
               >
                 <input
                   checked={false}
@@ -271,11 +295,13 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
                 <span />
               </label>
               <div
+                aria-label="Countries Borders Show sublayer"
                 className="tm-layer-tree-toggle"
                 onClick={[Function]}
                 onKeyPress={[Function]}
                 role="button"
                 tabIndex={0}
+                title="Countries Borders Show sublayer"
               >
                 <div>
                   Countries Borders
@@ -293,9 +319,11 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
               }
             >
               <label
+                aria-label="Hide layer"
                 className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
                 onKeyPress={[Function]}
                 tabIndex={-1}
+                title="Hide layer"
               >
                 <input
                   checked={true}
@@ -307,11 +335,13 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
                 <span />
               </label>
               <div
+                aria-label="USA Population Density Show sublayer"
                 className="tm-layer-tree-toggle"
                 onClick={[Function]}
                 onKeyPress={[Function]}
                 role="button"
                 tabIndex={0}
+                title="USA Population Density Show sublayer"
               >
                 <div>
                   USA Population Density
@@ -330,9 +360,11 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
             }
           >
             <label
+              aria-label="Hide layer"
               className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
               onKeyPress={[Function]}
               tabIndex={-1}
+              title="Hide layer"
             >
               <input
                 checked={true}
@@ -344,11 +376,13 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
               <span />
             </label>
             <div
+              aria-label="OSM Baselayer Show sublayer"
               className="tm-layer-tree-toggle"
               onClick={[Function]}
               onKeyPress={[Function]}
               role="button"
               tabIndex={0}
+              title="OSM Baselayer Show sublayer"
             >
               <div>
                 OSM Baselayer
@@ -379,9 +413,11 @@ exports[`Topiclist matches snapshots using default properties. 1`] = `
         tabIndex={0}
       />
       <label
+        aria-label="checkbox"
         className="tm-check tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
+        title="checkbox"
       >
         <input
           checked={false}
@@ -439,9 +475,11 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
         tabIndex={0}
       />
       <label
+        aria-label="checkbox"
         className="momo tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
+        title="checkbox"
       >
         <input
           checked={true}
@@ -487,9 +525,11 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
             }
           >
             <label
+              aria-label="Hide layer"
               className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
               onKeyPress={[Function]}
               tabIndex={0}
+              title="Hide layer"
             >
               <input
                 checked={true}
@@ -501,11 +541,13 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
               <span />
             </label>
             <div
+              aria-label="Vector sample layers Hide sublayer"
               className="tm-layer-tree-toggle"
               onClick={[Function]}
               onKeyPress={[Function]}
               role="button"
               tabIndex={0}
+              title="Vector sample layers Hide sublayer"
             >
               <div>
                 Vector sample layers
@@ -525,9 +567,11 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
               }
             >
               <label
+                aria-label="Show layer"
                 className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
                 onKeyPress={[Function]}
                 tabIndex={-1}
+                title="Show layer"
               >
                 <input
                   checked={false}
@@ -539,11 +583,13 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
                 <span />
               </label>
               <div
+                aria-label="Points Samples Show sublayer"
                 className="tm-layer-tree-toggle"
                 onClick={[Function]}
                 onKeyPress={[Function]}
                 role="button"
                 tabIndex={0}
+                title="Points Samples Show sublayer"
               >
                 <div>
                   Points Samples
@@ -561,9 +607,11 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
               }
             >
               <label
+                aria-label="Hide layer"
                 className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
                 onKeyPress={[Function]}
                 tabIndex={-1}
+                title="Hide layer"
               >
                 <input
                   checked={true}
@@ -575,11 +623,13 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
                 <span />
               </label>
               <div
+                aria-label="Lines Samples Show sublayer"
                 className="tm-layer-tree-toggle"
                 onClick={[Function]}
                 onKeyPress={[Function]}
                 role="button"
                 tabIndex={0}
+                title="Lines Samples Show sublayer"
               >
                 <div>
                   Lines Samples
@@ -597,9 +647,11 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
               }
             >
               <label
+                aria-label="Show layer"
                 className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
                 onKeyPress={[Function]}
                 tabIndex={-1}
+                title="Show layer"
               >
                 <input
                   checked={false}
@@ -611,11 +663,13 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
                 <span />
               </label>
               <div
+                aria-label="Polygons Samples Show sublayer"
                 className="tm-layer-tree-toggle"
                 onClick={[Function]}
                 onKeyPress={[Function]}
                 role="button"
                 tabIndex={0}
+                title="Polygons Samples Show sublayer"
               >
                 <div>
                   Polygons Samples
@@ -634,9 +688,11 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
             }
           >
             <label
+              aria-label="Hide layer"
               className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
               onKeyPress={[Function]}
               tabIndex={0}
+              title="Hide layer"
             >
               <input
                 checked={true}
@@ -648,11 +704,13 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
               <span />
             </label>
             <div
+              aria-label="Other layers Hide sublayer"
               className="tm-layer-tree-toggle"
               onClick={[Function]}
               onKeyPress={[Function]}
               role="button"
               tabIndex={0}
+              title="Other layers Hide sublayer"
             >
               <div>
                 Other layers
@@ -672,9 +730,11 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
               }
             >
               <label
+                aria-label="Show layer"
                 className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
                 onKeyPress={[Function]}
                 tabIndex={-1}
+                title="Show layer"
               >
                 <input
                   checked={false}
@@ -686,11 +746,13 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
                 <span />
               </label>
               <div
+                aria-label="Countries Borders Show sublayer"
                 className="tm-layer-tree-toggle"
                 onClick={[Function]}
                 onKeyPress={[Function]}
                 role="button"
                 tabIndex={0}
+                title="Countries Borders Show sublayer"
               >
                 <div>
                   Countries Borders
@@ -708,9 +770,11 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
               }
             >
               <label
+                aria-label="Hide layer"
                 className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
                 onKeyPress={[Function]}
                 tabIndex={-1}
+                title="Hide layer"
               >
                 <input
                   checked={true}
@@ -722,11 +786,13 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
                 <span />
               </label>
               <div
+                aria-label="USA Population Density Show sublayer"
                 className="tm-layer-tree-toggle"
                 onClick={[Function]}
                 onKeyPress={[Function]}
                 role="button"
                 tabIndex={0}
+                title="USA Population Density Show sublayer"
               >
                 <div>
                   USA Population Density
@@ -745,9 +811,11 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
             }
           >
             <label
+              aria-label="Hide layer"
               className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
               onKeyPress={[Function]}
               tabIndex={-1}
+              title="Hide layer"
             >
               <input
                 checked={true}
@@ -759,11 +827,13 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
               <span />
             </label>
             <div
+              aria-label="OSM Baselayer Show sublayer"
               className="tm-layer-tree-toggle"
               onClick={[Function]}
               onKeyPress={[Function]}
               role="button"
               tabIndex={0}
+              title="OSM Baselayer Show sublayer"
             >
               <div>
                 OSM Baselayer
@@ -794,9 +864,11 @@ exports[`Topiclist matches snapshots when classNames are used. 1`] = `
         tabIndex={0}
       />
       <label
+        aria-label="checkbox"
         className="momo tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
+        title="checkbox"
       >
         <input
           checked={false}
@@ -854,9 +926,11 @@ exports[`Topiclist matches snapshots when no layers. 1`] = `
         tabIndex={0}
       />
       <label
+        aria-label="checkbox"
         className="tm-check tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
+        title="checkbox"
       >
         <input
           checked={true}
@@ -914,9 +988,11 @@ exports[`Topiclist matches snapshots when no layers. 1`] = `
         tabIndex={0}
       />
       <label
+        aria-label="checkbox"
         className="tm-check tm-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
+        title="checkbox"
       >
         <input
           checked={false}

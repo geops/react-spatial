@@ -61,6 +61,21 @@ const propTypes = {
    * HTML tabIndex attribute of the button.
    */
   tabIndex: PropTypes.number,
+
+  /**
+   * title attribute of the baselayer button.
+   */
+  titleButton: PropTypes.string,
+
+  /**
+   * title attribute of the next baselayer button.
+   */
+  titleButtonNext: PropTypes.string,
+
+  /**
+   * title attribute of the previous baselayer button.
+   */
+  titleButtonPrevious: PropTypes.string,
 };
 
 const defaultProps = {
@@ -73,6 +88,9 @@ const defaultProps = {
   validExtent: [-Infinity, -Infinity, Infinity, Infinity],
   mapTabIndex: 0,
   tabIndex: 0,
+  titleButton: 'Baselayer button',
+  titleButtonNext: 'Next baselayer',
+  titleButtonPrevious: 'Previous baselayer',
 };
 
 class BaseLayerToggler extends Component {
@@ -288,6 +306,9 @@ class BaseLayerToggler extends Component {
       classNameNext,
       mapTabIndex,
       tabIndex,
+      titleButton,
+      titleButtonNext,
+      titleButtonPrevious,
     } = this.props;
     const { layers, idx, fallbackImg, fallbackImgOpacity } = this.state;
 
@@ -300,10 +321,18 @@ class BaseLayerToggler extends Component {
     if (layers.length > 2) {
       footer = (
         <Footer>
-          <Button className={classNamePrevious} onClick={() => this.previous()}>
+          <Button
+            className={classNamePrevious}
+            onClick={() => this.previous()}
+            title={titleButtonPrevious}
+          >
             <FaArrowCircleLeft />
           </Button>
-          <Button className={classNameNext} onClick={() => this.next()}>
+          <Button
+            className={classNameNext}
+            onClick={() => this.next()}
+            title={titleButtonNext}
+          >
             <FaArrowCircleRight />
           </Button>
         </Footer>
@@ -324,6 +353,7 @@ class BaseLayerToggler extends Component {
         <Button
           className={classNameItem}
           tabIndex={tabIndex}
+          title={titleButton}
           onClick={() => nextLayer.setVisible(true)}
         />
 

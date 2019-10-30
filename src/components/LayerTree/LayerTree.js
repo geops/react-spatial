@@ -75,6 +75,28 @@ const propTypes = {
   renderItemContent: PropTypes.func,
 
   /**
+   * Object holding title for the layer tree's buttons.
+   */
+  buttonTitles: PropTypes.shape({
+    /**
+     * aria-label on checkbox to show layer.
+     */
+    layerShow: PropTypes.string,
+    /**
+     * aria-label on checkbox to hide layer.
+     */
+    layerHide: PropTypes.string,
+    /**
+     * title on button to show sublayers.
+     */
+    subLayerShow: PropTypes.string,
+    /**
+     * title on button to show sublayers.
+     */
+    subLayerHide: PropTypes.string,
+  }),
+
+  /**
    * Translation function.
    * @param {function} Translation function returning the translated string.
    */
@@ -93,6 +115,12 @@ const defaultProps = {
   getParentClassName: () => undefined,
   renderItem: null,
   renderItemContent: null,
+  buttonTitles: {
+    layerShow: 'Show layer',
+    layerHide: 'Hide layer',
+    subLayerShow: 'Show sublayer',
+    subLayerHide: 'Hide sublayer',
+  },
   t: s => s,
 };
 
@@ -169,7 +197,7 @@ class LayerTree extends Component {
   }
 
   renderInput(layer) {
-    const { classNameInput } = this.props;
+    const { classNameInput, buttonTitles } = this.props;
     let tabIndex = 0;
 
     if (!layer.getChildren().length) {
@@ -183,6 +211,9 @@ class LayerTree extends Component {
         tabIndex={tabIndex}
         inputType={inputType}
         checked={layer.getVisible()}
+        title={
+          layer.getVisible() ? buttonTitles.layerHide : buttonTitles.layerShow
+        }
         className={`${classNameInput} ${classNameInput}-${inputType}`}
         onClick={() => this.onInputClick(layer)}
       />
@@ -209,12 +240,18 @@ class LayerTree extends Component {
   // Render a button which expands/collapse the layer if there is children
   // or simulate a click on the input otherwise.
   renderToggleButton(layer) {
-    const { t, classNameToggle } = this.props;
+    const { t, classNameToggle, buttonTitles } = this.props;
+    const { expandedLayerNames } = this.state;
     const tabIndex = 0;
 
     return (
       <Button
         tabIndex={tabIndex}
+        title={`${layer.getName()} ${
+          !expandedLayerNames.includes(layer)
+            ? buttonTitles.subLayerShow
+            : buttonTitles.subLayerHide
+        }`}
         className={classNameToggle}
         onClick={() => {
           this.onInputClick(layer, layer.getChildren().length);
