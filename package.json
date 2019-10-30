@@ -59,7 +59,7 @@
     "react": "^16.7.0",
     "react-app-polyfill": "^1.0.0",
     "react-dom": "^16.7.0",
-    "react-styleguidist": "^9.2.0",
+    "react-styleguidist": "^10.0.0",
     "react-svg-loader": "^3.0.0",
     "react-test-renderer": "^16.7.0",
     "sass-loader": "^8.0.0",
