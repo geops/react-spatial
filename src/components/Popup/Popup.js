@@ -20,7 +20,7 @@ const propTypes = {
    * Custom BoundingClientRect to fit popup into.
    * Use if panIntoView is true. Default is the map's BoundingClientRect.
    */
-  panRect: PropTypes.arrayOf(PropTypes.number),
+  panRect: PropTypes.objectOf(PropTypes.number),
   popupCoordinate: PropTypes.arrayOf(PropTypes.number),
   className: PropTypes.string,
   classNameCloseBt: PropTypes.string,
