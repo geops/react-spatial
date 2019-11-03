@@ -77,7 +77,7 @@ class Popup extends PureComponent {
     if (
       panIntoView &&
       popupElement &&
-      popupElement !== prevState.popupElement
+      (popupElement !== prevState.popupElement || feature !== prevProps.feature)
     ) {
       this.panIntoView();
     }
