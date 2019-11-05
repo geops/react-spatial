@@ -9,25 +9,71 @@ import { unByKey } from 'ol/Observable';
 import Button from '../Button';
 
 const propTypes = {
+  /**
+   * Children content of the popup.
+   */
   children: PropTypes.node.isRequired,
+
+  /**
+   * Openlayers Map (https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
+   */
   map: PropTypes.instanceOf(OLMap).isRequired,
+
+  /**
+   * Openlayers Feature (https://openlayers.org/en/latest/apidoc/module-ol_Feature-Feature.html).
+   */
   feature: PropTypes.instanceOf(Feature),
+
   /**
    * If true, the popup is panned in the map's viewport.
    */
   panIntoView: PropTypes.bool,
+
   /**
    * Custom BoundingClientRect to fit popup into.
    * Use if panIntoView is true. Default is the map's BoundingClientRect.
    */
   panRect: PropTypes.objectOf(PropTypes.number),
+
+  /**
+   * Coordinate for the popup to be localized on the map.
+   */
   popupCoordinate: PropTypes.arrayOf(PropTypes.number),
+
+  /**
+   * Class name of the popup body.
+   */
   className: PropTypes.string,
+
+  /**
+   * Class name of the popup wrapper.
+   */
+  classNameWrapper: PropTypes.string,
+
+  /**
+   * Class name of the popup close button.
+   */
   classNameCloseBt: PropTypes.string,
+
+  /**
+   * Function triggered on close button click.
+   */
   onCloseClick: PropTypes.func,
+
+  /**
+   * Class name of the map container.
+   */
   onKeyUp: PropTypes.func,
+
+  /**
+   * Hide or show close button.
+   */
   showCloseButton: PropTypes.bool,
 
+  /**
+   * Translation function.
+   * @param {function} Translation function returning the translated string.
+   */
   t: PropTypes.func,
 };
 
@@ -36,7 +82,8 @@ const defaultProps = {
   panIntoView: false,
   panRect: null,
   popupCoordinate: null,
-  className: 'tm-popup',
+  className: 'tm-popup-body',
+  classNameWrapper: 'tm-popup',
   classNameCloseBt: 'tm-button tm-popup-close-bt',
   showCloseButton: true,
   onKeyUp: () => {},
@@ -160,6 +207,7 @@ class Popup extends PureComponent {
     const {
       feature,
       popupCoordinate,
+      classNameWrapper,
       className,
       children,
       onKeyUp,
@@ -173,7 +221,7 @@ class Popup extends PureComponent {
 
     return (
       <div
-        className={className}
+        className={classNameWrapper}
         style={{
           left,
           top,
@@ -181,6 +229,7 @@ class Popup extends PureComponent {
       >
         <div
           role="button"
+          className={className}
           ref={popupElement => {
             this.setState({ popupElement });
           }}
