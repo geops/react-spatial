@@ -195,15 +195,11 @@ class BasicMap extends Component {
       this.map.getView().animate(animationOptions);
     }
 
-    if (prevProps.layers !== layers) {
-      const prevNames = prevProps.layers.map(l => l.getName());
-      const currentNames = layers.map(l => l.getName());
-      if (
-        prevNames.length !== currentNames.length &&
-        currentNames.every((value, index) => value !== prevNames[index])
-      ) {
-        this.setLayers(layers);
-      }
+    if (
+      prevProps.layers !== layers &&
+      prevProps.layers.every((layer, index) => layer !== layers[index])
+    ) {
+      this.setLayers(layers);
     }
 
     if (prevProps.center !== center) {
