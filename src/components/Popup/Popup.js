@@ -10,7 +10,7 @@ import Button from '../Button';
 
 const propTypes = {
   /**
-   * Children content of the popup.
+   * React Children.
    */
   children: PropTypes.node.isRequired,
 
@@ -36,19 +36,14 @@ const propTypes = {
   panRect: PropTypes.objectOf(PropTypes.number),
 
   /**
-   * Coordinate for the popup to be localized on the map.
+   * Coordinate position of the popup.
    */
   popupCoordinate: PropTypes.arrayOf(PropTypes.number),
 
   /**
-   * Class name of the popup body.
+   * Class name of the popup.
    */
   className: PropTypes.string,
-
-  /**
-   * Class name of the popup wrapper.
-   */
-  classNameWrapper: PropTypes.string,
 
   /**
    * Class name of the popup close button.
@@ -61,9 +56,29 @@ const propTypes = {
   onCloseClick: PropTypes.func,
 
   /**
-   * Class name of the map container.
+   * Function triggered on key up.
    */
   onKeyUp: PropTypes.func,
+
+  /**
+   * Popup title.
+   */
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+
+  /**
+   * Popup padding.
+   */
+  padding: PropTypes.string,
+
+  /**
+   * HTML tabIndex attribute.
+   */
+  tabIndex: PropTypes.string,
+
+  /**
+   * Hide or show the header.
+   */
+  showHeader: PropTypes.bool,
 
   /**
    * Hide or show close button.
@@ -82,10 +97,13 @@ const defaultProps = {
   panIntoView: false,
   panRect: null,
   popupCoordinate: null,
-  className: 'tm-popup-body',
-  classNameWrapper: 'tm-popup',
-  classNameCloseBt: 'tm-button tm-popup-close-bt',
+  className: 'rs-popup',
+  classNameCloseBt: 'rs-popup-close-bt',
   showCloseButton: true,
+  showHeader: true,
+  title: null,
+  padding: '15px',
+  tabIndex: '',
   onKeyUp: () => {},
   onCloseClick: () => {},
   t: p => p,
@@ -185,32 +203,41 @@ class Popup extends PureComponent {
     }
   }
 
-  renderCloseButton() {
-    const { t, showCloseButton, onCloseClick, classNameCloseBt } = this.props;
-
-    if (!showCloseButton) {
-      return null;
-    }
+  renderPopupHeader() {
+    const {
+      t,
+      title,
+      showCloseButton,
+      onCloseClick,
+      classNameCloseBt,
+    } = this.props;
 
     return (
-      <Button
-        className={classNameCloseBt}
-        title={`Popup ${t('Schliessen')}`}
-        onClick={() => onCloseClick()}
-      >
-        <MdClose focusable={false} />
-      </Button>
+      <div className="rs-popup-header">
+        {t(title)}
+        {showCloseButton ? (
+          <Button
+            className={classNameCloseBt}
+            title={`Popup ${t('Schliessen')}`}
+            onClick={() => onCloseClick()}
+          >
+            <MdClose focusable={false} />
+          </Button>
+        ) : null}
+      </div>
     );
   }
 
   render() {
     const {
       feature,
+      showHeader,
       popupCoordinate,
-      classNameWrapper,
       className,
       children,
       onKeyUp,
+      padding,
+      tabIndex,
     } = this.props;
 
     if (!feature && !popupCoordinate) {
@@ -221,24 +248,26 @@ class Popup extends PureComponent {
 
     return (
       <div
-        className={classNameWrapper}
+        className={className}
         style={{
           left,
           top,
         }}
       >
         <div
-          role="button"
-          className={className}
+          role="presentation"
           ref={popupElement => {
             this.setState({ popupElement });
           }}
-          tabIndex={className === 'tm-tooltip' ? '0' : ''}
+          style={{
+            padding,
+          }}
+          tabIndex={tabIndex}
           onKeyUp={e => {
             onKeyUp(e);
           }}
         >
-          {this.renderCloseButton()}
+          {showHeader ? this.renderPopupHeader() : null}
           {children}
         </div>
       </div>

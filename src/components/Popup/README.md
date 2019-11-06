@@ -83,7 +83,7 @@ class PopupExample extends React.Component {
         .toString();
 
     return (
-      <div className="tm-popup-example">
+      <div className="rs-popup-example">
         <BasicMap
           map={this.map}
           center={this.center}
@@ -94,10 +94,10 @@ class PopupExample extends React.Component {
         <ResizeHandler observe={this} />
         <Popup
           map={this.map}
+          title="Geometry:"
           feature={featureClicked}
           onCloseClick={this.onCloseClick}
         >
-          <div>Geometry:</div>
           <div>{content}</div>
         </Popup>
       </div>

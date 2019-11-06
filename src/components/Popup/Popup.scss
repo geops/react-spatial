@@ -1,54 +1,43 @@
-.tm-popup {
+.rs-popup {
   position: absolute;
+}
 
-  .tm-popup-body {
+.rs-popup > div {
+  position: absolute;
+  background-color: white;
+  filter: drop-shadow($box-shadow);
+  bottom: 12px;
+  left: -50px;
+  min-width: 220px;
+
+  &::after,
+  &::before {
+    top: 100%;
+    border: solid transparent;
+    content: ' ';
+    height: 0;
+    width: 0;
     position: absolute;
-    background-color: white;
-    filter: drop-shadow($box-shadow);
-    padding: 15px;
-    bottom: 12px;
-    left: -50px;
-    min-width: 220px;
+    pointer-events: none;
+  }
 
-    &::after,
-    &::before {
-      top: 100%;
-      border: solid transparent;
-      content: ' ';
-      height: 0;
-      width: 0;
-      position: absolute;
-      pointer-events: none;
-    }
+  &::after {
+    border-top-color: white;
+    border-width: 10px;
+    left: 48px;
+    margin-left: -10px;
+  }
 
-    &::after {
-      border-top-color: white;
-      border-width: 10px;
-      left: 48px;
-      margin-left: -10px;
-    }
+  &::before {
+    border-top-color: #ccc;
+    border-width: 11px;
+    left: 48px;
+    margin-left: -11px;
+  }
 
-    &::before {
-      border-top-color: #ccc;
-      border-width: 11px;
-      left: 48px;
-      margin-left: -11px;
-    }
-
-    .tm-popup-close-bt {
-      position: absolute;
-      border: none;
-      right: 0;
-      top: 0;
-      color: black;
-      height: $btn-size-base;
-      width: $btn-size-base;
-    }
-
-    .tm-popup-title {
-      font-weight: bold;
-      padding-bottom: 5px;
-      margin-right: 25px;
-    }
+  .rs-popup-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 }
