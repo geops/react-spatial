@@ -141,6 +141,9 @@ class BaseLayerToggler extends Component {
     if (this.map && idx !== prevState.idx) {
       this.map.getLayers().clear();
 
+      if (!layers.length) {
+        return;
+      }
       const children = layers[idx].getChildren();
       const childLayers = children.length ? children : [layers[idx]];
 

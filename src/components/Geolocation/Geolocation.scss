@@ -24,37 +24,16 @@
   }
 
   @keyframes blinking {
-    0% { color: white; }
-    50% { color: $btn-primary-color; }
-    100% { color: white; }
-  }
-
-  /**
-   * Loading animation
-   */
-  @keyframes &.blink {
-    /**
-     * At the start of the animation the dot
-     * has an opacity of 0.2
-     */
     0% {
-      opacity: 0.2;
+      color: white;
     }
 
-    /**
-     * At 20% the dot is fully visible and
-     * then fades out slowly
-     */
-    20% {
-      opacity: 1;
+    50% {
+      color: $btn-primary-color;
     }
 
-    /**
-     * Until it reaches an opacity of 0.2 and
-     * the animation can start again
-     */
     100% {
-      opacity: 0.2;
+      color: white;
     }
   }
 }
