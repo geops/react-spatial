@@ -1,4 +1,4 @@
-.tm-popup-example {
+.rs-popup-example {
   position: relative;
   overflow: hidden;
 
@@ -9,7 +9,7 @@
   }
 }
 
-.tm-w-xs .tm-popup {
+.tm-w-xs .rs-popup {
   left: 0 !important;
   right: 0;
   bottom: 0;
@@ -17,7 +17,7 @@
   border: 1px solid #e8e8e8;
 }
 
-.tm-w-xs .tm-popup > div {
+.tm-w-xs .rs-popup > div {
   position: relative;
   left: 0;
   bottom: 0;

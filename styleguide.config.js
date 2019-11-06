@@ -162,6 +162,12 @@ module.exports = {
       '@global body': {
         overflowY: 'hidden',
         overflowX: 'hidden',
+        fontFamily: 'Arial',
+      },
+    },
+    Playground: {
+      preview: {
+        fontSize: '12px',
       },
     },
   },
