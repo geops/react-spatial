@@ -8435,10 +8435,10 @@ obuf@^1.0.0, obuf@^1.1.2:
   resolved "https://registry.yarnpkg.com/obuf/-/obuf-1.1.2.tgz#09bea3343d41859ebd446292d11c9d4db619084e"
   integrity sha512-PX1wu0AmAdPqOL1mWhqmlOd8kOIZQwGZw6rh7uby9fTc5lhaOWFLX3I6R1hrF9k3zUY40e6igsLGkDXK92LJNg==
 
-ol@^6.0.1:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/ol/-/ol-6.1.0.tgz#81882524f554a58e1c588a1e6dbec262b26b87db"
-  integrity sha512-qAoa26yq8jZ9bKA/QlQcyvjlfi84DJh4yHQiTwF+yVKxug4B8IUUEiRlll0Mi9/fjKbKajjLMMXZFB59MAgofw==
+ol@^6.1.1:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/ol/-/ol-6.1.1.tgz#7f8ada284344a5872d552205de558ed4a904cd27"
+  integrity sha512-0dL3i3eJqgOpqIjDKEY3grkeQnjAYfV5L/JCxhOu4SxiaizRwFrFgeas6LILRoxKa03jhQFbut2r2bbgcLGQeA==
   dependencies:
     "@openlayers/pepjs" "^0.5.3"
     pbf "3.2.1"

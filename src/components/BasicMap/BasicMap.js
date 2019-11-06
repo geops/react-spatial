@@ -145,7 +145,6 @@ class BasicMap extends Component {
     const view = new View({ ...viewOptions, ...{ center, zoom, resolution } });
 
     this.map.setView(view);
-    window.map = this.map;
 
     this.node = React.createRef();
 
