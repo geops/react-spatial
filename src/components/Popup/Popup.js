@@ -136,7 +136,7 @@ class Popup extends PureComponent {
     if (
       panIntoView &&
       popupElement &&
-      (popupElement !== prevState.popupElement || feature !== prevProps.feature)
+      popupElement !== prevState.popupElement
     ) {
       this.panIntoView();
     }
@@ -234,6 +234,10 @@ class Popup extends PureComponent {
 
     const { top, left } = this.state;
 
+    // force re-render if the feature or the coordinate changes.
+    // this is needed to update the popupElement ref
+    const key = feature ? feature.getId() : popupCoordinate.join();
+
     return (
       <div
         className={className}
@@ -244,6 +248,7 @@ class Popup extends PureComponent {
       >
         <div
           role="presentation"
+          key={key}
           ref={popupElement => {
             this.setState({ popupElement });
           }}
