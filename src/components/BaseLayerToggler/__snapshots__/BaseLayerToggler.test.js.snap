@@ -5,8 +5,9 @@ exports[`BaseLayerToggler matches snapshots using default properties. 1`] = `
   className="tm-base-layer-toggler"
 >
   <div
+    aria-label="map"
     className="tm-map"
-    role="menu"
+    role="presentation"
     tabIndex={0}
   />
   <img
