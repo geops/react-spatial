@@ -94,7 +94,7 @@ class PopupExample extends React.Component {
         <ResizeHandler observe={this} />
         <Popup
           map={this.map}
-          title="Geometry:"
+          title="Geometry"
           feature={featureClicked}
           onCloseClick={this.onCloseClick}
         >

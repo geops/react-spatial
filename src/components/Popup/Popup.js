@@ -102,7 +102,7 @@ const defaultProps = {
   showCloseButton: true,
   showHeader: true,
   title: null,
-  padding: '15px',
+  padding: '10px',
   tabIndex: '',
   onKeyUp: () => {},
   onCloseClick: () => {},
@@ -259,16 +259,19 @@ class Popup extends PureComponent {
           ref={popupElement => {
             this.setState({ popupElement });
           }}
-          style={{
-            padding,
-          }}
           tabIndex={tabIndex}
           onKeyUp={e => {
             onKeyUp(e);
           }}
         >
           {showHeader ? this.renderPopupHeader() : null}
-          {children}
+          <div
+            style={{
+              padding,
+            }}
+          >
+            {children}
+          </div>
         </div>
       </div>
     );

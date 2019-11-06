@@ -10,6 +10,10 @@
   left: -50px;
   min-width: 220px;
 
+  .rs-popup-close-bt {
+    display: flex;
+  }
+
   &::after,
   &::before {
     top: 100%;
@@ -39,5 +43,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background-color: #f5f5f5;
+    padding: 10px;
   }
 }

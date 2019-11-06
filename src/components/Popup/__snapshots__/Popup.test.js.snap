@@ -13,11 +13,6 @@ exports[`Popup should match snapshot with default values. 1`] = `
   <div
     onKeyUp={[Function]}
     role="presentation"
-    style={
-      Object {
-        "padding": "15px",
-      }
-    }
     tabIndex=""
   >
     <div
@@ -54,8 +49,16 @@ exports[`Popup should match snapshot with default values. 1`] = `
       </div>
     </div>
     <div
-      id="foo"
-    />
+      style={
+        Object {
+          "padding": "10px",
+        }
+      }
+    >
+      <div
+        id="foo"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -73,11 +76,6 @@ exports[`Popup should match snapshot with tabIndex defined. 1`] = `
   <div
     onKeyUp={[Function]}
     role="presentation"
-    style={
-      Object {
-        "padding": "15px",
-      }
-    }
     tabIndex="0"
   >
     <div
@@ -114,8 +112,16 @@ exports[`Popup should match snapshot with tabIndex defined. 1`] = `
       </div>
     </div>
     <div
-      id="bar"
-    />
+      style={
+        Object {
+          "padding": "10px",
+        }
+      }
+    >
+      <div
+        id="bar"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -133,19 +139,22 @@ exports[`Popup should match snapshot without close button. 1`] = `
   <div
     onKeyUp={[Function]}
     role="presentation"
-    style={
-      Object {
-        "padding": "15px",
-      }
-    }
     tabIndex=""
   >
     <div
       className="rs-popup-header"
     />
     <div
-      id="bar"
-    />
+      style={
+        Object {
+          "padding": "10px",
+        }
+      }
+    >
+      <div
+        id="bar"
+      />
+    </div>
   </div>
 </div>
 `;
