@@ -195,7 +195,10 @@ class BasicMap extends Component {
       this.map.getView().animate(animationOptions);
     }
 
-    if (prevProps.layers !== layers) {
+    if (
+      prevProps.layers !== layers &&
+      prevProps.layers.every((layer, index) => layer !== layers[index])
+    ) {
       this.setLayers(layers);
     }
 
