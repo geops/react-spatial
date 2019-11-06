@@ -46,11 +46,6 @@ const propTypes = {
   className: PropTypes.string,
 
   /**
-   * Class name of the popup close button.
-   */
-  classNameCloseBt: PropTypes.string,
-
-  /**
    * Function triggered on close button click.
    */
   onCloseClick: PropTypes.func,
@@ -98,7 +93,6 @@ const defaultProps = {
   panRect: null,
   popupCoordinate: null,
   className: 'rs-popup',
-  classNameCloseBt: 'rs-popup-close-bt',
   showCloseButton: true,
   showHeader: true,
   title: null,
@@ -204,20 +198,14 @@ class Popup extends PureComponent {
   }
 
   renderPopupHeader() {
-    const {
-      t,
-      title,
-      showCloseButton,
-      onCloseClick,
-      classNameCloseBt,
-    } = this.props;
+    const { t, title, showCloseButton, onCloseClick } = this.props;
 
     return (
       <div className="rs-popup-header">
         {t(title)}
         {showCloseButton ? (
           <Button
-            className={classNameCloseBt}
+            className="rs-popup-close-bt"
             title={`Popup ${t('Schliessen')}`}
             onClick={() => onCloseClick()}
           >
