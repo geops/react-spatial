@@ -54,9 +54,9 @@ describe('Popup', () => {
       expect(tree).toMatchSnapshot();
     });
 
-    test('with tm-tooltip class.', () => {
+    test('with tabIndex defined.', () => {
       const component = renderer.create(
-        <Popup map={map} feature={feat} className="tm-tooltip">
+        <Popup map={map} feature={feat} tabIndex="0">
           <div id="bar" />
         </Popup>,
       );
@@ -78,14 +78,13 @@ describe('Popup', () => {
           map={map}
           feature={feat}
           onCloseClick={() => Closer.onCloseClick()}
-          showCloseButton
         >
           <div id="gux" />
         </Popup>,
       );
 
       component
-        .find('.tm-popup-close-bt')
+        .find('.rs-popup-close-bt')
         .at(1)
         .simulate(...evt);
 
@@ -103,7 +102,7 @@ describe('Popup', () => {
       // test if no js error triggered by the default value
       try {
         component
-          .find('.tm-popup-close-bt')
+          .find('.rs-popup-close-bt')
           .at(1)
           .simulate(...evt);
         expect(true).toBe(true);

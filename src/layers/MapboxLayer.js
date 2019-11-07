@@ -100,8 +100,9 @@ export default class MapboxLayer extends Layer {
     });
 
     const mapboxCanvas = this.mbMap.getCanvas();
-    if (mapboxCanvas && this.options.tabIndex) {
-      mapboxCanvas.setAttribute('tabindex', this.options.tabIndex);
+    if (mapboxCanvas) {
+      // Set default tabIndex to -1, so we can't access the canvas via Tab nav.
+      mapboxCanvas.setAttribute('tabindex', this.options.tabIndex || -1);
     }
   }
 

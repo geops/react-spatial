@@ -66,6 +66,9 @@ const propTypes = {
   /** The tabIndex of the map. */
   tabIndex: PropTypes.number,
 
+  /** HTML aria-label. */
+  ariaLabel: PropTypes.string,
+
   /** View constructor options */
   viewOptions: PropTypes.shape({
     minZoom: PropTypes.number,
@@ -96,6 +99,7 @@ const defaultProps = {
   onMapMoved: () => {},
   resolution: undefined,
   tabIndex: 0,
+  ariaLabel: 'map',
   viewOptions: {
     minZoom: 0,
     maxZoom: 22,
@@ -194,7 +198,10 @@ class BasicMap extends Component {
       this.map.getView().animate(animationOptions);
     }
 
-    if (prevProps.layers !== layers) {
+    if (
+      prevProps.layers !== layers &&
+      prevProps.layers.every((layer, index) => layer !== layers[index])
+    ) {
       this.setLayers(layers);
     }
 
@@ -262,12 +269,13 @@ class BasicMap extends Component {
   }
 
   render() {
-    const { className, tabIndex } = this.props;
+    const { className, tabIndex, ariaLabel } = this.props;
     return (
       <div
         className={className}
         ref={this.node}
-        role="menu"
+        role="presentation"
+        aria-label={ariaLabel}
         tabIndex={tabIndex}
       >
         <ResizeHandler

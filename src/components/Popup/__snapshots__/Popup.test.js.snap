@@ -2,7 +2,7 @@
 
 exports[`Popup should match snapshot with default values. 1`] = `
 <div
-  className="tm-popup"
+  className="rs-popup"
   style={
     Object {
       "left": 0,
@@ -12,48 +12,60 @@ exports[`Popup should match snapshot with default values. 1`] = `
 >
   <div
     onKeyUp={[Function]}
-    role="button"
+    role="presentation"
     tabIndex=""
   >
     <div
-      aria-label="Popup Schliessen"
-      className="tm-button tm-popup-close-bt"
-      onClick={[Function]}
-      onKeyPress={[Function]}
-      role="button"
-      tabIndex={0}
-      title="Popup Schliessen"
+      className="rs-popup-header"
     >
-      <svg
-        fill="currentColor"
-        focusable={false}
-        height="1em"
-        stroke="currentColor"
-        strokeWidth="0"
-        style={
-          Object {
-            "color": undefined,
-          }
-        }
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+      <div
+        aria-label="Popup Schliessen"
+        className="rs-popup-close-bt"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+        title="Popup Schliessen"
       >
-        <path
-          d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-        />
-      </svg>
+        <svg
+          fill="currentColor"
+          focusable={false}
+          height="1em"
+          stroke="currentColor"
+          strokeWidth="0"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+          />
+        </svg>
+      </div>
     </div>
     <div
-      id="foo"
-    />
+      style={
+        Object {
+          "padding": "10px",
+        }
+      }
+    >
+      <div
+        id="foo"
+      />
+    </div>
   </div>
 </div>
 `;
 
-exports[`Popup should match snapshot with tm-tooltip class. 1`] = `
+exports[`Popup should match snapshot with tabIndex defined. 1`] = `
 <div
-  className="tm-tooltip"
+  className="rs-popup"
   style={
     Object {
       "left": 0,
@@ -63,48 +75,60 @@ exports[`Popup should match snapshot with tm-tooltip class. 1`] = `
 >
   <div
     onKeyUp={[Function]}
-    role="button"
+    role="presentation"
     tabIndex="0"
   >
     <div
-      aria-label="Popup Schliessen"
-      className="tm-button tm-popup-close-bt"
-      onClick={[Function]}
-      onKeyPress={[Function]}
-      role="button"
-      tabIndex={0}
-      title="Popup Schliessen"
+      className="rs-popup-header"
     >
-      <svg
-        fill="currentColor"
-        focusable={false}
-        height="1em"
-        stroke="currentColor"
-        strokeWidth="0"
-        style={
-          Object {
-            "color": undefined,
-          }
-        }
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+      <div
+        aria-label="Popup Schliessen"
+        className="rs-popup-close-bt"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+        title="Popup Schliessen"
       >
-        <path
-          d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-        />
-      </svg>
+        <svg
+          fill="currentColor"
+          focusable={false}
+          height="1em"
+          stroke="currentColor"
+          strokeWidth="0"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+          />
+        </svg>
+      </div>
     </div>
     <div
-      id="bar"
-    />
+      style={
+        Object {
+          "padding": "10px",
+        }
+      }
+    >
+      <div
+        id="bar"
+      />
+    </div>
   </div>
 </div>
 `;
 
 exports[`Popup should match snapshot without close button. 1`] = `
 <div
-  className="tm-popup"
+  className="rs-popup"
   style={
     Object {
       "left": 0,
@@ -114,12 +138,23 @@ exports[`Popup should match snapshot without close button. 1`] = `
 >
   <div
     onKeyUp={[Function]}
-    role="button"
+    role="presentation"
     tabIndex=""
   >
     <div
-      id="bar"
+      className="rs-popup-header"
     />
+    <div
+      style={
+        Object {
+          "padding": "10px",
+        }
+      }
+    >
+      <div
+        id="bar"
+      />
+    </div>
   </div>
 </div>
 `;

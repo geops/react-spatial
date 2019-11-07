@@ -9,25 +9,81 @@ import { unByKey } from 'ol/Observable';
 import Button from '../Button';
 
 const propTypes = {
+  /**
+   * React Children.
+   */
   children: PropTypes.node.isRequired,
+
+  /**
+   * Openlayers Map (https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
+   */
   map: PropTypes.instanceOf(OLMap).isRequired,
+
+  /**
+   * Openlayers Feature (https://openlayers.org/en/latest/apidoc/module-ol_Feature-Feature.html).
+   */
   feature: PropTypes.instanceOf(Feature),
+
   /**
    * If true, the popup is panned in the map's viewport.
    */
   panIntoView: PropTypes.bool,
+
   /**
    * Custom BoundingClientRect to fit popup into.
    * Use if panIntoView is true. Default is the map's BoundingClientRect.
    */
   panRect: PropTypes.objectOf(PropTypes.number),
+
+  /**
+   * Coordinate position of the popup.
+   */
   popupCoordinate: PropTypes.arrayOf(PropTypes.number),
+
+  /**
+   * Class name of the popup.
+   */
   className: PropTypes.string,
-  classNameCloseBt: PropTypes.string,
+
+  /**
+   * Function triggered on close button click.
+   */
   onCloseClick: PropTypes.func,
+
+  /**
+   * Function triggered on key up.
+   */
   onKeyUp: PropTypes.func,
+
+  /**
+   * Popup title.
+   */
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+
+  /**
+   * Popup padding.
+   */
+  padding: PropTypes.string,
+
+  /**
+   * HTML tabIndex attribute.
+   */
+  tabIndex: PropTypes.string,
+
+  /**
+   * Hide or show the header.
+   */
+  showHeader: PropTypes.bool,
+
+  /**
+   * Hide or show close button.
+   */
   showCloseButton: PropTypes.bool,
 
+  /**
+   * Translation function.
+   * @param {function} Translation function returning the translated string.
+   */
   t: PropTypes.func,
 };
 
@@ -36,9 +92,12 @@ const defaultProps = {
   panIntoView: false,
   panRect: null,
   popupCoordinate: null,
-  className: 'tm-popup',
-  classNameCloseBt: 'tm-button tm-popup-close-bt',
+  className: 'rs-popup',
   showCloseButton: true,
+  showHeader: true,
+  title: null,
+  padding: '10px',
+  tabIndex: '',
   onKeyUp: () => {},
   onCloseClick: () => {},
   t: p => p,
@@ -138,31 +197,35 @@ class Popup extends PureComponent {
     }
   }
 
-  renderCloseButton() {
-    const { t, showCloseButton, onCloseClick, classNameCloseBt } = this.props;
-
-    if (!showCloseButton) {
-      return null;
-    }
+  renderPopupHeader() {
+    const { t, title, showCloseButton, onCloseClick } = this.props;
 
     return (
-      <Button
-        className={classNameCloseBt}
-        title={`Popup ${t('Schliessen')}`}
-        onClick={() => onCloseClick()}
-      >
-        <MdClose focusable={false} />
-      </Button>
+      <div className="rs-popup-header">
+        {t(title)}
+        {showCloseButton ? (
+          <Button
+            className="rs-popup-close-bt"
+            title={`Popup ${t('Schliessen')}`}
+            onClick={() => onCloseClick()}
+          >
+            <MdClose focusable={false} />
+          </Button>
+        ) : null}
+      </div>
     );
   }
 
   render() {
     const {
       feature,
+      showHeader,
       popupCoordinate,
       className,
       children,
       onKeyUp,
+      padding,
+      tabIndex,
     } = this.props;
 
     if (!feature && !popupCoordinate) {
@@ -180,17 +243,23 @@ class Popup extends PureComponent {
         }}
       >
         <div
-          role="button"
+          role="presentation"
           ref={popupElement => {
             this.setState({ popupElement });
           }}
-          tabIndex={className === 'tm-tooltip' ? '0' : ''}
+          tabIndex={tabIndex}
           onKeyUp={e => {
             onKeyUp(e);
           }}
         >
-          {this.renderCloseButton()}
-          {children}
+          {showHeader ? this.renderPopupHeader() : null}
+          <div
+            style={{
+              padding,
+            }}
+          >
+            {children}
+          </div>
         </div>
       </div>
     );

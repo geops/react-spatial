@@ -1,15 +1,18 @@
-.tm-popup {
+.rs-popup {
   position: absolute;
 }
 
-.tm-popup > div {
+.rs-popup > div {
   position: absolute;
   background-color: white;
   filter: drop-shadow($box-shadow);
-  padding: 15px;
   bottom: 12px;
   left: -50px;
   min-width: 220px;
+
+  .rs-popup-close-bt {
+    display: flex;
+  }
 
   &::after,
   &::before {
@@ -36,19 +39,12 @@
     margin-left: -11px;
   }
 
-  .tm-popup-close-bt {
-    position: absolute;
-    border: none;
-    right: 0;
-    top: 0;
-    color: black;
-    height: $btn-size-base;
-    width: $btn-size-base;
-  }
-
-  .tm-popup-title {
+  .rs-popup-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f5f5f5;
     font-weight: bold;
-    padding-bottom: 5px;
-    margin-right: 25px;
+    padding: 10px;
   }
 }
