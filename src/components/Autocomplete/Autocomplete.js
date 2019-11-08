@@ -163,10 +163,14 @@ class Autocomplete extends PureComponent {
 
   onKeyPress(evt) {
     const { refList } = this.state;
+    const { items } = this.props;
     if (evt.which === 40 && refList && refList.querySelector('.tm-list-item')) {
       // Give focus to the first element of the results
       // eslint-disable-next-line react/no-find-dom-node
       refList.querySelector('.tm-list-item').focus();
+    }
+    if (evt.which === 13 && refList && items.length) {
+      this.onSelect(evt, items[0]);
     }
   }
 
