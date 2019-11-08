@@ -329,14 +329,14 @@ class BaseLayerToggler extends Component {
             onClick={() => this.previous()}
             title={titleButtonPrevious}
           >
-            <FaArrowCircleLeft />
+            <FaArrowCircleLeft focusable={false} />
           </Button>
           <Button
             className={classNameNext}
             onClick={() => this.next()}
             title={titleButtonNext}
           >
-            <FaArrowCircleRight />
+            <FaArrowCircleRight focusable={false} />
           </Button>
         </Footer>
       );

@@ -229,7 +229,7 @@ class Geolocation extends PureComponent {
         title={title}
         onClick={() => this.toggle()}
       >
-        <FaRegDotCircle />
+        <FaRegDotCircle focusable={false} />
       </Button>
     );
   }
