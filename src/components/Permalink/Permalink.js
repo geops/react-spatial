@@ -164,7 +164,8 @@ class Permalink extends Component {
     const { params, history } = this.props;
     const oldParams = qs.parse(window.location.search);
     const parameters = { ...oldParams, ...params, ...this.state };
-    const qStr = qs.stringify(parameters, { encode: false });
+    // encodeURI to encode spaces, accents, etc. but not characters like ;,/?:@&=+$-_.!~*'()
+    const qStr = encodeURI(qs.stringify(parameters, { encode: false }));
     const search = qStr ? `?${qStr}` : '';
 
     if (
