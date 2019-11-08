@@ -44,11 +44,15 @@ class VectorLayer extends Layer {
    * eslint-disable-next-line class-methods-use-this
    */
   getFeatureInfoAtCoordinate(coordinate) {
-    const pixel = this.map.getPixelFromCoordinate(coordinate);
-    const features = this.map.getFeaturesAtPixel(pixel, {
-      layerFilter: l => l === this.olLayer,
-      hitTolerance: this.hitTolerance,
-    });
+    let features = [];
+
+    if (this.map) {
+      const pixel = this.map.getPixelFromCoordinate(coordinate);
+      features = this.map.getFeaturesAtPixel(pixel, {
+        layerFilter: l => l === this.olLayer,
+        hitTolerance: this.hitTolerance,
+      });
+    }
 
     return Promise.resolve({
       features,
