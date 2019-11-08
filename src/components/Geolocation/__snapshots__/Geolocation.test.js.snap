@@ -10,6 +10,7 @@ exports[`Geolocation should match snapshot minimum props 1`] = `
 >
   <svg
     fill="currentColor"
+    focusable={false}
     height="1em"
     stroke="currentColor"
     strokeWidth="0"
@@ -39,6 +40,7 @@ exports[`Geolocation should match snapshot with class name 1`] = `
 >
   <svg
     fill="currentColor"
+    focusable={false}
     height="1em"
     stroke="currentColor"
     strokeWidth="0"
@@ -70,6 +72,7 @@ exports[`Geolocation should match snapshot with title 1`] = `
 >
   <svg
     fill="currentColor"
+    focusable={false}
     height="1em"
     stroke="currentColor"
     strokeWidth="0"
