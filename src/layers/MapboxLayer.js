@@ -156,6 +156,6 @@ export default class MapboxLayer extends Layer {
    * @returns {MapboxLayer} MapboxLayer
    */
   clone() {
-    return new MapboxLayer(this.options);
+    return new MapboxLayer({ ...this.options, url: this.styleUrl });
   }
 }
