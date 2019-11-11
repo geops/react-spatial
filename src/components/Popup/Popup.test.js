@@ -19,7 +19,10 @@ const feat = new Feature({
 });
 
 const featLine = new Feature({
-  geometry: new Line([[0, 0], [1, 1]]),
+  geometry: new Line([
+    [0, 0],
+    [1, 1],
+  ]),
 });
 
 describe('Popup', () => {
@@ -65,7 +68,10 @@ describe('Popup', () => {
     });
   });
 
-  [['click', {}], ['keypress', { which: 13 }]].forEach(evt => {
+  [
+    ['click', {}],
+    ['keypress', { which: 13 }],
+  ].forEach(evt => {
     test(`should trigger onCloseClick function on ${evt[0]} event.`, () => {
       class Closer {
         static onCloseClick() {}
@@ -91,9 +97,7 @@ describe('Popup', () => {
       expect(spy).toHaveBeenCalled();
     });
 
-    test(`should trigger default onCloseClick function on ${
-      evt[0]
-    } event without errors.`, () => {
+    test(`should trigger default onCloseClick function on ${evt[0]} event without errors.`, () => {
       const component = mount(
         <Popup map={map} feature={feat} n>
           <div id="gux" />

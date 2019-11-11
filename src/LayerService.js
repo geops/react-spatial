@@ -20,6 +20,8 @@ export default class LayerService {
   setLayers(layers) {
     this.layers = layers;
     this.listenChangeEvt();
+    // When we change the layers we trigger an change:layers event
+    (this.callbacks['change:layers'] || []).forEach(cb => cb(layers));
   }
 
   getLayersAsFlatArray(optLayers) {

@@ -325,7 +325,11 @@ describe('FeatureExportButton', () => {
     test('should export lineStartIcon and lineEndIcon style.', () => {
       const extendedLayer = renderLayer(1);
       const line = new Feature({
-        geometry: new LineString([[0, 1], [2, 3], [4, 5]]),
+        geometry: new LineString([
+          [0, 1],
+          [2, 3],
+          [4, 5],
+        ]),
       });
       extendedLayer.olLayer.getSource().addFeatures([line]);
 

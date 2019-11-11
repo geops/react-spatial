@@ -209,6 +209,13 @@ class BaseLayerToggler extends Component {
           elt.offsetLeft + elt.offsetWidth / 2,
           elt.offsetTop + elt.offsetHeight / 2,
         ]);
+
+        // In some case the map is not able to get the coord.
+        // For example if the map has a width or height of 0.
+        if (!coord) {
+          return;
+        }
+
         this.map.getView().setCenter(coord);
       }
     });
