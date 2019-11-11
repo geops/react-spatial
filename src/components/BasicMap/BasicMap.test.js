@@ -162,4 +162,56 @@ describe('BasicMap', () => {
     ]);
     expect(spy).toHaveBeenCalledTimes(2);
   });
+
+  describe('#setLayers()', () => {
+    test('only init layers which are not already on the map.', () => {
+      const layer0 = new Layer({ key: 'test1' });
+      const spyInit0 = jest.spyOn(layer0, 'init');
+      const spyTerminate0 = jest.spyOn(layer0, 'terminate');
+      const layer1 = new Layer({ key: 'test1' });
+      const spyInit1 = jest.spyOn(layer1, 'init');
+      const spyTerminate1 = jest.spyOn(layer1, 'terminate');
+      const layer2 = new Layer({ key: 'test2' });
+      const spyInit2 = jest.spyOn(layer2, 'init');
+      const spyTerminate2 = jest.spyOn(layer2, 'terminate');
+      const layer3 = new Layer({ key: 'test3' });
+      const spyInit3 = jest.spyOn(layer3, 'init');
+      const spyTerminate3 = jest.spyOn(layer3, 'terminate');
+      const layer4 = new Layer({ key: 'test4' });
+      const spyInit4 = jest.spyOn(layer4, 'init');
+      const spyTerminate4 = jest.spyOn(layer4, 'terminate');
+      const startLayers = [layer1, layer3];
+      const map = shallow(<BasicMap map={olMap} layers={startLayers} />);
+
+      expect(map.instance().layers).toBe(startLayers);
+      expect(spyInit0).toHaveBeenCalledTimes(0);
+      expect(spyInit1).toHaveBeenCalledTimes(1);
+      expect(spyInit2).toHaveBeenCalledTimes(0);
+      expect(spyInit3).toHaveBeenCalledTimes(1);
+      expect(spyInit4).toHaveBeenCalledTimes(0);
+      expect(spyTerminate0).toHaveBeenCalledTimes(0);
+      expect(spyTerminate1).toHaveBeenCalledTimes(1);
+      expect(spyTerminate2).toHaveBeenCalledTimes(0);
+      expect(spyTerminate3).toHaveBeenCalledTimes(1);
+      expect(spyTerminate4).toHaveBeenCalledTimes(0);
+      expect(map.instance().layers).toBe(startLayers);
+
+      const layers = [layer0, layer2, layer3, layer4];
+      map.setProps({
+        layers,
+      });
+
+      expect(spyInit0).toHaveBeenCalledTimes(1);
+      expect(spyInit1).toHaveBeenCalledTimes(1);
+      expect(spyInit2).toHaveBeenCalledTimes(1);
+      expect(spyInit3).toHaveBeenCalledTimes(1);
+      expect(spyInit4).toHaveBeenCalledTimes(1);
+      expect(spyTerminate0).toHaveBeenCalledTimes(1);
+      expect(spyTerminate1).toHaveBeenCalledTimes(2);
+      expect(spyTerminate2).toHaveBeenCalledTimes(1);
+      expect(spyTerminate3).toHaveBeenCalledTimes(1);
+      expect(spyTerminate4).toHaveBeenCalledTimes(1);
+      expect(map.instance().layers).toBe(layers);
+    });
+  });
 });

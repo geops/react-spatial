@@ -69,7 +69,7 @@ export default class MapboxLayer extends Layer {
   init(map) {
     super.init(map);
 
-    if (!this.map || !this.map.getTargetElement()) {
+    if (!this.map || !this.map.getTargetElement() || this.mbMap) {
       return;
     }
 
@@ -142,13 +142,17 @@ export default class MapboxLayer extends Layer {
    * Terminate what was initialized in init function. Remove layer, events...
    */
   terminate() {
-    super.terminate();
     if (this.changeSizeRef) {
       unByKey(this.changeSizeRef);
     }
     if (this.mbMap) {
+      // Some asynchrone repaints are triggered even if the mbMap has been removed,
+      // to avoid display of errors we set an empty function.
+      this.mbMap.triggerRepaint = () => {};
       this.mbMap.remove();
+      this.mbMap = null;
     }
+    super.terminate();
   }
 
   /**

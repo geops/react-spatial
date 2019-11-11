@@ -159,6 +159,7 @@ class BasicMap extends Component {
     this.moveEndRef = this.map.on('moveend', e => onMapMoved(e));
     this.singleClickRef = null;
     this.pointerMoveRef = null;
+    this.layers = [];
   }
 
   componentDidMount() {
@@ -250,11 +251,17 @@ class BasicMap extends Component {
     }
   }
 
-  setLayers(layers) {
-    this.map.getLayers().clear();
-    for (let i = 0; i < layers.length; i += 1) {
-      this.initLayer(layers[i]);
+  setLayers(layers = []) {
+    const layersToRemove = this.layers.filter(layer => !layers.includes(layer));
+    for (let i = 0; i < layersToRemove.length; i += 1) {
+      this.terminateLayer(layersToRemove[i]);
     }
+
+    const layersToInit = layers.filter(layer => !this.layers.includes(layer));
+    for (let i = 0; i < layersToInit.length; i += 1) {
+      this.initLayer(layersToInit[i]);
+    }
+    this.layers = layers;
   }
 
   initLayer(layer) {
@@ -262,6 +269,14 @@ class BasicMap extends Component {
     const layers = layer.getChildren() || [];
     for (let i = 0; i < layers.length; i += 1) {
       this.initLayer(layers[i]);
+    }
+  }
+
+  terminateLayer(layer) {
+    layer.terminate(this.map);
+    const layers = layer.getChildren() || [];
+    for (let i = 0; i < layers.length; i += 1) {
+      this.terminateLayer(layers[i]);
     }
   }
 
