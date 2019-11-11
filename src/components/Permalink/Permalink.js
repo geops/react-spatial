@@ -108,6 +108,7 @@ class Permalink extends Component {
     }
 
     if (layerService) {
+      layerService.un('change:layers', this.updateLayers);
       layerService.un('change:visible', this.updateLayers);
     }
   }
@@ -132,12 +133,14 @@ class Permalink extends Component {
   updateLayerService() {
     const { layerService } = this.props;
     if (layerService) {
-      this.updateLayers(layerService);
-      layerService.on('change:visible', () => this.updateLayers(layerService));
+      this.updateLayers();
+      layerService.on('change:layers', this.updateLayers);
+      layerService.on('change:visible', this.updateLayers);
     }
   }
 
-  updateLayers(layerService) {
+  updateLayers() {
+    const { layerService } = this.props;
     const baseLayers = layerService.getBaseLayers();
     const idx = baseLayers.findIndex(l => l.getVisible());
     if (idx !== -1) {
