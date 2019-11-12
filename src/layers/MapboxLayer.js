@@ -46,7 +46,12 @@ export default class MapboxLayer extends Layer {
             this.mbMap._frame.cancel();
             this.mbMap._frame = null;
           }
-          this.mbMap._render();
+          try {
+            this.mbMap._render();
+          } catch (e) {
+            // ignore render errors because it's probably related to
+            // a render during an update of the style.
+          }
         }
 
         return canvas;
