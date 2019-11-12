@@ -48,9 +48,11 @@ export default class MapboxLayer extends Layer {
           }
           try {
             this.mbMap._render();
-          } catch (e) {
+          } catch (err) {
             // ignore render errors because it's probably related to
             // a render during an update of the style.
+            // eslint-disable-next-line no-console
+            console.warn(err);
           }
         }
 
@@ -101,7 +103,13 @@ export default class MapboxLayer extends Layer {
     });
 
     this.changeSizeRef = this.map.on('change:size', () => {
-      this.mbMap.resize();
+      try {
+        this.mbMap.resize();
+      } catch (err) {
+        // ignore render errors
+        // eslint-disable-next-line no-console
+        console.warn(err);
+      }
     });
 
     const mapboxCanvas = this.mbMap.getCanvas();
