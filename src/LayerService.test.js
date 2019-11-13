@@ -1,6 +1,7 @@
 import 'jest-canvas-mock';
 import LayerService from './LayerService';
 import ConfigReader from './ConfigReader';
+import Layer from './layers/Layer';
 
 describe('LayerService', () => {
   const instantiateLayerService = data => {
@@ -85,6 +86,18 @@ describe('LayerService', () => {
     layerService.on('change:visible', callback);
     layerService.getLayer('2').setVisible(true);
     expect(callback.mock.calls.length).toBe(3);
+  });
+
+  test('should set children from constructor', () => {
+    const layer = new Layer({
+      name: 'foo',
+      children: [
+        new Layer({
+          name: 'bar',
+        }),
+      ],
+    });
+    expect(layer.getChildren().length).toBe(1);
   });
 
   describe('#on() ', () => {

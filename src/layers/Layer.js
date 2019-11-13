@@ -11,6 +11,7 @@ import Observable, { unByKey } from 'ol/Observable';
  * @param {ol.layer} [options.olLayer] the {@link https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html ol/Layer}
  * @param {radioGroup} [options.radioGroup] identifier to group layer in a group, toggle via a radio
  * @param {boolean} [options.isBaseLayer] if true this layer is the baseLayer
+ * @param {Array<ol.layer>} [options.children] Layers
  * @param {boolean} [options.visible] If true layer is visible
  * @param {string} [options.copyright] Copyright-Statement
  * @param {Object} [options.properties] Application-specific layer properties.
@@ -23,6 +24,7 @@ export default class Layer extends Observable {
     olLayer,
     radioGroup,
     isBaseLayer,
+    children,
     visible,
     copyright,
     properties,
@@ -34,7 +36,7 @@ export default class Layer extends Observable {
     this.olLayer = olLayer;
     this.isBaseLayer = isBaseLayer;
     this.radioGroup = radioGroup;
-    this.children = [];
+    this.children = children || [];
     this.visible = visible === undefined ? true : visible;
     this.copyright = copyright;
     this.properties = properties || {};
