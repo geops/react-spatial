@@ -167,12 +167,13 @@ const loadLayerFromConfig = config => {
     visible: false,
     isBaseLayer: false,
     ...config,
+    children: [],
   };
 
   const layer = createLayer(item);
 
-  if (item.children) {
-    item.children.forEach(childConfig => {
+  if (config.children) {
+    config.children.forEach(childConfig => {
       layer.addChild(loadLayerFromConfig(childConfig));
     });
   }
