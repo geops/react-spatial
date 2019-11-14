@@ -156,7 +156,7 @@ class Permalink extends Component {
         )
         .map(l => l.getKey())
         .join(),
-      baseLayers:
+      baselayers:
         baseLayers.length > 1
           ? baseLayers.map(l => l.getKey()).join()
           : undefined,
