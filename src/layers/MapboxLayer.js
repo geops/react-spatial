@@ -137,7 +137,7 @@ export default class MapboxLayer extends Layer {
       return Promise.resolve({ coordinate, features: [], layer: this });
     }
 
-    const pixel = this.mbMap.project(toLonLat(coordinate));
+    const pixel = coordinate && this.mbMap.project(toLonLat(coordinate));
     // At this point we get GeoJSON Mapbox feature, we transform it to an Openlayers
     // feature to be consistent with other layers.
     const features = this.mbMap
