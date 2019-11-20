@@ -41,6 +41,13 @@ describe('BasicMap', () => {
     expect(setTarget).toHaveBeenCalled();
   });
 
+  test('should be rendered with touchAction to none', () => {
+    shallow(<BasicMap map={olMap} />);
+    expect(olMap.getViewport().style.touchAction).toBe('none');
+    expect(olMap.getViewport().style.msTouchAction).toBe('none');
+    expect(olMap.getViewport().getAttribute('touch-action')).toBe('none');
+  });
+
   test('uses onMapMoved function', () => {
     const spy = jest.fn(() => {});
     shallow(<BasicMap map={olMap} onMapMoved={spy} />);
