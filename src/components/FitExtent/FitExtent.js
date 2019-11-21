@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FaExpand } from 'react-icons/fa';
 import OLMap from 'ol/Map';
-import Button from '../Button';
+
+import './FitExtent.scss';
 
 const propTypes = {
   /**
@@ -33,7 +34,7 @@ const propTypes = {
 
 const defaultProps = {
   title: 'Fit Extent',
-  className: 'tm-button tm-round-blue',
+  className: 'rs-fit-extent',
   children: <FaExpand focusable={false} />,
 };
 
@@ -41,17 +42,22 @@ const defaultProps = {
  * This component creates a button to zoom to the given extent.
  */
 function FitExtent({ map, extent, title, className, children }) {
+  const fit = () => {
+    map.getView().cancelAnimations();
+    map.getView().fit(extent, map.getSize());
+  };
+
   return (
-    <Button
+    <div
       className={className}
+      role="button"
       title={title}
-      onClick={() => {
-        map.getView().cancelAnimations();
-        map.getView().fit(extent, map.getSize());
-      }}
+      tabIndex="0"
+      onClick={() => fit()}
+      onKeyPress={e => e.which === 13 && fit()}
     >
       {children}
-    </Button>
+    </div>
   );
 }
 

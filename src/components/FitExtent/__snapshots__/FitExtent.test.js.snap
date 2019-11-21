@@ -2,12 +2,11 @@
 
 exports[`Button should match snapshot. 1`] = `
 <div
-  aria-label="Fit Extent"
-  className="tm-button tm-round-blue"
+  className="rs-fit-extent"
   onClick={[Function]}
   onKeyPress={[Function]}
   role="button"
-  tabIndex={0}
+  tabIndex="0"
   title="Fit Extent"
 >
   <svg
