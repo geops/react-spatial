@@ -1,16 +1,16 @@
 .tm-canvas-save-button-example {
   position: relative;
 
-  .tm-button {
-    font-size: 30px;
-    margin-top: 16px;
+  div[role='button'] {
+    display: flex;
+    align-items: center;
+    width: 44px;
+    height: 44px;
 
     svg {
-      padding-top: 3px;
+      margin-top: 4px;
+      width: 100%;
+      height: 100%;
     }
-  }
-
-  .tm-map {
-    overflow: hidden;
   }
 }

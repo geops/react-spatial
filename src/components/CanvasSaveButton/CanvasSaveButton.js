@@ -2,40 +2,19 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import OLMap from 'ol/Map';
 import { getTopLeft, getBottomRight } from 'ol/extent';
-import Button from '../Button';
 import NorthArrowSimple from '../../images/northArrow.url.svg';
 import NorthArrowCircle from '../../images/northArrowCircle.url.svg';
 
 const propTypes = {
   /**
-   * Title of the button.
+   * Children content of the button.
    */
-  title: PropTypes.string.isRequired,
+  children: PropTypes.node,
 
   /**
-   *  Children content of the button.
+   * Output format of the image.
    */
-  children: PropTypes.node.isRequired,
-
-  /**
-   * CSS class of the button.
-   */
-  className: PropTypes.string,
-
-  /**
-   * HTML tabIndex attribute
-   */
-  tabIndex: PropTypes.number,
-
-  /**
-   * HTML disabled attribute
-   */
-  disabled: PropTypes.bool,
-
-  /**
-   * Format to save the image.
-   */
-  saveFormat: PropTypes.oneOf(['image/jpeg', 'image/png']),
+  format: PropTypes.oneOf(['image/jpeg', 'image/png']),
 
   /** An existing [ol/Map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html). */
   map: PropTypes.instanceOf(OLMap),
@@ -120,15 +99,13 @@ const propTypes = {
 };
 
 const defaultProps = {
+  children: null,
   map: null,
-  tabIndex: 0,
-  className: 'tm-canvas-save-button tm-button',
-  saveFormat: 'image/png',
+  format: 'image/png',
   extent: null,
   extraData: null,
   coordinates: null,
   scale: 1,
-  disabled: undefined,
   onSaveStart: map => Promise.resolve(map),
   onSaveEnd: () => {},
 };
@@ -139,12 +116,32 @@ const defaultProps = {
 class CanvasSaveButton extends PureComponent {
   constructor(props) {
     super(props);
-    const { saveFormat } = this.props;
-    this.options = {
-      format: saveFormat,
-    };
-    this.fileExt = this.options.format === 'image/jpeg' ? 'jpg' : 'png';
+    const { format } = this.props;
+    this.fileExt = format === 'image/jpeg' ? 'jpg' : 'png';
     this.padding = 5;
+  }
+
+  onClick(evt) {
+    const { map, onSaveStart, onSaveEnd } = this.props;
+    if (window.navigator.msSaveBlob) {
+      // ie only
+      evt.preventDefault();
+      evt.stopPropagation();
+    }
+    onSaveStart(map).then(mapToExport => {
+      return this.createCanvasImage(mapToExport || map)
+        .then(canvas => {
+          this.downloadCanvasImage(canvas);
+          onSaveEnd(mapToExport);
+        })
+        .catch(err => {
+          if (err) {
+            // eslint-disable-next-line no-console
+            console.error(err);
+          }
+          onSaveEnd(mapToExport, err);
+        });
+    });
   }
 
   getDownloadImageName() {
@@ -391,9 +388,10 @@ class CanvasSaveButton extends PureComponent {
   }
 
   downloadCanvasImage(canvas) {
+    const { format } = this.props;
     if (/msie (9|10)/gi.test(window.navigator.userAgent.toLowerCase())) {
       // ie 9 and 10
-      const url = canvas.toDataURL(this.options.format);
+      const url = canvas.toDataURL(format);
       const w = window.open('about:blank', '');
       w.document.write(`<img src="${url}" alt="from canvas"/>`);
     } else if (window.navigator.msSaveBlob) {
@@ -407,7 +405,7 @@ class CanvasSaveButton extends PureComponent {
       }
       window.navigator.msSaveBlob(
         new Blob([image], {
-          type: this.options.format,
+          type: format,
         }),
         this.getDownloadImageName(),
       );
@@ -420,52 +418,25 @@ class CanvasSaveButton extends PureComponent {
         // append child to document for firefox to be able to download.
         document.body.appendChild(link);
         link.click();
-      }, this.options.format);
+      }, format);
     }
   }
 
   render() {
-    const {
-      title,
-      map,
-      children,
-      tabIndex,
-      className,
-      disabled,
-      onSaveStart,
-      onSaveEnd,
-    } = this.props;
+    const { children, ...other } = this.props;
 
     return (
-      <Button
-        className={className}
-        title={title}
-        tabIndex={tabIndex}
-        disabled={disabled}
-        onClick={e => {
-          if (window.navigator.msSaveBlob) {
-            // ie only
-            e.preventDefault();
-            e.stopPropagation();
-          }
-          onSaveStart(map).then(mapToExport => {
-            return this.createCanvasImage(mapToExport || map)
-              .then(canvas => {
-                this.downloadCanvasImage(canvas);
-                onSaveEnd(mapToExport);
-              })
-              .catch(err => {
-                if (err) {
-                  // eslint-disable-next-line no-console
-                  console.error(err);
-                }
-                onSaveEnd(mapToExport, err);
-              });
-          });
-        }}
+      <div
+        role="button"
+        className="rs-canvas-save-button"
+        tabIndex={0}
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...other}
+        onClick={e => this.onClick(e)}
+        onKeyPress={e => e.which === 13 && this.onClick(e)}
       >
         {children}
-      </Button>
+      </div>
     );
   }
 }

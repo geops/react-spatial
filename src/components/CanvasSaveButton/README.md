@@ -27,8 +27,6 @@ function CanvasSaveButtonExample() {
         layers={layers}
       />
       <CanvasSaveButton
-        title="Save the map as PNG"
-        className="tm-round-grey-hover-primary tm-button"
         map={map}
         extraData={{
           copyright: {
