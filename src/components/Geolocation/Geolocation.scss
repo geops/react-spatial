@@ -1,4 +1,4 @@
-.tm-geolocation {
+.rs-geolocation {
   cursor: pointer;
   height: $btn-size-base;
   width: $btn-size-base;
@@ -16,7 +16,7 @@
     background-color: $btn-primary-color-hover;
   }
 
-  &.blink {
+  &.rs-blink {
     animation-name: blinking;
     animation-duration: 3s;
     animation-timing-function: linear;

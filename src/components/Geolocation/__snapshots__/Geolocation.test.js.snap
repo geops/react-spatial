@@ -2,7 +2,7 @@
 
 exports[`Geolocation should match snapshot minimum props 1`] = `
 <div
-  className="tm-geolocation "
+  className="rs-geolocation "
   onClick={[Function]}
   onKeyPress={[Function]}
   role="button"
@@ -63,7 +63,7 @@ exports[`Geolocation should match snapshot with class name 1`] = `
 exports[`Geolocation should match snapshot with title 1`] = `
 <div
   aria-label="Lokalisieren"
-  className="tm-geolocation "
+  className="rs-geolocation "
   onClick={[Function]}
   onKeyPress={[Function]}
   role="button"

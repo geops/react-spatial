@@ -25,11 +25,6 @@ const propTypes = {
   className: PropTypes.string,
 
   /**
-   * Additional CSS class of the activated button.
-   */
-  classNameActive: PropTypes.string,
-
-  /**
    * Title of the button.
    */
   title: PropTypes.string,
@@ -60,8 +55,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  className: 'tm-geolocation',
-  classNameActive: 'blink',
+  className: 'rs-geolocation',
   title: undefined,
   onError: () => {},
   noCenterAfterDrag: false,
@@ -220,12 +214,12 @@ class Geolocation extends PureComponent {
   }
 
   render() {
-    const { className, classNameActive, title } = this.props;
+    const { className, title } = this.props;
     const { active } = this.state;
 
     return (
       <Button
-        className={`${className} ${active ? classNameActive : ''}`}
+        className={`${className} ${active ? 'rs-blink' : ''}`}
         title={title}
         onClick={() => this.toggle()}
       >
