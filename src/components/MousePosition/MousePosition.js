@@ -1,27 +1,14 @@
-import React, { PureComponent } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import OLMap from 'ol/Map';
 import { createStringXY } from 'ol/coordinate';
 import OLMousePosition from 'ol/control/MousePosition';
-import Select from '../Select';
 
 const propTypes = {
   /**
    * The current map.
    */
   map: PropTypes.instanceOf(OLMap).isRequired,
-
-  /**
-   * CSS class of the checkbox.
-   */
-  className: PropTypes.string,
-
-  /**
-   * Function triggered on projection's change event.
-   * @param {Event} event The change event object.
-   * @param {Object} projection The selected projection object.
-   */
-  onChange: PropTypes.func,
 
   /**
    * List of projections to display.
@@ -45,10 +32,16 @@ const propTypes = {
       format: PropTypes.func,
     }),
   ),
+
+  /**
+   * Function triggered on projection's change event.
+   * @param {Event} event The change event object.
+   * @param {Object} projection The selected projection object.
+   */
+  onChange: PropTypes.func,
 };
 
 const defaultProps = {
-  className: 'tm-mouse-position',
   onChange: () => {},
   projections: [
     {
@@ -62,93 +55,66 @@ const defaultProps = {
   ],
 };
 
-class MousePosition extends PureComponent {
-  constructor(props) {
-    super(props);
-    const { projections, onChange } = this.props;
+function MousePosition({ map, projections, onChange, ...other }) {
+  const [projection, setProjection] = useState(projections && projections[0]);
+  const [control, setControl] = useState();
+  const ref = useRef();
 
-    const initialProjection = projections && projections[0];
-    this.state = {
-      projection: initialProjection,
-    };
-    onChange(null, initialProjection);
-    this.ref = React.createRef();
-  }
-
-  componentDidMount() {
-    this.updateControl();
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const { projection } = this.state;
-
-    if (prevState.projection !== projection) {
-      this.updateControl();
-    }
-  }
-
-  componentWillUnmount() {
-    if (this.control) {
-      const { map } = this.props;
-      map.removeControl(this.control);
-    }
-  }
-
-  updateControl() {
-    const { map } = this.props;
-    const { projection } = this.state;
-
-    if (this.control) {
-      map.removeControl(this.control);
-    }
-
-    if (!projection || !this.ref || !this.ref.current) {
-      return;
-    }
-
-    this.control = new OLMousePosition({
-      coordinateFormat: projection.format || createStringXY(4),
-      projection: projection.value,
-      target: this.ref.current,
+  useEffect(() => {
+    const mousePosition = new OLMousePosition({
+      target: ref.current,
       undefinedHTML: '&nbsp;',
       className: '',
     });
-    map.addControl(this.control);
-  }
+    map.addControl(mousePosition);
+    setControl(mousePosition);
 
-  renderSelect() {
-    const { projections, onChange } = this.props;
-    const { projection } = this.state;
-    if (!projections.length) {
-      return null;
+    return () => {
+      map.removeControl(mousePosition);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!projection || !control) {
+      return;
     }
+    control.setProjection(projection.value);
+    control.setCoordinateFormat(projection.format || createStringXY(4));
+  }, [projection, control]);
 
-    return (
-      <Select
-        options={projections}
-        value={projection}
-        onChange={(evt, proj) => {
-          this.setState({
-            projection: proj,
-          });
-          onChange(evt, proj);
-        }}
-      />
-    );
+  const onChangeCb = useCallback(
+    evt => {
+      const newProj = projections.find(opt => evt.target.value === opt.value);
+      setProjection(newProj);
+      onChange(evt, newProj);
+    },
+    [projections],
+  );
+
+  if (!projection || !projections || !projections.length) {
+    return null;
   }
 
-  render() {
-    const { className } = this.props;
-    return (
-      <div className={className}>
-        {this.renderSelect()}
-        <span ref={this.ref} />
-      </div>
-    );
-  }
+  return (
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <div className="rs-mouse-position" {...other}>
+      <select
+        className="rs-select"
+        value={projection.value}
+        onChange={onChangeCb}
+      >
+        {projections.map(option => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+      <span ref={ref} className="rs-coordinates" />
+    </div>
+  );
 }
 
 MousePosition.propTypes = propTypes;
 MousePosition.defaultProps = defaultProps;
 
-export default MousePosition;
+export default React.memo(MousePosition);

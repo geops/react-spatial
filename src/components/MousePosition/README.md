@@ -15,7 +15,7 @@ const layers = ConfigReader.readConfig(treeData);
 
 function MousePositionExample() {
   return (
-    <div className="tm-mouse-position-example">
+    <div className="rs-mouse-position-example">
       <BasicMap map={map} center={center} zoom={6} layers={layers} />
       <MousePosition
         map={map}

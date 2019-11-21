@@ -2,10 +2,10 @@
 
 exports[`MousePosition matches snapshots using default values. 1`] = `
 <div
-  className="tm-mouse-position"
+  className="rs-mouse-position"
 >
   <select
-    className="tm-select"
+    className="rs-select"
     onChange={[Function]}
     value="EPSG:4326"
   >
@@ -20,16 +20,18 @@ exports[`MousePosition matches snapshots using default values. 1`] = `
       EPSG:3857
     </option>
   </select>
-  <span />
+  <span
+    className="rs-coordinates"
+  />
 </div>
 `;
 
 exports[`MousePosition matches snapshots using multiple projections. 1`] = `
 <div
-  className="tm-mouse-position"
+  className="rs-mouse-position"
 >
   <select
-    className="tm-select"
+    className="rs-select"
     onChange={[Function]}
     value="foo"
   >
@@ -44,24 +46,20 @@ exports[`MousePosition matches snapshots using multiple projections. 1`] = `
       bar
     </option>
   </select>
-  <span />
+  <span
+    className="rs-coordinates"
+  />
 </div>
 `;
 
-exports[`MousePosition matches snapshots using no projections. 1`] = `
-<div
-  className="tm-mouse-position"
->
-  <span />
-</div>
-`;
+exports[`MousePosition matches snapshots using no projections. 1`] = `null`;
 
 exports[`MousePosition matches snapshots using only one projection 1`] = `
 <div
-  className="tm-mouse-position"
+  className="rs-mouse-position"
 >
   <select
-    className="tm-select"
+    className="rs-select"
     onChange={[Function]}
     value="foo"
   >
@@ -71,6 +69,8 @@ exports[`MousePosition matches snapshots using only one projection 1`] = `
       foo
     </option>
   </select>
-  <span />
+  <span
+    className="rs-coordinates"
+  />
 </div>
 `;
