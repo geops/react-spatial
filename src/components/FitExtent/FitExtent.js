@@ -53,7 +53,7 @@ function FitExtent({ map, extent, title, className, children }) {
       role="button"
       title={title}
       tabIndex="0"
-      onClick={() => fit()}
+      onClick={fit}
       onKeyPress={e => e.which === 13 && fit()}
     >
       {children}
