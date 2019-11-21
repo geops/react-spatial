@@ -3,8 +3,9 @@
 This demonstrates the use of Copyright.
 
 ```js
-import React, { Component } from  'react';
+import React from  'react';
 import ConfigReader from 'react-spatial/ConfigReader';
+import LayerService from 'react-spatial/LayerService';
 import Copyright from 'react-spatial/components/Copyright';
 
 const layerConf = [{
@@ -16,7 +17,7 @@ const layerConf = [{
     url: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
   },
 }];
-const layers = ConfigReader.readConfig(layerConf);
+const layerService = new LayerService(ConfigReader.readConfig(layerConf));
 
-<Copyright layers={layers} />
+<Copyright layerService={layerService} />
 ```

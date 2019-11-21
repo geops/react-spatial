@@ -1,12 +1,12 @@
 import React, { useMemo, useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import Layer from '../../layers/Layer';
+import LayerService from '../../LayerService';
 
 const propTypes = {
   /**
-   * Set of react-spatial layers.
+   * A LayerService.
    */
-  layers: PropTypes.arrayOf(PropTypes.instanceOf(Layer)),
+  layerService: PropTypes.instanceOf(LayerService),
 
   /**
    * Format function. Called with an array of copyrights from visible layers
@@ -16,7 +16,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  layers: [],
+  layerService: null,
   format: copyrights => (
     <>
       &copy;
@@ -25,26 +25,27 @@ const defaultProps = {
   ),
 };
 
-function Copyright({ layers, format, ...other }) {
+function Copyright({ layerService, format, ...other }) {
   const [, updateState] = useState();
   const forceUpdate = useCallback(() => updateState({}), []);
   const copyrights = useMemo(() =>
     // Array.from(new Set()) is use to remove duplicates.
     Array.from(
-      new Set(layers.filter(l => l.getVisible()).map(l => l.getCopyright())),
+      new Set(
+        layerService
+          .getLayersAsFlatArray()
+          .filter(l => l.getVisible())
+          .map(l => l.getCopyright()),
+      ),
     ),
   );
 
   useEffect(() => {
-    layers.forEach(layer => {
-      layer.on('change:visible', forceUpdate);
-    });
+    layerService.on('change:visible', forceUpdate);
     return () => {
-      layers.forEach(layer => {
-        layer.un('change:visible', forceUpdate);
-      });
+      layerService.un('change:visible', forceUpdate);
     };
-  }, [layers]);
+  }, [layerService]);
 
   if (!copyrights.length) {
     return null;

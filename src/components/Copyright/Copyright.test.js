@@ -49,29 +49,30 @@ const initLayerService = () => {
   return new LayerService(layers);
 };
 
+let layerService;
 let layers;
 
 describe('Copyright', () => {
   beforeEach(() => {
-    const layerService = initLayerService();
+    layerService = initLayerService();
     layers = layerService.getLayersAsFlatArray();
   });
 
   test('is empty if no layers are visible', () => {
-    const component = shallow(<Copyright layers={layers} />);
+    const component = shallow(<Copyright layerService={layerService} />);
     expect(component.html()).toBe(null);
   });
 
   test('displays one copyright', () => {
     layers[1].setVisible(true);
-    const component = shallow(<Copyright layers={layers} />);
+    const component = shallow(<Copyright layerService={layerService} />);
     expect(component.text()).toBe('© Hot OSM Contributors');
   });
 
   test('displays 2 copyrights', () => {
     layers[0].setVisible(true);
     layers[1].setVisible(true);
-    const component = shallow(<Copyright layers={layers} />);
+    const component = shallow(<Copyright layerService={layerService} />);
     expect(component.text()).toBe('© OSM Contributors | Hot OSM Contributors');
   });
 
@@ -79,7 +80,7 @@ describe('Copyright', () => {
     layers[0].setVisible(true);
     layers[1].setVisible(true);
     layers[3].setVisible(true);
-    const component = shallow(<Copyright layers={layers} />);
+    const component = shallow(<Copyright layerService={layerService} />);
     expect(component.text()).toBe('© OSM Contributors | Hot OSM Contributors');
   });
 
@@ -87,7 +88,7 @@ describe('Copyright', () => {
     layers[1].setVisible(true);
     const component = shallow(
       <Copyright
-        layers={layers}
+        layerService={layerService}
         format={copyrights => `Number of copyrights: ${copyrights.length}`}
       />,
     );
@@ -95,7 +96,7 @@ describe('Copyright', () => {
   });
 
   test('update copyright when visibility change.', () => {
-    const component = mount(<Copyright layers={layers} />);
+    const component = mount(<Copyright layerService={layerService} />);
     expect(component.text()).toBe('');
     act(() => {
       layers[1].setVisible(true);
@@ -106,26 +107,16 @@ describe('Copyright', () => {
   });
 
   test('listen/unlisten "change:visible" on mount/unmount.', () => {
-    const cbs = [];
-
     // mount
-    const spiesOn = layers.map(l => {
-      return jest.spyOn(l, 'on');
-    });
-    const component = mount(<Copyright layers={layers} />);
-    spiesOn.forEach(spy => {
-      expect(spy).toHaveBeenCalledTimes(1);
-      cbs.push(spy.mock.calls[0][1]);
-    });
+    const spyOn = jest.spyOn(layerService, 'on');
+    const component = mount(<Copyright layerService={layerService} />);
+    expect(spyOn).toHaveBeenCalledTimes(1);
+    const cb = spyOn.mock.calls[0][1];
 
     // unmount
-    const spiesUn = layers.map(l => {
-      return jest.spyOn(l, 'un');
-    });
+    const spyUn = jest.spyOn(layerService, 'un');
     component.unmount();
-    spiesUn.forEach((spy, idx) => {
-      expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith('change:visible', cbs[idx]);
-    });
+    expect(spyUn).toHaveBeenCalledTimes(1);
+    expect(spyUn).toHaveBeenCalledWith('change:visible', cb);
   });
 });
