@@ -17,7 +17,7 @@ const layerConf = [{
     url: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
   },
 }];
-const layerService = new LayerService(ConfigReader.readConfig(layerConf));
+const layers = ConfigReader.readConfig(layerConf));
 
-<Copyright layers={layerService.getLayersAsFlatArray()} />
+<Copyright layers={layers} />
 ```
