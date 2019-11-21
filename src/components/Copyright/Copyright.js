@@ -61,4 +61,4 @@ function Copyright({ layers, format, ...other }) {
 Copyright.propTypes = propTypes;
 Copyright.defaultProps = defaultProps;
 
-export default Copyright;
+export default React.memo(Copyright);

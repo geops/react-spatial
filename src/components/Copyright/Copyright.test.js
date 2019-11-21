@@ -35,39 +35,59 @@ const initLayerService = () => {
         url: 'https://a.tile.opentopomap.org/{z}/{x}/{y}.png',
       },
     },
+    {
+      name: 'OpenTopoMap',
+      copyright: 'OSM Contributors',
+      data: {
+        type: 'xyz',
+        url: 'https://a.tile.opentopomap.org/{z}/{x}/{y}.png',
+      },
+    },
   ];
 
   const layers = ConfigReader.readConfig(data);
   return new LayerService(layers);
 };
 
-let layerService;
+let layers;
 
 describe('Copyright', () => {
   beforeEach(() => {
-    layerService = initLayerService();
+    const layerService = initLayerService();
+    layers = layerService.getLayersAsFlatArray();
   });
 
   test('is empty if no layers are visible', () => {
-    const component = shallow(
-      <Copyright layers={layerService.getLayersAsFlatArray()} />,
-    );
+    const component = shallow(<Copyright layers={layers} />);
     expect(component.html()).toBe(null);
   });
 
-  test('displays the correct copyright', () => {
-    layerService.getLayersAsFlatArray()[1].setVisible(true);
-    const component = shallow(
-      <Copyright layers={layerService.getLayersAsFlatArray()} />,
-    );
+  test('displays one copyright', () => {
+    layers[1].setVisible(true);
+    const component = shallow(<Copyright layers={layers} />);
     expect(component.text()).toBe('© Hot OSM Contributors');
   });
 
+  test('displays 2 copyrights', () => {
+    layers[0].setVisible(true);
+    layers[1].setVisible(true);
+    const component = shallow(<Copyright layers={layers} />);
+    expect(component.text()).toBe('© OSM Contributors | Hot OSM Contributors');
+  });
+
+  test('displays only unique copyrights', () => {
+    layers[0].setVisible(true);
+    layers[1].setVisible(true);
+    layers[3].setVisible(true);
+    const component = shallow(<Copyright layers={layers} />);
+    expect(component.text()).toBe('© OSM Contributors | Hot OSM Contributors');
+  });
+
   test('displays a custom copyright', () => {
-    layerService.getLayersAsFlatArray()[1].setVisible(true);
+    layers[1].setVisible(true);
     const component = shallow(
       <Copyright
-        layers={layerService.getLayersAsFlatArray()}
+        layers={layers}
         format={copyrights => `Number of copyrights: ${copyrights.length}`}
       />,
     );
@@ -75,12 +95,10 @@ describe('Copyright', () => {
   });
 
   test('update copyright when visibility change.', () => {
-    const component = mount(
-      <Copyright layers={layerService.getLayersAsFlatArray()} />,
-    );
+    const component = mount(<Copyright layers={layers} />);
     expect(component.text()).toBe('');
     act(() => {
-      layerService.getLayersAsFlatArray()[1].setVisible(true);
+      layers[1].setVisible(true);
     });
     component.update();
     expect(component.text()).toBe('© Hot OSM Contributors');
@@ -88,7 +106,6 @@ describe('Copyright', () => {
   });
 
   test('listen/unlisten "change:visible" on mount/unmount.', () => {
-    const layers = layerService.getLayersAsFlatArray();
     const cbs = [];
 
     // mount
