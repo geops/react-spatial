@@ -165,6 +165,13 @@ class BasicMap extends Component {
   componentDidMount() {
     const { onFeaturesClick, onFeaturesHover, layers } = this.props;
     this.map.setTarget(this.node.current);
+    // Since ol 6.1.0 touch-action is set to auto and creates a bad navigation experience on mobile,
+    // so we have to force it to none for mobile.
+    // https://github.com/openlayers/openlayers/pull/10187/files
+    const viewPort = this.map.getViewport();
+    viewPort.style.touchAction = 'none';
+    viewPort.style.msTouchAction = 'none';
+    viewPort.setAttribute('touch-action', 'none');
 
     if (layers.length) {
       this.setLayers(layers);
