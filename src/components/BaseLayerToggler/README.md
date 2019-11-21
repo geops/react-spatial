@@ -15,7 +15,7 @@ const map = new OLMap({ controls: [] });
 const layers = ConfigReader.readConfig(treeData);
 const layerService = new LayerService(layers);
 
-<div className="tm-base-layer-example">
+<div className="rs-base-layer-example">
   <BasicMap
     map={map}
     center={center}

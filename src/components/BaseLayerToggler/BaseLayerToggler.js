@@ -6,19 +6,17 @@ import { unByKey } from 'ol/Observable';
 import TileLayer from 'ol/layer/Tile';
 import { containsExtent } from 'ol/extent';
 import LayerService from '../../LayerService';
-import Button from '../Button';
-import Footer from '../Footer';
 import BasicMap from '../BasicMap';
 import MapboxLayer from '../../layers/MapboxLayer';
 
 const propTypes = {
   /**
-   * An ol map.
+   * An ol.Map.
    */
   map: PropTypes.instanceOf(OLMap).isRequired,
 
   /**
-   * Layers provider.
+   * LayerService.
    */
   layerService: PropTypes.instanceOf(LayerService),
 
@@ -26,21 +24,6 @@ const propTypes = {
    * CSS class to apply on the container.
    */
   className: PropTypes.string,
-
-  /**
-   * CSS class to apply on each item.
-   */
-  classNameItem: PropTypes.string,
-
-  /**
-   * CSS class to apply to the previous button.
-   */
-  classNamePrevious: PropTypes.string,
-
-  /**
-   * CSS class to apply to the next button.
-   */
-  classNameNext: PropTypes.string,
 
   /**
    * Path to the directory which includes the fallback images
@@ -53,44 +36,25 @@ const propTypes = {
   validExtent: PropTypes.arrayOf(PropTypes.number),
 
   /**
-   *  The tabIndex of the map.
+   * Button titles.
    */
-  mapTabIndex: PropTypes.number,
-
-  /**
-   * HTML tabIndex attribute of the button.
-   */
-  tabIndex: PropTypes.number,
-
-  /**
-   * title attribute of the baselayer button.
-   */
-  titleButton: PropTypes.string,
-
-  /**
-   * title attribute of the next baselayer button.
-   */
-  titleButtonNext: PropTypes.string,
-
-  /**
-   * title attribute of the previous baselayer button.
-   */
-  titleButtonPrevious: PropTypes.string,
+  titles: PropTypes.shape({
+    button: PropTypes.string,
+    prevButton: PropTypes.stirng,
+    nextButton: PropTypes.string,
+  }),
 };
 
 const defaultProps = {
   layerService: undefined,
-  className: 'tm-base-layer-toggler',
-  classNameItem: 'tm-base-layer-item',
-  classNamePrevious: 'tm-base-layer-previous',
-  classNameNext: 'tm-base-layer-next',
+  className: 'rs-base-layer-toggler',
   fallbackImgDir: '../../images/baselayer/',
   validExtent: [-Infinity, -Infinity, Infinity, Infinity],
-  mapTabIndex: 0,
-  tabIndex: 0,
-  titleButton: 'Baselayer button',
-  titleButtonNext: 'Next baselayer',
-  titleButtonPrevious: 'Previous baselayer',
+  titles: {
+    button: 'Toggle base layer',
+    nextButton: 'Next base layer',
+    prevButton: 'Previous base layer',
+  },
 };
 
 class BaseLayerToggler extends Component {
@@ -309,17 +273,7 @@ class BaseLayerToggler extends Component {
   }
 
   render() {
-    const {
-      className,
-      classNameItem,
-      classNamePrevious,
-      classNameNext,
-      mapTabIndex,
-      tabIndex,
-      titleButton,
-      titleButtonNext,
-      titleButtonPrevious,
-    } = this.props;
+    const { className, titles } = this.props;
     const { layers, idx, fallbackImg, fallbackImgOpacity } = this.state;
 
     let footer = null;
@@ -330,22 +284,28 @@ class BaseLayerToggler extends Component {
 
     if (layers.length > 2) {
       footer = (
-        <Footer>
-          <Button
-            className={classNamePrevious}
+        <div className="rs-base-layer-footer">
+          <div
+            className="rs-base-layer-previous"
+            role="button"
             onClick={() => this.previous()}
-            title={titleButtonPrevious}
+            onKeyPress={e => e.which === 13 && this.previous()}
+            tabIndex="0"
+            title={titles.prevButton}
           >
             <FaArrowCircleLeft focusable={false} />
-          </Button>
-          <Button
-            className={classNameNext}
+          </div>
+          <div
+            className="rs-base-layer-next"
+            role="button"
             onClick={() => this.next()}
-            title={titleButtonNext}
+            onKeyPress={e => e.which === 13 && this.next()}
+            tabIndex="0"
+            title={titles.nextButton}
           >
             <FaArrowCircleRight focusable={false} />
-          </Button>
-        </Footer>
+          </div>
+        </div>
       );
     }
 
@@ -353,20 +313,26 @@ class BaseLayerToggler extends Component {
 
     return (
       <div className={className} ref={this.ref}>
-        <BasicMap map={this.map} tabIndex={mapTabIndex} />
-        <img
-          src={fallbackImg}
-          alt={fallbackImg}
-          style={{ opacity: fallbackImgOpacity }}
-          className={classNameItem}
-        />
-        <Button
-          className={classNameItem}
-          tabIndex={tabIndex}
-          title={titleButton}
+        <div
+          className="rs-base-layer-toggle-button"
+          role="button"
+          title={titles.button}
           onClick={() => nextLayer.setVisible(true)}
-        />
-
+          onKeyPress={e => e.which === 13 && nextLayer.setVisible(true)}
+          tabIndex="0"
+        >
+          <img
+            src={fallbackImg}
+            alt={fallbackImg}
+            style={{ opacity: fallbackImgOpacity }}
+            className="rs-base-layer-image"
+          />
+          <BasicMap
+            map={this.map}
+            className="rs-base-layer-map"
+            tabIndex={-1}
+          />
+        </div>
         {footer}
       </div>
     );
