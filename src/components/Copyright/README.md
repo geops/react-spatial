@@ -16,8 +16,24 @@ const layerConf = [{
     type: 'xyz',
     url: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
   },
+}, {
+  name: 'OSM Baselayer',
+  visible: true,
+  copyright: 'OSM Contributors 2',
+  data: {
+    type: 'xyz',
+    url: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  },
+}, {
+  name: 'OSM Baselayer',
+  visible: true,
+  copyright: 'OSM Contributors',
+  data: {
+    type: 'xyz',
+    url: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  },
 }];
 const layerService = new LayerService(ConfigReader.readConfig(layerConf));
 
-<Copyright layerService={layerService} />
+<Copyright layers={layerService.getLayersAsFlatArray()} />
 ```

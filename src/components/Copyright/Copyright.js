@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import React, { useMemo, useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import LayerService from '../../LayerService';
+import Layer from '../../layers/Layer';
 
 const propTypes = {
   /**
-   * Layer Service.
+   * Set of react-spatial layers.
    */
-  layerService: PropTypes.instanceOf(LayerService).isRequired,
+  layers: PropTypes.arrayOf(PropTypes.instanceOf(Layer)),
 
   /**
    * Format function. Called with an array of copyrights from visible layers
@@ -16,6 +16,7 @@ const propTypes = {
 };
 
 const defaultProps = {
+  layers: [],
   format: copyrights => (
     <>
       &copy;
@@ -24,67 +25,40 @@ const defaultProps = {
   ),
 };
 
-class Copyright extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      copyrights: [],
-    };
-    this.updateCopyright = this.updateCopyright.bind(this);
-  }
+function Copyright({ layers, format, ...other }) {
+  const [, updateState] = useState();
+  const forceUpdate = useCallback(() => updateState({}), []);
+  const copyrights = useMemo(() =>
+    // Array.from(new Set()) is use to remove duplicates.
+    Array.from(
+      new Set(layers.filter(l => l.getVisible()).map(l => l.getCopyright())),
+    ),
+  );
 
-  componentDidMount() {
-    this.updateLayerService();
-  }
-
-  componentDidUpdate(prevProps) {
-    const { layerService } = this.props;
-    if (layerService !== prevProps.layerService) {
-      this.updateLayerService();
-    }
-  }
-
-  componentWillUnmount() {
-    const { layerService } = this.props;
-    if (layerService) {
-      layerService.un('change:visible', this.updateCopyright);
-    }
-  }
-
-  updateLayerService() {
-    const { layerService } = this.props;
-    layerService.on('change:visible', () => this.updateCopyright());
-    this.updateCopyright();
-  }
-
-  updateCopyright() {
-    const { layerService } = this.props;
-
-    const copyrights = layerService
-      .getLayersAsFlatArray()
-      .filter(l => l.getVisible() && l.getCopyright())
-      .map(l => l.getCopyright());
-
-    // remove duplicates
-    const unique = Array.from(new Set(copyrights));
-
-    this.setState({
-      copyrights: unique,
+  useEffect(() => {
+    layers.forEach(layer => {
+      layer.on('change:visible', forceUpdate);
     });
+    return () => {
+      layers.forEach(layer => {
+        layer.un('change:visible', forceUpdate);
+      });
+    };
+  }, [layers]);
+
+  if (!copyrights.length) {
+    return null;
   }
 
-  render() {
-    const { format } = this.props;
-    const { copyrights } = this.state;
-
-    if (!copyrights.length) {
-      return null;
-    }
-
-    return <div className="tm-copyright">{format(copyrights)}</div>;
-  }
+  return (
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <div className="rs-copyright" {...other}>
+      {format(copyrights)}
+    </div>
+  );
 }
 
 Copyright.propTypes = propTypes;
 Copyright.defaultProps = defaultProps;
+
 export default Copyright;
