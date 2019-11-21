@@ -17,7 +17,7 @@ function FitExtentExample() {
   return (
     <div>
       <BasicMap map={map} layers={layers} />
-      <FitExtent map={map} extent={extent} />
+      <FitExtent map={map} extent={extent}>fit!</FitExtent>
     </div>
   );
 };

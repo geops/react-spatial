@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { FaExpand } from 'react-icons/fa';
 import OLMap from 'ol/Map';
 
 import './FitExtent.scss';
@@ -22,39 +21,34 @@ const propTypes = {
   title: PropTypes.string,
 
   /**
-   * CSS class of the fitExtent button.
+   * Button content.
    */
-  className: PropTypes.string,
-
-  /**
-   * Children content of the fitExtent button.
-   */
-  children: PropTypes.node,
+  children: PropTypes.node.isRequired,
 };
 
 const defaultProps = {
   title: 'Fit Extent',
-  className: 'rs-fit-extent',
-  children: <FaExpand focusable={false} />,
 };
 
 /**
  * This component creates a button to zoom to the given extent.
  */
-function FitExtent({ map, extent, title, className, children }) {
-  const fit = () => {
+function FitExtent({ map, extent, title, children, ...other }) {
+  const fit = useCallback(() => {
     map.getView().cancelAnimations();
     map.getView().fit(extent, map.getSize());
-  };
+  });
 
   return (
     <div
-      className={className}
+      className="rs-fit-extent"
       role="button"
       title={title}
       tabIndex="0"
       onClick={fit}
       onKeyPress={e => e.which === 13 && fit()}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...other}
     >
       {children}
     </div>
