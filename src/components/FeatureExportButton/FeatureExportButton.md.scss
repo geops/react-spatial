@@ -1,11 +1,11 @@
-.tm-feature-export-example {
-  display: flex;
-  padding: 15px 0;
-
-  .tm-feature-export-button {
-    margin-right: 15px;
+.rs-feature-export-example {
+  .rs-feature-export-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px;
     width: 150px;
-    padding: 5px;
+    height: 50px;
     border-radius: 10px;
     border: 2px solid $gray-lighter;
 
