@@ -16,8 +16,6 @@ import VectorSource from 'ol/source/Vector';
 
 import { FaRegDotCircle } from 'react-icons/fa';
 
-import Button from '../Button';
-
 const propTypes = {
   /**
    * CSS class of the button.
@@ -218,13 +216,16 @@ class Geolocation extends PureComponent {
     const { active } = this.state;
 
     return (
-      <Button
+      <div
+        role="button"
+        tabIndex="0"
         className={`${className} ${active ? 'rs-blink' : ''}`}
         title={title}
         onClick={() => this.toggle()}
+        onKeyPress={e => e.which === 13 && this.toggle()}
       >
         <FaRegDotCircle focusable={false} />
-      </Button>
+      </div>
     );
   }
 }
