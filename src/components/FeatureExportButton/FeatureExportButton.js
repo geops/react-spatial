@@ -1,21 +1,14 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { FaCloudDownloadAlt } from 'react-icons/fa';
 import KMLFormat from 'ol/format/KML';
 import Layer from '../../layers/Layer';
-import Button from '../Button';
 import KML from '../../utils/KML';
 
 const propTypes = {
   /**
    *  Children content of the Feature export button.
    */
-  children: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-
-  /**
-   * CSS class of the Feature export button.
-   */
-  className: PropTypes.string,
+  children: PropTypes.node,
 
   /**
    * Format to export features (function).
@@ -23,32 +16,21 @@ const propTypes = {
    */
   format: PropTypes.func,
 
-  /** An existing react-spatial Layer , using a valid ol.source.Vector */
+  /**
+   * An existing react-spatial Layer, using a valid ol.source.Vector
+   */
   layer: PropTypes.instanceOf(Layer).isRequired,
 
   /**
    * Map projection.
    */
   projection: PropTypes.string,
-
-  /**
-   * HTML tabIndex attribute
-   */
-  tabIndex: PropTypes.number,
-
-  /**
-   * Title of the Feature export button.
-   */
-  title: PropTypes.string,
 };
 
 const defaultProps = {
-  children: <FaCloudDownloadAlt focusable={false} />,
-  className: 'tm-button tm-feature-export',
+  children: null,
   format: KMLFormat,
   projection: 'EPSG:3857',
-  tabIndex: 0,
-  title: undefined,
 };
 
 /**
@@ -57,9 +39,7 @@ const defaultProps = {
  * Other formats do not always support style export (See specific format specs).
  */
 class FeatureExportButton extends PureComponent {
-  createFeatureString(layer) {
-    const { projection, format } = this.props;
-
+  static createFeatureString(layer, projection, format) {
     if (format === KMLFormat) {
       return KML.writeFeatures(layer, projection);
     }
@@ -70,13 +50,12 @@ class FeatureExportButton extends PureComponent {
     });
   }
 
-  exportFeatures() {
-    const { layer } = this.props;
+  static exportFeatures(layer, projection, format) {
     const now = new Date()
       .toJSON()
       .slice(0, 20)
       .replace(/[.:T-]+/g, '');
-    const featString = this.createFeatureString(layer);
+    const featString = this.createFeatureString(layer, projection, format);
 
     const formatString = featString
       ? featString.match(/<(\w+)\s+\w+.*?>/)[1]
@@ -104,17 +83,25 @@ class FeatureExportButton extends PureComponent {
   }
 
   render() {
-    const { title, children, tabIndex, className } = this.props;
+    const { children, layer, projection, format, ...other } = this.props;
 
     return (
-      <Button
-        className={className}
-        title={title}
-        tabIndex={tabIndex}
-        onClick={() => this.exportFeatures()}
+      <div
+        role="button"
+        className="rs-feature-export-button"
+        tabIndex={0}
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...other}
+        onClick={() =>
+          FeatureExportButton.exportFeatures(layer, projection, format)
+        }
+        onKeyPress={evt =>
+          evt.which === 13 &&
+          FeatureExportButton.exportFeatures(layer, projection, format)
+        }
       >
         {children}
-      </Button>
+      </div>
     );
   }
 }
