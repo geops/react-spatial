@@ -40,6 +40,9 @@ class PopupExample extends React.Component {
             new Feature({
               geometry: new Point([874105.13, 6106172.77]),
             }),
+            new Feature({
+              geometry: new Point([873105.13, 6106172.77]),
+            }),
           ],
         }),
         style: new Style({
@@ -97,6 +100,7 @@ class PopupExample extends React.Component {
           title="Geometry"
           feature={featureClicked}
           onCloseClick={this.onCloseClick}
+          panIntoView
         >
           <div>{content}</div>
         </Popup>

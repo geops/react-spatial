@@ -11,21 +11,19 @@ exports[`Popup should match snapshot with default values. 1`] = `
   }
 >
   <div
-    onKeyUp={[Function]}
+    className="rs-popup-container"
     role="presentation"
-    tabIndex=""
   >
     <div
       className="rs-popup-header"
     >
       <div
-        aria-label="Popup Schliessen"
         className="rs-popup-close-bt"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="Popup Schliessen"
+        title="Close"
       >
         <svg
           fill="currentColor"
@@ -49,11 +47,7 @@ exports[`Popup should match snapshot with default values. 1`] = `
       </div>
     </div>
     <div
-      style={
-        Object {
-          "padding": "10px",
-        }
-      }
+      className="rs-popup-body"
     >
       <div
         id="foo"
@@ -72,23 +66,22 @@ exports[`Popup should match snapshot with tabIndex defined. 1`] = `
       "top": 0,
     }
   }
+  tabIndex="0"
 >
   <div
-    onKeyUp={[Function]}
+    className="rs-popup-container"
     role="presentation"
-    tabIndex="0"
   >
     <div
       className="rs-popup-header"
     >
       <div
-        aria-label="Popup Schliessen"
         className="rs-popup-close-bt"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="Popup Schliessen"
+        title="Close"
       >
         <svg
           fill="currentColor"
@@ -112,11 +105,7 @@ exports[`Popup should match snapshot with tabIndex defined. 1`] = `
       </div>
     </div>
     <div
-      style={
-        Object {
-          "padding": "10px",
-        }
-      }
+      className="rs-popup-body"
     >
       <div
         id="bar"
@@ -137,19 +126,14 @@ exports[`Popup should match snapshot without close button. 1`] = `
   }
 >
   <div
-    onKeyUp={[Function]}
+    className="rs-popup-container"
     role="presentation"
-    tabIndex=""
   >
     <div
       className="rs-popup-header"
     />
     <div
-      style={
-        Object {
-          "padding": "10px",
-        }
-      }
+      className="rs-popup-body"
     >
       <div
         id="bar"

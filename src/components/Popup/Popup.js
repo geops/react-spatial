@@ -6,7 +6,6 @@ import OLMap from 'ol/Map';
 import Feature from 'ol/Feature';
 import { getCenter } from 'ol/extent';
 import { unByKey } from 'ol/Observable';
-import Button from '../Button';
 
 const propTypes = {
   /**
@@ -23,6 +22,11 @@ const propTypes = {
    * Openlayers Feature (https://openlayers.org/en/latest/apidoc/module-ol_Feature-Feature.html).
    */
   feature: PropTypes.instanceOf(Feature),
+
+  /**
+   * Popup title.
+   */
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
 
   /**
    * If true, the popup is panned in the map's viewport.
@@ -46,29 +50,16 @@ const propTypes = {
   className: PropTypes.string,
 
   /**
+   * Title HTML attributes.
+   */
+  titles: PropTypes.shape({
+    closeButton: PropTypes.string,
+  }),
+
+  /**
    * Function triggered on close button click.
    */
   onCloseClick: PropTypes.func,
-
-  /**
-   * Function triggered on key up.
-   */
-  onKeyUp: PropTypes.func,
-
-  /**
-   * Popup title.
-   */
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-
-  /**
-   * Popup padding.
-   */
-  padding: PropTypes.string,
-
-  /**
-   * HTML tabIndex attribute.
-   */
-  tabIndex: PropTypes.string,
 
   /**
    * Hide or show the header.
@@ -81,13 +72,23 @@ const propTypes = {
   showCloseButton: PropTypes.bool,
 
   /**
-   * Translation function.
-   * @param {function} Translation function returning the translated string.
+   * Render the header
    */
-  t: PropTypes.func,
+  renderHeader: PropTypes.func,
+
+  /**
+   * Render the close button
+   */
+  renderCloseButton: PropTypes.func,
+
+  /**
+   * Render the footer
+   */
+  renderFooter: PropTypes.func,
 };
 
 const defaultProps = {
+  title: null,
   feature: null,
   panIntoView: false,
   panRect: null,
@@ -95,15 +96,46 @@ const defaultProps = {
   className: 'rs-popup',
   showCloseButton: true,
   showHeader: true,
-  title: null,
-  padding: '10px',
-  tabIndex: '',
-  onKeyUp: () => {},
+  titles: { closeButton: 'Close' },
   onCloseClick: () => {},
-  t: p => p,
+  renderHeader: null,
+  renderCloseButton: null,
+  renderFooter: () => null,
 };
 
 class Popup extends PureComponent {
+  static renderHeader(showHeader, title, closeButton) {
+    if (!showHeader) {
+      return null;
+    }
+
+    return (
+      <div className="rs-popup-header">
+        {title}
+        {closeButton}
+      </div>
+    );
+  }
+
+  static renderCloseButton(showCloseButton, onCloseClick, titles) {
+    if (!showCloseButton) {
+      return null;
+    }
+
+    return (
+      <div
+        role="button"
+        tabIndex={0}
+        className="rs-popup-close-bt"
+        title={titles.closeButton}
+        onClick={() => onCloseClick()}
+        onKeyPress={evt => evt.which === 13 && onCloseClick()}
+      >
+        <MdClose focusable={false} />
+      </div>
+    );
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -197,74 +229,64 @@ class Popup extends PureComponent {
     }
   }
 
-  renderPopupHeader() {
-    const { t, title, showCloseButton, onCloseClick } = this.props;
-
-    return (
-      <div className="rs-popup-header">
-        {t(title)}
-        {showCloseButton ? (
-          <Button
-            className="rs-popup-close-bt"
-            title={`Popup ${t('Schliessen')}`}
-            onClick={() => onCloseClick()}
-          >
-            <MdClose focusable={false} />
-          </Button>
-        ) : null}
-      </div>
-    );
-  }
-
   render() {
     const {
       feature,
       showHeader,
       popupCoordinate,
-      className,
       children,
-      onKeyUp,
-      padding,
-      tabIndex,
+      title,
+      titles,
+      showCloseButton,
+      onCloseClick,
+      renderHeader,
+      renderFooter,
+      renderCloseButton,
+      ...other
     } = this.props;
 
     if (!feature && !popupCoordinate) {
       return null;
     }
 
+    delete other.panIntoView;
+    delete other.panRect;
+    delete other.map;
+
     const { top, left } = this.state;
 
     // force re-render if the feature or the coordinate changes.
     // this is needed to update the popupElement ref
     const key = feature ? feature.getId() : popupCoordinate.join();
-
     return (
       <div
-        className={className}
+        className="rs-popup"
         style={{
           left,
           top,
         }}
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...other}
       >
         <div
+          className="rs-popup-container"
           role="presentation"
           key={key}
           ref={popupElement => {
             this.setState({ popupElement });
           }}
-          tabIndex={tabIndex}
-          onKeyUp={e => {
-            onKeyUp(e);
-          }}
         >
-          {showHeader ? this.renderPopupHeader() : null}
-          <div
-            style={{
-              padding,
-            }}
-          >
-            {children}
-          </div>
+          {(renderHeader || Popup.renderHeader)(
+            showHeader,
+            title,
+            (renderCloseButton || Popup.renderCloseButton)(
+              showCloseButton,
+              onCloseClick,
+              titles,
+            ),
+          )}
+          <div className="rs-popup-body">{children}</div>
+          {renderFooter(this.props)}
         </div>
       </div>
     );

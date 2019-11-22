@@ -73,41 +73,32 @@ describe('Popup', () => {
     ['keypress', { which: 13 }],
   ].forEach(evt => {
     test(`should trigger onCloseClick function on ${evt[0]} event.`, () => {
-      class Closer {
-        static onCloseClick() {}
-      }
-
-      const spy = jest.spyOn(Closer, 'onCloseClick');
+      const spy = jest.fn(() => {});
 
       const component = mount(
-        <Popup
-          map={map}
-          feature={feat}
-          onCloseClick={() => Closer.onCloseClick()}
-        >
+        <Popup map={map} feature={feat} onCloseClick={spy}>
           <div id="gux" />
         </Popup>,
       );
 
       component
-        .find('.rs-popup-close-bt')
-        .at(1)
+        .find('div')
+        .at(3)
         .simulate(...evt);
-
       expect(spy).toHaveBeenCalled();
     });
 
     test(`should trigger default onCloseClick function on ${evt[0]} event without errors.`, () => {
       const component = mount(
-        <Popup map={map} feature={feat} n>
+        <Popup map={map} feature={feat}>
           <div id="gux" />
         </Popup>,
       );
       // test if no js error triggered by the default value
       try {
         component
-          .find('.rs-popup-close-bt')
-          .at(1)
+          .find('div')
+          .at(3)
           .simulate(...evt);
         expect(true).toBe(true);
       } catch (e) {
