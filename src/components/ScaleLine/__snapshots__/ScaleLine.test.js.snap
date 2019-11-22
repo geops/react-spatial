@@ -2,6 +2,6 @@
 
 exports[`ScaleLine matches snapshot 1`] = `
 <div
-  className="tm-scale-line"
+  className="rs-scale-line"
 />
 `;

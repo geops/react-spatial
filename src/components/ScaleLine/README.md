@@ -7,7 +7,6 @@ import React, { Component } from  'react';
 import BasicMap from 'react-spatial/components/BasicMap';
 import ConfigReader from 'react-spatial/ConfigReader';
 import OLMap from 'ol/Map';
-import Footer from 'react-spatial/components/Footer';
 import ScaleLine from 'react-spatial/components/ScaleLine';
 
 class ScaleLineExample extends Component {
@@ -27,16 +26,13 @@ class ScaleLineExample extends Component {
 
   render() {
     return (
-      <div className="tm-scale-line-example">
+      <div style={{position:'relative'}}>
         <BasicMap
           map={this.map}
           zoom={3}
           layers={this.layers}
         />
-        <Footer
-          left="© OpenStreetMap contributors"
-          right={<ScaleLine map={this.map} />}
-        />
+        <ScaleLine map={this.map} />
       </div>
     );
   }
