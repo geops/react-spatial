@@ -48,7 +48,6 @@ function NorthArrow({ map, rotationOffset, circled, children, ...other }) {
     if (!map) {
       return null;
     }
-    window.map = map;
     const key = map.on('postrender', () => {
       setRotation(getRotation(map, rotationOffset));
     });
