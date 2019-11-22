@@ -2,7 +2,7 @@
 
 exports[`NorthArrow should match snapshot rotated. 1`] = `
 <div
-  className="tm-north-arrow"
+  className="rs-north-arrow"
   style={
     Object {
       "transform": "rotate(45deg)",
@@ -15,24 +15,9 @@ exports[`NorthArrow should match snapshot rotated. 1`] = `
 </div>
 `;
 
-exports[`NorthArrow should match snapshot simple. 1`] = `
-<div
-  className="test-class"
-  style={
-    Object {
-      "transform": "rotate(0deg)",
-    }
-  }
->
-  <svg
-    data-file-name="SvgNorthArrow"
-  />
-</div>
-`;
-
 exports[`NorthArrow should match snapshot with children. 1`] = `
 <div
-  className="tm-north-arrow"
+  className="rs-north-arrow"
   style={
     Object {
       "transform": "rotate(0deg)",
@@ -69,7 +54,7 @@ exports[`NorthArrow should match snapshot with children. 1`] = `
 
 exports[`NorthArrow should match snapshot with circle. 1`] = `
 <div
-  className="tm-north-arrow"
+  className="rs-north-arrow"
   style={
     Object {
       "transform": "rotate(0deg)",
@@ -79,5 +64,54 @@ exports[`NorthArrow should match snapshot with circle. 1`] = `
   <svg
     data-file-name="SvgNorthArrowCircle"
   />
+</div>
+`;
+
+exports[`NorthArrow should match snapshot with custom attributes. 1`] = `
+<div
+  className="test-class"
+  style={
+    Object {
+      "transform": "rotate(0deg)",
+    }
+  }
+  tabIndex={0}
+>
+  <svg
+    data-file-name="SvgNorthArrow"
+  />
+</div>
+`;
+
+exports[`NorthArrow should match snapshot with default value. 1`] = `
+<div
+  className="rs-north-arrow"
+  style={
+    Object {
+      "transform": "rotate(0deg)",
+    }
+  }
+>
+  <svg
+    data-file-name="SvgNorthArrow"
+  />
+</div>
+`;
+
+exports[`NorthArrow should react on view rotation (transform: \`rotate(20deg)\`) 1`] = `
+<div class="rs-north-arrow"
+     style="transform: rotate(20deg);"
+>
+  <svg data-file-name="SvgNorthArrow">
+  </svg>
+</div>
+`;
+
+exports[`NorthArrow should react on view rotation with offset (transform: \`rotate(10deg)\`) 1`] = `
+<div class="rs-north-arrow"
+     style="transform: rotate(10deg);"
+>
+  <svg data-file-name="SvgNorthArrow">
+  </svg>
 </div>
 `;
