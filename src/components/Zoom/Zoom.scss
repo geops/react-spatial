@@ -1,4 +1,4 @@
-.tm-zooms-bar {
+.rs-zooms-bar {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -8,7 +8,18 @@
     margin: 10px 0;
   }
 
-  .tm-zoomslider-wrapper {
+  .rs-zoom-in,
+  .rs-zoom-out {
+    cursor: pointer;
+    height: $btn-size-base;
+    width: $btn-size-base;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.5s ease, color 0.5s ease;
+  }
+
+  .rs-zoomslider-wrapper {
     display: flex;
     justify-content: center;
 

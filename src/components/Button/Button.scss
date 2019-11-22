@@ -8,23 +8,23 @@
   transition: background-color 0.5s ease, color 0.5s ease;
 }
 
-.tm-round-blue {
+.rs-round-blue {
   background: $btn-secondary-color;
   border-radius: 50%;
   color: white;
 }
 
-.tm-square-white {
+.rs-square-white {
   border: 1px solid #aaa;
   background: white;
   color: #aaa;
 
-  &.tm-active {
+  &.rs-active {
     background-color: $btn-secondary-color-active;
   }
 }
 
-.tm-round-grey-hover-primary {
+.rs-round-grey-hover-primary {
   background-color: $gray-light;
   border-radius: 50%;
   color: white;

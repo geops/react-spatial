@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { configure, shallow } from 'enzyme';
+import { configure, shallow, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import OLView from 'ol/View';
 import OLMap from 'ol/Map';
@@ -8,31 +8,65 @@ import Zoom from './Zoom';
 
 configure({ adapter: new Adapter() });
 
-test('Button should match snapshot.', () => {
-  const map = new OLMap({});
-  const component = renderer.create(<Zoom map={map} />);
-  const tree = component.toJSON();
-  expect(tree).toMatchSnapshot();
-});
+describe('Zoom', () => {
+  test('should match snapshot.', () => {
+    const map = new OLMap({});
+    const component = renderer.create(<Zoom map={map} />);
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
 
-test('Should zoom in on click.', () => {
-  const map = new OLMap({ view: new OLView({ zoom: 5 }) });
-  const zooms = shallow(<Zoom map={map} zoomInClassName="zoom-in-class" />);
-  zooms
-    .find('.zoom-in-class')
-    .first()
-    .simulate('click');
+  test('should match snapshot with custom attributes', () => {
+    const map = new OLMap({});
+    const component = renderer.create(
+      <Zoom map={map} className="foo" tabIndex={-1} title="bar" />,
+    );
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
 
-  expect(map.getView().getZoom()).toBe(6);
-});
+  test('should match snapshot with zoom slider', () => {
+    const map = new OLMap({});
+    const component = renderer.create(<Zoom map={map} zoomSlider />);
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
 
-test('Should zoom in on click.', () => {
-  const map = new OLMap({ view: new OLView({ zoom: 5 }) });
-  const zooms = shallow(<Zoom map={map} zoomOutClassName="zoom-out-class" />);
-  zooms
-    .find('.zoom-out-class')
-    .first()
-    .simulate('click');
+  [
+    ['click', {}],
+    ['keypress', { which: 13 }],
+  ].forEach(evt => {
+    test(`should zoom in on ${evt[0]}.`, () => {
+      const map = new OLMap({ view: new OLView({ zoom: 5 }) });
+      const zooms = shallow(<Zoom map={map} />);
+      zooms
+        .find('.rs-zoom-in')
+        .first()
+        .simulate(...evt);
 
-  expect(map.getView().getZoom()).toBe(4);
+      expect(map.getView().getZoom()).toBe(6);
+    });
+
+    test(`should zoom out on ${evt[0]}.`, () => {
+      const map = new OLMap({ view: new OLView({ zoom: 5 }) });
+      const zooms = shallow(<Zoom map={map} />);
+      zooms
+        .find('.rs-zoom-out')
+        .first()
+        .simulate(...evt);
+
+      expect(map.getView().getZoom()).toBe(4);
+    });
+  });
+
+  test('remove zoomSlider control on unmount.', () => {
+    const map = new OLMap({});
+    const spy = jest.spyOn(map, 'removeControl');
+    const spy2 = jest.spyOn(map, 'addControl');
+    const wrapper = mount(<Zoom map={map} zoomSlider />);
+    expect(spy).toHaveBeenCalledTimes(0);
+    wrapper.unmount();
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy.mock.calls[0][0]).toBe(spy2.mock.calls[0][0]);
+  });
 });
