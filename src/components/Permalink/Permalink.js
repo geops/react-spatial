@@ -77,7 +77,7 @@ class Permalink extends Component {
       });
 
       // Set baser layer visibility based on 'baseLayers' parameter.
-      const visibleBaseLayers = (urlParams.baseLayers || '').split(',');
+      const visibleBaseLayers = (urlParams.baselayers || '').split(',');
       layerService.getBaseLayers().forEach(baseLayer => {
         if (baseLayer.getKey() === visibleBaseLayers[0]) {
           baseLayer.setVisible(true); // The radio group will hide the others baseLayers automatically
