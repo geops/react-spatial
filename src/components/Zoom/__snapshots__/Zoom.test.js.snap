@@ -7,7 +7,7 @@ exports[`Zoom should match snapshot with custom attributes 1`] = `
   title="bar"
 >
   <div
-    className="rs-zoom-in rs-round-blue"
+    className="rs-zoom-in"
     onClick={[Function]}
     onKeyPress={[Function]}
     role="button"
@@ -35,7 +35,7 @@ exports[`Zoom should match snapshot with custom attributes 1`] = `
     </svg>
   </div>
   <div
-    className="rs-zoom-out rs-round-blue"
+    className="rs-zoom-out"
     onClick={[Function]}
     onKeyPress={[Function]}
     role="button"
@@ -70,7 +70,7 @@ exports[`Zoom should match snapshot with zoom slider 1`] = `
   className="rs-zooms-bar"
 >
   <div
-    className="rs-zoom-in rs-round-blue"
+    className="rs-zoom-in"
     onClick={[Function]}
     onKeyPress={[Function]}
     role="button"
@@ -101,7 +101,7 @@ exports[`Zoom should match snapshot with zoom slider 1`] = `
     className="rs-zoomslider-wrapper"
   />
   <div
-    className="rs-zoom-out rs-round-blue"
+    className="rs-zoom-out"
     onClick={[Function]}
     onKeyPress={[Function]}
     role="button"
@@ -136,7 +136,7 @@ exports[`Zoom should match snapshot. 1`] = `
   className="rs-zooms-bar"
 >
   <div
-    className="rs-zoom-in rs-round-blue"
+    className="rs-zoom-in"
     onClick={[Function]}
     onKeyPress={[Function]}
     role="button"
@@ -164,7 +164,7 @@ exports[`Zoom should match snapshot. 1`] = `
     </svg>
   </div>
   <div
-    className="rs-zoom-out rs-round-blue"
+    className="rs-zoom-out"
     onClick={[Function]}
     onKeyPress={[Function]}
     role="button"

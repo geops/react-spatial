@@ -4,9 +4,16 @@
   .tm-map {
     height: 400px;
   }
-}
 
-.rs-zooms-bar {
-  top: 35px;
-  right: 10px;
+  .rs-zooms-bar {
+    top: 0;
+    right: 10px;
+  }
+
+  .rs-zoom-in,
+  .rs-zoom-out {
+    background: $btn-secondary-color;
+    border-radius: 50%;
+    color: white;
+  }
 }

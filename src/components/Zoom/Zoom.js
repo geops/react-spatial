@@ -87,8 +87,7 @@ function Zoom({
     let control;
     if (zoomSlider && ref.current) {
       control = new ZoomSlider();
-      control.element.classList.remove('ol-control');
-      // Unset tabIndex on zoom slider button.
+      // We don't want to navigate to the zoom slider using TAB navigation.
       control.element.firstElementChild.tabIndex = -1;
       // Set the zoom slider in the custom control wrapper.
       control.setTarget(ref.current);
@@ -107,7 +106,7 @@ function Zoom({
       <div
         role="button"
         tabIndex={0}
-        className="rs-zoom-in rs-round-blue"
+        className="rs-zoom-in"
         title={titles.zoomIn}
         onClick={zoomIn}
         onKeyPress={zoomIn}
@@ -118,7 +117,7 @@ function Zoom({
       <div
         role="button"
         tabIndex={0}
-        className="rs-zoom-out rs-round-blue"
+        className="rs-zoom-out"
         title={titles.zoomOut}
         onClick={zoomOut}
         onKeyPress={zoomOut}
