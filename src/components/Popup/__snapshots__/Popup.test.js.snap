@@ -144,3 +144,28 @@ exports[`Popup should match snapshot without close button. 1`] = `
 `;
 
 exports[`Popup should match snapshot without feature 1`] = `null`;
+
+exports[`Popup should match snapshot without header. 1`] = `
+<div
+  className="rs-popup"
+  style={
+    Object {
+      "left": 0,
+      "top": 0,
+    }
+  }
+>
+  <div
+    className="rs-popup-container"
+    role="presentation"
+  >
+    <div
+      className="rs-popup-body"
+    >
+      <div
+        id="bar"
+      />
+    </div>
+  </div>
+</div>
+`;

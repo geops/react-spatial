@@ -26,7 +26,7 @@ const propTypes = {
   /**
    * Popup title.
    */
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  header: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
 
   /**
    * If true, the popup is panned in the map's viewport.
@@ -62,16 +62,6 @@ const propTypes = {
   onCloseClick: PropTypes.func,
 
   /**
-   * Hide or show the header.
-   */
-  showHeader: PropTypes.bool,
-
-  /**
-   * Hide or show close button.
-   */
-  showCloseButton: PropTypes.bool,
-
-  /**
    * Render the header
    */
   renderHeader: PropTypes.func,
@@ -88,14 +78,12 @@ const propTypes = {
 };
 
 const defaultProps = {
-  title: null,
+  header: null,
   feature: null,
   panIntoView: false,
   panRect: null,
   popupCoordinate: null,
   className: 'rs-popup',
-  showCloseButton: true,
-  showHeader: true,
   titles: { closeButton: 'Close' },
   onCloseClick: () => {},
   renderHeader: null,
@@ -104,24 +92,17 @@ const defaultProps = {
 };
 
 class Popup extends PureComponent {
-  static renderHeader(showHeader, title, closeButton) {
-    if (!showHeader) {
-      return null;
-    }
-
+  static renderHeader(props) {
+    const { header, renderCloseButton } = props;
     return (
       <div className="rs-popup-header">
-        {title}
-        {closeButton}
+        {header}
+        {(renderCloseButton || Popup.renderCloseButton)(props)}
       </div>
     );
   }
 
-  static renderCloseButton(showCloseButton, onCloseClick, titles) {
-    if (!showCloseButton) {
-      return null;
-    }
-
+  static renderCloseButton({ onCloseClick, titles }) {
     return (
       <div
         role="button"
@@ -232,16 +213,12 @@ class Popup extends PureComponent {
   render() {
     const {
       feature,
-      showHeader,
       popupCoordinate,
       children,
-      title,
+      header,
       titles,
-      showCloseButton,
-      onCloseClick,
       renderHeader,
       renderFooter,
-      renderCloseButton,
       ...other
     } = this.props;
 
@@ -252,6 +229,9 @@ class Popup extends PureComponent {
     delete other.panIntoView;
     delete other.panRect;
     delete other.map;
+    delete other.header;
+    delete other.onCloseClick;
+    delete other.renderCloseButton;
 
     const { top, left } = this.state;
 
@@ -276,15 +256,7 @@ class Popup extends PureComponent {
             this.setState({ popupElement });
           }}
         >
-          {(renderHeader || Popup.renderHeader)(
-            showHeader,
-            title,
-            (renderCloseButton || Popup.renderCloseButton)(
-              showCloseButton,
-              onCloseClick,
-              titles,
-            ),
-          )}
+          {(renderHeader || Popup.renderHeader)(this.props)}
           <div className="rs-popup-body">{children}</div>
           {renderFooter(this.props)}
         </div>
