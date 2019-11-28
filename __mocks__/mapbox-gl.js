@@ -3,6 +3,8 @@ class Map {
   isStyleLoaded() {}
 
   getCanvas() {}
+
+  once() {}
 }
 module.exports = {
   Map,
