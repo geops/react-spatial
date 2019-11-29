@@ -1,14 +1,15 @@
-import React, { PureComponent } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import OLMap from 'ol/Map';
+import { unByKey } from 'ol/Observable';
 import NorthArrowSimple from '../../images/northArrow.svg';
 import NorthArrowCircle from '../../images/northArrowCircle.svg';
 
 const propTypes = {
   /**
-   * CSS class of the button.
+   * An ol map.
    */
-  className: PropTypes.string,
+  map: PropTypes.instanceOf(OLMap).isRequired,
 
   /**
    * Rotation of the north arrow in degrees.
@@ -24,63 +25,50 @@ const propTypes = {
    *  Children content of the north arrow.
    */
   children: PropTypes.node,
-
-  /**
-   * An ol map.
-   */
-  map: PropTypes.instanceOf(OLMap).isRequired,
 };
 
 const defaultProps = {
-  className: 'tm-north-arrow',
   rotationOffset: 0,
   circled: false,
   children: null,
 };
 
+const radToDeg = rad => (rad * 360) / (Math.PI * 2);
+
+const getRotation = (map, rotationOffset) =>
+  radToDeg(map.getView().getRotation()) + rotationOffset;
+
 /**
  * This component displays an arrow pointing the North of the map.
  */
-class NorthArrow extends PureComponent {
-  static radToDeg(rad) {
-    return (rad * 360) / (Math.PI * 2);
-  }
+function NorthArrow({ map, rotationOffset, circled, children, ...other }) {
+  const [rotation, setRotation] = useState(rotationOffset);
 
-  constructor(props) {
-    super(props);
-    const { map, rotationOffset } = this.props;
-    this.state = {
-      rotation: map.getView().getRotation() + rotationOffset,
-    };
-
-    map.on('postrender', e => this.onRotate(e));
-  }
-
-  onRotate(evt) {
-    const { rotationOffset } = this.props;
-
-    this.setState({
-      rotation:
-        NorthArrow.radToDeg(evt.map.getView().getRotation()) + rotationOffset,
+  useEffect(() => {
+    if (!map) {
+      return null;
+    }
+    const key = map.on('postrender', () => {
+      setRotation(getRotation(map, rotationOffset));
     });
-  }
+    return () => {
+      unByKey(key);
+    };
+  }, [map, rotationOffset]);
 
-  render() {
-    const { className, circled, children } = this.props;
-    const { rotation } = this.state;
-
-    return (
-      <div
-        className={className}
-        style={{ transform: `rotate(${rotation}deg)` }}
-      >
-        {children || (circled ? <NorthArrowCircle /> : <NorthArrowSimple />)}
-      </div>
-    );
-  }
+  return (
+    <div
+      className="rs-north-arrow"
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...other}
+      style={{ transform: `rotate(${rotation}deg)` }}
+    >
+      {children || (circled ? <NorthArrowCircle /> : <NorthArrowSimple />)}
+    </div>
+  );
 }
 
 NorthArrow.propTypes = propTypes;
 NorthArrow.defaultProps = defaultProps;
 
-export default NorthArrow;
+export default React.memo(NorthArrow);
