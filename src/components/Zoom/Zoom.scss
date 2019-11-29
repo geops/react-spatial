@@ -1,21 +1,32 @@
-.tm-zooms-bar {
+.rs-zooms-bar {
   position: absolute;
+  top: 0;
   right: 0;
-  bottom: 0;
-  z-index: 1;
 
   div {
     margin: 10px 0;
   }
 
-  .tm-zoomslider-wrapper {
+  .rs-zoom-in,
+  .rs-zoom-out {
+    cursor: pointer;
+    height: $btn-size-base;
+    width: $btn-size-base;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.5s ease, color 0.5s ease;
+  }
+
+  .rs-zoomslider-wrapper {
     display: flex;
     justify-content: center;
 
     .ol-zoomslider {
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
+      position: relative;
+      top: 0;
+      left: 0;
+      user-select: none;
       background-color: rgba(255, 255, 255, 0.4);
       border: 1px solid $brand-secondary;
       border-radius: 3px;
@@ -27,9 +38,7 @@
       z-index: 1;
 
       .ol-zoomslider-thumb {
-        -webkit-user-select: none;
-        -moz-user-select: -moz-none;
-        -ms-user-select: none;
+        user-select: none;
         position: relative;
         display: block;
         background: $brand-secondary;
