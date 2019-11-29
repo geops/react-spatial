@@ -45,11 +45,18 @@ describe('CanvasSaveButton', () => {
 
   test('should match snapshot.', () => {
     const component = renderer.create(
-      <CanvasSaveButton
-        title={conf.title}
-        saveFormat={conf.saveFormat}
-        map={olMap}
-      >
+      <CanvasSaveButton format={conf.saveFormat} map={olMap}>
+        {conf.icon}
+      </CanvasSaveButton>,
+    );
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  test('should match snapshot with a different attributes', () => {
+    const component = renderer.create(
+      // eslint-disable-next-line jsx-a11y/tabindex-no-positive
+      <CanvasSaveButton title={conf.title} className="foo" tabIndex="1">
         {conf.icon}
       </CanvasSaveButton>,
     );
@@ -65,9 +72,8 @@ describe('CanvasSaveButton', () => {
     const wrapper = shallow(
       <CanvasSaveButton
         className="ta-example"
-        title={conf.title}
         map={olMap}
-        saveFormat={conf.saveFormat}
+        format={conf.saveFormat}
         onSaveStart={saveStart}
         onSaveEnd={saveEnd}
         extraData={{
