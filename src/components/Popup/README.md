@@ -97,7 +97,7 @@ class PopupExample extends React.Component {
         <ResizeHandler observe={this} />
         <Popup
           map={this.map}
-          title="Geometry"
+          header="Geometry"
           feature={featureClicked}
           onCloseClick={this.onCloseClick}
           panIntoView
