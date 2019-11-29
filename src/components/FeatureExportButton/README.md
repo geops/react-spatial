@@ -66,14 +66,14 @@ class FeatureExportButtonExample extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="rs-feature-export-example">
         <BasicMap
           center={[843119.531243, 6111943.000197]}
           zoom={9}
           map={this.map}
           layers={this.layers}
         />
-        <div className="tm-feature-export-example">
+        <div>
           <FeatureExportButton layer={this.layers[1]}>
             Export as KML
           </FeatureExportButton>
