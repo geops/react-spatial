@@ -1,7 +1,8 @@
 import React from 'react';
-import { configure, mount } from 'enzyme';
+import { configure, mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import 'jest-canvas-mock';
+import { act } from 'react-dom/test-utils';
 import Copyright from './Copyright';
 import ConfigReader from '../../ConfigReader';
 import LayerService from '../../LayerService';
@@ -34,30 +35,58 @@ const initLayerService = () => {
         url: 'https://a.tile.opentopomap.org/{z}/{x}/{y}.png',
       },
     },
+    {
+      name: 'OpenTopoMap',
+      copyright: 'OSM Contributors',
+      data: {
+        type: 'xyz',
+        url: 'https://a.tile.opentopomap.org/{z}/{x}/{y}.png',
+      },
+    },
   ];
 
   const layers = ConfigReader.readConfig(data);
   return new LayerService(layers);
 };
 
+let layerService;
+let layers;
+
 describe('Copyright', () => {
+  beforeEach(() => {
+    layerService = initLayerService();
+    layers = layerService.getLayersAsFlatArray();
+  });
+
   test('is empty if no layers are visible', () => {
-    const layerService = initLayerService();
-    const component = mount(<Copyright layerService={layerService} />);
+    const component = shallow(<Copyright layerService={layerService} />);
     expect(component.html()).toBe(null);
   });
 
-  test('displays the correct copyright', () => {
-    const layerService = initLayerService();
-    layerService.getLayersAsFlatArray()[1].setVisible(true);
-    const component = mount(<Copyright layerService={layerService} />);
+  test('displays one copyright', () => {
+    layers[1].setVisible(true);
+    const component = shallow(<Copyright layerService={layerService} />);
     expect(component.text()).toBe('© Hot OSM Contributors');
   });
 
+  test('displays 2 copyrights', () => {
+    layers[0].setVisible(true);
+    layers[1].setVisible(true);
+    const component = shallow(<Copyright layerService={layerService} />);
+    expect(component.text()).toBe('© OSM Contributors | Hot OSM Contributors');
+  });
+
+  test('displays only unique copyrights', () => {
+    layers[0].setVisible(true);
+    layers[1].setVisible(true);
+    layers[3].setVisible(true);
+    const component = shallow(<Copyright layerService={layerService} />);
+    expect(component.text()).toBe('© OSM Contributors | Hot OSM Contributors');
+  });
+
   test('displays a custom copyright', () => {
-    const layerService = initLayerService();
-    layerService.getLayersAsFlatArray()[1].setVisible(true);
-    const component = mount(
+    layers[1].setVisible(true);
+    const component = shallow(
       <Copyright
         layerService={layerService}
         format={copyrights => `Number of copyrights: ${copyrights.length}`}
@@ -66,13 +95,28 @@ describe('Copyright', () => {
     expect(component.text()).toBe('Number of copyrights: 1');
   });
 
-  test('listens to change events on a new LayerService', () => {
-    const layerService = initLayerService();
+  test('update copyright when visibility change.', () => {
     const component = mount(<Copyright layerService={layerService} />);
-    const newLayerService = initLayerService();
-    const spy = jest.spyOn(LayerService.prototype, 'on');
-    component.setProps({ layerService: newLayerService });
-    expect(spy).toHaveBeenCalled();
-    expect(spy.mock.calls[0][0]).toBe('change:visible');
+    expect(component.text()).toBe('');
+    act(() => {
+      layers[1].setVisible(true);
+    });
+    component.update();
+    expect(component.text()).toBe('© Hot OSM Contributors');
+    component.unmount();
+  });
+
+  test('listen/unlisten "change:visible" on mount/unmount.', () => {
+    // mount
+    const spyOn = jest.spyOn(layerService, 'on');
+    const component = mount(<Copyright layerService={layerService} />);
+    expect(spyOn).toHaveBeenCalledTimes(1);
+    const cb = spyOn.mock.calls[0][1];
+
+    // unmount
+    const spyUn = jest.spyOn(layerService, 'un');
+    component.unmount();
+    expect(spyUn).toHaveBeenCalledTimes(1);
+    expect(spyUn).toHaveBeenCalledWith('change:visible', cb);
   });
 });

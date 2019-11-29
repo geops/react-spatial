@@ -3,7 +3,7 @@
 This demonstrates the use of Copyright.
 
 ```js
-import React, { Component } from  'react';
+import React from  'react';
 import ConfigReader from 'react-spatial/ConfigReader';
 import LayerService from 'react-spatial/LayerService';
 import Copyright from 'react-spatial/components/Copyright';
