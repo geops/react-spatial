@@ -23,11 +23,6 @@ const propTypes = {
   className: PropTypes.string,
 
   /**
-   * Title of the button.
-   */
-  title: PropTypes.string,
-
-  /**
    * Map.
    */
   map: PropTypes.instanceOf(OLMap).isRequired,
@@ -54,7 +49,6 @@ const propTypes = {
 
 const defaultProps = {
   className: 'rs-geolocation',
-  title: undefined,
   onError: () => {},
   noCenterAfterDrag: false,
   colorOrStyleFunc: [235, 0, 0],
@@ -212,7 +206,11 @@ class Geolocation extends PureComponent {
   }
 
   render() {
-    const { className, title } = this.props;
+    const { className } = this.props;
+    // Remove component props from other HTML props.
+    const other = Object.entries(this.props).reduce((props, [key, value]) => {
+      return propTypes[key] ? props : { ...props, [key]: value };
+    }, {});
     const { active } = this.state;
 
     return (
@@ -220,9 +218,10 @@ class Geolocation extends PureComponent {
         role="button"
         tabIndex="0"
         className={`${className} ${active ? 'rs-blink' : ''}`}
-        title={title}
         onClick={() => this.toggle()}
         onKeyPress={e => e.which === 13 && this.toggle()}
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...other}
       >
         <FaRegDotCircle focusable={false} />
       </div>
