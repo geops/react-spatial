@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import OLScaleLine from 'ol/control/ScaleLine';
 import OLMap from 'ol/Map';
@@ -10,11 +10,6 @@ const propTypes = {
   map: PropTypes.instanceOf(OLMap).isRequired,
 
   /**
-   * CSS class for the container.
-   */
-  className: PropTypes.string,
-
-  /**
    * Options for ol/control/ScaleLine.
    * See https://openlayers.org/en/latest/apidoc/module-ol_control_ScaleLine-ScaleLine.html
    */
@@ -22,39 +17,29 @@ const propTypes = {
 };
 
 const defaultProps = {
-  className: 'tm-scale-line',
   options: {},
 };
 
-class ScaleLine extends Component {
-  constructor(props) {
-    super(props);
-    this.ref = React.createRef();
-  }
+function ScaleLine({ map, options, ...other }) {
+  const ref = useRef();
 
-  componentDidMount() {
-    const { map, options } = this.props;
-
-    this.control = new OLScaleLine({
+  useEffect(() => {
+    const control = new OLScaleLine({
       ...options,
-      ...{ target: this.ref.current },
+      ...{ target: ref.current },
     });
 
-    map.addControl(this.control);
-  }
+    map.addControl(control);
+    return () => {
+      map.removeControl(control);
+    };
+  }, [map]);
 
-  componentWillUnmount() {
-    const { map } = this.props;
-    map.removeControl(this.control);
-  }
-
-  render() {
-    const { className } = this.props;
-    return <div className={className} ref={this.ref} />;
-  }
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  return <div className="rs-scale-line" ref={ref} {...other} />;
 }
 
 ScaleLine.propTypes = propTypes;
 ScaleLine.defaultProps = defaultProps;
 
-export default ScaleLine;
+export default React.memo(ScaleLine);
