@@ -76,12 +76,12 @@ describe('BaseLayerToggler', () => {
     expect(comp.state.layerVisible).toBe(layerVisible);
     expect(comp.state.idx).toBe(1);
 
-    wrapper.find('.tm-base-layer-next').simulate('click');
+    wrapper.find('.rs-base-layer-next').simulate('click');
     expect(comp.state.layerVisible).toBe(layerVisible);
     expect(comp.state.idx).toBe(2);
 
     // Layer at index 0 is displayed on the map so we must ignore it
-    wrapper.find('.tm-base-layer-next').simulate('click');
+    wrapper.find('.rs-base-layer-next').simulate('click');
     expect(comp.state.layerVisible).toBe(layerVisible);
     expect(comp.state.idx).toBe(1);
   });
@@ -94,12 +94,12 @@ describe('BaseLayerToggler', () => {
     expect(comp.state.layerVisible).toBe(layerVisible);
     expect(comp.state.idx).toBe(1);
 
-    wrapper.find('.tm-base-layer-previous').simulate('click');
+    wrapper.find('.rs-base-layer-previous').simulate('click');
     expect(comp.state.layerVisible).toBe(layerVisible);
     expect(comp.state.idx).toBe(2);
 
     // Layer at index 0 is displayed on the map so we must ignore it
-    wrapper.find('.tm-base-layer-previous').simulate('click');
+    wrapper.find('.rs-base-layer-previous').simulate('click');
     expect(comp.state.layerVisible).toBe(layerVisible);
     expect(comp.state.idx).toBe(1);
   });
@@ -124,10 +124,7 @@ describe('BaseLayerToggler', () => {
     const comp = wrapper.instance();
     expect(comp.state.layers.length).toBe(3);
     expect(comp.state.layers[0].getVisible()).toBe(true);
-    wrapper
-      .find('.tm-base-layer-item')
-      .at(1)
-      .simulate('click');
+    wrapper.find('.rs-base-layer-toggle-button').simulate('click');
     wrapper.update();
     expect(comp.state.layers[0].getVisible()).toBe(false);
     expect(comp.state.layers[1].getVisible()).toBe(true);
@@ -137,6 +134,6 @@ describe('BaseLayerToggler', () => {
 
   test('hide baseLayerToggler if only one baselayer', () => {
     const wrapper = mountComp(exampleData);
-    expect(wrapper.find('.tm-base-layer-item').exists()).toBe(false);
+    expect(wrapper.find('.rs-base-layer-item').exists()).toBe(false);
   });
 });

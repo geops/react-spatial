@@ -2,44 +2,43 @@
 
 exports[`BaseLayerToggler matches snapshots using default properties. 1`] = `
 <div
-  className="tm-base-layer-toggler"
+  className="rs-base-layer-toggler"
 >
   <div
-    aria-label="map"
-    className="tm-map"
-    role="presentation"
-    tabIndex={0}
-  />
-  <img
-    alt={null}
-    className="tm-base-layer-item"
-    src={null}
-    style={
-      Object {
-        "opacity": 0,
-      }
-    }
-  />
-  <div
-    aria-label="Baselayer button"
-    className="tm-base-layer-item"
+    className="rs-base-layer-toggle-button"
     onClick={[Function]}
     onKeyPress={[Function]}
     role="button"
-    tabIndex={0}
-    title="Baselayer button"
-  />
+    tabIndex="0"
+    title="Toggle base layer"
+  >
+    <img
+      alt={null}
+      className="rs-base-layer-image"
+      src={null}
+      style={
+        Object {
+          "opacity": 0,
+        }
+      }
+    />
+    <div
+      aria-label="map"
+      className="rs-base-layer-map"
+      role="presentation"
+      tabIndex={-1}
+    />
+  </div>
   <div
-    className="tm-footer"
+    className="rs-base-layer-footer"
   >
     <div
-      aria-label="Previous baselayer"
-      className="tm-base-layer-previous"
+      className="rs-base-layer-previous"
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
-      tabIndex={0}
-      title="Previous baselayer"
+      tabIndex="0"
+      title="Previous base layer"
     >
       <svg
         fill="currentColor"
@@ -62,13 +61,12 @@ exports[`BaseLayerToggler matches snapshots using default properties. 1`] = `
       </svg>
     </div>
     <div
-      aria-label="Next baselayer"
-      className="tm-base-layer-next"
+      className="rs-base-layer-next"
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
-      tabIndex={0}
-      title="Next baselayer"
+      tabIndex="0"
+      title="Next base layer"
     >
       <svg
         fill="currentColor"
