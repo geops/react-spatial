@@ -1,8 +1,6 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { FaExpand } from 'react-icons/fa';
 import OLMap from 'ol/Map';
-import Button from '../Button';
 
 const propTypes = {
   /**
@@ -16,42 +14,44 @@ const propTypes = {
   extent: PropTypes.arrayOf(PropTypes.number).isRequired,
 
   /**
-   * Title for the fitExtent button.
-   */
-  title: PropTypes.string,
-
-  /**
-   * CSS class of the fitExtent button.
+   * CSS class  for the fitExtent button.
    */
   className: PropTypes.string,
 
   /**
-   * Children content of the fitExtent button.
+   * Button content.
    */
-  children: PropTypes.node,
+  children: PropTypes.node.isRequired,
 };
 
 const defaultProps = {
-  title: 'Fit Extent',
-  className: 'tm-button tm-round-blue',
-  children: <FaExpand focusable={false} />,
+  className: 'rs-fit-extent',
 };
 
 /**
  * This component creates a button to zoom to the given extent.
  */
-function FitExtent({ map, extent, title, className, children }) {
+function FitExtent({ map, extent, className, children, ...other }) {
+  const fit = useCallback(evt => {
+    if (evt.which && evt.which !== 13) {
+      return;
+    }
+    map.getView().cancelAnimations();
+    map.getView().fit(extent, map.getSize());
+  });
+
   return (
-    <Button
+    <div
       className={className}
-      title={title}
-      onClick={() => {
-        map.getView().cancelAnimations();
-        map.getView().fit(extent, map.getSize());
-      }}
+      role="button"
+      tabIndex="0"
+      onClick={fit}
+      onKeyPress={fit}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...other}
     >
       {children}
-    </Button>
+    </div>
   );
 }
 
