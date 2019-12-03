@@ -109,7 +109,7 @@ describe('Geolocation', () => {
         .first()
         .simulate('click');
 
-      expect(basic.className).toBe('rs-geolocation rs-blink');
+      expect(basic.className).toBe('rs-geolocation rs-active');
 
       restoreGeolocation();
     });

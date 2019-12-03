@@ -217,7 +217,7 @@ class Geolocation extends PureComponent {
       <div
         role="button"
         tabIndex="0"
-        className={`${className} ${active ? 'rs-blink' : ''}`}
+        className={`${className} ${active ? 'rs-active' : ''}`}
         onClick={() => this.toggle()}
         onKeyPress={e => e.which === 13 && this.toggle()}
         // eslint-disable-next-line react/jsx-props-no-spreading

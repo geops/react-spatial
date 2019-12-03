@@ -16,7 +16,7 @@
     background-color: $btn-primary-color-hover;
   }
 
-  &.rs-blink {
+  &.rs-active {
     animation-name: blinking;
     animation-duration: 3s;
     animation-timing-function: linear;
