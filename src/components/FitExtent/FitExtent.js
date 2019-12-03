@@ -2,8 +2,6 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import OLMap from 'ol/Map';
 
-import './FitExtent.scss';
-
 const propTypes = {
   /**
    * An ol map.
@@ -16,9 +14,9 @@ const propTypes = {
   extent: PropTypes.arrayOf(PropTypes.number).isRequired,
 
   /**
-   * Title for the fitExtent button.
+   * CSS class  for the fitExtent button.
    */
-  title: PropTypes.string,
+  className: PropTypes.string,
 
   /**
    * Button content.
@@ -27,26 +25,28 @@ const propTypes = {
 };
 
 const defaultProps = {
-  title: 'Fit Extent',
+  className: 'rs-fit-extent',
 };
 
 /**
  * This component creates a button to zoom to the given extent.
  */
-function FitExtent({ map, extent, title, children, ...other }) {
-  const fit = useCallback(() => {
+function FitExtent({ map, extent, className, children, ...other }) {
+  const fit = useCallback(evt => {
+    if (evt.which && evt.which !== 13) {
+      return;
+    }
     map.getView().cancelAnimations();
     map.getView().fit(extent, map.getSize());
   });
 
   return (
     <div
-      className="rs-fit-extent"
+      className={className}
       role="button"
-      title={title}
       tabIndex="0"
       onClick={fit}
-      onKeyPress={e => e.which === 13 && fit()}
+      onKeyPress={fit}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...other}
     >

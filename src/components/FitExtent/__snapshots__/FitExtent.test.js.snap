@@ -7,6 +7,7 @@ exports[`Button should match snapshot. 1`] = `
   onKeyPress={[Function]}
   role="button"
   tabIndex="0"
-  title="Fit Extent"
-/>
+>
+  FitExtent
+</div>
 `;
