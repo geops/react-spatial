@@ -101,15 +101,15 @@ describe('Geolocation', () => {
     test('class should be active', () => {
       mockGeolocation();
 
-      const wrapper = mount(<Geolocation map={map} classNameActive="active" />);
+      const wrapper = mount(<Geolocation map={map} />);
       const basic = wrapper.getDOMNode();
 
       wrapper
-        .find('.tm-geolocation')
+        .find('.rs-geolocation')
         .first()
         .simulate('click');
 
-      expect(basic.className).toBe('tm-geolocation active');
+      expect(basic.className).toBe('rs-geolocation rs-active');
 
       restoreGeolocation();
     });
@@ -121,12 +121,12 @@ describe('Geolocation', () => {
       const basic = wrapper.getDOMNode();
 
       wrapper
-        .find('.tm-geolocation')
+        .find('.rs-geolocation')
         .first()
         .simulate('click')
         .simulate('click');
 
-      expect(basic.className).toBe('tm-geolocation ');
+      expect(basic.className).toBe('rs-geolocation ');
 
       restoreGeolocation();
     });
@@ -158,7 +158,7 @@ describe('Geolocation', () => {
     );
 
     wrapper
-      .find('.tm-geolocation')
+      .find('.rs-geolocation')
       .first()
       .simulate('click');
 
