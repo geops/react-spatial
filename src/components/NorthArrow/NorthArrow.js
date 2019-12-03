@@ -71,4 +71,7 @@ function NorthArrow({ map, rotationOffset, circled, children, ...other }) {
 NorthArrow.propTypes = propTypes;
 NorthArrow.defaultProps = defaultProps;
 
-export default React.memo(NorthArrow);
+const memoized = React.memo(NorthArrow);
+memoized.radToDeg = radToDeg;
+
+export default memoized;
