@@ -102,6 +102,14 @@ export default class MapboxLayer extends Layer {
       preserveDrawingBuffer: this.options.preserveDrawingBuffer || false,
     });
 
+    this.mbMap.once('load', () => {
+      this.loaded = true;
+      this.dispatchEvent({
+        type: 'load',
+        target: this,
+      });
+    });
+
     this.changeSizeRef = this.map.on('change:size', () => {
       try {
         this.mbMap.resize();
@@ -165,6 +173,7 @@ export default class MapboxLayer extends Layer {
       this.mbMap.remove();
       this.mbMap = null;
     }
+    this.loaded = false;
     super.terminate();
   }
 
