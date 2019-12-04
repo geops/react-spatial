@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import OLMap from 'ol/Map';
 import { unByKey } from 'ol/Observable';
+import degrees from 'radians-degrees';
 import NorthArrowSimple from '../../images/northArrow.svg';
 import NorthArrowCircle from '../../images/northArrowCircle.svg';
 
@@ -33,10 +34,8 @@ const defaultProps = {
   children: null,
 };
 
-const radToDeg = rad => (rad * 360) / (Math.PI * 2);
-
 const getRotation = (map, rotationOffset) =>
-  radToDeg(map.getView().getRotation()) + rotationOffset;
+  degrees(map.getView().getRotation()) + rotationOffset;
 
 /**
  * This component displays an arrow pointing the North of the map.
@@ -72,6 +71,5 @@ NorthArrow.propTypes = propTypes;
 NorthArrow.defaultProps = defaultProps;
 
 const memoized = React.memo(NorthArrow);
-memoized.radToDeg = radToDeg;
 
 export default memoized;
