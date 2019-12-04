@@ -10490,6 +10490,11 @@ quickselect@^2.0.0:
   resolved "https://registry.yarnpkg.com/quickselect/-/quickselect-2.0.0.tgz#f19680a486a5eefb581303e023e98faaf25dd018"
   integrity sha512-RKJ22hX8mHe3Y6wH/N3wCM6BWtjaxIyyUIkpHOvfFnxdI4yD4tBXEBKSbriGujF6jnSVkJrffuo6vxACiSSxIw==
 
+radians-degrees@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/radians-degrees/-/radians-degrees-1.0.0.tgz#7232bf171410788c9ab295a7cf7fadc55e72513a"
+  integrity sha1-cjK/FxQQeIyaspWnz3+txV5yUTo=
+
 raf@3.4.1, raf@^3.4.0:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/raf/-/raf-3.4.1.tgz#0742e99a4a6552f445d73e3ee0328af0ff1ede39"
