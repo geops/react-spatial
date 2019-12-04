@@ -425,6 +425,14 @@ class CanvasSaveButton extends PureComponent {
   render() {
     const { children, ...other } = this.props;
 
+    delete other.onSaveStart;
+    delete other.onSaveEnd;
+    delete other.extraData;
+    delete other.extent;
+    delete other.format;
+    delete other.map;
+    delete other.coordinates;
+
     return (
       <div
         role="button"

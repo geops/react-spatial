@@ -16,23 +16,11 @@ import VectorSource from 'ol/source/Vector';
 
 import { FaRegDotCircle } from 'react-icons/fa';
 
-import Button from '../Button';
-
 const propTypes = {
   /**
    * CSS class of the button.
    */
   className: PropTypes.string,
-
-  /**
-   * Additional CSS class of the activated button.
-   */
-  classNameActive: PropTypes.string,
-
-  /**
-   * Title of the button.
-   */
-  title: PropTypes.string,
 
   /**
    * Map.
@@ -60,9 +48,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  className: 'tm-geolocation',
-  classNameActive: 'blink',
-  title: undefined,
+  className: 'rs-geolocation',
   onError: () => {},
   noCenterAfterDrag: false,
   colorOrStyleFunc: [235, 0, 0],
@@ -220,17 +206,25 @@ class Geolocation extends PureComponent {
   }
 
   render() {
-    const { className, classNameActive, title } = this.props;
+    const { className } = this.props;
+    // Remove component props from other HTML props.
+    const other = Object.entries(this.props).reduce((props, [key, value]) => {
+      return propTypes[key] ? props : { ...props, [key]: value };
+    }, {});
     const { active } = this.state;
 
     return (
-      <Button
-        className={`${className} ${active ? classNameActive : ''}`}
-        title={title}
+      <div
+        role="button"
+        tabIndex="0"
+        className={`${className} ${active ? 'rs-active' : ''}`}
         onClick={() => this.toggle()}
+        onKeyPress={e => e.which === 13 && this.toggle()}
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...other}
       >
         <FaRegDotCircle focusable={false} />
-      </Button>
+      </div>
     );
   }
 }
