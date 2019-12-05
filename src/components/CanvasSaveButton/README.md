@@ -6,6 +6,7 @@ This demonstrates the use of CanvasSaveButton.
 import React from 'react';
 import { TiImage } from 'react-icons/ti';
 import Map from 'ol/Map';
+import degrees from 'radians-degrees';
 import CanvasSaveButton from 'react-spatial/components/CanvasSaveButton';
 import BasicMap from 'react-spatial/components/BasicMap';
 import ConfigReader from 'react-spatial/ConfigReader';
@@ -36,7 +37,7 @@ function CanvasSaveButtonExample() {
           },
           northArrow: {
             rotation: () => {
-              return NorthArrow.radToDeg(map.getView().getRotation());
+              return degrees(map.getView().getRotation());
             },
             circled: true,
           },
