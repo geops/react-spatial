@@ -70,6 +70,4 @@ function NorthArrow({ map, rotationOffset, circled, children, ...other }) {
 NorthArrow.propTypes = propTypes;
 NorthArrow.defaultProps = defaultProps;
 
-const memoized = React.memo(NorthArrow);
-
-export default memoized;
+export default React.memo(NorthArrow);
