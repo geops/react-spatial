@@ -117,7 +117,7 @@ describe('Geolocation', () => {
     test('class should not be active', () => {
       mockGeolocation();
 
-      const wrapper = mount(<Geolocation map={map} classNameActive="active" />);
+      const wrapper = mount(<Geolocation map={map} />);
       const basic = wrapper.getDOMNode();
 
       wrapper
