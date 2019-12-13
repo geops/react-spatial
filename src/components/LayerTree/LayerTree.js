@@ -247,7 +247,7 @@ class LayerTree extends Component {
     return (
       <Button
         tabIndex={tabIndex}
-        title={`${layer.getName()} ${
+        title={`${t(layer.getName())} ${
           !expandedLayerNames.includes(layer)
             ? buttonTitles.subLayerShow
             : buttonTitles.subLayerHide
