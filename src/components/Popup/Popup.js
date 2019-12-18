@@ -250,7 +250,7 @@ class Popup extends PureComponent {
       >
         <div
           className="rs-popup-container"
-          role="presentation"
+          role="dialog"
           key={key}
           ref={popupElement => {
             this.setState({ popupElement });
