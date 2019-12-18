@@ -141,6 +141,7 @@ class BaseLayerToggler extends Component {
 
     this.updateState();
     layerService.on('change:visible', () => this.updateState());
+    layerService.on('change:layers', () => this.updateState());
   }
 
   updateState() {
