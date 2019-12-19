@@ -2,11 +2,11 @@
 
 exports[`LayerTree matches snapshots using default properties. 1`] = `
 <div
-  className="tm-layer-tree"
+  className="rs-layer-tree"
 >
   <div>
     <div
-      className="tm-layer-tree-item tm-visible"
+      className="rs-layer-tree-item rs-visible"
       style={
         Object {
           "paddingLeft": "0px",
@@ -15,7 +15,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
     >
       <label
         aria-label="Hide layer"
-        className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
+        className="rs-layer-tree-input rs-layer-tree-input-radio rs-radio"
         onKeyPress={[Function]}
         tabIndex={0}
         title="Hide layer"
@@ -31,7 +31,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       </label>
       <div
         aria-label="Vector sample layers Hide sublayer"
-        className="tm-layer-tree-toggle"
+        className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -42,13 +42,13 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           Vector sample layers
         </div>
         <div
-          className="tm-layer-tree-arrow tm-layer-tree-arrow-expanded"
+          className="rs-layer-tree-arrow rs-layer-tree-arrow-expanded"
         />
       </div>
     </div>
     <div>
       <div
-        className="tm-layer-tree-item "
+        className="rs-layer-tree-item "
         style={
           Object {
             "paddingLeft": "30px",
@@ -57,7 +57,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       >
         <label
           aria-label="Show layer"
-          className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
+          className="rs-layer-tree-input rs-layer-tree-input-radio rs-radio"
           onKeyPress={[Function]}
           tabIndex={-1}
           title="Show layer"
@@ -73,7 +73,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         </label>
         <div
           aria-label="Points Samples Show sublayer"
-          className="tm-layer-tree-toggle"
+          className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
@@ -88,7 +88,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
     </div>
     <div>
       <div
-        className="tm-layer-tree-item tm-visible"
+        className="rs-layer-tree-item rs-visible"
         style={
           Object {
             "paddingLeft": "30px",
@@ -97,7 +97,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       >
         <label
           aria-label="Hide layer"
-          className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
+          className="rs-layer-tree-input rs-layer-tree-input-radio rs-radio"
           onKeyPress={[Function]}
           tabIndex={-1}
           title="Hide layer"
@@ -113,7 +113,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         </label>
         <div
           aria-label="Lines Samples Show sublayer"
-          className="tm-layer-tree-toggle"
+          className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
@@ -128,7 +128,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
     </div>
     <div>
       <div
-        className="tm-layer-tree-item "
+        className="rs-layer-tree-item "
         style={
           Object {
             "paddingLeft": "30px",
@@ -137,7 +137,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       >
         <label
           aria-label="Show layer"
-          className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
+          className="rs-layer-tree-input rs-layer-tree-input-radio rs-radio"
           onKeyPress={[Function]}
           tabIndex={-1}
           title="Show layer"
@@ -153,7 +153,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         </label>
         <div
           aria-label="Polygons Samples Show sublayer"
-          className="tm-layer-tree-toggle"
+          className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
@@ -169,7 +169,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
   </div>
   <div>
     <div
-      className="tm-layer-tree-item tm-visible"
+      className="rs-layer-tree-item rs-visible"
       style={
         Object {
           "paddingLeft": "0px",
@@ -178,7 +178,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
     >
       <label
         aria-label="Hide layer"
-        className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
+        className="rs-layer-tree-input rs-layer-tree-input-checkbox rs-checkbox"
         onKeyPress={[Function]}
         tabIndex={0}
         title="Hide layer"
@@ -194,7 +194,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       </label>
       <div
         aria-label="Other layers Hide sublayer"
-        className="tm-layer-tree-toggle"
+        className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -205,13 +205,13 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           Other layers
         </div>
         <div
-          className="tm-layer-tree-arrow tm-layer-tree-arrow-expanded"
+          className="rs-layer-tree-arrow rs-layer-tree-arrow-expanded"
         />
       </div>
     </div>
     <div>
       <div
-        className="tm-layer-tree-item "
+        className="rs-layer-tree-item "
         style={
           Object {
             "paddingLeft": "30px",
@@ -220,7 +220,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       >
         <label
           aria-label="Show layer"
-          className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
+          className="rs-layer-tree-input rs-layer-tree-input-checkbox rs-checkbox"
           onKeyPress={[Function]}
           tabIndex={-1}
           title="Show layer"
@@ -236,7 +236,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         </label>
         <div
           aria-label="Countries Borders Show sublayer"
-          className="tm-layer-tree-toggle"
+          className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
@@ -251,7 +251,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
     </div>
     <div>
       <div
-        className="tm-layer-tree-item tm-visible"
+        className="rs-layer-tree-item rs-visible"
         style={
           Object {
             "paddingLeft": "30px",
@@ -260,7 +260,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       >
         <label
           aria-label="Hide layer"
-          className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
+          className="rs-layer-tree-input rs-layer-tree-input-checkbox rs-checkbox"
           onKeyPress={[Function]}
           tabIndex={-1}
           title="Hide layer"
@@ -276,7 +276,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         </label>
         <div
           aria-label="USA Population Density Show sublayer"
-          className="tm-layer-tree-toggle"
+          className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
@@ -291,7 +291,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
     </div>
     <div>
       <div
-        className="tm-layer-tree-item tm-visible"
+        className="rs-layer-tree-item rs-visible"
         style={
           Object {
             "paddingLeft": "30px",
@@ -300,7 +300,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       >
         <label
           aria-label="Hide layer"
-          className="tm-layer-tree-input tm-layer-tree-input-checkbox tm-checkbox"
+          className="rs-layer-tree-input rs-layer-tree-input-checkbox rs-checkbox"
           onKeyPress={[Function]}
           tabIndex={-1}
           title="Hide layer"
@@ -316,7 +316,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         </label>
         <div
           aria-label="Switzerland Show sublayer"
-          className="tm-layer-tree-toggle"
+          className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
@@ -332,7 +332,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
   </div>
   <div>
     <div
-      className="tm-layer-tree-item "
+      className="rs-layer-tree-item "
       style={
         Object {
           "paddingLeft": "0px",
@@ -341,7 +341,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
     >
       <label
         aria-label="Show layer"
-        className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
+        className="rs-layer-tree-input rs-layer-tree-input-radio rs-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
         title="Show layer"
@@ -357,7 +357,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       </label>
       <div
         aria-label="OpenTopoMap Show sublayer"
-        className="tm-layer-tree-toggle"
+        className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -372,7 +372,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
   </div>
   <div>
     <div
-      className="tm-layer-tree-item "
+      className="rs-layer-tree-item "
       style={
         Object {
           "paddingLeft": "0px",
@@ -381,7 +381,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
     >
       <label
         aria-label="Show layer"
-        className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
+        className="rs-layer-tree-input rs-layer-tree-input-radio rs-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
         title="Show layer"
@@ -397,7 +397,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       </label>
       <div
         aria-label="OSM Baselayer Hot Show sublayer"
-        className="tm-layer-tree-toggle"
+        className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -412,7 +412,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
   </div>
   <div>
     <div
-      className="tm-layer-tree-item tm-visible"
+      className="rs-layer-tree-item rs-visible"
       style={
         Object {
           "paddingLeft": "0px",
@@ -421,7 +421,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
     >
       <label
         aria-label="Hide layer"
-        className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
+        className="rs-layer-tree-input rs-layer-tree-input-radio rs-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
         title="Hide layer"
@@ -437,7 +437,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       </label>
       <div
         aria-label="OSM Baselayer Show sublayer"
-        className="tm-layer-tree-toggle"
+        className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -455,11 +455,11 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
 
 exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
 <div
-  className="tm-layer-tree"
+  className="rs-layer-tree"
 >
   <div>
     <div
-      className="tm-layer-tree-item "
+      className="rs-layer-tree-item "
       style={
         Object {
           "paddingLeft": "0px",
@@ -468,7 +468,7 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
     >
       <label
         aria-label="Show layer"
-        className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
+        className="rs-layer-tree-input rs-layer-tree-input-radio rs-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
         title="Show layer"
@@ -484,7 +484,7 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
       </label>
       <div
         aria-label="OpenTopoMap Show sublayer"
-        className="tm-layer-tree-toggle"
+        className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -499,7 +499,7 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
   </div>
   <div>
     <div
-      className="tm-layer-tree-item "
+      className="rs-layer-tree-item "
       style={
         Object {
           "paddingLeft": "0px",
@@ -508,7 +508,7 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
     >
       <label
         aria-label="Show layer"
-        className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
+        className="rs-layer-tree-input rs-layer-tree-input-radio rs-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
         title="Show layer"
@@ -524,7 +524,7 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
       </label>
       <div
         aria-label="OSM Baselayer Hot Show sublayer"
-        className="tm-layer-tree-toggle"
+        className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -539,7 +539,7 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
   </div>
   <div>
     <div
-      className="tm-layer-tree-item tm-visible"
+      className="rs-layer-tree-item rs-visible"
       style={
         Object {
           "paddingLeft": "0px",
@@ -548,7 +548,7 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
     >
       <label
         aria-label="Hide layer"
-        className="tm-layer-tree-input tm-layer-tree-input-radio tm-radio"
+        className="rs-layer-tree-input rs-layer-tree-input-radio rs-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
         title="Hide layer"
@@ -564,7 +564,7 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
       </label>
       <div
         aria-label="OSM Baselayer Show sublayer"
-        className="tm-layer-tree-toggle"
+        className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -586,7 +586,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
 >
   <div>
     <div
-      className="bar tm-visible"
+      className="rs-layer-tree-item rs-visible"
       style={
         Object {
           "paddingLeft": "0px",
@@ -595,7 +595,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
     >
       <label
         aria-label="Hide layer"
-        className="qux qux-radio tm-radio"
+        className="rs-layer-tree-input rs-layer-tree-input-radio rs-radio"
         onKeyPress={[Function]}
         tabIndex={0}
         title="Hide layer"
@@ -611,7 +611,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       </label>
       <div
         aria-label="Vector sample layers Hide sublayer"
-        className="quux"
+        className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -622,13 +622,13 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           Vector sample layers
         </div>
         <div
-          className="ged ged-expanded"
+          className="rs-layer-tree-arrow rs-layer-tree-arrow-expanded"
         />
       </div>
     </div>
     <div>
       <div
-        className="bar "
+        className="rs-layer-tree-item "
         style={
           Object {
             "paddingLeft": "30px",
@@ -637,7 +637,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       >
         <label
           aria-label="Show layer"
-          className="qux qux-radio tm-radio"
+          className="rs-layer-tree-input rs-layer-tree-input-radio rs-radio"
           onKeyPress={[Function]}
           tabIndex={-1}
           title="Show layer"
@@ -653,7 +653,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         </label>
         <div
           aria-label="Points Samples Show sublayer"
-          className="quux"
+          className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
@@ -668,7 +668,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
     </div>
     <div>
       <div
-        className="bar tm-visible"
+        className="rs-layer-tree-item rs-visible"
         style={
           Object {
             "paddingLeft": "30px",
@@ -677,7 +677,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       >
         <label
           aria-label="Hide layer"
-          className="qux qux-radio tm-radio"
+          className="rs-layer-tree-input rs-layer-tree-input-radio rs-radio"
           onKeyPress={[Function]}
           tabIndex={-1}
           title="Hide layer"
@@ -693,7 +693,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         </label>
         <div
           aria-label="Lines Samples Show sublayer"
-          className="quux"
+          className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
@@ -708,7 +708,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
     </div>
     <div>
       <div
-        className="bar "
+        className="rs-layer-tree-item "
         style={
           Object {
             "paddingLeft": "30px",
@@ -717,7 +717,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       >
         <label
           aria-label="Show layer"
-          className="qux qux-radio tm-radio"
+          className="rs-layer-tree-input rs-layer-tree-input-radio rs-radio"
           onKeyPress={[Function]}
           tabIndex={-1}
           title="Show layer"
@@ -733,7 +733,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         </label>
         <div
           aria-label="Polygons Samples Show sublayer"
-          className="quux"
+          className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
@@ -749,7 +749,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
   </div>
   <div>
     <div
-      className="bar tm-visible"
+      className="rs-layer-tree-item rs-visible"
       style={
         Object {
           "paddingLeft": "0px",
@@ -758,7 +758,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
     >
       <label
         aria-label="Hide layer"
-        className="qux qux-checkbox tm-checkbox"
+        className="rs-layer-tree-input rs-layer-tree-input-checkbox rs-checkbox"
         onKeyPress={[Function]}
         tabIndex={0}
         title="Hide layer"
@@ -774,7 +774,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       </label>
       <div
         aria-label="Other layers Hide sublayer"
-        className="quux"
+        className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -785,13 +785,13 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           Other layers
         </div>
         <div
-          className="ged ged-expanded"
+          className="rs-layer-tree-arrow rs-layer-tree-arrow-expanded"
         />
       </div>
     </div>
     <div>
       <div
-        className="bar "
+        className="rs-layer-tree-item "
         style={
           Object {
             "paddingLeft": "30px",
@@ -800,7 +800,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       >
         <label
           aria-label="Show layer"
-          className="qux qux-checkbox tm-checkbox"
+          className="rs-layer-tree-input rs-layer-tree-input-checkbox rs-checkbox"
           onKeyPress={[Function]}
           tabIndex={-1}
           title="Show layer"
@@ -816,7 +816,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         </label>
         <div
           aria-label="Countries Borders Show sublayer"
-          className="quux"
+          className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
@@ -831,7 +831,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
     </div>
     <div>
       <div
-        className="bar tm-visible"
+        className="rs-layer-tree-item rs-visible"
         style={
           Object {
             "paddingLeft": "30px",
@@ -840,7 +840,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       >
         <label
           aria-label="Hide layer"
-          className="qux qux-checkbox tm-checkbox"
+          className="rs-layer-tree-input rs-layer-tree-input-checkbox rs-checkbox"
           onKeyPress={[Function]}
           tabIndex={-1}
           title="Hide layer"
@@ -856,7 +856,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         </label>
         <div
           aria-label="USA Population Density Show sublayer"
-          className="quux"
+          className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
@@ -871,7 +871,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
     </div>
     <div>
       <div
-        className="bar tm-visible"
+        className="rs-layer-tree-item rs-visible"
         style={
           Object {
             "paddingLeft": "30px",
@@ -880,7 +880,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       >
         <label
           aria-label="Hide layer"
-          className="qux qux-checkbox tm-checkbox"
+          className="rs-layer-tree-input rs-layer-tree-input-checkbox rs-checkbox"
           onKeyPress={[Function]}
           tabIndex={-1}
           title="Hide layer"
@@ -896,7 +896,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         </label>
         <div
           aria-label="Switzerland Show sublayer"
-          className="quux"
+          className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
@@ -912,7 +912,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
   </div>
   <div>
     <div
-      className="bar "
+      className="rs-layer-tree-item "
       style={
         Object {
           "paddingLeft": "0px",
@@ -921,7 +921,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
     >
       <label
         aria-label="Show layer"
-        className="qux qux-radio tm-radio"
+        className="rs-layer-tree-input rs-layer-tree-input-radio rs-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
         title="Show layer"
@@ -937,7 +937,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       </label>
       <div
         aria-label="OpenTopoMap Show sublayer"
-        className="quux"
+        className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -952,7 +952,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
   </div>
   <div>
     <div
-      className="bar "
+      className="rs-layer-tree-item "
       style={
         Object {
           "paddingLeft": "0px",
@@ -961,7 +961,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
     >
       <label
         aria-label="Show layer"
-        className="qux qux-radio tm-radio"
+        className="rs-layer-tree-input rs-layer-tree-input-radio rs-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
         title="Show layer"
@@ -977,7 +977,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       </label>
       <div
         aria-label="OSM Baselayer Hot Show sublayer"
-        className="quux"
+        className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -992,7 +992,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
   </div>
   <div>
     <div
-      className="bar tm-visible"
+      className="rs-layer-tree-item rs-visible"
       style={
         Object {
           "paddingLeft": "0px",
@@ -1001,7 +1001,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
     >
       <label
         aria-label="Hide layer"
-        className="qux qux-radio tm-radio"
+        className="rs-layer-tree-input rs-layer-tree-input-radio rs-radio"
         onKeyPress={[Function]}
         tabIndex={-1}
         title="Hide layer"
@@ -1017,7 +1017,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       </label>
       <div
         aria-label="OSM Baselayer Show sublayer"
-        className="quux"
+        className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
@@ -1035,13 +1035,13 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
 
 exports[`LayerTree matches snapshots when no layers. 1`] = `
 <div
-  className="tm-layer-tree"
+  className="rs-layer-tree"
 />
 `;
 
 exports[`LayerTree matches snapshots when renderItem is used. 1`] = `
 <div
-  className="tm-layer-tree"
+  className="rs-layer-tree"
 >
   <div>
     Vector sample layers

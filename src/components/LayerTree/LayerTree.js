@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Checkbox from '../Checkbox';
-import Button from '../Button';
 
 const propTypes = {
   /**
@@ -13,29 +11,6 @@ const propTypes = {
    * CSS class to apply on the container.
    */
   className: PropTypes.string,
-
-  /**
-   * CSS class to apply on each item.
-   */
-  classNameItem: PropTypes.string,
-
-  /**
-   * CSS class to apply to the label element which contains the input.
-   * Unused if you use `renderItem` property.
-   */
-  classNameInput: PropTypes.string,
-
-  /**
-   * CSS class to apply to the toggle button which contains the title and the arrow.
-   * Unused if you use `renderItem` property.
-   */
-  classNameToggle: PropTypes.string,
-
-  /**
-   * CSS class to apply to the arrow.
-   * Unused if you use `renderItem` property.
-   */
-  classNameArrow: PropTypes.string,
 
   /**
    * Padding left to apply on each level.
@@ -77,7 +52,7 @@ const propTypes = {
   /**
    * Object holding title for the layer tree's buttons.
    */
-  buttonTitles: PropTypes.shape({
+  titles: PropTypes.shape({
     /**
      * aria-label on checkbox to show layer.
      */
@@ -105,17 +80,13 @@ const propTypes = {
 
 const defaultProps = {
   layerService: undefined,
-  className: 'tm-layer-tree',
-  classNameItem: 'tm-layer-tree-item',
-  classNameInput: 'tm-layer-tree-input',
-  classNameToggle: 'tm-layer-tree-toggle',
-  classNameArrow: 'tm-layer-tree-arrow',
+  className: 'rs-layer-tree',
   padding: 30,
   isItemHidden: () => false,
   getParentClassName: () => undefined,
   renderItem: null,
   renderItemContent: null,
-  buttonTitles: {
+  titles: {
     layerShow: 'Show layer',
     layerHide: 'Hide layer',
     subLayerShow: 'Show sublayer',
@@ -197,7 +168,7 @@ class LayerTree extends Component {
   }
 
   renderInput(layer) {
-    const { classNameInput, buttonTitles } = this.props;
+    const { titles } = this.props;
     let tabIndex = 0;
 
     if (!layer.getChildren().length) {
@@ -207,21 +178,31 @@ class LayerTree extends Component {
 
     const inputType = layer.getRadioGroup() ? 'radio' : 'checkbox';
     return (
-      <Checkbox
+      // eslint-disable-next-line jsx-a11y/label-has-associated-control
+      <label
+        className={`rs-layer-tree-input rs-layer-tree-input-${inputType} rs-${inputType}`}
         tabIndex={tabIndex}
-        inputType={inputType}
-        checked={layer.getVisible()}
-        title={
-          layer.getVisible() ? buttonTitles.layerHide : buttonTitles.layerShow
-        }
-        className={`${classNameInput} ${classNameInput}-${inputType}`}
-        onClick={() => this.onInputClick(layer)}
-      />
+        title={layer.getVisible() ? titles.layerHide : titles.layerShow}
+        aria-label={layer.getVisible() ? titles.layerHide : titles.layerShow}
+        onKeyPress={e => {
+          if (e.which === 13) {
+            this.onInputClick(layer);
+          }
+        }}
+      >
+        <input
+          type={inputType}
+          tabIndex={-1}
+          checked={layer.getVisible()}
+          onChange={() => this.onInputClick(layer)}
+          onClick={() => this.onInputClick(layer)}
+        />
+        <span />
+      </label>
     );
   }
 
   renderArrow(layer) {
-    const { classNameArrow } = this.props;
     const { expandedLayerNames } = this.state;
 
     if (!layer.getChildren().length) {
@@ -230,8 +211,8 @@ class LayerTree extends Component {
 
     return (
       <div
-        className={`${classNameArrow} ${classNameArrow}${
-          !expandedLayerNames.includes(layer) ? '-collapsed' : '-expanded'
+        className={`rs-layer-tree-arrow rs-layer-tree-arrow-${
+          !expandedLayerNames.includes(layer) ? 'collapsed' : 'expanded'
         }`}
       />
     );
@@ -240,26 +221,29 @@ class LayerTree extends Component {
   // Render a button which expands/collapse the layer if there is children
   // or simulate a click on the input otherwise.
   renderToggleButton(layer) {
-    const { t, classNameToggle, buttonTitles } = this.props;
+    const { t, titles } = this.props;
     const { expandedLayerNames } = this.state;
-    const tabIndex = 0;
-
+    const onInputClick = () => {
+      this.onInputClick(layer, layer.getChildren().length);
+    };
+    const title = `${t(layer.getName())} ${
+      !expandedLayerNames.includes(layer)
+        ? titles.subLayerShow
+        : titles.subLayerHide
+    }`;
     return (
-      <Button
-        tabIndex={tabIndex}
-        title={`${t(layer.getName())} ${
-          !expandedLayerNames.includes(layer)
-            ? buttonTitles.subLayerShow
-            : buttonTitles.subLayerHide
-        }`}
-        className={classNameToggle}
-        onClick={() => {
-          this.onInputClick(layer, layer.getChildren().length);
-        }}
+      <div
+        role="button"
+        tabIndex={0}
+        className="rs-layer-tree-toggle"
+        title={title}
+        aria-label={title}
+        onClick={onInputClick}
+        onKeyPress={onInputClick}
       >
         <div>{t(layer.getName())}</div>
         {this.renderArrow(layer)}
-      </Button>
+      </div>
     );
   }
 
@@ -276,7 +260,6 @@ class LayerTree extends Component {
     const {
       renderItem,
       renderItemContent,
-      classNameItem,
       padding,
       getParentClassName,
     } = this.props;
@@ -293,8 +276,8 @@ class LayerTree extends Component {
     return (
       <div className={getParentClassName()} key={layer.getKey()}>
         <div
-          className={`${classNameItem} ${
-            layer.getVisible() ? 'tm-visible' : ''
+          className={`rs-layer-tree-item ${
+            layer.getVisible() ? 'rs-visible' : ''
           }`}
           style={{
             paddingLeft: `${padding * level}px`,

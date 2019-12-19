@@ -39,7 +39,7 @@ const renderTopicList = (topics, props) => {
   expect(tree).toMatchSnapshot();
 };
 
-const toggleItem = '.tm-topic-list-toggle';
+const toggleItem = '.rs-topic-list-toggle';
 
 describe('Topiclist', () => {
   describe('matches snapshots', () => {
@@ -57,13 +57,7 @@ describe('Topiclist', () => {
     });
 
     test('when classNames are used.', () => {
-      renderTopicList(topicData, {
-        className: 'mimi',
-        classNameItem: 'mama',
-        classNameInput: 'momo',
-        classNameToggle: 'mumu',
-        classNameArrow: 'meme',
-      });
+      renderTopicList(topicData, { className: 'mimi' });
     });
   });
 

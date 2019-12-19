@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ConfigReader from '../../ConfigReader';
 import LayerTree from '../LayerTree';
-import Checkbox from '../Checkbox';
-import Button from '../Button';
 
 const propTypes = {
   /**
@@ -35,26 +33,6 @@ const propTypes = {
   className: PropTypes.string,
 
   /**
-   * CSS class to apply on each item.
-   */
-  classNameItem: PropTypes.string,
-
-  /**
-   * CSS class to apply to the label element which contains the input.
-   */
-  classNameInput: PropTypes.string,
-
-  /**
-   * CSS class to apply to the toggle button which contains the title and the arrow.
-   */
-  classNameToggle: PropTypes.string,
-
-  /**
-   * CSS class to apply to the arrow.
-   */
-  classNameArrow: PropTypes.string,
-
-  /**
    * Padding left.
    */
   padding: PropTypes.number,
@@ -62,11 +40,7 @@ const propTypes = {
 
 const defaultProps = {
   propsToLayerTree: null,
-  className: 'tm-topic-list',
-  classNameItem: 'tm-topic-list-item',
-  classNameInput: undefined,
-  classNameToggle: 'tm-topic-list-toggle',
-  classNameArrow: 'tm-topic-list-arrow',
+  className: 'rs-topic-list',
   onTopicClick: () => {},
   padding: 30,
 };
@@ -87,29 +61,43 @@ class TopicList extends Component {
   }
 
   renderInput(topic) {
-    const { onTopicClick, classNameInput } = this.props;
+    const { onTopicClick } = this.props;
+    const onClick = () => {
+      this.setState({ expandedTopic: topic.id });
+      onTopicClick(topic);
+    };
 
     return (
-      <Checkbox
-        inputType="radio"
+      // eslint-disable-next-line jsx-a11y/label-has-associated-control
+      <label
+        aria-label="checkbox"
+        className="rs-check rs-radio"
         tabIndex={-1}
-        checked={topic.visible}
-        className={classNameInput}
-        onClick={() => {
-          this.setState({ expandedTopic: topic.id });
-          onTopicClick(topic);
+        onKeyPress={e => {
+          if (e.which === 13) {
+            onClick();
+          }
         }}
-      />
+        title="checkbox"
+      >
+        <input
+          type="radio"
+          tabIndex={-1}
+          checked={topic.visible}
+          onChange={onClick}
+          onClick={onClick}
+        />
+        <span />
+      </label>
     );
   }
 
   renderArrow(topic) {
-    const { classNameArrow } = this.props;
     const { expandedTopic } = this.state;
     return (
       <div
-        className={`${classNameArrow} ${classNameArrow}${
-          topic.id === expandedTopic ? '-expanded' : '-collapsed'
+        className={`rs--topic-list-arrow rs-topic-list-arrow-${
+          topic.id === expandedTopic ? 'expanded' : 'collapsed'
         }`}
       />
     );
@@ -148,34 +136,37 @@ class TopicList extends Component {
   // Render a button which expands/collapse the layer if there is children
   // or simulate a click on the input otherwise.
   renderToggleButton(topic) {
-    const { onTopicClick, classNameToggle } = this.props;
+    const { onTopicClick } = this.props;
+    const onClick = () => {
+      if (topic.visible) {
+        this.onTopicToggle(topic);
+      } else {
+        this.setState({ expandedTopic: topic.id });
+        onTopicClick(topic);
+      }
+    };
 
     return (
-      <Button
+      <div
+        role="button"
         tabIndex={-1}
-        className={classNameToggle}
-        onClick={() => {
-          if (topic.visible) {
-            this.onTopicToggle(topic);
-          } else {
-            this.setState({ expandedTopic: topic.id });
-            onTopicClick(topic);
-          }
-        }}
+        className="rs-topic-list-toggle"
+        onClick={onClick}
+        onKeyPress={onClick}
       >
         <div>{topic.name}</div>
         {topic.visible ? this.renderArrow(topic) : null}
-      </Button>
+      </div>
     );
   }
 
   renderTopic(topic, index) {
-    const { classNameItem, padding, propsToLayerTree } = this.props;
+    const { padding, propsToLayerTree } = this.props;
     const { expandedTopic } = this.state;
 
     return (
       <div key={topic.id}>
-        <div className={classNameItem}>
+        <div className="rs-topic-list-item">
           {this.renderBarrierFreeDiv(topic)}
           {this.renderInput(topic)}
           {this.renderToggleButton(topic)}
