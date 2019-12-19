@@ -97,6 +97,10 @@ export default class Layer extends Observable {
    */
   set(name, value) {
     this.properties[name] = value;
+    this.dispatchEvent({
+      type: `change:${name}`,
+      target: this,
+    });
   }
 
   /**
@@ -145,6 +149,17 @@ export default class Layer extends Observable {
    */
   getRadioGroup() {
     return this.radioGroup;
+  }
+
+  /**
+   * Get the Layer's Copyright Statment.
+   * @returns {string} Copyright
+   */
+  setCopyright(copyright) {
+    this.copyright = copyright;
+    this.dispatchEvent({
+      type: 'change:copyright',
+    });
   }
 
   /**
