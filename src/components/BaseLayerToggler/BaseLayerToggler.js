@@ -58,6 +58,16 @@ const defaultProps = {
 };
 
 class BaseLayerToggler extends Component {
+  static isDifferentLayers(prevLayers, layers) {
+    if (prevLayers && layers) {
+      return (
+        JSON.stringify(prevLayers.map(l => l.getKey())) !==
+        JSON.stringify(layers.map(l => l.getKey()))
+      );
+    }
+    return false;
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -102,14 +112,22 @@ class BaseLayerToggler extends Component {
       this.toggle(prevState.layerVisible);
     }
 
-    if (this.map && idx !== prevState.idx) {
+    if (
+      this.map &&
+      (idx !== prevState.idx ||
+        BaseLayerToggler.isDifferentLayers(prevState.layers, layers))
+    ) {
       this.map.getLayers().clear();
 
       if (!layers.length) {
         return;
       }
-      const children = layers[idx].getChildren();
-      const childLayers = children.length ? children : [layers[idx]];
+      let children = [];
+      let childLayers = [];
+      if (idx !== null) {
+        children = layers[idx].getChildren();
+        childLayers = children.length ? children : [layers[idx]];
+      }
 
       childLayers.forEach(layer => {
         if (layer instanceof MapboxLayer) {
@@ -129,7 +147,10 @@ class BaseLayerToggler extends Component {
   }
 
   componentWillUnmount() {
+    const { layerService } = this.props;
     unByKey([this.postRenderKey, this.moveEndKey]);
+    layerService.un('change:visible', e => this.updateState(e));
+    layerService.un('change:layers', () => this.resetState());
   }
 
   updateLayerService() {
@@ -138,13 +159,18 @@ class BaseLayerToggler extends Component {
     if (!layerService) {
       return;
     }
-
+    layerService.un('change:visible', e => this.updateState(e));
+    layerService.un('change:layers', () => this.resetState());
     this.updateState();
-    layerService.on('change:visible', () => this.updateState());
-    layerService.on('change:layers', () => this.updateState());
+    layerService.on('change:visible', e => this.updateState(e));
+    layerService.on('change:layers', () => this.resetState());
   }
 
-  updateState() {
+  updateState(evtLayer) {
+    if (evtLayer && !evtLayer.getIsBaseLayer()) {
+      return;
+    }
+
     const { layerService } = this.props;
     const layers = layerService.getBaseLayers() || [];
     let idx = layers.findIndex(l => l.getVisible());
@@ -152,10 +178,27 @@ class BaseLayerToggler extends Component {
       idx = 0;
       layers[idx].setVisible(true);
     }
+
     this.setState({
       layers,
       idx,
       layerVisible: layers.length > 1 ? layers[idx] : null,
+    });
+  }
+
+  resetState() {
+    const { layerService } = this.props;
+    const { layerVisible } = this.state;
+
+    if (!layerVisible) {
+      return;
+    }
+
+    const layers = layerService.getBaseLayers() || [];
+
+    this.setState({
+      layers,
+      idx: layers.length > 1 ? 1 : null,
     });
   }
 
