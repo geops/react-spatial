@@ -107,7 +107,10 @@ class BaseLayerToggler extends Component {
 
     if (layerVisible && !prevState.layerVisible) {
       this.next();
-    } else if (layerVisible !== prevState.layerVisible) {
+    } else if (
+      layerVisible !== prevState.layerVisible &&
+      layers.includes(prevState.layerVisible)
+    ) {
       // In case the visibility of the background Layer is change from another component.
       this.toggle(prevState.layerVisible);
     }
@@ -195,10 +198,20 @@ class BaseLayerToggler extends Component {
     }
 
     const layers = layerService.getBaseLayers() || [];
+    const idx = layers.indexOf(layerVisible);
+    let newIdx;
+
+    if (idx === -1) {
+      newIdx = 1;
+    } else if (idx === layers.length - 1) {
+      newIdx = 0;
+    } else {
+      newIdx = idx + 1;
+    }
 
     this.setState({
       layers,
-      idx: layers.length > 1 ? 1 : null,
+      idx: layers.length > 1 ? newIdx : null,
     });
   }
 
