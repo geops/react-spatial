@@ -156,6 +156,15 @@ class BaseLayerToggler extends Component {
     layerService.un('change:layers', () => this.resetState());
   }
 
+  setNextVisible(nextLayer) {
+    const { layers } = this.state;
+    // Unset visibility to all layers before showing the next layer.
+    layers.forEach(
+      l => l.getVisible() && l.setVisible(false, true, true, true),
+    );
+    nextLayer.setVisible(true);
+  }
+
   updateLayerService() {
     const { layerService } = this.props;
 
@@ -175,16 +184,18 @@ class BaseLayerToggler extends Component {
     }
 
     const { layerService } = this.props;
+    const { idx } = this.state;
+
     const layers = layerService.getBaseLayers() || [];
-    let idx = layers.findIndex(l => l.getVisible());
-    if (idx === -1 && layers.length > 1) {
-      idx = 0;
+    let newIdx = idx;
+    if (newIdx === -1 && layers.length > 1) {
+      newIdx = 0;
       layers[idx].setVisible(true);
     }
 
     this.setState({
       layers,
-      idx,
+      idx: newIdx,
       layerVisible: layers.length > 1 ? layers[idx] : null,
     });
   }
@@ -374,8 +385,8 @@ class BaseLayerToggler extends Component {
           className="rs-base-layer-toggle-button"
           role="button"
           title={titles.button}
-          onClick={() => nextLayer.setVisible(true)}
-          onKeyPress={e => e.which === 13 && nextLayer.setVisible(true)}
+          onClick={() => this.setNextVisible(nextLayer)}
+          onKeyPress={e => e.which === 13 && this.setNextVisible(nextLayer)}
           tabIndex="0"
         >
           <img
