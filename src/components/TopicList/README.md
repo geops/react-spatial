@@ -20,7 +20,7 @@ class TopicListExample extends React.Component {
     this.state = {
       topics: topicData,
       layerService: null,
-    }
+    };
   }
 
   componentDidMount() {
@@ -30,7 +30,7 @@ class TopicListExample extends React.Component {
 
     this.setState({
       layerService: new LayerService(layers),
-    })
+    });
   }
 
   onTopicClick(topic) {
@@ -38,12 +38,13 @@ class TopicListExample extends React.Component {
     layerService.layers.forEach(layer => layer.setVisible(false));
 
     topics.map(t => {
-      t.visible = (t.id === topic.id);
+      t.visible = t.id === topic.id;
       t.expanded = true;
       return t;
     });
 
-    const layers = ConfigReader.readConfig(ConfigReader.getVisibleTopic(topics).children,
+    const layers = ConfigReader.readConfig(
+      ConfigReader.getVisibleTopic(topics).children,
     );
 
     this.setState({
@@ -52,16 +53,16 @@ class TopicListExample extends React.Component {
   }
 
   render() {
-    const {layerService, topics} = this.state;
+    const { layerService, topics } = this.state;
 
     const propsToLayerTree = {
       layerService,
     };
 
     return (
-      <div className="tm-topic-list-example">
+      <div className="rs-topic-list-example">
         <TopicList
-          onTopicClick={(topic) => this.onTopicClick(topic)}
+          onTopicClick={topic => this.onTopicClick(topic)}
           propsToLayerTree={propsToLayerTree}
           layerService={layerService}
           topics={topics}

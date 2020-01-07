@@ -84,7 +84,7 @@ const propTypes = {
 const defaultProps = {
   animationOptions: undefined,
   center: [0, 0],
-  className: 'tm-map',
+  className: 'rs-map',
   extent: undefined,
   fitOptions: {
     duration: 1000,

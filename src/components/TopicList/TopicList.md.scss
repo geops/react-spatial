@@ -1,4 +1,4 @@
-.tm-topic-list-example {
+.rs-topic-list-example {
   width: 100%;
   height: 400px;
   background: white;
@@ -6,13 +6,13 @@
   overflow: hidden;
   border: 1px solid lightgray;
 
-  .tm-map {
+  .rs-map {
     width: auto;
     height: auto;
     flex-grow: 1;
   }
 
-  .tm-topic-list-arrow {
+  .rs-topic-list-arrow {
     border: solid black;
     border-width: 0 1px 1px 0;
     display: inline-block;
@@ -22,19 +22,19 @@
     height: 5px;
   }
 
-  .tm-topic-list-arrow-collapsed {
+  .rs-topic-list-arrow-collapsed {
     transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
     margin-top: -3px;
   }
 
-  .tm-topic-list-arrow-expanded {
+  .rs-topic-list-arrow-expanded {
     transform: rotate(-135deg);
     -webkit-transform: rotate(-135deg);
     margin-top: 3px;
   }
 
-  .tm-topic-list {
+  .rs-topic-list {
     width: 300px;
     padding: 10px;
     border-right: 1px solid lightgray;
@@ -42,7 +42,7 @@
     flex-shrink: 0;
   }
 
-  .tm-topic-list-item {
+  .rs-topic-list-item {
     display: flex;
     align-items: center;
     padding: 10px;
@@ -59,7 +59,7 @@
     }
 
     /* CSS for the toggle div */
-    .tm-topic-list-toggle {
+    .rs-topic-list-toggle {
       cursor: pointer;
       width: auto;
       height: auto;
@@ -73,12 +73,12 @@
       }
     }
 
-    .tm-topic-list-input-radio span {
+    .rs-topic-list-input-radio span {
       border-radius: 50%;
     }
 
     /* Style the checkmark/indicator */
-    .tm-topic-list-input-checkbox span::after {
+    .rs-topic-list-input-checkbox span::after {
       left: 5px;
       top: 1px;
       width: 5px;
@@ -91,7 +91,7 @@
     }
 
     /* Style the  (dot/circle) */
-    .tm-topic-list-input-radio span::after {
+    .rs-topic-list-input-radio span::after {
       top: 2px;
       left: 2px;
       width: 12px;

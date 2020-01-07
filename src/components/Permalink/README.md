@@ -17,7 +17,7 @@ const map = new OLMap({ controls: [] });
 const populationLayer = layerService.getLayer('USA Population Density');
 const baseLayers = layerService.getBaseLayers();
 
-<div className="tm-permalink-example">
+<div className="rs-permalink-example">
   <BasicMap map={map} layers={layers} />
   <Permalink
     map={map}
