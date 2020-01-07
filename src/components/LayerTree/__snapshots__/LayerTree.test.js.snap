@@ -30,6 +30,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <span />
       </label>
       <div
+        aria-expanded={true}
         aria-label="Vector sample layers Hide sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
@@ -72,6 +73,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <span />
         </label>
         <div
+          aria-expanded={false}
           aria-label="Points Samples Show sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
@@ -112,6 +114,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <span />
         </label>
         <div
+          aria-expanded={false}
           aria-label="Lines Samples Show sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
@@ -152,6 +155,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <span />
         </label>
         <div
+          aria-expanded={false}
           aria-label="Polygons Samples Show sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
@@ -193,6 +197,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <span />
       </label>
       <div
+        aria-expanded={true}
         aria-label="Other layers Hide sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
@@ -235,6 +240,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <span />
         </label>
         <div
+          aria-expanded={false}
           aria-label="Countries Borders Show sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
@@ -275,6 +281,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <span />
         </label>
         <div
+          aria-expanded={false}
           aria-label="USA Population Density Show sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
@@ -315,6 +322,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <span />
         </label>
         <div
+          aria-expanded={false}
           aria-label="Switzerland Show sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
@@ -356,6 +364,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <span />
       </label>
       <div
+        aria-expanded={false}
         aria-label="OpenTopoMap Show sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
@@ -396,6 +405,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <span />
       </label>
       <div
+        aria-expanded={false}
         aria-label="OSM Baselayer Hot Show sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
@@ -436,6 +446,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <span />
       </label>
       <div
+        aria-expanded={false}
         aria-label="OSM Baselayer Show sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
@@ -483,6 +494,7 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
         <span />
       </label>
       <div
+        aria-expanded={false}
         aria-label="OpenTopoMap Show sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
@@ -523,6 +535,7 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
         <span />
       </label>
       <div
+        aria-expanded={false}
         aria-label="OSM Baselayer Hot Show sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
@@ -563,6 +576,7 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
         <span />
       </label>
       <div
+        aria-expanded={false}
         aria-label="OSM Baselayer Show sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
@@ -610,6 +624,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <span />
       </label>
       <div
+        aria-expanded={true}
         aria-label="Vector sample layers Hide sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
@@ -652,6 +667,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <span />
         </label>
         <div
+          aria-expanded={false}
           aria-label="Points Samples Show sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
@@ -692,6 +708,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <span />
         </label>
         <div
+          aria-expanded={false}
           aria-label="Lines Samples Show sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
@@ -732,6 +749,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <span />
         </label>
         <div
+          aria-expanded={false}
           aria-label="Polygons Samples Show sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
@@ -773,6 +791,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <span />
       </label>
       <div
+        aria-expanded={true}
         aria-label="Other layers Hide sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
@@ -815,6 +834,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <span />
         </label>
         <div
+          aria-expanded={false}
           aria-label="Countries Borders Show sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
@@ -855,6 +875,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <span />
         </label>
         <div
+          aria-expanded={false}
           aria-label="USA Population Density Show sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
@@ -895,6 +916,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <span />
         </label>
         <div
+          aria-expanded={false}
           aria-label="Switzerland Show sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
@@ -936,6 +958,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <span />
       </label>
       <div
+        aria-expanded={false}
         aria-label="OpenTopoMap Show sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
@@ -976,6 +999,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <span />
       </label>
       <div
+        aria-expanded={false}
         aria-label="OSM Baselayer Hot Show sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
@@ -1016,6 +1040,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <span />
       </label>
       <div
+        aria-expanded={false}
         aria-label="OSM Baselayer Show sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
