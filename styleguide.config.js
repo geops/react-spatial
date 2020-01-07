@@ -29,7 +29,7 @@ module.exports = {
       content: 'README.md',
     },
     {
-      name: 'Spatial',
+      name: 'Components',
       description:
         'A collection of react components for spatial web development.',
       components: [
