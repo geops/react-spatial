@@ -237,6 +237,7 @@ class LayerTree extends Component {
         tabIndex={0}
         className="rs-layer-tree-toggle"
         title={title}
+        aria-expanded={expandedLayerNames.includes(layer)}
         aria-label={title}
         onClick={onInputClick}
         onKeyPress={onInputClick}
