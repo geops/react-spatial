@@ -119,4 +119,35 @@ describe('Copyright', () => {
     expect(spyUn).toHaveBeenCalledTimes(1);
     expect(spyUn).toHaveBeenCalledWith('change:visible', cb);
   });
+
+  test('displays only when copyright is defined', () => {
+    const data = [
+      {
+        name: 'OSM Baselayer',
+        visible: true,
+        copyright: 'OSM Contributors',
+        data: {
+          type: 'xyz',
+          url: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        },
+      },
+      {
+        name: 'OSM Baselayer Hot',
+        visible: true,
+        data: {
+          type: 'xyz',
+          url: 'https://c.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+        },
+      },
+    ];
+
+    const layService = new LayerService(ConfigReader.readConfig(data));
+    const component = shallow(
+      <Copyright
+        layerService={layService}
+        format={copyrights => `Number of copyrights: ${copyrights.length}`}
+      />,
+    );
+    expect(component.text()).toBe('Number of copyrights: 1');
+  });
 });
