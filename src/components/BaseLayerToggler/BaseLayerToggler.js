@@ -79,6 +79,9 @@ class BaseLayerToggler extends Component {
     };
     this.map = null;
     this.ref = React.createRef();
+
+    this.updateState = this.updateState.bind(this);
+    this.resetState = this.resetState.bind(this);
   }
 
   componentDidMount() {
@@ -127,7 +130,7 @@ class BaseLayerToggler extends Component {
       }
       let children = [];
       let childLayers = [];
-      if (idx !== null) {
+      if (idx !== null && idx <= layers.length) {
         children = layers[idx].getChildren();
         childLayers = children.length ? children : [layers[idx]];
       }
@@ -152,8 +155,8 @@ class BaseLayerToggler extends Component {
   componentWillUnmount() {
     const { layerService } = this.props;
     unByKey([this.postRenderKey, this.moveEndKey]);
-    layerService.un('change:visible', e => this.updateState(e));
-    layerService.un('change:layers', () => this.resetState());
+    layerService.un('change:visible', this.updateState);
+    layerService.un('change:layers', this.resetState);
   }
 
   setNextVisible(nextLayer) {
@@ -171,11 +174,11 @@ class BaseLayerToggler extends Component {
     if (!layerService) {
       return;
     }
-    layerService.un('change:visible', e => this.updateState(e));
-    layerService.un('change:layers', () => this.resetState());
+    layerService.un('change:visible', this.updateState);
+    layerService.un('change:layers', this.resetState);
     this.updateState();
-    layerService.on('change:visible', e => this.updateState(e));
-    layerService.on('change:layers', () => this.resetState());
+    layerService.on('change:visible', this.updateState);
+    layerService.on('change:layers', this.resetState);
   }
 
   updateState(evtLayer) {
@@ -196,7 +199,7 @@ class BaseLayerToggler extends Component {
     this.setState({
       layers,
       idx: newIdx,
-      layerVisible: layers.length > 1 ? layers[idx] : null,
+      layerVisible: layers.length > 1 ? layers[newIdx] : null,
     });
   }
 
