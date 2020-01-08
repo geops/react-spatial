@@ -19,7 +19,7 @@ describe('Permalink', () => {
     window.history.pushState({}, undefined, '/');
   });
 
-  test('shoud initialize x, y & z with history.', () => {
+  test('should initialize x, y & z with history.', () => {
     const history = {
       replace: jest.fn(v => v),
     };
@@ -46,7 +46,7 @@ describe('Permalink', () => {
     expect(history.replace.mock.results[0].value.search).toEqual(search);
   });
 
-  test('shoud initialize x, y & z Permalink without history.', () => {
+  test('should initialize x, y & z Permalink without history.', () => {
     const params = {
       x: 0,
       y: 0,
@@ -69,7 +69,7 @@ describe('Permalink', () => {
     expect(window.location.search).toEqual(search);
   });
 
-  test('shoud initialize Permalink with layerService.', () => {
+  test('should initialize Permalink with layerService.', () => {
     expect(window.location.search).toEqual('');
     const layers = ConfigReader.readConfig(data);
     const layerService = new LayerService(layers);
@@ -80,7 +80,26 @@ describe('Permalink', () => {
     expect(window.location.search).toEqual(search);
   });
 
-  test('shoud initialize Permalink with map.', () => {
+  test('should initialize Permalink with isLayerHidden.', () => {
+    expect(window.location.search).toEqual('');
+    const layers = ConfigReader.readConfig(data);
+    const layerService = new LayerService(layers);
+    mount(
+      <Permalink
+        layerService={layerService}
+        isLayerHidden={l =>
+          l.get('hideInLegend') ||
+          layerService.getParents(l).some(pl => pl.get('hideInLegend'))
+        }
+      />,
+    );
+    const search =
+      '?baselayers=osm.baselayer,osm.baselayer.hot,open.topo.map&layers=usa.population.density';
+
+    expect(window.location.search).toEqual(search);
+  });
+
+  test('should initialize Permalink with map.', () => {
     expect(window.location.search).toEqual('');
     const olMap = new OLMap({
       controls: [],
@@ -96,7 +115,7 @@ describe('Permalink', () => {
     expect(window.location.search).toEqual(search);
   });
 
-  test('shoud limit 2 decimals by default for x, y.', () => {
+  test('should limit 2 decimals by default for x, y.', () => {
     expect(window.location.search).toEqual('');
     const olMap = new OLMap({
       controls: [],
@@ -112,7 +131,7 @@ describe('Permalink', () => {
     expect(window.location.search).toEqual(search);
   });
 
-  test('shoud round values x & y ".00" for readability.', () => {
+  test('should round values x & y ".00" for readability.', () => {
     expect(window.location.search).toEqual('');
     const olMap = new OLMap({
       controls: [],
@@ -128,7 +147,7 @@ describe('Permalink', () => {
     expect(window.location.search).toEqual(search);
   });
 
-  test('shoud limit 4 decimals with props "coordinateDecimals".', () => {
+  test('should limit 4 decimals with props "coordinateDecimals".', () => {
     expect(window.location.search).toEqual('');
     const olMap = new OLMap({
       controls: [],
@@ -144,7 +163,7 @@ describe('Permalink', () => {
     expect(window.location.search).toEqual(search);
   });
 
-  test('shoud react on layerService change.', () => {
+  test('should react on layerService change.', () => {
     expect(window.location.search).toEqual('');
     const layers = ConfigReader.readConfig(data);
     const layerService = new LayerService(layers);
@@ -158,7 +177,7 @@ describe('Permalink', () => {
     expect(window.location.search).toEqual(search);
   });
 
-  test('shoud react on layer visiblity change.', () => {
+  test('should react on layer visiblity change.', () => {
     expect(window.location.search).toEqual('');
     const layers = ConfigReader.readConfig(data);
     const layerService = new LayerService(layers);
@@ -172,7 +191,7 @@ describe('Permalink', () => {
     ).toBe(true);
   });
 
-  test('shoud react on base layer visiblity change.', () => {
+  test('should react on base layer visiblity change.', () => {
     expect(window.location.search).toEqual('');
     const layers = ConfigReader.readConfig(data);
     const layerService = new LayerService(layers);

@@ -77,7 +77,9 @@ export default [
         name: 'Switzerland',
         key: 'switzerland.samples',
         visible: true,
-        hideInLegend: true,
+        properties: {
+          hideInLegend: true,
+        },
         data: {
           style: new Style({
             image: new Circle({
@@ -104,6 +106,9 @@ export default [
     name: 'Vector sample layers',
     key: 'vector.sample.layers',
     visible: true,
+    properties: {
+      hideInLegend: true,
+    },
     radioGroup: 'radio',
     children: [
       {
