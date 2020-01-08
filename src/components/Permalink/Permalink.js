@@ -35,6 +35,15 @@ const propTypes = {
    * Maximum number of decimals allowed for coordinates.
    */
   coordinateDecimals: PropTypes.number,
+
+  /**
+   * Determine if the layer is hidden in the permalink or not.
+   *
+   * @param {object} item The item to hide or not.
+   *
+   * @return {bool} true if the item is not displayed in the permalink
+   */
+  isLayerHidden: PropTypes.func,
 };
 
 const defaultProps = {
@@ -43,6 +52,7 @@ const defaultProps = {
   map: null,
   params: {},
   coordinateDecimals: 2,
+  isLayerHidden: () => false,
 };
 
 /**
@@ -57,7 +67,7 @@ class Permalink extends Component {
   }
 
   componentDidMount() {
-    const { map, layerService } = this.props;
+    const { map, layerService, isLayerHidden } = this.props;
     if (map) {
       this.moveEndRef = map.on('moveend', () => {
         this.onMapMoved();
@@ -69,12 +79,17 @@ class Permalink extends Component {
 
       // set layer visibility based on 'layers' parameter.
       const urlParams = qs.parse(window.location.search);
-      const visibleLayers = (urlParams.layers || '').split(',');
-      layerService.getLayersAsFlatArray().forEach(l => {
-        if (visibleLayers.includes(l.getKey())) {
-          l.setVisible(true);
-        }
-      });
+
+      if (urlParams.layers) {
+        const visibleLayers = urlParams.layers.split(',');
+        layerService.getLayersAsFlatArray().forEach(l => {
+          if (visibleLayers.includes(l.getKey())) {
+            l.setVisible(true);
+          } else if (!isLayerHidden(l) && !l.hasVisibleChildren()) {
+            l.setVisible(false);
+          }
+        });
+      }
 
       // Set baser layer visibility based on 'baseLayers' parameter.
       const visibleBaseLayers = (urlParams.baselayers || '').split(',');
@@ -140,7 +155,7 @@ class Permalink extends Component {
   }
 
   updateLayers() {
-    const { layerService } = this.props;
+    const { layerService, isLayerHidden } = this.props;
     const baseLayers = layerService.getBaseLayers();
     const idx = baseLayers.findIndex(l => l.getVisible());
     if (idx !== -1) {
@@ -151,9 +166,14 @@ class Permalink extends Component {
     this.setState({
       layers: layerService
         .getLayersAsFlatArray()
-        .filter(
-          l => !l.getIsBaseLayer() && l.getVisible() && !l.hasVisibleChildren(),
-        )
+        .filter(l => {
+          return (
+            !l.getIsBaseLayer() &&
+            l.getVisible() &&
+            !l.hasVisibleChildren() &&
+            !isLayerHidden(l)
+          );
+        })
         .map(l => l.getKey())
         .join(),
       baselayers:

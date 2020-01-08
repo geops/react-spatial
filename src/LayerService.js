@@ -44,6 +44,22 @@ export default class LayerService {
     );
   }
 
+  getParents(child) {
+    let layer = child;
+    const parents = [];
+
+    let parentLayer;
+    do {
+      parentLayer = this.getParent(layer);
+      if (parentLayer) {
+        parents.push(parentLayer);
+        layer = parentLayer;
+      }
+    } while (parentLayer);
+
+    return parents;
+  }
+
   getRadioGroupLayers(radioGroupName) {
     if (radioGroupName) {
       return this.getLayersAsFlatArray().filter(

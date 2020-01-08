@@ -26,6 +26,7 @@ const baseLayers = layerService.getBaseLayers();
     params={{
       mode: 'custom',
     }}
+    isLayerHidden={l => l.get('hideInLegend') || layerService.getParents(l).some(pl => pl.get('hideInLegend'))}
   />
   <Button
     onClick={() => {
