@@ -130,7 +130,7 @@ class BaseLayerToggler extends Component {
       }
       let children = [];
       let childLayers = [];
-      if (idx !== null && idx <= layers.length) {
+      if (idx !== null && idx < layers.length) {
         children = layers[idx].getChildren();
         childLayers = children.length ? children : [layers[idx]];
       }
