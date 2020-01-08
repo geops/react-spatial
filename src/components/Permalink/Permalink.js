@@ -85,7 +85,11 @@ class Permalink extends Component {
         layerService.getLayersAsFlatArray().forEach(l => {
           if (visibleLayers.includes(l.getKey())) {
             l.setVisible(true);
-          } else if (!isLayerHidden(l) && !l.hasVisibleChildren()) {
+          } else if (
+            !l.getIsBaseLayer() &&
+            !l.hasVisibleChildren() &&
+            !isLayerHidden(l)
+          ) {
             l.setVisible(false);
           }
         });
