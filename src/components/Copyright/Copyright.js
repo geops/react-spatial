@@ -36,7 +36,7 @@ function Copyright({ layerService, format, ...other }) {
           .getLayersAsFlatArray()
           .filter(l => l.getVisible())
           .map(l => l.getCopyright())
-          .filter(cr => cr !== undefined),
+          .filter(cr => cr),
       ),
     ),
   );
