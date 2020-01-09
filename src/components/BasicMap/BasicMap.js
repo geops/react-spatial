@@ -94,7 +94,7 @@ const defaultProps = {
   interactions: null,
   layers: [],
   map: null,
-  onFeaturesClick: () => {},
+  onFeaturesClick: undefined,
   onFeaturesHover: undefined,
   onMapMoved: () => {},
   resolution: undefined,
@@ -177,15 +177,17 @@ class BasicMap extends Component {
       this.setLayers(layers);
     }
 
-    this.singleClickRef = this.map.on('singleclick', evt => {
-      const features = evt.map.getFeaturesAtPixel(evt.pixel);
-      onFeaturesClick(features || []);
-    });
+    if (onFeaturesClick) {
+      this.singleClickRef = this.map.on('singleclick', evt => {
+        const features = evt.map.getFeaturesAtPixel(evt.pixel);
+        onFeaturesClick(features || [], evt);
+      });
+    }
 
     if (onFeaturesHover) {
       this.pointerMoveRef = this.map.on('pointermove', evt => {
         const features = this.map.getFeaturesAtPixel(evt.pixel);
-        onFeaturesHover(features || []);
+        onFeaturesHover(features || [], evt);
       });
     }
   }
