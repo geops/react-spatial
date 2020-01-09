@@ -1,7 +1,7 @@
 {
   "name": "react-spatial",
   "description": "Components to build React map apps.",
-  "version": "0.1.1-beta.17",
+  "version": "0.1.1-beta.18",
   "license": "MIT",
   "dependencies": {
     "query-string": "^6.4.2",
