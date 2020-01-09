@@ -18,7 +18,9 @@ const getCopyrightFromSources = mbMap => {
       );
     }
   });
-  return [...new Set(copyrights.filter(copyright => !!copyright))].join(', ');
+  return Array.from(new Set(copyrights.filter(copyright => !!copyright))).join(
+    ', ',
+  );
 };
 
 /**
