@@ -7,7 +7,6 @@ import TileLayer from 'ol/layer/Tile';
 import { containsExtent } from 'ol/extent';
 import LayerService from '../../LayerService';
 import BasicMap from '../BasicMap';
-import MapboxLayer from '../../layers/MapboxLayer';
 
 const propTypes = {
   /**
@@ -136,11 +135,18 @@ class BaseLayerToggler extends Component {
       }
 
       childLayers.forEach(layer => {
-        if (layer instanceof MapboxLayer) {
-          const ml = layer.clone();
-          ml.init(this.map); // Including addLayer
-          ml.setVisible(true);
-        } else {
+        if (layer.clone) {
+          let ml;
+          // MapboxStyleLayer
+          if (layer.mapboxLayer) {
+            ml = layer.mapboxLayer.clone();
+            ml.init(this.map); // Including addLayer
+            ml.setVisible(true);
+          }
+          const cloned = layer.clone(ml);
+          cloned.init(this.map); // Including addLayer
+          cloned.setVisible(true);
+        } else if (layer.olLayer && layer.olLayer instanceof TileLayer) {
           this.map.addLayer(
             new TileLayer({
               source: layer.olLayer.getSource(),
