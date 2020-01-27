@@ -194,7 +194,6 @@ class LayerTree extends Component {
           type={inputType}
           tabIndex={-1}
           checked={layer.getVisible()}
-          onChange={() => this.onInputClick(layer)}
           onClick={() => this.onInputClick(layer)}
         />
         <span />
