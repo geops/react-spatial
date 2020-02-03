@@ -11,6 +11,11 @@ const propTypes = {
   map: PropTypes.instanceOf(OLMap).isRequired,
 
   /**
+   * The zoom delta applied on each click.
+   */
+  delta: PropTypes.number,
+
+  /**
    * Titles HTML attribtues for button.
    */
   titles: PropTypes.shape({
@@ -42,6 +47,7 @@ const defaultProps = {
   zoomInChildren: <FaPlus focusable={false} />,
   zoomOutChildren: <FaMinus focusable={false} />,
   zoomSlider: false,
+  delta: 1,
 };
 
 const updateZoom = (map, zoomAction) => {
@@ -62,13 +68,14 @@ function Zoom({
   zoomInChildren,
   zoomOutChildren,
   zoomSlider,
+  delta,
   ...other
 }) {
   const ref = useRef();
   const zoomIn = useCallback(
     evt => {
       if (!evt.which || evt.which === 13) {
-        updateZoom(map, 1);
+        updateZoom(map, delta);
       }
     },
     [map],
@@ -77,7 +84,7 @@ function Zoom({
   const zoomOut = useCallback(
     evt => {
       if (!evt.which || evt.which === 13) {
-        updateZoom(map, -1);
+        updateZoom(map, -delta);
       }
     },
     [map],
