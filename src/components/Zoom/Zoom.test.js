@@ -47,6 +47,17 @@ describe('Zoom', () => {
       expect(map.getView().getZoom()).toBe(6);
     });
 
+    test(`should zoom in on ${evt[0]} (delta: 0.3).`, () => {
+      const map = new OLMap({ view: new OLView({ zoom: 5 }) });
+      const zooms = shallow(<Zoom map={map} delta={0.3} />);
+      zooms
+        .find('.rs-zoom-in')
+        .first()
+        .simulate(...evt);
+
+      expect(map.getView().getZoom()).toBe(5.3);
+    });
+
     test(`should zoom out on ${evt[0]}.`, () => {
       const map = new OLMap({ view: new OLView({ zoom: 5 }) });
       const zooms = shallow(<Zoom map={map} />);
@@ -56,6 +67,17 @@ describe('Zoom', () => {
         .simulate(...evt);
 
       expect(map.getView().getZoom()).toBe(4);
+    });
+
+    test(`should zoom out on ${evt[0]} (delta: 0.3).`, () => {
+      const map = new OLMap({ view: new OLView({ zoom: 5 }) });
+      const zooms = shallow(<Zoom map={map} delta={0.3} />);
+      zooms
+        .find('.rs-zoom-out')
+        .first()
+        .simulate(...evt);
+
+      expect(map.getView().getZoom()).toBe(4.7);
     });
   });
 
