@@ -10,6 +10,8 @@ import Interaction from 'ol/interaction/Interaction';
 import Layer from '../../layers/Layer';
 import ResizeHandler from '../ResizeHandler';
 
+export const MapContext = React.createContext();
+
 const propTypes = {
   /** Map animation options */
   animationOptions: PropTypes.shape({
@@ -20,6 +22,11 @@ const propTypes = {
 
   /** Center of the ol.View. */
   center: PropTypes.arrayOf(PropTypes.number),
+
+  /**
+   * Children components of the map.
+   */
+  children: PropTypes.node,
 
   /** Class name of the map container */
   className: PropTypes.string,
@@ -84,6 +91,7 @@ const propTypes = {
 const defaultProps = {
   animationOptions: undefined,
   center: [0, 0],
+  children: null,
   className: 'rs-map',
   extent: undefined,
   fitOptions: {
@@ -288,7 +296,7 @@ class BasicMap extends Component {
   }
 
   render() {
-    const { className, tabIndex, ariaLabel } = this.props;
+    const { children, className, tabIndex, ariaLabel } = this.props;
     return (
       <div
         className={className}
@@ -297,6 +305,7 @@ class BasicMap extends Component {
         aria-label={ariaLabel}
         tabIndex={tabIndex}
       >
+        <MapContext.Provider value={this.map}>{children}</MapContext.Provider>
         <ResizeHandler
           maxHeightBrkpts={null}
           maxWidthBrkpts={null}

@@ -1,4 +1,8 @@
 .rs-geolocation {
+  top: 10px;
+  right: 10px;
+  position: absolute;
+  z-index: 1;
   cursor: pointer;
   height: $btn-size-base;
   width: $btn-size-base;

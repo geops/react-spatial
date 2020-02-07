@@ -3,19 +3,12 @@
 This demonstrates the use of BasicMap.
 
 ```jsx
+import OSM from "ol/source/OSM";
 import React from 'react';
 import BasicMap from 'react-spatial/components/BasicMap';
-import ConfigReader from 'react-spatial/ConfigReader';
+import TileLayer from 'react-spatial/components/layer/Tile';
 
-
-const layers = ConfigReader.readConfig([{
-  name: 'OSM Baselayer',
-  visible: true,
-  data: {
-    type: 'xyz',
-    url: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  },
-}]);
-
-<BasicMap layers={layers} />;
+<BasicMap>
+  <TileLayer source={new OSM()} />
+</BasicMap>;
 ```

@@ -3,23 +3,14 @@
 This demonstrates the use of Geolocation.
 
 ```jsx
+import OSM from "ol/source/OSM";
 import React from 'react';
-import OLMap from 'ol/Map';
-import Geolocation from 'react-spatial/components/Geolocation';
 import BasicMap from 'react-spatial/components/BasicMap';
-import ConfigReader from 'react-spatial/ConfigReader';
+import Geolocation from 'react-spatial/components/Geolocation';
+import TileLayer from 'react-spatial/components/layer/Tile';
 
-const map = new OLMap({ controls: [] });
-const layers = ConfigReader.readConfig(treeData);
-
-function GeolocationExample() {
-  return (
-    <div className="rs-geolocation-example">
-      <BasicMap map={map} layers={layers} />
-      <Geolocation map={map} />
-    </div>
-  );
-}
-
-<GeolocationExample />;
+<BasicMap>
+  <Geolocation />
+  <TileLayer source={new OSM()} />
+</BasicMap>;
 ```

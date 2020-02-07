@@ -7,6 +7,7 @@ import 'jest-canvas-mock';
 import Map from 'ol/Map';
 import View from 'ol/View';
 import MapEvent from 'ol/MapEvent';
+import { MapContext } from '../BasicMap/BasicMap';
 import Geolocation from './Geolocation';
 
 configure({ adapter: new Adapter() });
@@ -75,22 +76,20 @@ describe('Geolocation', () => {
 
   describe('should match snapshot', () => {
     test('minimum props', () => {
-      const component = renderer.create(<Geolocation map={map} />);
+      const component = renderer.create(<Geolocation />);
       const tree = component.toJSON();
       expect(tree).toMatchSnapshot();
     });
 
     test('with title', () => {
-      const component = renderer.create(
-        <Geolocation map={map} title="Lokalisieren" />,
-      );
+      const component = renderer.create(<Geolocation title="Lokalisieren" />);
       const tree = component.toJSON();
       expect(tree).toMatchSnapshot();
     });
 
     test('with class name', () => {
       const component = renderer.create(
-        <Geolocation map={map} className="my-class-name" />,
+        <Geolocation className="my-class-name" />,
       );
       const tree = component.toJSON();
       expect(tree).toMatchSnapshot();
@@ -101,7 +100,11 @@ describe('Geolocation', () => {
     test('class should be active', () => {
       mockGeolocation();
 
-      const wrapper = mount(<Geolocation map={map} />);
+      const wrapper = mount(
+        <MapContext.Provider value={map}>
+          <Geolocation />
+        </MapContext.Provider>,
+      );
       const basic = wrapper.getDOMNode();
 
       wrapper
@@ -117,7 +120,11 @@ describe('Geolocation', () => {
     test('class should not be active', () => {
       mockGeolocation();
 
-      const wrapper = mount(<Geolocation map={map} />);
+      const wrapper = mount(
+        <MapContext.Provider value={map}>
+          <Geolocation />
+        </MapContext.Provider>,
+      );
       const basic = wrapper.getDOMNode();
 
       wrapper
@@ -135,7 +142,11 @@ describe('Geolocation', () => {
   test(`highlight on first toggle`, () => {
     mockGeolocation();
 
-    const component = shallow(<Geolocation map={map} />);
+    const component = mount(
+      <MapContext.Provider value={map}>
+        <Geolocation />
+      </MapContext.Provider>,
+    );
     const instance = component.instance();
     const spy = jest.spyOn(instance, 'highlight');
     instance.toggle();
@@ -154,7 +165,7 @@ describe('Geolocation', () => {
     const spy = jest.spyOn(ErrorHandler, 'onError');
 
     const wrapper = mount(
-      <Geolocation map={map} onError={() => ErrorHandler.onError()} />,
+      <Geolocation onError={() => ErrorHandler.onError()} />,
     );
 
     wrapper
@@ -174,7 +185,11 @@ describe('Geolocation', () => {
       const center1 = [742952.8821531708, 6330118.608483334];
       map.getView().setCenter(center1);
 
-      const component = shallow(<Geolocation map={map} />);
+      const component = mount(
+        <MapContext.Provider value={map}>
+          <Geolocation />
+        </MapContext.Provider>,
+      );
       component.instance().toggle();
 
       const center2 = map.getView().getCenter();
@@ -189,7 +204,11 @@ describe('Geolocation', () => {
       const center1 = [742952.8821531708, 6330118.608483334];
       map.getView().setCenter(center1);
 
-      const component = shallow(<Geolocation map={map} noCenterAfterDrag />);
+      const component = mount(
+        <MapContext.Provider value={map}>
+          <Geolocation noCenterAfterDrag />
+        </MapContext.Provider>,
+      );
       map.dispatchEvent(new MapEvent('pointerdrag', map));
       component.instance().toggle();
 
@@ -205,8 +224,10 @@ describe('Geolocation', () => {
 
     const styleFunc = jest.fn();
 
-    const component = shallow(
-      <Geolocation map={map} colorOrStyleFunc={styleFunc} />,
+    const component = mount(
+      <MapContext.Provider value={map}>
+        <Geolocation colorOrStyleFunc={styleFunc} />
+      </MapContext.Provider>,
     );
     const instance = component.instance();
     instance.toggle();

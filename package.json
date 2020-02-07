@@ -121,6 +121,13 @@
           "devDependencies": true
         }
       ],
+      "react/destructuring-assignment": [
+        0,
+        "always",
+        {
+          "ignoreClassFields": true
+        }
+      ],
       "react/jsx-filename-extension": [
         1,
         {

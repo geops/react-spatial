@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import OLMap from 'ol/Map';
 import { transform } from 'ol/proj';
 import Point from 'ol/geom/Point';
 import Feature from 'ol/Feature';
@@ -16,16 +15,13 @@ import VectorSource from 'ol/source/Vector';
 
 import { FaRegDotCircle } from 'react-icons/fa';
 
+import { MapContext } from '../BasicMap/BasicMap';
+
 const propTypes = {
   /**
    * CSS class of the button.
    */
   className: PropTypes.string,
-
-  /**
-   * Map.
-   */
-  map: PropTypes.instanceOf(OLMap).isRequired,
 
   /**
    * Function triggered when geolocating is not successful.
@@ -60,22 +56,25 @@ const defaultProps = {
 class Geolocation extends PureComponent {
   constructor(props) {
     super(props);
-    const { map, noCenterAfterDrag } = this.props;
 
     this.layer = new VectorLayer({
       source: new VectorSource(),
     });
 
     this.isCentered = true;
-    if (noCenterAfterDrag) {
-      map.on('pointerdrag', () => {
-        this.isCentered = false;
-      });
-    }
 
     this.state = {
       active: false,
     };
+  }
+
+  componentDidMount() {
+    const { noCenterAfterDrag } = this.props;
+    if (noCenterAfterDrag) {
+      this.context.on('pointerdrag', () => {
+        this.isCentered = false;
+      });
+    }
   }
 
   toggle() {
@@ -116,9 +115,7 @@ class Geolocation extends PureComponent {
   }
 
   activate(position) {
-    const { map } = this.props;
-
-    const code = map
+    const code = this.context
       .getView()
       .getProjection()
       .getCode();
@@ -130,9 +127,9 @@ class Geolocation extends PureComponent {
 
     const point = new Point(pos);
     this.highlight(point);
-    this.layer.setMap(map);
+    this.layer.setMap(this.context);
     if (this.isCentered) {
-      map.getView().setCenter(pos);
+      this.context.getView().setCenter(pos);
     }
 
     this.setState({
@@ -229,6 +226,7 @@ class Geolocation extends PureComponent {
   }
 }
 
+Geolocation.contextType = MapContext;
 Geolocation.propTypes = propTypes;
 Geolocation.defaultProps = defaultProps;
 
