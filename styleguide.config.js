@@ -21,7 +21,6 @@ module.exports = {
   context: {
     exampleData: path.join(__dirname, 'data/ExampleData'),
     treeData: path.join(__dirname, 'data/TreeData'),
-    topicData: path.join(__dirname, 'data/TopicData'),
   },
   sections: [
     {
@@ -46,7 +45,6 @@ module.exports = {
         'src/components/Permalink/[A-Z]*.js',
         'src/components/Popup/[A-Z]*.js',
         'src/components/ScaleLine/[A-Z]*.js',
-        'src/components/TopicList/[A-Z]*.js',
         'src/components/Zoom/[A-Z]*.js',
       ],
       exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
