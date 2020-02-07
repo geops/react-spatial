@@ -36,7 +36,7 @@ const propTypes = {
   /**
    * The initially selected projection
    */
-  value: PropTypes.shape({
+  projectionValue: PropTypes.shape({
     /**
      * The label to display in the select box.
      */
@@ -74,13 +74,20 @@ const defaultProps = {
       value: 'EPSG:3857',
     },
   ],
-  value: null,
+  projectionValue: null,
 };
 
-function MousePosition({ map, projections, value, onChange, ...other }) {
+function MousePosition({
+  map,
+  projections,
+  projectionValue,
+  onChange,
+  ...other
+}) {
   const [projection, setProjection] = useState(
     projections &&
-      ((value && projections.find(p => p.value === value.value)) ||
+      ((projectionValue &&
+        projections.find(p => p.value === projectionValue.value)) ||
         projections[0]),
   );
   const [control, setControl] = useState();
