@@ -34,6 +34,11 @@ const propTypes = {
   ),
 
   /**
+   * The index of the initial projection
+   */
+  initialIndex: PropTypes.number,
+
+  /**
    * Function triggered on projection's change event.
    * @param {Event} event The change event object.
    * @param {Object} projection The selected projection object.
@@ -53,10 +58,14 @@ const defaultProps = {
       value: 'EPSG:3857',
     },
   ],
+  initialIndex: 0,
 };
 
-function MousePosition({ map, projections, onChange, ...other }) {
-  const [projection, setProjection] = useState(projections && projections[0]);
+function MousePosition({ map, projections, initialIndex, onChange, ...other }) {
+  const index = Math.min(Math.max(initialIndex, 0), projections.length - 1);
+  const [projection, setProjection] = useState(
+    projections && projections[index],
+  );
   const [control, setControl] = useState();
   const ref = useRef();
 
