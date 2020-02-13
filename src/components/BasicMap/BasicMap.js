@@ -179,13 +179,13 @@ class BasicMap extends Component {
 
     this.singleClickRef = this.map.on('singleclick', evt => {
       const features = evt.map.getFeaturesAtPixel(evt.pixel);
-      onFeaturesClick(features || []);
+      onFeaturesClick(features || [], evt);
     });
 
     if (onFeaturesHover) {
       this.pointerMoveRef = this.map.on('pointermove', evt => {
         const features = this.map.getFeaturesAtPixel(evt.pixel);
-        onFeaturesHover(features || []);
+        onFeaturesHover(features || [], evt);
       });
     }
   }

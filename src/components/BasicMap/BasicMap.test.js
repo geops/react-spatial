@@ -58,15 +58,19 @@ describe('BasicMap', () => {
   test('uses onFeaturesClick function', () => {
     const spy = jest.fn();
     shallow(<BasicMap map={olMap} onFeaturesClick={spy} />);
-    olMap.dispatchEvent(new MapEvent('singleclick', olMap));
+    const evt = new MapEvent('singleclick', olMap);
+    olMap.dispatchEvent(evt);
     expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith([], evt);
   });
 
   test('uses onFeaturesHover function', () => {
     const spy = jest.fn();
     shallow(<BasicMap map={olMap} onFeaturesHover={spy} />);
-    olMap.dispatchEvent(new MapEvent('pointermove', olMap));
+    const evt = new MapEvent('pointermove', olMap);
+    olMap.dispatchEvent(evt);
     expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith([], evt);
   });
 
   test('should be rendered with a default map', () => {
