@@ -3,11 +3,10 @@
 This demonstrates the use of Permalink.
 
 ```jsx
-import React from 'react'
+import React from 'react';
 import Permalink from 'react-spatial/components/Permalink';
 import BasicMap from 'react-spatial/components/BasicMap';
 import LayerService from 'react-spatial/LayerService';
-import Button from 'react-spatial/components/Button';
 import OLMap from 'ol/Map';
 import ConfigReader from '../../ConfigReader';
 
@@ -18,8 +17,8 @@ const map = new OLMap({ controls: [] });
 const populationLayer = layerService.getLayer('USA Population Density');
 const baseLayers = layerService.getBaseLayers();
 
-<div className="tm-permalink-example">
-  <BasicMap map={map} layers={layers}/>
+<div className="rs-permalink-example">
+  <BasicMap map={map} layers={layers} />
   <Permalink
     map={map}
     layerService={layerService}
@@ -28,14 +27,16 @@ const baseLayers = layerService.getBaseLayers();
     }}
     isLayerHidden={l => l.get('hideInLegend') || layerService.getParents(l).some(pl => pl.get('hideInLegend'))}
   />
-  <Button
+  <div
+    role="button"
     onClick={() => {
-      populationLayer.setVisible(!populationLayer.getVisible())
+      populationLayer.setVisible(!populationLayer.getVisible());
     }}
   >
     Toggle population layer
-  </Button>
-  <Button
+  </div>
+  <div
+    role="button"
     onClick={() => {
       if (baseLayers[1].getVisible()) {
         baseLayers[0].setVisible(true);
@@ -45,6 +46,6 @@ const baseLayers = layerService.getBaseLayers();
     }}
   >
     Change base layer
-  </Button>
+  </div>
 </div>;
 ```

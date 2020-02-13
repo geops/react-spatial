@@ -228,7 +228,7 @@ describe('ResizeHandler', () => {
           },
         },
       ]);
-      expect(basic.className).toBe('tm-w-xs tm-h-xs');
+      expect(basic.className).toBe('rs-w-xs rs-h-xs');
 
       ResizeObserver.onResize([
         {
@@ -239,7 +239,7 @@ describe('ResizeHandler', () => {
           },
         },
       ]);
-      expect(basic.className).toBe('tm-w-s tm-h-s');
+      expect(basic.className).toBe('rs-w-s rs-h-s');
       ResizeObserver.onResize([
         {
           target: basic,
@@ -249,7 +249,7 @@ describe('ResizeHandler', () => {
           },
         },
       ]);
-      expect(basic.className).toBe('tm-w-m tm-h-m');
+      expect(basic.className).toBe('rs-w-m rs-h-m');
       ResizeObserver.onResize([
         {
           target: basic,
@@ -259,7 +259,7 @@ describe('ResizeHandler', () => {
           },
         },
       ]);
-      expect(basic.className).toBe('tm-w-l tm-h-l');
+      expect(basic.className).toBe('rs-w-l rs-h-l');
       ResizeObserver.onResize([
         {
           target: basic,
@@ -269,7 +269,7 @@ describe('ResizeHandler', () => {
           },
         },
       ]);
-      expect(basic.className).toBe('tm-w-xl tm-h-xl');
+      expect(basic.className).toBe('rs-w-xl rs-h-xl');
     });
 
     test('uses user defined breakpoints', () => {
@@ -287,7 +287,7 @@ describe('ResizeHandler', () => {
           },
         },
       ]);
-      expect(basic.className).toBe('tm-w-schmal tm-h-niedrig');
+      expect(basic.className).toBe('rs-w-schmal rs-h-niedrig');
 
       ResizeObserver.onResize([
         {
@@ -298,7 +298,7 @@ describe('ResizeHandler', () => {
           },
         },
       ]);
-      expect(basic.className).toBe('tm-w-breit tm-h-hoch');
+      expect(basic.className).toBe('rs-w-breit rs-h-hoch');
     });
 
     test('calls onResize property', () => {

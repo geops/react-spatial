@@ -20,7 +20,7 @@ const layerService = new LayerService([...layers]);
 
 function CanvasSaveButtonExample() {
   return (
-    <div className="tm-canvas-save-button-example">
+    <div className="rs-canvas-save-button-example">
       <BasicMap
         map={map}
         center={[874105.13, 6106172.77]}

@@ -3,7 +3,7 @@
 This demonstrates the use of LayerTree.
 
 ```jsx
-import React from 'react'
+import React from 'react';
 import OLMap from 'ol/Map';
 import LayerTree from 'react-spatial/components/LayerTree';
 import BasicMap from 'react-spatial/components/BasicMap';
@@ -17,7 +17,7 @@ const layerService = new LayerService(layers);
 
 function LayerTreeExample() {
   return (
-    <div className="tm-layer-tree-example">
+    <div className="rs-layer-tree-example">
       <BasicMap map={map} layers={layers} center={center} zoom={3} />
       <LayerTree layerService={layerService} />
     </div>
