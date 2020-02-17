@@ -84,11 +84,19 @@ export default class MapboxLayer extends Layer {
       featureProjection: this.map.getView().getProjection(),
     });
 
+    // If the map hasn't been resized, the center could be [NaN,NaN].
+    // We set default good value for the mapbox map, to avoid the app crashes.
+    let [x, y] = map.getView().getCenter();
+    if (!x || !y) {
+      x = 0;
+      y = 0;
+    }
+
     this.mbMap = new mapboxgl.Map({
       style: this.styleUrl,
       attributionControl: false,
       boxZoom: false,
-      center: toLonLat(map.getView().getCenter()),
+      center: toLonLat([x, y]),
       container: this.map.getTargetElement(),
       doubleClickZoom: false,
       dragPan: false,
