@@ -23,6 +23,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <input
           checked={true}
           onClick={[Function]}
+          readOnly={true}
           tabIndex={-1}
           type="radio"
         />
@@ -65,6 +66,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <input
             checked={false}
             onClick={[Function]}
+            readOnly={true}
             tabIndex={-1}
             type="radio"
           />
@@ -105,6 +107,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <input
             checked={true}
             onClick={[Function]}
+            readOnly={true}
             tabIndex={-1}
             type="radio"
           />
@@ -145,6 +148,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <input
             checked={false}
             onClick={[Function]}
+            readOnly={true}
             tabIndex={-1}
             type="radio"
           />
@@ -186,6 +190,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <input
           checked={true}
           onClick={[Function]}
+          readOnly={true}
           tabIndex={-1}
           type="checkbox"
         />
@@ -228,6 +233,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <input
             checked={false}
             onClick={[Function]}
+            readOnly={true}
             tabIndex={-1}
             type="checkbox"
           />
@@ -268,6 +274,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <input
             checked={true}
             onClick={[Function]}
+            readOnly={true}
             tabIndex={-1}
             type="checkbox"
           />
@@ -308,6 +315,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
           <input
             checked={true}
             onClick={[Function]}
+            readOnly={true}
             tabIndex={-1}
             type="checkbox"
           />
@@ -349,6 +357,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <input
           checked={false}
           onClick={[Function]}
+          readOnly={true}
           tabIndex={-1}
           type="radio"
         />
@@ -389,6 +398,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <input
           checked={false}
           onClick={[Function]}
+          readOnly={true}
           tabIndex={-1}
           type="radio"
         />
@@ -429,6 +439,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         <input
           checked={true}
           onClick={[Function]}
+          readOnly={true}
           tabIndex={-1}
           type="radio"
         />
@@ -476,6 +487,7 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
         <input
           checked={false}
           onClick={[Function]}
+          readOnly={true}
           tabIndex={-1}
           type="radio"
         />
@@ -516,6 +528,7 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
         <input
           checked={false}
           onClick={[Function]}
+          readOnly={true}
           tabIndex={-1}
           type="radio"
         />
@@ -556,6 +569,7 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
         <input
           checked={true}
           onClick={[Function]}
+          readOnly={true}
           tabIndex={-1}
           type="radio"
         />
@@ -603,6 +617,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <input
           checked={true}
           onClick={[Function]}
+          readOnly={true}
           tabIndex={-1}
           type="radio"
         />
@@ -645,6 +660,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <input
             checked={false}
             onClick={[Function]}
+            readOnly={true}
             tabIndex={-1}
             type="radio"
           />
@@ -685,6 +701,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <input
             checked={true}
             onClick={[Function]}
+            readOnly={true}
             tabIndex={-1}
             type="radio"
           />
@@ -725,6 +742,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <input
             checked={false}
             onClick={[Function]}
+            readOnly={true}
             tabIndex={-1}
             type="radio"
           />
@@ -766,6 +784,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <input
           checked={true}
           onClick={[Function]}
+          readOnly={true}
           tabIndex={-1}
           type="checkbox"
         />
@@ -808,6 +827,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <input
             checked={false}
             onClick={[Function]}
+            readOnly={true}
             tabIndex={-1}
             type="checkbox"
           />
@@ -848,6 +868,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <input
             checked={true}
             onClick={[Function]}
+            readOnly={true}
             tabIndex={-1}
             type="checkbox"
           />
@@ -888,6 +909,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
           <input
             checked={true}
             onClick={[Function]}
+            readOnly={true}
             tabIndex={-1}
             type="checkbox"
           />
@@ -929,6 +951,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <input
           checked={false}
           onClick={[Function]}
+          readOnly={true}
           tabIndex={-1}
           type="radio"
         />
@@ -969,6 +992,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <input
           checked={false}
           onClick={[Function]}
+          readOnly={true}
           tabIndex={-1}
           type="radio"
         />
@@ -1009,6 +1033,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         <input
           checked={true}
           onClick={[Function]}
+          readOnly={true}
           tabIndex={-1}
           type="radio"
         />
