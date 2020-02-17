@@ -59,7 +59,8 @@ const sanitizeFeature = feature => {
   let styles = feature.getStyleFunction();
 
   // The use of clone is part of the scale fix line 156
-  const style = styles(feature)[0].clone();
+  const tmpStyles = styles(feature);
+  const style = (Array.isArray(tmpStyles) ? tmpStyles[0] : tmpStyles).clone();
 
   let stroke = style.getStroke();
   if (stroke && feature.get('lineDash')) {
