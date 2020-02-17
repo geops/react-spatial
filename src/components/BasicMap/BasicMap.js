@@ -232,11 +232,15 @@ class BasicMap extends Component {
     }
 
     if (
-      viewOptions &&
-      viewOptions.extent &&
-      (!prevProps.viewOptions.extent ||
-        (prevProps.viewOptions.extent &&
-          !equals(prevProps.viewOptions.extent, viewOptions.extent)))
+      (viewOptions &&
+        viewOptions.extent &&
+        (!prevProps.viewOptions.extent ||
+          (prevProps.viewOptions.extent &&
+            !equals(prevProps.viewOptions.extent, viewOptions.extent)))) ||
+      (viewOptions.maxZoom &&
+        prevProps.viewOptions.maxZoom !== viewOptions.maxZoom) ||
+      (viewOptions.minZoom &&
+        prevProps.viewOptions.minZoom !== viewOptions.minZoom)
     ) {
       // Re-create a view, ol doesn't provide any method to setExtent of view.
       this.map.setView(
@@ -245,6 +249,8 @@ class BasicMap extends Component {
           ...{ center },
           ...{ resolution },
           ...{ extent: viewOptions.extent },
+          ...{ maxZoom: viewOptions.maxZoom },
+          ...{ minZoom: viewOptions.minZoom },
         }),
       );
     }
