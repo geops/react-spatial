@@ -236,7 +236,6 @@ class BaseLayerToggler extends Component {
     if (!this.map) {
       this.map = new OLMap({ controls: [], interactions: [] });
     }
-    this.map.setView(map.getView());
     unByKey([this.postRenderKey, this.moveEndKey]);
     this.postRenderKey = map.on('postrender', e => {
       this.map.getView().setZoom(e.target.getView().getZoom());
