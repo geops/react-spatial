@@ -62,6 +62,11 @@ const propTypes = {
   onCloseClick: PropTypes.func,
 
   /**
+   * HTML tabIndex attribute.
+   */
+  tabIndex: PropTypes.string,
+
+  /**
    * Render the header
    */
   renderHeader: PropTypes.func,
@@ -84,6 +89,7 @@ const defaultProps = {
   panRect: null,
   popupCoordinate: null,
   className: 'rs-popup',
+  tabIndex: '',
   titles: { closeButton: 'Close' },
   onCloseClick: () => {},
   renderHeader: null,
@@ -217,6 +223,7 @@ class Popup extends PureComponent {
       children,
       header,
       titles,
+      tabIndex,
       renderHeader,
       renderFooter,
       ...other
@@ -250,6 +257,7 @@ class Popup extends PureComponent {
       >
         <div
           className="rs-popup-container"
+          tabIndex={tabIndex}
           role="dialog"
           key={key}
           ref={popupElement => {
