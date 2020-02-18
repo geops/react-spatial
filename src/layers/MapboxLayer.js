@@ -7,6 +7,27 @@ import GeoJSON from 'ol/format/GeoJSON';
 import Layer from './Layer';
 
 /**
+ * Apply a function to style layers that fits the filter function.
+ * @private
+ */
+const applyAction = (mbMap, action, filterFunc) => {
+  const style = mbMap.getStyle();
+
+  if ((filterFunc && !mbMap) || !style) {
+    return;
+  }
+
+  for (let i = 0; i < style.layers.length; i += 1) {
+    const styleLayer = style.layers[i];
+    if (filterFunc(styleLayer)) {
+      if (mbMap.getLayer(styleLayer.id)) {
+        action(styleLayer);
+      }
+    }
+  }
+};
+
+/**
  * A class representing Mapboxlayer to display on BasicMap
  * @class
  * @inheritDoc
@@ -111,7 +132,52 @@ export default class MapboxLayer extends Layer {
     });
 
     this.mbMap.once('load', () => {
+      // Remove some layer.
+      if (this.options.removeFilter) {
+        applyAction(
+          this.mbMap,
+          ({ id }) => {
+            this.mbMap.removeLayer(id);
+          },
+          this.options.removeFilter,
+        );
+      }
+
+      // Move some layers son top.
+      if (this.options.moveOnTopFilter) {
+        applyAction(
+          this.mbMap,
+          ({ id }) => {
+            this.mbMap.moveLayer(id);
+          },
+          this.options.moveOnTopFilter,
+        );
+      }
+
+      // Displays some layers on load.
+      if (this.options.visibleFilter) {
+        applyAction(
+          this.mbMap,
+          ({ id }) => {
+            this.mbMap.setLayoutProperty(id, 'visibility', 'visible');
+          },
+          this.options.visibleFilter,
+        );
+      }
+
+      // Hides some layers on load.
+      if (this.options.hideFilter) {
+        applyAction(
+          this.mbMap,
+          ({ id }) => {
+            this.mbMap.setLayoutProperty(id, 'visibility', 'none');
+          },
+          this.options.hideFilter,
+        );
+      }
+
       this.loaded = true;
+
       this.dispatchEvent({
         type: 'load',
         target: this,
