@@ -39,7 +39,7 @@
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "^2.3.0",
-    "fixpack": "^2.3.1",
+    "fixpack": "^3.0.5",
     "generact": "^0.4.0",
     "geops-docjs-template": "^1.0.0",
     "husky": "^4.2.3",
