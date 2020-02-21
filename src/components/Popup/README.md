@@ -20,6 +20,7 @@ import { getCenter } from 'ol/extent';
 import Style from 'ol/style/Style';
 import Circle from 'ol/style/Circle';
 import Fill from 'ol/style/Fill';
+import Icon from 'ol/style/Icon';
 
 class PopupExample extends React.Component {
   constructor(props) {
@@ -46,11 +47,12 @@ class PopupExample extends React.Component {
           ],
         }),
         style: new Style({
-          image: new Circle({
-            radius: 40,
-            fill: new Fill({
-              color: '#ff0000',
-            }),
+          image: new Icon({
+            anchor: [0.5, 46],
+            anchorXUnits: 'fraction',
+            anchorYUnits: 'pixels',
+            src: 'https://openlayers.org/en/latest/examples/data/icon.png',
+            imgSize: [32, 48]
           }),
         }),
       }),
