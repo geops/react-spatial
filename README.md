@@ -1,7 +1,7 @@
 # React Spatial
 
 [![npm](https://img.shields.io/npm/v/react-spatial.svg?style=flat-square)](https://www.npmjs.com/package/react-spatial)
-[![build](https://travis-ci.com/geops/react-spatial.svg?branch=master)](https://travis-ci.com/geops/react-spatial)
+[![build](https://github.com/geops/react-spatial/workflows/main/badge.svg)](https://github.com/geops/react-spatial/actions?query=workflow%3Amain)
 [![dependabot](https://badgen.net/dependabot/geops/react-spatial/?icon=dependabot)](https://github.com/marketplace/dependabot-preview)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/8f7b7082-8998-4e1f-9a34-4d8cd18e6003/deploy-status)](https://app.netlify.com/sites/react-spatial/deploys)
