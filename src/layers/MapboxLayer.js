@@ -58,7 +58,6 @@ export default class MapboxLayer extends Layer {
 
         return canvas;
       },
-      zIndex: options.zIndex,
     });
 
     super({
