@@ -44,7 +44,7 @@ class ResizeHandler extends PureComponent {
   static applyBreakpoints(entry, breakpoints, size, direction) {
     let found = false;
     Object.entries(breakpoints).forEach(brkpt => {
-      const cssClass = `tm-${direction}-${brkpt[0]}`;
+      const cssClass = `rs-${direction}-${brkpt[0]}`;
       entry.target.classList.remove(cssClass);
       if (!found && size <= brkpt[1]) {
         found = true;

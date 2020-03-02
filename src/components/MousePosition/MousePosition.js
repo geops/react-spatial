@@ -34,6 +34,27 @@ const propTypes = {
   ),
 
   /**
+   * The initially selected projection
+   */
+  projectionValue: PropTypes.shape({
+    /**
+     * The label to display in the select box.
+     */
+    label: PropTypes.string.isRequired,
+
+    /**
+     * The value used to create the options´s projection of the MousePosition control.
+     * See [doc](https://openlayers.org/en/latest/apidoc/module-ol_control_MousePosition.html).
+     */
+    value: PropTypes.string.isRequired,
+
+    /**
+     * A function following the  [CoordinateFormat](https://openlayers.org/en/latest/apidoc/module-ol_coordinate.html#~CoordinateFormat).
+     */
+    format: PropTypes.func,
+  }),
+
+  /**
    * Function triggered on projection's change event.
    * @param {Event} event The change event object.
    * @param {Object} projection The selected projection object.
@@ -53,10 +74,22 @@ const defaultProps = {
       value: 'EPSG:3857',
     },
   ],
+  projectionValue: null,
 };
 
-function MousePosition({ map, projections, onChange, ...other }) {
-  const [projection, setProjection] = useState(projections && projections[0]);
+function MousePosition({
+  map,
+  projections,
+  projectionValue,
+  onChange,
+  ...other
+}) {
+  const [projection, setProjection] = useState(
+    projections &&
+      ((projectionValue &&
+        projections.find(p => p.value === projectionValue.value)) ||
+        projections[0]),
+  );
   const [control, setControl] = useState();
   const ref = useRef();
 

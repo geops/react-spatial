@@ -7,7 +7,6 @@ import TileLayer from 'ol/layer/Tile';
 import { containsExtent } from 'ol/extent';
 import LayerService from '../../LayerService';
 import BasicMap from '../BasicMap';
-import MapboxLayer from '../../layers/MapboxLayer';
 
 const propTypes = {
   /**
@@ -58,6 +57,16 @@ const defaultProps = {
 };
 
 class BaseLayerToggler extends Component {
+  static isDifferentLayers(prevLayers, layers) {
+    if (prevLayers && layers) {
+      return (
+        JSON.stringify(prevLayers.map(l => l.getKey())) !==
+        JSON.stringify(layers.map(l => l.getKey()))
+      );
+    }
+    return false;
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -69,6 +78,9 @@ class BaseLayerToggler extends Component {
     };
     this.map = null;
     this.ref = React.createRef();
+
+    this.updateState = this.updateState.bind(this);
+    this.resetState = this.resetState.bind(this);
   }
 
   componentDidMount() {
@@ -97,26 +109,44 @@ class BaseLayerToggler extends Component {
 
     if (layerVisible && !prevState.layerVisible) {
       this.next();
-    } else if (layerVisible !== prevState.layerVisible) {
+    } else if (
+      layerVisible !== prevState.layerVisible &&
+      layers.includes(prevState.layerVisible)
+    ) {
       // In case the visibility of the background Layer is change from another component.
       this.toggle(prevState.layerVisible);
     }
 
-    if (this.map && idx !== prevState.idx) {
+    if (
+      this.map &&
+      (idx !== prevState.idx ||
+        BaseLayerToggler.isDifferentLayers(prevState.layers, layers))
+    ) {
       this.map.getLayers().clear();
 
       if (!layers.length) {
         return;
       }
-      const children = layers[idx].getChildren();
-      const childLayers = children.length ? children : [layers[idx]];
+      let children = [];
+      let childLayers = [];
+      if (idx !== null && idx < layers.length) {
+        children = layers[idx].getChildren();
+        childLayers = children.length ? children : [layers[idx]];
+      }
 
       childLayers.forEach(layer => {
-        if (layer instanceof MapboxLayer) {
-          const ml = layer.clone();
-          ml.init(this.map); // Including addLayer
-          ml.setVisible(true);
-        } else {
+        if (layer.clone) {
+          let ml;
+          // MapboxStyleLayer
+          if (layer.mapboxLayer) {
+            ml = layer.mapboxLayer.clone();
+            ml.init(this.map); // Including addLayer
+            ml.setVisible(true);
+          }
+          const cloned = layer.clone(ml);
+          cloned.init(this.map); // Including addLayer
+          cloned.setVisible(true);
+        } else if (layer.olLayer && layer.olLayer instanceof TileLayer) {
           this.map.addLayer(
             new TileLayer({
               source: layer.olLayer.getSource(),
@@ -129,7 +159,19 @@ class BaseLayerToggler extends Component {
   }
 
   componentWillUnmount() {
+    const { layerService } = this.props;
     unByKey([this.postRenderKey, this.moveEndKey]);
+    layerService.un('change:visible', this.updateState);
+    layerService.un('change:layers', this.resetState);
+  }
+
+  setNextVisible(nextLayer) {
+    const { layers } = this.state;
+    // Unset visibility to all layers before showing the next layer.
+    layers.forEach(
+      l => l.getVisible() && l.setVisible(false, true, true, true),
+    );
+    nextLayer.setVisible(true);
   }
 
   updateLayerService() {
@@ -138,23 +180,54 @@ class BaseLayerToggler extends Component {
     if (!layerService) {
       return;
     }
-
+    layerService.un('change:visible', this.updateState);
+    layerService.un('change:layers', this.resetState);
     this.updateState();
-    layerService.on('change:visible', () => this.updateState());
+    layerService.on('change:visible', this.updateState);
+    layerService.on('change:layers', this.resetState);
   }
 
-  updateState() {
+  updateState(evtLayer) {
+    if (evtLayer && !evtLayer.getIsBaseLayer()) {
+      return;
+    }
+
     const { layerService } = this.props;
+    const { idx } = this.state;
+
     const layers = layerService.getBaseLayers() || [];
-    let idx = layers.findIndex(l => l.getVisible());
-    if (idx === -1 && layers.length > 1) {
-      idx = 0;
+    let newIdx = idx;
+    if (newIdx === -1 && layers.length > 1) {
+      newIdx = 0;
       layers[idx].setVisible(true);
     }
+
     this.setState({
       layers,
-      idx,
-      layerVisible: layers.length > 1 ? layers[idx] : null,
+      idx: newIdx,
+      layerVisible: layers.length > 1 ? layers[newIdx] : null,
+    });
+  }
+
+  resetState() {
+    const { layerService } = this.props;
+    const { layerVisible } = this.state;
+
+    const layers = layerService.getBaseLayers() || [];
+    const idx = layerVisible ? layers.indexOf(layerVisible) : -1;
+    let newIdx;
+
+    if (idx === -1) {
+      newIdx = 1;
+    } else if (idx === layers.length - 1) {
+      newIdx = 0;
+    } else {
+      newIdx = idx + 1;
+    }
+
+    this.setState({
+      layers,
+      idx: layers.length > 1 ? newIdx : null,
     });
   }
 
@@ -163,7 +236,6 @@ class BaseLayerToggler extends Component {
     if (!this.map) {
       this.map = new OLMap({ controls: [], interactions: [] });
     }
-    this.map.setView(map.getView());
     unByKey([this.postRenderKey, this.moveEndKey]);
     this.postRenderKey = map.on('postrender', e => {
       this.map.getView().setZoom(e.target.getView().getZoom());
@@ -317,8 +389,8 @@ class BaseLayerToggler extends Component {
           className="rs-base-layer-toggle-button"
           role="button"
           title={titles.button}
-          onClick={() => nextLayer.setVisible(true)}
-          onKeyPress={e => e.which === 13 && nextLayer.setVisible(true)}
+          onClick={() => this.setNextVisible(nextLayer)}
+          onKeyPress={e => e.which === 13 && this.setNextVisible(nextLayer)}
           tabIndex="0"
         >
           <img

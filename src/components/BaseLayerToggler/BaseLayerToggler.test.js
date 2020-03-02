@@ -114,8 +114,7 @@ describe('BaseLayerToggler', () => {
     comp.state.layers[0].setVisible(false);
 
     expect(comp.state.layers.length).toBe(3);
-    expect(comp.state.layerVisible).toBe(layerVisible);
-    expect(comp.state.layerVisible.getVisible()).toBe(true);
+    expect(comp.state.layerVisible).toBe(comp.state.layers[1]);
     expect(comp.state.idx).toBe(0);
   });
 

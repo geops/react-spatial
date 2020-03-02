@@ -27,8 +27,8 @@ const renderLayerTree = (newData, props) => {
   expect(tree).toMatchSnapshot();
 };
 
-const classItem = '.tm-layer-tree-item';
-const toggleItem = '.tm-layer-tree-toggle';
+const classItem = '.rs-layer-tree-item';
+const toggleItem = '.rs-layer-tree-toggle';
 
 describe('LayerTree', () => {
   describe('matches snapshots', () => {
@@ -52,13 +52,7 @@ describe('LayerTree', () => {
     });
 
     test('when classNames are used.', () => {
-      renderLayerTree(data, {
-        className: 'foo',
-        classNameItem: 'bar',
-        classNameInput: 'qux',
-        classNameToggle: 'quux',
-        classNameArrow: 'ged',
-      });
+      renderLayerTree(data, { className: 'foo' });
     });
 
     test('when an item is hidden.', () => {

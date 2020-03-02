@@ -26,6 +26,7 @@ export default class Layer extends Observable {
     isBaseLayer,
     children,
     visible,
+    zIndex,
     copyright,
     properties,
     isQueryable,
@@ -38,6 +39,7 @@ export default class Layer extends Observable {
     this.radioGroup = radioGroup;
     this.children = children || [];
     this.visible = visible === undefined ? true : visible;
+    this.zIndex = zIndex;
     this.copyright = copyright;
     this.properties = properties || {};
     this.isQueryable = isQueryable !== false;
@@ -47,6 +49,9 @@ export default class Layer extends Observable {
 
     if (this.olLayer) {
       this.olLayer.setVisible(this.visible);
+      if (this.zIndex) {
+        this.olLayer.setZIndex(this.zIndex);
+      }
     }
   }
 
