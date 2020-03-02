@@ -75,7 +75,7 @@ describe('Permalink', () => {
     const layerService = new LayerService(layers);
     mount(<Permalink layerService={layerService} />);
     const search =
-      '?baselayers=osm.baselayer,osm.baselayer.hot,open.topo.map&layers=switzerland.samples,usa.population.density,lines.samples';
+      '?baselayers=osm.baselayer,osm.baselayer.hot,open.topo.map&layers=switzerland.samples,usa.population.density,lines.samples,roads.seoul,vienna.streets';
 
     expect(window.location.search).toEqual(search);
   });

@@ -15,6 +15,132 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
     >
       <label
         aria-label="Hide layer"
+        className="rs-layer-tree-input rs-layer-tree-input-checkbox rs-checkbox"
+        onKeyPress={[Function]}
+        tabIndex={0}
+        title="Hide layer"
+      >
+        <input
+          checked={true}
+          onClick={[Function]}
+          readOnly={true}
+          tabIndex={-1}
+          type="checkbox"
+        />
+        <span />
+      </label>
+      <div
+        aria-expanded={true}
+        aria-label="Road sample layers Hide sublayer"
+        className="rs-layer-tree-toggle"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+        title="Road sample layers Hide sublayer"
+      >
+        <div>
+          Road sample layers
+        </div>
+        <div
+          className="rs-layer-tree-arrow rs-layer-tree-arrow-expanded"
+        />
+      </div>
+    </div>
+    <div>
+      <div
+        className="rs-layer-tree-item rs-visible"
+        style={
+          Object {
+            "paddingLeft": "30px",
+          }
+        }
+      >
+        <label
+          aria-label="Hide layer"
+          className="rs-layer-tree-input rs-layer-tree-input-checkbox rs-checkbox"
+          onKeyPress={[Function]}
+          tabIndex={-1}
+          title="Hide layer"
+        >
+          <input
+            checked={true}
+            onClick={[Function]}
+            readOnly={true}
+            tabIndex={-1}
+            type="checkbox"
+          />
+          <span />
+        </label>
+        <div
+          aria-expanded={false}
+          aria-label="Vienna Streets Show sublayer"
+          className="rs-layer-tree-toggle"
+          onClick={[Function]}
+          onKeyPress={[Function]}
+          role="button"
+          tabIndex={0}
+          title="Vienna Streets Show sublayer"
+        >
+          <div>
+            Vienna Streets
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div
+        className="rs-layer-tree-item rs-visible"
+        style={
+          Object {
+            "paddingLeft": "30px",
+          }
+        }
+      >
+        <label
+          aria-label="Hide layer"
+          className="rs-layer-tree-input rs-layer-tree-input-checkbox rs-checkbox"
+          onKeyPress={[Function]}
+          tabIndex={-1}
+          title="Hide layer"
+        >
+          <input
+            checked={true}
+            onClick={[Function]}
+            readOnly={true}
+            tabIndex={-1}
+            type="checkbox"
+          />
+          <span />
+        </label>
+        <div
+          aria-expanded={false}
+          aria-label="Roads Seoul Show sublayer"
+          className="rs-layer-tree-toggle"
+          onClick={[Function]}
+          onKeyPress={[Function]}
+          role="button"
+          tabIndex={0}
+          title="Roads Seoul Show sublayer"
+        >
+          <div>
+            Roads Seoul
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div
+      className="rs-layer-tree-item rs-visible"
+      style={
+        Object {
+          "paddingLeft": "0px",
+        }
+      }
+    >
+      <label
+        aria-label="Hide layer"
         className="rs-layer-tree-input rs-layer-tree-input-radio rs-radio"
         onKeyPress={[Function]}
         tabIndex={0}
@@ -464,6 +590,180 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
 </div>
 `;
 
+exports[`LayerTree matches snapshots when an item is hidden (different layer tree levels) 1`] = `
+<div
+  className="rs-layer-tree"
+>
+  <div>
+    <div
+      className="rs-layer-tree-item rs-visible"
+      style={
+        Object {
+          "paddingLeft": "0px",
+        }
+      }
+    >
+      <label
+        aria-label="Hide layer"
+        className="rs-layer-tree-input rs-layer-tree-input-checkbox rs-checkbox"
+        onKeyPress={[Function]}
+        tabIndex={-1}
+        title="Hide layer"
+      >
+        <input
+          checked={true}
+          onClick={[Function]}
+          readOnly={true}
+          tabIndex={-1}
+          type="checkbox"
+        />
+        <span />
+      </label>
+      <div
+        aria-expanded={false}
+        aria-label="Road sample layers Show sublayer"
+        className="rs-layer-tree-toggle"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+        title="Road sample layers Show sublayer"
+      >
+        <div>
+          Road sample layers
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div
+      className="rs-layer-tree-item rs-visible"
+      style={
+        Object {
+          "paddingLeft": "0px",
+        }
+      }
+    >
+      <label
+        aria-label="Hide layer"
+        className="rs-layer-tree-input rs-layer-tree-input-checkbox rs-checkbox"
+        onKeyPress={[Function]}
+        tabIndex={0}
+        title="Hide layer"
+      >
+        <input
+          checked={true}
+          onClick={[Function]}
+          readOnly={true}
+          tabIndex={-1}
+          type="checkbox"
+        />
+        <span />
+      </label>
+      <div
+        aria-expanded={true}
+        aria-label="Other layers Hide sublayer"
+        className="rs-layer-tree-toggle"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+        title="Other layers Hide sublayer"
+      >
+        <div>
+          Other layers
+        </div>
+        <div
+          className="rs-layer-tree-arrow rs-layer-tree-arrow-expanded"
+        />
+      </div>
+    </div>
+    <div>
+      <div
+        className="rs-layer-tree-item "
+        style={
+          Object {
+            "paddingLeft": "30px",
+          }
+        }
+      >
+        <label
+          aria-label="Show layer"
+          className="rs-layer-tree-input rs-layer-tree-input-checkbox rs-checkbox"
+          onKeyPress={[Function]}
+          tabIndex={-1}
+          title="Show layer"
+        >
+          <input
+            checked={false}
+            onClick={[Function]}
+            readOnly={true}
+            tabIndex={-1}
+            type="checkbox"
+          />
+          <span />
+        </label>
+        <div
+          aria-expanded={false}
+          aria-label="Countries Borders Show sublayer"
+          className="rs-layer-tree-toggle"
+          onClick={[Function]}
+          onKeyPress={[Function]}
+          role="button"
+          tabIndex={0}
+          title="Countries Borders Show sublayer"
+        >
+          <div>
+            Countries Borders
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div
+        className="rs-layer-tree-item rs-visible"
+        style={
+          Object {
+            "paddingLeft": "30px",
+          }
+        }
+      >
+        <label
+          aria-label="Hide layer"
+          className="rs-layer-tree-input rs-layer-tree-input-checkbox rs-checkbox"
+          onKeyPress={[Function]}
+          tabIndex={-1}
+          title="Hide layer"
+        >
+          <input
+            checked={true}
+            onClick={[Function]}
+            readOnly={true}
+            tabIndex={-1}
+            type="checkbox"
+          />
+          <span />
+        </label>
+        <div
+          aria-expanded={false}
+          aria-label="USA Population Density Show sublayer"
+          className="rs-layer-tree-toggle"
+          onClick={[Function]}
+          onKeyPress={[Function]}
+          role="button"
+          tabIndex={0}
+          title="USA Population Density Show sublayer"
+        >
+          <div>
+            USA Population Density
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
 <div
   className="rs-layer-tree"
@@ -598,6 +898,132 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
 <div
   className="foo"
 >
+  <div>
+    <div
+      className="rs-layer-tree-item rs-visible"
+      style={
+        Object {
+          "paddingLeft": "0px",
+        }
+      }
+    >
+      <label
+        aria-label="Hide layer"
+        className="rs-layer-tree-input rs-layer-tree-input-checkbox rs-checkbox"
+        onKeyPress={[Function]}
+        tabIndex={0}
+        title="Hide layer"
+      >
+        <input
+          checked={true}
+          onClick={[Function]}
+          readOnly={true}
+          tabIndex={-1}
+          type="checkbox"
+        />
+        <span />
+      </label>
+      <div
+        aria-expanded={true}
+        aria-label="Road sample layers Hide sublayer"
+        className="rs-layer-tree-toggle"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+        title="Road sample layers Hide sublayer"
+      >
+        <div>
+          Road sample layers
+        </div>
+        <div
+          className="rs-layer-tree-arrow rs-layer-tree-arrow-expanded"
+        />
+      </div>
+    </div>
+    <div>
+      <div
+        className="rs-layer-tree-item rs-visible"
+        style={
+          Object {
+            "paddingLeft": "30px",
+          }
+        }
+      >
+        <label
+          aria-label="Hide layer"
+          className="rs-layer-tree-input rs-layer-tree-input-checkbox rs-checkbox"
+          onKeyPress={[Function]}
+          tabIndex={-1}
+          title="Hide layer"
+        >
+          <input
+            checked={true}
+            onClick={[Function]}
+            readOnly={true}
+            tabIndex={-1}
+            type="checkbox"
+          />
+          <span />
+        </label>
+        <div
+          aria-expanded={false}
+          aria-label="Vienna Streets Show sublayer"
+          className="rs-layer-tree-toggle"
+          onClick={[Function]}
+          onKeyPress={[Function]}
+          role="button"
+          tabIndex={0}
+          title="Vienna Streets Show sublayer"
+        >
+          <div>
+            Vienna Streets
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div
+        className="rs-layer-tree-item rs-visible"
+        style={
+          Object {
+            "paddingLeft": "30px",
+          }
+        }
+      >
+        <label
+          aria-label="Hide layer"
+          className="rs-layer-tree-input rs-layer-tree-input-checkbox rs-checkbox"
+          onKeyPress={[Function]}
+          tabIndex={-1}
+          title="Hide layer"
+        >
+          <input
+            checked={true}
+            onClick={[Function]}
+            readOnly={true}
+            tabIndex={-1}
+            type="checkbox"
+          />
+          <span />
+        </label>
+        <div
+          aria-expanded={false}
+          aria-label="Roads Seoul Show sublayer"
+          className="rs-layer-tree-toggle"
+          onClick={[Function]}
+          onKeyPress={[Function]}
+          role="button"
+          tabIndex={0}
+          title="Roads Seoul Show sublayer"
+        >
+          <div>
+            Roads Seoul
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div>
     <div
       className="rs-layer-tree-item rs-visible"
@@ -1068,6 +1494,9 @@ exports[`LayerTree matches snapshots when renderItem is used. 1`] = `
 <div
   className="rs-layer-tree"
 >
+  <div>
+    Road sample layers
+  </div>
   <div>
     Vector sample layers
   </div>

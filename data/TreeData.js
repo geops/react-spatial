@@ -175,4 +175,53 @@ export default [
       },
     ],
   },
+  {
+    name: 'Road sample layers',
+    key: 'road.sample.layers',
+    visible: true,
+    children: [
+      {
+        name: 'Vienna Streets',
+        key: 'vienna.streets',
+        visible: true,
+        properties: {
+          hideInLegend: true,
+        },
+        data: {
+          style: new Style({
+            stroke: new Stroke({
+              color: '#ffcc33',
+              width: 2,
+            }),
+          }),
+          type: 'vectorLayer',
+          url:
+            'https://raw.githubusercontent.com/openlayers/openlayers/' +
+            '3c64018b3754cf605ea19cbbe4c8813304da2539/examples/data/geojson/' +
+            'vienna-streets.geojson',
+        },
+      },
+      {
+        name: 'Roads Seoul',
+        key: 'roads.seoul',
+        visible: true,
+        properties: {
+          hideInLegend: true,
+        },
+        data: {
+          style: new Style({
+            stroke: new Stroke({
+              color: '#7dff8f',
+              width: 2,
+            }),
+          }),
+          type: 'vectorLayer',
+          url:
+            'https://raw.githubusercontent.com/openlayers/openlayers/' +
+            '3c64018b3754cf605ea19cbbe4c8813304da2539/examples/data/geojson/' +
+            'roads-seoul.geojson',
+        },
+      },
+    ],
+  },
 ];
