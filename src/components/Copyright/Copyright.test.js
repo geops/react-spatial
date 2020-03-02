@@ -90,12 +90,14 @@ describe('Copyright', () => {
 
   test('displays a custom copyright', () => {
     layers[1].setVisible(true);
+
     const component = mount(
       <Copyright
         layerService={layerService}
         format={copyrights => `Number of copyrights: ${copyrights.length}`}
       />,
     );
+
     expect(component.text()).toBe('Number of copyrights: 1');
   });
 
@@ -150,7 +152,7 @@ describe('Copyright', () => {
     ];
 
     const layService = new LayerService(ConfigReader.readConfig(data));
-    const component = shallow(
+    const component = mount(
       <Copyright
         layerService={layService}
         format={copyrights => `Number of copyrights: ${copyrights.length}`}
