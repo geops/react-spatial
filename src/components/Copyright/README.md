@@ -11,7 +11,7 @@ import Copyright from 'react-spatial/components/Copyright';
 const layerConf = [{
   name: 'OSM Baselayer',
   visible: true,
-  copyright: 'OSM Contributors',
+  copyright: '&copy; OSM Contributors',
   data: {
     type: 'xyz',
     url: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',

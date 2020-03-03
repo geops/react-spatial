@@ -13,16 +13,17 @@ const propTypes = {
    * and returns the copyright.
    */
   format: PropTypes.func,
+
+  /**
+   * CSS class of th root element
+   */
+  className: PropTypes.string,
 };
 
 const defaultProps = {
   layerService: null,
-  format: copyrights => (
-    <>
-      &copy;
-      {` ${copyrights.join(' | ')}`}
-    </>
-  ),
+  format: copyrights => copyrights.join(' | '),
+  className: 'rs-copyright',
 };
 
 function Copyright({ layerService, format, ...other }) {
@@ -43,8 +44,10 @@ function Copyright({ layerService, format, ...other }) {
 
   useEffect(() => {
     layerService.on('change:visible', forceUpdate);
+    layerService.on('change:copyright', forceUpdate);
     return () => {
       layerService.un('change:visible', forceUpdate);
+      layerService.un('change:copyright', forceUpdate);
     };
   }, [layerService]);
 
@@ -53,10 +56,14 @@ function Copyright({ layerService, format, ...other }) {
   }
 
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    <div className="rs-copyright" {...other}>
-      {format(copyrights)}
-    </div>
+    <div
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...other}
+      // eslint-disable-next-line react/no-danger
+      dangerouslySetInnerHTML={{
+        __html: format(copyrights),
+      }}
+    />
   );
 }
 

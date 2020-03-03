@@ -109,6 +109,11 @@ export default class LayerService {
   listenChangeEvt() {
     this.getLayersAsFlatArray().forEach(layer => {
       this.keys.push(
+        layer.on('change:copyright', evt => {
+          (this.callbacks['change:copyright'] || []).forEach(cb =>
+            cb(evt.target),
+          );
+        }),
         layer.on('change:visible', evt => {
           const visible = evt.target.getVisible();
 
