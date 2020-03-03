@@ -44,6 +44,10 @@ export default class Layer extends Observable {
     this.properties = properties || {};
     this.isQueryable = isQueryable !== false;
 
+    // Custom property for duck typing since `instanceof` is not working
+    // when the instance was created on different bundles.
+    this.isReactSpatialLayer = true;
+
     // This array contains openlayers listeners keys to unlisten in terminate function.
     this.olListenersKeys = [];
 
