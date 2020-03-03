@@ -103,7 +103,11 @@ class LayerTree extends Component {
       layerService && layerService.getLayers()
         ? layerService
             .getLayers()
-            .filter(l => !isItemHidden(l) && l.getVisibleChildren().length)
+            .filter(
+              l =>
+                !isItemHidden(l) &&
+                l.getVisibleChildren().filter(c => !isItemHidden(c)).length,
+            )
         : [];
 
     this.state = {
@@ -168,10 +172,10 @@ class LayerTree extends Component {
   }
 
   renderInput(layer) {
-    const { titles } = this.props;
+    const { titles, isItemHidden } = this.props;
     let tabIndex = 0;
 
-    if (!layer.getChildren().length) {
+    if (!layer.getChildren().filter(c => !isItemHidden(c)).length) {
       // We forbid focus on keypress event for first level layers and layers without children.
       tabIndex = -1;
     }
@@ -203,9 +207,10 @@ class LayerTree extends Component {
   }
 
   renderArrow(layer) {
+    const { isItemHidden } = this.props;
     const { expandedLayerNames } = this.state;
 
-    if (!layer.getChildren().length) {
+    if (!layer.getChildren().filter(c => !isItemHidden(c)).length) {
       return null;
     }
 
@@ -221,10 +226,13 @@ class LayerTree extends Component {
   // Render a button which expands/collapse the layer if there is children
   // or simulate a click on the input otherwise.
   renderToggleButton(layer) {
-    const { t, titles } = this.props;
+    const { t, titles, isItemHidden } = this.props;
     const { expandedLayerNames } = this.state;
     const onInputClick = () => {
-      this.onInputClick(layer, layer.getChildren().length);
+      this.onInputClick(
+        layer,
+        layer.getChildren().filter(c => !isItemHidden(c)).length,
+      );
     };
     const title = `${t(layer.getName())} ${
       !expandedLayerNames.includes(layer)
@@ -258,6 +266,7 @@ class LayerTree extends Component {
   }
 
   renderItem(layer, level) {
+    const { isItemHidden } = this.props;
     const {
       renderItem,
       renderItemContent,
@@ -267,7 +276,7 @@ class LayerTree extends Component {
     const { expandedLayerNames } = this.state;
 
     const children = expandedLayerNames.includes(layer)
-      ? [...layer.getChildren()]
+      ? [...layer.getChildren().filter(c => !isItemHidden(c))]
       : [];
 
     if (renderItem) {

@@ -60,6 +60,12 @@ describe('LayerTree', () => {
         isItemHidden: item => !!item.children.length,
       });
     });
+
+    test('when an item is hidden (different layer tree levels)', () => {
+      renderLayerTree(data, {
+        isItemHidden: item => item.getIsBaseLayer() || item.get('hideInLegend'),
+      });
+    });
   });
 
   describe('triggers onInputClick', () => {
