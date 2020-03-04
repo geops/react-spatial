@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import { toLonLat } from 'ol/proj';
 import { unByKey } from 'ol/Observable';
-import mapboxgl from 'mapbox-gl';
+import mapboxgl from 'mapbox-gl/dist/mapbox-gl-unminified';
 import OLLayer from 'ol/layer/Layer';
 import GeoJSON from 'ol/format/GeoJSON';
 import Layer from './Layer';
@@ -17,44 +17,12 @@ export default class MapboxLayer extends Layer {
     const mbLayer = new OLLayer({
       render: frameState => {
         const canvas = this.mbMap.getCanvas();
-        const { viewState } = frameState;
 
         const visible = mbLayer.getVisible();
         canvas.style.display = visible ? 'block' : 'none';
 
         const opacity = mbLayer.getOpacity();
         canvas.style.opacity = opacity;
-
-        // adjust view parameters in mapbox
-        const { rotation } = viewState;
-        if (rotation) {
-          this.mbMap.rotateTo((-rotation * 180) / Math.PI, {
-            animate: false,
-          });
-        }
-        this.mbMap.jumpTo({
-          center: toLonLat(viewState.center),
-          zoom: viewState.zoom - 1,
-          animate: false,
-        });
-
-        // cancel the scheduled update & trigger synchronous redraw
-        // see https://github.com/mapbox/mapbox-gl-js/issues/7893#issue-408992184
-        // NOTE: THIS MIGHT BREAK WHEN UPDATING MAPBOX
-        if (this.mbMap && this.mbMap.style && this.mbMap.isStyleLoaded()) {
-          if (this.mbMap._frame) {
-            this.mbMap._frame.cancel();
-            this.mbMap._frame = null;
-          }
-          try {
-            this.mbMap._render();
-          } catch (err) {
-            // ignore render errors because it's probably related to
-            // a render during an update of the style.
-            // eslint-disable-next-line no-console
-            console.warn(err);
-          }
-        }
 
         return canvas;
       },
@@ -108,6 +76,17 @@ export default class MapboxLayer extends Layer {
       touchZoomRotate: false,
       // Needs to be true to able to export the canvas, but could lead to performance issue on mobile.
       preserveDrawingBuffer: this.options.preserveDrawingBuffer || false,
+    });
+    const that = this;
+    this.map.on('postrender', () => {
+      // adjust view parameters in mapbox
+      const view = that.map.getView();
+      if (that.mbMap) {
+        that.mbMap.jumpTo({
+          center: toLonLat(view.getCenter()),
+          zoom: view.getZoom() - 1,
+        });
+      }
     });
 
     this.mbMap.once('load', () => {
