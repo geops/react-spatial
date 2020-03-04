@@ -18,12 +18,6 @@ export default class MapboxLayer extends Layer {
       render: frameState => {
         const canvas = this.mbMap.getCanvas();
 
-        const visible = mbLayer.getVisible();
-        canvas.style.display = visible ? 'block' : 'none';
-
-        const opacity = mbLayer.getOpacity();
-        canvas.style.opacity = opacity;
-
         return canvas;
       },
       zIndex: options.zIndex,
@@ -66,14 +60,7 @@ export default class MapboxLayer extends Layer {
       boxZoom: false,
       center: toLonLat([x, y]),
       container: this.map.getTargetElement(),
-      doubleClickZoom: false,
-      dragPan: false,
-      dragRotate: false,
       interactive: false,
-      keyboard: false,
-      pitchWithRotate: false,
-      scrollZoom: false,
-      touchZoomRotate: false,
       // Needs to be true to able to export the canvas, but could lead to performance issue on mobile.
       preserveDrawingBuffer: this.options.preserveDrawingBuffer || false,
     });
