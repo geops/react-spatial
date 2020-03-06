@@ -26,6 +26,7 @@ export default class Layer extends Observable {
     isBaseLayer,
     children,
     visible,
+    zIndex,
     copyright,
     properties,
     isQueryable,
@@ -38,15 +39,23 @@ export default class Layer extends Observable {
     this.radioGroup = radioGroup;
     this.children = children || [];
     this.visible = visible === undefined ? true : visible;
+    this.zIndex = zIndex;
     this.copyright = copyright;
     this.properties = properties || {};
     this.isQueryable = isQueryable !== false;
+
+    // Custom property for duck typing since `instanceof` is not working
+    // when the instance was created on different bundles.
+    this.isReactSpatialLayer = true;
 
     // This array contains openlayers listeners keys to unlisten in terminate function.
     this.olListenersKeys = [];
 
     if (this.olLayer) {
       this.olLayer.setVisible(this.visible);
+      if (this.zIndex) {
+        this.olLayer.setZIndex(this.zIndex);
+      }
     }
   }
 

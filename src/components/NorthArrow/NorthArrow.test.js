@@ -95,13 +95,10 @@ describe('NorthArrow', () => {
 
   test('should remove post render event on unmount', () => {
     const wrapper = mount(<NorthArrow map={olMap} rotationOffset={-10} />);
-    act(() => {
-      olMap.dispatchEvent(new MapEvent('postrender', olMap));
-    });
     // eslint-disable-next-line no-underscore-dangle
-    expect(olMap.listeners_.postrender.length).toBe(3);
+    expect(olMap.listeners_.postrender.length).toBe(4);
     wrapper.unmount();
     // eslint-disable-next-line no-underscore-dangle
-    expect(olMap.listeners_.postrender.length).toBe(2);
+    expect(olMap.listeners_.postrender.length).toBe(3);
   });
 });

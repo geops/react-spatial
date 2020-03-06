@@ -45,18 +45,20 @@ const propTypes = {
   /**
    * Callback when a [ol/Feature](https://openlayers.org/en/latest/apidoc/module-ol_Feature-Feature.html) is clicked.
    * @param {OLFeature[]} features An array of [ol/Feature](https://openlayers.org/en/latest/apidoc/module-ol_Feature-Feature.html).
+   * @param {ol.MapBrowserEvent} event The singleclick [ol/MapBrowserEvent](https://openlayers.org/en/latest/apidoc/module-ol_MapBrowserEvent-MapBrowserEvent.html#event:singleclick).
    */
   onFeaturesClick: PropTypes.func,
 
   /**
    * Callback when a [ol/Feature](https://openlayers.org/en/latest/apidoc/module-ol_Feature-Feature.html) is hovered.
    * @param {OLFeature[]} features An array of [ol/Feature](https://openlayers.org/en/latest/apidoc/module-ol_Feature-Feature.html).
+   * @param {ol.MapBrowserEvent} event The pointermove [ol/MapBrowserEvent](https://openlayers.org/en/latest/apidoc/module-ol_MapBrowserEvent-MapBrowserEvent.html#event:pointermove).
    */
   onFeaturesHover: PropTypes.func,
 
   /**
    * Callback when the map was moved.
-   * @param {ol.MapEvent} [evt](https://openlayers.org/en/latest/apidoc/module-ol_MapEvent-MapEvent.html).
+   * @param {ol.MapEvent} event The movend [ol/MapEvent](https://openlayers.org/en/latest/apidoc/module-ol_MapBrowserEvent-MapBrowserEvent.html#event:moveend).
    */
   onMapMoved: PropTypes.func,
 
@@ -84,7 +86,7 @@ const propTypes = {
 const defaultProps = {
   animationOptions: undefined,
   center: [0, 0],
-  className: 'tm-map',
+  className: 'rs-map',
   extent: undefined,
   fitOptions: {
     duration: 1000,
@@ -179,13 +181,13 @@ class BasicMap extends Component {
 
     this.singleClickRef = this.map.on('singleclick', evt => {
       const features = evt.map.getFeaturesAtPixel(evt.pixel);
-      onFeaturesClick(features || []);
+      onFeaturesClick(features || [], evt);
     });
 
     if (onFeaturesHover) {
       this.pointerMoveRef = this.map.on('pointermove', evt => {
         const features = this.map.getFeaturesAtPixel(evt.pixel);
-        onFeaturesHover(features || []);
+        onFeaturesHover(features || [], evt);
       });
     }
   }
@@ -230,11 +232,15 @@ class BasicMap extends Component {
     }
 
     if (
-      viewOptions &&
-      viewOptions.extent &&
-      (!prevProps.viewOptions.extent ||
-        (prevProps.viewOptions.extent &&
-          !equals(prevProps.viewOptions.extent, viewOptions.extent)))
+      (viewOptions &&
+        viewOptions.extent &&
+        (!prevProps.viewOptions.extent ||
+          (prevProps.viewOptions.extent &&
+            !equals(prevProps.viewOptions.extent, viewOptions.extent)))) ||
+      (viewOptions.maxZoom &&
+        prevProps.viewOptions.maxZoom !== viewOptions.maxZoom) ||
+      (viewOptions.minZoom &&
+        prevProps.viewOptions.minZoom !== viewOptions.minZoom)
     ) {
       // Re-create a view, ol doesn't provide any method to setExtent of view.
       this.map.setView(
@@ -243,6 +249,8 @@ class BasicMap extends Component {
           ...{ center },
           ...{ resolution },
           ...{ extent: viewOptions.extent },
+          ...{ maxZoom: viewOptions.maxZoom },
+          ...{ minZoom: viewOptions.minZoom },
         }),
       );
     }
