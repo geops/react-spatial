@@ -363,6 +363,7 @@ class BaseLayerToggler extends Component {
             onClick={() => this.previous()}
             onKeyPress={e => e.which === 13 && this.previous()}
             tabIndex="0"
+            aria-label={titles.prevButton}
             title={titles.prevButton}
           >
             <FaArrowCircleLeft focusable={false} />
@@ -373,6 +374,7 @@ class BaseLayerToggler extends Component {
             onClick={() => this.next()}
             onKeyPress={e => e.which === 13 && this.next()}
             tabIndex="0"
+            aria-label={titles.nextButton}
             title={titles.nextButton}
           >
             <FaArrowCircleRight focusable={false} />
@@ -389,6 +391,7 @@ class BaseLayerToggler extends Component {
           className="rs-base-layer-toggle-button"
           role="button"
           title={titles.button}
+          aria-label={titles.button}
           onClick={() => this.setNextVisible(nextLayer)}
           onKeyPress={e => e.which === 13 && this.setNextVisible(nextLayer)}
           tabIndex="0"
