@@ -115,6 +115,7 @@ class Popup extends PureComponent {
         tabIndex={0}
         className="rs-popup-close-bt"
         title={titles.closeButton}
+        aria-label={titles.closeButton}
         onClick={() => onCloseClick()}
         onKeyPress={evt => evt.which === 13 && onCloseClick()}
       >
