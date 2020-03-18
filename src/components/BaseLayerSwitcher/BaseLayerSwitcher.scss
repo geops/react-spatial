@@ -1,0 +1,42 @@
+.rs-base-layer-switcher {
+  border: 2px solid lightgray;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  .rs-base-layer-map,
+  .rs-base-layer-image {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+  }
+
+  .rs-base-layer-switch-title {
+    font-size: 10px;
+    padding: 2px;
+    color: white;
+    background-color: black;
+    text-align: center;
+  }
+
+  .rs-base-layer-switch-button {
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+    height: 100px;
+    margin: 4px;
+    border: 1px solid black;
+  }
+
+  .rs-base-layer-toggle {
+    width: 18px;
+    height: 18px;
+    padding: 4px;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
