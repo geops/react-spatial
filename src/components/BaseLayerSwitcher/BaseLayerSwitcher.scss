@@ -4,6 +4,10 @@
   position: relative;
   height: 80px;
 
+  &.open {
+    width: auto;
+  }
+
   .rs-base-layer-switch-title {
     position: absolute;
     width: 96px;

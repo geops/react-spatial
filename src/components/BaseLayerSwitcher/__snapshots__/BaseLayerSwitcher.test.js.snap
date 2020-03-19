@@ -1,3 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BaseLayerToggler matches snapshots using default properties. 1`] = `null`;
+exports[`BaseLayerToggler matches snapshots using default properties. 1`] = `
+<div
+  className="rs-base-layer-switcher"
+>
+  <div
+    aria-label="Open Baselayer-Switcher"
+    className="rs-base-layer-switch-button"
+    onClick={[Function]}
+    onKeyPress={[Function]}
+    role="button"
+    tabIndex="0"
+    title="Open Baselayer-Switcher"
+  >
+    <div
+      className="rs-base-layer-switch-title closed"
+    >
+      Base layers
+    </div>
+    <img
+      alt="foobar"
+      className="rs-base-layer-image"
+    />
+  </div>
+</div>
+`;

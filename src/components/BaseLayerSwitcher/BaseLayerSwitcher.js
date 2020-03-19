@@ -50,7 +50,9 @@ const getNextImage = (currentLayer, layers, layerImages) => {
 function BaseLayerSwitcher({ layers, layerImages, className, titles }) {
   const baseLayers = layers.filter(layer => layer.getIsBaseLayer());
   const [switcherOpen, setSwitcherOpen] = useState(false);
-  const [currentLayer, setCurrentlayer] = useState(baseLayers[0]);
+  const [currentLayer, setCurrentlayer] = useState(
+    baseLayers.find(layer => layer.getVisible()),
+  );
   const images = Object.keys(layerImages).map(
     layerImage => layerImages[layerImage],
   );
@@ -102,7 +104,7 @@ function BaseLayerSwitcher({ layers, layerImages, className, titles }) {
                 setCurrentlayer(baseLayers[index]) &&
                 setSwitcherOpen(false)
               }
-              tabIndex={index}
+              tabIndex="0"
             >
               <div className="rs-base-layer-switch-title">{layerName}</div>
               <img
