@@ -1,42 +1,53 @@
 .rs-base-layer-switcher {
-  border: 2px solid lightgray;
-  background-color: white;
   display: flex;
   align-items: center;
   position: relative;
-
-  .rs-base-layer-map,
-  .rs-base-layer-image {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-  }
+  height: 80px;
 
   .rs-base-layer-switch-title {
+    position: absolute;
+    width: 96px;
     font-size: 10px;
     padding: 2px;
-    color: white;
-    background-color: black;
+    background-color: rgba(255, 255, 255, 0.9);
     text-align: center;
+    z-index: 2;
+
+    &.closed {
+      color: white;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
   }
 
   .rs-base-layer-switch-button {
-    display: flex;
-    flex-direction: column;
-    width: 100px;
-    height: 100px;
+    height: 85%;
     margin: 4px;
-    border: 1px solid black;
+    overflow: hidden;
+    border: 2px solid white;
+
+    &.layer {
+      &:hover {
+        border: 2px solid red;
+      }
+    }
+
+    &.active {
+      border: 2px solid red;
+    }
+
+    .rs-base-layer-image {
+      width: 100px;
+      height: 100px;
+    }
   }
 
   .rs-base-layer-toggle {
-    width: 18px;
-    height: 18px;
-    padding: 4px;
-
-    svg {
-      width: 100%;
-      height: 100%;
-    }
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 85%;
+    margin: 4px;
+    background-color: white;
+    border: 2px solid white;
   }
 }

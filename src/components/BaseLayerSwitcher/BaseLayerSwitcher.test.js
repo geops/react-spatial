@@ -10,10 +10,13 @@ import BaseLayerSwitcher from './BaseLayerSwitcher';
 
 configure({ adapter: new Adapter() });
 
-const shallowComp = (newData, props) => {
+const shallowComp = newData => {
   const layers = ConfigReader.readConfig(newData || data);
+  const layerImages = {
+    layer1: 'foo',
+  };
   const component = renderer.create(
-    <BaseLayerSwitcher layers={[layers[0]]} {...(props || {})} />,
+    <BaseLayerSwitcher layers={[layers[0]]} layerImages={layerImages} />,
   );
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
