@@ -4,24 +4,16 @@ import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import 'jest-canvas-mock';
 import renderer from 'react-test-renderer';
-import OLMap from 'ol/Map';
 import ConfigReader from '../../ConfigReader';
-import LayerService from '../../LayerService';
 import data from '../../../data/TreeData';
 import BaseLayerSwitcher from './BaseLayerSwitcher';
 
 configure({ adapter: new Adapter() });
 
 const shallowComp = (newData, props) => {
-  const map = new OLMap({});
   const layers = ConfigReader.readConfig(newData || data);
-  const layerService = new LayerService(layers);
   const component = renderer.create(
-    <BaseLayerSwitcher
-      layerService={layerService}
-      map={map}
-      {...(props || {})}
-    />,
+    <BaseLayerSwitcher layers={[layers[0]]} {...(props || {})} />,
   );
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
