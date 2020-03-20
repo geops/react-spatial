@@ -82,7 +82,7 @@ const defaultProps = {
   layerService: undefined,
   className: 'rs-layer-tree',
   padding: 30,
-  isItemHidden: () => false,
+  isItemHidden: item => item.get('hideInLegend'),
   getParentClassName: () => undefined,
   renderItem: null,
   renderItemContent: null,
