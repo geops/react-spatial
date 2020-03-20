@@ -5,23 +5,65 @@ exports[`BaseLayerToggler matches snapshots using default properties. 1`] = `
   className="rs-base-layer-switcher"
 >
   <div
-    aria-label="Open Baselayer-Switcher"
-    className="rs-base-layer-switch-button"
-    onClick={[Function]}
-    onKeyPress={[Function]}
-    role="button"
-    tabIndex="0"
-    title="Open Baselayer-Switcher"
+    className="wkp-base-layer-switch-layers"
   >
     <div
-      className="rs-base-layer-switch-title closed"
+      aria-label="Open Baselayer-Switcher"
+      className="rs-base-layer-switch-button active"
+      onClick={[Function]}
+      onKeyPress={[Function]}
+      role="button"
+      tabIndex="0"
+      title="Open Baselayer-Switcher"
     >
-      Base layers
+      <div
+        className="rs-base-layer-switch-title closed"
+      >
+        Base layers
+      </div>
+      <img
+        alt="Failed loading source"
+        className="rs-base-layer-image"
+      />
     </div>
-    <img
-      alt="foobar"
-      className="rs-base-layer-image"
-    />
+    <div
+      aria-label="Open Baselayer-Switcher"
+      className="rs-base-layer-switch-button"
+      onClick={[Function]}
+      onKeyPress={[Function]}
+      role="button"
+      tabIndex="0"
+      title="Open Baselayer-Switcher"
+    >
+      <div
+        className="rs-base-layer-switch-title closed"
+      >
+        Base layers
+      </div>
+      <img
+        alt="Failed loading source"
+        className="rs-base-layer-image"
+      />
+    </div>
+    <div
+      aria-label="Open Baselayer-Switcher"
+      className="rs-base-layer-switch-button"
+      onClick={[Function]}
+      onKeyPress={[Function]}
+      role="button"
+      tabIndex="0"
+      title="Open Baselayer-Switcher"
+    >
+      <div
+        className="rs-base-layer-switch-title closed"
+      >
+        Base layers
+      </div>
+      <img
+        alt="Failed loading source"
+        className="rs-base-layer-image"
+      />
+    </div>
   </div>
 </div>
 `;
