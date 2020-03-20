@@ -46,7 +46,9 @@ const getNextImage = (currentLayer, layers, layerImages) => {
     layers.find(layer => layer === currentLayer),
   );
   const nextIndex = currentIndex + 1 === layers.length ? 0 : currentIndex + 1;
-  return layerImages[Object.keys(layerImages)[nextIndex]];
+  return layerImages.filter(layer => layer)[
+    Object.keys(layerImages)[nextIndex]
+  ];
 };
 
 let timeout;
@@ -58,9 +60,10 @@ function BaseLayerSwitcher({ layers, layerImages, className, titles }) {
   const [currentLayer, setCurrentlayer] = useState(
     baseLayers.find(layer => layer.getVisible()),
   );
-  const images = Object.keys(layerImages).map(
-    layerImage => layerImages[layerImage],
-  );
+  /* Images are loaded from props if provided, fallback from layer */
+  const images = layerImages
+    ? Object.keys(layerImages).map(layerImage => layerImages[layerImage])
+    : baseLayers.map(layer => layer.previewImage);
 
   if (!baseLayers || baseLayers.length < 2) {
     return null;
@@ -144,10 +147,10 @@ function BaseLayerSwitcher({ layers, layerImages, className, titles }) {
               <img
                 src={
                   isClosed
-                    ? getNextImage(currentLayer, baseLayers, layerImages)
+                    ? getNextImage(currentLayer, baseLayers, images)
                     : images[index]
                 }
-                alt="Failed loading source"
+                alt="Source not found"
                 className="rs-base-layer-image"
               />
             </div>

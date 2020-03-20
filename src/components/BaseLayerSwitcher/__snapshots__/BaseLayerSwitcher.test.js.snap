@@ -22,7 +22,7 @@ exports[`BaseLayerToggler matches snapshots using default properties. 1`] = `
         Base layers
       </div>
       <img
-        alt="Failed loading source"
+        alt="Source not found"
         className="rs-base-layer-image"
       />
     </div>
@@ -41,7 +41,7 @@ exports[`BaseLayerToggler matches snapshots using default properties. 1`] = `
         Base layers
       </div>
       <img
-        alt="Failed loading source"
+        alt="Source not found"
         className="rs-base-layer-image"
       />
     </div>
@@ -60,7 +60,7 @@ exports[`BaseLayerToggler matches snapshots using default properties. 1`] = `
         Base layers
       </div>
       <img
-        alt="Failed loading source"
+        alt="Source not found"
         className="rs-base-layer-image"
       />
     </div>
