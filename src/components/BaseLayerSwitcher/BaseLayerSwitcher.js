@@ -15,7 +15,7 @@ const propTypes = {
   /**
    * Object containing relative paths to the base layer images.
    */
-  layerImages: PropTypes.objectOf(PropTypes.string).isRequired,
+  layerImages: PropTypes.objectOf(PropTypes.string),
 
   /**
    * CSS class to apply on the container.
@@ -39,6 +39,7 @@ const defaultProps = {
     openSwitcher: 'Open Baselayer-Switcher',
     closeSwitcher: 'Close Baselayer-Switcher',
   },
+  layerImages: undefined,
 };
 
 const getNextImage = (currentLayer, layers, layerImages) => {
