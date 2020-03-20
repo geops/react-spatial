@@ -39,8 +39,32 @@ describe('BaseLayerToggler', () => {
     });
   });
 
+  test('renders one switch button per baselayer', () => {
+    const comp = mountComp(data);
+    expect(comp.find('.rs-base-layer-switch-button').length).toBe(3);
+  });
+
   test('the first baselayer is visible on mount', () => {
     const comp = mountComp(data);
     expect(comp.props().layers[0].getVisible()).toBe(true);
+  });
+
+  test('unmounts close button and switches layer on click', () => {
+    const comp = mountComp(data);
+    comp
+      .find('.rs-base-layer-switch-button')
+      .at(0)
+      .simulate('click');
+    comp
+      .find('.rs-base-layer-switch-button')
+      .at(2)
+      .simulate('click');
+    expect(comp.find('.rs-base-layer-close').exists()).toBe(false);
+    expect(
+      comp
+        .props()
+        .layers.filter(layer => layer.getIsBaseLayer())[2]
+        .getVisible(),
+    ).toBe(true);
   });
 });

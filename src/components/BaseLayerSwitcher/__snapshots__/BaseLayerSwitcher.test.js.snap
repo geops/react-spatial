@@ -5,7 +5,7 @@ exports[`BaseLayerToggler matches snapshots using default properties. 1`] = `
   className="rs-base-layer-switcher"
 >
   <div
-    className="wkp-base-layer-switch-layers"
+    className="rs-base-layer-switch-layers"
   >
     <div
       aria-label="Open Baselayer-Switcher"

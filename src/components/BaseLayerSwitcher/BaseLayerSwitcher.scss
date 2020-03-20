@@ -10,7 +10,7 @@
     // overflow: ov erlay; // For small screen resolutions
   }
 
-  .wkp-base-layer-switch-layers {
+  .rs-base-layer-switch-layers {
     display: flex;
     overflow: auto;
     height: 100%;
@@ -54,7 +54,7 @@
       }
     }
 
-    .rs-base-layer-toggle {
+    .rs-base-layer-close {
       display: flex;
       flex-direction: column;
       justify-content: center;

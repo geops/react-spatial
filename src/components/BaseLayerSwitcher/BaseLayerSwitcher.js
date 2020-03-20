@@ -81,7 +81,7 @@ function BaseLayerSwitcher({ layers, layerImages, className, titles }) {
   const toggleBtn =
     baseLayers.length > 0 ? (
       <div
-        className="rs-base-layer-toggle"
+        className="rs-base-layer-close"
         role="button"
         onClick={() => setSwitcherOpen(false)}
         onKeyPress={e => e.which === 13 && setSwitcherOpen(false)}
@@ -95,7 +95,7 @@ function BaseLayerSwitcher({ layers, layerImages, className, titles }) {
 
   return (
     <div className={`${className}${switcherOpen ? ' open' : ''}`}>
-      <div className="wkp-base-layer-switch-layers">
+      <div className="rs-base-layer-switch-layers">
         {switcherOpen ? toggleBtn : null}
         {baseLayers.map((layer, index) => {
           const layerName = layers[index].getName();
