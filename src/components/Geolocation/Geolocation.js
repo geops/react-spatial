@@ -38,6 +38,11 @@ const propTypes = {
   noCenterAfterDrag: PropTypes.bool,
 
   /**
+   * If true, the map will constantly recenter to the current Position
+   */
+  alwaysRecenterToPosition: PropTypes.bool,
+
+  /**
    * Color (Number array with rgb values) or style function.
    * If a color is given, the style is animated.
    */
@@ -51,6 +56,7 @@ const defaultProps = {
   className: 'rs-geolocation',
   onError: () => {},
   noCenterAfterDrag: false,
+  alwaysRecenterToPosition: true,
   colorOrStyleFunc: [235, 0, 0],
 };
 
@@ -66,10 +72,10 @@ class Geolocation extends PureComponent {
       source: new VectorSource(),
     });
 
-    this.isCentered = true;
+    this.recenterToPostion = true;
     if (noCenterAfterDrag) {
       map.on('pointerdrag', () => {
-        this.isCentered = false;
+        this.recenterToPostion = false;
       });
     }
 
@@ -106,9 +112,14 @@ class Geolocation extends PureComponent {
   }
 
   deactivate() {
+    const { noCenterAfterDrag,  } = this.props;
     window.clearInterval(this.interval);
     this.layer.setMap(null);
     navigator.geolocation.clearWatch(this.watch);
+
+    if (!noCenterAfterDrag) {
+      this.recenterToPostion = true;
+    }
 
     this.setState({
       active: false,
@@ -116,7 +127,7 @@ class Geolocation extends PureComponent {
   }
 
   activate(position) {
-    const { map } = this.props;
+    const { map, alwaysRecenterToPosition } = this.props;
 
     const code = map
       .getView()
@@ -131,8 +142,11 @@ class Geolocation extends PureComponent {
     const point = new Point(pos);
     this.highlight(point);
     this.layer.setMap(map);
-    if (this.isCentered) {
+    if (this.recenterToPostion) {
       map.getView().setCenter(pos);
+      if (!alwaysRecenterToPosition) {
+        this.recenterToPostion = false;
+      }
     }
 
     this.setState({
