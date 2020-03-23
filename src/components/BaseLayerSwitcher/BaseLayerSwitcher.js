@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/interactive-supports-focus */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FaChevronCircleLeft } from 'react-icons/fa';
@@ -23,6 +24,11 @@ const propTypes = {
   className: PropTypes.string,
 
   /**
+   * Alternaive text rendered if layer images can't be loaded
+   */
+  altText: PropTypes.string,
+
+  /**
    * Button titles.
    */
   titles: PropTypes.shape({
@@ -34,6 +40,7 @@ const propTypes = {
 
 const defaultProps = {
   className: 'rs-base-layer-switcher',
+  altText: 'Source not found',
   titles: {
     button: 'Base layers',
     openSwitcher: 'Open Baselayer-Switcher',
@@ -54,7 +61,13 @@ const getNextImage = (currentLayer, layers, layerImages) => {
 
 let timeout;
 
-function BaseLayerSwitcher({ layers, layerImages, className, titles }) {
+function BaseLayerSwitcher({
+  layers,
+  layerImages,
+  altText,
+  className,
+  titles,
+}) {
   const baseLayers = layers.filter(layer => layer.getIsBaseLayer());
   const [switcherOpen, setSwitcherOpen] = useState(false);
   const [isClosed, setIsClosed] = useState(true);
@@ -79,13 +92,14 @@ function BaseLayerSwitcher({ layers, layerImages, className, titles }) {
       }, 200);
       return;
     }
+    window.clearTimeout(timeout);
     setIsClosed(false);
   }, [switcherOpen]);
 
   const toggleBtn =
     baseLayers.length > 0 ? (
       <div
-        className="rs-base-layer-close"
+        className="rs-base-layer-switch-close"
         role="button"
         onClick={() => setSwitcherOpen(false)}
         onKeyPress={e => e.which === 13 && setSwitcherOpen(false)}
@@ -102,17 +116,13 @@ function BaseLayerSwitcher({ layers, layerImages, className, titles }) {
       <div className="rs-base-layer-switch-layers">
         {switcherOpen ? toggleBtn : null}
         {baseLayers.map((layer, index) => {
-          const layerName = layers[index].getName();
+          const layerName = layer.getName();
           return (
             <div
-              key={baseLayers[index].key}
+              key={layer.key}
               className={`rs-base-layer-switch-button${
-                switcherOpen ? ' layer' : ''
-              }${
-                baseLayers[index].getName() === currentLayer.getName()
-                  ? ' active'
-                  : ''
-              }`}
+                switcherOpen ? ' open' : ''
+              }${layerName === currentLayer.getName() ? ' rs-active' : ''}`}
               role="button"
               title={isClosed ? titles.openSwitcher : layerName}
               aria-label={isClosed ? titles.openSwitcher : layerName}
@@ -121,8 +131,8 @@ function BaseLayerSwitcher({ layers, layerImages, className, titles }) {
                   setSwitcherOpen(true);
                   return;
                 }
-                setCurrentlayer(baseLayers[index]);
-                baseLayers[index].setVisible(true);
+                setCurrentlayer(layer);
+                layer.setVisible(true);
                 setSwitcherOpen(false);
               }}
               onKeyPress={e => {
@@ -130,13 +140,13 @@ function BaseLayerSwitcher({ layers, layerImages, className, titles }) {
                   if (!switcherOpen) {
                     setSwitcherOpen(true);
                   } else {
-                    baseLayers[index].setVisible(true);
-                    setCurrentlayer(baseLayers[index]);
+                    layer.setVisible(true);
+                    setCurrentlayer(layer);
                     setSwitcherOpen(false);
                   }
                 }
               }}
-              tabIndex="0"
+              tabIndex={`${isClosed ? index : '0'}`}
             >
               <div
                 className={`rs-base-layer-switch-title${
@@ -151,8 +161,8 @@ function BaseLayerSwitcher({ layers, layerImages, className, titles }) {
                     ? getNextImage(currentLayer, baseLayers, images)
                     : images[index]
                 }
-                alt="Source not found"
-                className="rs-base-layer-image"
+                alt={altText}
+                className="rs-base-layer-switch-image"
               />
             </div>
           );

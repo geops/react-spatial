@@ -24,12 +24,12 @@
       border: 2px solid white;
       background-color: gray;
 
-      &.layer {
+      &.open {
         &:hover {
           border: 2px solid red;
         }
 
-        &.active {
+        &.rs-active {
           border: 2px solid red;
         }
       }
@@ -50,7 +50,7 @@
         }
       }
 
-      .rs-base-layer-image {
+      .rs-base-layer-switch-image {
         vertical-align: center;
         width: 100px;
         height: 100px;
@@ -61,7 +61,7 @@
       }
     }
 
-    .rs-base-layer-close {
+    .rs-base-layer-switch-close {
       display: flex;
       flex-direction: column;
       justify-content: center;
