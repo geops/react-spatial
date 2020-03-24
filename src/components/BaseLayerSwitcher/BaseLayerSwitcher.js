@@ -83,14 +83,13 @@ function BaseLayerSwitcher({
 
   useEffect(() => {
     /* Used for correct layer image render with animation */
+    window.clearTimeout(timeout);
     if (!switcherOpen) {
-      window.clearTimeout(timeout);
       timeout = window.setTimeout(() => {
         setIsClosed(true);
       }, 200);
       return;
     }
-    window.clearTimeout(timeout);
     setIsClosed(false);
   }, [switcherOpen]);
 
