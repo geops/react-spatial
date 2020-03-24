@@ -54,9 +54,7 @@ const getNextImage = (currentLayer, layers, layerImages) => {
     layers.find(layer => layer === currentLayer),
   );
   const nextIndex = currentIndex + 1 === layers.length ? 0 : currentIndex + 1;
-  return layerImages.filter(layer => layer)[
-    Object.keys(layerImages)[nextIndex]
-  ];
+  return layerImages[nextIndex];
 };
 
 let timeout;
