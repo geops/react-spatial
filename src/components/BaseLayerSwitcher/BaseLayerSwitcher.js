@@ -49,6 +49,10 @@ const defaultProps = {
   layerImages: undefined,
 };
 
+const getVisibleLayer = layers => {
+  return layers.find(layer => layer.getVisible());
+};
+
 const getNextImage = (currentLayer, layers, layerImages) => {
   const currentIndex = layers.indexOf(
     layers.find(layer => layer === currentLayer),
@@ -69,9 +73,7 @@ function BaseLayerSwitcher({
   const baseLayers = layers.filter(layer => layer.getIsBaseLayer());
   const [switcherOpen, setSwitcherOpen] = useState(false);
   const [isClosed, setIsClosed] = useState(true);
-  const [currentLayer, setCurrentlayer] = useState(
-    baseLayers.find(layer => layer.getVisible()),
-  );
+  const [currentLayer, setCurrentLayer] = useState(getVisibleLayer(baseLayers));
   /* Images are loaded from props if provided, fallback from layer */
   const images = layerImages
     ? Object.keys(layerImages).map(layerImage => layerImages[layerImage])
@@ -80,6 +82,13 @@ function BaseLayerSwitcher({
   if (!baseLayers || baseLayers.length < 2) {
     return null;
   }
+
+  useEffect(() => {
+    /* Ensure correct layer is active on app load */
+    if (currentLayer !== getVisibleLayer(baseLayers)) {
+      setCurrentLayer(getVisibleLayer(baseLayers));
+    }
+  }, [currentLayer]);
 
   useEffect(() => {
     /* Used for correct layer image render with animation */
@@ -128,7 +137,7 @@ function BaseLayerSwitcher({
                   setSwitcherOpen(true);
                   return;
                 }
-                setCurrentlayer(layer);
+                setCurrentLayer(layer);
                 layer.setVisible(true);
                 setSwitcherOpen(false);
               }}
@@ -138,7 +147,7 @@ function BaseLayerSwitcher({
                     setSwitcherOpen(true);
                   } else {
                     layer.setVisible(true);
-                    setCurrentlayer(layer);
+                    setCurrentLayer(layer);
                     setSwitcherOpen(false);
                   }
                 }
