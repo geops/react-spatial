@@ -26,6 +26,7 @@ export default class Layer extends Observable {
     isBaseLayer,
     children,
     visible,
+    isAlwaysExpanded,
     zIndex,
     copyright,
     properties,
@@ -39,6 +40,7 @@ export default class Layer extends Observable {
     this.radioGroup = radioGroup;
     this.children = children || [];
     this.visible = visible === undefined ? true : visible;
+    this.isAlwaysExpanded = isAlwaysExpanded || false;
     this.zIndex = zIndex;
     this.copyright = copyright;
     this.properties = properties || {};
@@ -142,6 +144,10 @@ export default class Layer extends Observable {
    */
   getVisible() {
     return this.visible;
+  }
+
+  getIsAlwaysExpanded() {
+    return this.isAlwaysExpanded;
   }
 
   /**

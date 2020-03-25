@@ -48,15 +48,34 @@ export default [
     type: 'parent',
     children: [
       {
-        name: 'Countries Borders',
-        key: 'country.borders',
+        name: 'Countries',
+        key: 'countries',
         visible: false,
-        data: {
-          type: 'vectorLayer',
-          url:
-            'https://openlayers.org/en/latest/examples/data/geojson/' +
-            'countries.geojson',
-        },
+        isAlwaysExpanded: true,
+        children: [
+          {
+            name: 'Countries Borders',
+            key: 'country.borders',
+            visible: false,
+            data: {
+              type: 'vectorLayer',
+              url:
+                'https://openlayers.org/en/latest/examples/data/geojson/' +
+                'countries.geojson',
+            },
+          },
+          {
+            name: 'Countries 110m',
+            key: 'country.110m',
+            visible: false,
+            data: {
+              type: 'vectorLayer',
+              url:
+                'https://openlayers.org/en/latest/examples/data/geojson/' +
+                'countries-110m.geojson',
+            },
+          },
+        ],
       },
       {
         name: 'USA Population Density',
