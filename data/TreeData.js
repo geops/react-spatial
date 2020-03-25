@@ -5,27 +5,28 @@ import Fill from 'ol/style/Fill';
 
 export default [
   {
-    name: 'OSM Baselayer',
-    key: 'osm.baselayer',
+    name: 'Travic',
+    key: 'travic',
     visible: true,
     isBaseLayer: true,
     radioGroup: 'baseLayer',
-    copyright: '© OSM Contributors',
+    copyright: '©OpenMapTiles',
     data: {
-      type: 'xyz',
-      url: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      type: 'mapbox',
+      url:
+        'https://maps.geops.io/styles/travic/style.json?key=5cc87b12d7c5370001c1d6557f01e26728174c1fa19d33afe303b910',
     },
   },
   {
-    name: 'OSM Baselayer Hot',
-    key: 'osm.baselayer.hot',
+    name: 'OSM Baselayer',
+    key: 'osm.baselayer',
     visible: false,
     isBaseLayer: true,
     radioGroup: 'baseLayer',
     copyright: '© OSM Contributors',
     data: {
       type: 'xyz',
-      url: 'https://c.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+      url: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
     },
   },
   {

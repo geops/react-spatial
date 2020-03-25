@@ -532,16 +532,16 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       </label>
       <div
         aria-expanded={false}
-        aria-label="OSM Baselayer Hot Show sublayer"
+        aria-label="OSM Baselayer Show sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="OSM Baselayer Hot Show sublayer"
+        title="OSM Baselayer Show sublayer"
       >
         <div>
-          OSM Baselayer Hot
+          OSM Baselayer
         </div>
       </div>
     </div>
@@ -573,16 +573,16 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       </label>
       <div
         aria-expanded={false}
-        aria-label="OSM Baselayer Show sublayer"
+        aria-label="Travic Show sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="OSM Baselayer Show sublayer"
+        title="Travic Show sublayer"
       >
         <div>
-          OSM Baselayer
+          Travic
         </div>
       </div>
     </div>
@@ -836,16 +836,16 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
       </label>
       <div
         aria-expanded={false}
-        aria-label="OSM Baselayer Hot Show sublayer"
+        aria-label="OSM Baselayer Show sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="OSM Baselayer Hot Show sublayer"
+        title="OSM Baselayer Show sublayer"
       >
         <div>
-          OSM Baselayer Hot
+          OSM Baselayer
         </div>
       </div>
     </div>
@@ -877,16 +877,16 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
       </label>
       <div
         aria-expanded={false}
-        aria-label="OSM Baselayer Show sublayer"
+        aria-label="Travic Show sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="OSM Baselayer Show sublayer"
+        title="Travic Show sublayer"
       >
         <div>
-          OSM Baselayer
+          Travic
         </div>
       </div>
     </div>
@@ -1426,16 +1426,16 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       </label>
       <div
         aria-expanded={false}
-        aria-label="OSM Baselayer Hot Show sublayer"
+        aria-label="OSM Baselayer Show sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="OSM Baselayer Hot Show sublayer"
+        title="OSM Baselayer Show sublayer"
       >
         <div>
-          OSM Baselayer Hot
+          OSM Baselayer
         </div>
       </div>
     </div>
@@ -1467,16 +1467,16 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       </label>
       <div
         aria-expanded={false}
-        aria-label="OSM Baselayer Show sublayer"
+        aria-label="Travic Show sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="OSM Baselayer Show sublayer"
+        title="Travic Show sublayer"
       >
         <div>
-          OSM Baselayer
+          Travic
         </div>
       </div>
     </div>
@@ -1507,10 +1507,10 @@ exports[`LayerTree matches snapshots when renderItem is used. 1`] = `
     OpenTopoMap
   </div>
   <div>
-    OSM Baselayer Hot
+    OSM Baselayer
   </div>
   <div>
-    OSM Baselayer
+    Travic
   </div>
 </div>
 `;

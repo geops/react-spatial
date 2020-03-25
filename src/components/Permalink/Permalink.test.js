@@ -75,7 +75,7 @@ describe('Permalink', () => {
     const layerService = new LayerService(layers);
     mount(<Permalink layerService={layerService} />);
     const search =
-      '?baselayers=osm.baselayer,osm.baselayer.hot,open.topo.map&layers=switzerland.samples,usa.population.density,lines.samples,roads.seoul,vienna.streets';
+      '?baselayers=travic,osm.baselayer,open.topo.map&layers=switzerland.samples,usa.population.density,lines.samples,roads.seoul,vienna.streets';
 
     expect(window.location.search).toEqual(search);
   });
@@ -94,7 +94,7 @@ describe('Permalink', () => {
       />,
     );
     const search =
-      '?baselayers=osm.baselayer,osm.baselayer.hot,open.topo.map&layers=usa.population.density';
+      '?baselayers=travic,osm.baselayer,open.topo.map&layers=usa.population.density';
 
     expect(window.location.search).toEqual(search);
   });
@@ -197,15 +197,13 @@ describe('Permalink', () => {
     const layerService = new LayerService(layers);
     mount(<Permalink layerService={layerService} />);
     expect(
-      /baselayers=osm\.baselayer,osm\.baselayer\.hot,open\.topo\.map/.test(
+      /baselayers=travic,osm\.baselayer,open\.topo\.map/.test(
         window.location.search,
       ),
     ).toBe(true);
-
-    layerService.getLayer('OSM Baselayer Hot').setVisible(true);
-
+    layerService.getLayer('OSM Baselayer').setVisible(true);
     expect(
-      /baselayers=osm\.baselayer\.hot,osm\.baselayer,open\.topo\.map/.test(
+      /baselayers=osm\.baselayer,travic,open\.topo\.map/.test(
         window.location.search,
       ),
     ).toBe(true);

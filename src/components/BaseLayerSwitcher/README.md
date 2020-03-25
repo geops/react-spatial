@@ -11,6 +11,7 @@ import LayerService from 'react-spatial/LayerService';
 import ConfigReader from 'react-spatial/ConfigReader';
 import osmImage from '../../images/baselayer/osm.baselayer.png';
 import osmhotImage from '../../images/baselayer/osm.baselayer.hot.png';
+import travic from '../../images/baselayer/travic.png';
 import openTopoImage from '../../images/baselayer/open.topo.map.png';
 
 const center = [1149722.7037660484, 6618091.313553318];
@@ -18,8 +19,8 @@ const map = new OLMap({ controls: [] });
 const layers = ConfigReader.readConfig(treeData);
 const layerService = new LayerService(layers);
 const layerImages = {
+  travic: travic,
   osm: osmImage,
-  osm_hot: osmhotImage,
   opentopo: openTopoImage,
 };
 

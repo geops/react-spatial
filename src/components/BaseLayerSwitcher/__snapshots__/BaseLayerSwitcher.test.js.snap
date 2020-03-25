@@ -5,11 +5,11 @@ exports[`BaseLayerToggler matches snapshots using default properties. 1`] = `
   className="rs-base-layer-switcher"
 >
   <div
-    className="rs-base-layer-switch-layers"
+    className="rs-base-layer-switcher-layers"
   >
     <div
       aria-label="Open Baselayer-Switcher"
-      className="rs-base-layer-switch-button rs-active"
+      className="rs-base-layer-switcher-button rs-layer rs-active"
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
@@ -17,51 +17,51 @@ exports[`BaseLayerToggler matches snapshots using default properties. 1`] = `
       title="Open Baselayer-Switcher"
     >
       <div
-        className="rs-base-layer-switch-title closed"
+        className="rs-base-layer-switcher-title rs-closed"
       >
         Base layers
       </div>
       <img
         alt="Source not found"
-        className="rs-base-layer-switch-image"
+        className="rs-base-layer-switcher-image"
       />
     </div>
     <div
       aria-label="Open Baselayer-Switcher"
-      className="rs-base-layer-switch-button"
+      className="rs-base-layer-switcher-button rs-layer"
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
-      tabIndex="1"
+      tabIndex="-1"
       title="Open Baselayer-Switcher"
     >
       <div
-        className="rs-base-layer-switch-title closed"
+        className="rs-base-layer-switcher-title rs-closed"
       >
         Base layers
       </div>
       <img
         alt="Source not found"
-        className="rs-base-layer-switch-image"
+        className="rs-base-layer-switcher-image"
       />
     </div>
     <div
       aria-label="Open Baselayer-Switcher"
-      className="rs-base-layer-switch-button"
+      className="rs-base-layer-switcher-button rs-layer"
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
-      tabIndex="2"
+      tabIndex="-1"
       title="Open Baselayer-Switcher"
     >
       <div
-        className="rs-base-layer-switch-title closed"
+        className="rs-base-layer-switcher-title rs-closed"
       >
         Base layers
       </div>
       <img
         alt="Source not found"
-        className="rs-base-layer-switch-image"
+        className="rs-base-layer-switcher-image"
       />
     </div>
   </div>

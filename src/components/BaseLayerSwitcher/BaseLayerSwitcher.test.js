@@ -41,7 +41,7 @@ describe('BaseLayerToggler', () => {
 
   test('renders one switch button per baselayer', () => {
     const comp = mountComp(data);
-    expect(comp.find('.rs-base-layer-switch-button').length).toBe(3);
+    expect(comp.find('.rs-base-layer-switcher-button').length).toBe(3);
   });
 
   test('the first baselayer is visible on mount', () => {
@@ -52,18 +52,18 @@ describe('BaseLayerToggler', () => {
   test('unmounts close button and switches layer on click', () => {
     const comp = mountComp(data);
     comp
-      .find('.rs-base-layer-switch-button')
+      .find('.rs-base-layer-switcher-button')
       .at(0)
       .simulate('click');
     comp
-      .find('.rs-base-layer-switch-button')
+      .find('.rs-base-layer-switcher-button')
       .at(2)
       .simulate('click');
-    expect(comp.find('.rs-base-layer-close').exists()).toBe(false);
+    expect(comp.find('.rs-close').exists()).toBe(false);
     expect(
       comp
         .props()
-        .layers.filter(layer => layer.getIsBaseLayer())[2]
+        .layers.filter(layer => layer.getIsBaseLayer())[1]
         .getVisible(),
     ).toBe(true);
   });

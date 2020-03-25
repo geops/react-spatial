@@ -5,70 +5,60 @@
   transition: 250ms width;
   overflow: hidden;
 
-  &.open {
-    width: 360px;
+  &.rs-open {
+    width: 600px;
   }
 
-  .rs-base-layer-switch-layers {
+  .rs-base-layer-switcher-layers {
     display: flex;
     overflow: auto;
     height: 100%;
-    width: 360px;
+    width: 600px;
+  }
 
-    .rs-base-layer-switch-button {
-      position: relative;
-      height: 85%;
-      min-width: 100px;
-      margin: 4px;
-      overflow: hidden;
-      border: 2px solid white;
-      background-color: gray;
+  .rs-base-layer-switcher-button {
+    margin: 4px;
+    background-color: white;
+    border: 2px solid white;
+  }
 
-      &.open {
-        &:hover {
-          border: 2px solid red;
-        }
+  .rs-layer {
+    position: relative;
+    min-width: 100px;
+    overflow: hidden;
+    background-color: gray;
+  }
 
-        &.rs-active {
-          border: 2px solid red;
-        }
-      }
+  .rs-close {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 
-      .rs-base-layer-switch-title {
-        position: absolute;
-        width: 100%;
-        min-height: 11px;
-        font-size: 9px;
-        padding: 2px 0;
-        background-color: rgba(255, 255, 255, 0.9);
-        text-align: center;
-        z-index: 2;
-
-        &.closed {
-          color: white;
-          background-color: rgba(0, 0, 0, 0.7);
-        }
-      }
-
-      .rs-base-layer-switch-image {
-        vertical-align: center;
-        width: 100px;
-        height: 100px;
-      }
-
-      img[alt] {
-        color: gray;
-      }
+  .rs-open {
+    &:hover,
+    &.rs-active {
+      border: 2px solid red;
     }
+  }
 
-    .rs-base-layer-switch-close {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      height: 85%;
-      margin: 4px;
-      background-color: white;
-      border: 2px solid white;
+  .rs-base-layer-switcher-title {
+    position: absolute;
+    width: 100%;
+    font-size: 10px;
+    padding: 2px 0;
+    background-color: rgba(255, 255, 255, 0.9);
+    text-align: center;
+    z-index: 2;
+
+    &.rs-closed {
+      color: white;
+      background-color: rgba(0, 0, 0, 0.7);
     }
+  }
+
+  .rs-base-layer-switcher-image {
+    width: 100px;
+    height: 100px;
   }
 }
