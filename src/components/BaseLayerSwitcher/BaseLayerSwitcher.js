@@ -140,7 +140,7 @@ function BaseLayerSwitcher({
   return (
     <div className={`${className}${openClass}`}>
       <div className="rs-base-layer-switcher-layers">
-        {switcherOpen && toggleBtn}
+        {!isClosed && toggleBtn}
         {baseLayers.map((layer, index) => {
           const layerName = layer.getName();
           const buttonTitle = isClosed ? titles.openSwitcher : layerName;
