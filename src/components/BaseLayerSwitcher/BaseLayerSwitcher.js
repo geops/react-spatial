@@ -61,8 +61,6 @@ const getNextImage = (currentLayer, layers, layerImages) => {
   return layerImages[nextIndex];
 };
 
-let timeout;
-
 function BaseLayerSwitcher({
   layers,
   layerImages,
@@ -92,14 +90,13 @@ function BaseLayerSwitcher({
 
   useEffect(() => {
     /* Used for correct layer image render with animation */
-    window.clearTimeout(timeout);
     if (!switcherOpen) {
-      timeout = window.setTimeout(() => {
+      const timeout = setTimeout(() => {
         setIsClosed(true);
       }, 200);
-      return;
+      return () => clearTimeout(timeout);
     }
-    setIsClosed(false);
+    return setIsClosed(false);
   }, [switcherOpen]);
 
   const toggleBtn =
