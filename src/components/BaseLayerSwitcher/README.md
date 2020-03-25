@@ -19,8 +19,8 @@ const map = new OLMap({ controls: [] });
 const layers = ConfigReader.readConfig(treeData);
 const layerService = new LayerService(layers);
 const layerImages = {
-  travic: travic,
   osm: osmImage,
+  osmhot: osmhotImage,
   opentopo: openTopoImage,
 };
 
