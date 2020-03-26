@@ -25,6 +25,16 @@ const propTypes = {
   className: PropTypes.string,
 
   /**
+   * Children of the previous baselayer button.
+   */
+  prevButtonContent: PropTypes.node,
+
+  /**
+   * Children of the next baselayer button.
+   */
+  nextButtonContent: PropTypes.node,
+
+  /**
    * Path to the directory which includes the fallback images
    */
   fallbackImgDir: PropTypes.string,
@@ -47,6 +57,8 @@ const propTypes = {
 const defaultProps = {
   layerService: undefined,
   className: 'rs-base-layer-toggler',
+  prevButtonContent: <FaArrowCircleLeft focusable={false} />,
+  nextButtonContent: <FaArrowCircleRight focusable={false} />,
   fallbackImgDir: '../../images/baselayer/',
   validExtent: [-Infinity, -Infinity, Infinity, Infinity],
   titles: {
@@ -345,7 +357,12 @@ class BaseLayerToggler extends Component {
   }
 
   render() {
-    const { className, titles } = this.props;
+    const {
+      className,
+      titles,
+      prevButtonContent,
+      nextButtonContent,
+    } = this.props;
     const { layers, idx, fallbackImg, fallbackImgOpacity } = this.state;
 
     let footer = null;
@@ -366,7 +383,7 @@ class BaseLayerToggler extends Component {
             aria-label={titles.prevButton}
             title={titles.prevButton}
           >
-            <FaArrowCircleLeft focusable={false} />
+            {prevButtonContent}
           </div>
           <div
             className="rs-base-layer-next"
@@ -377,7 +394,7 @@ class BaseLayerToggler extends Component {
             aria-label={titles.nextButton}
             title={titles.nextButton}
           >
-            <FaArrowCircleRight focusable={false} />
+            {nextButtonContent}
           </div>
         </div>
       );
