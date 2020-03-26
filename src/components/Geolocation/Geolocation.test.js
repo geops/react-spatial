@@ -97,6 +97,21 @@ describe('Geolocation', () => {
     });
   });
 
+  test('should use children', () => {
+    mockGeolocation();
+
+    const wrapper = mount(<Geolocation map={map}>test</Geolocation>);
+
+    const text = wrapper
+      .find('.rs-geolocation')
+      .first()
+      .text();
+
+    expect(text).toBe('test');
+
+    restoreGeolocation();
+  });
+
   describe('button classes', () => {
     test('class should be active', () => {
       mockGeolocation();
