@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FaChevronCircleLeft } from 'react-icons/fa';
 import Layer from '../../layers/Layer';
-import img from '../../images/baselayer/osm.baselayer.png';
 
 import './BaseLayerSwitcher.scss';
 
@@ -61,11 +60,20 @@ const getNextImage = (currentLayer, layers, layerImages) => {
   return layerImages[nextIndex];
 };
 
+const getImageStyle = url => {
+  return {
+    backgroundImage: `url(${url})`,
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+  };
+};
+
 function BaseLayerSwitcher({
   layers,
   layerImages,
-  altText,
   className,
+  altText,
   titles,
 }) {
   const baseLayers = layers.filter(layer => layer.getIsBaseLayer());
@@ -90,6 +98,8 @@ function BaseLayerSwitcher({
     layer.setVisible(true);
     setSwitcherOpen(false);
   };
+
+  const nextImage = getNextImage(currentLayer, baseLayers, images);
 
   useEffect(() => {
     /* Ensure correct layer is active on app load */
@@ -122,7 +132,7 @@ function BaseLayerSwitcher({
       onClick={() => setSwitcherOpen(false)}
       onKeyPress={e => e.which === 13 && setSwitcherOpen(false)}
       tabIndex="0"
-      aria-label={titles.closeSwitcher}
+      aria-label={altText}
       title={titles.closeSwitcher}
     >
       <FaChevronCircleLeft size={15} focusable={false} />
@@ -150,40 +160,33 @@ function BaseLayerSwitcher({
                   onLayerSelect(layer);
                 }
               }}
+              style={getImageStyle(images[index])}
               tabIndex="0"
             >
-              <>
-                <div className="rs-base-layer-switcher-title">{layerName}</div>
-                <img
-                  src={images[index]}
-                  alt={altText}
-                  className="rs-base-layer-switcher-image"
-                />
-              </>
+              <div className="rs-base-layer-switcher-title">{layerName}</div>
+              {images[index] ? null : (
+                <span className="rs-alt-text">{altText}</span>
+              )}
             </div>
           );
         })
       ) : (
         <div
-          key={0}
           className="rs-base-layer-switcher-button rs-layer"
           role="button"
           title={titles.openSwitcher}
-          aria-label={titles.openSwitcher}
+          aria-label={altText}
           onClick={() => setSwitcherOpen(true) && setIsClosed(false)}
           onKeyPress={e =>
             e.which === 13 && setSwitcherOpen(true) && setIsClosed(false)
           }
+          style={getImageStyle(nextImage)}
           tabIndex="0"
         >
           <div className={`rs-base-layer-switcher-title${closedClass}`}>
             {titles.button}
           </div>
-          <img
-            src={getNextImage(currentLayer, baseLayers, images)}
-            alt={altText}
-            className="rs-base-layer-switcher-image"
-          />
+          {nextImage ? null : <span className="rs-alt-text">{altText}</span>}
         </div>
       )}
     </div>

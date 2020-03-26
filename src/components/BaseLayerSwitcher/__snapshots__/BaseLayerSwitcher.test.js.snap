@@ -5,11 +5,19 @@ exports[`BaseLayerToggler matches snapshots using default properties. 1`] = `
   className="rs-base-layer-switcher"
 >
   <div
-    aria-label="Open Baselayer-Switcher"
+    aria-label="Source not found"
     className="rs-base-layer-switcher-button rs-layer"
     onClick={[Function]}
     onKeyPress={[Function]}
     role="button"
+    style={
+      Object {
+        "backgroundImage": "url(undefined)",
+        "backgroundPosition": "center",
+        "backgroundRepeat": "no-repeat",
+        "backgroundSize": "cover",
+      }
+    }
     tabIndex="0"
     title="Open Baselayer-Switcher"
   >
@@ -18,10 +26,11 @@ exports[`BaseLayerToggler matches snapshots using default properties. 1`] = `
     >
       Base layers
     </div>
-    <img
-      alt="Source not found"
-      className="rs-base-layer-switcher-image"
-    />
+    <span
+      className="rs-alt-text"
+    >
+      Source not found
+    </span>
   </div>
 </div>
 `;

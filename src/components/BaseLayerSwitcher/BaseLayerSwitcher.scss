@@ -14,13 +14,24 @@
     margin: 4px;
     background-color: white;
     border: 2px solid white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .rs-layer {
-    position: relative;
     min-width: 100px;
+    background-color: rgb(187, 187, 187);
+  }
+
+  .rs-alt-text {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    max-width: 80px;
     overflow: hidden;
-    background-color: gray;
   }
 
   .rs-close {
@@ -37,22 +48,16 @@
   }
 
   .rs-base-layer-switcher-title {
-    position: absolute;
     width: 100%;
+    max-height: 12px;
     font-size: 10px;
     padding: 2px 0;
     background-color: rgba(255, 255, 255, 0.9);
     text-align: center;
-    z-index: 2;
 
     &.rs-closed {
       color: white;
       background-color: rgba(0, 0, 0, 0.7);
     }
-  }
-
-  .rs-base-layer-switcher-image {
-    width: 100px;
-    height: 100px;
   }
 }
