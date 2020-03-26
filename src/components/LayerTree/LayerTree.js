@@ -182,7 +182,7 @@ class LayerTree extends Component {
 
     const inputType = layer.getRadioGroup() ? 'radio' : 'checkbox';
     return (
-      // eslint-disable-next-line jsx-a11y/label-has-associated-control
+      // eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/no-noninteractive-element-interactions
       <label
         className={`rs-layer-tree-input rs-layer-tree-input-${inputType} rs-${inputType}`}
         tabIndex={tabIndex}
