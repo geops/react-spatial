@@ -31,22 +31,7 @@ module.exports = {
       name: 'Components',
       description:
         'A collection of react components for spatial web development.',
-      components: [
-        'src/components/BaseLayerToggler/[A-Z]*.js',
-        'src/components/BasicMap/[A-Z]*.js',
-        'src/components/CanvasSaveButton/[A-Z]*.js',
-        'src/components/Copyright/[A-Z]*.js',
-        'src/components/FeatureExportButton/[A-Z]*.js',
-        'src/components/FitExtent/[A-Z]*.js',
-        'src/components/Geolocation/[A-Z]*.js',
-        'src/components/LayerTree/[A-Z]*.js',
-        'src/components/MousePosition/[A-Z]*.js',
-        'src/components/NorthArrow/[A-Z]*.js',
-        'src/components/Permalink/[A-Z]*.js',
-        'src/components/Popup/[A-Z]*.js',
-        'src/components/ScaleLine/[A-Z]*.js',
-        'src/components/Zoom/[A-Z]*.js',
-      ],
+      components: ['src/components/BasicMap/[A-Z]*.js'],
       exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
       usageMode: 'collapse', // 'hide' | 'collapse' | 'expand'
     },

@@ -15,6 +15,7 @@ const propTypes = {
   maxWidthBrkpts: PropTypes.objectOf(PropTypes.number),
   stylePropHeight: PropTypes.string,
   onResize: PropTypes.func,
+  forceUpdate: PropTypes.string,
 };
 
 // Same as bootstrap
@@ -36,6 +37,7 @@ const defaultProps = {
   },
   stylePropHeight: null,
   onResize: null,
+  forceUpdate: null,
 };
 /**
  * This component adds css class to an element depending on his size.
@@ -64,9 +66,12 @@ class ResizeHandler extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { observe } = this.props;
+    const { observe, forceUpdate } = this.props;
 
-    if (observe !== prevProps.observe) {
+    if (
+      observe !== prevProps.observe &&
+      forceUpdate !== prevProps.forceUpdate
+    ) {
       this.observe();
     }
   }

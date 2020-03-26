@@ -135,8 +135,11 @@ export default class MapboxLayer extends Layer {
         type: 'load',
         target: this,
       });
+      this.map.on('moveend', () => {
+        console.log(getCopyrightFromSources(this.mbMap));
+        this.setCopyright(getCopyrightFromSources(this.mbMap));
+      });
     });
-
     this.changeSizeRef = this.map.on('change:size', () => {
       try {
         this.mbMap.resize();
