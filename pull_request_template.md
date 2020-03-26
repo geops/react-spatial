@@ -1,10 +1,8 @@
-#
-
-## How to
+# How to
 
 <!--  Please provide a test link and quick description how to see the change -->
 
-## Others
+# Others
 
 <!-- Thanks for the PR! Feel free to add or remove items if there are not necessary. -->
 
