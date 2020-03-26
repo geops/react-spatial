@@ -4,15 +4,9 @@
   width: 115px;
   transition: 250ms width;
   overflow: hidden;
+  display: flex;
 
   &.rs-open {
-    width: 600px;
-  }
-
-  .rs-base-layer-switcher-layers {
-    display: flex;
-    overflow: auto;
-    height: 100%;
     width: 600px;
   }
 

@@ -81,8 +81,8 @@ function BaseLayerSwitcher({
   const openClass = switcherOpen ? ' rs-open' : '';
   const closedClass = isClosed ? ' rs-closed' : '';
 
-  const onButtonSelect = (open, layer) => {
-    if (!open) {
+  const onButtonSelect = layer => {
+    if (!switcherOpen) {
       setSwitcherOpen(true);
       return;
     }
@@ -91,16 +91,12 @@ function BaseLayerSwitcher({
     setSwitcherOpen(false);
   };
 
-  const setTabIndex = (closed, buttonIndex) => {
-    if (closed) {
+  const getTabIndex = buttonIndex => {
+    if (isClosed) {
       return buttonIndex === 0 ? '0' : '-1';
     }
     return '0';
   };
-
-  if (!baseLayers || baseLayers.length < 2) {
-    return null;
-  }
 
   useEffect(() => {
     /* Ensure correct layer is active on app load */
@@ -122,72 +118,71 @@ function BaseLayerSwitcher({
     return () => clearTimeout(timeout);
   }, [switcherOpen]);
 
-  const toggleBtn =
-    baseLayers.length > 0 ? (
-      <div
-        className="rs-base-layer-switcher-button rs-close"
-        role="button"
-        onClick={() => setSwitcherOpen(false)}
-        onKeyPress={e => e.which === 13 && setSwitcherOpen(false)}
-        tabIndex="0"
-        aria-label={titles.closeSwitcher}
-        title={titles.closeSwitcher}
-      >
-        <FaChevronCircleLeft size={15} focusable={false} />
-      </div>
-    ) : null;
+  if (!baseLayers || baseLayers.length < 2) {
+    return null;
+  }
+
+  const toggleBtn = (
+    <div
+      className="rs-base-layer-switcher-button rs-close"
+      role="button"
+      onClick={() => setSwitcherOpen(false)}
+      onKeyPress={e => e.which === 13 && setSwitcherOpen(false)}
+      tabIndex="0"
+      aria-label={titles.closeSwitcher}
+      title={titles.closeSwitcher}
+    >
+      <FaChevronCircleLeft size={15} focusable={false} />
+    </div>
+  );
 
   return (
     <div className={`${className}${openClass}`}>
-      <div className="rs-base-layer-switcher-layers">
-        {!isClosed && toggleBtn}
-        {baseLayers.map((layer, index) => {
-          const layerName = layer.getName();
-          const buttonTitle = isClosed ? titles.openSwitcher : layerName;
-          const activeClass =
-            layerName === currentLayer.getName() ? ' rs-active' : '';
-          return (
-            <div
-              key={layer.key}
-              className={`rs-base-layer-switcher-button rs-layer${openClass}${activeClass}`}
-              role="button"
-              title={buttonTitle}
-              aria-label={buttonTitle}
-              onClick={() => onButtonSelect(switcherOpen, layer)}
-              onKeyPress={e => {
-                if (e.which === 13) {
-                  onButtonSelect(switcherOpen, layer);
-                }
-              }}
-              tabIndex={setTabIndex(isClosed, index)}
-            >
-              {isClosed ? (
-                <>
-                  <div className={`rs-base-layer-switcher-title${closedClass}`}>
-                    {titles.button}
-                  </div>
-                  <img
-                    src={getNextImage(currentLayer, baseLayers, images)}
-                    alt={altText}
-                    className="rs-base-layer-switcher-image"
-                  />
-                </>
-              ) : (
-                <>
-                  <div className="rs-base-layer-switcher-title">
-                    {layerName}
-                  </div>
-                  <img
-                    src={images[index]}
-                    alt={altText}
-                    className="rs-base-layer-switcher-image"
-                  />
-                </>
-              )}
-            </div>
-          );
-        })}
-      </div>
+      {!isClosed && toggleBtn}
+      {baseLayers.map((layer, index) => {
+        const layerName = layer.getName();
+        const buttonTitle = isClosed ? titles.openSwitcher : layerName;
+        const activeClass =
+          layerName === currentLayer.getName() ? ' rs-active' : '';
+        return (
+          <div
+            key={layer.key}
+            className={`rs-base-layer-switcher-button rs-layer${openClass}${activeClass}`}
+            role="button"
+            title={buttonTitle}
+            aria-label={buttonTitle}
+            onClick={() => onButtonSelect(layer)}
+            onKeyPress={e => {
+              if (e.which === 13) {
+                onButtonSelect(layer);
+              }
+            }}
+            tabIndex={getTabIndex(index)}
+          >
+            {isClosed ? (
+              <>
+                <div className={`rs-base-layer-switcher-title${closedClass}`}>
+                  {titles.button}
+                </div>
+                <img
+                  src={getNextImage(currentLayer, baseLayers, images)}
+                  alt={altText}
+                  className="rs-base-layer-switcher-image"
+                />
+              </>
+            ) : (
+              <>
+                <div className="rs-base-layer-switcher-title">{layerName}</div>
+                <img
+                  src={images[index]}
+                  alt={altText}
+                  className="rs-base-layer-switcher-image"
+                />
+              </>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }

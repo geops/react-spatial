@@ -11,7 +11,6 @@ import LayerService from 'react-spatial/LayerService';
 import ConfigReader from 'react-spatial/ConfigReader';
 import osmImage from '../../images/baselayer/osm.baselayer.png';
 import osmhotImage from '../../images/baselayer/osm.baselayer.hot.png';
-import travic from '../../images/baselayer/travic.png';
 import openTopoImage from '../../images/baselayer/open.topo.map.png';
 
 const center = [1149722.7037660484, 6618091.313553318];
