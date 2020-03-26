@@ -23,6 +23,11 @@ const propTypes = {
   className: PropTypes.string,
 
   /**
+   *  Children content of the Geolocation button.
+   */
+  children: PropTypes.node,
+
+  /**
    * Map.
    */
   map: PropTypes.instanceOf(OLMap).isRequired,
@@ -49,6 +54,7 @@ const propTypes = {
 
 const defaultProps = {
   className: 'rs-geolocation',
+  children: <FaRegDotCircle focusable={false} />,
   onError: () => {},
   noCenterAfterDrag: false,
   colorOrStyleFunc: [235, 0, 0],
@@ -206,7 +212,7 @@ class Geolocation extends PureComponent {
   }
 
   render() {
-    const { className } = this.props;
+    const { children, className } = this.props;
     // Remove component props from other HTML props.
     const other = Object.entries(this.props).reduce((props, [key, value]) => {
       return propTypes[key] ? props : { ...props, [key]: value };
@@ -223,7 +229,7 @@ class Geolocation extends PureComponent {
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...other}
       >
-        <FaRegDotCircle focusable={false} />
+        {children}
       </div>
     );
   }
