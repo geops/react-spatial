@@ -102,10 +102,7 @@ describe('Geolocation', () => {
 
     const wrapper = mount(<Geolocation map={map}>test</Geolocation>);
 
-    const text = wrapper
-      .find('.rs-geolocation')
-      .first()
-      .text();
+    const text = wrapper.find('.rs-geolocation').first().text();
 
     expect(text).toBe('test');
 
