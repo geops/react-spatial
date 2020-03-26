@@ -11,17 +11,14 @@
   }
 
   .rs-base-layer-switcher-button {
-    margin: 4px;
-    background-color: white;
-    border: 2px solid white;
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
-
-  .rs-layer {
+    width: 100px;
     min-width: 100px;
-    background-color: rgb(187, 187, 187);
+    margin-left: 5px;
+    background-color: white;
+    border: 2px solid white;
   }
 
   .rs-alt-text {
@@ -34,10 +31,11 @@
     overflow: hidden;
   }
 
-  .rs-close {
+  .rs-base-layer-switcher-close-btn {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    background-color: white;
   }
 
   .rs-open {

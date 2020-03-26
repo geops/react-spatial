@@ -51,8 +51,7 @@ describe('BaseLayerToggler', () => {
       .find('.rs-base-layer-switcher-button')
       .at(0)
       .simulate('click');
-    comp.update();
-    expect(comp.find('.rs-base-layer-switcher-button').length).toBe(4);
+    expect(comp.find('.rs-base-layer-switcher-close-btn').length).toBe(1);
   });
 
   test('removes open class and switches layer on click', () => {
@@ -68,7 +67,7 @@ describe('BaseLayerToggler', () => {
     expect(
       comp
         .props()
-        .layers.filter(layer => layer.getIsBaseLayer())[1]
+        .layers.filter(layer => layer.getIsBaseLayer())[2]
         .getVisible(),
     ).toBe(true);
     expect(comp.find('.rs-base-layer-switcher rs-open').exists()).toBe(false);

@@ -127,7 +127,7 @@ function BaseLayerSwitcher({
 
   const toggleBtn = (
     <div
-      className="rs-base-layer-switcher-button rs-close"
+      className="rs-base-layer-switcher-close-btn"
       role="button"
       onClick={() => setSwitcherOpen(false)}
       onKeyPress={e => e.which === 13 && setSwitcherOpen(false)}
@@ -150,7 +150,7 @@ function BaseLayerSwitcher({
           return (
             <div
               key={layer.key}
-              className={`rs-base-layer-switcher-button rs-layer${openClass}${activeClass}`}
+              className={`rs-base-layer-switcher-button ${openClass}${activeClass}`}
               role="button"
               title={layerName}
               aria-label={layerName}
