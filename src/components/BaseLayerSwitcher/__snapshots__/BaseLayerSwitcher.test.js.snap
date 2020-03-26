@@ -6,7 +6,7 @@ exports[`BaseLayerToggler matches snapshots using default properties. 1`] = `
 >
   <div
     aria-label="Source not found"
-    className="rs-base-layer-switcher-button rs-layer"
+    className="rs-base-layer-switcher-button"
     onClick={[Function]}
     onKeyPress={[Function]}
     role="button"

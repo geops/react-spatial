@@ -172,7 +172,7 @@ function BaseLayerSwitcher({
         })
       ) : (
         <div
-          className="rs-base-layer-switcher-button rs-layer"
+          className="rs-base-layer-switcher-button"
           role="button"
           title={titles.openSwitcher}
           aria-label={altText}
