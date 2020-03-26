@@ -138,8 +138,8 @@ describe('BaseLayerToggler', () => {
 
   test('should use children', () => {
     const wrapper = shallowComp(null, {
-      previousLayerBtChildren: 'prev',
-      nextLayerBtChildren: 'next',
+      prevButtonContent: 'prev',
+      nextButtonContent: 'next',
     });
     expect(wrapper.find('.rs-base-layer-item').exists()).toBe(false);
 
