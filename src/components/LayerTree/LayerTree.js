@@ -231,7 +231,10 @@ class LayerTree extends Component {
     const { isItemHidden } = this.props;
     const { expandedLayerNames } = this.state;
 
-    if (!layer.getChildren().filter(c => !isItemHidden(c)).length) {
+    if (
+      !layer.getChildren().filter(c => !isItemHidden(c)).length ||
+      layer.getIsAlwaysExpanded()
+    ) {
       return null;
     }
 
@@ -252,7 +255,8 @@ class LayerTree extends Component {
     const onInputClick = () => {
       this.onInputClick(
         layer,
-        layer.getChildren().filter(c => !isItemHidden(c)).length,
+        layer.getChildren().filter(c => !isItemHidden(c)).length &&
+          !layer.getIsAlwaysExpanded(),
       );
     };
     const title = `${t(layer.getName())} ${
