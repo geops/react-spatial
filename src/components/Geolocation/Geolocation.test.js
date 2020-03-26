@@ -17,7 +17,7 @@ const mockGeolocation = () => {
   const mock = {
     clearWatch: jest.fn(),
     getCurrentPosition: jest.fn(),
-    watchPosition: onSuccess => {
+    watchPosition: (onSuccess) => {
       onSuccess({
         coords: {
           latitude: 47.9913611,
@@ -104,10 +104,7 @@ describe('Geolocation', () => {
       const wrapper = mount(<Geolocation map={map} />);
       const basic = wrapper.getDOMNode();
 
-      wrapper
-        .find('.rs-geolocation')
-        .first()
-        .simulate('click');
+      wrapper.find('.rs-geolocation').first().simulate('click');
 
       expect(basic.className).toBe('rs-geolocation rs-active');
 
@@ -157,10 +154,7 @@ describe('Geolocation', () => {
       <Geolocation map={map} onError={() => ErrorHandler.onError()} />,
     );
 
-    wrapper
-      .find('.rs-geolocation')
-      .first()
-      .simulate('click');
+    wrapper.find('.rs-geolocation').first().simulate('click');
 
     expect(spy).toHaveBeenCalled();
 
@@ -210,10 +204,7 @@ describe('Geolocation', () => {
     );
     const instance = component.instance();
     instance.toggle();
-    const style = instance.layer
-      .getSource()
-      .getFeatures()[0]
-      .getStyle();
+    const style = instance.layer.getSource().getFeatures()[0].getStyle();
 
     expect(style).toBe(styleFunc);
 

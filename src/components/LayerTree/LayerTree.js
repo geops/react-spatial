@@ -92,7 +92,7 @@ const defaultProps = {
     subLayerShow: 'Show sublayer',
     subLayerHide: 'Hide sublayer',
   },
-  t: s => s,
+  t: (s) => s,
 };
 
 class LayerTree extends Component {
@@ -104,9 +104,9 @@ class LayerTree extends Component {
         ? layerService
             .getLayers()
             .filter(
-              l =>
+              (l) =>
                 !isItemHidden(l) &&
-                l.getVisibleChildren().filter(c => !isItemHidden(c)).length,
+                l.getVisibleChildren().filter((c) => !isItemHidden(c)).length,
             )
         : [];
 
@@ -175,7 +175,7 @@ class LayerTree extends Component {
     const { titles, isItemHidden } = this.props;
     let tabIndex = 0;
 
-    if (!layer.getChildren().filter(c => !isItemHidden(c)).length) {
+    if (!layer.getChildren().filter((c) => !isItemHidden(c)).length) {
       // We forbid focus on keypress event for first level layers and layers without children.
       tabIndex = -1;
     }
@@ -188,7 +188,7 @@ class LayerTree extends Component {
         tabIndex={tabIndex}
         title={layer.getVisible() ? titles.layerHide : titles.layerShow}
         aria-label={layer.getVisible() ? titles.layerHide : titles.layerShow}
-        onKeyPress={e => {
+        onKeyPress={(e) => {
           if (e.which === 13) {
             this.onInputClick(layer);
           }
@@ -210,7 +210,7 @@ class LayerTree extends Component {
     const { isItemHidden } = this.props;
     const { expandedLayerNames } = this.state;
 
-    if (!layer.getChildren().filter(c => !isItemHidden(c)).length) {
+    if (!layer.getChildren().filter((c) => !isItemHidden(c)).length) {
       return null;
     }
 
@@ -231,7 +231,7 @@ class LayerTree extends Component {
     const onInputClick = () => {
       this.onInputClick(
         layer,
-        layer.getChildren().filter(c => !isItemHidden(c)).length,
+        layer.getChildren().filter((c) => !isItemHidden(c)).length,
       );
     };
     const title = `${t(layer.getName())} ${
@@ -276,7 +276,7 @@ class LayerTree extends Component {
     const { expandedLayerNames } = this.state;
 
     const children = expandedLayerNames.includes(layer)
-      ? [...layer.getChildren().filter(c => !isItemHidden(c))]
+      ? [...layer.getChildren().filter((c) => !isItemHidden(c))]
       : [];
 
     if (renderItem) {
@@ -299,7 +299,7 @@ class LayerTree extends Component {
         </div>
         {[...children]
           .reverse()
-          .map(child => this.renderItem(child, level + 1))}
+          .map((child) => this.renderItem(child, level + 1))}
       </div>
     );
   }
@@ -315,9 +315,9 @@ class LayerTree extends Component {
     return (
       <>
         {layers
-          .filter(l => !isItemHidden(l))
+          .filter((l) => !isItemHidden(l))
           .reverse()
-          .map(l => this.renderItem(l, 0))}
+          .map((l) => this.renderItem(l, 0))}
       </>
     );
   }

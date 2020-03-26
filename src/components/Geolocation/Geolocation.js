@@ -118,10 +118,7 @@ class Geolocation extends PureComponent {
   activate(position) {
     const { map } = this.props;
 
-    const code = map
-      .getView()
-      .getProjection()
-      .getCode();
+    const code = map.getView().getProjection().getCode();
     const pos = transform(
       [position.coords.longitude, position.coords.latitude],
       'EPSG:4326',
@@ -219,7 +216,7 @@ class Geolocation extends PureComponent {
         tabIndex="0"
         className={`${className} ${active ? 'rs-active' : ''}`}
         onClick={() => this.toggle()}
-        onKeyPress={e => e.which === 13 && this.toggle()}
+        onKeyPress={(e) => e.which === 13 && this.toggle()}
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...other}
       >

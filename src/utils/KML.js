@@ -38,7 +38,7 @@ const getLineIcon = (feature, icon, color, start = true) => {
   const rotation = Math.atan2(dy, dx);
 
   return new Style({
-    geometry: feat => {
+    geometry: (feat) => {
       const ge = feat.getGeometry();
       return new Point(getVertexCoord(ge, start));
     },
@@ -54,7 +54,7 @@ const getLineIcon = (feature, icon, color, start = true) => {
 };
 
 // Clean the uneeded feature's style and properties created by the KML parser.
-const sanitizeFeature = feature => {
+const sanitizeFeature = (feature) => {
   const geom = feature.getGeometry();
   let styles = feature.getStyleFunction();
 
@@ -68,7 +68,7 @@ const sanitizeFeature = feature => {
       feature
         .get('lineDash')
         .split(',')
-        .map(l => parseInt(l, 10)),
+        .map((l) => parseInt(l, 10)),
     );
   }
 
@@ -134,7 +134,7 @@ const sanitizeFeature = feature => {
           feature
             .get('textPadding')
             .split(',')
-            .map(n => parseFloat(n)),
+            .map((n) => parseFloat(n)),
         );
       }
 
@@ -210,7 +210,7 @@ const readFeatures = (kmlString, featureProjection) => {
   const features = new KML().readFeatures(kmlString, {
     featureProjection,
   });
-  features.forEach(feature => {
+  features.forEach((feature) => {
     sanitizeFeature(feature);
   });
   return features;
@@ -226,7 +226,7 @@ const writeFeatures = (layer, featureProjection) => {
   const { olLayer } = layer;
   const exportFeatures = [];
 
-  olLayer.getSource().forEachFeature(f => {
+  olLayer.getSource().forEachFeature((f) => {
     // We silently ignore Circle elements as they are
     // not supported in kml.
     if (f.getGeometry().getType() === 'Circle') {
@@ -239,7 +239,7 @@ const writeFeatures = (layer, featureProjection) => {
     clone.getGeometry().transform(featureProjection, 'EPSG:4326');
 
     // We remove all ExtendedData not related to style.
-    Object.keys(f.getProperties()).forEach(key => {
+    Object.keys(f.getProperties()).forEach((key) => {
       if (!/^(geometry|name|description)$/.test(key)) {
         clone.unset(key, true);
       }
@@ -317,15 +317,13 @@ const writeFeatures = (layer, featureProjection) => {
 
     // In case we use line's icon .
     const extraLineStyles = styles.slice(1);
-    extraLineStyles.forEach(extraLineStyle => {
+    extraLineStyles.forEach((extraLineStyle) => {
       if (
         extraLineStyle &&
         extraLineStyle.getImage() instanceof Icon &&
         extraLineStyle.getGeometry()
       ) {
-        const coord = extraLineStyle
-          .getGeometry()(f)
-          .getCoordinates();
+        const coord = extraLineStyle.getGeometry()(f).getCoordinates();
         const startCoord = f.getGeometry().getFirstCoordinate();
         if (coord[0] === startCoord[0] && coord[1] === startCoord[1]) {
           clone.set(

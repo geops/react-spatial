@@ -26,7 +26,7 @@ function ComponentsList({
   useHashId,
   hashPath,
 }) {
-  const mappedItems = items.map(item => ({
+  const mappedItems = items.map((item) => ({
     ...item,
     href: item.href
       ? item.href
