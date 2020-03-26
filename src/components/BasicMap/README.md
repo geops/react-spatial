@@ -15,7 +15,7 @@ const layers = ConfigReader.readConfig([
       isBaseLayer: true,
       data: {
         type: 'mapbox',
-        url: `https://maps.geops.io/styles/trafimage_perimeter_v2/style.json?key=5cc87b12d7c5370001c1d655c329e52009654762acf3db61f63dc03f`,
+        url: `https://maps.geops.io/styles/trafimage_perimeter_v2/style.json`,
       },tabIndex:1,
       copyright: '© OpenStreetMap, OpenMapTiles, SBB/CFF/FFS, mapset.ch',
     },
