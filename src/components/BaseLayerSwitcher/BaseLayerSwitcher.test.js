@@ -39,19 +39,14 @@ describe('BaseLayerToggler', () => {
     });
   });
 
-  test('renders one switch button per baselayer on mount', () => {
-    const comp = mountComp(data);
-    expect(comp.find('.rs-base-layer-switcher-button').length).toBe(3);
-  });
-
-  test('the first baselayer is visible on mount', () => {
+  test('the correct baselayer is visible on mount', () => {
     const comp = mountComp(data);
     expect(comp.props().layers[0].getVisible()).toBe(true);
   });
 
   test('adds close button when opening the switcher', () => {
     const comp = mountComp(data);
-    expect(comp.find('.rs-base-layer-switcher-button').length).toBe(3);
+    expect(comp.find('.rs-base-layer-switcher-button').length).toBe(1);
     comp
       .find('.rs-base-layer-switcher-button')
       .at(0)
