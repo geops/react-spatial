@@ -19,6 +19,7 @@ exports[`Popup should match snapshot with default values. 1`] = `
       className="rs-popup-header"
     >
       <div
+        aria-label="Close"
         className="rs-popup-close-bt"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -77,6 +78,7 @@ exports[`Popup should match snapshot with tabIndex defined. 1`] = `
       className="rs-popup-header"
     >
       <div
+        aria-label="Close"
         className="rs-popup-close-bt"
         onClick={[Function]}
         onKeyPress={[Function]}

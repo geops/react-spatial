@@ -5,6 +5,7 @@ exports[`BaseLayerToggler matches snapshots using default properties. 1`] = `
   className="rs-base-layer-toggler"
 >
   <div
+    aria-label="Toggle base layer"
     className="rs-base-layer-toggle-button"
     onClick={[Function]}
     onKeyPress={[Function]}
@@ -33,6 +34,7 @@ exports[`BaseLayerToggler matches snapshots using default properties. 1`] = `
     className="rs-base-layer-footer"
   >
     <div
+      aria-label="Previous base layer"
       className="rs-base-layer-previous"
       onClick={[Function]}
       onKeyPress={[Function]}
@@ -61,6 +63,7 @@ exports[`BaseLayerToggler matches snapshots using default properties. 1`] = `
       </svg>
     </div>
     <div
+      aria-label="Next base layer"
       className="rs-base-layer-next"
       onClick={[Function]}
       onKeyPress={[Function]}
