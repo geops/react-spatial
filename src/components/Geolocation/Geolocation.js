@@ -75,6 +75,7 @@ class Geolocation extends PureComponent {
 
     this.state = {
       active: false,
+      point: undefined,
     };
   }
 
@@ -116,6 +117,7 @@ class Geolocation extends PureComponent {
   }
 
   activate(position) {
+    const { point } = this.state;
     const { map } = this.props;
 
     const code = map
@@ -127,10 +129,17 @@ class Geolocation extends PureComponent {
       'EPSG:4326',
       code,
     );
-
-    const point = new Point(pos);
-    this.highlight(point);
-    this.layer.setMap(map);
+    if (!point) {
+      var tmpPoint = new Point(pos);
+      this.setState({
+        point: tmpPoint,
+      });
+      this.highlight(tmpPoint);
+      this.layer.setMap(map);
+    } else {
+      point.setCoordinates(pos);
+    }
+    
     if (this.isCentered) {
       map.getView().setCenter(pos);
     }
