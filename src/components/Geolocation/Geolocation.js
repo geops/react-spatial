@@ -152,21 +152,7 @@ class Geolocation extends PureComponent {
   highlight(point) {
     const { colorOrStyleFunc } = this.props;
 
-    let decrease = true;
-    let opacity = 0.5;
-    let rotation = 0;
     let feature;
-
-    window.clearInterval(this.interval);
-    this.interval = window.setInterval(() => {
-      rotation += 0.03;
-      decrease = opacity < 0.1 ? false : decrease;
-      decrease = opacity > 0.5 ? true : decrease;
-      opacity += decrease ? -0.03 : 0.03;
-      if (feature) {
-        feature.changed();
-      }
-    }, 50);
 
     feature = new Feature({
       geometry: point,
@@ -175,6 +161,21 @@ class Geolocation extends PureComponent {
 
     if (Array.isArray(colorOrStyleFunc)) {
       const color = colorOrStyleFunc;
+
+      let decrease = true;
+      let opacity = 0.5;
+      let rotation = 0;
+
+      window.clearInterval(this.interval);
+      this.interval = window.setInterval(() => {
+        rotation += 0.03;
+        decrease = opacity < 0.1 ? false : decrease;
+        decrease = opacity > 0.5 ? true : decrease;
+        opacity += decrease ? -0.03 : 0.03;
+        if (feature) {
+          feature.changed();
+        }
+      }, 50);
 
       feature.setStyle(() => {
         const circleStyle = new Style({
