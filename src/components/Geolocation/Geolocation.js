@@ -113,6 +113,7 @@ class Geolocation extends PureComponent {
 
     this.setState({
       active: false,
+      point: undefined,
     });
   }
 
