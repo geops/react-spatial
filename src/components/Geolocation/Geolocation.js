@@ -112,7 +112,7 @@ class Geolocation extends PureComponent {
   }
 
   deactivate() {
-    const { noCenterAfterDrag,  } = this.props;
+    const { noCenterAfterDrag } = this.props;
     window.clearInterval(this.interval);
     this.layer.setMap(null);
     navigator.geolocation.clearWatch(this.watch);
