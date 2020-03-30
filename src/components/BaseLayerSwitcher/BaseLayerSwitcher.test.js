@@ -10,7 +10,7 @@ import BaseLayerSwitcher from './BaseLayerSwitcher';
 
 configure({ adapter: new Adapter() });
 
-const getSnapshot = newData => {
+const getSnapshot = (newData) => {
   const layers = ConfigReader.readConfig(newData || data);
   const layerImages = {
     layer1: 'foo',
@@ -22,7 +22,7 @@ const getSnapshot = newData => {
   expect(tree).toMatchSnapshot();
 };
 
-const mountComp = newData => {
+const mountComp = (newData) => {
   const layers = ConfigReader.readConfig(newData || data);
   const layerImages = {
     layerFoo: 'foo',
@@ -47,27 +47,18 @@ describe('BaseLayerToggler', () => {
   test('adds close button when opening the switcher', () => {
     const comp = mountComp(data);
     expect(comp.find('.rs-base-layer-switcher-button').length).toBe(1);
-    comp
-      .find('.rs-base-layer-switcher-button')
-      .at(0)
-      .simulate('click');
+    comp.find('.rs-base-layer-switcher-button').at(0).simulate('click');
     expect(comp.find('.rs-base-layer-switcher-close-btn').length).toBe(1);
   });
 
   test('removes open class and switches layer on click', () => {
     const comp = mountComp(data);
-    comp
-      .find('.rs-base-layer-switcher-button')
-      .at(0)
-      .simulate('click');
-    comp
-      .find('.rs-base-layer-switcher-button')
-      .at(2)
-      .simulate('click');
+    comp.find('.rs-base-layer-switcher-button').at(0).simulate('click');
+    comp.find('.rs-base-layer-switcher-button').at(2).simulate('click');
     expect(
       comp
         .props()
-        .layers.filter(layer => layer.getIsBaseLayer())[2]
+        .layers.filter((layer) => layer.getIsBaseLayer())[2]
         .getVisible(),
     ).toBe(true);
     expect(comp.find('.rs-base-layer-switcher rs-open').exists()).toBe(false);
