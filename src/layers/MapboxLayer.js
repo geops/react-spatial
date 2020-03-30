@@ -33,25 +33,25 @@ export default class MapboxLayer extends Layer {
   constructor(options = {}) {
     const mbLayer = new OLLayer({
       render: frameState => {
-        var changed = false;
+        let changed = false;
         const canvas = this.mbMap.getCanvas();
         const { viewState } = frameState;
 
         const visible = mbLayer.getVisible();
-        if (this.renderState.visiable != visible) {
+        if (this.renderState.visiable !== visible) {
           canvas.style.display = visible ? 'block' : 'none';
           this.renderState.visiable = visible;
         }
 
         const opacity = mbLayer.getOpacity();
-        if (this.renderState.opacity != opacity) {
+        if (this.renderState.opacity !== opacity) {
           canvas.style.opacity = opacity;
           this.renderState.opacity = opacity;
         }
 
         // adjust view parameters in mapbox
         const { rotation } = viewState;
-        if (rotation && this.renderState.rotation != rotation) {
+        if (rotation && this.renderState.rotation !== rotation) {
           this.mbMap.rotateTo((-rotation * 180) / Math.PI, {
             animate: false,
           });
@@ -59,7 +59,11 @@ export default class MapboxLayer extends Layer {
           this.renderState.rotation = rotation;
         }
 
-        if (this.renderState.zoom != viewState.zoom || this.renderState.center[0] != viewState.center[0] || this.renderState.center[1] != viewState.center[1]) {
+        if (
+          this.renderState.zoom !== viewState.zoom ||
+          this.renderState.center[0] !== viewState.center[0] ||
+          this.renderState.center[1] !== viewState.center[1]
+        ) {
           this.mbMap.jumpTo({
             center: toLonLat(viewState.center),
             zoom: viewState.zoom - 1,
@@ -112,13 +116,12 @@ export default class MapboxLayer extends Layer {
     // Options the last render run did happen. If something changes
     // we have to render again
     this.renderState = {
-      center: [ 0, 0 ],
+      center: [0, 0],
       zoom: undefined,
       rotation: undefined,
       visible: undefined,
       opacity: undefined,
-    }
-    
+    };
 
     if (!this.map || !this.map.getTargetElement() || this.mbMap) {
       return;
