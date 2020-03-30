@@ -81,6 +81,7 @@ class Geolocation extends PureComponent {
 
     this.state = {
       active: false,
+      point: undefined,
     };
   }
 
@@ -118,10 +119,12 @@ class Geolocation extends PureComponent {
 
     this.setState({
       active: false,
+      point: undefined,
     });
   }
 
   activate(position) {
+    const { point } = this.state;
     const { map } = this.props;
 
     const code = map
@@ -133,10 +136,17 @@ class Geolocation extends PureComponent {
       'EPSG:4326',
       code,
     );
-
-    const point = new Point(pos);
-    this.highlight(point);
-    this.layer.setMap(map);
+    if (!point) {
+      var tmpPoint = new Point(pos);
+      this.setState({
+        point: tmpPoint,
+      });
+      this.highlight(tmpPoint);
+      this.layer.setMap(map);
+    } else {
+      point.setCoordinates(pos);
+    }
+    
     if (this.isCentered) {
       map.getView().setCenter(pos);
     }
@@ -149,21 +159,7 @@ class Geolocation extends PureComponent {
   highlight(point) {
     const { colorOrStyleFunc } = this.props;
 
-    let decrease = true;
-    let opacity = 0.5;
-    let rotation = 0;
     let feature;
-
-    window.clearInterval(this.interval);
-    this.interval = window.setInterval(() => {
-      rotation += 0.03;
-      decrease = opacity < 0.1 ? false : decrease;
-      decrease = opacity > 0.5 ? true : decrease;
-      opacity += decrease ? -0.03 : 0.03;
-      if (feature) {
-        feature.changed();
-      }
-    }, 50);
 
     feature = new Feature({
       geometry: point,
@@ -172,6 +168,21 @@ class Geolocation extends PureComponent {
 
     if (Array.isArray(colorOrStyleFunc)) {
       const color = colorOrStyleFunc;
+
+      let decrease = true;
+      let opacity = 0.5;
+      let rotation = 0;
+
+      window.clearInterval(this.interval);
+      this.interval = window.setInterval(() => {
+        rotation += 0.03;
+        decrease = opacity < 0.1 ? false : decrease;
+        decrease = opacity > 0.5 ? true : decrease;
+        opacity += decrease ? -0.03 : 0.03;
+        if (feature) {
+          feature.changed();
+        }
+      }, 50);
 
       feature.setStyle(() => {
         const circleStyle = new Style({
