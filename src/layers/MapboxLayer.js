@@ -122,6 +122,8 @@ export default class MapboxLayer extends Layer {
       pitchWithRotate: false,
       scrollZoom: false,
       touchZoomRotate: false,
+      fadeDuration:
+        'fadeDuration' in this.options ? this.options.fadeDuration : 300,
       // Needs to be true to able to export the canvas, but could lead to performance issue on mobile.
       preserveDrawingBuffer: this.options.preserveDrawingBuffer || false,
     });
