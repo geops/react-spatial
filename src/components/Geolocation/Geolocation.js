@@ -123,45 +123,34 @@ class Geolocation extends PureComponent {
     });
   }
 
-  activate(position) {
-    const { point } = this.state;
+  activate({ coords: { latitude, longitude } }) {
+    let { point } = this.state;
     const { map } = this.props;
 
-    const code = map
+    const projection = map
       .getView()
       .getProjection()
       .getCode();
-    const pos = transform(
-      [position.coords.longitude, position.coords.latitude],
-      'EPSG:4326',
-      code,
-    );
+    const position = transform([longitude, latitude], 'EPSG:4326', projection);
     if (!point) {
-      var tmpPoint = new Point(pos);
-      this.setState({
-        point: tmpPoint,
-      });
-      this.highlight(tmpPoint);
+      point = new Point(position);
+      this.setState({ point });
+      this.highlight(point);
       this.layer.setMap(map);
     } else {
-      point.setCoordinates(pos);
-    }
-    
-    if (this.isCentered) {
-      map.getView().setCenter(pos);
+      point.setCoordinates(position);
     }
 
-    this.setState({
-      active: true,
-    });
+    if (this.isCentered) {
+      map.getView().setCenter(position);
+    }
+
+    this.setState({ active: true });
   }
 
   highlight(point) {
     const { colorOrStyleFunc } = this.props;
-
-    let feature;
-
-    feature = new Feature({
+    const feature = new Feature({
       geometry: point,
       source: new VectorSource(),
     });
