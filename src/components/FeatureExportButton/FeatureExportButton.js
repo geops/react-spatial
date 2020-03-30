@@ -95,7 +95,7 @@ class FeatureExportButton extends PureComponent {
         onClick={() =>
           FeatureExportButton.exportFeatures(layer, projection, format)
         }
-        onKeyPress={evt =>
+        onKeyPress={(evt) =>
           evt.which === 13 &&
           FeatureExportButton.exportFeatures(layer, projection, format)
         }

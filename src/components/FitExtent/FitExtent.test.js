@@ -28,10 +28,7 @@ test('Should fit the extent.', () => {
       FitExtent
     </FitExtent>,
   );
-  wrapper
-    .find('.fit-ext')
-    .first()
-    .simulate('click', {});
+  wrapper.find('.fit-ext').first().simulate('click', {});
   const calculatedExtent = map.getView().calculateExtent(map.getSize());
 
   expect(calculatedExtent).toStrictEqual([1, 2, 3, 4]);
@@ -44,10 +41,7 @@ test('Should fit the extent on return.', () => {
       FitExtent
     </FitExtent>,
   );
-  wrapper
-    .find('.fit-ext')
-    .first()
-    .simulate('click', { which: 13 });
+  wrapper.find('.fit-ext').first().simulate('click', { which: 13 });
   const calculatedExtent = map.getView().calculateExtent(map.getSize());
 
   expect(calculatedExtent).toStrictEqual([1, 2, 3, 4]);

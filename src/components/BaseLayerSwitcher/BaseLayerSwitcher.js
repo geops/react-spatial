@@ -48,19 +48,19 @@ const defaultProps = {
   layerImages: undefined,
 };
 
-const getVisibleLayer = layers => {
-  return layers.find(layer => layer.getVisible());
+const getVisibleLayer = (layers) => {
+  return layers.find((layer) => layer.getVisible());
 };
 
 const getNextImage = (currentLayer, layers, layerImages) => {
   const currentIndex = layers.indexOf(
-    layers.find(layer => layer === currentLayer),
+    layers.find((layer) => layer === currentLayer),
   );
   const nextIndex = currentIndex + 1 === layers.length ? 0 : currentIndex + 1;
   return layerImages[nextIndex];
 };
 
-const getImageStyle = url => {
+const getImageStyle = (url) => {
   return {
     backgroundImage: `url(${url})`,
     backgroundSize: 'cover',
@@ -76,20 +76,20 @@ function BaseLayerSwitcher({
   altText,
   titles,
 }) {
-  const baseLayers = layers.filter(layer => layer.getIsBaseLayer());
+  const baseLayers = layers.filter((layer) => layer.getIsBaseLayer());
   const [switcherOpen, setSwitcherOpen] = useState(false);
   const [isClosed, setIsClosed] = useState(true);
   const [currentLayer, setCurrentLayer] = useState(getVisibleLayer(baseLayers));
 
   /* Images are loaded from props if provided, fallback from layer */
   const images = layerImages
-    ? Object.keys(layerImages).map(layerImage => layerImages[layerImage])
-    : baseLayers.map(layer => layer.previewImage);
+    ? Object.keys(layerImages).map((layerImage) => layerImages[layerImage])
+    : baseLayers.map((layer) => layer.previewImage);
 
   const openClass = switcherOpen ? ' rs-open' : '';
   const closedClass = isClosed ? ' rs-closed' : '';
 
-  const onLayerSelect = layer => {
+  const onLayerSelect = (layer) => {
     if (!switcherOpen) {
       setSwitcherOpen(true);
       return;
@@ -130,7 +130,7 @@ function BaseLayerSwitcher({
       className="rs-base-layer-switcher-close-btn"
       role="button"
       onClick={() => setSwitcherOpen(false)}
-      onKeyPress={e => e.which === 13 && setSwitcherOpen(false)}
+      onKeyPress={(e) => e.which === 13 && setSwitcherOpen(false)}
       tabIndex="0"
       aria-label={altText}
       title={titles.closeSwitcher}
@@ -155,7 +155,7 @@ function BaseLayerSwitcher({
               title={layerName}
               aria-label={layerName}
               onClick={() => onLayerSelect(layer)}
-              onKeyPress={e => {
+              onKeyPress={(e) => {
                 if (e.which === 13) {
                   onLayerSelect(layer);
                 }
@@ -177,7 +177,7 @@ function BaseLayerSwitcher({
           title={titles.openSwitcher}
           aria-label={altText}
           onClick={() => setSwitcherOpen(true) && setIsClosed(false)}
-          onKeyPress={e =>
+          onKeyPress={(e) =>
             e.which === 13 && setSwitcherOpen(true) && setIsClosed(false)
           }
           style={getImageStyle(nextImage)}

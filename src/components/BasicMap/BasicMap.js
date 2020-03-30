@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { defaults as defaultInteractions } from 'ol/interaction';
 import { equals } from 'ol/extent';
@@ -71,7 +71,7 @@ const propTypes = {
   /** HTML aria-label. */
   ariaLabel: PropTypes.string,
 
-  /** View constructor options */
+  /** [ol/View](https://openlayers.org/en/latest/apidoc/module-ol_View-View.html) constructor options */
   viewOptions: PropTypes.shape({
     minZoom: PropTypes.number,
     maxZoom: PropTypes.number,
@@ -123,7 +123,7 @@ const defaultProps = {
  * These options can be overrided by the viewOptions property.
  *
  */
-class BasicMap extends Component {
+class BasicMap extends PureComponent {
   constructor(props) {
     super(props);
     const { map, interactions } = this.props;
@@ -140,7 +140,6 @@ class BasicMap extends Component {
           }),
       });
 
-    // this.map.setView(new View({ ...viewOptions, center, zoom, resolution }));
     this.node = React.createRef();
     this.singleClickRef = null;
     this.pointerMoveRef = null;
@@ -181,18 +180,18 @@ class BasicMap extends Component {
     }
 
     if (onMapMoved) {
-      this.moveEndRef = this.map.on('moveend', evt => onMapMoved(evt));
+      this.mapMoveRef = this.map.on('moveend', (evt) => onMapMoved(evt));
     }
 
     if (onFeaturesClick) {
-      this.singleClickRef = this.map.on('singleclick', evt => {
+      this.singleClickRef = this.map.on('singleclick', (evt) => {
         const features = evt.map.getFeaturesAtPixel(evt.pixel);
         onFeaturesClick(features || [], evt);
       });
     }
 
     if (onFeaturesHover) {
-      this.pointerMoveRef = this.map.on('pointermove', evt => {
+      this.pointerMoveRef = this.map.on('pointermove', (evt) => {
         const features = this.map.getFeaturesAtPixel(evt.pixel);
         onFeaturesHover(features || [], evt);
       });
@@ -259,12 +258,14 @@ class BasicMap extends Component {
   }
 
   setLayers(layers = []) {
-    const layersToRemove = this.layers.filter(layer => !layers.includes(layer));
+    const layersToRemove = this.layers.filter(
+      (layer) => !layers.includes(layer),
+    );
     for (let i = 0; i < layersToRemove.length; i += 1) {
       this.terminateLayer(layersToRemove[i]);
     }
 
-    const layersToInit = layers.filter(layer => !this.layers.includes(layer));
+    const layersToInit = layers.filter((layer) => !this.layers.includes(layer));
     for (let i = 0; i < layersToInit.length; i += 1) {
       this.initLayer(layersToInit[i]);
     }

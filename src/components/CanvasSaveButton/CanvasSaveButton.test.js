@@ -64,8 +64,8 @@ describe('CanvasSaveButton', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  test('should call onSaveBefore then download then onSaveEnd function on click.', async done => {
-    const saveStart = jest.fn(m => {
+  test('should call onSaveBefore then download then onSaveEnd function on click.', async (done) => {
+    const saveStart = jest.fn((m) => {
       return Promise.resolve(m);
     });
     const saveEnd = jest.fn();
@@ -99,12 +99,12 @@ describe('CanvasSaveButton', () => {
     link.click = jest.fn();
     const div = document.createElement('div');
     const canvas = document.createElement('canvas');
-    canvas.toBlob = jest.fn(callback => callback());
+    canvas.toBlob = jest.fn((callback) => callback());
     global.URL.createObjectURL = jest.fn(() => 'fooblob');
     // We use a spy here to be able to correctly restore the initial function
     const spy3 = jest
       .spyOn(global.document, 'createElement')
-      .mockImplementation(elt => {
+      .mockImplementation((elt) => {
         if (elt === 'canvas') {
           return canvas;
         }
@@ -160,7 +160,7 @@ describe('CanvasSaveButton', () => {
     window.navigator.msSaveBlob = true;
 
     const canvas = document.createElement('canvas');
-    const p = new Promise(resolve => {
+    const p = new Promise((resolve) => {
       resolve(canvas);
     });
     jest

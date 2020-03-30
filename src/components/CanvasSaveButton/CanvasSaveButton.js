@@ -106,7 +106,7 @@ const defaultProps = {
   extraData: null,
   coordinates: null,
   scale: 1,
-  onSaveStart: map => Promise.resolve(map),
+  onSaveStart: (map) => Promise.resolve(map),
   onSaveEnd: () => {},
 };
 
@@ -128,13 +128,13 @@ class CanvasSaveButton extends PureComponent {
       evt.preventDefault();
       evt.stopPropagation();
     }
-    onSaveStart(map).then(mapToExport => {
+    onSaveStart(map).then((mapToExport) => {
       return this.createCanvasImage(mapToExport || map)
-        .then(canvas => {
+        .then((canvas) => {
           this.downloadCanvasImage(canvas);
           onSaveEnd(mapToExport);
         })
-        .catch(err => {
+        .catch((err) => {
           if (err) {
             // eslint-disable-next-line no-console
             console.error(err);
@@ -238,7 +238,7 @@ class CanvasSaveButton extends PureComponent {
     const { scale, extraData } = this.props;
     const { src, circled, width, height, rotation } = extraData.northArrow;
 
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const img = new Image();
       img.crossOrigin = 'Anonymous';
       img.src = src || (circled ? NorthArrowCircle : NorthArrowSimple);
@@ -318,7 +318,7 @@ class CanvasSaveButton extends PureComponent {
   createCanvasImage(mapToExport) {
     const { extraData } = this.props;
 
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       mapToExport.once('rendercomplete', () => {
         // Find all layer canvases and add it to dest canvas.
         const canvases = mapToExport
@@ -329,7 +329,7 @@ class CanvasSaveButton extends PureComponent {
         let destCanvas;
         let destContext;
 
-        canvases.forEach(canvas => {
+        canvases.forEach((canvas) => {
           if (!canvas.width || !canvas.height) {
             return;
           }
@@ -367,7 +367,7 @@ class CanvasSaveButton extends PureComponent {
           p = this.drawNorthArrow(destContext, destCanvas);
         }
 
-        p.then(arrowWidth => {
+        p.then((arrowWidth) => {
           // Copyright
           if (
             destContext &&
@@ -411,7 +411,7 @@ class CanvasSaveButton extends PureComponent {
       );
     } else {
       // Use blob for large images
-      canvas.toBlob(blob => {
+      canvas.toBlob((blob) => {
         const link = document.createElement('a');
         link.download = this.getDownloadImageName();
         link.href = URL.createObjectURL(blob);
@@ -440,8 +440,8 @@ class CanvasSaveButton extends PureComponent {
         tabIndex={0}
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...other}
-        onClick={e => this.onClick(e)}
-        onKeyPress={e => e.which === 13 && this.onClick(e)}
+        onClick={(e) => this.onClick(e)}
+        onKeyPress={(e) => e.which === 13 && this.onClick(e)}
       >
         {children}
       </div>

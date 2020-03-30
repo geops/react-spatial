@@ -22,7 +22,7 @@ const propTypes = {
 
 const defaultProps = {
   layerService: null,
-  format: copyrights => copyrights.join(' | '),
+  format: (copyrights) => copyrights.join(' | '),
   className: 'rs-copyright',
 };
 
@@ -35,9 +35,9 @@ function Copyright({ layerService, format, ...other }) {
       new Set(
         layerService
           .getLayersAsFlatArray()
-          .filter(l => l.getVisible())
-          .map(l => l.getCopyright())
-          .filter(cr => cr),
+          .filter((l) => l.getVisible())
+          .map((l) => l.getCopyright())
+          .filter((cr) => cr),
       ),
     ),
   );

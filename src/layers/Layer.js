@@ -74,7 +74,7 @@ export default class Layer extends Observable {
     this.map.addLayer(this.olLayer);
 
     this.olListenersKeys.push(
-      this.map.getLayers().on('remove', evt => {
+      this.map.getLayers().on('remove', (evt) => {
         if (evt.element === this.olLayer) {
           this.terminate();
         }
@@ -237,7 +237,7 @@ export default class Layer extends Observable {
    * @returns {Array<ol.layer>} Visible children
    */
   getVisibleChildren() {
-    return this.children.filter(c => c.getVisible() === true);
+    return this.children.filter((c) => c.getVisible() === true);
   }
 
   /**
@@ -269,7 +269,7 @@ export default class Layer extends Observable {
    * @returns {boolean} True if the layer has visible child layers
    */
   hasVisibleChildren() {
-    return !!this.children.find(l => l.getVisible());
+    return !!this.children.find((l) => l.getVisible());
   }
 
   /**
@@ -278,7 +278,7 @@ export default class Layer extends Observable {
    * @returns {boolean} True if the layer has children with the given visibility
    */
   hasChildren(visible) {
-    return !!this.children.find(l => visible === l.getVisible());
+    return !!this.children.find((l) => visible === l.getVisible());
   }
 
   // eslint-disable-next-line class-methods-use-this
