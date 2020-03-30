@@ -6,7 +6,7 @@ import OLLayer from 'ol/layer/Layer';
 import GeoJSON from 'ol/format/GeoJSON';
 import Layer from './Layer';
 
-const getCopyrightFromSources = mbMap => {
+const getCopyrightFromSources = (mbMap) => {
   let copyrights = [];
   const regex = /<[^>]*>[^>]*<\/[^>]*>/g;
   // Trick from Mapbox AttributionControl to know if the source is used.
@@ -18,9 +18,9 @@ const getCopyrightFromSources = mbMap => {
       );
     }
   });
-  return Array.from(new Set(copyrights.filter(copyright => !!copyright))).join(
-    ', ',
-  );
+  return Array.from(
+    new Set(copyrights.filter((copyright) => !!copyright)),
+  ).join(', ');
 };
 
 /**
@@ -32,7 +32,7 @@ const getCopyrightFromSources = mbMap => {
 export default class MapboxLayer extends Layer {
   constructor(options = {}) {
     const mbLayer = new OLLayer({
-      render: frameState => {
+      render: (frameState) => {
         let changed = false;
         const canvas = this.mbMap.getCanvas();
         const { viewState } = frameState;
@@ -208,7 +208,7 @@ export default class MapboxLayer extends Layer {
     // feature to be consistent with other layers.
     const features = this.mbMap
       .queryRenderedFeatures(pixel, options)
-      .map(feature => this.format.readFeature(feature));
+      .map((feature) => this.format.readFeature(feature));
 
     return Promise.resolve({
       layer: this,

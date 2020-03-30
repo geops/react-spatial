@@ -158,7 +158,7 @@ class BasicMap extends Component {
       this.map.getView().fit(extent);
     }
 
-    this.moveEndRef = this.map.on('moveend', e => onMapMoved(e));
+    this.moveEndRef = this.map.on('moveend', (e) => onMapMoved(e));
     this.singleClickRef = null;
     this.pointerMoveRef = null;
     this.layers = [];
@@ -179,13 +179,13 @@ class BasicMap extends Component {
       this.setLayers(layers);
     }
 
-    this.singleClickRef = this.map.on('singleclick', evt => {
+    this.singleClickRef = this.map.on('singleclick', (evt) => {
       const features = evt.map.getFeaturesAtPixel(evt.pixel);
       onFeaturesClick(features || [], evt);
     });
 
     if (onFeaturesHover) {
-      this.pointerMoveRef = this.map.on('pointermove', evt => {
+      this.pointerMoveRef = this.map.on('pointermove', (evt) => {
         const features = this.map.getFeaturesAtPixel(evt.pixel);
         onFeaturesHover(features || [], evt);
       });
@@ -267,12 +267,14 @@ class BasicMap extends Component {
   }
 
   setLayers(layers = []) {
-    const layersToRemove = this.layers.filter(layer => !layers.includes(layer));
+    const layersToRemove = this.layers.filter(
+      (layer) => !layers.includes(layer),
+    );
     for (let i = 0; i < layersToRemove.length; i += 1) {
       this.terminateLayer(layersToRemove[i]);
     }
 
-    const layersToInit = layers.filter(layer => !this.layers.includes(layer));
+    const layersToInit = layers.filter((layer) => !this.layers.includes(layer));
     for (let i = 0; i < layersToInit.length; i += 1) {
       this.initLayer(layersToInit[i]);
     }

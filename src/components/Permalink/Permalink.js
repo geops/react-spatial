@@ -82,7 +82,7 @@ class Permalink extends Component {
 
       if (urlParams.layers) {
         const visibleLayers = urlParams.layers.split(',');
-        layerService.getLayersAsFlatArray().forEach(l => {
+        layerService.getLayersAsFlatArray().forEach((l) => {
           if (visibleLayers.includes(l.getKey())) {
             l.setVisible(true);
           } else if (
@@ -97,7 +97,7 @@ class Permalink extends Component {
 
       // Set baser layer visibility based on 'baseLayers' parameter.
       const visibleBaseLayers = (urlParams.baselayers || '').split(',');
-      layerService.getBaseLayers().forEach(baseLayer => {
+      layerService.getBaseLayers().forEach((baseLayer) => {
         if (baseLayer.getKey() === visibleBaseLayers[0]) {
           baseLayer.setVisible(true); // The radio group will hide the others baseLayers automatically
         }
@@ -161,7 +161,7 @@ class Permalink extends Component {
   updateLayers() {
     const { layerService, isLayerHidden } = this.props;
     const baseLayers = layerService.getBaseLayers();
-    const idx = baseLayers.findIndex(l => l.getVisible());
+    const idx = baseLayers.findIndex((l) => l.getVisible());
     if (idx !== -1) {
       const baseLayerVisible = baseLayers.splice(idx, 1);
       baseLayers.unshift(baseLayerVisible[0]);
@@ -170,7 +170,7 @@ class Permalink extends Component {
     this.setState({
       layers: layerService
         .getLayersAsFlatArray()
-        .filter(l => {
+        .filter((l) => {
           return (
             !l.getIsBaseLayer() &&
             l.getVisible() &&
@@ -178,11 +178,11 @@ class Permalink extends Component {
             !isLayerHidden(l)
           );
         })
-        .map(l => l.getKey())
+        .map((l) => l.getKey())
         .join(),
       baselayers:
         baseLayers.length > 1
-          ? baseLayers.map(l => l.getKey()).join()
+          ? baseLayers.map((l) => l.getKey()).join()
           : undefined,
     });
   }

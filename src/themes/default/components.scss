@@ -1,6 +1,7 @@
 /**
 * This file load the css of components.
 */
+@import '../../components/BaseLayerSwitcher/BaseLayerSwitcher.scss';
 @import '../../components/BaseLayerToggler/BaseLayerToggler.scss';
 @import '../../components/Geolocation/Geolocation.scss';
 @import '../../components/LayerTree/LayerTree.scss';

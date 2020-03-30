@@ -2,6 +2,7 @@
 * This file is loaded by the styleguide and provide additionnal css for all examples.
 */
 @import './index.scss';
+@import '../../components/BaseLayerSwitcher/BaseLayerSwitcher.md.scss';
 @import '../../components/BaseLayerToggler/BaseLayerToggler.md.scss';
 @import '../../components/BasicMap/BasicMap.md.scss';
 @import '../../components/CanvasSaveButton/CanvasSaveButton.md.scss';

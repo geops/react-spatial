@@ -70,7 +70,7 @@ describe('FeatureExportButton', () => {
   describe('triggers onClick', () => {
     // Use library 'jest-environment-jsdom-fourteen'
     // to allow jest test of format.writeFeatures(feats).
-    const renderLayer = featNumbers => {
+    const renderLayer = (featNumbers) => {
       const featsArray = [];
       for (let i = 0; i < featNumbers; i += 1) {
         featsArray.push(
@@ -143,7 +143,7 @@ describe('FeatureExportButton', () => {
           }),
         });
 
-        iconLayer.olLayer.getSource().forEachFeature(f => {
+        iconLayer.olLayer.getSource().forEachFeature((f) => {
           f.setStyle(iconStyle);
         });
 
@@ -191,7 +191,7 @@ describe('FeatureExportButton', () => {
         test('should export text style in kml.', () => {
           const textlayer = renderLayer(2);
 
-          textlayer.olLayer.getSource().forEachFeature(f => {
+          textlayer.olLayer.getSource().forEachFeature((f) => {
             f.setStyle(textStyle);
           });
           const exportString = FeatureExportButton.createFeatureString(
@@ -210,7 +210,7 @@ describe('FeatureExportButton', () => {
         test('should only export none-empty text style in kml.', () => {
           const textlayer = renderLayer(2);
 
-          textlayer.olLayer.getSource().forEachFeature(f => {
+          textlayer.olLayer.getSource().forEachFeature((f) => {
             f.setStyle(textStyle);
           });
           const exportString1 = FeatureExportButton.createFeatureString(
@@ -234,10 +234,7 @@ describe('FeatureExportButton', () => {
             }),
           });
           // Set empty string as name for first feature
-          textlayer.olLayer
-            .getSource()
-            .getFeatures()[0]
-            .setStyle(newStyle);
+          textlayer.olLayer.getSource().getFeatures()[0].setStyle(newStyle);
 
           const exportString2 = FeatureExportButton.createFeatureString(
             textlayer,
@@ -277,7 +274,7 @@ describe('FeatureExportButton', () => {
             }),
           });
 
-          circleLayer.olLayer.getSource().forEachFeature(f => {
+          circleLayer.olLayer.getSource().forEachFeature((f) => {
             f.setStyle(circleStyle);
           });
           const exportString = FeatureExportButton.createFeatureString(
@@ -306,7 +303,7 @@ describe('FeatureExportButton', () => {
             }),
           });
 
-          extendedLayer.olLayer.getSource().forEachFeature(f => {
+          extendedLayer.olLayer.getSource().forEachFeature((f) => {
             f.setStyle(style);
           });
           const exportString = FeatureExportButton.createFeatureString(
@@ -342,7 +339,7 @@ describe('FeatureExportButton', () => {
             }),
           });
 
-          extendedLayer.olLayer.getSource().forEachFeature(f => {
+          extendedLayer.olLayer.getSource().forEachFeature((f) => {
             f.setStyle(style);
             f.set('foo', 'bar');
           });

@@ -1,0 +1,61 @@
+.rs-base-layer-switcher {
+  position: relative;
+  height: 80px;
+  width: 115px;
+  transition: 250ms width;
+  overflow: hidden;
+  display: flex;
+
+  &.rs-open {
+    width: 600px;
+  }
+
+  .rs-base-layer-switcher-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
+    min-width: 100px;
+    margin-left: 5px;
+    background-color: rgb(197, 197, 197);
+    border: 2px solid white;
+  }
+
+  .rs-alt-text {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    max-width: 80px;
+    overflow: hidden;
+  }
+
+  .rs-base-layer-switcher-close-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+  }
+
+  .rs-open {
+    &:hover,
+    &.rs-active {
+      border: 2px solid red;
+    }
+  }
+
+  .rs-base-layer-switcher-title {
+    width: 100%;
+    max-height: 12px;
+    font-size: 10px;
+    padding: 2px 0;
+    background-color: rgba(255, 255, 255, 0.9);
+    text-align: center;
+
+    &.rs-closed {
+      color: white;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+  }
+}

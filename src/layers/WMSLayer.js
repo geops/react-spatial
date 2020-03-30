@@ -51,13 +51,13 @@ class WMSLayer extends Layer {
    */
   getFeatureInfoAtCoordinate(coordinate) {
     return fetch(this.getFeatureInfoUrl(coordinate))
-      .then(resp => resp.json())
-      .then(r => r.features)
-      .then(data => {
+      .then((resp) => resp.json())
+      .then((r) => r.features)
+      .then((data) => {
         return {
           layer: this,
           coordinate,
-          features: data.map(d => this.format.readFeature(d)),
+          features: data.map((d) => this.format.readFeature(d)),
         };
       })
       .catch(() => {
@@ -96,12 +96,12 @@ class WMSLayer extends Layer {
     }
 
     // Listen to click events
-    this.singleClickRef = this.map.on('singleclick', e => {
+    this.singleClickRef = this.map.on('singleclick', (e) => {
       if (!this.clickCallbacks.length) {
         return;
       }
 
-      this.getFeatureInfoAtCoordinate(e.coordinate).then(data =>
+      this.getFeatureInfoAtCoordinate(e.coordinate).then((data) =>
         this.callClickCallbacks(data.features, data.layer, data.coordinate),
       );
     });
@@ -113,7 +113,7 @@ class WMSLayer extends Layer {
    * @private
    */
   callClickCallbacks(features, layer, coordinate) {
-    this.clickCallbacks.forEach(c => c(features, layer, coordinate));
+    this.clickCallbacks.forEach((c) => c(features, layer, coordinate));
   }
 
   /**
