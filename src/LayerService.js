@@ -21,12 +21,12 @@ export default class LayerService {
     this.layers = layers;
     this.listenChangeEvt();
     // When we change the layers we trigger an change:layers event
-    (this.callbacks['change:layers'] || []).forEach(cb => cb(layers));
+    (this.callbacks['change:layers'] || []).forEach((cb) => cb(layers));
   }
 
   getLayersAsFlatArray(optLayers) {
     let layers = [];
-    (optLayers || this.getLayers() || []).forEach(l => {
+    (optLayers || this.getLayers() || []).forEach((l) => {
       layers.push(l);
       const children = l.getChildren();
       layers = layers.concat(this.getLayersAsFlatArray(children));
@@ -35,12 +35,12 @@ export default class LayerService {
   }
 
   getLayer(name) {
-    return this.getLayersAsFlatArray().find(l => l.getName() === name);
+    return this.getLayersAsFlatArray().find((l) => l.getName() === name);
   }
 
   getParent(child) {
     return this.getLayersAsFlatArray().find(
-      l => !!l.getChildren().includes(child),
+      (l) => !!l.getChildren().includes(child),
     );
   }
 
@@ -63,7 +63,7 @@ export default class LayerService {
   getRadioGroupLayers(radioGroupName) {
     if (radioGroupName) {
       return this.getLayersAsFlatArray().filter(
-        l => l.getRadioGroup() === radioGroupName,
+        (l) => l.getRadioGroup() === radioGroupName,
       );
     }
 
@@ -71,20 +71,20 @@ export default class LayerService {
   }
 
   getBaseLayers() {
-    return this.getLayersAsFlatArray().filter(l => l.getIsBaseLayer());
+    return this.getLayersAsFlatArray().filter((l) => l.getIsBaseLayer());
   }
 
   getQueryableLayers() {
     return this.getLayersAsFlatArray().filter(
-      layer => layer.getVisible() && layer.isQueryable,
+      (layer) => layer.getVisible() && layer.isQueryable,
     );
   }
 
   getFeatureInfoAtCoordinate(coordinate) {
-    const promises = this.getQueryableLayers().map(layer => {
+    const promises = this.getQueryableLayers().map((layer) => {
       return layer
         .getFeatureInfoAtCoordinate(coordinate, layer.filter)
-        .then(featureInfo => {
+        .then((featureInfo) => {
           return featureInfo;
         });
     });
@@ -107,14 +107,14 @@ export default class LayerService {
   }
 
   listenChangeEvt() {
-    this.getLayersAsFlatArray().forEach(layer => {
+    this.getLayersAsFlatArray().forEach((layer) => {
       this.keys.push(
-        layer.on('change:copyright', evt => {
-          (this.callbacks['change:copyright'] || []).forEach(cb =>
+        layer.on('change:copyright', (evt) => {
+          (this.callbacks['change:copyright'] || []).forEach((cb) =>
             cb(evt.target),
           );
         }),
-        layer.on('change:visible', evt => {
+        layer.on('change:visible', (evt) => {
           const visible = evt.target.getVisible();
 
           // Apply to siblings only if it's a radio group.
@@ -125,9 +125,9 @@ export default class LayerService {
           ) {
             const siblings = this.getRadioGroupLayers(
               layer.getRadioGroup(),
-            ).filter(l => l !== layer);
+            ).filter((l) => l !== layer);
 
-            siblings.forEach(s => {
+            siblings.forEach((s) => {
               if (
                 visible &&
                 s.getRadioGroup() &&
@@ -140,7 +140,7 @@ export default class LayerService {
 
           // Apply to children
           if (!evt.stopPropagationDown && layer.children) {
-            layer.children.forEach(child => {
+            layer.children.forEach((child) => {
               child.setVisible(visible, false, true, false);
             });
           }
@@ -154,12 +154,12 @@ export default class LayerService {
             !evt.stopPropagationUp &&
             parentLayer &&
             (visible ||
-              (!visible && !parentLayer.children.find(c => c.getVisible())))
+              (!visible && !parentLayer.children.find((c) => c.getVisible())))
           ) {
             parentLayer.setVisible(visible, true, false, false);
           }
 
-          (this.callbacks['change:visible'] || []).forEach(cb =>
+          (this.callbacks['change:visible'] || []).forEach((cb) =>
             cb(evt.target),
           );
         }),

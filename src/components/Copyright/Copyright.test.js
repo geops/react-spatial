@@ -94,7 +94,7 @@ describe('Copyright', () => {
     const component = mount(
       <Copyright
         layerService={layerService}
-        format={copyrights => `Number of copyrights: ${copyrights.length}`}
+        format={(copyrights) => `Number of copyrights: ${copyrights.length}`}
       />,
     );
 
@@ -155,7 +155,7 @@ describe('Copyright', () => {
     const component = mount(
       <Copyright
         layerService={layService}
-        format={copyrights => `Number of copyrights: ${copyrights.length}`}
+        format={(copyrights) => `Number of copyrights: ${copyrights.length}`}
       />,
     );
     expect(component.text()).toBe('Number of copyrights: 1');

@@ -10,7 +10,7 @@ import Layer from './layers/Layer';
 import MapboxLayer from './layers/MapboxLayer';
 import projections from './Projections';
 
-const createXYZLayer = item => {
+const createXYZLayer = (item) => {
   const conf = { ...item };
   delete conf.data;
 
@@ -28,7 +28,7 @@ const createXYZLayer = item => {
   return l;
 };
 
-const createVectorLayer = item => {
+const createVectorLayer = (item) => {
   const conf = { ...item };
   delete conf.data;
 
@@ -45,7 +45,7 @@ const createVectorLayer = item => {
   });
 };
 
-const createMapboxLayer = item => {
+const createMapboxLayer = (item) => {
   const conf = { ...item };
   delete conf.data;
 
@@ -55,7 +55,7 @@ const createMapboxLayer = item => {
   });
 };
 
-const createTileJSONLayer = item => {
+const createTileJSONLayer = (item) => {
   const conf = { ...item };
   delete conf.data;
 
@@ -71,7 +71,7 @@ const createTileJSONLayer = item => {
   });
 };
 
-const createWMTSLayer = item => {
+const createWMTSLayer = (item) => {
   const { data } = item;
 
   if (data.type === 'wmts') {
@@ -112,7 +112,7 @@ const createWMTSLayer = item => {
   });
 };
 
-const createCustomLayer = item => {
+const createCustomLayer = (item) => {
   const conf = { ...item };
   delete conf.data;
 
@@ -122,7 +122,7 @@ const createCustomLayer = item => {
   });
 };
 
-const createEmptyLayer = item => {
+const createEmptyLayer = (item) => {
   const conf = { ...item };
   delete conf.data;
 
@@ -131,7 +131,7 @@ const createEmptyLayer = item => {
   });
 };
 
-const createLayer = item => {
+const createLayer = (item) => {
   let layer;
 
   switch (item.data.type) {
@@ -160,7 +160,7 @@ const createLayer = item => {
   return layer;
 };
 
-const loadLayerFromConfig = config => {
+const loadLayerFromConfig = (config) => {
   // apply default values
   const item = {
     data: [],
@@ -173,7 +173,7 @@ const loadLayerFromConfig = config => {
   const layer = createLayer(item);
 
   if (config.children) {
-    config.children.forEach(childConfig => {
+    config.children.forEach((childConfig) => {
       layer.addChild(loadLayerFromConfig(childConfig));
     });
   }
@@ -181,13 +181,13 @@ const loadLayerFromConfig = config => {
   return layer;
 };
 
-const readConfig = data => {
-  return data.map(config => loadLayerFromConfig(config));
+const readConfig = (data) => {
+  return data.map((config) => loadLayerFromConfig(config));
 };
 
-const getVisibleTopic = topicList => {
+const getVisibleTopic = (topicList) => {
   let visibleTopic = null;
-  topicList.forEach(topic => {
+  topicList.forEach((topic) => {
     if (topic.visible) {
       visibleTopic = topic;
     }
