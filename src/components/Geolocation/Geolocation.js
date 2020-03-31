@@ -147,7 +147,6 @@ class Geolocation extends PureComponent {
     const { colorOrStyleFunc } = this.props;
     const feature = new Feature({
       geometry: this.point,
-      source: new VectorSource(),
     });
 
     if (Array.isArray(colorOrStyleFunc)) {
