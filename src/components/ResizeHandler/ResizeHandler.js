@@ -43,7 +43,7 @@ const defaultProps = {
 class ResizeHandler extends PureComponent {
   static applyBreakpoints(entry, breakpoints, size, direction) {
     let found = false;
-    Object.entries(breakpoints).forEach(brkpt => {
+    Object.entries(breakpoints).forEach((brkpt) => {
       const cssClass = `rs-${direction}-${brkpt[0]}`;
       entry.target.classList.remove(cssClass);
       if (!found && size <= brkpt[1]) {
@@ -55,7 +55,7 @@ class ResizeHandler extends PureComponent {
 
   constructor(props) {
     super(props);
-    this.observer = new ResizeObserver(entries => this.onResize(entries));
+    this.observer = new ResizeObserver((entries) => this.onResize(entries));
     this.nodes = [];
   }
 
@@ -135,7 +135,7 @@ class ResizeHandler extends PureComponent {
     }
 
     if (this.nodes.length) {
-      this.nodes.forEach(node => this.observer.observe(node));
+      this.nodes.forEach((node) => this.observer.observe(node));
     }
   }
 

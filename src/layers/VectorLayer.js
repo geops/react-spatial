@@ -49,7 +49,7 @@ class VectorLayer extends Layer {
     if (this.map) {
       const pixel = this.map.getPixelFromCoordinate(coordinate);
       features = this.map.getFeaturesAtPixel(pixel, {
-        layerFilter: l => l === this.olLayer,
+        layerFilter: (l) => l === this.olLayer,
         hitTolerance: this.hitTolerance,
       });
     }
@@ -73,13 +73,13 @@ class VectorLayer extends Layer {
     }
 
     // Listen to click events
-    this.singleClickRef = this.map.on('singleclick', e => {
+    this.singleClickRef = this.map.on('singleclick', (e) => {
       if (!this.clickCallbacks.length) {
         return;
       }
 
       this.getFeatureInfoAtCoordinate(e.coordinate)
-        .then(d => this.callClickCallbacks(d.features, d.layer, d.coordinate))
+        .then((d) => this.callClickCallbacks(d.features, d.layer, d.coordinate))
         .catch(() => this.callClickCallbacks([], this, e.coordinate));
     });
   }
@@ -90,7 +90,7 @@ class VectorLayer extends Layer {
    * @private
    */
   callClickCallbacks(features, layer, coordinate) {
-    this.clickCallbacks.forEach(c => c(features, layer, coordinate));
+    this.clickCallbacks.forEach((c) => c(features, layer, coordinate));
   }
 
   /**

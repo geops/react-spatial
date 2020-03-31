@@ -32,7 +32,7 @@ const defaultProps = {
  * This component creates a button to zoom to the given extent.
  */
 function FitExtent({ map, extent, className, children, ...other }) {
-  const fit = useCallback(evt => {
+  const fit = useCallback((evt) => {
     if (evt.which && evt.which !== 13) {
       return;
     }

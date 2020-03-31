@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { defaults as defaultInteractions } from 'ol/interaction';
 import { equals } from 'ol/extent';
@@ -71,7 +71,7 @@ const propTypes = {
   /** HTML aria-label. */
   ariaLabel: PropTypes.string,
 
-  /** View constructor options */
+  /** [ol/View](https://openlayers.org/en/latest/apidoc/module-ol_View-View.html) constructor options */
   viewOptions: PropTypes.shape({
     minZoom: PropTypes.number,
     maxZoom: PropTypes.number,
@@ -96,9 +96,9 @@ const defaultProps = {
   interactions: null,
   layers: [],
   map: null,
-  onFeaturesClick: () => {},
+  onFeaturesClick: undefined,
   onFeaturesHover: undefined,
-  onMapMoved: () => {},
+  onMapMoved: undefined,
   resolution: undefined,
   tabIndex: 0,
   ariaLabel: 'map',
@@ -123,19 +123,10 @@ const defaultProps = {
  * These options can be overrided by the viewOptions property.
  *
  */
-class BasicMap extends Component {
+class BasicMap extends PureComponent {
   constructor(props) {
     super(props);
-    const {
-      center,
-      extent,
-      map,
-      interactions,
-      onMapMoved,
-      resolution,
-      viewOptions,
-      zoom,
-    } = this.props;
+    const { map, interactions } = this.props;
 
     this.map =
       map ||
@@ -148,44 +139,59 @@ class BasicMap extends Component {
             pinchRotate: false,
           }),
       });
-    const view = new View({ ...viewOptions, ...{ center, zoom, resolution } });
-
-    this.map.setView(view);
 
     this.node = React.createRef();
-
-    if (extent) {
-      this.map.getView().fit(extent);
-    }
-
-    this.moveEndRef = this.map.on('moveend', e => onMapMoved(e));
     this.singleClickRef = null;
     this.pointerMoveRef = null;
     this.layers = [];
   }
 
   componentDidMount() {
-    const { onFeaturesClick, onFeaturesHover, layers } = this.props;
+    const {
+      onMapMoved,
+      onFeaturesClick,
+      onFeaturesHover,
+      layers,
+      extent,
+      viewOptions,
+      center,
+      zoom,
+      resolution,
+    } = this.props;
     this.map.setTarget(this.node.current);
-    // Since ol 6.1.0 touch-action is set to auto and creates a bad navigation experience on mobile,
-    // so we have to force it to none for mobile.
-    // https://github.com/openlayers/openlayers/pull/10187/files
+
+    // We set the view here otherwise the map is not correctly zoomed.
+    this.map.setView(new View({ ...viewOptions, center, zoom, resolution }));
+
+    // // Since ol 6.1.0 touch-action is set to auto and creates a bad navigation experience on mobile,
+    // // so we have to force it to none for mobile.
+    // // https://github.com/openlayers/openlayers/pull/10187/files
     const viewPort = this.map.getViewport();
     viewPort.style.touchAction = 'none';
     viewPort.style.msTouchAction = 'none';
     viewPort.setAttribute('touch-action', 'none');
 
+    if (extent) {
+      this.map.getView().fit(extent);
+    }
+
     if (layers.length) {
       this.setLayers(layers);
     }
 
-    this.singleClickRef = this.map.on('singleclick', evt => {
-      const features = evt.map.getFeaturesAtPixel(evt.pixel);
-      onFeaturesClick(features || [], evt);
-    });
+    if (onMapMoved) {
+      this.mapMoveRef = this.map.on('moveend', (evt) => onMapMoved(evt));
+    }
+
+    if (onFeaturesClick) {
+      this.singleClickRef = this.map.on('singleclick', (evt) => {
+        const features = evt.map.getFeaturesAtPixel(evt.pixel);
+        onFeaturesClick(features || [], evt);
+      });
+    }
 
     if (onFeaturesHover) {
-      this.pointerMoveRef = this.map.on('pointermove', evt => {
+      this.pointerMoveRef = this.map.on('pointermove', (evt) => {
         const features = this.map.getFeaturesAtPixel(evt.pixel);
         onFeaturesHover(features || [], evt);
       });
@@ -204,75 +210,62 @@ class BasicMap extends Component {
       zoom,
     } = this.props;
 
-    if (animationOptions && prevProps.animationOptions !== animationOptions) {
-      this.map.getView().animate(animationOptions);
-    }
-
     if (prevProps.layers !== layers) {
       this.setLayers(layers);
     }
 
-    if (prevProps.center !== center) {
-      this.map.getView().setCenter(center);
-    }
-
-    if (prevProps.extent !== extent) {
-      this.map.getView().fit(extent, fitOptions);
-    }
-
-    if (prevProps.zoom !== zoom) {
-      this.map.getView().setZoom(zoom);
-    }
-
+    // Creates a new view if necessary before updating the others prop.
     if (
-      prevProps.resolution !== resolution &&
-      this.map.getView().getResolution() !== resolution
-    ) {
-      this.map.getView().setResolution(resolution);
-    }
-
-    if (
-      (viewOptions &&
-        viewOptions.extent &&
-        (!prevProps.viewOptions.extent ||
-          (prevProps.viewOptions.extent &&
-            !equals(prevProps.viewOptions.extent, viewOptions.extent)))) ||
-      (viewOptions.maxZoom &&
-        prevProps.viewOptions.maxZoom !== viewOptions.maxZoom) ||
-      (viewOptions.minZoom &&
-        prevProps.viewOptions.minZoom !== viewOptions.minZoom)
+      viewOptions &&
+      JSON.stringify(viewOptions) !== JSON.stringify(prevProps.viewOptions)
     ) {
       // Re-create a view, ol doesn't provide any method to setExtent of view.
       this.map.setView(
         new View({
           ...viewOptions,
-          ...{ center },
-          ...{ resolution },
-          ...{ extent: viewOptions.extent },
-          ...{ maxZoom: viewOptions.maxZoom },
-          ...{ minZoom: viewOptions.minZoom },
+          center,
+          resolution,
+          zoom,
         }),
       );
+    }
+
+    const view = this.map.getView();
+
+    if (animationOptions && prevProps.animationOptions !== animationOptions) {
+      view.animate(animationOptions);
+    }
+
+    if (prevProps.center !== center) {
+      view.setCenter(center);
+    }
+
+    if (zoom !== prevProps.zoom) {
+      view.setZoom(zoom);
+    }
+
+    if (resolution !== prevProps.resolution) {
+      view.setResolution(resolution);
+    }
+
+    if (extent && !equals(extent, prevProps.extent || [])) {
+      view.fit(extent, fitOptions);
     }
   }
 
   componentWillUnmount() {
-    const { onFeaturesHover } = this.props;
-    unByKey(this.moveEndRef);
-    unByKey(this.singleClickRef);
-
-    if (onFeaturesHover) {
-      unByKey(this.pointerMoveRef);
-    }
+    unByKey([this.moveEndRef, this.singleClickRef, this.pointerMoveRef]);
   }
 
   setLayers(layers = []) {
-    const layersToRemove = this.layers.filter(layer => !layers.includes(layer));
+    const layersToRemove = this.layers.filter(
+      (layer) => !layers.includes(layer),
+    );
     for (let i = 0; i < layersToRemove.length; i += 1) {
       this.terminateLayer(layersToRemove[i]);
     }
 
-    const layersToInit = layers.filter(layer => !this.layers.includes(layer));
+    const layersToInit = layers.filter((layer) => !this.layers.includes(layer));
     for (let i = 0; i < layersToInit.length; i += 1) {
       this.initLayer(layersToInit[i]);
     }

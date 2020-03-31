@@ -9,7 +9,7 @@ import OLMousePosition from 'ol/control/MousePosition';
 import MousePosition from './MousePosition';
 
 configure({ adapter: new Adapter() });
-const expectSnapshot = props => {
+const expectSnapshot = (props) => {
   const map = new OLMap({});
   const component = renderer.create(<MousePosition map={map} {...props} />);
   const tree = component.toJSON();

@@ -25,6 +25,16 @@ const propTypes = {
   className: PropTypes.string,
 
   /**
+   * Children of the previous baselayer button.
+   */
+  prevButtonContent: PropTypes.node,
+
+  /**
+   * Children of the next baselayer button.
+   */
+  nextButtonContent: PropTypes.node,
+
+  /**
    * Path to the directory which includes the fallback images
    */
   fallbackImgDir: PropTypes.string,
@@ -47,6 +57,8 @@ const propTypes = {
 const defaultProps = {
   layerService: undefined,
   className: 'rs-base-layer-toggler',
+  prevButtonContent: <FaArrowCircleLeft focusable={false} />,
+  nextButtonContent: <FaArrowCircleRight focusable={false} />,
   fallbackImgDir: '../../images/baselayer/',
   validExtent: [-Infinity, -Infinity, Infinity, Infinity],
   titles: {
@@ -60,8 +72,8 @@ class BaseLayerToggler extends Component {
   static isDifferentLayers(prevLayers, layers) {
     if (prevLayers && layers) {
       return (
-        JSON.stringify(prevLayers.map(l => l.getKey())) !==
-        JSON.stringify(layers.map(l => l.getKey()))
+        JSON.stringify(prevLayers.map((l) => l.getKey())) !==
+        JSON.stringify(layers.map((l) => l.getKey()))
       );
     }
     return false;
@@ -134,7 +146,7 @@ class BaseLayerToggler extends Component {
         childLayers = children.length ? children : [layers[idx]];
       }
 
-      childLayers.forEach(layer => {
+      childLayers.forEach((layer) => {
         if (layer.clone) {
           let ml;
           // MapboxStyleLayer
@@ -169,7 +181,7 @@ class BaseLayerToggler extends Component {
     const { layers } = this.state;
     // Unset visibility to all layers before showing the next layer.
     layers.forEach(
-      l => l.getVisible() && l.setVisible(false, true, true, true),
+      (l) => l.getVisible() && l.setVisible(false, true, true, true),
     );
     nextLayer.setVisible(true);
   }
@@ -237,7 +249,7 @@ class BaseLayerToggler extends Component {
       this.map = new OLMap({ controls: [], interactions: [] });
     }
     unByKey([this.postRenderKey, this.moveEndKey]);
-    this.postRenderKey = map.on('postrender', e => {
+    this.postRenderKey = map.on('postrender', (e) => {
       this.map.getView().setZoom(e.target.getView().getZoom());
       if (this.ref && this.ref.current) {
         const elt = this.ref.current;
@@ -345,7 +357,12 @@ class BaseLayerToggler extends Component {
   }
 
   render() {
-    const { className, titles } = this.props;
+    const {
+      className,
+      titles,
+      prevButtonContent,
+      nextButtonContent,
+    } = this.props;
     const { layers, idx, fallbackImg, fallbackImgOpacity } = this.state;
 
     let footer = null;
@@ -361,23 +378,23 @@ class BaseLayerToggler extends Component {
             className="rs-base-layer-previous"
             role="button"
             onClick={() => this.previous()}
-            onKeyPress={e => e.which === 13 && this.previous()}
+            onKeyPress={(e) => e.which === 13 && this.previous()}
             tabIndex="0"
             aria-label={titles.prevButton}
             title={titles.prevButton}
           >
-            <FaArrowCircleLeft focusable={false} />
+            {prevButtonContent}
           </div>
           <div
             className="rs-base-layer-next"
             role="button"
             onClick={() => this.next()}
-            onKeyPress={e => e.which === 13 && this.next()}
+            onKeyPress={(e) => e.which === 13 && this.next()}
             tabIndex="0"
             aria-label={titles.nextButton}
             title={titles.nextButton}
           >
-            <FaArrowCircleRight focusable={false} />
+            {nextButtonContent}
           </div>
         </div>
       );
@@ -393,7 +410,7 @@ class BaseLayerToggler extends Component {
           title={titles.button}
           aria-label={titles.button}
           onClick={() => this.setNextVisible(nextLayer)}
-          onKeyPress={e => e.which === 13 && this.setNextVisible(nextLayer)}
+          onKeyPress={(e) => e.which === 13 && this.setNextVisible(nextLayer)}
           tabIndex="0"
         >
           <img

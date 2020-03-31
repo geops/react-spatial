@@ -23,6 +23,11 @@ const propTypes = {
   className: PropTypes.string,
 
   /**
+   *  Children content of the Geolocation button.
+   */
+  children: PropTypes.node,
+
+  /**
    * Map.
    */
   map: PropTypes.instanceOf(OLMap).isRequired,
@@ -49,6 +54,7 @@ const propTypes = {
 
 const defaultProps = {
   className: 'rs-geolocation',
+  children: <FaRegDotCircle focusable={false} />,
   onError: () => {},
   noCenterAfterDrag: false,
   colorOrStyleFunc: [235, 0, 0],
@@ -75,6 +81,7 @@ class Geolocation extends PureComponent {
 
     this.state = {
       active: false,
+      point: undefined,
     };
   }
 
@@ -112,60 +119,56 @@ class Geolocation extends PureComponent {
 
     this.setState({
       active: false,
+      point: undefined,
     });
   }
 
-  activate(position) {
+  activate({ coords: { latitude, longitude } }) {
+    let { point } = this.state;
     const { map } = this.props;
 
-    const code = map
-      .getView()
-      .getProjection()
-      .getCode();
-    const pos = transform(
-      [position.coords.longitude, position.coords.latitude],
-      'EPSG:4326',
-      code,
-    );
-
-    const point = new Point(pos);
-    this.highlight(point);
-    this.layer.setMap(map);
-    if (this.isCentered) {
-      map.getView().setCenter(pos);
+    const projection = map.getView().getProjection().getCode();
+    const position = transform([longitude, latitude], 'EPSG:4326', projection);
+    if (!point) {
+      point = new Point(position);
+      this.setState({ point });
+      this.highlight(point);
+      this.layer.setMap(map);
+    } else {
+      point.setCoordinates(position);
     }
 
-    this.setState({
-      active: true,
-    });
+    if (this.isCentered) {
+      map.getView().setCenter(position);
+    }
+
+    this.setState({ active: true });
   }
 
   highlight(point) {
     const { colorOrStyleFunc } = this.props;
-
-    let decrease = true;
-    let opacity = 0.5;
-    let rotation = 0;
-    let feature;
-
-    window.clearInterval(this.interval);
-    this.interval = window.setInterval(() => {
-      rotation += 0.03;
-      decrease = opacity < 0.1 ? false : decrease;
-      decrease = opacity > 0.5 ? true : decrease;
-      opacity += decrease ? -0.03 : 0.03;
-      if (feature) {
-        feature.changed();
-      }
-    }, 50);
-
-    feature = new Feature({
+    const feature = new Feature({
       geometry: point,
       source: new VectorSource(),
     });
 
     if (Array.isArray(colorOrStyleFunc)) {
       const color = colorOrStyleFunc;
+
+      let decrease = true;
+      let opacity = 0.5;
+      let rotation = 0;
+
+      window.clearInterval(this.interval);
+      this.interval = window.setInterval(() => {
+        rotation += 0.03;
+        decrease = opacity < 0.1 ? false : decrease;
+        decrease = opacity > 0.5 ? true : decrease;
+        opacity += decrease ? -0.03 : 0.03;
+        if (feature) {
+          feature.changed();
+        }
+      }, 50);
 
       feature.setStyle(() => {
         const circleStyle = new Style({
@@ -206,7 +209,7 @@ class Geolocation extends PureComponent {
   }
 
   render() {
-    const { className } = this.props;
+    const { children, className } = this.props;
     // Remove component props from other HTML props.
     const other = Object.entries(this.props).reduce((props, [key, value]) => {
       return propTypes[key] ? props : { ...props, [key]: value };
@@ -219,11 +222,11 @@ class Geolocation extends PureComponent {
         tabIndex="0"
         className={`${className} ${active ? 'rs-active' : ''}`}
         onClick={() => this.toggle()}
-        onKeyPress={e => e.which === 13 && this.toggle()}
+        onKeyPress={(e) => e.which === 13 && this.toggle()}
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...other}
       >
-        <FaRegDotCircle focusable={false} />
+        {children}
       </div>
     );
   }

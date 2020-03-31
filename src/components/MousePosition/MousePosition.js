@@ -87,7 +87,7 @@ function MousePosition({
   const [projection, setProjection] = useState(
     projections &&
       ((projectionValue &&
-        projections.find(p => p.value === projectionValue.value)) ||
+        projections.find((p) => p.value === projectionValue.value)) ||
         projections[0]),
   );
   const [control, setControl] = useState();
@@ -116,8 +116,8 @@ function MousePosition({
   }, [projection, control]);
 
   const onChangeCb = useCallback(
-    evt => {
-      const newProj = projections.find(opt => evt.target.value === opt.value);
+    (evt) => {
+      const newProj = projections.find((opt) => evt.target.value === opt.value);
       setProjection(newProj);
       onChange(evt, newProj);
     },
@@ -136,7 +136,7 @@ function MousePosition({
         value={projection.value}
         onChange={onChangeCb}
       >
-        {projections.map(option => (
+        {projections.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
           </option>

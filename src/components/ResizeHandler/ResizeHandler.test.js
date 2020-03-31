@@ -100,7 +100,7 @@ class CallbackComponent extends React.Component {
     return (
       <>
         <div
-          ref={node => {
+          ref={(node) => {
             if (node && !ref) {
               this.setState({
                 ref: node,
@@ -144,7 +144,7 @@ class CallbackNodeComponent extends React.Component {
     return (
       <>
         <div
-          ref={node => {
+          ref={(node) => {
             if (node && !ref) {
               this.setState({
                 ref: node,
@@ -198,7 +198,7 @@ describe('ResizeHandler', () => {
       document.querySelectorAll.mockRestore();
     });
 
-    comps.forEach(Comp => {
+    comps.forEach((Comp) => {
       test(`(un)observes an html node from ${Comp.name} on (un)mount`, () => {
         const spy = jest.spyOn(ResizeObserver.prototype, 'observe');
         const spy2 = jest.spyOn(ResizeObserver.prototype, 'disconnect');
