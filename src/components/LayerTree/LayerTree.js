@@ -101,13 +101,15 @@ class LayerTree extends Component {
     const { layerService, isItemHidden } = this.props;
     const initialExpandedLayerNames =
       layerService && layerService.getLayers()
-        ? layerService
-            .getLayers()
-            .filter(
-              (l) =>
-                !isItemHidden(l) &&
-                l.getVisibleChildren().filter((c) => !isItemHidden(c)).length,
-            )
+        ? this.getExpandedLayers(
+            layerService
+              .getLayers()
+              .filter(
+                (l) =>
+                  !isItemHidden(l) &&
+                  l.getVisibleChildren().filter((c) => !isItemHidden(c)).length,
+              ),
+          )
         : [];
 
     this.state = {
@@ -149,10 +151,31 @@ class LayerTree extends Component {
     if (pos > -1) {
       expandedLayerNames.splice(pos, 1);
     } else {
-      expandedLayerNames.push(layer);
+      expandedLayerNames.push(...this.getExpandedLayers([layer]));
     }
 
     this.setState({ expandedLayerNames });
+  }
+
+  /**
+   * Get the always expanded ancestors (isAlwaysExpanded=true) of the given layers
+   * together with the (given) initially expanded layers
+   *
+   * @param  {Layer} layers Initially expanded layers
+   * @return {Array.<Layer>} Initially expanded layers and all its always expanded ancestors
+   */
+  getExpandedLayers(layers) {
+    const { isItemHidden } = this.props;
+    const children = layers.flatMap((l) =>
+      l
+        .getChildren()
+        .filter((c) => !isItemHidden(c) && c.getIsAlwaysExpanded()),
+    );
+
+    if (!children.length) {
+      return layers;
+    }
+    return [...layers, this.getExpandedLayers(children)].flat();
   }
 
   updateLayerService() {
@@ -210,7 +233,10 @@ class LayerTree extends Component {
     const { isItemHidden } = this.props;
     const { expandedLayerNames } = this.state;
 
-    if (!layer.getChildren().filter((c) => !isItemHidden(c)).length) {
+    if (
+      !layer.getChildren().filter((c) => !isItemHidden(c)).length ||
+      layer.getIsAlwaysExpanded()
+    ) {
       return null;
     }
 
@@ -231,7 +257,8 @@ class LayerTree extends Component {
     const onInputClick = () => {
       this.onInputClick(
         layer,
-        layer.getChildren().filter((c) => !isItemHidden(c)).length,
+        layer.getChildren().filter((c) => !isItemHidden(c)).length &&
+          !layer.getIsAlwaysExpanded(),
       );
     };
     const title = `${t(layer.getName())} ${

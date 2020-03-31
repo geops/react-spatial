@@ -67,6 +67,114 @@ describe('LayerTree', () => {
           item.getIsBaseLayer() || item.get('hideInLegend'),
       });
     });
+
+    test('when items are always expanded', () => {
+      const dataExp = [
+        {
+          name: 'Expanded layer 1 (because of level 1)',
+          visible: true,
+          children: [
+            {
+              name: 'Expanded layer 1.1 (because of isAlwaysExpanded=true)',
+              visible: true,
+              isAlwaysExpanded: true,
+              children: [
+                {
+                  name:
+                    'Expanded layer 1.1.1 (because of isAlwaysExpanded=true)',
+                  visible: true,
+                  isAlwaysExpanded: true,
+                  children: [
+                    {
+                      name: 'Visible layer 1.1.1.1 (as parent is expanded)',
+                      visible: true,
+                    },
+                  ],
+                },
+                {
+                  name: 'Hidden layer 1.1.1 (because of hidden=true)',
+                  visible: true,
+                  properties: {
+                    hideInLegend: true,
+                  },
+                  children: [
+                    {
+                      name: 'Invisible layer 1.1.1.1 (as parent is hidden)',
+                      visible: true,
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: 'Expanded layer 1.2 (because of isAlwaysExpanded=true)',
+              visible: true,
+              isAlwaysExpanded: true,
+              children: [
+                {
+                  name: 'Visible layer 1.2.1 (as parent is expanded)',
+                  visible: true,
+                  children: [
+                    {
+                      name:
+                        'Invisible layer 1.2.1.1 (as parent isAlwaysExpanded=false)',
+                      visible: true,
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          name: 'Expanded layer 2 (because of level 1)',
+          visible: true,
+          children: [
+            {
+              name: 'Visible layer 2.1 (as parent is expanded)',
+              visible: true,
+              children: [
+                {
+                  name:
+                    'Invisible layer 2.1.1 (as parent isAlwaysExpanded=false)',
+                  visible: true,
+                  isAlwaysExpanded: true,
+                  children: [
+                    {
+                      name:
+                        'Invisible layer 2.1.1.1 (as parent is not visible)',
+                      visible: true,
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: 'Visible layer 2.2 (as parent is expanded)',
+              visible: true,
+              children: [
+                {
+                  name:
+                    'Invisible layer 2.2.1 (as parent isAlwaysExpanded=false)',
+                  visible: true,
+                  children: [
+                    {
+                      name:
+                        'Invisible layer 2.2.1.1 (as parent is not visible)',
+                      visible: true,
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ];
+
+      renderLayerTree(dataExp, {
+        isItemHidden: (item) => item.get('hideInLegend'),
+      });
+    });
   });
 
   describe('triggers onInputClick', () => {
