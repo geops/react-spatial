@@ -35,6 +35,12 @@ const propTypes = {
     openSwitcher: PropTypes.string,
     closeSwitcher: PropTypes.string,
   }),
+
+  /**
+   * Translation function.
+   * @param {function} Translation function returning the translated string.
+   */
+  t: PropTypes.func,
 };
 
 const defaultProps = {
@@ -46,6 +52,7 @@ const defaultProps = {
     closeSwitcher: 'Close Baselayer-Switcher',
   },
   layerImages: undefined,
+  t: (s) => s,
 };
 
 const getVisibleLayer = (layers) => {
@@ -75,6 +82,7 @@ function BaseLayerSwitcher({
   className,
   altText,
   titles,
+  t,
 }) {
   const baseLayers = layers.filter((layer) => layer.getIsBaseLayer());
   const [switcherOpen, setSwitcherOpen] = useState(false);
@@ -144,9 +152,9 @@ function BaseLayerSwitcher({
       {!isClosed && toggleBtn}
       {!isClosed ? (
         baseLayers.map((layer, index) => {
-          const layerName = layer.getName();
+          const layerName = t(layer.getName());
           const activeClass =
-            layerName === currentLayer.getName() ? ' rs-active' : '';
+            layerName === t(currentLayer.getName()) ? ' rs-active' : '';
           return (
             <div
               key={layer.key}
@@ -165,7 +173,7 @@ function BaseLayerSwitcher({
             >
               <div className="rs-base-layer-switcher-title">{layerName}</div>
               {images[index] ? null : (
-                <span className="rs-alt-text">{altText}</span>
+                <span className="rs-alt-text">{t(altText)}</span>
               )}
             </div>
           );
@@ -186,7 +194,7 @@ function BaseLayerSwitcher({
           <div className={`rs-base-layer-switcher-title${closedClass}`}>
             {titles.button}
           </div>
-          {nextImage ? null : <span className="rs-alt-text">{altText}</span>}
+          {nextImage ? null : <span className="rs-alt-text">{t(altText)}</span>}
         </div>
       )}
     </div>
