@@ -152,16 +152,16 @@ function BaseLayerSwitcher({
       {!isClosed && toggleBtn}
       {!isClosed ? (
         baseLayers.map((layer, index) => {
-          const layerName = t(layer.getName());
+          const layerName = layer.getName();
           const activeClass =
-            layerName === t(currentLayer.getName()) ? ' rs-active' : '';
+            layerName === currentLayer.getName() ? ' rs-active' : '';
           return (
             <div
               key={layer.key}
               className={`rs-base-layer-switcher-button ${openClass}${activeClass}`}
               role="button"
-              title={layerName}
-              aria-label={layerName}
+              title={t(layerName)}
+              aria-label={t(layerName)}
               onClick={() => onLayerSelect(layer)}
               onKeyPress={(e) => {
                 if (e.which === 13) {
@@ -171,7 +171,7 @@ function BaseLayerSwitcher({
               style={getImageStyle(images[index])}
               tabIndex="0"
             >
-              <div className="rs-base-layer-switcher-title">{layerName}</div>
+              <div className="rs-base-layer-switcher-title">{t(layerName)}</div>
               {images[index] ? null : (
                 <span className="rs-alt-text">{t(altText)}</span>
               )}
