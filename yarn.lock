@@ -7141,10 +7141,10 @@ jss@10.1.1, jss@^10.0.0:
     is-in-browser "^1.1.3"
     tiny-warning "^1.0.2"
 
-jsts@2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/jsts/-/jsts-2.1.0.tgz#6a724e9d38de8a69585f7ace09d87bf4bbda68e5"
-  integrity sha512-gxv7hw5FmXwoieHBNKyrl+DZVp1aaJbUPDgPRGf54y7owWoq75CWwL6VCmdKxt5jaMHh9CKOaG1u/WZJRUM5NA==
+jsts@2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/jsts/-/jsts-2.1.2.tgz#30e7e00b990d689ae5c399b6c20389b84ee35019"
+  integrity sha512-9Mw/vKxnLHw5WX6c67Hvo4jxRkP3jDlVfRl3HK3P71EoSLFM7VkjZQh/2Utj7hf2IX6x/M7UYrkPjrmqlLMNQA==
 
 jsx-ast-utils@^2.2.1, jsx-ast-utils@^2.2.3:
   version "2.2.3"
