@@ -36,7 +36,7 @@ export default class MapboxLayer extends Layer {
         const canvas = this.mbMap.getCanvas();
         const { viewState } = frameState;
 
-        const visible = mbLayer.getVisible();43
+        const visible = mbLayer.getVisible();
         canvas.style.display = visible ? 'block' : 'none';
         
         // Needed since mapbox-gl 1.9.0.
