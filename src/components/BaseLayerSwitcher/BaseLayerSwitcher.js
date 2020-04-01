@@ -35,6 +35,12 @@ const propTypes = {
     openSwitcher: PropTypes.string,
     closeSwitcher: PropTypes.string,
   }),
+
+  /**
+   * Translation function.
+   * @param {function} Translation function returning the translated string.
+   */
+  t: PropTypes.func,
 };
 
 const defaultProps = {
@@ -46,6 +52,7 @@ const defaultProps = {
     closeSwitcher: 'Close Baselayer-Switcher',
   },
   layerImages: undefined,
+  t: (s) => s,
 };
 
 const getVisibleLayer = (layers) => {
@@ -75,6 +82,7 @@ function BaseLayerSwitcher({
   className,
   altText,
   titles,
+  t,
 }) {
   const baseLayers = layers.filter((layer) => layer.getIsBaseLayer());
   const [switcherOpen, setSwitcherOpen] = useState(false);
@@ -152,8 +160,8 @@ function BaseLayerSwitcher({
               key={layer.key}
               className={`rs-base-layer-switcher-button ${openClass}${activeClass}`}
               role="button"
-              title={layerName}
-              aria-label={layerName}
+              title={t(layerName)}
+              aria-label={t(layerName)}
               onClick={() => onLayerSelect(layer)}
               onKeyPress={(e) => {
                 if (e.which === 13) {
@@ -163,9 +171,9 @@ function BaseLayerSwitcher({
               style={getImageStyle(images[index])}
               tabIndex="0"
             >
-              <div className="rs-base-layer-switcher-title">{layerName}</div>
+              <div className="rs-base-layer-switcher-title">{t(layerName)}</div>
               {images[index] ? null : (
-                <span className="rs-alt-text">{altText}</span>
+                <span className="rs-alt-text">{t(altText)}</span>
               )}
             </div>
           );
@@ -186,7 +194,7 @@ function BaseLayerSwitcher({
           <div className={`rs-base-layer-switcher-title${closedClass}`}>
             {titles.button}
           </div>
-          {nextImage ? null : <span className="rs-alt-text">{altText}</span>}
+          {nextImage ? null : <span className="rs-alt-text">{t(altText)}</span>}
         </div>
       )}
     </div>
