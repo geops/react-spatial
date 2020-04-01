@@ -38,7 +38,7 @@ export default class MapboxLayer extends Layer {
 
         const visible = mbLayer.getVisible();
         canvas.style.display = visible ? 'block' : 'none';
-        
+
         // Needed since mapbox-gl 1.9.0.
         // Without you don't see others ol layers on top.
         canvas.style.position = 'absolute';
