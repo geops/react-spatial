@@ -306,6 +306,12 @@ const writeFeatures = (layer, featureProjection) => {
       }
     }
 
+    if (newStyle.fill && newStyle.fill.getColor() instanceof CanvasPattern) {
+      // eslint-disable-next-line no-console
+      clone.set('fillPattern', f.get('fillPattern'));
+      newStyle.fill = null;
+    }
+
     // If only text is displayed we must specify an
     // image style with scale=0
     if (newStyle.text && !newStyle.image) {
