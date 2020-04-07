@@ -151,7 +151,7 @@ describe('KML', () => {
       expectWriteResult(feats, str);
     });
 
-    test('should add fillPattern attribute to feature if specified in extended data.', () => {
+    test('should add fillPattern attribute to feature if specified in extended data and apply correct outline styles.', () => {
       const str = `
         <kml ${xmlns}>
           <Document>
@@ -175,7 +175,7 @@ describe('KML', () => {
                 <Polygon>
                     <outerBoundaryIs>
                         <LinearRing>
-                            <coordinates>8.521549619962451,47.38072787729837,0 8.529446043302295,47.37584574107993,0 8.531484522153614,47.382151748542725,0 8.521549619962451,47.38072787729837,0</coordinates>
+                            <coordinates>8.521,47.381,0 8.529,47.375,0 8.531,47.382,0 8.521,47.381,0</coordinates>
                         </LinearRing>
                     </outerBoundaryIs>
                 </Polygon>
@@ -184,10 +184,15 @@ describe('KML', () => {
       </kml>
       `;
       const feats = KML.readFeatures(str);
+      const styles = feats[0].getStyle();
       expect(feats.length).toBe(1);
+      expect(styles.length).toBe(1);
 
       // Polygon
       const feature = feats[0];
+      const outlineStyle = styles[0].getStroke();
+      expect(outlineStyle.getColor()).toEqual([235, 0, 0, 1]);
+      expect(outlineStyle.getWidth()).toEqual(2);
       expect(feature.get('fillPattern')).toBe('{"id":3,"color":[235,0,0,1]}');
       expectWriteResult(feats, str);
     });
