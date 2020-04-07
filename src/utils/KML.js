@@ -306,7 +306,8 @@ const writeFeatures = (layer, featureProjection) => {
       }
     }
 
-    if (newStyle.fill && newStyle.fill.getColor() instanceof CanvasPattern) {
+    // In case a fill pattern should be applied (use fillPattern attribute to store pattern id, color etc)
+    if (newStyle.fill && f.get('fillPattern')) {
       clone.set('fillPattern', f.get('fillPattern'));
       newStyle.fill = null;
     }
