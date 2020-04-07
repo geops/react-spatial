@@ -150,5 +150,51 @@ describe('KML', () => {
       });
       expectWriteResult(feats, str);
     });
+
+    test('should add fillPattern attribute to feature if specified in extended data and apply correct outline styles.', () => {
+      const str = `
+        <kml ${xmlns}>
+          <Document>
+            <name>lala</name>
+            <Placemark>
+                <description></description>
+                <Style>
+                    <LineStyle>
+                        <color>ff0000eb</color>
+                        <width>2</width>
+                    </LineStyle>
+                </Style>
+                <ExtendedData>
+                    <Data name="fillPattern">
+                        <value>{"id":3,"color":[235,0,0,1]}</value>
+                    </Data>
+                    <Data name="lineDash">
+                        <value>1,1</value>
+                    </Data>
+                </ExtendedData>
+                <Polygon>
+                    <outerBoundaryIs>
+                        <LinearRing>
+                            <coordinates>8.521,47.381,0 8.529,47.375,0 8.531,47.382,0 8.521,47.381,0</coordinates>
+                        </LinearRing>
+                    </outerBoundaryIs>
+                </Polygon>
+            </Placemark>
+        </Document>
+      </kml>
+      `;
+      const feats = KML.readFeatures(str);
+      const styles = feats[0].getStyle();
+      expect(feats.length).toBe(1);
+      expect(styles.length).toBe(1);
+
+      // Polygon
+      const feature = feats[0];
+      const outlineStyle = styles[0].getStroke();
+      expect(outlineStyle.getColor()).toEqual([235, 0, 0, 1]);
+      expect(outlineStyle.getWidth()).toEqual(2);
+      expect(feature.get('fillPattern')).toBe('{"id":3,"color":[235,0,0,1]}');
+      expectWriteResult(feats, str);
+    });
   });
 });

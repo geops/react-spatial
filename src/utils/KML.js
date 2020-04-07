@@ -306,6 +306,12 @@ const writeFeatures = (layer, featureProjection) => {
       }
     }
 
+    // In case a fill pattern should be applied (use fillPattern attribute to store pattern id, color etc)
+    if (newStyle.fill && f.get('fillPattern')) {
+      clone.set('fillPattern', f.get('fillPattern'));
+      newStyle.fill = null;
+    }
+
     // If only text is displayed we must specify an
     // image style with scale=0
     if (newStyle.text && !newStyle.image) {
