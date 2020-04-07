@@ -33,27 +33,46 @@ export default class MapboxLayer extends Layer {
   constructor(options = {}) {
     const mbLayer = new OLLayer({
       render: (frameState) => {
+        let changed = false;
         const canvas = this.mbMap.getCanvas();
         const { viewState } = frameState;
 
         const visible = mbLayer.getVisible();
-        canvas.style.display = visible ? 'block' : 'none';
+        if (this.renderState.visible !== visible) {
+          canvas.style.display = visible ? 'block' : 'none';
+          this.renderState.visible = visible;
+        }
 
         const opacity = mbLayer.getOpacity();
-        canvas.style.opacity = opacity;
+        if (this.renderState.opacity !== opacity) {
+          canvas.style.opacity = opacity;
+          this.renderState.opacity = opacity;
+        }
 
         // adjust view parameters in mapbox
         const { rotation } = viewState;
-        if (rotation) {
+        if (rotation && this.renderState.rotation !== rotation) {
           this.mbMap.rotateTo((-rotation * 180) / Math.PI, {
             animate: false,
           });
+          changed = true;
+          this.renderState.rotation = rotation;
         }
-        this.mbMap.jumpTo({
-          center: toLonLat(viewState.center),
-          zoom: viewState.zoom - 1,
-          animate: false,
-        });
+
+        if (
+          this.renderState.zoom !== viewState.zoom ||
+          this.renderState.center[0] !== viewState.center[0] ||
+          this.renderState.center[1] !== viewState.center[1]
+        ) {
+          this.mbMap.jumpTo({
+            center: toLonLat(viewState.center),
+            zoom: viewState.zoom - 1,
+            animate: false,
+          });
+          changed = true;
+          this.renderState.zoom = viewState.zoom;
+          this.renderState.center = viewState.center;
+        }
 
         // cancel the scheduled update & trigger synchronous redraw
         // see https://github.com/mapbox/mapbox-gl-js/issues/7893#issue-408992184
@@ -64,7 +83,9 @@ export default class MapboxLayer extends Layer {
             this.mbMap._frame = null;
           }
           try {
-            this.mbMap._render();
+            if (changed) {
+              this.mbMap._render();
+            }
           } catch (err) {
             // ignore render errors because it's probably related to
             // a render during an update of the style.
@@ -91,6 +112,16 @@ export default class MapboxLayer extends Layer {
    */
   init(map) {
     super.init(map);
+
+    // Options the last render run did happen. If something changes
+    // we have to render again
+    this.renderState = {
+      center: [0, 0],
+      zoom: undefined,
+      rotation: undefined,
+      visible: undefined,
+      opacity: undefined,
+    };
 
     if (!this.map || !this.map.getTargetElement() || this.mbMap) {
       return;
