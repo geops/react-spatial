@@ -43,6 +43,10 @@ export default class MapboxLayer extends Layer {
           this.renderState.visible = visible;
         }
 
+        // Needed since mapbox-gl 1.9.0.
+        // Without you don't see others ol layers on top.
+        canvas.style.position = 'absolute';
+
         const opacity = mbLayer.getOpacity();
         if (this.renderState.opacity !== opacity) {
           canvas.style.opacity = opacity;
