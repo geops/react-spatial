@@ -155,19 +155,11 @@ describe('BasicMap', () => {
     expect(setZoom).toHaveBeenCalled();
   });
 
-  test('should be observed by ResizeHandler', () => {
-    const spy = jest.spyOn(ResizeObserver.prototype, 'observe');
-    const map = mount(<BasicMap map={olMap} />);
-    const node = map.getDOMNode();
-    expect(spy).toHaveBeenCalledWith(node);
-    expect(spy).toHaveBeenCalledTimes(1);
-  });
-
   test('size is updated when div is resized', () => {
     const spy = jest.spyOn(olMap, 'updateSize');
     const map = mount(<BasicMap map={olMap} />);
     const node = map.getDOMNode();
-    expect(spy).toHaveBeenCalledTimes(2);
+    expect(spy).toHaveBeenCalledTimes(1);
     // The mock class set the onResize property, we just have to run it to
     // simulate a resize
     ResizeObserver.onResize([
@@ -179,7 +171,7 @@ describe('BasicMap', () => {
         },
       },
     ]);
-    expect(spy).toHaveBeenCalledTimes(3);
+    expect(spy).toHaveBeenCalledTimes(2);
   });
 
   describe('#setLayers()', () => {
