@@ -140,14 +140,10 @@ class BasicMap extends PureComponent {
           }),
       });
 
-    this.state = {
-      node: null,
-    };
-
+    this.node = React.createRef();
     this.singleClickRef = null;
     this.pointerMoveRef = null;
     this.layers = [];
-    this.setNode = this.setNode.bind(this);
   }
 
   componentDidMount() {
@@ -162,8 +158,7 @@ class BasicMap extends PureComponent {
       zoom,
       resolution,
     } = this.props;
-    const { node } = this.state;
-    this.map.setTarget(node);
+    this.map.setTarget(this.node.current);
 
     // We set the view here otherwise the map is not correctly zoomed.
     this.map.setView(new View({ ...viewOptions, center, zoom, resolution }));
@@ -203,7 +198,7 @@ class BasicMap extends PureComponent {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     const {
       animationOptions,
       center,
@@ -214,11 +209,6 @@ class BasicMap extends PureComponent {
       viewOptions,
       zoom,
     } = this.props;
-    const { node } = this.state;
-
-    if (prevState.node !== node) {
-      this.map.setTarget(node);
-    }
 
     if (prevProps.layers !== layers) {
       this.setLayers(layers);
@@ -267,10 +257,6 @@ class BasicMap extends PureComponent {
     unByKey([this.moveEndRef, this.singleClickRef, this.pointerMoveRef]);
   }
 
-  setNode(node) {
-    this.setState({ node });
-  }
-
   setLayers(layers = []) {
     const layersToRemove = this.layers.filter(
       (layer) => !layers.includes(layer),
@@ -304,11 +290,10 @@ class BasicMap extends PureComponent {
 
   render() {
     const { className, tabIndex, ariaLabel } = this.props;
-    const { node } = this.state;
     return (
       <div
         className={className}
-        ref={this.setNode}
+        ref={this.node}
         role="presentation"
         aria-label={ariaLabel}
         tabIndex={tabIndex}
@@ -316,7 +301,7 @@ class BasicMap extends PureComponent {
         <ResizeHandler
           maxHeightBrkpts={null}
           maxWidthBrkpts={null}
-          observe={node}
+          observe={this.node && this.node.current}
           onResize={() => {
             this.map.updateSize();
           }}
