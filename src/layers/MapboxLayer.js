@@ -1,6 +1,5 @@
 /* eslint-disable no-underscore-dangle */
 import { toLonLat } from 'ol/proj';
-import { unByKey } from 'ol/Observable';
 import mapboxgl from 'mapbox-gl';
 import OLLayer from 'ol/layer/Layer';
 import GeoJSON from 'ol/format/GeoJSON';
@@ -80,6 +79,15 @@ export default class MapboxLayer extends Layer {
           changed = true;
           this.renderState.zoom = viewState.zoom;
           this.renderState.center = viewState.center;
+        }
+
+        const size = this.map.getSize();
+        if (
+          this.renderState.size[0] !== size[0] ||
+          this.renderState.size[1] !== size[1]
+        ) {
+          changed = true;
+          this.renderState.size = size;
         }
 
         // cancel the scheduled update & trigger synchronous redraw
@@ -192,6 +200,7 @@ export default class MapboxLayer extends Layer {
       rotation: null,
       visible: null,
       opacity: null,
+      size: [0, 0],
     };
 
     this.mbMap.once('load', () => {
