@@ -197,7 +197,7 @@ class BasicMap extends PureComponent {
 
     if (onFeaturesHover) {
       this.pointerMoveRef = this.map.on('pointermove', (evt) => {
-        const features = this.map.getFeaturesAtPixel(evt.pixel);
+        const features = evt.map.getFeaturesAtPixel(evt.pixel);
         onFeaturesHover(features || [], evt);
       });
     }
