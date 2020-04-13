@@ -72,10 +72,10 @@ class Geolocation extends PureComponent {
       source: new VectorSource(),
     });
 
-    this.recenterToPostion = true;
+    this.isRecenteringToPosition = true;
     if (noCenterAfterDrag) {
       map.on('pointerdrag', () => {
-        this.recenterToPostion = false;
+        this.isRecenteringToPosition = false;
       });
     }
 
@@ -118,7 +118,7 @@ class Geolocation extends PureComponent {
     navigator.geolocation.clearWatch(this.watch);
 
     if (!noCenterAfterDrag) {
-      this.recenterToPostion = true;
+      this.isRecenteringToPosition = true;
     }
 
     this.setState({
@@ -142,10 +142,10 @@ class Geolocation extends PureComponent {
     const point = new Point(pos);
     this.highlight(point);
     this.layer.setMap(map);
-    if (this.recenterToPostion) {
+    if (this.isRecenteringToPosition) {
       map.getView().setCenter(pos);
       if (!alwaysRecenterToPosition) {
-        this.recenterToPostion = false;
+        this.isRecenteringToPosition = false;
       }
     }
 
