@@ -97,13 +97,7 @@ class Geolocation extends PureComponent {
     if (!geolocation) {
       onError();
     } else if (!active) {
-      this.watch = navigator.geolocation.watchPosition(
-        this.update.bind(this),
-        this.error.bind(this),
-        {
-          enableHighAccuracy: true,
-        },
-      );
+      this.activate();
     } else {
       this.deactivate();
     }
@@ -127,28 +121,26 @@ class Geolocation extends PureComponent {
     this.point = undefined;
   }
 
-  activate(latitude, longitude) {
+  activate() {
     const { map } = this.props;
 
     this.projection = map.getView().getProjection().getCode();
-    const position = transform(
-      [longitude, latitude],
-      'EPSG:4326',
-      this.projection,
-    );
-    this.point = new Point(position);
+    this.point = new Point([0, 0]);
     this.highlight();
     this.layer.setMap(map);
     this.setState({ active: true });
+
+    this.watch = navigator.geolocation.watchPosition(
+      this.update.bind(this),
+      this.error.bind(this),
+      {
+        enableHighAccuracy: true,
+      },
+    );
   }
 
   update({ coords: { latitude, longitude } }) {
     const { map } = this.props;
-    const { active } = this.state;
-
-    if (!active) {
-      this.activate(longitude, latitude);
-    }
 
     const position = transform(
       [longitude, latitude],
