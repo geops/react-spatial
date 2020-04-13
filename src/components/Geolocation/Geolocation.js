@@ -85,6 +85,10 @@ class Geolocation extends PureComponent {
     this.point = undefined;
   }
 
+  componentWillUnmount() {
+    this.deactivate();
+  }
+
   toggle() {
     const { active } = this.state;
     const { onError } = this.props;
@@ -123,24 +127,39 @@ class Geolocation extends PureComponent {
     this.point = undefined;
   }
 
-  update({ coords: { latitude, longitude } }) {
+  activate(latitude, longitude) {
     const { map } = this.props;
 
-    const projection = map.getView().getProjection().getCode();
-    const position = transform([longitude, latitude], 'EPSG:4326', projection);
-    if (!this.point) {
-      this.point = new Point(position);
-      this.highlight();
-      this.layer.setMap(map);
-    } else {
-      this.point.setCoordinates(position);
+    this.projection = map.getView().getProjection().getCode();
+    const position = transform(
+      [longitude, latitude],
+      'EPSG:4326',
+      this.projection,
+    );
+    this.point = new Point(position);
+    this.highlight();
+    this.layer.setMap(map);
+    this.setState({ active: true });
+  }
+
+  update({ coords: { latitude, longitude } }) {
+    const { map } = this.props;
+    const { active } = this.state;
+
+    if (!active) {
+      this.activate(longitude, latitude);
     }
+
+    const position = transform(
+      [longitude, latitude],
+      'EPSG:4326',
+      this.projection,
+    );
+    this.point.setCoordinates(position);
 
     if (this.isCentered) {
       map.getView().setCenter(position);
     }
-
-    this.setState({ active: true });
   }
 
   highlight() {
