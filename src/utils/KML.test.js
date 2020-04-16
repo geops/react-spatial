@@ -112,6 +112,9 @@ describe('KML', () => {
                 </LabelStyle>
               </Style>
               <ExtendedData>
+                <Data name="textAlign">
+                  <value>right</value>
+                </Data>
                 <Data name="textBackgroundFillColor">
                   <value>rgba(255,255,255,0.01)</value>
                 </Data>
@@ -148,6 +151,7 @@ describe('KML', () => {
       expect(style.getBackgroundFill()).toEqual({
         color_: 'rgba(255,255,255,0.01)',
       });
+      expect(style.getTextAlign()).toEqual('right');
       expectWriteResult(feats, str);
     });
 

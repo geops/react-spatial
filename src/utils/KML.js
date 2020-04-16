@@ -121,6 +121,10 @@ const sanitizeFeature = (feature) => {
         scale: style.getText().getScale(),
       });
 
+      if (feature.get('textAlign')) {
+        text.setTextAlign(feature.get('textAlign'));
+      }
+
       if (feature.get('textBackgroundFillColor')) {
         text.setBackgroundFill(
           new Fill({
@@ -274,6 +278,10 @@ const writeFeatures = (layer, featureProjection) => {
 
     if (newStyle.text && newStyle.text.getFont()) {
       clone.set('textFont', newStyle.text.getFont());
+    }
+
+    if (newStyle.text && newStyle.text.getTextAlign()) {
+      clone.set('textAlign', newStyle.text.getTextAlign());
     }
 
     if (newStyle.text && newStyle.text.getBackgroundFill()) {
