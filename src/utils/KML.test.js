@@ -112,6 +112,12 @@ describe('KML', () => {
                 </LabelStyle>
               </Style>
               <ExtendedData>
+                <Data name="offsetX">
+                  <value>-90</value>
+                </Data>
+                <Data name="offsetY">
+                  <value>30</value>
+                </Data>
                 <Data name="textAlign">
                   <value>right</value>
                 </Data>
@@ -152,6 +158,8 @@ describe('KML', () => {
         color_: 'rgba(255,255,255,0.01)',
       });
       expect(style.getTextAlign()).toEqual('right');
+      expect(style.getOffsetX()).toEqual(-90);
+      expect(style.getOffsetY()).toEqual(30);
       expectWriteResult(feats, str);
     });
 
@@ -197,7 +205,10 @@ describe('KML', () => {
       const outlineStyle = styles[0].getStroke();
       expect(outlineStyle.getColor()).toEqual([235, 0, 0, 1]);
       expect(outlineStyle.getWidth()).toEqual(2);
-      expect(feature.get('fillPattern')).toBe('{"id":3,"color":[235,0,0,1]}');
+      expect(feature.get('fillPattern')).toEqual({
+        id: 3,
+        color: [235, 0, 0, 1],
+      });
       expectWriteResult(feats, str);
     });
   });
