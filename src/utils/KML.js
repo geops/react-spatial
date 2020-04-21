@@ -125,12 +125,12 @@ const sanitizeFeature = (feature) => {
         text.setTextAlign(feature.get('textAlign'));
       }
 
-      if (feature.get('offsetX')) {
-        text.setOffsetX(parseFloat(feature.get('offsetX')));
+      if (feature.get('textOffsetX')) {
+        text.setOffsetX(parseFloat(feature.get('textOffsetX')));
       }
 
-      if (feature.get('offsetY')) {
-        text.setOffsetY(parseFloat(feature.get('offsetY')));
+      if (feature.get('textOffsetY')) {
+        text.setOffsetY(parseFloat(feature.get('textOffsetY')));
       }
 
       if (feature.get('textBackgroundFillColor')) {
@@ -298,11 +298,11 @@ const writeFeatures = (layer, featureProjection) => {
     }
 
     if (newStyle.text && newStyle.text.getOffsetX()) {
-      clone.set('offsetX', newStyle.text.getOffsetX());
+      clone.set('textOffsetX', newStyle.text.getOffsetX());
     }
 
     if (newStyle.text && newStyle.text.getOffsetY()) {
-      clone.set('offsetY', newStyle.text.getOffsetY());
+      clone.set('textOffsetY', newStyle.text.getOffsetY());
     }
 
     if (newStyle.text && newStyle.text.getBackgroundFill()) {

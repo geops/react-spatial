@@ -112,12 +112,6 @@ describe('KML', () => {
                 </LabelStyle>
               </Style>
               <ExtendedData>
-                <Data name="offsetX">
-                  <value>-90</value>
-                </Data>
-                <Data name="offsetY">
-                  <value>30</value>
-                </Data>
                 <Data name="textAlign">
                   <value>right</value>
                 </Data>
@@ -126,6 +120,12 @@ describe('KML', () => {
                 </Data>
                 <Data name="textFont">
                   <value>bold 16px arial</value>
+                </Data>
+                <Data name="textOffsetX">
+                  <value>-90</value>
+                </Data>
+                <Data name="textOffsetY">
+                  <value>30</value>
                 </Data>
                 <Data name="textPadding">
                   <value>5,6,7,8</value>
