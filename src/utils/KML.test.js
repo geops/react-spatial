@@ -121,6 +121,12 @@ describe('KML', () => {
                 <Data name="textFont">
                   <value>bold 16px arial</value>
                 </Data>
+                <Data name="textOffsetX">
+                  <value>-90</value>
+                </Data>
+                <Data name="textOffsetY">
+                  <value>30</value>
+                </Data>
                 <Data name="textPadding">
                   <value>5,6,7,8</value>
                 </Data>
@@ -152,6 +158,8 @@ describe('KML', () => {
         color_: 'rgba(255,255,255,0.01)',
       });
       expect(style.getTextAlign()).toEqual('right');
+      expect(style.getOffsetX()).toEqual(-90);
+      expect(style.getOffsetY()).toEqual(30);
       expectWriteResult(feats, str);
     });
 
@@ -197,7 +205,10 @@ describe('KML', () => {
       const outlineStyle = styles[0].getStroke();
       expect(outlineStyle.getColor()).toEqual([235, 0, 0, 1]);
       expect(outlineStyle.getWidth()).toEqual(2);
-      expect(feature.get('fillPattern')).toBe('{"id":3,"color":[235,0,0,1]}');
+      expect(feature.get('fillPattern')).toEqual({
+        id: 3,
+        color: [235, 0, 0, 1],
+      });
       expectWriteResult(feats, str);
     });
   });

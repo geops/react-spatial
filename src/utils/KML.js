@@ -125,6 +125,14 @@ const sanitizeFeature = (feature) => {
         text.setTextAlign(feature.get('textAlign'));
       }
 
+      if (feature.get('textOffsetX')) {
+        text.setOffsetX(parseFloat(feature.get('textOffsetX')));
+      }
+
+      if (feature.get('textOffsetY')) {
+        text.setOffsetY(parseFloat(feature.get('textOffsetY')));
+      }
+
       if (feature.get('textBackgroundFillColor')) {
         text.setBackgroundFill(
           new Fill({
@@ -179,6 +187,11 @@ const sanitizeFeature = (feature) => {
         zIndex: style.getZIndex(),
       }),
     ];
+
+    // Parse the fillPattern json string and store parsed object
+    if (feature.get('fillPattern')) {
+      feature.set('fillPattern', JSON.parse(feature.get('fillPattern')));
+    }
 
     // Add line's icons styles
     if (feature.get('lineStartIcon')) {
@@ -284,6 +297,14 @@ const writeFeatures = (layer, featureProjection) => {
       clone.set('textAlign', newStyle.text.getTextAlign());
     }
 
+    if (newStyle.text && newStyle.text.getOffsetX()) {
+      clone.set('textOffsetX', newStyle.text.getOffsetX());
+    }
+
+    if (newStyle.text && newStyle.text.getOffsetY()) {
+      clone.set('textOffsetY', newStyle.text.getOffsetY());
+    }
+
     if (newStyle.text && newStyle.text.getBackgroundFill()) {
       clone.set(
         'textBackgroundFillColor',
@@ -316,7 +337,7 @@ const writeFeatures = (layer, featureProjection) => {
 
     // In case a fill pattern should be applied (use fillPattern attribute to store pattern id, color etc)
     if (newStyle.fill && f.get('fillPattern')) {
-      clone.set('fillPattern', f.get('fillPattern'));
+      clone.set('fillPattern', JSON.stringify(f.get('fillPattern')));
       newStyle.fill = null;
     }
 
