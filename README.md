@@ -24,7 +24,7 @@ Navigate to your `react-spatial-demo` folder and install all dependencies
 yarn add ol react-spatial react-dom mapbox-gl
 ```
 
-Navigate to `App.js` and import styles, `BasicMap` and `ConfigReader`
+Open `App.js` and import styles, `BasicMap` and `ConfigReader`
 
 ```js
 import 'react-spatial/themes/default/index.scss';
