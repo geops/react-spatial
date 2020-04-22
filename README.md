@@ -21,10 +21,10 @@ npx create-react-app react-spatial-demo
 Navigate to your `react-spatial-demo` folder and install all dependencies
 
 ```bash
-yarn add ol react-spatial react-dom mapbox-gl node-sass
+yarn add ol react-spatial react-dom mapbox-gl
 ```
 
-Navigate to `App.js` and import styles and `BasicMap`
+Navigate to `App.js` and import styles, `BasicMap` and `ConfigReader`
 
 ```js
 import 'react-spatial/themes/default/index.scss';
@@ -33,7 +33,7 @@ import BasicMap from 'react-spatial/components/BasicMap';
 import ConfigReader from 'react-spatial/ConfigReader';
 ```
 
-Add base layer configuration
+Add baselayer configuration below
 
 ```js
 const layers = ConfigReader.readConfig([{
@@ -46,7 +46,7 @@ const layers = ConfigReader.readConfig([{
 }]);
 ```
 
-Add `BasicMap` with `layers` Prop
+Add `BasicMap` with `layers` prop to initialize the baselayer
 
 ```js
 function App() {
