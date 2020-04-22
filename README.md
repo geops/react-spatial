@@ -62,14 +62,14 @@ Navigate to your `App.css` and set the wrapper to absolute and give the map full
 
 ```css
 .map-wrapper {
-  position: absolute
-  top: 0
-  right: 0
-  bottom: 0
-  left: 0
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 .map-wrapper .rs-map {
-  height: 100%
+  height: 100%;
 }
 ```
 
