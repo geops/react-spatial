@@ -10,6 +10,75 @@ This library provides React components to build web applications based on [OpenL
 
 Documentation and examples at https://react-spatial.geops.de.
 
+## Quick Start Guide
+
+Create a new react app
+
+```bash
+npx create-react-app react-spatial-demo
+```
+
+Navigate to your `react-spatial-demo` folder and install all dependencies
+
+```bash
+yarn add ol react-spatial react-dom mapbox-gl node-sass
+```
+
+Navigate to `App.js` and import styles and `BasicMap`
+
+```js
+import 'react-spatial/themes/default/index.scss';
+import 'ol/ol.css';
+import BasicMap from 'react-spatial/components/BasicMap';
+import ConfigReader from 'react-spatial/ConfigReader';
+```
+
+Add base layer configuration
+
+```js
+const layers = ConfigReader.readConfig([{
+  name: 'OSM Baselayer',
+  visible: true,
+  data: {
+    type: 'xyz',
+    url: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  },
+}]);
+```
+
+Add `BasicMap` with `layers` Prop
+
+```js
+function App() {
+  return (
+    <div className="map-wrapper">
+      <BasicMap layers={layers}/>
+    </div>
+  );
+}
+```
+
+Navigate to your `App.css` and set the wrapper to absolute and give the map full height
+
+```css
+.map-wrapper {
+  position: absolute
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
+}
+.map-wrapper .rs-map {
+  height: 100%
+}
+```
+
+Start your app
+
+```bash
+yarn start
+```
+
 ## Getting Started
 
 Install the [react-spatial](https://www.npmjs.com/package/react-spatial) package:
