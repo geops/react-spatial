@@ -12,19 +12,19 @@ Documentation and examples at https://react-spatial.geops.de.
 
 ## Quick Start Guide
 
-Create a new react app
+Create a new React app:
 
 ```bash
 npx create-react-app react-spatial-demo
 ```
 
-Navigate to your `react-spatial-demo` folder and install all dependencies
+Navigate to your `react-spatial-demo` folder and install all dependencies:
 
 ```bash
 yarn add ol react-spatial react-dom mapbox-gl
 ```
 
-Open `App.js` and import styles, `BasicMap` and `ConfigReader`
+Open `App.js` and import styles, `BasicMap` and `ConfigReader`:
 
 ```js
 import 'react-spatial/themes/default/index.scss';
@@ -33,7 +33,7 @@ import BasicMap from 'react-spatial/components/BasicMap';
 import ConfigReader from 'react-spatial/ConfigReader';
 ```
 
-Add baselayer configuration below
+Add baselayer configuration below:
 
 ```js
 const layers = ConfigReader.readConfig([{
@@ -46,7 +46,7 @@ const layers = ConfigReader.readConfig([{
 }]);
 ```
 
-Add `BasicMap` with `layers` prop to initialize the baselayer
+Add `BasicMap` with `layers` prop to initialize the baselayer:
 
 ```js
 function App() {
@@ -58,7 +58,7 @@ function App() {
 }
 ```
 
-Navigate to your `App.css` and set the wrapper to absolute and give the map full height
+Navigate to your `App.css` and set the wrapper to absolute and give the map full height:
 
 ```css
 .map-wrapper {
@@ -73,26 +73,10 @@ Navigate to your `App.css` and set the wrapper to absolute and give the map full
 }
 ```
 
-Start your app
+Start your app:
 
 ```bash
 yarn start
-```
-
-## Getting Started
-
-Install the [react-spatial](https://www.npmjs.com/package/react-spatial) package:
-
-```bash
-yarn add ol react-spatial
-```
-
-Your build pipeline needs to support ES6 modules and SASS.
-
-Import the main scss file in your project:
-
-```bash
-import  'react-spatial/themes/default/index.scss';
 ```
 
 ## More
