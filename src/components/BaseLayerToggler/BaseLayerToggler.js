@@ -189,7 +189,6 @@ class BaseLayerToggler extends Component {
   updateLayerService() {
     const { layerService } = this.props;
 
-    console.log('>>>>>updateLayerService');
     if (!layerService) {
       return;
     }
@@ -197,10 +196,7 @@ class BaseLayerToggler extends Component {
     layerService.un('change:layers', this.resetState);
     this.updateState();
     layerService.on('change:visible', this.updateState);
-    layerService.on('change:layers', () => {
-      console.log('layerService.on(change:layers');
-      this.resetState();
-    });
+    layerService.on('change:layers', this.resetState);
   }
 
   updateState(evtLayer) {
