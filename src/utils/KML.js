@@ -155,6 +155,10 @@ const sanitizeFeature = (feature) => {
       }
     }
 
+    if (feature.get('zIndex')) {
+      style.setZIndex(parseInt(feature.get('zIndex'), 10));
+    }
+
     fill = undefined;
     stroke = undefined;
 
@@ -167,6 +171,7 @@ const sanitizeFeature = (feature) => {
         zIndex: style.getZIndex(),
       }),
     ];
+
     feature.setStyle(styles);
   }
 
@@ -277,6 +282,10 @@ const writeFeatures = (layer, featureProjection) => {
       image: styles[0].getImage(),
       zIndex: styles[0].getZIndex(),
     };
+
+    if (newStyle.zIndex) {
+      clone.set('zIndex', newStyle.zIndex);
+    }
 
     // If we see spaces at the beginning or at the end we add a empty
     // white space at the beginning and at the end.
