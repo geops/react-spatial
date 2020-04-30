@@ -211,5 +211,41 @@ describe('KML', () => {
       });
       expectWriteResult(feats, str);
     });
+
+    test('should add zIndex to the feature style.', () => {
+      const str = `
+      <kml ${xmlns}>
+        <Document>
+            <name>lala</name>
+            <Placemark>
+                <description></description>
+                <Style>
+                    <IconStyle>
+                        <scale>0.5</scale>
+                        <Icon>
+                            <href>https://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+                            <gx:w>64</gx:w>
+                            <gx:h>64</gx:h>
+                        </Icon>
+                        <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+                    </IconStyle>
+                </Style>
+                <ExtendedData>
+                    <Data name="zIndex">
+                        <value>1</value>
+                    </Data>
+                </ExtendedData>
+                <Point>
+                    <coordinates>0,0,0</coordinates>
+                </Point>
+            </Placemark>
+        </Document>
+      </kml>
+      `;
+      const feats = KML.readFeatures(str);
+      const style = feats[0].getStyle()[0];
+      expect(style.getZIndex()).toBe(1);
+      expectWriteResult(feats, str);
+    });
   });
 });

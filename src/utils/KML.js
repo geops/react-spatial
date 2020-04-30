@@ -156,7 +156,7 @@ const sanitizeFeature = (feature) => {
     }
 
     if (feature.get('zIndex')) {
-      style.setZIndex(feature.get('zIndex'));
+      style.setZIndex(parseInt(feature.get('zIndex'), 10));
     }
 
     fill = undefined;
