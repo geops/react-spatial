@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { FaChevronCircleLeft } from 'react-icons/fa';
+import ChevronLeft from '../../images/chevron_left.svg';
 import Layer from '../../layers/Layer';
 
 import './BaseLayerSwitcher.scss';
@@ -110,6 +110,15 @@ function BaseLayerSwitcher({
   const nextImage = getNextImage(currentLayer, baseLayers, images);
 
   useEffect(() => {
+    /* Attach corresponding image to layers on load */
+    baseLayers.map((baselayer, idx) => {
+      const layer = baselayer;
+      layer.image = images[idx];
+      return layer;
+    });
+  }, []);
+
+  useEffect(() => {
     /* Ensure correct layer is active on app load */
     if (currentLayer !== getVisibleLayer(baseLayers)) {
       setCurrentLayer(getVisibleLayer(baseLayers));
@@ -143,7 +152,7 @@ function BaseLayerSwitcher({
       aria-label={altText}
       title={titles.closeSwitcher}
     >
-      <FaChevronCircleLeft size={15} focusable={false} />
+      <ChevronLeft />
     </div>
   );
 
@@ -151,33 +160,35 @@ function BaseLayerSwitcher({
     <div className={`${className}${openClass}`}>
       {!isClosed && toggleBtn}
       {!isClosed ? (
-        baseLayers.map((layer, index) => {
-          const layerName = layer.getName();
-          const activeClass =
-            layerName === currentLayer.getName() ? ' rs-active' : '';
-          return (
-            <div
-              key={layer.key}
-              className={`rs-base-layer-switcher-button ${openClass}${activeClass}`}
-              role="button"
-              title={t(layerName)}
-              aria-label={t(layerName)}
-              onClick={() => onLayerSelect(layer)}
-              onKeyPress={(e) => {
-                if (e.which === 13) {
-                  onLayerSelect(layer);
-                }
-              }}
-              style={getImageStyle(images[index])}
-              tabIndex="0"
-            >
-              <div className="rs-base-layer-switcher-title">{t(layerName)}</div>
-              {images[index] ? null : (
-                <span className="rs-alt-text">{t(altText)}</span>
-              )}
-            </div>
-          );
-        })
+        baseLayers
+          .sort((l1) => (l1.name === currentLayer.name ? -1 : 0))
+          .map((layer) => {
+            const layerName = layer.getName();
+            return (
+              <div
+                key={layer.key}
+                className={`rs-base-layer-switcher-button ${openClass}`}
+                role="button"
+                title={t(layerName)}
+                aria-label={t(layerName)}
+                onClick={() => onLayerSelect(layer)}
+                onKeyPress={(e) => {
+                  if (e.which === 13) {
+                    onLayerSelect(layer);
+                  }
+                }}
+                style={getImageStyle(layer.image)}
+                tabIndex="0"
+              >
+                <div className="rs-base-layer-switcher-title">
+                  {t(layerName)}
+                </div>
+                {layer.image ? null : (
+                  <span className="rs-alt-text">{t(altText)}</span>
+                )}
+              </div>
+            );
+          })
       ) : (
         <div
           className="rs-base-layer-switcher-button"
