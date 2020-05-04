@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import ChevronLeft from '../../images/chevron_left.svg';
+import ChevronLeft from '../../images/chevronLeft.svg';
 import Layer from '../../layers/Layer';
 
 import './BaseLayerSwitcher.scss';
@@ -111,10 +111,9 @@ function BaseLayerSwitcher({
 
   useEffect(() => {
     /* Attach corresponding image to layers on load */
-    baseLayers.map((baselayer, idx) => {
-      const layer = baselayer;
-      layer.image = images[idx];
-      return layer;
+    baseLayers.forEach((baselayer, idx) => {
+      // eslint-disable-next-line no-param-reassign
+      baselayer.image = images[idx];
     });
   }, []);
 
@@ -164,10 +163,12 @@ function BaseLayerSwitcher({
           .sort((l1) => (l1.name === currentLayer.name ? -1 : 0))
           .map((layer) => {
             const layerName = layer.getName();
+            const activeClass =
+              layerName === currentLayer.getName() ? ' rs-active' : '';
             return (
               <div
                 key={layer.key}
-                className={`rs-base-layer-switcher-button ${openClass}`}
+                className={`rs-base-layer-switcher-button${openClass}`}
                 role="button"
                 title={t(layerName)}
                 aria-label={t(layerName)}
@@ -180,7 +181,7 @@ function BaseLayerSwitcher({
                 style={getImageStyle(layer.image)}
                 tabIndex="0"
               >
-                <div className="rs-base-layer-switcher-title">
+                <div className={`rs-base-layer-switcher-title${activeClass}`}>
                   {t(layerName)}
                 </div>
                 {layer.image ? null : (
