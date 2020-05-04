@@ -236,10 +236,10 @@ class BaseLayerToggler extends Component {
     } else {
       newIdx = idx + 1;
     }
-
     this.setState({
       layers,
       idx: layers.length > 1 ? newIdx : null,
+      layerVisible: layers.length > 1 ? layers[newIdx] : null,
     });
   }
 
