@@ -10,14 +10,7 @@ exports[`BaseLayerToggler matches snapshots using default properties. 1`] = `
     onClick={[Function]}
     onKeyPress={[Function]}
     role="button"
-    style={
-      Object {
-        "backgroundImage": "url(undefined)",
-        "backgroundPosition": "center",
-        "backgroundRepeat": "no-repeat",
-        "backgroundSize": "cover",
-      }
-    }
+    style={null}
     tabIndex="0"
     title="Open Baselayer-Switcher"
   >

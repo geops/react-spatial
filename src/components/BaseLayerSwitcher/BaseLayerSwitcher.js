@@ -13,7 +13,8 @@ const propTypes = {
   layers: PropTypes.arrayOf(PropTypes.instanceOf(Layer)).isRequired,
 
   /**
-   * Object containing relative paths to the base layer images.
+   * Object containing relative paths to the base layer images. Object
+   * keys need to correspond to layer keys
    */
   layerImages: PropTypes.objectOf(PropTypes.string),
 
@@ -68,12 +69,14 @@ const getNextImage = (currentLayer, layers, layerImages) => {
 };
 
 const getImageStyle = (url) => {
-  return {
-    backgroundImage: `url(${url})`,
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
-  };
+  return url
+    ? {
+        backgroundImage: `url(${url})`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+      }
+    : null;
 };
 
 function BaseLayerSwitcher({
@@ -109,13 +112,13 @@ function BaseLayerSwitcher({
 
   const nextImage = getNextImage(currentLayer, baseLayers, images);
 
-  useEffect(() => {
-    /* Attach corresponding image to layers on load */
-    baseLayers.forEach((baselayer, idx) => {
-      // eslint-disable-next-line no-param-reassign
-      baselayer.image = images[idx];
-    });
-  }, []);
+  /* Move visible layer to front of array (array.sort() not working in Firefox) */
+  baseLayers.forEach((item, i) => {
+    if (item.key === currentLayer.key) {
+      baseLayers.splice(i, 1);
+      baseLayers.unshift(item);
+    }
+  });
 
   useEffect(() => {
     /* Ensure correct layer is active on app load */
@@ -159,37 +162,38 @@ function BaseLayerSwitcher({
     <div className={`${className}${openClass}`}>
       {!isClosed && toggleBtn}
       {!isClosed ? (
-        baseLayers
-          .sort((l1) => (l1.name === currentLayer.name ? -1 : 0))
-          .map((layer) => {
-            const layerName = layer.getName();
-            const activeClass =
-              layerName === currentLayer.getName() ? ' rs-active' : '';
-            return (
-              <div
-                key={layer.key}
-                className={`rs-base-layer-switcher-button${openClass}`}
-                role="button"
-                title={t(layerName)}
-                aria-label={t(layerName)}
-                onClick={() => onLayerSelect(layer)}
-                onKeyPress={(e) => {
-                  if (e.which === 13) {
-                    onLayerSelect(layer);
-                  }
-                }}
-                style={getImageStyle(layer.image)}
-                tabIndex="0"
-              >
-                <div className={`rs-base-layer-switcher-title${activeClass}`}>
-                  {t(layerName)}
-                </div>
-                {layer.image ? null : (
-                  <span className="rs-alt-text">{t(altText)}</span>
-                )}
+        baseLayers.map((layer) => {
+          const layerName = layer.getName();
+          const activeClass =
+            layerName === currentLayer.getName() ? ' rs-active' : '';
+          const imageStyle = getImageStyle(
+            layerImages ? layerImages[`${layer.key}`] : layer.previewImage,
+          );
+          return (
+            <div
+              key={layer.key}
+              className={`rs-base-layer-switcher-button${openClass}`}
+              role="button"
+              title={t(layerName)}
+              aria-label={t(layerName)}
+              onClick={() => onLayerSelect(layer)}
+              onKeyPress={(e) => {
+                if (e.which === 13) {
+                  onLayerSelect(layer);
+                }
+              }}
+              style={imageStyle}
+              tabIndex="0"
+            >
+              <div className={`rs-base-layer-switcher-title${activeClass}`}>
+                {t(layerName)}
               </div>
-            );
-          })
+              {imageStyle ? null : (
+                <span className="rs-alt-text">{t(altText)}</span>
+              )}
+            </div>
+          );
+        })
       ) : (
         <div
           className="rs-base-layer-switcher-button"
