@@ -110,15 +110,8 @@ function BaseLayerSwitcher({
     setSwitcherOpen(false);
   };
 
+  /* Get next image for closed button */
   const nextImage = getNextImage(currentLayer, baseLayers, images);
-
-  /* Move visible layer to front of array (array.sort() not working in Firefox) */
-  baseLayers.forEach((item, i) => {
-    if (item.key === currentLayer.key) {
-      baseLayers.splice(i, 1);
-      baseLayers.unshift(item);
-    }
-  });
 
   useEffect(() => {
     /* Ensure correct layer is active on app load */
@@ -143,6 +136,9 @@ function BaseLayerSwitcher({
   if (!baseLayers || baseLayers.length < 2) {
     return null;
   }
+
+  /* Move visible layer to front of array */
+  baseLayers.sort((a) => (a.key === currentLayer.key ? -1 : 1));
 
   const toggleBtn = (
     <div
