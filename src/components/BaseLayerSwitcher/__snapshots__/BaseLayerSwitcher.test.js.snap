@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BaseLayerToggler matches snapshots using default properties. 1`] = `
+exports[`BaseLayerSwitcher matches snapshots using default properties. 1`] = `
 <div
   className="rs-base-layer-switcher"
 >
