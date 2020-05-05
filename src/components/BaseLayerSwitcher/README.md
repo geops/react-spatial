@@ -18,9 +18,9 @@ const map = new OLMap({ controls: [] });
 const layers = ConfigReader.readConfig(treeData);
 const layerService = new LayerService(layers);
 const layerImages = {
-  osm: osmImage,
-  osmhot: osmhotImage,
-  opentopo: openTopoImage,
+  'osm.baselayer': osmImage,
+  'osm.baselayer.hot': osmhotImage,
+  'open.topo.map': openTopoImage,
 };
 
 <div className="rs-base-layer-example">

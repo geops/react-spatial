@@ -32,7 +32,7 @@ const mountComp = (newData) => {
   return mount(<BaseLayerSwitcher layers={layers} layerImages={layerImages} />);
 };
 
-describe('BaseLayerToggler', () => {
+describe('BaseLayerSwitcher', () => {
   describe('matches snapshots', () => {
     test('using default properties.', () => {
       getSnapshot();
