@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import ChevronLeft from '../../images/chevronLeft.svg';
+import { FaChevronCircleLeft } from 'react-icons/fa';
 import Layer from '../../layers/Layer';
 
 import './BaseLayerSwitcher.scss';
@@ -38,6 +38,11 @@ const propTypes = {
   }),
 
   /**
+   * Image (node) rendered in the switcher close button.
+   */
+  closeButtonImage: PropTypes.node,
+
+  /**
    * Translation function.
    * @param {function} Translation function returning the translated string.
    */
@@ -52,6 +57,7 @@ const defaultProps = {
     openSwitcher: 'Open Baselayer-Switcher',
     closeSwitcher: 'Close Baselayer-Switcher',
   },
+  closeButtonImage: <FaChevronCircleLeft />,
   layerImages: undefined,
   t: (s) => s,
 };
@@ -85,6 +91,7 @@ function BaseLayerSwitcher({
   className,
   altText,
   titles,
+  closeButtonImage,
   t,
 }) {
   const baseLayers = layers.filter((layer) => layer.getIsBaseLayer());
@@ -150,7 +157,7 @@ function BaseLayerSwitcher({
       aria-label={altText}
       title={titles.closeSwitcher}
     >
-      <ChevronLeft />
+      {closeButtonImage}
     </div>
   );
 
