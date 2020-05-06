@@ -9,11 +9,13 @@ export default [
     key: 'osm.baselayer',
     visible: true,
     isBaseLayer: true,
-    radioGroup: 'baseLayer',
     copyright: '© OSM Contributors',
     data: {
       type: 'xyz',
       url: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    },
+    properties: {
+      radioGroup: 'baseLayer',
     },
   },
   {
@@ -21,11 +23,13 @@ export default [
     key: 'osm.baselayer.hot',
     visible: false,
     isBaseLayer: true,
-    radioGroup: 'baseLayer',
     copyright: '© OSM Contributors',
     data: {
       type: 'xyz',
       url: 'https://c.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+    },
+    properties: {
+      radioGroup: 'baseLayer',
     },
   },
   {
@@ -33,12 +37,14 @@ export default [
     key: 'open.topo.map',
     visible: false,
     isBaseLayer: true,
-    radioGroup: 'baseLayer',
     copyright:
       'map data: © OpenStreetMap contributors, SRTM | map style: © OpenTopoMap (CC-BY-SA)',
     data: {
       type: 'xyz',
       url: 'https://a.tile.opentopomap.org/{z}/{x}/{y}.png',
+    },
+    properties: {
+      radioGroup: 'baseLayer',
     },
   },
   {
@@ -127,13 +133,12 @@ export default [
     visible: true,
     properties: {
       hideInLegend: true,
+      radioGroup: 'radio',
     },
-    radioGroup: 'radio',
     children: [
       {
         name: 'Points Samples',
         key: 'point.samples',
-        radioGroup: 'vectorLayers',
         visible: false,
         data: {
           style: new Style({
@@ -150,12 +155,17 @@ export default [
             '3c64018b3754cf605ea19cbbe4c8813304da2539/examples/data/geojson/' +
             'point-samples.geojson',
         },
+        properties: {
+          radioGroup: 'vectorLayers',
+        },
       },
       {
         name: 'Lines Samples',
         key: 'lines.samples',
-        radioGroup: 'vectorLayers',
         visible: true,
+        properties: {
+          radioGroup: 'vectorLayers',
+        },
         data: {
           style: new Style({
             stroke: new Stroke({
@@ -173,7 +183,9 @@ export default [
       {
         name: 'Polygons Samples',
         key: 'polygon.samples',
-        radioGroup: 'vectorLayers',
+        properties: {
+          radioGroup: 'vectorLayers',
+        },
         visible: false,
         data: {
           style: new Style({

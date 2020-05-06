@@ -49,6 +49,11 @@ describe('Layer', () => {
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
+  test('should write zIndex into properties if specified in props.', () => {
+    const layer = new Layer({ name: 'Layer', olLayer, zIndex: 1 });
+    expect(layer.get('zIndex')).toEqual(1);
+  });
+
   test('should add the layer on initialization.', () => {
     const map = new Map({});
     const layer = new Layer({ name: 'Layer', olLayer });

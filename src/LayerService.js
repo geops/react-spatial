@@ -63,7 +63,7 @@ export default class LayerService {
   getRadioGroupLayers(radioGroupName) {
     if (radioGroupName) {
       return this.getLayersAsFlatArray().filter(
-        (l) => l.getRadioGroup() === radioGroupName,
+        (l) => l.get('radioGroup') === radioGroupName,
       );
     }
 
@@ -120,18 +120,18 @@ export default class LayerService {
           // Apply to siblings only if it's a radio group.
           if (
             !evt.stopPropagationSiblings &&
-            layer.getRadioGroup() &&
+            layer.get('radioGroup') &&
             visible
           ) {
             const siblings = this.getRadioGroupLayers(
-              layer.getRadioGroup(),
+              layer.get('radioGroup'),
             ).filter((l) => l !== layer);
 
             siblings.forEach((s) => {
               if (
                 visible &&
-                s.getRadioGroup() &&
-                evt.target.getRadioGroup() === s.getRadioGroup()
+                s.get('radioGroup') &&
+                evt.target.get('radioGroup') === s.get('radioGroup')
               ) {
                 s.setVisible(false, false, true, true);
               }

@@ -169,7 +169,7 @@ class LayerTree extends Component {
     const children = layers.flatMap((l) =>
       l
         .getChildren()
-        .filter((c) => !isItemHidden(c) && c.getIsAlwaysExpanded()),
+        .filter((c) => !isItemHidden(c) && c.get('isAlwaysExpanded')),
     );
 
     if (!children.length) {
@@ -203,7 +203,7 @@ class LayerTree extends Component {
       tabIndex = -1;
     }
 
-    const inputType = layer.getRadioGroup() ? 'radio' : 'checkbox';
+    const inputType = layer.get('radioGroup') ? 'radio' : 'checkbox';
     return (
       // eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/no-noninteractive-element-interactions
       <label
@@ -235,7 +235,7 @@ class LayerTree extends Component {
 
     if (
       !layer.getChildren().filter((c) => !isItemHidden(c)).length ||
-      layer.getIsAlwaysExpanded()
+      layer.get('isAlwaysExpanded')
     ) {
       return null;
     }
@@ -258,7 +258,7 @@ class LayerTree extends Component {
       this.onInputClick(
         layer,
         layer.getChildren().filter((c) => !isItemHidden(c)).length &&
-          !layer.getIsAlwaysExpanded(),
+          !layer.get('isAlwaysExpanded'),
       );
     };
     const title = `${t(layer.getName())} ${
