@@ -6,16 +6,16 @@ import Observable, { unByKey } from 'ol/Observable';
  * an {@link https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html ol/Layer}
  * @class
  * @param {Object} [options]
- * @param {string} [options.key] Information about the key.CanvasGradient.
- * @param {string} [options.name] The name of the new layer
+ * @param {string} [options.key] Layer key.
+ * @param {string} [options.name] Layer name.
  * @param {ol.layer} [options.olLayer] The {@link https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html ol/Layer}.
- * @param {boolean} [options.isBaseLayer] If true this layer is the baseLayer.
- * @param {Array<ol.layer>} [options.children] Layers.
- * @param {boolean} [options.visible] If true layer is visible.
+ * @param {boolean} [options.isBaseLayer] If true this layer is a baseLayer.
+ * @param {Array<ol.layer>} [options.children] Sublayers.
+ * @param {boolean} [options.visible] If true this layer is the currently visible layer on the map.
  * @param {Object} [options.zIndex] Layer z-Index.
  * @param {string} [options.copyright] Copyright-Statement.
  * @param {Object} [options.properties] Application-specific layer properties.
- * @param {Object} [options.isQueryable] Application-specific layer properties.
+ * @param {boolean} [options.isQueryable] If true feature information can be queried by the layer service.
  */
 
 export default class Layer extends Observable {
