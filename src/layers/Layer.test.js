@@ -49,9 +49,9 @@ describe('Layer', () => {
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
-  test('should write zIndex into properties if specified in props.', () => {
+  test('should set olLayer zIndex if specified in props.', () => {
     const layer = new Layer({ name: 'Layer', olLayer, zIndex: 1 });
-    expect(layer.get('zIndex')).toEqual(1);
+    expect(layer.olLayer.getZIndex()).toEqual(1);
   });
 
   test('should add the layer on initialization.', () => {

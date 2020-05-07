@@ -6,16 +6,16 @@ import Observable, { unByKey } from 'ol/Observable';
  * an {@link https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html ol/Layer}
  * @class
  * @param {Object} [options]
- * @param {string} [options.key] Layer key.
- * @param {string} [options.name] Layer name.
- * @param {ol.layer} [options.olLayer] The {@link https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html ol/Layer}.
- * @param {boolean} [options.isBaseLayer] If true this layer is a baseLayer.
- * @param {Array<ol.layer>} [options.children] Sublayers.
- * @param {boolean} [options.visible] If true this layer is the currently visible layer on the map.
- * @param {Object} [options.zIndex] Layer z-Index.
- * @param {string} [options.copyright] Copyright-Statement.
- * @param {Object} [options.properties] Application-specific layer properties.
- * @param {boolean} [options.isQueryable] If true feature information can be queried by the layer service.
+ * @param {string} [options.key=undefined] Layer key, will use name.toLowerCase() if not specified (provided a name is specified).
+ * @param {string} [options.name=undefined] Layer name.
+ * @param {ol.layer} [options.olLayer=undefined] The {@link https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html ol/Layer}.
+ * @param {boolean} [options.isBaseLayer=undefined] If true this layer is a baseLayer.
+ * @param {Array<ol.layer>} [options.children=[]] Sublayers.
+ * @param {boolean} [options.visible=true] If true this layer is the currently visible layer on the map.
+ * @param {Object} [options.zIndex=undefined] Layer z-Index.
+ * @param {string} [options.copyright=undefined] Copyright-Statement.
+ * @param {Object} [options.properties={}] Application-specific layer properties.
+ * @param {boolean} [options.isQueryable=true] If true feature information can be queried by the layer service.
  */
 
 export default class Layer extends Observable {
@@ -52,7 +52,6 @@ export default class Layer extends Observable {
     if (this.olLayer) {
       this.olLayer.setVisible(this.visible);
       if (zIndex) {
-        this.properties.zIndex = zIndex;
         this.olLayer.setZIndex(zIndex);
       }
     }

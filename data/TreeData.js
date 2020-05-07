@@ -56,8 +56,10 @@ export default [
       {
         name: 'Countries',
         key: 'countries',
+        properties: {
+          isAlwaysExpanded: true,
+        },
         visible: false,
-        isAlwaysExpanded: true,
         children: [
           {
             name: 'Countries Borders',
