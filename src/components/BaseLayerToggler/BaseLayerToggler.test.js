@@ -149,6 +149,4 @@ describe('BaseLayerToggler', () => {
     expect(next).toBe('next');
     expect(prev).toBe('prev');
   });
-
-  // Add test to verify correct state when resetState.
 });

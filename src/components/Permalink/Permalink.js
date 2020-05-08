@@ -156,8 +156,6 @@ class Permalink extends Component {
       layerService.un('change:layers', this.updateLayers);
       this.updateLayers();
       layerService.on('change:layers', this.updateLayers);
-      // Should reset layer visiblity base don url here? on layers change?
-      // Or before in wkp github?
       layerService.on('change:visible', this.updateLayers);
     }
   }
