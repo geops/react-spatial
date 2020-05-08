@@ -146,12 +146,6 @@ class BaseLayerToggler extends Component {
         childLayers = children.length ? children : [layers[idx]];
       }
 
-      console.log(
-        'UPDATETOGGLERMAP',
-        children,
-        childLayers,
-        childLayers.map((lay) => lay.name),
-      );
       childLayers.forEach((layer) => {
         if (layer.clone) {
           let ml;
@@ -189,13 +183,7 @@ class BaseLayerToggler extends Component {
     layers.forEach(
       (l) => l.getVisible() && l.setVisible(false, true, true, true),
     );
-    console.log('setNextVisible', nextLayer.name, nextLayer, layers);
     nextLayer.setVisible(true);
-    /*
-    layers.forEach((l) => {
-      console.log([l.name, l.visible]);
-    });
-    */
   }
 
   updateLayerService() {
@@ -226,19 +214,9 @@ class BaseLayerToggler extends Component {
       layers[idx].setVisible(true);
     }
 
-    // const newLayerVisible = layers[idx === -1 ? 0 : idx];
-    console.log(
-      'UPADTESTATE',
-      // evtLayer ? evtLayer.name : evtLayer,
-      newIdx,
-      layers.length > 1 ? layers[newIdx].name : null,
-      // newLayerVisible.name,
-      // layers.map((l) => l.key),
-    );
     this.setState({
       layers,
       idx: newIdx,
-      // layerVisible: newLayerVisible,
       layerVisible: layers.length > 1 ? layers[newIdx] : null,
     });
   }
@@ -260,13 +238,6 @@ class BaseLayerToggler extends Component {
     }
 
     const newLayerVisible = layers[idx === -1 ? 0 : idx];
-    console.log(
-      'RESET STATE',
-      layers.length > 1 ? newIdx : null,
-      // layers.length > 1 ? layers[newIdx].name : null,
-      layers.indexOf(layerVisible),
-      newLayerVisible.name,
-    );
     this.setState({
       layers,
       idx: layers.length > 1 ? newIdx : null,
