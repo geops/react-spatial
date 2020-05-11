@@ -11,7 +11,6 @@ import Observable, { unByKey } from 'ol/Observable';
  * @param {boolean} [options.isBaseLayer=undefined] If true this layer is a baseLayer.
  * @param {Array<ol.layer>} [options.children=[]] Sublayers.
  * @param {boolean} [options.visible=true] If true this layer is the currently visible layer on the map.
- * @param {Object} [options.zIndex=undefined] Layer z-Index. Can be retrieved from the options.olLayer using {@link https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html#getZIndex getZIndex()}.
  * @param {string} [options.copyright=undefined] Copyright-Statement.
  * @param {Object} [options.properties={}] Application-specific layer properties.
  * @param {boolean} [options.isQueryable=undefined] If true feature information can be queried by the react-spatial LayerService. Default is undefined, but resulting to true if not strictly set to false.
@@ -25,7 +24,6 @@ export default class Layer extends Observable {
     isBaseLayer,
     children,
     visible,
-    zIndex,
     copyright,
     properties,
     isQueryable,
@@ -50,9 +48,6 @@ export default class Layer extends Observable {
 
     if (this.olLayer) {
       this.olLayer.setVisible(this.visible);
-      if (zIndex) {
-        this.olLayer.setZIndex(zIndex);
-      }
     }
   }
 
