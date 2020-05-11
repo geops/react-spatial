@@ -1,8 +1,8 @@
 import Observable, { unByKey } from 'ol/Observable';
 
 /**
- * A class representing layer to display on BasicMap with a name and
- * an {@link https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html ol/Layer} with further options
+ * A class representing a layer to display on BasicMap with a name and
+ * an {@link https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html ol/Layer} and further options
  * @class
  * @param {Object} options
  * @param {string} options.name Layer name (required).
