@@ -14,7 +14,7 @@ import Observable, { unByKey } from 'ol/Observable';
  * @param {Object} [options.zIndex=undefined] Layer z-Index. Can be retrieved from the options.olLayer using {@link https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html#getZIndex getZIndex()}.
  * @param {string} [options.copyright=undefined] Copyright-Statement.
  * @param {Object} [options.properties={}] Application-specific layer properties.
- * @param {boolean} [options.isQueryable=!==false] If true feature information can be queried by the react-spatial LayerService. Will return false only if strictly set to false (not 0, null or undefined)
+ * @param {boolean} [options.isQueryable=undefined] If true feature information can be queried by the react-spatial LayerService. Default is undefined, but resulting to true if not strictly set to false.
  */
 
 export default class Layer extends Observable {
