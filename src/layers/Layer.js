@@ -1,21 +1,20 @@
 import Observable, { unByKey } from 'ol/Observable';
 
 /**
- * A class representing layer to display on BasicMap with a name, a visibility,
- * a radioGroup, astatus and
- * an {@link https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html ol/Layer}
+ * A class representing layer to display on BasicMap with a name and
+ * an {@link https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html ol/Layer} with further options
  * @class
- * @param {Object} [options]
- * @param {string} [options.key=undefined] Layer key, will use name.toLowerCase() if not specified (provided a name is specified).
- * @param {string} [options.name=undefined] Layer name.
- * @param {ol.layer} [options.olLayer=undefined] The {@link https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html ol/Layer}.
+ * @param {Object} options
+ * @param {string} options.name Layer name (required).
+ * @param {ol.layer} options.olLayer The {@link https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html ol/Layer} (required).
+ * @param {string} [options.key=undefined] Layer key, will use options.name.toLowerCase() if not specified.
  * @param {boolean} [options.isBaseLayer=undefined] If true this layer is a baseLayer.
  * @param {Array<ol.layer>} [options.children=[]] Sublayers.
  * @param {boolean} [options.visible=true] If true this layer is the currently visible layer on the map.
- * @param {Object} [options.zIndex=undefined] Layer z-Index.
+ * @param {Object} [options.zIndex=undefined] Layer z-Index. Can be retrieved from the options.olLayer using {@link https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html#getZIndex getZIndex()}.
  * @param {string} [options.copyright=undefined] Copyright-Statement.
  * @param {Object} [options.properties={}] Application-specific layer properties.
- * @param {boolean} [options.isQueryable=true] If true feature information can be queried by the layer service.
+ * @param {boolean} [options.isQueryable=!==false] If true feature information can be queried by the react-spatial LayerService. Will return false only if strictly set to false (not 0, null or undefined)
  */
 
 export default class Layer extends Observable {
@@ -32,9 +31,9 @@ export default class Layer extends Observable {
     isQueryable,
   }) {
     super();
-    this.key = key || name.toLowerCase();
     this.name = name;
     this.olLayer = olLayer;
+    this.key = key || name.toLowerCase();
     this.isBaseLayer = isBaseLayer;
     this.children = children || [];
     this.visible = visible === undefined ? true : visible;
