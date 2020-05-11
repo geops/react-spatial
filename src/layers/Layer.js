@@ -19,9 +19,9 @@ import Observable, { unByKey } from 'ol/Observable';
 
 export default class Layer extends Observable {
   constructor({
-    key,
     name,
     olLayer,
+    key,
     isBaseLayer,
     children,
     visible,
