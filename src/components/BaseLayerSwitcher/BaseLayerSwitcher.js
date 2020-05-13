@@ -102,7 +102,7 @@ function BaseLayerSwitcher({
   /* Images are loaded from props if provided, fallback from layer */
   const images = layerImages
     ? Object.keys(layerImages).map((layerImage) => layerImages[layerImage])
-    : baseLayers.map((layer) => layer.previewImage);
+    : baseLayers.map((layer) => layer.get('previewImage'));
 
   const openClass = switcherOpen ? ' rs-open' : '';
   const closedClass = isClosed ? ' rs-closed' : '';
@@ -145,7 +145,9 @@ function BaseLayerSwitcher({
   }
 
   /* Move visible layer to front of array */
-  baseLayers.sort((a) => (a.key === currentLayer.key ? -1 : 1));
+  if (currentLayer) {
+    baseLayers.sort((a) => (a.key === currentLayer.key ? -1 : 1));
+  }
 
   const toggleBtn = (
     <div
