@@ -97,12 +97,14 @@ function BaseLayerSwitcher({
   const baseLayers = layers.filter((layer) => layer.getIsBaseLayer());
   const [switcherOpen, setSwitcherOpen] = useState(false);
   const [isClosed, setIsClosed] = useState(true);
-  const [currentLayer, setCurrentLayer] = useState(getVisibleLayer(baseLayers));
+  const [currentLayer, setCurrentLayer] = useState(
+    getVisibleLayer(baseLayers) || baseLayers[0],
+  );
 
   /* Images are loaded from props if provided, fallback from layer */
   const images = layerImages
     ? Object.keys(layerImages).map((layerImage) => layerImages[layerImage])
-    : baseLayers.map((layer) => layer.previewImage);
+    : baseLayers.map((layer) => layer.get('previewImage'));
 
   const openClass = switcherOpen ? ' rs-open' : '';
   const closedClass = isClosed ? ' rs-closed' : '';
@@ -123,9 +125,9 @@ function BaseLayerSwitcher({
   useEffect(() => {
     /* Ensure correct layer is active on app load */
     if (currentLayer !== getVisibleLayer(baseLayers)) {
-      setCurrentLayer(getVisibleLayer(baseLayers));
+      setCurrentLayer(getVisibleLayer(baseLayers) || baseLayers[0]);
     }
-  }, [currentLayer]);
+  }, [currentLayer, baseLayers]);
 
   useEffect(() => {
     /* Used for correct layer image render with animation */
@@ -145,7 +147,9 @@ function BaseLayerSwitcher({
   }
 
   /* Move visible layer to front of array */
-  baseLayers.sort((a) => (a.key === currentLayer.key ? -1 : 1));
+  if (currentLayer) {
+    baseLayers.sort((a) => (a.key === currentLayer.key ? -1 : 1));
+  }
 
   const toggleBtn = (
     <div
@@ -170,7 +174,9 @@ function BaseLayerSwitcher({
           const activeClass =
             layerName === currentLayer.getName() ? ' rs-active' : '';
           const imageStyle = getImageStyle(
-            layerImages ? layerImages[`${layer.key}`] : layer.previewImage,
+            layerImages
+              ? layerImages[`${layer.key}`]
+              : layer.get('previewImage'),
           );
           return (
             <div
