@@ -118,7 +118,11 @@ function BaseLayerSwitcher({
   };
 
   /* Get next image for closed button */
-  const nextImage = getNextImage(currentLayer, baseLayers, images);
+  const nextImage = getNextImage(
+    currentLayer || baseLayers[0],
+    baseLayers,
+    images,
+  );
 
   useEffect(() => {
     /* Ensure correct layer is active on app load */

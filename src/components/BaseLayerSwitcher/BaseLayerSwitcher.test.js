@@ -44,6 +44,17 @@ describe('BaseLayerSwitcher', () => {
     expect(comp.props().layers[0].getVisible()).toBe(true);
   });
 
+  test('omits layer sorting when currentLayer is undefined', () => {
+    const layers = ConfigReader.readConfig(data);
+    const baseLayers = layers.filter((layer) => layer.getIsBaseLayer());
+    baseLayers.forEach((layer) => layer.setVisible(false));
+    const comp = mountComp(baseLayers);
+    expect(comp.props().layers.find((layer) => layer.getVisible())).toBe(
+      undefined,
+    );
+    expect(comp.props().layers).toStrictEqual(baseLayers);
+  });
+
   test('adds close button when opening the switcher', () => {
     const comp = mountComp(data);
     expect(comp.find('.rs-base-layer-switcher-button').length).toBe(1);
