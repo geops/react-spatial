@@ -172,7 +172,9 @@ function BaseLayerSwitcher({
           const activeClass =
             layerName === currentLayer.getName() ? ' rs-active' : '';
           const imageStyle = getImageStyle(
-            layerImages ? layerImages[`${layer.key}`] : layer.previewImage,
+            layerImages
+              ? layerImages[`${layer.key}`]
+              : layer.get('previewImage'),
           );
           return (
             <div
