@@ -97,7 +97,9 @@ function BaseLayerSwitcher({
   const baseLayers = layers.filter((layer) => layer.getIsBaseLayer());
   const [switcherOpen, setSwitcherOpen] = useState(false);
   const [isClosed, setIsClosed] = useState(true);
-  const [currentLayer, setCurrentLayer] = useState(getVisibleLayer(baseLayers));
+  const [currentLayer, setCurrentLayer] = useState(
+    getVisibleLayer(baseLayers) || baseLayers[0],
+  );
 
   /* Images are loaded from props if provided, fallback from layer */
   const images = layerImages
@@ -118,18 +120,14 @@ function BaseLayerSwitcher({
   };
 
   /* Get next image for closed button */
-  const nextImage = getNextImage(
-    currentLayer || baseLayers[0],
-    baseLayers,
-    images,
-  );
+  const nextImage = getNextImage(currentLayer, baseLayers, images);
 
   useEffect(() => {
     /* Ensure correct layer is active on app load */
     if (currentLayer !== getVisibleLayer(baseLayers)) {
-      setCurrentLayer(getVisibleLayer(baseLayers));
+      setCurrentLayer(getVisibleLayer(baseLayers) || baseLayers[0]);
     }
-  }, [currentLayer]);
+  }, [currentLayer, baseLayers]);
 
   useEffect(() => {
     /* Used for correct layer image render with animation */
