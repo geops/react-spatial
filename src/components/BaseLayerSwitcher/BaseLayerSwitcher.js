@@ -191,7 +191,7 @@ function BaseLayerSwitcher({
                 }
               }}
               style={imageStyle}
-              tabIndex="0"
+              tabIndex={switcherOpen ? '0' : '-1'}
             >
               <div className={`rs-base-layer-switcher-title${activeClass}`}>
                 {t(layerName)}

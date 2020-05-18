@@ -18,7 +18,7 @@ exports[`BaseLayerSwitcher matches snapshots using default properties. 1`] = `
       onKeyPress={[Function]}
       role="button"
       style={null}
-      tabIndex="0"
+      tabIndex="-1"
       title="OSM Baselayer"
     >
       <div
@@ -47,7 +47,7 @@ exports[`BaseLayerSwitcher matches snapshots using default properties. 1`] = `
       onKeyPress={[Function]}
       role="button"
       style={null}
-      tabIndex="0"
+      tabIndex="-1"
       title="OSM Baselayer Hot"
     >
       <div
@@ -76,7 +76,7 @@ exports[`BaseLayerSwitcher matches snapshots using default properties. 1`] = `
       onKeyPress={[Function]}
       role="button"
       style={null}
-      tabIndex="0"
+      tabIndex="-1"
       title="OpenTopoMap"
     >
       <div
