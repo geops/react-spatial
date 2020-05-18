@@ -5,6 +5,93 @@ exports[`BaseLayerSwitcher matches snapshots using default properties. 1`] = `
   className="rs-base-layer-switcher"
 >
   <div
+    style={
+      Object {
+        "overflow": "hidden",
+      }
+    }
+  >
+    <div
+      aria-label="OSM Baselayer"
+      className="rs-base-layer-switcher-button"
+      onClick={[Function]}
+      onKeyPress={[Function]}
+      role="button"
+      style={null}
+      tabIndex="0"
+      title="OSM Baselayer"
+    >
+      <div
+        className="rs-base-layer-switcher-title rs-active"
+      >
+        OSM Baselayer
+      </div>
+      <span
+        className="rs-alt-text"
+      >
+        Source not found
+      </span>
+    </div>
+  </div>
+  <div
+    style={
+      Object {
+        "overflow": "hidden",
+      }
+    }
+  >
+    <div
+      aria-label="OSM Baselayer Hot"
+      className="rs-base-layer-switcher-button"
+      onClick={[Function]}
+      onKeyPress={[Function]}
+      role="button"
+      style={null}
+      tabIndex="0"
+      title="OSM Baselayer Hot"
+    >
+      <div
+        className="rs-base-layer-switcher-title"
+      >
+        OSM Baselayer Hot
+      </div>
+      <span
+        className="rs-alt-text"
+      >
+        Source not found
+      </span>
+    </div>
+  </div>
+  <div
+    style={
+      Object {
+        "overflow": "hidden",
+      }
+    }
+  >
+    <div
+      aria-label="OpenTopoMap"
+      className="rs-base-layer-switcher-button"
+      onClick={[Function]}
+      onKeyPress={[Function]}
+      role="button"
+      style={null}
+      tabIndex="0"
+      title="OpenTopoMap"
+    >
+      <div
+        className="rs-base-layer-switcher-title"
+      >
+        OpenTopoMap
+      </div>
+      <span
+        className="rs-alt-text"
+      >
+        Source not found
+      </span>
+    </div>
+  </div>
+  <div
     aria-label="Source not found"
     className="rs-base-layer-switcher-button"
     onClick={[Function]}

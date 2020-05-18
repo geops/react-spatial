@@ -1,8 +1,6 @@
 .rs-base-layer-switcher {
-  position: relative;
-  height: 80px;
-  width: 115px;
-  transition: 250ms width;
+  width: 100px;
+  transition: 1000ms width;
   overflow: hidden;
   display: flex;
   padding: 2px 2px;
@@ -15,11 +13,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 80px;
     width: 100px;
     min-width: 100px;
-    margin-left: 5px;
+    margin-right: 5px;
     background-color: rgb(197, 197, 197);
     border: 2px solid white;
+    box-sizing: border-box;
   }
 
   .rs-alt-text {
@@ -36,7 +36,13 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     background-color: white;
+    align-self: center;
+    width: 25px;
+    height: 25px;
+    margin-left: 5px;
+    border-radius: 50px;
   }
 
   .rs-open {
