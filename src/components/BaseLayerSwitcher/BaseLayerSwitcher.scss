@@ -32,13 +32,17 @@
     overflow: hidden;
   }
 
+  .rs-base-layer-switcher-btn-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
   .rs-base-layer-switcher-close-btn {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: white;
-    align-self: center;
     width: 25px;
     height: 25px;
     border-radius: 50px;

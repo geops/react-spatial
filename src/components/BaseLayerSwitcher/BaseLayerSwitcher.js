@@ -140,7 +140,7 @@ function BaseLayerSwitcher({
     } else {
       timeout = setTimeout(() => {
         setIsClosed(false);
-      }, 300);
+      }, 800);
     }
     return () => clearTimeout(timeout);
   }, [switcherOpen]);
@@ -151,15 +151,22 @@ function BaseLayerSwitcher({
 
   const toggleBtn = (
     <div
-      className="rs-base-layer-switcher-close-btn"
-      role="button"
-      onClick={() => setSwitcherOpen(false)}
-      onKeyPress={(e) => e.which === 13 && setSwitcherOpen(false)}
-      tabIndex="0"
-      aria-label={altText}
-      title={titles.closeSwitcher}
+      className="rs-base-layer-switcher-btn-wrapper"
+      style={{
+        overflow: hiddenStyle,
+      }}
     >
-      {closeButtonImage}
+      <div
+        className="rs-base-layer-switcher-close-btn"
+        role="button"
+        onClick={() => setSwitcherOpen(false)}
+        onKeyPress={(e) => e.which === 13 && setSwitcherOpen(false)}
+        tabIndex="0"
+        aria-label={altText}
+        title={titles.closeSwitcher}
+      >
+        {closeButtonImage}
+      </div>
     </div>
   );
 
@@ -175,6 +182,7 @@ function BaseLayerSwitcher({
         return (
           <div
             key={layer.key}
+            className="rs-base-layer-switcher-btn-wrapper"
             style={{
               overflow: hiddenStyle,
             }}
@@ -203,7 +211,7 @@ function BaseLayerSwitcher({
           </div>
         );
       })}
-      {!isClosed && toggleBtn}
+      {toggleBtn}
       {!switcherOpen && isClosed && (
         <div
           className="rs-base-layer-switcher-button"
