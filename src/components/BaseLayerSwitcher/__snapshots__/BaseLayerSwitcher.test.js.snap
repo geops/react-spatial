@@ -142,7 +142,7 @@ exports[`BaseLayerSwitcher matches snapshots using default properties. 1`] = `
     title="Open Baselayer-Switcher"
   >
     <div
-      className="rs-base-layer-switcher-title rs-closed"
+      className="rs-base-layer-switcher-title"
     >
       Base layers
     </div>

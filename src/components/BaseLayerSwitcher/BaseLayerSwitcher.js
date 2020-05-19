@@ -107,7 +107,6 @@ function BaseLayerSwitcher({
     : baseLayers.map((layer) => layer.get('previewImage'));
 
   const openClass = switcherOpen ? ' rs-open' : '';
-  const closedClass = isClosed ? ' rs-closed' : '';
   const hiddenStyle = switcherOpen && !isClosed ? 'visible' : 'hidden';
 
   const onLayerSelect = (layer) => {
@@ -225,9 +224,7 @@ function BaseLayerSwitcher({
           style={getImageStyle(nextImage)}
           tabIndex="0"
         >
-          <div className={`rs-base-layer-switcher-title${closedClass}`}>
-            {titles.button}
-          </div>
+          <div className="rs-base-layer-switcher-title">{titles.button}</div>
           {nextImage ? null : <span className="rs-alt-text">{t(altText)}</span>}
         </div>
       )}
