@@ -44,13 +44,6 @@ describe('BaseLayerSwitcher', () => {
     expect(comp.props().layers[0].getVisible()).toBe(true);
   });
 
-  test('removes opener when opening the switcher', () => {
-    const comp = mountComp(data);
-    expect(comp.find('.rs-base-layer-switcher-button').length).toBe(4);
-    comp.find('.rs-base-layer-switcher-button').at(0).simulate('click');
-    expect(comp.find('.rs-base-layer-switcher-button').length).toBe(3);
-  });
-
   test('removes open class and switches layer on click', () => {
     const comp = mountComp(data);
     comp.find('.rs-base-layer-switcher-button').at(0).simulate('click');

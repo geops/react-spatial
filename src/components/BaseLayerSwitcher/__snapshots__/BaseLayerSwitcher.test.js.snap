@@ -9,6 +9,7 @@ exports[`BaseLayerSwitcher matches snapshots using default properties. 1`] = `
     style={
       Object {
         "overflow": "hidden",
+        "zIndex": 3,
       }
     }
   >
@@ -39,6 +40,7 @@ exports[`BaseLayerSwitcher matches snapshots using default properties. 1`] = `
     style={
       Object {
         "overflow": "hidden",
+        "zIndex": 2,
       }
     }
   >
@@ -69,6 +71,7 @@ exports[`BaseLayerSwitcher matches snapshots using default properties. 1`] = `
     style={
       Object {
         "overflow": "hidden",
+        "zIndex": 1,
       }
     }
   >
@@ -108,7 +111,7 @@ exports[`BaseLayerSwitcher matches snapshots using default properties. 1`] = `
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
-      tabIndex="0"
+      tabIndex="-1"
       title="Close Baselayer-Switcher"
     >
       <svg
@@ -133,7 +136,7 @@ exports[`BaseLayerSwitcher matches snapshots using default properties. 1`] = `
   </div>
   <div
     aria-label="Source not found"
-    className="rs-base-layer-switcher-button"
+    className="rs-base-layer-switcher-button rs-opener"
     onClick={[Function]}
     onKeyPress={[Function]}
     role="button"

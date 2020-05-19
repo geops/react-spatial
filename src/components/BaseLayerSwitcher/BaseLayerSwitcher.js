@@ -160,7 +160,7 @@ function BaseLayerSwitcher({
         role="button"
         onClick={() => setSwitcherOpen(false)}
         onKeyPress={(e) => e.which === 13 && setSwitcherOpen(false)}
-        tabIndex="0"
+        tabIndex={switcherOpen ? '0' : '-1'}
         aria-label={altText}
         title={titles.closeSwitcher}
       >
@@ -171,7 +171,7 @@ function BaseLayerSwitcher({
 
   return (
     <div className={`${className}${openClass}`}>
-      {baseLayers.map((layer) => {
+      {baseLayers.map((layer, idx) => {
         const layerName = layer.getName();
         const activeClass =
           layerName === currentLayer.getName() ? ' rs-active' : '';
@@ -184,6 +184,7 @@ function BaseLayerSwitcher({
             className="rs-base-layer-switcher-btn-wrapper"
             style={{
               overflow: hiddenStyle,
+              zIndex: baseLayers.length - idx,
             }}
           >
             <div
@@ -211,9 +212,9 @@ function BaseLayerSwitcher({
         );
       })}
       {toggleBtn}
-      {!switcherOpen && isClosed && (
+      {
         <div
-          className="rs-base-layer-switcher-button"
+          className={`rs-base-layer-switcher-button rs-opener${openClass}`}
           role="button"
           title={titles.openSwitcher}
           aria-label={altText}
@@ -227,7 +228,7 @@ function BaseLayerSwitcher({
           <div className="rs-base-layer-switcher-title">{titles.button}</div>
           {nextImage ? null : <span className="rs-alt-text">{t(altText)}</span>}
         </div>
-      )}
+      }
     </div>
   );
 }
