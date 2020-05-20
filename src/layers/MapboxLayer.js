@@ -79,7 +79,7 @@ export default class MapboxLayer extends Layer {
         }
 
         // cancel the scheduled update & trigger synchronous redraw only when the
-        // ol map's properties have changed
+        // ol redner state have changed.
         // see https://github.com/mapbox/mapbox-gl-js/issues/7893#issue-408992184
         // NOTE: THIS MIGHT BREAK WHEN UPDATING MAPBOX
         if (
