@@ -46,8 +46,8 @@ describe('BaseLayerSwitcher', () => {
 
   test('removes open class and switches layer on click', () => {
     const comp = mountComp(data);
-    comp.find('.rs-base-layer-switcher-button').at(0).simulate('click');
-    comp.find('.rs-base-layer-switcher-button').at(2).simulate('click');
+    comp.find('.rs-opener').at(0).simulate('click');
+    comp.find('.rs-base-layer-switcher-button').at(3).simulate('click');
     expect(
       comp
         .props()

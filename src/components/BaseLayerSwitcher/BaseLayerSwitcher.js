@@ -149,12 +149,7 @@ function BaseLayerSwitcher({
   }
 
   const toggleBtn = (
-    <div
-      className="rs-base-layer-switcher-btn-wrapper"
-      style={{
-        overflow: hiddenStyle,
-      }}
-    >
+    <div className="rs-base-layer-switcher-btn-wrapper">
       <div
         className="rs-base-layer-switcher-close-btn"
         role="button"
@@ -171,6 +166,23 @@ function BaseLayerSwitcher({
 
   return (
     <div className={`${className}${openClass}`}>
+      {
+        <div
+          className={`rs-base-layer-switcher-button rs-opener${openClass}`}
+          role="button"
+          title={titles.openSwitcher}
+          aria-label={altText}
+          onClick={() => setSwitcherOpen(true) && setIsClosed(false)}
+          onKeyPress={(e) =>
+            e.which === 13 && setSwitcherOpen(true) && setIsClosed(false)
+          }
+          style={getImageStyle(nextImage)}
+          tabIndex="0"
+        >
+          <div className="rs-base-layer-switcher-title">{titles.button}</div>
+          {nextImage ? null : <span className="rs-alt-text">{t(altText)}</span>}
+        </div>
+      }
       {baseLayers.map((layer, idx) => {
         const layerName = layer.getName();
         const activeClass =
@@ -212,23 +224,6 @@ function BaseLayerSwitcher({
         );
       })}
       {toggleBtn}
-      {
-        <div
-          className={`rs-base-layer-switcher-button rs-opener${openClass}`}
-          role="button"
-          title={titles.openSwitcher}
-          aria-label={altText}
-          onClick={() => setSwitcherOpen(true) && setIsClosed(false)}
-          onKeyPress={(e) =>
-            e.which === 13 && setSwitcherOpen(true) && setIsClosed(false)
-          }
-          style={getImageStyle(nextImage)}
-          tabIndex="0"
-        >
-          <div className="rs-base-layer-switcher-title">{titles.button}</div>
-          {nextImage ? null : <span className="rs-alt-text">{t(altText)}</span>}
-        </div>
-      }
     </div>
   );
 }
