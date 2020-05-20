@@ -81,15 +81,21 @@ export default class MapboxLayer extends Layer {
         // cancel the scheduled update & trigger synchronous redraw
         // see https://github.com/mapbox/mapbox-gl-js/issues/7893#issue-408992184
         // NOTE: THIS MIGHT BREAK WHEN UPDATING MAPBOX
-        if (this.mbMap && this.mbMap.style && this.mbMap.isStyleLoaded()) {
-          if (this.mbMap._frame) {
-            this.mbMap._frame.cancel();
-            this.mbMap._frame = null;
-          }
+        if (
+          this.mbMap &&
+          this.mbMap.style &&
+          this.mbMap.isStyleLoaded() &&
+          changed
+        ) {
           try {
-            if (changed) {
-              this.mbMap._render();
+            // if the ol map's properties have changed, we cancel the current
+            // rendering then triggers a new one. The goal is to synchronize
+            // ol map render and mb map.
+            if (this.mbMap._frame) {
+              this.mbMap._frame.cancel();
+              this.mbMap._frame = null;
             }
+            this.mbMap._render();
           } catch (err) {
             // ignore render errors because it's probably related to
             // a render during an update of the style.
