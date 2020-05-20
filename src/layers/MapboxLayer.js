@@ -78,7 +78,8 @@ export default class MapboxLayer extends Layer {
           this.renderState.center = viewState.center;
         }
 
-        // cancel the scheduled update & trigger synchronous redraw
+        // cancel the scheduled update & trigger synchronous redraw only when the
+        // ol map's properties have changed
         // see https://github.com/mapbox/mapbox-gl-js/issues/7893#issue-408992184
         // NOTE: THIS MIGHT BREAK WHEN UPDATING MAPBOX
         if (
@@ -88,9 +89,6 @@ export default class MapboxLayer extends Layer {
           changed
         ) {
           try {
-            // if the ol map's properties have changed, we cancel the current
-            // rendering then triggers a new one. The goal is to synchronize
-            // ol map render and mb map.
             if (this.mbMap._frame) {
               this.mbMap._frame.cancel();
               this.mbMap._frame = null;
