@@ -77,13 +77,17 @@ describe('LayerTree', () => {
             {
               name: 'Expanded layer 1.1 (because of isAlwaysExpanded=true)',
               visible: true,
-              isAlwaysExpanded: true,
+              properties: {
+                isAlwaysExpanded: true,
+              },
               children: [
                 {
                   name:
                     'Expanded layer 1.1.1 (because of isAlwaysExpanded=true)',
                   visible: true,
-                  isAlwaysExpanded: true,
+                  properties: {
+                    isAlwaysExpanded: true,
+                  },
                   children: [
                     {
                       name: 'Visible layer 1.1.1.1 (as parent is expanded)',
@@ -109,7 +113,9 @@ describe('LayerTree', () => {
             {
               name: 'Expanded layer 1.2 (because of isAlwaysExpanded=true)',
               visible: true,
-              isAlwaysExpanded: true,
+              properties: {
+                isAlwaysExpanded: true,
+              },
               children: [
                 {
                   name: 'Visible layer 1.2.1 (as parent is expanded)',
@@ -138,7 +144,9 @@ describe('LayerTree', () => {
                   name:
                     'Invisible layer 2.1.1 (as parent isAlwaysExpanded=false)',
                   visible: true,
-                  isAlwaysExpanded: true,
+                  properties: {
+                    isAlwaysExpanded: true,
+                  },
                   children: [
                     {
                       name:

@@ -1,52 +1,43 @@
 import Observable, { unByKey } from 'ol/Observable';
 
 /**
- * A class representing layer to display on BasicMap with a name, a visibility,
- * a radioGroup, astatus and
- * an {@link https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html ol/Layer}
+ * A class representing a layer to display on BasicMap with a name and
+ * an {@link https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html ol/Layer} and further options
  * @class
- * @param {Object} [options]
- * @param {string} [options.key] information about the key
- * @param {string} [options.name] The name of the new layer
- * @param {ol.layer} [options.olLayer] the {@link https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html ol/Layer}
- * @param {radioGroup} [options.radioGroup] identifier to group layer in a group, toggle via a radio
- * @param {boolean} [options.isBaseLayer] if true this layer is the baseLayer
- * @param {Array<ol.layer>} [options.children] Layers
- * @param {boolean} [options.visible] If true layer is visible
- * @param {string} [options.copyright] Copyright-Statement
- * @param {Object} [options.properties] Application-specific layer properties.
+ * @param {Object} options
+ * @param {string} options.name Layer name (required).
+ * @param {ol.layer} options.olLayer The {@link https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html ol/Layer} (required).
+ * @param {string} [options.key=undefined] Layer key, will use options.name.toLowerCase() if not specified.
+ * @param {boolean} [options.isBaseLayer=undefined] If true this layer is a baseLayer.
+ * @param {Array<ol.layer>} [options.children=[]] Sublayers.
+ * @param {boolean} [options.visible=true] If true this layer is the currently visible layer on the map.
+ * @param {string} [options.copyright=undefined] Copyright-Statement.
+ * @param {Object} [options.properties={}] Application-specific layer properties.
+ * @param {boolean} [options.isQueryable=undefined] If true feature information can be queried by the react-spatial LayerService. Default is undefined, but resulting to true if not strictly set to false.
  */
 
 export default class Layer extends Observable {
   constructor({
-    key,
     name,
     olLayer,
-    radioGroup,
+    key,
     isBaseLayer,
     children,
     visible,
-    isAlwaysExpanded,
-    zIndex,
     copyright,
     properties,
     isQueryable,
-    previewImage,
   }) {
     super();
-    this.key = key || name.toLowerCase();
     this.name = name;
     this.olLayer = olLayer;
+    this.key = key || name.toLowerCase();
     this.isBaseLayer = isBaseLayer;
-    this.radioGroup = radioGroup;
     this.children = children || [];
     this.visible = visible === undefined ? true : visible;
-    this.isAlwaysExpanded = isAlwaysExpanded || false;
-    this.zIndex = zIndex;
     this.copyright = copyright;
     this.properties = properties || {};
     this.isQueryable = isQueryable !== false;
-    this.previewImage = previewImage || undefined;
 
     // Custom property for duck typing since `instanceof` is not working
     // when the instance was created on different bundles.
@@ -57,9 +48,6 @@ export default class Layer extends Observable {
 
     if (this.olLayer) {
       this.olLayer.setVisible(this.visible);
-      if (this.zIndex) {
-        this.olLayer.setZIndex(this.zIndex);
-      }
     }
   }
 
@@ -148,24 +136,12 @@ export default class Layer extends Observable {
     return this.visible;
   }
 
-  getIsAlwaysExpanded() {
-    return this.isAlwaysExpanded;
-  }
-
   /**
    * Returns whether the layer is the BaseLayer or not.
    * @returns {boolean} If true, the layer is the BaseLayer.
    */
   getIsBaseLayer() {
     return this.isBaseLayer;
-  }
-
-  /**
-   * Get the layers radioGroup identifier
-   * @returns {string} RadioGroup identifier
-   */
-  getRadioGroup() {
-    return this.radioGroup;
   }
 
   /**
@@ -177,14 +153,6 @@ export default class Layer extends Observable {
     this.dispatchEvent({
       type: 'change:copyright',
     });
-  }
-
-  /**
-   *
-   * @param {string} radioGroup Set a new identifier to group layer in a group, toggle via a radio
-   */
-  setRadioGroup(radioGroup) {
-    this.radioGroup = radioGroup;
   }
 
   /**

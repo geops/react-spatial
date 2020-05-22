@@ -152,6 +152,8 @@ class Permalink extends Component {
   updateLayerService() {
     const { layerService } = this.props;
     if (layerService) {
+      layerService.un('change:visible', this.updateState);
+      layerService.un('change:layers', this.updateLayers);
       this.updateLayers();
       layerService.on('change:layers', this.updateLayers);
       layerService.on('change:visible', this.updateLayers);

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BaseLayerToggler matches snapshots using default properties. 1`] = `
+exports[`BaseLayerSwitcher matches snapshots using default properties. 1`] = `
 <div
   className="rs-base-layer-switcher"
 >
@@ -10,14 +10,7 @@ exports[`BaseLayerToggler matches snapshots using default properties. 1`] = `
     onClick={[Function]}
     onKeyPress={[Function]}
     role="button"
-    style={
-      Object {
-        "backgroundImage": "url(undefined)",
-        "backgroundPosition": "center",
-        "backgroundRepeat": "no-repeat",
-        "backgroundSize": "cover",
-      }
-    }
+    style={null}
     tabIndex="0"
     title="Open Baselayer-Switcher"
   >

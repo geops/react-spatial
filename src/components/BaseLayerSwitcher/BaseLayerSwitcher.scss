@@ -5,6 +5,7 @@
   transition: 250ms width;
   overflow: hidden;
   display: flex;
+  padding: 2px 2px;
 
   &.rs-open {
     width: 600px;
@@ -39,8 +40,9 @@
   }
 
   .rs-open {
-    &:hover,
-    &.rs-active {
+    &:focus,
+    &:hover {
+      outline: none;
       border: 2px solid red;
     }
   }
@@ -56,6 +58,10 @@
     &.rs-closed {
       color: white;
       background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    &.rs-active {
+      font-weight: bold;
     }
   }
 }

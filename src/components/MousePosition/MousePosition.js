@@ -115,6 +115,16 @@ function MousePosition({
     control.setCoordinateFormat(projection.format || createStringXY(4));
   }, [projection, control]);
 
+  useEffect(() => {
+    if (projections) {
+      const proj =
+        (projectionValue &&
+          projections.find((p) => p.value === projectionValue.value)) ||
+        projections[0];
+      setProjection(proj);
+    }
+  }, [projectionValue]);
+
   const onChangeCb = useCallback(
     (evt) => {
       const newProj = projections.find((opt) => evt.target.value === opt.value);

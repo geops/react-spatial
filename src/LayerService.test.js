@@ -18,11 +18,15 @@ describe('LayerService', () => {
       children: [
         {
           name: '1-1',
-          radioGroup: 'radio',
+          properties: {
+            radioGroup: 'radio',
+          },
         },
         {
           name: '1-2',
-          radioGroup: 'radio',
+          properties: {
+            radioGroup: 'radio',
+          },
           children: [{ name: '1-2-1' }, { name: '1-2-2' }, { name: '2' }],
         },
       ],

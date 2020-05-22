@@ -112,11 +112,20 @@ describe('KML', () => {
                 </LabelStyle>
               </Style>
               <ExtendedData>
+                <Data name="textAlign">
+                  <value>right</value>
+                </Data>
                 <Data name="textBackgroundFillColor">
                   <value>rgba(255,255,255,0.01)</value>
                 </Data>
                 <Data name="textFont">
                   <value>bold 16px arial</value>
+                </Data>
+                <Data name="textOffsetX">
+                  <value>-90</value>
+                </Data>
+                <Data name="textOffsetY">
+                  <value>30</value>
                 </Data>
                 <Data name="textPadding">
                   <value>5,6,7,8</value>
@@ -148,6 +157,9 @@ describe('KML', () => {
       expect(style.getBackgroundFill()).toEqual({
         color_: 'rgba(255,255,255,0.01)',
       });
+      expect(style.getTextAlign()).toEqual('right');
+      expect(style.getOffsetX()).toEqual(-90);
+      expect(style.getOffsetY()).toEqual(30);
       expectWriteResult(feats, str);
     });
 
@@ -193,7 +205,46 @@ describe('KML', () => {
       const outlineStyle = styles[0].getStroke();
       expect(outlineStyle.getColor()).toEqual([235, 0, 0, 1]);
       expect(outlineStyle.getWidth()).toEqual(2);
-      expect(feature.get('fillPattern')).toBe('{"id":3,"color":[235,0,0,1]}');
+      expect(feature.get('fillPattern')).toEqual({
+        id: 3,
+        color: [235, 0, 0, 1],
+      });
+      expectWriteResult(feats, str);
+    });
+
+    test('should add zIndex to the feature style.', () => {
+      const str = `
+      <kml ${xmlns}>
+        <Document>
+            <name>lala</name>
+            <Placemark>
+                <description></description>
+                <Style>
+                    <IconStyle>
+                        <scale>0.5</scale>
+                        <Icon>
+                            <href>https://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+                            <gx:w>64</gx:w>
+                            <gx:h>64</gx:h>
+                        </Icon>
+                        <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+                    </IconStyle>
+                </Style>
+                <ExtendedData>
+                    <Data name="zIndex">
+                        <value>1</value>
+                    </Data>
+                </ExtendedData>
+                <Point>
+                    <coordinates>0,0,0</coordinates>
+                </Point>
+            </Placemark>
+        </Document>
+      </kml>
+      `;
+      const feats = KML.readFeatures(str);
+      const style = feats[0].getStyle()[0];
+      expect(style.getZIndex()).toBe(1);
       expectWriteResult(feats, str);
     });
   });
