@@ -5,6 +5,7 @@
   overflow: hidden;
   display: flex;
   padding: 2px 2px;
+  pointer-events: none;
 
   &.rs-open {
     width: 600px;
@@ -22,6 +23,7 @@
     background-color: rgb(197, 197, 197);
     border: 2px solid white;
     box-sizing: border-box;
+    pointer-events: auto;
 
     &.rs-opener {
       position: absolute;
