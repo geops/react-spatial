@@ -6,6 +6,7 @@ This demonstrates the use of BasicMap.
 import React from 'react';
 import BasicMap from 'react-spatial/components/BasicMap';
 import ConfigReader from 'react-spatial/ConfigReader';
+import TokenLayer from 'react-spatial/layers/TokenLayer';
 
 
 const layers = ConfigReader.readConfig([{
@@ -16,6 +17,6 @@ const layers = ConfigReader.readConfig([{
     url: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
   },
 }]);
-
+layers.push(new TokenLayer());
 <BasicMap layers={layers} />;
 ```
