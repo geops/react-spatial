@@ -144,7 +144,7 @@ function BaseLayerSwitcher({
     return () => clearTimeout(timeout);
   }, [switcherOpen]);
 
-  if (!baseLayers || baseLayers.length < 2) {
+  if (!baseLayers || baseLayers.length < 2 || !currentLayer) {
     return null;
   }
 
