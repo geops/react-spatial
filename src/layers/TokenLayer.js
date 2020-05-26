@@ -1,5 +1,3 @@
-import Image from 'ol/layer/Image';
-import ImageWMS from 'ol/source/ImageWMS';
 import Layer from './Layer';
 /**
  * A class representing a layer that need a token to be renewed.
@@ -9,37 +7,14 @@ import Layer from './Layer';
  */
 export default class TokenLayer extends Layer {
   constructor(options = {}) {
-    const olLayer =
-      options.olLayer ||
-      new Image({
-        source: new ImageWMS({
-          url:
-            'https://map.geo.fr.ch/arcgis/services/SIPO/SIPO_Liegenschaften/MapServer/WFSServer',
-          params: {
-            LAYERS: 'RealEstate',
-            CRS: 'EPSG:3857',
-          },
-        }),
-      });
-
     super({
       ...options,
-      olLayer,
     });
-
-    this.username = options.username || 'geops';
-    this.password = options.password || 'SIPO2014';
-    this.tokenUrl =
-      options.tokenUrl ||
-      'https://sampleserver6.arcgisonline.com/arcgis/tokens/generateToken';
+    this.username = options.username;
+    this.password = options.password;
+    this.tokenUrl = options.tokenUrl;
     this.expiration = options.expiration || 60; // in minutes
-    this.onTokenUpdate =
-      options.onTokenUpdate ||
-      ((token) => {
-        this.olLayer.updateParams({
-          token,
-        });
-      });
+    this.onTokenUpdate = options.onTokenUpdate;
   }
 
   /**
@@ -53,14 +28,14 @@ export default class TokenLayer extends Layer {
       return;
     }
 
-    this.startUpdateToken();
+    this.startTokenUpdate();
   }
 
   /**
    * @inheritdoc
    */
   terminate() {
-    this.stopUpdateToken();
+    this.stopTokenUpdate();
     super.terminate();
   }
 
@@ -68,20 +43,22 @@ export default class TokenLayer extends Layer {
    * Start requesting a new token every 60 minutes. See expiration property.
    * @private
    */
-  startUpdateToken() {
-    this.stopUpdateToken();
-    const body = new FormData();
-    body.set('username', this.username);
-    body.set('password', this.password);
-    body.set('expiration', this.expiration);
+  startTokenUpdate() {
+    this.stopTokenUpdate();
     fetch(`${this.tokenUrl}`, {
       method: 'post',
-      body,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+      },
+      body: `username=${this.username}&password=${this.password}&expiration=${this.expiration}`,
     })
-      .then((response) => response.json())
-      .then((data) => {
-        this.onTokenUpdate(data.contents);
-        this.timeout = setTimeout(this.startUpdateToken, this.expiration - 2);
+      .then((response) => response.text())
+      .then((token) => {
+        this.onTokenUpdate(token, this);
+        this.timeout = setTimeout(
+          () => this.startTokenUpdate(),
+          this.expiration * 60 * 1000 - 10000, // 10 seconds before expiration
+        );
       });
   }
 
@@ -89,7 +66,7 @@ export default class TokenLayer extends Layer {
    * Stop requesting a new token.
    * @private
    */
-  stopUpdateToken() {
+  stopTokenUpdate() {
     clearTimeout(this.timeout);
   }
 }
