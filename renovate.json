@@ -1,5 +1,4 @@
 {
   "extends": ["config:js-lib", "schedule:monthly"],
-  "baseBranches": ["release-1.1"],
   "assignees": ["@friedjoff"]
 }
