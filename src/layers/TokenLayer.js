@@ -52,7 +52,15 @@ export default class TokenLayer extends Layer {
       },
       body: `username=${this.username}&password=${this.password}&expiration=${this.expiration}`,
     })
-      .then((response) => response.text())
+      .then((response) => {
+        return response.text().then((text) => {
+          if (!response.ok || /Invalid/.test(text)) {
+            // When user/pass is wrong
+            throw new Error(text);
+          }
+          return text;
+        });
+      })
       .then((token) => {
         this.onTokenUpdate(token, this);
         this.timeout = setTimeout(
