@@ -15,6 +15,13 @@ const propTypes = {
   maxWidthBrkpts: PropTypes.objectOf(PropTypes.number),
   stylePropHeight: PropTypes.string,
   onResize: PropTypes.func,
+
+  // This property is used to re-apply the classes, for example when the className of the observed node changes.
+  forceUpdate: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.bool,
+  ]),
 };
 
 // Same as bootstrap
@@ -36,6 +43,7 @@ const defaultProps = {
   },
   stylePropHeight: null,
   onResize: null,
+  forceUpdate: null,
 };
 /**
  * This component adds css class to an element depending on his size.
@@ -64,9 +72,12 @@ class ResizeHandler extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { observe } = this.props;
+    const { observe, forceUpdate } = this.props;
 
-    if (observe !== prevProps.observe) {
+    if (
+      observe !== prevProps.observe ||
+      forceUpdate !== prevProps.forceUpdate
+    ) {
       this.observe();
     }
   }
@@ -89,7 +100,7 @@ class ResizeHandler extends PureComponent {
     }
 
     if (onResize) {
-      onResize(entries);
+      onResize(entries, maxWidthBrkpts, maxHeightBrkpts);
     }
 
     if (!maxWidthBrkpts && !maxHeightBrkpts) {
