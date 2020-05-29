@@ -99,13 +99,13 @@ class ResizeHandler extends PureComponent {
       document.documentElement.style.setProperty(stylePropHeight, `${vh}px`);
     }
 
-    if (onResize) {
-      onResize(entries, maxWidthBrkpts, maxHeightBrkpts);
-    }
-
     if (!maxWidthBrkpts && !maxHeightBrkpts) {
+      onResize(entries);
       return;
     }
+
+    let newScreenWidth;
+    let newScreenHeight;
 
     for (let i = 0; i < entries.length; i += 1) {
       const entry = entries[i];
@@ -113,11 +113,25 @@ class ResizeHandler extends PureComponent {
       const { height, width } = rect;
 
       if (maxWidthBrkpts) {
-        ResizeHandler.applyBreakpoints(entry, maxWidthBrkpts, width, 'w');
+        newScreenWidth = ResizeHandler.applyBreakpoints(
+          entry,
+          maxWidthBrkpts,
+          width,
+          'w',
+        );
       }
       if (maxHeightBrkpts) {
-        ResizeHandler.applyBreakpoints(entry, maxHeightBrkpts, height, 'h');
+        newScreenHeight = ResizeHandler.applyBreakpoints(
+          entry,
+          maxHeightBrkpts,
+          height,
+          'h',
+        );
       }
+    }
+
+    if (onResize) {
+      onResize(entries, newScreenWidth, newScreenHeight);
     }
   }
 
