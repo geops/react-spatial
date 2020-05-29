@@ -74,7 +74,7 @@
     "url-loader": "^4.0.0",
     "vinyl-fs": "^3.0.3",
     "webpack": "^4.42.1",
-    "xml-beautifier": "^0.4.2"
+    "xml-beautifier": "^0.4.3"
   },
   "scripts": {
     "build": "buble --no modules,asyncAwait -i src -o build --objectAssign Object.assign --sourcemap && cp package.json README.md LICENSE build && cp -rf src/images build",
