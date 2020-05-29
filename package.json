@@ -12,7 +12,7 @@
   },
   "peerDependencies": {
     "mapbox-gl": "^1.2.0",
-    "ol": "^6.0.1",
+    "ol": "^6.3.1",
     "react": "^16.7.0",
     "react-dom": "^16.7.0"
   },
@@ -54,7 +54,7 @@
     "lint-staged": "^10.0.10",
     "mapbox-gl": "1.9.1",
     "node-sass": "^4.11.0",
-    "ol": "6.1.1",
+    "ol": "6.3.1",
     "prettier": "^2.0.2",
     "proj4": "^2.6.0",
     "prop-types": "^15.6.2",
