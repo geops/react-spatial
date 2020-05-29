@@ -81,8 +81,12 @@ class Geolocation extends PureComponent {
 
     this.state = {
       active: false,
-      point: undefined,
     };
+    this.point = undefined;
+  }
+
+  componentWillUnmount() {
+    this.deactivate();
   }
 
   toggle() {
@@ -93,13 +97,7 @@ class Geolocation extends PureComponent {
     if (!geolocation) {
       onError();
     } else if (!active) {
-      this.watch = navigator.geolocation.watchPosition(
-        this.activate.bind(this),
-        this.error.bind(this),
-        {
-          enableHighAccuracy: true,
-        },
-      );
+      this.activate();
     } else {
       this.deactivate();
     }
@@ -119,37 +117,47 @@ class Geolocation extends PureComponent {
 
     this.setState({
       active: false,
-      point: undefined,
     });
+    this.point = undefined;
   }
 
-  activate({ coords: { latitude, longitude } }) {
-    let { point } = this.state;
+  activate() {
     const { map } = this.props;
 
-    const projection = map.getView().getProjection().getCode();
-    const position = transform([longitude, latitude], 'EPSG:4326', projection);
-    if (!point) {
-      point = new Point(position);
-      this.setState({ point });
-      this.highlight(point);
-      this.layer.setMap(map);
-    } else {
-      point.setCoordinates(position);
-    }
+    this.projection = map.getView().getProjection().getCode();
+    this.point = new Point([0, 0]);
+    this.highlight();
+    this.layer.setMap(map);
+    this.setState({ active: true });
+
+    this.watch = navigator.geolocation.watchPosition(
+      this.update.bind(this),
+      this.error.bind(this),
+      {
+        enableHighAccuracy: true,
+      },
+    );
+  }
+
+  update({ coords: { latitude, longitude } }) {
+    const { map } = this.props;
+
+    const position = transform(
+      [longitude, latitude],
+      'EPSG:4326',
+      this.projection,
+    );
+    this.point.setCoordinates(position);
 
     if (this.isCentered) {
       map.getView().setCenter(position);
     }
-
-    this.setState({ active: true });
   }
 
-  highlight(point) {
+  highlight() {
     const { colorOrStyleFunc } = this.props;
     const feature = new Feature({
-      geometry: point,
-      source: new VectorSource(),
+      geometry: this.point,
     });
 
     if (Array.isArray(colorOrStyleFunc)) {
