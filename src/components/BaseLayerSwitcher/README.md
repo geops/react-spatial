@@ -29,6 +29,7 @@ const layerImages = {
     center={center}
     zoom={6}
     layers={layers}
+    tabIndex={0}
   />
   <BaseLayerSwitcher
     layers={layers}

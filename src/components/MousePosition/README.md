@@ -16,7 +16,7 @@ const layers = ConfigReader.readConfig(treeData);
 function MousePositionExample() {
   return (
     <div className="rs-mouse-position-example">
-      <BasicMap map={map} center={center} zoom={6} layers={layers} />
+      <BasicMap map={map} center={center} zoom={6} layers={layers} tabIndex={0} />
       <MousePosition
         map={map}
         projections={[

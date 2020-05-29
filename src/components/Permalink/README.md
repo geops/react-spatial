@@ -18,7 +18,7 @@ const populationLayer = layerService.getLayer('USA Population Density');
 const baseLayers = layerService.getBaseLayers();
 
 <div className="rs-permalink-example">
-  <BasicMap map={map} layers={layers} />
+  <BasicMap map={map} layers={layers} tabIndex={0} />
   <Permalink
     map={map}
     layerService={layerService}

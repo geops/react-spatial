@@ -17,5 +17,5 @@ const layers = ConfigReader.readConfig([{
   },
 }]);
 
-<BasicMap layers={layers} />;
+<BasicMap layers={layers} tabIndex={0} />;
 ```
