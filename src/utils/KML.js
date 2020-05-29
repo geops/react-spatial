@@ -104,7 +104,7 @@ const sanitizeFeature = (feature) => {
         });
       }
 
-      // We replace empty white spaces used to keep mormal spaces before and after the name.
+      // We replace empty white spaces used to keep normal spaces before and after the name.
       let name = feature.get('name');
       if (/\u200B/g.test(name)) {
         name = name.replace(/\u200B/g, '');
@@ -345,7 +345,7 @@ const writeFeatures = (layer, featureProjection) => {
     }
 
     // In case a fill pattern should be applied (use fillPattern attribute to store pattern id, color etc)
-    if (newStyle.fill && f.get('fillPattern')) {
+    if (f.get('fillPattern')) {
       clone.set('fillPattern', JSON.stringify(f.get('fillPattern')));
       newStyle.fill = null;
     }

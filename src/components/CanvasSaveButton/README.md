@@ -26,6 +26,7 @@ function CanvasSaveButtonExample() {
         center={[874105.13, 6106172.77]}
         zoom={10}
         layers={layers}
+        tabIndex={0}
       />
       <CanvasSaveButton
         map={map}

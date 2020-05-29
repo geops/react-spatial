@@ -18,7 +18,7 @@ const layerService = new LayerService(layers);
 function LayerTreeExample() {
   return (
     <div className="rs-layer-tree-example">
-      <BasicMap map={map} layers={layers} center={center} zoom={3} />
+      <BasicMap map={map} layers={layers} center={center} zoom={3} tabIndex={0} />
       <LayerTree layerService={layerService} />
     </div>
   );

@@ -56,6 +56,7 @@ const map = new OLMap({
     center={center}
     zoom={17}
     layers={layers}
+    tabIndex={0}
   />
   <NorthArrow
     map={map}

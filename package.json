@@ -1,7 +1,7 @@
 {
   "name": "react-spatial",
   "description": "Components to build React map apps.",
-  "version": "0.3.5",
+  "version": "0.3.6-beta.2",
   "license": "MIT",
   "dependencies": {
     "query-string": "^6.11.1",
@@ -12,7 +12,7 @@
   },
   "peerDependencies": {
     "mapbox-gl": "^1.2.0",
-    "ol": "^6.0.1",
+    "ol": "^6.3.1",
     "react": "^16.7.0",
     "react-dom": "^16.7.0"
   },
@@ -54,7 +54,7 @@
     "lint-staged": "^10.0.10",
     "mapbox-gl": "1.9.1",
     "node-sass": "^4.11.0",
-    "ol": "6.1.1",
+    "ol": "6.3.1",
     "prettier": "^2.0.2",
     "proj4": "^2.6.0",
     "prop-types": "^15.6.2",
@@ -74,7 +74,7 @@
     "url-loader": "^4.0.0",
     "vinyl-fs": "^3.0.3",
     "webpack": "^4.42.1",
-    "xml-beautifier": "^0.4.2"
+    "xml-beautifier": "^0.4.3"
   },
   "scripts": {
     "build": "buble --no modules,asyncAwait -i src -o build --objectAssign Object.assign --sourcemap && cp package.json README.md LICENSE build && cp -rf src/images build",
