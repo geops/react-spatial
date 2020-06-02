@@ -100,7 +100,7 @@ const defaultProps = {
   onFeaturesHover: undefined,
   onMapMoved: undefined,
   resolution: undefined,
-  tabIndex: 0,
+  tabIndex: undefined,
   ariaLabel: 'map',
   viewOptions: {
     minZoom: 0,

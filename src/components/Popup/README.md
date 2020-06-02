@@ -95,6 +95,7 @@ class PopupExample extends React.Component {
           zoom={17}
           layers={this.layers}
           onFeaturesClick={this.onFeaturesClick}
+          tabIndex={0}
         />
         <ResizeHandler observe={this} />
         <Popup

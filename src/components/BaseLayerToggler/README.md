@@ -21,6 +21,7 @@ const layerService = new LayerService(layers);
     center={center}
     zoom={6}
     layers={layers}
+    tabIndex={0}
   />
   <BaseLayerToggler
     map={map}

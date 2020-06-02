@@ -31,6 +31,7 @@ class ScaleLineExample extends Component {
           map={this.map}
           zoom={3}
           layers={this.layers}
+          tabIndex={0}
         />
         <ScaleLine map={this.map} />
       </div>

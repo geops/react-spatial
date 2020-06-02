@@ -42,9 +42,6 @@ describe('KML', () => {
                     <color>ff056600</color>
                     <width>1</width>
                   </LineStyle>
-                  <PolyStyle>
-                    <color>ffffffff</color>
-                  </PolyStyle>
                 </Style>
                 <ExtendedData>
                   <Data name="lineDash"><value>40,40</value></Data>
@@ -101,7 +98,7 @@ describe('KML', () => {
           <Document>
             <name>lala</name>
             <Placemark>
-              <name>\u200B   bar  \u200B</name>
+              <name>   bar  </name>
               <Style>
                 <IconStyle>
                   <scale>0</scale>
@@ -148,7 +145,7 @@ describe('KML', () => {
 
       // Text
       const style = styles[0].getText();
-      expect(style.getText()).toBe('   bar  ');
+      expect(style.getText()).toBe('bar'); // spaces are trimmed.
       expect(style.getFont()).toEqual('bold 16px arial');
       expect(style.getFill()).toEqual({ color_: [32, 52, 126, 1] });
       expect(style.getScale()).toEqual(2);
@@ -175,6 +172,9 @@ describe('KML', () => {
                         <color>ff0000eb</color>
                         <width>2</width>
                     </LineStyle>
+                    <PolyStyle>
+                      <fill>0</fill>
+                    </PolyStyle>
                 </Style>
                 <ExtendedData>
                     <Data name="fillPattern">

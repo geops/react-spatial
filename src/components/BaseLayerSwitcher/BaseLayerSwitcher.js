@@ -156,7 +156,7 @@ function BaseLayerSwitcher({
         onClick={() => setSwitcherOpen(false)}
         onKeyPress={(e) => e.which === 13 && setSwitcherOpen(false)}
         tabIndex={switcherOpen ? '0' : '-1'}
-        aria-label={altText}
+        aria-label={titles.closeSwitcher}
         title={titles.closeSwitcher}
       >
         {closeButtonImage}
@@ -171,7 +171,7 @@ function BaseLayerSwitcher({
           className={`rs-base-layer-switcher-button rs-opener${openClass}`}
           role="button"
           title={titles.openSwitcher}
-          aria-label={altText}
+          aria-label={titles.openSwitcher}
           onClick={() => setSwitcherOpen(true) && setIsClosed(false)}
           onKeyPress={(e) =>
             e.which === 13 && setSwitcherOpen(true) && setIsClosed(false)

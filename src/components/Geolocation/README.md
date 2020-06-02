@@ -15,7 +15,7 @@ const layers = ConfigReader.readConfig(treeData);
 function GeolocationExample() {
   return (
     <div className="rs-geolocation-example">
-      <BasicMap map={map} layers={layers} />
+      <BasicMap map={map} layers={layers} tabIndex={0} />
       <Geolocation map={map} />
     </div>
   );
