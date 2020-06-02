@@ -5,7 +5,7 @@ exports[`BaseLayerSwitcher matches snapshots using default properties. 1`] = `
   className="rs-base-layer-switcher"
 >
   <div
-    aria-label="Source not found"
+    aria-label="Open Baselayer-Switcher"
     className="rs-base-layer-switcher-button rs-opener"
     onClick={[Function]}
     onKeyPress={[Function]}
@@ -122,7 +122,7 @@ exports[`BaseLayerSwitcher matches snapshots using default properties. 1`] = `
     className="rs-base-layer-switcher-btn-wrapper"
   >
     <div
-      aria-label="Source not found"
+      aria-label="Close Baselayer-Switcher"
       className="rs-base-layer-switcher-close-btn"
       onClick={[Function]}
       onKeyPress={[Function]}
