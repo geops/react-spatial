@@ -177,7 +177,13 @@ class BasicMap extends PureComponent {
     viewPort.setAttribute('touch-action', 'none');
 
     if (extent) {
-      this.map.getView().fit(extent);
+      if (this.map.getTargetElement()) {
+        this.map.getView().fit(extent);
+      } else {
+        this.map.once('change:target', () => {
+          this.map.getView().fit(extent);
+        });
+      }
     }
 
     if (layers.length) {
