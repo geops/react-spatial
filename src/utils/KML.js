@@ -78,6 +78,10 @@ const sanitizeFeature = (feature) => {
     stroke = undefined;
   }
 
+  if (feature.get('zIndex')) {
+    style.setZIndex(parseInt(feature.get('zIndex'), 10));
+  }
+
   // if the feature is a Point and we are offline, we use default vector
   // style.
   // if the feature is a Point and has a name with a text style, we
@@ -155,10 +159,6 @@ const sanitizeFeature = (feature) => {
       }
     }
 
-    if (feature.get('zIndex')) {
-      style.setZIndex(parseInt(feature.get('zIndex'), 10));
-    }
-
     fill = undefined;
     stroke = undefined;
 
@@ -196,6 +196,11 @@ const sanitizeFeature = (feature) => {
     // Parse the fillPattern json string and store parsed object
     if (feature.get('fillPattern')) {
       feature.set('fillPattern', JSON.parse(feature.get('fillPattern')));
+    }
+
+    // Extended data boolean variable used to select feature on kml load
+    if (feature.get('isSelected')) {
+      feature.set('isSelected', feature.get('isSelected') === 'true');
     }
 
     // Add line's icons styles
@@ -350,6 +355,11 @@ const writeFeatures = (layer, featureProjection) => {
       newStyle.fill = null;
     }
 
+    // Extended data boolean variable used to select feature on kml load
+    if (f.get('isSelected')) {
+      clone.set('isSelected', f.get('isSelected'));
+    }
+
     // If only text is displayed we must specify an
     // image style with scale=0
     if (newStyle.text && !newStyle.image) {
@@ -393,6 +403,7 @@ const writeFeatures = (layer, featureProjection) => {
 
     const olStyle = new Style(newStyle);
     clone.setStyle(olStyle);
+    console.log('########RS#############', clone.getId());
 
     if (
       !(
