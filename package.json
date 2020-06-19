@@ -4,6 +4,7 @@
   "version": "0.3.7",
   "license": "MIT",
   "dependencies": {
+    "abortcontroller-polyfill": "^1.4.0",
     "query-string": "^6.11.1",
     "radians-degrees": "^1.0.0",
     "react-autosuggest": "^10.0.2",
