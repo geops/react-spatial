@@ -28,6 +28,7 @@ export const pad = (integer) => {
 /**
  * Returns a 'hh:mm' string from a time in ms.
  * @param {Number} timeInMs Time in milliseconds.
+ * @private
  */
 export const getHoursAndMinutes = (timeInMs) => {
   if (!timeInMs || timeInMs <= 0) {
@@ -40,6 +41,7 @@ export const getHoursAndMinutes = (timeInMs) => {
 /**
  * Returns a string representing a delay.
  * @param {Number} timeInMs Delay time in milliseconds.
+ * @private
  */
 export const getDelayString = (timeInMs) => {
   const h = Math.floor(timeInMs / 3600000);
