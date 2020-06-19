@@ -14,6 +14,7 @@ module.exports = {
     'ol/ol.css',
     'react-app-polyfill/ie11',
     'react-app-polyfill/stable',
+    'abortcontroller-polyfill/dist/abortcontroller-polyfill-only',
   ],
   moduleAliases: {
     'react-spatial': path.resolve(__dirname, 'src'),
