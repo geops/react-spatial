@@ -25,28 +25,50 @@ module.exports = {
   sections: [
     {
       name: '',
+
       content: 'README.md',
     },
     {
-      name: 'Components',
+      name: 'Maps',
       description:
-        'A collection of react components for spatial web development.',
+        'A collection of react components for spatial web development of map components.',
       components: [
-        'src/components/BaseLayerSwitcher/[A-Z]*.js',
-        'src/components/BaseLayerToggler/[A-Z]*.js',
-        'src/components/BasicMap/[A-Z]*.js',
-        'src/components/CanvasSaveButton/[A-Z]*.js',
-        'src/components/Copyright/[A-Z]*.js',
-        'src/components/FeatureExportButton/[A-Z]*.js',
-        'src/components/FitExtent/[A-Z]*.js',
-        'src/components/Geolocation/[A-Z]*.js',
-        'src/components/LayerTree/[A-Z]*.js',
-        'src/components/MousePosition/[A-Z]*.js',
-        'src/components/NorthArrow/[A-Z]*.js',
-        'src/components/Permalink/[A-Z]*.js',
-        'src/components/Popup/[A-Z]*.js',
-        'src/components/ScaleLine/[A-Z]*.js',
-        'src/components/Zoom/[A-Z]*.js',
+        'src/components/maps/BaseLayerSwitcher/[A-Z]*.js',
+        'src/components/maps/BaseLayerToggler/[A-Z]*.js',
+        'src/components/maps/BasicMap/[A-Z]*.js',
+        'src/components/maps/CanvasSaveButton/[A-Z]*.js',
+        'src/components/maps/Copyright/[A-Z]*.js',
+        'src/components/maps/FeatureExportButton/[A-Z]*.js',
+        'src/components/maps/FitExtent/[A-Z]*.js',
+        'src/components/maps/Geolocation/[A-Z]*.js',
+        'src/components/maps/LayerTree/[A-Z]*.js',
+        'src/components/maps/MousePosition/[A-Z]*.js',
+        'src/components/maps/NorthArrow/[A-Z]*.js',
+        'src/components/maps/Permalink/[A-Z]*.js',
+        'src/components/maps/Popup/[A-Z]*.js',
+        'src/components/maps/ScaleLine/[A-Z]*.js',
+        'src/components/maps/Zoom/[A-Z]*.js',
+      ],
+      exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
+      usageMode: 'collapse', // 'hide' | 'collapse' | 'expand'
+    },
+    {
+      name: 'Realtime',
+      description:
+        'A collection of react components for spatial web development of realtime components.',
+      components: [
+        'src/components/realtime/RouteSchedule/[A-Z]*.js',
+        'src/components/realtime/TrackerControl/[A-Z]*.js',
+      ],
+      exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
+      usageMode: 'collapse', // 'hide' | 'collapse' | 'expand'
+    },
+    {
+      name: 'Stops',
+      description:
+        'A collection of react components for spatial web development of stops components.',
+      components: [
+        'src/components/stops/Search/Search.js',
       ],
       exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
       usageMode: 'collapse', // 'hide' | 'collapse' | 'expand'

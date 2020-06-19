@@ -1,0 +1,18 @@
+.rt-route-schedule-example {
+  font-family: $font-family;
+  position: relative;
+  display: flex;
+
+  .rt-route-schedule {
+    width: 50%;
+
+    .rt-route-body {
+      max-height: 210px;
+      overflow-y: auto;
+    }
+  }
+
+  .rs-map {
+    flex: 1;
+  }
+}
