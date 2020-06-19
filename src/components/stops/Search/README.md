@@ -42,6 +42,7 @@ function SearchExample() {
         onSelect={setCenter}
         apiKey={apiKey}
         inputProps={{
+          autoFocus: false,
           placeholder: 'Search stops',
         }}
       />
