@@ -160,9 +160,6 @@ class Geolocation extends PureComponent {
     );
     this.point.setCoordinates(position);
 
-    const point = new Point(position);
-    this.highlight(point);
-    this.layer.setMap(map);
     if (this.isRecenteringToPosition) {
       map.getView().setCenter(position);
       if (!alwaysRecenterToPosition) {
