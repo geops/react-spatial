@@ -35,7 +35,7 @@ describe('Zoom', () => {
   [
     ['click', {}],
     ['keypress', { which: 13 }],
-  ].forEach(evt => {
+  ].forEach((evt) => {
     test(`should zoom in on ${evt[0]}.`, () => {
       const map = new OLMap({ view: new OLView({ zoom: 5 }) });
       const zooms = shallow(<Zoom map={map} />);

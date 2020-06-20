@@ -4,7 +4,7 @@ import ConfigReader from './ConfigReader';
 import Layer from './layers/Layer';
 
 describe('LayerService', () => {
-  const instantiateLayerService = data => {
+  const instantiateLayerService = (data) => {
     const layers = ConfigReader.readConfig(data);
     return new LayerService(layers);
   };
@@ -18,11 +18,15 @@ describe('LayerService', () => {
       children: [
         {
           name: '1-1',
-          radioGroup: 'radio',
+          properties: {
+            radioGroup: 'radio',
+          },
         },
         {
           name: '1-2',
-          radioGroup: 'radio',
+          properties: {
+            radioGroup: 'radio',
+          },
           children: [{ name: '1-2-1' }, { name: '1-2-2' }, { name: '2' }],
         },
       ],
@@ -120,7 +124,7 @@ describe('LayerService', () => {
   });
 
   describe('#un() ', () => {
-    test("doesn't failed if callback doesn't exists.", done => {
+    test("doesn't failed if callback doesn't exists.", (done) => {
       const layerService = instantiateLayerService(layerData);
       const cb = () => {};
       try {

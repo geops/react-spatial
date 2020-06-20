@@ -23,6 +23,11 @@ const propTypes = {
   className: PropTypes.string,
 
   /**
+   *  Children content of the Geolocation button.
+   */
+  children: PropTypes.node,
+
+  /**
    * Map.
    */
   map: PropTypes.instanceOf(OLMap).isRequired,
@@ -54,6 +59,7 @@ const propTypes = {
 
 const defaultProps = {
   className: 'rs-geolocation',
+  children: <FaRegDotCircle focusable={false} />,
   onError: () => {},
   noCenterAfterDrag: false,
   alwaysRecenterToPosition: true,
@@ -82,6 +88,11 @@ class Geolocation extends PureComponent {
     this.state = {
       active: false,
     };
+    this.point = undefined;
+  }
+
+  componentWillUnmount() {
+    this.deactivate();
   }
 
   toggle() {
@@ -92,13 +103,7 @@ class Geolocation extends PureComponent {
     if (!geolocation) {
       onError();
     } else if (!active) {
-      this.watch = navigator.geolocation.watchPosition(
-        this.activate.bind(this),
-        this.error.bind(this),
-        {
-          enableHighAccuracy: true,
-        },
-      );
+      this.activate();
     } else {
       this.deactivate();
     }
@@ -124,62 +129,71 @@ class Geolocation extends PureComponent {
     this.setState({
       active: false,
     });
+    this.point = undefined;
   }
 
-  activate(position) {
+  activate() {
+    const { map } = this.props;
+
+    this.projection = map.getView().getProjection().getCode();
+    this.point = new Point([0, 0]);
+    this.highlight();
+    this.layer.setMap(map);
+    this.setState({ active: true });
+
+    this.watch = navigator.geolocation.watchPosition(
+      this.update.bind(this),
+      this.error.bind(this),
+      {
+        enableHighAccuracy: true,
+      },
+    );
+  }
+
+  update({ coords: { latitude, longitude } }) {
     const { map, alwaysRecenterToPosition } = this.props;
 
-    const code = map
-      .getView()
-      .getProjection()
-      .getCode();
-    const pos = transform(
-      [position.coords.longitude, position.coords.latitude],
+    const position = transform(
+      [longitude, latitude],
       'EPSG:4326',
-      code,
+      this.projection,
     );
+    this.point.setCoordinates(position);
 
-    const point = new Point(pos);
+    const point = new Point(position);
     this.highlight(point);
     this.layer.setMap(map);
     if (this.isRecenteringToPosition) {
-      map.getView().setCenter(pos);
+      map.getView().setCenter(position);
       if (!alwaysRecenterToPosition) {
         this.isRecenteringToPosition = false;
       }
     }
-
-    this.setState({
-      active: true,
-    });
   }
 
-  highlight(point) {
+  highlight() {
     const { colorOrStyleFunc } = this.props;
-
-    let decrease = true;
-    let opacity = 0.5;
-    let rotation = 0;
-    let feature;
-
-    window.clearInterval(this.interval);
-    this.interval = window.setInterval(() => {
-      rotation += 0.03;
-      decrease = opacity < 0.1 ? false : decrease;
-      decrease = opacity > 0.5 ? true : decrease;
-      opacity += decrease ? -0.03 : 0.03;
-      if (feature) {
-        feature.changed();
-      }
-    }, 50);
-
-    feature = new Feature({
-      geometry: point,
-      source: new VectorSource(),
+    const feature = new Feature({
+      geometry: this.point,
     });
 
     if (Array.isArray(colorOrStyleFunc)) {
       const color = colorOrStyleFunc;
+
+      let decrease = true;
+      let opacity = 0.5;
+      let rotation = 0;
+
+      window.clearInterval(this.interval);
+      this.interval = window.setInterval(() => {
+        rotation += 0.03;
+        decrease = opacity < 0.1 ? false : decrease;
+        decrease = opacity > 0.5 ? true : decrease;
+        opacity += decrease ? -0.03 : 0.03;
+        if (feature) {
+          feature.changed();
+        }
+      }, 50);
 
       feature.setStyle(() => {
         const circleStyle = new Style({
@@ -220,7 +234,7 @@ class Geolocation extends PureComponent {
   }
 
   render() {
-    const { className } = this.props;
+    const { children, className } = this.props;
     // Remove component props from other HTML props.
     const other = Object.entries(this.props).reduce((props, [key, value]) => {
       return propTypes[key] ? props : { ...props, [key]: value };
@@ -233,11 +247,11 @@ class Geolocation extends PureComponent {
         tabIndex="0"
         className={`${className} ${active ? 'rs-active' : ''}`}
         onClick={() => this.toggle()}
-        onKeyPress={e => e.which === 13 && this.toggle()}
+        onKeyPress={(e) => e.which === 13 && this.toggle()}
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...other}
       >
-        <FaRegDotCircle focusable={false} />
+        {children}
       </div>
     );
   }

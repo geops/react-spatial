@@ -72,6 +72,7 @@ class FeatureExportButtonExample extends React.Component {
           zoom={9}
           map={this.map}
           layers={this.layers}
+          tabIndex={0}
         />
         <div>
           <FeatureExportButton layer={this.layers[1]}>

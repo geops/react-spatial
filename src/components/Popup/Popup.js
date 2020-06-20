@@ -117,7 +117,7 @@ class Popup extends PureComponent {
         title={titles.closeButton}
         aria-label={titles.closeButton}
         onClick={() => onCloseClick()}
-        onKeyPress={evt => evt.which === 13 && onCloseClick()}
+        onKeyPress={(evt) => evt.which === 13 && onCloseClick()}
       >
         <MdClose focusable={false} />
       </div>
@@ -261,7 +261,7 @@ class Popup extends PureComponent {
           tabIndex={tabIndex}
           role="dialog"
           key={key}
-          ref={popupElement => {
+          ref={(popupElement) => {
             this.setState({ popupElement });
           }}
         >

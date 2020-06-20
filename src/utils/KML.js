@@ -38,7 +38,7 @@ const getLineIcon = (feature, icon, color, start = true) => {
   const rotation = Math.atan2(dy, dx);
 
   return new Style({
-    geometry: feat => {
+    geometry: (feat) => {
       const ge = feat.getGeometry();
       return new Point(getVertexCoord(ge, start));
     },
@@ -54,7 +54,7 @@ const getLineIcon = (feature, icon, color, start = true) => {
 };
 
 // Clean the uneeded feature's style and properties created by the KML parser.
-const sanitizeFeature = feature => {
+const sanitizeFeature = (feature) => {
   const geom = feature.getGeometry();
   let styles = feature.getStyleFunction();
 
@@ -68,7 +68,7 @@ const sanitizeFeature = feature => {
       feature
         .get('lineDash')
         .split(',')
-        .map(l => parseInt(l, 10)),
+        .map((l) => parseInt(l, 10)),
     );
   }
 
@@ -104,7 +104,7 @@ const sanitizeFeature = feature => {
         });
       }
 
-      // We replace empty white spaces used to keep mormal spaces before and after the name.
+      // We replace empty white spaces used to keep normal spaces before and after the name.
       let name = feature.get('name');
       if (/\u200B/g.test(name)) {
         name = name.replace(/\u200B/g, '');
@@ -121,6 +121,18 @@ const sanitizeFeature = feature => {
         scale: style.getText().getScale(),
       });
 
+      if (feature.get('textAlign')) {
+        text.setTextAlign(feature.get('textAlign'));
+      }
+
+      if (feature.get('textOffsetX')) {
+        text.setOffsetX(parseFloat(feature.get('textOffsetX')));
+      }
+
+      if (feature.get('textOffsetY')) {
+        text.setOffsetY(parseFloat(feature.get('textOffsetY')));
+      }
+
       if (feature.get('textBackgroundFillColor')) {
         text.setBackgroundFill(
           new Fill({
@@ -134,13 +146,17 @@ const sanitizeFeature = feature => {
           feature
             .get('textPadding')
             .split(',')
-            .map(n => parseFloat(n)),
+            .map((n) => parseFloat(n)),
         );
       }
 
       if (image instanceof Icon) {
         applyTextStyleForIcon(image, text);
       }
+    }
+
+    if (feature.get('zIndex')) {
+      style.setZIndex(parseInt(feature.get('zIndex'), 10));
     }
 
     fill = undefined;
@@ -155,6 +171,7 @@ const sanitizeFeature = feature => {
         zIndex: style.getZIndex(),
       }),
     ];
+
     feature.setStyle(styles);
   }
 
@@ -175,6 +192,11 @@ const sanitizeFeature = feature => {
         zIndex: style.getZIndex(),
       }),
     ];
+
+    // Parse the fillPattern json string and store parsed object
+    if (feature.get('fillPattern')) {
+      feature.set('fillPattern', JSON.parse(feature.get('fillPattern')));
+    }
 
     // Add line's icons styles
     if (feature.get('lineStartIcon')) {
@@ -210,7 +232,7 @@ const readFeatures = (kmlString, featureProjection) => {
   const features = new KML().readFeatures(kmlString, {
     featureProjection,
   });
-  features.forEach(feature => {
+  features.forEach((feature) => {
     sanitizeFeature(feature);
   });
   return features;
@@ -226,7 +248,7 @@ const writeFeatures = (layer, featureProjection) => {
   const { olLayer } = layer;
   const exportFeatures = [];
 
-  olLayer.getSource().forEachFeature(f => {
+  olLayer.getSource().forEachFeature((f) => {
     // We silently ignore Circle elements as they are
     // not supported in kml.
     if (f.getGeometry().getType() === 'Circle') {
@@ -239,7 +261,7 @@ const writeFeatures = (layer, featureProjection) => {
     clone.getGeometry().transform(featureProjection, 'EPSG:4326');
 
     // We remove all ExtendedData not related to style.
-    Object.keys(f.getProperties()).forEach(key => {
+    Object.keys(f.getProperties()).forEach((key) => {
       if (!/^(geometry|name|description)$/.test(key)) {
         clone.unset(key, true);
       }
@@ -261,6 +283,10 @@ const writeFeatures = (layer, featureProjection) => {
       zIndex: styles[0].getZIndex(),
     };
 
+    if (newStyle.zIndex) {
+      clone.set('zIndex', newStyle.zIndex);
+    }
+
     // If we see spaces at the beginning or at the end we add a empty
     // white space at the beginning and at the end.
     if (newStyle.text && /^\s|\s$/g.test(newStyle.text.getText())) {
@@ -274,6 +300,18 @@ const writeFeatures = (layer, featureProjection) => {
 
     if (newStyle.text && newStyle.text.getFont()) {
       clone.set('textFont', newStyle.text.getFont());
+    }
+
+    if (newStyle.text && newStyle.text.getTextAlign()) {
+      clone.set('textAlign', newStyle.text.getTextAlign());
+    }
+
+    if (newStyle.text && newStyle.text.getOffsetX()) {
+      clone.set('textOffsetX', newStyle.text.getOffsetX());
+    }
+
+    if (newStyle.text && newStyle.text.getOffsetY()) {
+      clone.set('textOffsetY', newStyle.text.getOffsetY());
     }
 
     if (newStyle.text && newStyle.text.getBackgroundFill()) {
@@ -306,6 +344,12 @@ const writeFeatures = (layer, featureProjection) => {
       }
     }
 
+    // In case a fill pattern should be applied (use fillPattern attribute to store pattern id, color etc)
+    if (f.get('fillPattern')) {
+      clone.set('fillPattern', JSON.stringify(f.get('fillPattern')));
+      newStyle.fill = null;
+    }
+
     // If only text is displayed we must specify an
     // image style with scale=0
     if (newStyle.text && !newStyle.image) {
@@ -317,15 +361,13 @@ const writeFeatures = (layer, featureProjection) => {
 
     // In case we use line's icon .
     const extraLineStyles = styles.slice(1);
-    extraLineStyles.forEach(extraLineStyle => {
+    extraLineStyles.forEach((extraLineStyle) => {
       if (
         extraLineStyle &&
         extraLineStyle.getImage() instanceof Icon &&
         extraLineStyle.getGeometry()
       ) {
-        const coord = extraLineStyle
-          .getGeometry()(f)
-          .getCoordinates();
+        const coord = extraLineStyle.getGeometry()(f).getCoordinates();
         const startCoord = f.getGeometry().getFirstCoordinate();
         if (coord[0] === startCoord[0] && coord[1] === startCoord[1]) {
           clone.set(

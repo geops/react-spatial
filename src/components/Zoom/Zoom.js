@@ -73,7 +73,7 @@ function Zoom({
 }) {
   const ref = useRef();
   const zoomIn = useCallback(
-    evt => {
+    (evt) => {
       if (!evt.which || evt.which === 13) {
         updateZoom(map, delta);
       }
@@ -82,7 +82,7 @@ function Zoom({
   );
 
   const zoomOut = useCallback(
-    evt => {
+    (evt) => {
       if (!evt.which || evt.which === 13) {
         updateZoom(map, -delta);
       }

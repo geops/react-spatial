@@ -86,7 +86,7 @@ describe('Popup', () => {
   [
     ['click', {}],
     ['keypress', { which: 13 }],
-  ].forEach(evt => {
+  ].forEach((evt) => {
     test(`should trigger onCloseClick function on ${evt[0]} event.`, () => {
       const spy = jest.fn(() => {});
 

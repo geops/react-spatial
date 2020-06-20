@@ -135,4 +135,18 @@ describe('BaseLayerToggler', () => {
     const wrapper = mountComp(exampleData);
     expect(wrapper.find('.rs-base-layer-item').exists()).toBe(false);
   });
+
+  test('should use children', () => {
+    const wrapper = shallowComp(null, {
+      prevButtonContent: 'prev',
+      nextButtonContent: 'next',
+    });
+    expect(wrapper.find('.rs-base-layer-item').exists()).toBe(false);
+
+    const next = wrapper.find('.rs-base-layer-next').text();
+    const prev = wrapper.find('.rs-base-layer-previous').text();
+
+    expect(next).toBe('next');
+    expect(prev).toBe('prev');
+  });
 });
