@@ -58,7 +58,7 @@ export default class MapboxLayer extends Layer {
 
         // adjust view parameters in mapbox
         const { rotation } = viewState;
-        if (rotation && this.renderState.rotation !== rotation) {
+        if (rotation != null && this.renderState.rotation !== rotation) {
           this.mbMap.rotateTo((-rotation * 180) / Math.PI, {
             animate: false,
           });
