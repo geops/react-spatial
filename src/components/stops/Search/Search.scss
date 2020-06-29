@@ -28,6 +28,7 @@
       top: calc(100% - 1px);
       width: 100%;
       border: 1px solid #515151;
+      z-index: 1;
 
       .rt-search__suggestions-list {
         padding: 0;
