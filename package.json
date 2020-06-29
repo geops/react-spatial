@@ -1,7 +1,7 @@
 {
   "name": "react-spatial",
   "description": "Components to build React map apps.",
-  "version": "0.3.8-beta.2",
+  "version": "0.3.7",
   "license": "MIT",
   "dependencies": {
     "abortcontroller-polyfill": "^1.4.0",
