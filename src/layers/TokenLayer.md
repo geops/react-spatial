@@ -26,7 +26,7 @@ layers.push(new TokenLayer({
   key:'tokenLayer',
   username: '',
   password: '',
-  tokenUrl:'https://map.geo.fr.ch/arcgis/tokens/?request=gettoken',
+  tokenUrl:'',
   expiration: 1, // in minutes
   olLayer: new VectorLayer({
     source: new VectorSource({
