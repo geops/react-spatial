@@ -1,0 +1,221 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RouteSchedule matches snapshots. 1`] = `
+<div
+  className="rt-route-schedule"
+>
+  <div
+    className="rt-route-header"
+  >
+    <span
+      className="rt-route-icon"
+      style={
+        Object {
+          "backgroundColor": "ff8a00",
+          "color": "black",
+        }
+      }
+    >
+      3
+    </span>
+    <div
+      className="rt-route-title"
+    >
+      <span
+        className="rt-route-name"
+      >
+        Station name
+      </span>
+      <span>
+        T 3
+         (3634)
+      </span>
+    </div>
+    <div
+      className="rt-route-buttons"
+    >
+      <div>
+        Button
+      </div>
+    </div>
+  </div>
+  <div
+    className="rt-route-body"
+  >
+    <div
+      className="rt-route-station"
+      onClick={[Function]}
+      onKeyPress={[Function]}
+      role="button"
+      tabIndex={0}
+    >
+      <div
+        className="rt-route-delay"
+      >
+        <span
+          className="rt-route-delay-departure green"
+        >
+          +1m
+        </span>
+      </div>
+      <div
+        className="rt-route-times"
+      >
+        <span
+          className="rt-route-time-arrival"
+        >
+          09:01
+        </span>
+        <span
+          className="rt-route-time-departure"
+        >
+          09:01
+        </span>
+      </div>
+      <img
+        alt="routeScheduleLine"
+        className="rt-route-icon"
+        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAyCAYAAABcfPsmAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3gYeCBQzRAvlCAAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAD2SURBVEjH7ZPNEYIwEEafPwXQgSnBBhydoRDog4N44GAVQiMODBXQAcPVCx3owUUzmjAyenO/S0J280h2v4BKpVKp/lQzb2STGcAAW2u1AlrqpJ0GvMP2AtxZkRJogYMPuhiBxQK0ZYA1ELAKG7pz/7p96fjJTmDIaSoZh+sbiVdA/rp57gBG1rwAUuokBVL5duWNAu2a5Y9a3cfckzcK/EouYGnNY2nS0KzYkzfalMK6TgQYNlnr8GTxKbCUWg22MY6c3HfCdx92555V2ACBeM4F8xrb15QLcPLEjtOf3vPVXN/W6mQ2tcs/t40CFahABSrwB7oBXXk7PEfz+n8AAAAASUVORK5CYII="
+      />
+      <div
+        className={null}
+      >
+        first stop
+      </div>
+    </div>
+    <div
+      className="rt-route-station"
+      onClick={[Function]}
+      onKeyPress={[Function]}
+      role="button"
+      tabIndex={0}
+    >
+      <div
+        className="rt-route-delay"
+      >
+        <span
+          className="rt-route-delay-arrival green"
+        >
+          +0
+        </span>
+        <span
+          className="rt-route-delay-departure green"
+        >
+          +2m
+        </span>
+      </div>
+      <div
+        className="rt-route-times"
+      >
+        <span
+          className="rt-route-time-arrival"
+        >
+          09:01
+        </span>
+        <span
+          className="rt-route-time-departure"
+        >
+          09:01
+        </span>
+      </div>
+      <img
+        alt="routeScheduleLine"
+        className="rt-route-icon"
+        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAyCAYAAABcfPsmAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3gcKCgsxhsC3rAAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAADoSURBVEjH7ZbBDYJAEEUfagF0ICXQAJGEQtw+OIgHDlYhNEIwVGAHxKsXOtCDG9wIu1kTowdnLjPMzrwMOz+BAJcl5W2S6/LA1bLgwyZAAQpQgAL8OjApo7fy2paOph0Qz5yGrLMzl2bwAz5hyjJE7IKuZhpSA9YDJ+0jYKO90vnK5w63RlwDBV1eAIV+nqtzAlMjrujyXn+P+5eJ0p/JpjViNcrk4ZWlzrmU2nidLRCRlOZSzDovYKvvSmnInJAr24RTHV6agXV2BkKLsCtgPy7LcylX4Gg5O9hgAIH8zglQgAIU4L8C709SOkzp8yUKAAAAAElFTkSuQmCC"
+      />
+      <div
+        className={null}
+      >
+        second stop
+      </div>
+    </div>
+    <div
+      className="rt-route-station rt-no-stop"
+      onClick={[Function]}
+      onKeyPress={[Function]}
+      role="button"
+      tabIndex={0}
+    >
+      <div
+        className="rt-route-delay"
+      >
+        <span
+          className="rt-route-delay-arrival green"
+        >
+          +0
+        </span>
+        <span
+          className="rt-route-delay-departure green"
+        >
+          +0
+        </span>
+      </div>
+      <div
+        className="rt-route-times"
+      >
+        <span
+          className="rt-route-time-arrival"
+        >
+          
+        </span>
+        <span
+          className="rt-route-time-departure"
+        >
+          
+        </span>
+      </div>
+      <img
+        alt="routeScheduleLine"
+        className="rt-route-icon"
+        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAyCAYAAABcfPsmAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3gcKCgsxhsC3rAAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAADoSURBVEjH7ZbBDYJAEEUfagF0ICXQAJGEQtw+OIgHDlYhNEIwVGAHxKsXOtCDG9wIu1kTowdnLjPMzrwMOz+BAJcl5W2S6/LA1bLgwyZAAQpQgAL8OjApo7fy2paOph0Qz5yGrLMzl2bwAz5hyjJE7IKuZhpSA9YDJ+0jYKO90vnK5w63RlwDBV1eAIV+nqtzAlMjrujyXn+P+5eJ0p/JpjViNcrk4ZWlzrmU2nidLRCRlOZSzDovYKvvSmnInJAr24RTHV6agXV2BkKLsCtgPy7LcylX4Gg5O9hgAIH8zglQgAIU4L8C709SOkzp8yUKAAAAAElFTkSuQmCC"
+      />
+      <div
+        className={null}
+      >
+        no stop
+      </div>
+    </div>
+    <div
+      className="rt-route-station"
+      onClick={[Function]}
+      onKeyPress={[Function]}
+      role="button"
+      tabIndex={0}
+    >
+      <div
+        className="rt-route-delay"
+      >
+        <span
+          className="rt-route-delay-arrival orange"
+        >
+          +4m
+        </span>
+      </div>
+      <div
+        className="rt-route-times"
+      >
+        <span
+          className="rt-route-time-arrival"
+        >
+          09:01
+        </span>
+        <span
+          className="rt-route-time-departure"
+        >
+          
+        </span>
+      </div>
+      <img
+        alt="routeScheduleLine"
+        className="rt-route-icon"
+        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAyCAYAAABcfPsmAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3gYeCBMwkkMidQAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAEeSURBVEjH7ZSxbcMwEEWflAzgJrVZpswCRgR4ECtTpGARpfAe8iKGDNYpXKUVPIGa1E5h2iBkHkMCApLA/IAgSvfv607/yIIQFuvj1Tuji1BKycSYXLAItAtwFHOMTqjwJDZRy7FiAu/vm5IF/4WgsANieWUKOSZeJif98LEbdDl0Hj4Cn57IM/CB0V8p56ECXoVPvQAPUh13gtgbUAs5T8CM+XLPYTuMg/eehMoR64GdvSvbrrLxHdDGtLxy1hugwegGaOyzjxcUrJx1i9G9Heh+VFH1a3PYOevamnQ2qxZ4QVM2TjsrQLFYu6a4vCjBzv6r2oooD6eVKryew8N2YL7cAzNgGAl29nq/mJWw9ZSnzdNMCmIZGRkZGTeNb4FoRhP3GY83AAAAAElFTkSuQmCC"
+      />
+      <div
+        className={null}
+      >
+        third stop
+      </div>
+    </div>
+  </div>
+</div>
+`;
