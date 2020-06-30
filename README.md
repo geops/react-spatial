@@ -6,7 +6,7 @@
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/8f7b7082-8998-4e1f-9a34-4d8cd18e6003/deploy-status)](https://app.netlify.com/sites/react-spatial/deploys)
 
-This library provides React components to build web applications and to visualize real-time geographical information based on [OpenLayers](https://openlayers.org/).
+This library provides React components to build web applications based on [OpenLayers](https://openlayers.org/).
 
 Documentation and examples at https://react-spatial.geops.de.
 
