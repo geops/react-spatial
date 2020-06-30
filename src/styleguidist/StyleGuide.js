@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Logo from 'react-styleguidist/lib/client/rsg-components/Logo';
 import Version from 'react-styleguidist/lib/client/rsg-components/Version';
@@ -102,27 +102,6 @@ export function StyleGuideRenderer({
   toc,
   hasSidebar,
 }) {
-  const [apiKey, setApiKey] = useState();
-  useEffect(() => {
-    fetch('https://developer.geops.io/publickey')
-      .then((response) => response.json())
-      .then((data) => {
-        setApiKey(data.key);
-      })
-      .catch(() => {
-        setApiKey('error');
-        // eslint-disable-next-line no-console
-        console.error('Request to get the apiKey failed');
-      });
-  }, []);
-
-  if (!apiKey) {
-    return null;
-  }
-
-  // Makes apiKey accessible for all components.
-  window.apiKey = apiKey;
-
   return (
     <div className={classes.root}>
       <div>

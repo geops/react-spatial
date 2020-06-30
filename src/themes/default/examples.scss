@@ -2,20 +2,18 @@
 * This file is loaded by the styleguide and provide additionnal css for all examples.
 */
 @import './index.scss';
-@import '../../components/maps/BaseLayerSwitcher/BaseLayerSwitcher.md.scss';
-@import '../../components/maps/BaseLayerToggler/BaseLayerToggler.md.scss';
-@import '../../components/maps/BasicMap/BasicMap.md.scss';
-@import '../../components/maps/CanvasSaveButton/CanvasSaveButton.md.scss';
-@import '../../components/maps/FeatureExportButton/FeatureExportButton.md.scss';
-@import '../../components/maps/FitExtent/FitExtent.md.scss';
-@import '../../components/maps/Geolocation/Geolocation.md.scss';
-@import '../../components/maps/LayerTree/LayerTree.md.scss';
-@import '../../components/maps/MousePosition/MousePosition.md.scss';
-@import '../../components/maps/Permalink/Permalink.md.scss';
-@import '../../components/maps/Popup/Popup.md.scss';
-@import '../../components/maps/Zoom/Zoom.md.scss';
-@import '../../components/realtime/RouteSchedule/RouteSchedule.md.scss';
-@import '../../components/stops/Search/Search.md.scss';
+@import '../../components/BaseLayerSwitcher/BaseLayerSwitcher.md.scss';
+@import '../../components/BaseLayerToggler/BaseLayerToggler.md.scss';
+@import '../../components/BasicMap/BasicMap.md.scss';
+@import '../../components/CanvasSaveButton/CanvasSaveButton.md.scss';
+@import '../../components/FeatureExportButton/FeatureExportButton.md.scss';
+@import '../../components/FitExtent/FitExtent.md.scss';
+@import '../../components/Geolocation/Geolocation.md.scss';
+@import '../../components/LayerTree/LayerTree.md.scss';
+@import '../../components/MousePosition/MousePosition.md.scss';
+@import '../../components/Permalink/Permalink.md.scss';
+@import '../../components/Popup/Popup.md.scss';
+@import '../../components/Zoom/Zoom.md.scss';
 
 body {
   font-family: $font-family;
