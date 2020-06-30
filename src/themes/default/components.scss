@@ -1,6 +1,8 @@
 /**
 * This file load the css of components.
 */
+@import '../../components/FilterButton/FilterButton.scss';
+@import '../../components/FollowButton/FollowButton.scss';
 @import '../../components/BaseLayerSwitcher/BaseLayerSwitcher.scss';
 @import '../../components/BaseLayerToggler/BaseLayerToggler.scss';
 @import '../../components/Geolocation/Geolocation.scss';
@@ -9,3 +11,6 @@
 @import '../../components/Popup/Popup.scss';
 @import '../../components/ScaleLine/ScaleLine.scss';
 @import '../../components/Zoom/Zoom.scss';
+@import '../../components/RouteSchedule/RouteSchedule.scss';
+@import '../../components/TrackerControl/TrackerControl.scss';
+@import '../../components/Search/Search.scss';

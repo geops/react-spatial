@@ -9,13 +9,14 @@ Each component must have this structure:
 ```bash
 src/
     components/
-        MyComponent/
-            index.js            // ES module export.
-            MyComponent.js      // The JSX component WITHOUT hardcoded classNames !!!!
-            MyComponent.test.js // The test file with at least snapshots tests.
-            MyComponent.scss    // A sass file with default CSS when the main html element of MyComponent uses rs-mycomponent CSS class.
-            README.md           // The MyComponentExample component of use to display in the doc.
-            MyComponent.md.scss // A sass file for the MyComponentExample component used in README.md
+        MyCategory/
+            MyComponent/
+                index.js            // ES module export.
+                MyComponent.js      // The JSX component WITHOUT hardcoded classNames !!!!
+                MyComponent.test.js // The test file with at least snapshots tests.
+                MyComponent.scss    // A sass file with default CSS when the main html element of MyComponent uses rs-mycomponent CSS class.
+                README.md           // The MyComponentExample component of use to display in the doc.
+                MyComponent.md.scss // A sass file for the MyComponentExample component used in README.md
 ```
 
 Some rules must be followed:

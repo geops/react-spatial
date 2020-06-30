@@ -14,6 +14,7 @@ module.exports = {
     'ol/ol.css',
     'react-app-polyfill/ie11',
     'react-app-polyfill/stable',
+    'abortcontroller-polyfill/dist/abortcontroller-polyfill-only',
   ],
   moduleAliases: {
     'react-spatial': path.resolve(__dirname, 'src'),
@@ -25,12 +26,13 @@ module.exports = {
   sections: [
     {
       name: '',
+
       content: 'README.md',
     },
     {
-      name: 'Components',
+      name: 'Maps',
       description:
-        'A collection of react components for spatial web development.',
+        'A collection of react components for spatial web development of map components.',
       components: [
         'src/components/BaseLayerSwitcher/[A-Z]*.js',
         'src/components/BaseLayerToggler/[A-Z]*.js',
@@ -50,6 +52,24 @@ module.exports = {
       ],
       exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
       usageMode: 'collapse', // 'hide' | 'collapse' | 'expand'
+    },
+    {
+      name: 'Realtime',
+      description:
+        'A collection of react components for spatial web development of realtime components.',
+      components: [
+        'src/components/RouteSchedule/[A-Z]*.js',
+        'src/components/TrackerControl/[A-Z]*.js',
+      ],
+      exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
+      usageMode: 'collapse', // 'hide' | 'collapse' | 'expand'
+    },
+    {
+      name: 'Stops',
+      description:
+        'A collection of react components for spatial web development of stops components.',
+      components: ['src/components/Search/Search.js'],
+      exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
     },
   ],
   webpackConfig: {
