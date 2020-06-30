@@ -15,6 +15,7 @@ export default class Tracker {
 
     this.map = map;
     this.trajectories = [];
+    this.renderedTrajectories = [];
     this.interpolate = !!opts.interpolate;
     this.hoverVehicleId = null;
 
@@ -77,6 +78,15 @@ export default class Tracker {
    */
   getTrajectories() {
     return this.trajectories;
+  }
+
+  /**
+   * Return rendered trajectories.
+   * Use this to avoid race conditions while rendering.
+   * @returns {array<trajectory>} trajectories
+   */
+  getRenderedTrajectories() {
+    return this.renderedTrajectories;
   }
 
   /**
@@ -232,6 +242,7 @@ export default class Tracker {
         hoverVehiclePx[1] - hoverVehicleImg.height / 2,
       );
     }
+    this.renderedTrajectories = this.trajectories.filter((t) => t.coordinate);
   }
 
   /**
@@ -240,6 +251,7 @@ export default class Tracker {
    */
   destroy() {
     unByKey(this.olEventsKeys);
+    this.renderedTrajectories = [];
     this.clear();
   }
 }
