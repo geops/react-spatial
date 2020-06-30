@@ -26,7 +26,7 @@ layers.push(new TokenLayer({
   key:'tokenLayer',
   username: '',
   password: '',
-  tokenUrl:'https://map.geo.fr.ch/arcgis/tokens/?request=gettoken',
+  tokenUrl:'',
   expiration: 1, // in minutes
   olLayer: new VectorLayer({
     source: new VectorSource({
@@ -36,9 +36,7 @@ layers.push(new TokenLayer({
           return;
         }
         const proj = projection.getCode();
-        const url = `https://map.geo.fr.ch/arcgis/services/SIPO/SIPO_Liegenschaften/MapServer/WFSServer?service=WFS&version=1.1.0&request=GetFeature&typename=RealEstate&srsname=${proj}&bbox=${extent.join(
-          ',',
-        )},${proj}&token=${(this && this.token) || ''}`;
+        const url = `&token=${(this && this.token) || ''}`;
 
         fetch(url)
           .then((response) => {
