@@ -23,7 +23,7 @@ register(proj4);
 
 configure({ adapter: new Adapter() });
 
-const extent = [-10000, -10000, 10000, 10000];
+const extent = [-1000000, -1000000, 200000, 200000];
 const olView = new OLView();
 const olMap = new OLMap({ view: olView });
 const olLayers = [
@@ -35,6 +35,18 @@ const olLayers = [
 ];
 
 describe('BasicMap', () => {
+  beforeEach(() => {
+    const target = document.createElement('div');
+    const { style } = target;
+    style.position = 'absolute';
+    style.left = '0px';
+    style.top = '0px';
+    style.width = '400px';
+    style.height = '400px';
+    document.body.appendChild(target);
+
+    olMap.setTarget(target);
+  });
   test('should be rendered', () => {
     const setTarget = jest.spyOn(olMap, 'setTarget');
     shallow(<BasicMap map={olMap} />);
