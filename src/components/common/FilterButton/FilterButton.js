@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react';
 import qs from 'query-string';
 import PropTypes from 'prop-types';
-import TrackerLayer from '../../../layers/TrackerLayer';
-import TrajservLayer from '../../../layers/TrajservLayer';
+import { TrackerLayer, TrajservLayer } from 'mobility-toolbox-js/src/ol/';
 
 const propTypes = {
   /**

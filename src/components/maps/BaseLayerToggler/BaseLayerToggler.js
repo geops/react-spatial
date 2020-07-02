@@ -72,8 +72,8 @@ class BaseLayerToggler extends Component {
   static isDifferentLayers(prevLayers, layers) {
     if (prevLayers && layers) {
       return (
-        JSON.stringify(prevLayers.map((l) => l.getKey())) !==
-        JSON.stringify(layers.map((l) => l.getKey()))
+        JSON.stringify(prevLayers.map((l) => l.key)) !==
+        JSON.stringify(layers.map((l) => l.key))
       );
     }
     return false;
@@ -142,7 +142,7 @@ class BaseLayerToggler extends Component {
       let children = [];
       let childLayers = [];
       if (idx !== null && idx < layers.length) {
-        children = layers[idx].getChildren();
+        children = layers[idx].children;
         childLayers = children.length ? children : [layers[idx]];
       }
 
@@ -180,9 +180,7 @@ class BaseLayerToggler extends Component {
   setNextVisible(nextLayer) {
     const { layers } = this.state;
     // Unset visibility to all layers before showing the next layer.
-    layers.forEach(
-      (l) => l.getVisible() && l.setVisible(false, true, true, true),
-    );
+    layers.forEach((l) => l.visible && l.setVisible(false, true, true, true));
     nextLayer.setVisible(true);
   }
 
@@ -200,7 +198,7 @@ class BaseLayerToggler extends Component {
   }
 
   updateState(evtLayer) {
-    if (evtLayer && !evtLayer.getIsBaseLayer()) {
+    if (evtLayer && !evtLayer.isBaseLayer) {
       return;
     }
 
@@ -349,7 +347,7 @@ class BaseLayerToggler extends Component {
 
       if (!containsExtent(validExtent, [...blCoord, ...trCoord])) {
         opacity = 1;
-        img = `${fallbackImgDir}${nextLayer.getKey()}.png`;
+        img = `${fallbackImgDir}${nextLayer.key}.png`;
       }
     }
 

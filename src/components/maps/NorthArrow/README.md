@@ -6,7 +6,7 @@ This demonstrates the use of NorthArrowExample (Shift + click to rotate).
 import React from 'react';
 import NorthArrow from 'react-spatial/components/maps/NorthArrow';
 import BasicMap from 'react-spatial/components/maps/BasicMap';
-import Layer from 'react-spatial/layers/Layer';
+import { Layer } from 'mobility-toolbox-js/src/ol/';
 import {
   defaults as defaultInteractions,
   DragRotateAndZoom

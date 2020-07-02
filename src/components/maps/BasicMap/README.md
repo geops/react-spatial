@@ -7,7 +7,6 @@ import React from 'react';
 import BasicMap from 'react-spatial/components/maps/BasicMap';
 import ConfigReader from 'react-spatial/ConfigReader';
 
-
 const layers = ConfigReader.readConfig([{
   name: 'OSM Baselayer',
   visible: true,

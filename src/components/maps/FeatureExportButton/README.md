@@ -5,7 +5,7 @@ This demonstrates the use of FeatureExportButton.
 ```jsx
 import React from 'react';
 import BasicMap from 'react-spatial/components/maps/BasicMap';
-import Layer from 'react-spatial/layers/Layer';
+import { Layer } from 'mobility-toolbox-js/src/ol/';
 import { Vector as VectorLayer } from 'ol/layer';
 import OLMap from 'ol/Map';
 import VectorSource from 'ol/source/Vector';

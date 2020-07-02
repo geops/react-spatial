@@ -30,7 +30,7 @@ const baseLayers = layerService.getBaseLayers();
   <div
     role="button"
     onClick={() => {
-      populationLayer.setVisible(!populationLayer.getVisible());
+      populationLayer.setVisible(!populationLayer.visible);
     }}
   >
     Toggle population layer
@@ -38,7 +38,7 @@ const baseLayers = layerService.getBaseLayers();
   <div
     role="button"
     onClick={() => {
-      if (baseLayers[1].getVisible()) {
+      if (baseLayers[1].visible) {
         baseLayers[0].setVisible(true);
       } else {
         baseLayers[1].setVisible(true);

@@ -5,12 +5,12 @@ import React from 'react';
 import { configure, shallow, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import ResizeObserver from 'resize-observer-polyfill';
+import { Layer } from 'mobility-toolbox-js/src/ol/';
 import MapEvent from 'ol/MapEvent';
 import OLLayer from 'ol/layer/Vector';
 import OLMap from 'ol/Map';
 import OLView from 'ol/View';
 import BasicMap from './BasicMap';
-import Layer from '../../../layers/Layer';
 
 proj4.defs(
   'EPSG:21781',

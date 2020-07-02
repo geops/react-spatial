@@ -122,11 +122,11 @@ describe('BaseLayerToggler', () => {
     const wrapper = mountComp(data);
     const comp = wrapper.instance();
     expect(comp.state.layers.length).toBe(3);
-    expect(comp.state.layers[0].getVisible()).toBe(true);
+    expect(comp.state.layers[0].visible).toBe(true);
     wrapper.find('.rs-base-layer-toggle-button').simulate('click');
     wrapper.update();
-    expect(comp.state.layers[0].getVisible()).toBe(false);
-    expect(comp.state.layers[1].getVisible()).toBe(true);
+    expect(comp.state.layers[0].visible).toBe(false);
+    expect(comp.state.layers[1].visible).toBe(true);
     expect(comp.state.layerVisible).toBe(comp.state.layers[1]);
     expect(comp.state.idx).toBe(0); // Toggle
   });

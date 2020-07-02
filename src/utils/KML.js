@@ -427,10 +427,10 @@ const writeFeatures = (layer, featureProjection) => {
     featString = featString.replace(/<Placemark\/>/g, '');
 
     // Add KML document name
-    if (layer.getName()) {
+    if (layer.name) {
       featString = featString.replace(
         /<Document>/,
-        `<Document><name>${layer.getName()}</name>`,
+        `<Document><name>${layer.name}</name>`,
       );
     }
   }

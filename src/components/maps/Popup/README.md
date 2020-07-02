@@ -7,7 +7,7 @@ import React from 'react';
 import BasicMap from 'react-spatial/components/maps/BasicMap';
 import Popup from 'react-spatial/components/maps/Popup';
 import ResizeHandler from 'react-spatial/components/maps/ResizeHandler';
-import Layer from 'react-spatial/layers/Layer';
+import { Layer } from 'mobility-toolbox-js/src/ol/';
 import { Vector as VectorLayer } from 'ol/layer';
 import OLMap from 'ol/Map';
 import Feature from 'ol/Feature';
