@@ -78,6 +78,10 @@ const sanitizeFeature = (feature) => {
     stroke = undefined;
   }
 
+  if (feature.get('zIndex')) {
+    style.setZIndex(parseInt(feature.get('zIndex'), 10));
+  }
+
   // if the feature is a Point and we are offline, we use default vector
   // style.
   // if the feature is a Point and has a name with a text style, we
@@ -153,10 +157,6 @@ const sanitizeFeature = (feature) => {
       if (image instanceof Icon) {
         applyTextStyleForIcon(image, text);
       }
-    }
-
-    if (feature.get('zIndex')) {
-      style.setZIndex(parseInt(feature.get('zIndex'), 10));
     }
 
     fill = undefined;
