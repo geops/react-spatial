@@ -2,7 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import TrajservLayer from '../../layers/TrajservLayer';
+import { TrajservLayer } from 'mobility-toolbox-js/src/ol/';
 import TrackerControl from '.';
 
 configure({ adapter: new Adapter() });
