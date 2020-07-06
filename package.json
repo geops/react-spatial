@@ -94,7 +94,7 @@
     "publish:beta": "yarn publish:public --tag beta",
     "publish:public": "yarn version && git push origin HEAD && yarn build && yarn publish build/",
     "start": "yarn doc:server",
-    "test": "jest"
+    "test": "jest --transformIgnorePatterns \"/node_modules/(?!(ol|mobility-toolbox-js)/).*/\""
   },
   "browserslist": [
     ">0.2%",
@@ -168,6 +168,9 @@
     ],
     "testPathIgnorePatterns": [
       "<rootDir>/(build|coverage|public|doc|packages)"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setupTests.js"
     ]
   },
   "lint-staged": {
