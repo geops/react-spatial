@@ -16,7 +16,7 @@ const expectWriteResult = (feats, str) => {
     beautify(
       KML.writeFeatures(
         {
-          getName: () => 'lala',
+          name: 'lala',
           olLayer: new VectorLayer({
             source: new VectorSource({
               features: feats,
