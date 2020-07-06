@@ -177,7 +177,6 @@ describe('FeatureExportButton', () => {
 
         test('should export without layer name.', () => {
           const unnamedlayer = renderLayer(1);
-          delete unnamedlayer.name;
           const exportString = FeatureExportButton.createFeatureString(
             unnamedlayer,
             FeatureExportButton.defaultProps.projection,
