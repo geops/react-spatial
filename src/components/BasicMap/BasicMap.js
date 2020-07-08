@@ -288,7 +288,11 @@ class BasicMap extends PureComponent {
 
   initLayer(layer) {
     layer.init(this.map);
-    if (layer.olLayer) {
+    if (
+      layer.olLayer &&
+      this.map.getLayers() &&
+      !this.map.getLayers().getArray().includes(layer.olLayer)
+    ) {
       this.map.addLayer(layer.olLayer);
     }
     const layers = layer.children || [];
