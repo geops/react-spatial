@@ -9193,10 +9193,10 @@ mixin-deep@^1.2.0:
   dependencies:
     minimist "^1.2.5"
 
-mobility-toolbox-js@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/mobility-toolbox-js/-/mobility-toolbox-js-1.0.1.tgz#9f6921ab509356e7961a971d3aeed558a56c1ef8"
-  integrity sha512-K2BGAy2vlIvYYZH8VnT9oQ8LPTRixMZdbA9GDjupWTTzGA6xhYOB1IPXstfyAozYdbmUK+JhKb7YTOIx9iuONg==
+mobility-toolbox-js@^1.0.2-beta.2:
+  version "1.0.2-beta-1"
+  resolved "https://registry.yarnpkg.com/mobility-toolbox-js/-/mobility-toolbox-js-1.0.2-beta-1.tgz#441ed5c2f281b5d33b18c2974c7af202016043a1"
+  integrity sha512-+Ls05qsvdi7Gn93ikIqLcL4IeFlPFlKevvKfRtEPYp4d94/df07V5jFxTNtko8IePUPe9dD3pbzuevrTxDM1NQ==
   dependencies:
     "@material-ui/core" "^4.9.14"
     "@material-ui/icons" "^4.9.1"

@@ -5,7 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "abortcontroller-polyfill": "^1.4.0",
-    "mobility-toolbox-js": "^1.0.1",
+    "mobility-toolbox-js": "^1.0.2-beta.2",
     "query-string": "^6.11.1",
     "radians-degrees": "^1.0.0",
     "react-autosuggest": "^10.0.2",
@@ -15,6 +15,7 @@
   },
   "peerDependencies": {
     "mapbox-gl": "^1.2.0",
+    "mobility-toolbox-js": "^1.0.2-beta.2",
     "ol": "^6.3.1",
     "react": "^16.7.0",
     "react-dom": "^16.7.0"
