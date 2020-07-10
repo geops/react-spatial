@@ -220,6 +220,7 @@ export default class Tracker {
           // eslint-disable-next-line no-continue
           continue;
         }
+        this.trajectories[i].rendered = true;
 
         const vehicleImg = this.style(traj, res);
         if (this.hoverVehicleId !== traj.id) {
@@ -242,7 +243,7 @@ export default class Tracker {
         hoverVehiclePx[1] - hoverVehicleImg.height / 2,
       );
     }
-    this.renderedTrajectories = this.trajectories.filter((t) => t.coordinate);
+    this.renderedTrajectories = this.trajectories.filter((t) => t.rendered);
   }
 
   /**
