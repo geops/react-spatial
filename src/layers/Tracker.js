@@ -1,4 +1,5 @@
 import { unByKey } from 'ol/Observable';
+import { containsCoordinate } from 'ol/extent';
 
 /**
  * Tracker for OpenLayers.
@@ -220,7 +221,6 @@ export default class Tracker {
           // eslint-disable-next-line no-continue
           continue;
         }
-        this.trajectories[i].rendered = true;
 
         const vehicleImg = this.style(traj, res);
         if (this.hoverVehicleId !== traj.id) {
@@ -243,7 +243,10 @@ export default class Tracker {
         hoverVehiclePx[1] - hoverVehicleImg.height / 2,
       );
     }
-    this.renderedTrajectories = this.trajectories.filter((t) => t.rendered);
+    const extent = this.map.getView().calculateExtent(this.map.getSize());
+    this.renderedTrajectories = this.trajectories.filter((t) => {
+      return t.coordinate && containsCoordinate(extent, t.coordinate);
+    });
   }
 
   /**
