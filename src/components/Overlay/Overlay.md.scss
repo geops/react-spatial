@@ -1,0 +1,36 @@
+.tm-overlay-example {
+  border: 2px solid #838383;
+  background-color: #eee;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  width: 100%;
+
+  .tm-overlay-container {
+    width: 150px;
+  }
+
+  .tm-clickable-feature {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #838383;
+  }
+
+  .tm-overlay-mobile {
+    .tm-overlay-mobile-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      div {
+        width: 80px;
+        padding: 10px;
+        border-radius: 5px;
+        height: unset;
+        border: 1px solid #838383;
+      }
+    }
+  }
+}

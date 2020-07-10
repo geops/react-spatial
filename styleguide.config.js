@@ -47,6 +47,7 @@ module.exports = {
         'src/components/NorthArrow/[A-Z]*.js',
         'src/components/Permalink/[A-Z]*.js',
         'src/components/Popup/[A-Z]*.js',
+        'src/components/Overlay/[A-Z]*.js',
         'src/components/ScaleLine/[A-Z]*.js',
         'src/components/Zoom/[A-Z]*.js',
       ],

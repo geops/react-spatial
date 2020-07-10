@@ -8,6 +8,7 @@
     "mobility-toolbox-js": "^1.0.2-beta.2",
     "query-string": "^6.11.1",
     "radians-degrees": "^1.0.0",
+    "re-resizable": "^6.3.2",
     "react-autosuggest": "^10.0.2",
     "react-draggable": "^4.0.3",
     "react-icons": "^3.9.0",

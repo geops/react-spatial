@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Overlay should match snapshot. 1`] = `
+<div
+  className="tm-overlay"
+>
+  Test content
+</div>
+`;
