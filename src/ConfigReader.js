@@ -6,7 +6,7 @@ import WMTSSource from 'ol/source/WMTS';
 import TileJSONSource from 'ol/source/TileJSON';
 import WMTSTileGrid from 'ol/tilegrid/WMTS';
 import GeoJSONFormat from 'ol/format/GeoJSON';
-import { Layer, MapboxLayer } from 'mobility-toolbox-js/src/ol/';
+import { Layer, MapboxLayer } from 'mobility-toolbox-js/ol/';
 import projections from './Projections';
 
 const createXYZLayer = (item) => {

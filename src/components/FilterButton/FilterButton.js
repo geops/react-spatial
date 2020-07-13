@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import qs from 'query-string';
 import PropTypes from 'prop-types';
-import { TrackerLayer, TrajservLayer } from 'mobility-toolbox-js/src/ol/';
+import { TrackerLayer } from 'mobility-toolbox-js/ol/';
 
 const propTypes = {
   /**
@@ -67,20 +67,15 @@ class FilterButton extends PureComponent {
 
   toggleFilter(routeIdentifier) {
     const { trackerLayer, active, onClick } = this.props;
-
     const activated = !active;
 
-    const filterFc = TrajservLayer.createFilter(
-      undefined,
-      routeIdentifier.split('.')[0],
-    );
-    if (trackerLayer && trackerLayer.tracker) {
+    if (trackerLayer) {
       if (activated) {
         this.updatePermalink(false);
-        trackerLayer.setFilter(filterFc);
+        [trackerLayer.tripNumber] = routeIdentifier.split('.');
       } else {
         this.updatePermalink(true);
-        trackerLayer.addTrackerFilters();
+        trackerLayer.tripNumber = null;
       }
     }
 

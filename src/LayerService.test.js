@@ -1,5 +1,5 @@
 import 'jest-canvas-mock';
-import { Layer } from 'mobility-toolbox-js/src/ol/';
+import { Layer } from 'mobility-toolbox-js/ol/';
 import LayerService from './LayerService';
 import ConfigReader from './ConfigReader';
 

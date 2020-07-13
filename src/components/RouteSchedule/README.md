@@ -5,7 +5,7 @@ This demonstrates the use of RouteSchedule.
 ```jsx
 import React, { useState, useEffect } from 'react';
 import BasicMap from 'react-spatial/components/BasicMap';
-import { Layer, TrajservLayer } from 'mobility-toolbox-js/src/ol/';
+import { Layer, TrajservLayer } from 'mobility-toolbox-js/ol/';
 import TileLayer from 'ol/layer/Tile';
 import OSMSource from 'ol/source/OSM';
 import RouteSchedule from 'react-spatial/components/RouteSchedule';

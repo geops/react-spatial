@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TrackerLayer } from 'mobility-toolbox-js/src/ol/';
+import { TrackerLayer } from 'mobility-toolbox-js/ol/';
 import ReactTransitPropTypes from '../../propTypes';
 import firstStation from '../../images/RouteSchedule/firstStation.png';
 import station from '../../images/RouteSchedule/station.png';

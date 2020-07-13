@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { IoIosSpeedometer } from 'react-icons/io';
 import { FaPlay, FaForward, FaBackward, FaRegDotCircle } from 'react-icons/fa';
-import { TrackerLayer } from 'mobility-toolbox-js/src/ol/';
+import { TrackerLayer } from 'mobility-toolbox-js/ol/';
 
 const increaseSpeed = (speed) => {
   let delta = 0.1;
