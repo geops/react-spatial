@@ -151,8 +151,8 @@
   "jest": {
     "maxConcurrency": 10,
     "transform": {
-      ".+\\.js$": "babel-jest",
-      ".+\\.svg$": "jest-svg-transformer",
+      "^.+\\.js$": "babel-jest",
+      "^.+\\.svg$": "jest-svg-transformer",
       "\\.(jpg|jpeg|png|gif|webp)$": "jest-transform-file"
     },
     "transformIgnorePatterns": [
@@ -162,7 +162,7 @@
       "<rootDir>/src/**/?(*.)+(spec|test).[jt]s?(x)"
     ],
     "moduleNameMapper": {
-      ".+\\.scss$": "identity-obj-proxy"
+      "^.+\\.scss$": "identity-obj-proxy"
     },
     "snapshotSerializers": [
       "jest-serializer-html"

@@ -302,6 +302,13 @@ class BasicMap extends PureComponent {
   }
 
   terminateLayer(layer) {
+    if (
+      layer.olLayer &&
+      this.map.getLayers() &&
+      !this.map.getLayers().getArray().includes(layer.olLayer)
+    ) {
+      this.map.removeLayer(layer.olLayer);
+    }
     layer.terminate(this.map);
     const layers = layer.children || [];
     for (let i = 0; i < layers.length; i += 1) {
