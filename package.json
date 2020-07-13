@@ -13,10 +13,10 @@
     "resize-observer-polyfill": "1.5.1"
   },
   "peerDependencies": {
-    "mapbox-gl": "1.2.0",
-    "mobility-toolbox-js": "1.0.2-beta.3",
-    "ol": "6.3.1",
-    "react-icons": "3.9.0"
+    "mapbox-gl": "^1.8.1",
+    "mobility-toolbox-js": "^1.0.2-beta.3",
+    "ol": "^6.3.1",
+    "react-icons": "^3.9.0"
   },
   "devDependencies": {
     "@babel/core": "7.10.4",
