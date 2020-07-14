@@ -82,6 +82,7 @@ function RouteScheduleExample() {
         center={center}
         zoom={15}
         layers={layers}
+        tabIndex={0} 
       />
     </div>
   );

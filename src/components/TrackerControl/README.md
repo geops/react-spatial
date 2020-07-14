@@ -29,7 +29,7 @@ const layers = [
 function TrackerControlExample() {
   return (
     <>
-      <BasicMap center={[951560, 6002550]} zoom={14} layers={layers} />
+      <BasicMap center={[951560, 6002550]} zoom={14} layers={layers} tabIndex={0} />
       <TrackerControl trackerLayer={trackerLayer} />
     </>
   );

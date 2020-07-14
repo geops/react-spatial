@@ -37,6 +37,7 @@ function SearchExample() {
         center={[951560, 6002550]}
         zoom={14}
         layers={layers}
+        tabIndex={0} 
       />
       <Search
         onSelect={setCenter}
