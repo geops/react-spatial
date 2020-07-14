@@ -3,7 +3,7 @@ import renderer from 'react-test-renderer';
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import 'jest-date-mock';
-import TrajservLayer from '../../layers/TrajservLayer';
+import { TrajservLayer } from 'mobility-toolbox-js/ol/';
 import RouteSchedule from '.';
 
 configure({ adapter: new Adapter() });

@@ -84,7 +84,7 @@ const propTypes = {
     {
       copyright: {
         text: () => { // Copyright as function
-          return this.getCopyright();
+          return this.copyright;
         },
       },
       northArrow: {

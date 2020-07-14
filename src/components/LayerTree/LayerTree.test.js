@@ -47,7 +47,7 @@ describe('LayerTree', () => {
 
     test('when renderItem is used.', () => {
       renderLayerTree(data, {
-        renderItem: (item) => <div key={item.getName()}>{item.getName()}</div>,
+        renderItem: (item) => <div key={item.name}>{item.name}</div>,
       });
     });
 
@@ -63,8 +63,7 @@ describe('LayerTree', () => {
 
     test('when an item is hidden (different layer tree levels)', () => {
       renderLayerTree(data, {
-        isItemHidden: (item) =>
-          item.getIsBaseLayer() || item.get('hideInLegend'),
+        isItemHidden: (item) => item.isBaseLayer || item.get('hideInLegend'),
       });
     });
 
@@ -200,7 +199,7 @@ describe('LayerTree', () => {
     const expectCalled = () => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spy2).toHaveBeenCalledTimes(0);
-      expect(spy.mock.calls[0][0].getName()).toBe('foo');
+      expect(spy.mock.calls[0][0].name).toBe('foo');
     };
 
     beforeEach(() => {

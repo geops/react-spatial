@@ -5,10 +5,9 @@ This demonstrates the use of RouteSchedule.
 ```jsx
 import React, { useState, useEffect } from 'react';
 import BasicMap from 'react-spatial/components/BasicMap';
-import Layer from 'react-spatial/layers/Layer';
+import { Layer, TrajservLayer } from 'mobility-toolbox-js/ol/';
 import TileLayer from 'ol/layer/Tile';
 import OSMSource from 'ol/source/OSM';
-import TrajservLayer from 'react-spatial/layers/TrajservLayer';
 import RouteSchedule from 'react-spatial/components/RouteSchedule';
 import FilterButton from 'react-spatial/components/FilterButton';
 import FollowButton from 'react-spatial/components/FollowButton';
@@ -36,7 +35,7 @@ const layers = [
 
 function RouteScheduleExample() {
   const [lineInfos, setLineInfos] = useState(null);
-  const [fitlerActive, setFitlerActive] = useState(false);
+  const [filterActive, setFilterActive] = useState(false);
   const [followActive, setFollowActive] = useState(false);
   const [center, setCenter] = useState(initialCenter);
 
@@ -59,8 +58,8 @@ function RouteScheduleExample() {
           <>
             <FilterButton
               title="Filter"
-              active={fitlerActive}
-              onClick={active => setFitlerActive(active)}
+              active={filterActive}
+              onClick={active => setFilterActive(active)}
               routeIdentifier={routeIdentifier}
               trackerLayer={trackerLayer}
             >

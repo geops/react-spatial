@@ -5,7 +5,7 @@ This demonstrates the use of the Search component.
 ```jsx
 import React from 'react';
 import BasicMap from 'react-spatial/components/BasicMap';
-import Layer from 'react-spatial/layers/Layer';
+import { Layer } from 'mobility-toolbox-js/ol/';
 import OLMap from 'ol/Map';
 import TileLayer from 'ol/layer/Tile';
 import { fromLonLat } from 'ol/proj';

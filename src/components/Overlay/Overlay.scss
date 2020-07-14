@@ -1,0 +1,27 @@
+.tm-overlay,
+.tm-overlay-mobile {
+  position: absolute;
+  background-color: white;
+  left: 0;
+  overscroll-behavior: contain;
+}
+
+.tm-overlay {
+  border-right: 1px solid #eee;
+  height: 100%;
+}
+
+.tm-overlay-mobile {
+  border-top: 1px solid #eee;
+  bottom: 0;
+
+  .tm-overlay-mobile-content {
+    margin-top: 20px;
+    height: calc(100% - 20px);
+  }
+
+  .tm-overlay-handler {
+    font-weight: bold;
+    font-size: 20px;
+  }
+}

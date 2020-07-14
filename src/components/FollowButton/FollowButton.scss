@@ -1,42 +1,36 @@
-.rt-active {
-  border: 2px solid red;
-  background-color: red;
-
-  svg {
-    path {
-      fill: white;
-    }
-  }
-}
-
-.rt-inactive {
-  border: 2px solid #eee;
-  background-color: white;
-
-  &:hover {
-    background-color: #eee;
-
-    svg {
-      path {
-        fill: #0f447e;
-      }
-    }
-  }
-}
-
-.rt-control-button.rt-route-follow {
+.rt-route-follow {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 35px;
   width: 35px;
   border-radius: 7px;
-  cursor: pointer;
   margin: 15px;
   margin-top: 10px;
+  border: 2px solid #eee;
+  background-color: white;
 
   svg {
     height: 30px;
     width: 30px;
+  }
+
+  &:hover {
+    background-color: #eee;
+  }
+
+  &.rt-active {
+    border-color: red;
+    background-color: red;
+
+    svg {
+      path {
+        fill: white;
+      }
+    }
+
+    &:hover {
+      background-color: red;
+    }
   }
 }

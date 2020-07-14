@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-
-import TrackerLayer from '../../layers/TrackerLayer';
+import { TrackerLayer } from 'mobility-toolbox-js/ol/';
 
 const propTypes = {
   /**
@@ -46,7 +45,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  className: 'rt-control-button rt-route-follow',
+  className: 'rt-route-follow',
   title: 'Follow',
 };
 
@@ -54,15 +53,37 @@ const defaultProps = {
  * Button enables the follow of a selected train.
  */
 class FollowButton extends PureComponent {
+  constructor() {
+    super();
+    this.onClick = this.onClick.bind(this);
+  }
+
   componentDidUpdate(prevProps) {
-    const { routeIdentifier } = this.props;
+    const { routeIdentifier, active, trackerLayer, onClick } = this.props;
+
     if (routeIdentifier !== prevProps.routeIdentifier) {
-      this.changeRouteIdentifier();
+      onClick(false);
+    }
+
+    if (active !== prevProps.active) {
+      if (active && trackerLayer) {
+        this.centerOnTrajectory(routeIdentifier);
+        this.updateInterval = window.setInterval(() => {
+          this.centerOnTrajectory(routeIdentifier);
+        }, 50);
+      } else {
+        clearInterval(this.updateInterval);
+      }
     }
   }
 
   componentWillUnmount() {
     clearInterval(this.updateInterval);
+  }
+
+  onClick() {
+    const { active, onClick } = this.props;
+    onClick(!active);
   }
 
   centerOnTrajectory(routeIdentifier) {
@@ -77,40 +98,16 @@ class FollowButton extends PureComponent {
     }
   }
 
-  toggleFollow(routeIdentifier) {
-    const { trackerLayer, active, onClick } = this.props;
-
-    const activated = !active;
-
-    if (activated && trackerLayer && trackerLayer.tracker) {
-      this.centerOnTrajectory(routeIdentifier);
-      this.updateInterval = window.setInterval(() => {
-        this.centerOnTrajectory(routeIdentifier);
-      }, 50);
-    } else {
-      clearInterval(this.updateInterval);
-    }
-
-    onClick(activated);
-  }
-
-  changeRouteIdentifier() {
-    const { onClick } = this.props;
-    clearInterval(this.updateInterval);
-    onClick(false);
-  }
-
   render() {
-    const { className, title, routeIdentifier, active, children } = this.props;
-    const toggle = () => this.toggleFollow(routeIdentifier);
+    const { className, title, active, children } = this.props;
 
     return (
       <div
         aria-label={title}
-        className={`${className}${active ? ' rt-active' : ' rt-inactive'}`}
+        className={`${className}${active ? ' rt-active' : ''}`}
         title={title}
-        onClick={toggle}
-        onKeyPress={(e) => e.which === 13 && toggle()}
+        onClick={this.onClick}
+        onKeyPress={(e) => e.which === 13 && this.onClick}
         role="button"
         tabIndex={0}
       >

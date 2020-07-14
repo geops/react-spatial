@@ -5,10 +5,9 @@ This demonstrates the use of TrackerControl.
 ```jsx
 import React from 'react';
 import BasicMap from 'react-spatial/components/BasicMap';
-import Layer from 'react-spatial/layers/Layer';
+import { Layer, TrajservLayer } from 'mobility-toolbox-js/ol/';
 import TileLayer from 'ol/layer/Tile';
 import OSMSource from 'ol/source/OSM';
-import TrajservLayer from 'react-spatial/layers/TrajservLayer';
 import TrackerControl from 'react-spatial/components/TrackerControl';
 
 // The `apiKey` used here is for demonstration purposes only.

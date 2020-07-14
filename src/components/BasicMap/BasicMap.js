@@ -7,7 +7,7 @@ import OLCollection from 'ol/Collection';
 import View from 'ol/View';
 import { unByKey } from 'ol/Observable';
 import Interaction from 'ol/interaction/Interaction';
-import Layer from '../../layers/Layer';
+import { Layer } from 'mobility-toolbox-js/ol/';
 import ResizeHandler from '../ResizeHandler';
 
 const propTypes = {
@@ -288,15 +288,29 @@ class BasicMap extends PureComponent {
 
   initLayer(layer) {
     layer.init(this.map);
-    const layers = layer.getChildren() || [];
+    if (
+      layer.olLayer &&
+      this.map.getLayers() &&
+      !this.map.getLayers().getArray().includes(layer.olLayer)
+    ) {
+      this.map.addLayer(layer.olLayer);
+    }
+    const layers = layer.children || [];
     for (let i = 0; i < layers.length; i += 1) {
       this.initLayer(layers[i]);
     }
   }
 
   terminateLayer(layer) {
+    if (
+      layer.olLayer &&
+      this.map.getLayers() &&
+      !this.map.getLayers().getArray().includes(layer.olLayer)
+    ) {
+      this.map.removeLayer(layer.olLayer);
+    }
     layer.terminate(this.map);
-    const layers = layer.getChildren() || [];
+    const layers = layer.children || [];
     for (let i = 0; i < layers.length; i += 1) {
       this.terminateLayer(layers[i]);
     }
