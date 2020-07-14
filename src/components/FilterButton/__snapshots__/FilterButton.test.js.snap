@@ -3,7 +3,7 @@
 exports[`FollowButton should match snapshot. 1`] = `
 <div
   aria-label="Filter up"
-  className="rt-filter-button rt-inactive"
+  className="rt-filter-button"
   onClick={[Function]}
   onKeyPress={[Function]}
   role="button"

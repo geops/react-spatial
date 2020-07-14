@@ -41,7 +41,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  className: 'rt-control-button rt-route-filter',
+  className: 'rt-route-filter',
   title: 'Filter',
 };
 
@@ -89,7 +89,7 @@ class FilterButton extends PureComponent {
     return (
       <div
         aria-label={title}
-        className={`${className}${active ? ' rt-active' : ' rt-inactive'}`}
+        className={`${className}${active ? ' rt-active' : ''}`}
         title={title}
         onClick={toggle}
         onKeyPress={(e) => e.which === 13 && toggle()}

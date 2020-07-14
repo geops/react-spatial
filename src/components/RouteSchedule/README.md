@@ -35,7 +35,7 @@ const layers = [
 
 function RouteScheduleExample() {
   const [lineInfos, setLineInfos] = useState(null);
-  const [fitlerActive, setFitlerActive] = useState(false);
+  const [filterActive, setFilterActive] = useState(false);
   const [followActive, setFollowActive] = useState(false);
   const [center, setCenter] = useState(initialCenter);
 
@@ -58,8 +58,8 @@ function RouteScheduleExample() {
           <>
             <FilterButton
               title="Filter"
-              active={fitlerActive}
-              onClick={active => setFitlerActive(active)}
+              active={filterActive}
+              onClick={active => setFilterActive(active)}
               routeIdentifier={routeIdentifier}
               trackerLayer={trackerLayer}
             >
