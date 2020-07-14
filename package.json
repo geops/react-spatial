@@ -56,7 +56,7 @@
     "jsts": "2.3.0",
     "lint-staged": "10.2.11",
     "mapbox-gl": "1.11.1",
-    "mobility-toolbox-js": "1.1.0",
+    "mobility-toolbox-js": "1.1.1",
     "node-sass": "4.14.1",
     "ol": "6.3.1",
     "prettier": "2.0.5",
