@@ -51,14 +51,17 @@ const defaultProps = {
 class ResizeHandler extends PureComponent {
   static applyBreakpoints(entry, breakpoints, size, direction) {
     let found = false;
+    let screenSize;
     Object.entries(breakpoints).forEach((brkpt) => {
       const cssClass = `rs-${direction}-${brkpt[0]}`;
       entry.target.classList.remove(cssClass);
       if (!found && size <= brkpt[1]) {
         found = true;
+        [screenSize] = brkpt;
         entry.target.classList.add(cssClass);
       }
     });
+    return screenSize;
   }
 
   constructor(props) {
