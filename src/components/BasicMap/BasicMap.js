@@ -225,7 +225,7 @@ class BasicMap extends PureComponent {
       this.map.setTarget(node);
 
       // When the node is set we reinitialize the extent with the extent property.
-      if (node && extent) {
+      if (!prevState.node && node && extent) {
         this.map.getView().fit(extent);
       }
     }
