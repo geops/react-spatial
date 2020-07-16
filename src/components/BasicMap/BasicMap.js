@@ -49,8 +49,15 @@ const propTypes = {
    */
   onFeaturesClick: PropTypes.func,
 
-  /** Hit-detection tolerance in pixels. Pixels inside the radius around the given position will be checked for features. */
-  featuresClickHitTolerance: PropTypes.number,
+  /**
+   * Optional options to pass on feature click. Passed to ol's 'getFeaturesAtPixel' method.
+   * https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html#getFeaturesAtPixel
+   */
+  featuresClickOptions: PropTypes.shape({
+    layerFilter: PropTypes.func,
+    hitTolerance: PropTypes.number,
+    checkWrapped: PropTypes.bool,
+  }),
 
   /**
    * Callback when a [ol/Feature](https://openlayers.org/en/latest/apidoc/module-ol_Feature-Feature.html) is hovered.
@@ -100,7 +107,9 @@ const defaultProps = {
   layers: [],
   map: null,
   onFeaturesClick: undefined,
-  featuresClickHitTolerance: 0,
+  featuresClickOptions: {
+    hitTolerance: 0,
+  },
   onFeaturesHover: undefined,
   onMapMoved: undefined,
   resolution: undefined,
@@ -158,7 +167,7 @@ class BasicMap extends PureComponent {
     const {
       onMapMoved,
       onFeaturesClick,
-      featuresClickHitTolerance,
+      featuresClickOptions,
       onFeaturesHover,
       layers,
       extent,
@@ -195,9 +204,10 @@ class BasicMap extends PureComponent {
 
     if (onFeaturesClick) {
       this.singleClickRef = this.map.on('singleclick', (evt) => {
-        const features = evt.map.getFeaturesAtPixel(evt.pixel, {
-          hitTolerance: featuresClickHitTolerance,
-        });
+        const features = evt.map.getFeaturesAtPixel(
+          evt.pixel,
+          featuresClickOptions,
+        );
         onFeaturesClick(features || [], evt);
       });
     }
