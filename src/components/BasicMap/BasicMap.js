@@ -68,6 +68,9 @@ const propTypes = {
   /** The tabIndex of the map. */
   tabIndex: PropTypes.number,
 
+  /** The style of the map. */
+  style: PropTypes.object,
+
   /** HTML aria-label. */
   ariaLabel: PropTypes.string,
 
@@ -93,6 +96,7 @@ const defaultProps = {
     padding: [20, 20, 20, 20],
     maxZoom: 23,
   },
+  style: undefined,
   interactions: null,
   layers: [],
   map: null,
@@ -176,7 +180,8 @@ class BasicMap extends PureComponent {
     viewPort.style.msTouchAction = 'none';
     viewPort.setAttribute('touch-action', 'none');
 
-    if (extent) {
+    // Fit only work if the map has a size.
+    if (this.map.getSize() && extent) {
       this.map.getView().fit(extent);
     }
 
@@ -218,6 +223,11 @@ class BasicMap extends PureComponent {
 
     if (prevState.node !== node) {
       this.map.setTarget(node);
+
+      // When the node is set we reinitialize the extent with the extent property.
+      if (!prevState.node && node && extent) {
+        this.map.getView().fit(extent);
+      }
     }
 
     if (prevProps.layers !== layers) {
@@ -303,7 +313,7 @@ class BasicMap extends PureComponent {
   }
 
   render() {
-    const { className, tabIndex, ariaLabel } = this.props;
+    const { className, tabIndex, ariaLabel, style } = this.props;
     const { node } = this.state;
     return (
       <div
@@ -312,6 +322,7 @@ class BasicMap extends PureComponent {
         role="presentation"
         aria-label={ariaLabel}
         tabIndex={tabIndex}
+        style={style}
       >
         <ResizeHandler
           maxHeightBrkpts={null}

@@ -23,9 +23,7 @@ register(proj4);
 
 configure({ adapter: new Adapter() });
 
-const extent = [0, 0, 0, 0];
-const olView = new OLView();
-const olMap = new OLMap({ view: olView });
+const extent = [0, 0, 1000, 1000];
 const olLayers = [
   new Layer({
     name: 'foo',
@@ -35,6 +33,12 @@ const olLayers = [
 ];
 
 describe('BasicMap', () => {
+  let olMap;
+  beforeEach(() => {
+    const olView = new OLView();
+    olMap = new OLMap({ view: olView });
+  });
+
   test('should be rendered', () => {
     const setTarget = jest.spyOn(olMap, 'setTarget');
     shallow(<BasicMap map={olMap} />);
@@ -95,10 +99,10 @@ describe('BasicMap', () => {
     expect(inst.map).toBeDefined();
     expect(inst.map.getLayers().getLength()).toBe(1);
     expect(inst.map.getView().calculateExtent()).toEqual([
-      -1.8640493388513675,
-      -1.8640493388513675,
-      1.8640493388513675,
-      1.8640493388513675,
+      -119.29915768648752,
+      -119.29915768648752,
+      119.29915768648752,
+      119.29915768648752,
     ]);
   });
 
