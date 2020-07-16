@@ -15,6 +15,13 @@ const propTypes = {
   maxWidthBrkpts: PropTypes.objectOf(PropTypes.number),
   stylePropHeight: PropTypes.string,
   onResize: PropTypes.func,
+
+  // This property is used to re-apply the classes, for example when the className of the observed node changes.
+  forceUpdate: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.bool,
+  ]),
 };
 
 // Same as bootstrap
@@ -36,6 +43,7 @@ const defaultProps = {
   },
   stylePropHeight: null,
   onResize: null,
+  forceUpdate: null,
 };
 /**
  * This component adds css class to an element depending on his size.
@@ -43,14 +51,17 @@ const defaultProps = {
 class ResizeHandler extends PureComponent {
   static applyBreakpoints(entry, breakpoints, size, direction) {
     let found = false;
+    let screenSize;
     Object.entries(breakpoints).forEach((brkpt) => {
       const cssClass = `rs-${direction}-${brkpt[0]}`;
       entry.target.classList.remove(cssClass);
       if (!found && size <= brkpt[1]) {
         found = true;
+        [screenSize] = brkpt;
         entry.target.classList.add(cssClass);
       }
     });
+    return screenSize;
   }
 
   constructor(props) {
@@ -64,9 +75,12 @@ class ResizeHandler extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { observe } = this.props;
+    const { observe, forceUpdate } = this.props;
 
-    if (observe !== prevProps.observe) {
+    if (
+      observe !== prevProps.observe ||
+      forceUpdate !== prevProps.forceUpdate
+    ) {
       this.observe();
     }
   }
@@ -88,13 +102,13 @@ class ResizeHandler extends PureComponent {
       document.documentElement.style.setProperty(stylePropHeight, `${vh}px`);
     }
 
-    if (onResize) {
-      onResize(entries);
-    }
-
     if (!maxWidthBrkpts && !maxHeightBrkpts) {
+      onResize(entries);
       return;
     }
+
+    let newScreenWidth;
+    let newScreenHeight;
 
     for (let i = 0; i < entries.length; i += 1) {
       const entry = entries[i];
@@ -102,11 +116,25 @@ class ResizeHandler extends PureComponent {
       const { height, width } = rect;
 
       if (maxWidthBrkpts) {
-        ResizeHandler.applyBreakpoints(entry, maxWidthBrkpts, width, 'w');
+        newScreenWidth = ResizeHandler.applyBreakpoints(
+          entry,
+          maxWidthBrkpts,
+          width,
+          'w',
+        );
       }
       if (maxHeightBrkpts) {
-        ResizeHandler.applyBreakpoints(entry, maxHeightBrkpts, height, 'h');
+        newScreenHeight = ResizeHandler.applyBreakpoints(
+          entry,
+          maxHeightBrkpts,
+          height,
+          'h',
+        );
       }
+    }
+
+    if (onResize) {
+      onResize(entries, newScreenWidth, newScreenHeight);
     }
   }
 
