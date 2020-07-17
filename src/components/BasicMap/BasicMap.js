@@ -50,6 +50,16 @@ const propTypes = {
   onFeaturesClick: PropTypes.func,
 
   /**
+   * Optional options to pass on feature click. Passed to ol's 'getFeaturesAtPixel' method.
+   * https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html#getFeaturesAtPixel
+   */
+  featuresClickOptions: PropTypes.shape({
+    layerFilter: PropTypes.func,
+    hitTolerance: PropTypes.number,
+    checkWrapped: PropTypes.bool,
+  }),
+
+  /**
    * Callback when a [ol/Feature](https://openlayers.org/en/latest/apidoc/module-ol_Feature-Feature.html) is hovered.
    * @param {OLFeature[]} features An array of [ol/Feature](https://openlayers.org/en/latest/apidoc/module-ol_Feature-Feature.html).
    * @param {ol.MapBrowserEvent} event The pointermove [ol/MapBrowserEvent](https://openlayers.org/en/latest/apidoc/module-ol_MapBrowserEvent-MapBrowserEvent.html#event:pointermove).
@@ -101,6 +111,9 @@ const defaultProps = {
   layers: [],
   map: null,
   onFeaturesClick: undefined,
+  featuresClickOptions: {
+    hitTolerance: 0,
+  },
   onFeaturesHover: undefined,
   onMapMoved: undefined,
   resolution: undefined,
@@ -158,6 +171,7 @@ class BasicMap extends PureComponent {
     const {
       onMapMoved,
       onFeaturesClick,
+      featuresClickOptions,
       onFeaturesHover,
       layers,
       extent,
@@ -195,7 +209,10 @@ class BasicMap extends PureComponent {
 
     if (onFeaturesClick) {
       this.singleClickRef = this.map.on('singleclick', (evt) => {
-        const features = evt.map.getFeaturesAtPixel(evt.pixel);
+        const features = evt.map.getFeaturesAtPixel(
+          evt.pixel,
+          featuresClickOptions,
+        );
         onFeaturesClick(features || [], evt);
       });
     }
