@@ -1,5 +1,5 @@
 import 'jest-canvas-mock';
-import { Layer } from 'mobility-toolbox-js/ol/';
+import { Layer } from 'mobility-toolbox-js/ol';
 import TileLayer from 'ol/layer/Tile';
 import XYZ from 'ol/source/XYZ';
 import OLVectorLayer from 'ol/layer/Vector';

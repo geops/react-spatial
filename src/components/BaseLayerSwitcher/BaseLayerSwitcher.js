@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FaChevronLeft } from 'react-icons/fa';
-import { Layer } from 'mobility-toolbox-js/ol/';
+import { Layer } from 'mobility-toolbox-js/ol';
 
 import './BaseLayerSwitcher.scss';
 

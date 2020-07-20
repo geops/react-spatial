@@ -7,12 +7,12 @@ import React from 'react';
 import Permalink from 'react-spatial/components/Permalink';
 import BasicMap from 'react-spatial/components/BasicMap';
 import LayerService from 'react-spatial/LayerService';
-import OLMap from 'ol/Map';
+import Map from 'ol/Map';
 import ConfigReader from '../../ConfigReader';
 
 const layers = ConfigReader.readConfig(treeData);
 const layerService = new LayerService(layers);
-const map = new OLMap({ controls: [] });
+const map = new Map({ controls: [] });
 
 const populationLayer = layerService.getLayer('USA Population Density');
 const baseLayers = layerService.getBaseLayers();

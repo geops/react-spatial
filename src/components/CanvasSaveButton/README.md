@@ -5,27 +5,32 @@ This demonstrates the use of CanvasSaveButton.
 ```jsx
 import React from 'react';
 import { TiImage } from 'react-icons/ti';
+import { Layer } from 'mobility-toolbox-js/ol';
+import Tile from 'ol/layer/Tile';
+import OSM from 'ol/source/OSM';
 import Map from 'ol/Map';
 import degrees from 'radians-degrees';
 import CanvasSaveButton from 'react-spatial/components/CanvasSaveButton';
 import BasicMap from 'react-spatial/components/BasicMap';
-import ConfigReader from 'react-spatial/ConfigReader';
-import LayerService from 'react-spatial/LayerService';
-import NorthArrow from '../NorthArrow/NorthArrow';
-import Feature from 'ol/Feature';
 
-const map = new Map();
-const layers = ConfigReader.readConfig(treeData);
-const layerService = new LayerService([...layers]);
+const map = new Map({ controls: [] });
+
+const layers = [
+    new Layer({
+    olLayer: new Tile({
+      source: new OSM(),
+    }),
+  })
+];
 
 function CanvasSaveButtonExample() {
   return (
     <div className="rs-canvas-save-button-example">
       <BasicMap
         map={map}
+        layers={layers}
         center={[874105.13, 6106172.77]}
         zoom={10}
-        layers={layers}
         tabIndex={0}
       />
       <CanvasSaveButton

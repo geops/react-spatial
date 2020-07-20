@@ -3,7 +3,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { configure, mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { Layer } from 'mobility-toolbox-js/ol/';
+import { Layer } from 'mobility-toolbox-js/ol';
 import GPX from 'ol/format/GPX';
 import VectorSource from 'ol/source/Vector';
 import Style from 'ol/style/Style';

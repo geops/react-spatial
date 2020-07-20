@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TrackerLayer } from 'mobility-toolbox-js/ol/';
+import { TrackerLayer } from 'mobility-toolbox-js/ol';
 import { bgColors } from 'mobility-toolbox-js/common/trackerConfig';
 import {
   getHoursAndMinutes,

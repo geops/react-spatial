@@ -4,52 +4,46 @@ This demonstrates the use of the Search component.
 
 ```jsx
 import React from 'react';
-import BasicMap from 'react-spatial/components/BasicMap';
-import { Layer } from 'mobility-toolbox-js/ol/';
-import OLMap from 'ol/Map';
-import TileLayer from 'ol/layer/Tile';
+import { Layer } from 'mobility-toolbox-js/ol';
+import Map from 'ol/Map';
+import Tile from 'ol/layer/Tile';
 import { fromLonLat } from 'ol/proj';
-import OSMSource from 'ol/source/OSM';
+import OSM from 'ol/source/OSM';
+import BasicMap from 'react-spatial/components/BasicMap';
 import Search from 'react-spatial/components/Search';
 
-const map = new OLMap({ controls: [] });
+const map = new Map({ controls: [] });
+
 const layers = [
   new Layer({
-    name: 'Layer',
-    olLayer: new TileLayer({
-      source: new OSMSource(),
+    olLayer: new Tile({
+      source: new OSM(),
     }),
   }),
 ];
-const setCenter = ({ geometry }) => {
-  map.getView().setCenter(fromLonLat(geometry.coordinates, 'EPSG:3857'));
-};
 
 // The `apiKey` used here is for demonstration purposes only.
 // Please get your own api key at https://developer.geops.io/.
 const { apiKey } = window;
 
-function SearchExample() {
-  return (
-    <div className="rt-stop-finder-example">
-      <BasicMap
-        map={map}
-        center={[951560, 6002550]}
-        zoom={14}
-        layers={layers}
-        tabIndex={0} 
-      />
-      <Search
-        onSelect={setCenter}
-        apiKey={apiKey}
-        inputProps={{
-          autoFocus: false,
-          placeholder: 'Search stops',
-        }}
-      />
-    </div>
-  );
-}
 
-<SearchExample />;
+<div className="rt-stop-finder-example">
+  <BasicMap
+    map={map}
+    center={[951560, 6002550]}
+    zoom={14}
+    layers={layers}
+    tabIndex={0}
+  />
+  <Search
+    onSelect={({ geometry }) => {
+      map.getView().setCenter(fromLonLat(geometry.coordinates));
+    }}
+    apiKey={apiKey}
+    inputProps={{
+      autoFocus: false,
+      placeholder: 'Search stops',
+    }}
+  />
+</div>
 ```

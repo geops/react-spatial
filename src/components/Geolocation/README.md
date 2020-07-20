@@ -4,22 +4,25 @@ This demonstrates the use of Geolocation.
 
 ```jsx
 import React from 'react';
-import OLMap from 'ol/Map';
+import { Layer } from 'mobility-toolbox-js/ol';
+import Tile from 'ol/layer/Tile';
+import OSM from 'ol/source/OSM';
+import Map from 'ol/Map';
 import Geolocation from 'react-spatial/components/Geolocation';
 import BasicMap from 'react-spatial/components/BasicMap';
-import ConfigReader from 'react-spatial/ConfigReader';
 
-const map = new OLMap({ controls: [] });
-const layers = ConfigReader.readConfig(treeData);
+const map = new Map({ controls: [] });
 
-function GeolocationExample() {
-  return (
-    <div className="rs-geolocation-example">
-      <BasicMap map={map} layers={layers} tabIndex={0} />
-      <Geolocation map={map} />
-    </div>
-  );
-}
+const layers = [
+  new Layer({
+    olLayer: new Tile({
+      source: new OSM(),
+    }),
+  })
+];
 
-<GeolocationExample />;
+<div className="rs-geolocation-example">
+  <BasicMap map={map} layers={layers} tabIndex={0} />
+  <Geolocation map={map} />
+</div>
 ```

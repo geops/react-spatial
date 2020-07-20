@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import KMLFormat from 'ol/format/KML';
-import { Layer } from 'mobility-toolbox-js/ol/';
+import { Layer } from 'mobility-toolbox-js/ol';
 import KML from '../../utils/KML';
 
 const propTypes = {

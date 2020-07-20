@@ -14,6 +14,7 @@ function OverlayExample() {
   useEffect(() => {
     setRef(refDiv);
   }, [refDiv]);
+  
   return (
     <div
       className="tm-overlay-example"
