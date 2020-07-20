@@ -4,22 +4,25 @@ This demonstrates the use of Zoom.
 
 ```jsx
 import React from 'react';
-import Zoom from 'react-spatial/components/Zoom';
-import BasicMap from 'react-spatial/components/BasicMap';
+import { Layer } from 'mobility-toolbox-js/ol';
+import Tile from 'ol/layer/Tile';
+import OSM from 'ol/source/OSM';
 import Map from 'ol/Map';
-import ConfigReader from 'react-spatial/ConfigReader';
+import BasicMap from 'react-spatial/components/BasicMap';
+import Zoom from 'react-spatial/components/Zoom';
 
 const map = new Map({ controls: [] });
-const layers = ConfigReader.readConfig(treeData);
 
-function ZoomExample() {
-  return (
-    <div className="rs-zoom-example">
-      <BasicMap map={map} layers={layers} tabIndex={0} />
-      <Zoom map={map} zoomSlider />
-    </div>
-  );
-};
+const layers = [
+  new Layer({
+    olLayer: new Tile({
+      source: new OSM(),
+    }),
+  })
+];
 
-<ZoomExample />;
+<div className="rs-zoom-example">
+  <BasicMap map={map} layers={layers} tabIndex={0} />
+  <Zoom map={map} zoomSlider />
+</div>
 ```

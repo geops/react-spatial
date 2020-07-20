@@ -14,7 +14,7 @@ import ScaleLine from 'react-spatial/components/ScaleLine';
 const map = new Map({ controls: [] });
 
 const layers = [
-    new Layer({
+  new Layer({
     olLayer: new Tile({
       source: new OSM(),
     }),

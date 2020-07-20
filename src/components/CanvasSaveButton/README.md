@@ -16,7 +16,7 @@ import BasicMap from 'react-spatial/components/BasicMap';
 const map = new Map({ controls: [] });
 
 const layers = [
-    new Layer({
+  new Layer({
     olLayer: new Tile({
       source: new OSM(),
     }),

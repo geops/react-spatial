@@ -10,7 +10,7 @@ import OSM from 'ol/source/OSM';
 import BasicMap from 'react-spatial/components/BasicMap';
 
 const layers = [
-    new Layer({
+  new Layer({
     olLayer: new Tile({
       source: new OSM(),
     }),
