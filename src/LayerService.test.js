@@ -1,7 +1,7 @@
 import 'jest-canvas-mock';
+import { Layer } from 'mobility-toolbox-js/ol';
 import LayerService from './LayerService';
 import ConfigReader from './ConfigReader';
-import Layer from './layers/Layer';
 
 describe('LayerService', () => {
   const instantiateLayerService = (data) => {
@@ -54,7 +54,7 @@ describe('LayerService', () => {
   test('should return the parent layer.', () => {
     const layerService = instantiateLayerService(layerData);
     const child = layerService.getLayer('1-2');
-    expect(layerService.getParent(child).getName()).toBe('1');
+    expect(layerService.getParent(child).name).toBe('1');
   });
 
   test('should return null if no radio name is given.', () => {
@@ -71,17 +71,17 @@ describe('LayerService', () => {
   test('should toggle radio layers.', () => {
     const layerService = instantiateLayerService(layerData);
     layerService.getLayer('1-1').setVisible(true);
-    expect(layerService.getLayer('1-1').getVisible()).toBe(true);
+    expect(layerService.getLayer('1-1').visible).toBe(true);
     layerService.getLayer('1-2').setVisible(true);
-    expect(layerService.getLayer('1-1').getVisible()).toBe(false);
+    expect(layerService.getLayer('1-1').visible).toBe(false);
   });
 
   test('should toggle child layers.', () => {
     const layerService = instantiateLayerService(layerData);
     layerService.getLayer('1-2').setVisible(true);
-    expect(layerService.getLayer('1-2-1').getVisible()).toBe(true);
-    expect(layerService.getLayer('1-2-2').getVisible()).toBe(true);
-    expect(layerService.getLayer('2').getVisible()).toBe(true);
+    expect(layerService.getLayer('1-2-1').visible).toBe(true);
+    expect(layerService.getLayer('1-2-2').visible).toBe(true);
+    expect(layerService.getLayer('2').visible).toBe(true);
   });
 
   test('should call back on visibility changes.', () => {
@@ -101,7 +101,7 @@ describe('LayerService', () => {
         }),
       ],
     });
-    expect(layer.getChildren().length).toBe(1);
+    expect(layer.children.length).toBe(1);
   });
 
   describe('#on() ', () => {

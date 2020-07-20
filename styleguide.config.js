@@ -47,6 +47,7 @@ module.exports = {
         'src/components/NorthArrow/[A-Z]*.js',
         'src/components/Permalink/[A-Z]*.js',
         'src/components/Popup/[A-Z]*.js',
+        'src/components/Overlay/[A-Z]*.js',
         'src/components/ScaleLine/[A-Z]*.js',
         'src/components/Zoom/[A-Z]*.js',
       ],
@@ -80,7 +81,7 @@ module.exports = {
         {
           test: [
             /\/node_modules\/(regexpu-core|unicode-.*|chalk|acorn-.*|query-string|strict-uri-encode|javascript-stringify)/,
-            /\/node_modules\/(split-on-first|react-dev-utils|ansi-styles|jsts|estree-walker|strip-ansi)/,
+            /\/node_modules\/(split-on-first|react-dev-utils|ansi-styles|jsts|estree-walker|strip-ansi|mobility-toolbox-js)/,
           ],
           loader: 'babel-loader',
         },

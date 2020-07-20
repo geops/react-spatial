@@ -141,7 +141,7 @@ class LayerTree extends Component {
     if (toggle) {
       this.onToggle(layer);
     } else {
-      layer.setVisible(!layer.getVisible());
+      layer.setVisible(!layer.visible);
     }
   }
 
@@ -167,9 +167,7 @@ class LayerTree extends Component {
   getExpandedLayers(layers) {
     const { isItemHidden } = this.props;
     const children = layers.flatMap((l) =>
-      l
-        .getChildren()
-        .filter((c) => !isItemHidden(c) && c.get('isAlwaysExpanded')),
+      l.children.filter((c) => !isItemHidden(c) && c.get('isAlwaysExpanded')),
     );
 
     if (!children.length) {
@@ -198,7 +196,7 @@ class LayerTree extends Component {
     const { titles, isItemHidden } = this.props;
     let tabIndex = 0;
 
-    if (!layer.getChildren().filter((c) => !isItemHidden(c)).length) {
+    if (!layer.children.filter((c) => !isItemHidden(c)).length) {
       // We forbid focus on keypress event for first level layers and layers without children.
       tabIndex = -1;
     }
@@ -209,8 +207,8 @@ class LayerTree extends Component {
       <label
         className={`rs-layer-tree-input rs-layer-tree-input-${inputType} rs-${inputType}`}
         tabIndex={tabIndex}
-        title={layer.getVisible() ? titles.layerHide : titles.layerShow}
-        aria-label={layer.getVisible() ? titles.layerHide : titles.layerShow}
+        title={layer.visible ? titles.layerHide : titles.layerShow}
+        aria-label={layer.visible ? titles.layerHide : titles.layerShow}
         onKeyPress={(e) => {
           if (e.which === 13) {
             this.onInputClick(layer);
@@ -220,7 +218,7 @@ class LayerTree extends Component {
         <input
           type={inputType}
           tabIndex={-1}
-          checked={layer.getVisible()}
+          checked={layer.visible}
           readOnly
           onClick={() => this.onInputClick(layer)}
         />
@@ -234,7 +232,7 @@ class LayerTree extends Component {
     const { expandedLayerNames } = this.state;
 
     if (
-      !layer.getChildren().filter((c) => !isItemHidden(c)).length ||
+      !layer.children.filter((c) => !isItemHidden(c)).length ||
       layer.get('isAlwaysExpanded')
     ) {
       return null;
@@ -257,11 +255,11 @@ class LayerTree extends Component {
     const onInputClick = () => {
       this.onInputClick(
         layer,
-        layer.getChildren().filter((c) => !isItemHidden(c)).length &&
+        layer.children.filter((c) => !isItemHidden(c)).length &&
           !layer.get('isAlwaysExpanded'),
       );
     };
-    const title = `${t(layer.getName())} ${
+    const title = `${t(layer.name)} ${
       !expandedLayerNames.includes(layer)
         ? titles.subLayerShow
         : titles.subLayerHide
@@ -277,7 +275,7 @@ class LayerTree extends Component {
         onClick={onInputClick}
         onKeyPress={onInputClick}
       >
-        <div>{t(layer.getName())}</div>
+        <div>{t(layer.name)}</div>
         {this.renderArrow(layer)}
       </div>
     );
@@ -303,7 +301,7 @@ class LayerTree extends Component {
     const { expandedLayerNames } = this.state;
 
     const children = expandedLayerNames.includes(layer)
-      ? [...layer.getChildren().filter((c) => !isItemHidden(c))]
+      ? [...layer.children.filter((c) => !isItemHidden(c))]
       : [];
 
     if (renderItem) {
@@ -311,11 +309,9 @@ class LayerTree extends Component {
     }
 
     return (
-      <div className={getParentClassName()} key={layer.getKey()}>
+      <div className={getParentClassName()} key={layer.key}>
         <div
-          className={`rs-layer-tree-item ${
-            layer.getVisible() ? 'rs-visible' : ''
-          }`}
+          className={`rs-layer-tree-item ${layer.visible ? 'rs-visible' : ''}`}
           style={{
             paddingLeft: `${padding * level}px`,
           }}

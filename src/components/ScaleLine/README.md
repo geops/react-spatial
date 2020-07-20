@@ -4,40 +4,29 @@ This demonstrates the use of ScaleLine.
 
 ```js
 import React, { Component } from  'react';
+import { Layer } from 'mobility-toolbox-js/ol';
+import Tile from 'ol/layer/Tile';
+import OSM from 'ol/source/OSM';
+import Map from 'ol/Map';
 import BasicMap from 'react-spatial/components/BasicMap';
-import ConfigReader from 'react-spatial/ConfigReader';
-import OLMap from 'ol/Map';
 import ScaleLine from 'react-spatial/components/ScaleLine';
 
-class ScaleLineExample extends Component {
-  constructor(props) {
-    const layerConf = [{
-      name: 'OSM Baselayer',
-      visible: true,
-      data: {
-        type: 'xyz',
-        url: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      },
-    }];
+const map = new Map({ controls: [] });
 
-    this.map = new OLMap();
-    this.layers = ConfigReader.readConfig(layerConf);
-  }
+const layers = [
+  new Layer({
+    olLayer: new Tile({
+      source: new OSM(),
+    }),
+  })
+];
 
-  render() {
-    return (
-      <div style={{position:'relative'}}>
-        <BasicMap
-          map={this.map}
-          zoom={3}
-          layers={this.layers}
-          tabIndex={0}
-        />
-        <ScaleLine map={this.map} />
-      </div>
-    );
-  }
-}
-
-<ScaleLineExample />
+<div style={{position:'relative'}}>
+  <BasicMap
+    map={map}
+    layers={layers}
+    tabIndex={0}
+  />
+  <ScaleLine map={map} />
+</div>
 ```

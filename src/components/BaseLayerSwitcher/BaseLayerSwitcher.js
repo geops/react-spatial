@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FaChevronLeft } from 'react-icons/fa';
-import Layer from '../../layers/Layer';
+import { Layer } from 'mobility-toolbox-js/ol';
 
 import './BaseLayerSwitcher.scss';
 
@@ -63,7 +63,7 @@ const defaultProps = {
 };
 
 const getVisibleLayer = (layers) => {
-  return layers.find((layer) => layer.getVisible());
+  return layers.find((layer) => layer.visible);
 };
 
 const getNextImage = (currentLayer, layers, layerImages) => {
@@ -94,7 +94,7 @@ function BaseLayerSwitcher({
   closeButtonImage,
   t,
 }) {
-  const baseLayers = layers.filter((layer) => layer.getIsBaseLayer());
+  const baseLayers = layers.filter((layer) => layer.isBaseLayer);
   const [switcherOpen, setSwitcherOpen] = useState(false);
   const [isClosed, setIsClosed] = useState(true);
   const [currentLayer, setCurrentLayer] = useState(
@@ -184,9 +184,8 @@ function BaseLayerSwitcher({
         </div>
       }
       {baseLayers.map((layer, idx) => {
-        const layerName = layer.getName();
-        const activeClass =
-          layerName === currentLayer.getName() ? ' rs-active' : '';
+        const layerName = layer.name;
+        const activeClass = layerName === currentLayer.name ? ' rs-active' : '';
         const imageStyle = getImageStyle(
           layerImages ? layerImages[`${layer.key}`] : layer.get('previewImage'),
         );

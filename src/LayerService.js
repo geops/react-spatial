@@ -28,19 +28,19 @@ export default class LayerService {
     let layers = [];
     (optLayers || this.getLayers() || []).forEach((l) => {
       layers.push(l);
-      const children = l.getChildren();
+      const { children } = l;
       layers = layers.concat(this.getLayersAsFlatArray(children));
     });
     return layers;
   }
 
   getLayer(name) {
-    return this.getLayersAsFlatArray().find((l) => l.getName() === name);
+    return this.getLayersAsFlatArray().find((l) => l.name === name);
   }
 
   getParent(child) {
     return this.getLayersAsFlatArray().find(
-      (l) => !!l.getChildren().includes(child),
+      (l) => !!l.children.includes(child),
     );
   }
 
@@ -71,12 +71,12 @@ export default class LayerService {
   }
 
   getBaseLayers() {
-    return this.getLayersAsFlatArray().filter((l) => l.getIsBaseLayer());
+    return this.getLayersAsFlatArray().filter((l) => l.isBaseLayer);
   }
 
   getQueryableLayers() {
     return this.getLayersAsFlatArray().filter(
-      (layer) => layer.getVisible() && layer.isQueryable,
+      (layer) => layer.visible && layer.isQueryable,
     );
   }
 
@@ -115,7 +115,7 @@ export default class LayerService {
           );
         }),
         layer.on('change:visible', (evt) => {
-          const visible = evt.target.getVisible();
+          const { visible } = evt.target;
 
           // Apply to siblings only if it's a radio group.
           if (
@@ -154,7 +154,7 @@ export default class LayerService {
             !evt.stopPropagationUp &&
             parentLayer &&
             (visible ||
-              (!visible && !parentLayer.children.find((c) => c.getVisible())))
+              (!visible && !parentLayer.children.find((c) => c.visible)))
           ) {
             parentLayer.setVisible(visible, true, false, false);
           }

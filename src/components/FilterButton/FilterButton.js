@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react';
 import qs from 'query-string';
 import PropTypes from 'prop-types';
-import TrackerLayer from '../../layers/TrackerLayer';
-import TrajservLayer from '../../layers/TrajservLayer';
+import { TrackerLayer } from 'mobility-toolbox-js/ol';
 
 const propTypes = {
   /**
@@ -42,7 +41,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  className: 'rt-control-button rt-route-filter',
+  className: 'rt-route-filter',
   title: 'Filter',
 };
 
@@ -68,20 +67,15 @@ class FilterButton extends PureComponent {
 
   toggleFilter(routeIdentifier) {
     const { trackerLayer, active, onClick } = this.props;
-
     const activated = !active;
 
-    const filterFc = TrajservLayer.createFilter(
-      undefined,
-      routeIdentifier.split('.')[0],
-    );
-    if (trackerLayer && trackerLayer.tracker) {
+    if (trackerLayer) {
       if (activated) {
         this.updatePermalink(false);
-        trackerLayer.setFilter(filterFc);
+        [trackerLayer.tripNumber] = routeIdentifier.split('.');
       } else {
         this.updatePermalink(true);
-        trackerLayer.addTrackerFilters();
+        trackerLayer.tripNumber = null;
       }
     }
 
@@ -95,7 +89,7 @@ class FilterButton extends PureComponent {
     return (
       <div
         aria-label={title}
-        className={`${className}${active ? ' rt-active' : ' rt-inactive'}`}
+        className={`${className}${active ? ' rt-active' : ''}`}
         title={title}
         onClick={toggle}
         onKeyPress={(e) => e.which === 13 && toggle()}

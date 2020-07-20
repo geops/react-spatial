@@ -7,7 +7,7 @@ import docConfig from '../../doc/doc-config.json';
 
 const xsmall = '@media (max-width: 600px)';
 
-const styles = ({ font, mq }) => ({
+const styles = ({ mq }) => ({
   root: {
     backgroundColor: 'white',
   },
@@ -38,26 +38,6 @@ const styles = ({ font, mq }) => ({
   },
   version: {
     padding: '10px 0 0 10px',
-  },
-  nav: {
-    fontFamily: 'Avenir, Helvetica, Arial, sans-serif',
-    marginLeft: 'auto',
-    marginRight: '1.5em',
-    fontSize: 16,
-    [xsmall]: {
-      margin: [[10, 0, 0]],
-    },
-  },
-  headerLink: {
-    '&, &:link, &:visited': {
-      marginLeft: '0.5em',
-      marginRight: '0.5em',
-      fontFamily: font,
-    },
-    '&:hover, &:active': {
-      textDecoration: 'underline',
-      cursor: 'pointer',
-    },
   },
   content: {
     marginTop: 60,
@@ -133,14 +113,6 @@ export function StyleGuideRenderer({
                 {docConfig.appName}
               </a>
             </Logo>
-            <nav className={classes.nav}>
-              <a className={`${classes.headerLink} link-active`} href="/">
-                Components
-              </a>
-              <a className={classes.headerLink} href="/docjs.html">
-                Layers
-              </a>
-            </nav>
           </div>
         </header>
       </div>

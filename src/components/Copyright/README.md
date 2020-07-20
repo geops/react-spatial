@@ -4,20 +4,22 @@ This demonstrates the use of Copyright.
 
 ```js
 import React from  'react';
-import ConfigReader from 'react-spatial/ConfigReader';
+import { Layer } from 'mobility-toolbox-js/ol';
+import Tile from 'ol/layer/Tile';
+import OSM from 'ol/source/OSM';
 import LayerService from 'react-spatial/LayerService';
 import Copyright from 'react-spatial/components/Copyright';
 
-const layerConf = [{
-  name: 'OSM Baselayer',
-  visible: true,
-  copyright: '&copy; OSM Contributors',
-  data: {
-    type: 'xyz',
-    url: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  },
-}];
-const layerService = new LayerService(ConfigReader.readConfig(layerConf));
+const layers = [
+  new Layer({
+    copyright: '&copy; OSM Contributors',
+    olLayer: new Tile({
+      source: new OSM(),
+    }),
+  })
+];
+
+const layerService = new LayerService(layers);
 
 <Copyright layerService={layerService} />
 ```

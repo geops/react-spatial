@@ -1,14 +1,13 @@
 import 'jest-canvas-mock';
+import { Layer } from 'mobility-toolbox-js/ol';
 import TileLayer from 'ol/layer/Tile';
 import XYZ from 'ol/source/XYZ';
-import OLLayer from 'ol/layer/Layer';
 import OLVectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import WMTSSource from 'ol/source/WMTS';
 import OSMSource from 'ol/source/OSM';
 import TileJSONSource from 'ol/source/TileJSON';
 import ConfigReader from './ConfigReader';
-import Layer from './layers/Layer';
 
 describe('ConfigReader', () => {
   describe('readConfig()', () => {
@@ -93,7 +92,6 @@ describe('ConfigReader', () => {
         },
       ]);
       expect(layers[0]).toBeInstanceOf(Layer);
-      expect(layers[0].olLayer).toBeInstanceOf(OLLayer);
       expect(layers[0].styleUrl).toBe(
         'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
       );
@@ -138,7 +136,7 @@ describe('ConfigReader', () => {
       ]);
       expect(layers[0]).toBeInstanceOf(Layer);
       expect(layers[0].olLayer).toBe();
-      expect(layers[0].getChildren().length).toBe(2);
+      expect(layers[0].children.length).toBe(2);
     });
 
     test('returns an empty array', () => {

@@ -4,31 +4,26 @@ This demonstrates the use of RouteSchedule.
 
 ```jsx
 import React, { useState, useEffect } from 'react';
+import { Layer, TrajservLayer } from 'mobility-toolbox-js/ol';
+import Tile from 'ol/layer/Tile';
+import OSM from 'ol/source/OSM';
 import BasicMap from 'react-spatial/components/BasicMap';
-import Layer from 'react-spatial/layers/Layer';
-import TileLayer from 'ol/layer/Tile';
-import OSMSource from 'ol/source/OSM';
-import TrajservLayer from 'react-spatial/layers/TrajservLayer';
 import RouteSchedule from 'react-spatial/components/RouteSchedule';
 import FilterButton from 'react-spatial/components/FilterButton';
 import FollowButton from 'react-spatial/components/FollowButton';
-
-import Filter from '../../images/FilterButton/filter.svg';
-import Follow from '../../images/FollowButton/follow.svg';
-
-let firstRender = null;
-const initialCenter = [951560, 6002550];
+import Filter from 'react-spatial/images/FilterButton/filter.svg';
+import Follow from 'react-spatial/images/FollowButton/follow.svg';
 
 // The `apiKey` used here is for demonstration purposes only.
 // Please get your own api key at https://developer.geops.io/.
 const trackerLayer = new TrajservLayer({
   apiKey: window.apiKey,
 });
+
 const layers = [
   new Layer({
-    name: 'Layer',
-    olLayer: new TileLayer({
-      source: new OSMSource(),
+    olLayer: new Tile({
+      source: new OSM(),
     }),
   }),
   trackerLayer,
@@ -36,9 +31,9 @@ const layers = [
 
 function RouteScheduleExample() {
   const [lineInfos, setLineInfos] = useState(null);
-  const [fitlerActive, setFitlerActive] = useState(false);
+  const [filterActive, setFilterActive] = useState(false);
   const [followActive, setFollowActive] = useState(false);
-  const [center, setCenter] = useState(initialCenter);
+  const [center, setCenter] = useState([951560, 6002550]);
 
   useEffect(()=> {
     trackerLayer.onClick((newLineInfos)=> {
@@ -59,8 +54,8 @@ function RouteScheduleExample() {
           <>
             <FilterButton
               title="Filter"
-              active={fitlerActive}
-              onClick={active => setFitlerActive(active)}
+              active={filterActive}
+              onClick={active => setFilterActive(active)}
               routeIdentifier={routeIdentifier}
               trackerLayer={trackerLayer}
             >
@@ -83,6 +78,7 @@ function RouteScheduleExample() {
         center={center}
         zoom={15}
         layers={layers}
+        tabIndex={0}
       />
     </div>
   );

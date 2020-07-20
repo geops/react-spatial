@@ -35,8 +35,8 @@ function Copyright({ layerService, format, ...other }) {
       new Set(
         layerService
           .getLayersAsFlatArray()
-          .filter((l) => l.getVisible())
-          .map((l) => l.getCopyright())
+          .filter((l) => l.visible)
+          .map((l) => l.copyright)
           .filter((cr) => cr),
       ),
     ),
