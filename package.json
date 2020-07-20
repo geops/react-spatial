@@ -10,7 +10,7 @@
     "re-resizable": "6.5.4",
     "react-autosuggest": "10.0.2",
     "react-draggable": "4.4.3",
-    "react-icons": "3.9.0",
+    "react-icons": "3.10.0",
     "resize-observer-polyfill": "1.5.1"
   },
   "peerDependencies": {
@@ -19,8 +19,8 @@
     "ol": "^6.3.1"
   },
   "devDependencies": {
-    "@babel/core": "7.10.4",
-    "@babel/plugin-transform-runtime": "7.10.4",
+    "@babel/core": "7.10.5",
+    "@babel/plugin-transform-runtime": "7.10.5",
     "@babel/preset-env": "7.10.4",
     "@babel/preset-react": "7.10.4",
     "babel-core": "7.0.0-bridge.0",
@@ -33,14 +33,14 @@
     "documentation": "13.0.2",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.2",
-    "eslint": "7.4.0",
+    "eslint": "7.5.0",
     "eslint-config-airbnb": "18.2.0",
     "eslint-config-prettier": "6.11.0",
-    "eslint-plugin-import": "2.20.2",
+    "eslint-plugin-import": "2.22.0",
     "eslint-plugin-jsx-a11y": "6.3.1",
     "eslint-plugin-prettier": "3.1.4",
     "eslint-plugin-react": "7.20.3",
-    "eslint-plugin-react-hooks": "4.0.7",
+    "eslint-plugin-react-hooks": "4.0.8",
     "fixpack": "3.0.6",
     "generact": "0.4.0",
     "geops-docjs-template": "1.0.3",
