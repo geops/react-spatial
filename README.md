@@ -8,6 +8,8 @@
 
 This library provides React components to build web applications and to visualize real-time geographical information based on [OpenLayers](https://openlayers.org/) and [Mapbox GL](https://docs.mapbox.com/mapbox-gl-js/api/).
 
+This library uses the [mobility-toolbox-js](https://mobility-toolbox-js.geops.de/) library.
+
 Documentation and examples at https://react-spatial.geops.de.
 
 ## Getting Started
@@ -15,7 +17,7 @@ Documentation and examples at https://react-spatial.geops.de.
 Install the [react-spatial](https://www.npmjs.com/package/react-spatial) package:
 
 ```bash
-yarn add ol react-spatial
+yarn add mobility-toolbox-js mapbox-gl ol react-spatial
 ```
 
 Your build pipeline needs to support ES6 modules and SASS.

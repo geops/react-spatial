@@ -38,33 +38,33 @@ else
 fi
 
 # Build jsdoc documentation for layers, in jsdoc folder (based on jsdoc_conf.json).
-if node ./scripts/doc.js; then
-  echo "jsdoc build suceeds."
-else
-  echo "Building jsdoc failed."
-  exit 1
-fi
+# if node ./scripts/doc.js; then
+#   echo "jsdoc build suceeds."
+# else
+#   echo "Building jsdoc failed."
+#   exit 1
+# fi
 
 # Rename jsdoc index.html and move in documentation folder.
-if mv docjs/index.html doc/build/docjs.html; then
-  echo "Move and rename docjs index suceeds."
-else
-  echo "Move and rename docjs index failed."
-  exit 1
-fi
+# if mv docjs/index.html doc/build/docjs.html; then
+#   echo "Move and rename docjs index suceeds."
+# else
+#   echo "Move and rename docjs index failed."
+#   exit 1
+# fi
 
 # Move all jsdoc build in documentation folder.
-if mv docjs/* doc/build; then
-  echo "Move docjs build suceeds."
-else
-  echo "Move docjs build failed."
-  exit 1
-fi
+# if mv docjs/* doc/build; then
+#   echo "Move docjs build suceeds."
+# else
+#   echo "Move docjs build failed."
+#   exit 1
+# fi
 
 # Remove emtpy folder.
-if rm -r docjs; then
-  echo "Remove emtpy folder suceeds."
-else
-  echo "Remove emtpy folder failed."
-  exit 1
-fi
+# if rm -r docjs; then
+#   echo "Remove emtpy folder suceeds."
+# else
+#   echo "Remove emtpy folder failed."
+#   exit 1
+# fi
