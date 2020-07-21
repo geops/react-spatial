@@ -54,9 +54,31 @@ describe('BasicMap', () => {
 
   test('uses onMapMoved function', () => {
     const spy = jest.fn(() => {});
-    shallow(<BasicMap map={olMap} onMapMoved={spy} />);
-    olMap.dispatchEvent(new MapEvent('moveend', olMap));
+    const spy2 = jest.fn();
+    const evt = new MapEvent('moveend', olMap);
+
+    // Test componentDidMount
+    const wrapper = shallow(<BasicMap map={olMap} onMapMoved={spy} />);
+    olMap.dispatchEvent(evt);
     expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(evt);
+
+    // Test componentDidUpdate
+    wrapper.setProps({
+      onMapMoved: spy2,
+    });
+    olMap.dispatchEvent(evt);
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy2).toHaveBeenCalledTimes(1);
+    expect(spy2).toHaveBeenCalledWith(evt);
+
+    // Test componentDidUpdate
+    wrapper.setProps({
+      onMapMoved: null,
+    });
+    olMap.dispatchEvent(evt);
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy2).toHaveBeenCalledTimes(1);
   });
 
   test('uses onFeaturesClick function', () => {
@@ -64,7 +86,7 @@ describe('BasicMap', () => {
     const spy2 = jest.fn();
     const evt = new MapEvent('singleclick', olMap);
 
-    // Test componnetDidMount
+    // Test componentDidMount
     const wrapper = shallow(<BasicMap map={olMap} onFeaturesClick={spy} />, {
       lifecycleExperimental: true,
     });
@@ -95,7 +117,7 @@ describe('BasicMap', () => {
     const spy2 = jest.fn();
     const evt = new MapEvent('pointermove', olMap);
 
-    // Test componnetDidMount
+    // Test componentDidMount
     const wrapper = shallow(<BasicMap map={olMap} onFeaturesHover={spy} />, {
       lifecycleExperimental: true,
     });

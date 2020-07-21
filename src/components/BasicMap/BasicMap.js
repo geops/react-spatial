@@ -169,9 +169,6 @@ class BasicMap extends PureComponent {
 
   componentDidMount() {
     const {
-      onMapMoved,
-      onFeaturesClick,
-      onFeaturesHover,
       layers,
       extent,
       viewOptions,
@@ -198,21 +195,10 @@ class BasicMap extends PureComponent {
       this.map.getView().fit(extent);
     }
 
-    if (layers.length) {
-      this.setLayers(layers);
-    }
-
-    if (onMapMoved) {
-      this.mapMoveRef = this.map.on('moveend', (evt) => onMapMoved(evt));
-    }
-
-    if (onFeaturesClick) {
-      this.listenSingleClick();
-    }
-
-    if (onFeaturesHover) {
-      this.listenPointerMove();
-    }
+    this.setLayers(layers);
+    this.listenMoveEnd();
+    this.listenSingleClick();
+    this.listenPointerMove();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -225,6 +211,7 @@ class BasicMap extends PureComponent {
       resolution,
       viewOptions,
       zoom,
+      onMapMoved,
       onFeaturesClick,
       onFeaturesHover,
     } = this.props;
@@ -279,6 +266,10 @@ class BasicMap extends PureComponent {
 
     if (extent && !equals(extent, prevProps.extent || [])) {
       view.fit(extent, fitOptions);
+    }
+
+    if (onMapMoved !== prevProps.onMapMoved) {
+      this.listenMoveEnd();
     }
 
     if (onFeaturesClick !== prevProps.onFeaturesClick) {
@@ -341,6 +332,17 @@ class BasicMap extends PureComponent {
     for (let i = 0; i < layers.length; i += 1) {
       this.terminateLayer(layers[i]);
     }
+  }
+
+  listenMoveEnd() {
+    const { onMapMoved } = this.props;
+    unByKey(this.moveEndRef);
+
+    if (!onMapMoved) {
+      return;
+    }
+
+    this.moveEndRef = this.map.on('moveend', (evt) => onMapMoved(evt));
   }
 
   listenSingleClick() {
