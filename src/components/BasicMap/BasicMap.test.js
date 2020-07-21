@@ -61,20 +61,64 @@ describe('BasicMap', () => {
 
   test('uses onFeaturesClick function', () => {
     const spy = jest.fn();
-    shallow(<BasicMap map={olMap} onFeaturesClick={spy} />);
+    const spy2 = jest.fn();
     const evt = new MapEvent('singleclick', olMap);
+
+    // Test componnetDidMount
+    const wrapper = shallow(<BasicMap map={olMap} onFeaturesClick={spy} />, {
+      lifecycleExperimental: true,
+    });
     olMap.dispatchEvent(evt);
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toHaveBeenCalledWith([], evt);
+
+    // Test componentDidUpdate
+    wrapper.setProps({
+      onFeaturesClick: spy2,
+    });
+    olMap.dispatchEvent(evt);
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy2).toHaveBeenCalledTimes(1);
+    expect(spy2).toHaveBeenCalledWith([], evt);
+
+    // Test componentDidUpdate
+    wrapper.setProps({
+      onFeaturesClick: null,
+    });
+    olMap.dispatchEvent(evt);
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy2).toHaveBeenCalledTimes(1);
   });
 
   test('uses onFeaturesHover function', () => {
     const spy = jest.fn();
-    shallow(<BasicMap map={olMap} onFeaturesHover={spy} />);
+    const spy2 = jest.fn();
     const evt = new MapEvent('pointermove', olMap);
+
+    // Test componnetDidMount
+    const wrapper = shallow(<BasicMap map={olMap} onFeaturesHover={spy} />, {
+      lifecycleExperimental: true,
+    });
     olMap.dispatchEvent(evt);
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toHaveBeenCalledWith([], evt);
+
+    // Test componentDidUpdate
+    wrapper.setProps({
+      onFeaturesHover: spy2,
+    });
+    olMap.dispatchEvent(evt);
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy2).toHaveBeenCalledTimes(1);
+    expect(spy2).toHaveBeenCalledWith([], evt);
+
+    // Test componentDidUpdate
+    wrapper.setProps({
+      onFeaturesHover: null,
+    });
+    olMap.dispatchEvent(evt);
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy2).toHaveBeenCalledTimes(1);
   });
 
   test('should be rendered with a default map', () => {

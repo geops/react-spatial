@@ -171,7 +171,6 @@ class BasicMap extends PureComponent {
     const {
       onMapMoved,
       onFeaturesClick,
-      featuresClickOptions,
       onFeaturesHover,
       layers,
       extent,
@@ -208,20 +207,11 @@ class BasicMap extends PureComponent {
     }
 
     if (onFeaturesClick) {
-      this.singleClickRef = this.map.on('singleclick', (evt) => {
-        const features = evt.map.getFeaturesAtPixel(
-          evt.pixel,
-          featuresClickOptions,
-        );
-        onFeaturesClick(features || [], evt);
-      });
+      this.listenSingleClick();
     }
 
     if (onFeaturesHover) {
-      this.pointerMoveRef = this.map.on('pointermove', (evt) => {
-        const features = evt.map.getFeaturesAtPixel(evt.pixel);
-        onFeaturesHover(features || [], evt);
-      });
+      this.listenPointerMove();
     }
   }
 
@@ -235,6 +225,8 @@ class BasicMap extends PureComponent {
       resolution,
       viewOptions,
       zoom,
+      onFeaturesClick,
+      onFeaturesHover,
     } = this.props;
     const { node } = this.state;
 
@@ -287,6 +279,14 @@ class BasicMap extends PureComponent {
 
     if (extent && !equals(extent, prevProps.extent || [])) {
       view.fit(extent, fitOptions);
+    }
+
+    if (onFeaturesClick !== prevProps.onFeaturesClick) {
+      this.listenSingleClick();
+    }
+
+    if (onFeaturesHover !== prevProps.onFeaturesHover) {
+      this.listenPointerMove();
     }
   }
 
@@ -341,6 +341,37 @@ class BasicMap extends PureComponent {
     for (let i = 0; i < layers.length; i += 1) {
       this.terminateLayer(layers[i]);
     }
+  }
+
+  listenSingleClick() {
+    const { onFeaturesClick, featuresClickOptions } = this.props;
+    unByKey(this.singleClickRef);
+
+    if (!onFeaturesClick) {
+      return;
+    }
+
+    this.singleClickRef = this.map.on('singleclick', (evt) => {
+      const features = evt.map.getFeaturesAtPixel(
+        evt.pixel,
+        featuresClickOptions,
+      );
+      onFeaturesClick(features || [], evt);
+    });
+  }
+
+  listenPointerMove() {
+    const { onFeaturesHover } = this.props;
+    unByKey(this.pointerMoveRef);
+
+    if (!onFeaturesHover) {
+      return;
+    }
+
+    this.pointerMoveRef = this.map.on('pointermove', (evt) => {
+      const features = evt.map.getFeaturesAtPixel(evt.pixel);
+      onFeaturesHover(features || [], evt);
+    });
   }
 
   render() {
