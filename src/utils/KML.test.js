@@ -148,6 +148,7 @@ describe('KML', () => {
       expect(style.getText()).toBe('bar'); // spaces are trimmed.
       expect(style.getFont()).toEqual('bold 16px arial');
       expect(style.getFill()).toEqual({ color_: [32, 52, 126, 1] });
+      expect(style.getStroke()).toEqual(null);
       expect(style.getScale()).toEqual(2);
       expect(style.getRotation()).toEqual('2.303834612632515');
       expect(style.getPadding()).toEqual([5, 6, 7, 8]);

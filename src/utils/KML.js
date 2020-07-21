@@ -121,7 +121,12 @@ const sanitizeFeature = (feature) => {
         fill: style.getText().getFill(),
         // rotation unsupported by KML, taken instead from custom field.
         rotation: feature.get('textRotation') || 0,
-        stroke: style.getText().getStroke(),
+        // since ol 6.3.1 : https://github.com/openlayers/openlayers/pull/10613/files#diff-1883da8b57e690db7ea0c35ce53c880aR925
+        // a default textstroke is added to mimic google earth.
+        // it was not the case before, the stroke was always null. So to keep
+        // the same behavior we don't copy the stroke style.
+        // TODO : maybe we should use this functionnality in the futur.
+        // stroke: style.getText().getStroke(),
         scale: style.getText().getScale(),
       });
 
