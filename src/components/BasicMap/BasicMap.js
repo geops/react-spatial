@@ -161,9 +161,10 @@ class BasicMap extends PureComponent {
       node: null,
     };
 
+    this.layers = [];
+    this.moveEndRef = null;
     this.singleClickRef = null;
     this.pointerMoveRef = null;
-    this.layers = [];
     this.setNode = this.setNode.bind(this);
   }
 
