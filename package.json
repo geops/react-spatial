@@ -4,7 +4,7 @@
   "version": "1.0.1",
   "license": "MIT",
   "dependencies": {
-    "abortcontroller-polyfill": "1.4.0",
+    "abortcontroller-polyfill": "1.5.0",
     "query-string": "6.13.1",
     "radians-degrees": "1.0.0",
     "re-resizable": "6.5.4",
