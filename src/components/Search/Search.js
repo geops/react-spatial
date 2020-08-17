@@ -111,7 +111,7 @@ function Search({
                 const filtered = suggestions.filter((s) => s.items.length > 0);
                 if (filtered.length > 0) {
                   const { items, section } = filtered[0];
-                  searchService.select({ ...items[0], section });
+                  onSelect({ ...items[0], section });
                 }
               } else if (
                 (key === 'ArrowDown' || key === 'ArrowUp') &&
