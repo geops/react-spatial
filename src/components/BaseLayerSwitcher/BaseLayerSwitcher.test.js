@@ -60,5 +60,6 @@ describe('BaseLayerSwitcher', () => {
     expect(
       comp.props().layers.filter((layer) => layer.isBaseLayer)[1].visible,
     ).toBe(true);
+    expect(comp.find('.rs-base-layer-switcher rs-open').exists()).toBe(false);
   });
 });
