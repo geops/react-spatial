@@ -109,6 +109,18 @@ function BaseLayerSwitcher({
   const openClass = switcherOpen ? ' rs-open' : '';
   const hiddenStyle = switcherOpen && !isClosed ? 'visible' : 'hidden';
 
+  const handleSwitcherClick = () => {
+    if (baseLayers.length === 2) {
+      /* On only two layer options the opener becomes a layer toggle button */
+      const nextLayer = baseLayers.find((layer) => !layer.visible);
+      setCurrentLayer(nextLayer);
+      nextLayer.setVisible(true);
+      return;
+    }
+    setSwitcherOpen(true);
+    setIsClosed(false);
+  };
+
   const onLayerSelect = (layer) => {
     if (!switcherOpen) {
       setSwitcherOpen(true);
@@ -172,10 +184,12 @@ function BaseLayerSwitcher({
           role="button"
           title={titles.openSwitcher}
           aria-label={titles.openSwitcher}
-          onClick={() => setSwitcherOpen(true) && setIsClosed(false)}
-          onKeyPress={(e) =>
-            e.which === 13 && setSwitcherOpen(true) && setIsClosed(false)
-          }
+          onClick={handleSwitcherClick}
+          onKeyPress={(e) => {
+            if (e.which === 13) {
+              handleSwitcherClick();
+            }
+          }}
           style={getImageStyle(nextImage)}
           tabIndex="0"
         >
