@@ -197,7 +197,7 @@ function BaseLayerSwitcher({
             {baseLayers.length !== 2
               ? titles.button
               : baseLayers.find((layer) => !layer.visible) &&
-                baseLayers.find((layer) => !layer.visible).name}
+                t(baseLayers.find((layer) => !layer.visible).name)}
           </div>
           {nextImage ? null : <span className="rs-alt-text">{t(altText)}</span>}
         </div>
