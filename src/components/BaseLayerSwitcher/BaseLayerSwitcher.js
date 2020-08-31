@@ -117,8 +117,8 @@ function BaseLayerSwitcher({
       nextLayer.setVisible(true);
       return;
     }
-    setSwitcherOpen(true);
-    setIsClosed(false);
+    // eslint-disable-next-line consistent-return
+    return setSwitcherOpen(true) && setIsClosed(false);
   };
 
   const onLayerSelect = (layer) => {
