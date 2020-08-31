@@ -193,7 +193,12 @@ function BaseLayerSwitcher({
           style={getImageStyle(nextImage)}
           tabIndex="0"
         >
-          <div className="rs-base-layer-switcher-title">{titles.button}</div>
+          <div className="rs-base-layer-switcher-title">
+            {baseLayers.length !== 2
+              ? titles.button
+              : baseLayers.find((layer) => !layer.visible) &&
+                t(baseLayers.find((layer) => !layer.visible).name)}
+          </div>
           {nextImage ? null : <span className="rs-alt-text">{t(altText)}</span>}
         </div>
       }

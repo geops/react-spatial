@@ -56,6 +56,9 @@ describe('BaseLayerSwitcher', () => {
 
   test.only('toggles base map instead of opening when only two base layers', () => {
     const comp = mountComp(data.slice(0, 2));
+    expect(
+      comp.props().layers.filter((layer) => layer.isBaseLayer)[0].visible,
+    ).toBe(true);
     comp.find('.rs-opener').at(0).simulate('click');
     expect(
       comp.props().layers.filter((layer) => layer.isBaseLayer)[1].visible,
