@@ -41,7 +41,7 @@
     "eslint-plugin-jsx-a11y": "6.3.1",
     "eslint-plugin-prettier": "3.1.4",
     "eslint-plugin-react": "7.20.3",
-    "eslint-plugin-react-hooks": "4.0.8",
+    "eslint-plugin-react-hooks": "4.1.0",
     "fixpack": "3.0.6",
     "generact": "0.4.0",
     "husky": "4.2.5",
