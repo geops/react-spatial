@@ -53,7 +53,7 @@
     "jest-serializer-html": "7.0.0",
     "jest-svg-transformer": "1.0.0",
     "jest-transform-file": "1.1.1",
-    "jsts": "2.3.0",
+    "jsts": "2.5.1",
     "lint-staged": "10.2.11",
     "mapbox-gl": "1.11.1",
     "mobility-toolbox-js": "1.1.3",
