@@ -77,7 +77,7 @@
     "stylelint-scss": "3.18.0",
     "url-loader": "4.1.0",
     "vinyl-fs": "3.0.3",
-    "webpack": "4.44.1",
+    "webpack": "4.43.0",
     "xml-beautifier": "0.4.3"
   },
   "scripts": {
