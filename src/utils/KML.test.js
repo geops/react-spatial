@@ -213,7 +213,7 @@ describe('KML', () => {
       expectWriteResult(feats, str);
     });
 
-    test('should add zIndex to the feature style.', () => {
+    test('should add zIndex and rotation to icon style.', () => {
       const str = `
       <kml ${xmlns}>
         <Document>
@@ -223,6 +223,9 @@ describe('KML', () => {
                 <Style>
                     <IconStyle>
                         <scale>0.5</scale>
+                        <heading>
+                          1.5707963267948966
+                        </heading>
                         <Icon>
                             <href>https://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
                             <gx:w>64</gx:w>
@@ -232,6 +235,9 @@ describe('KML', () => {
                     </IconStyle>
                 </Style>
                 <ExtendedData>
+                    <Data name="iconRotation">
+                      <value>1.5707963267948966</value>
+                    </Data>
                     <Data name="zIndex">
                         <value>1</value>
                     </Data>
@@ -246,6 +252,7 @@ describe('KML', () => {
       const feats = KML.readFeatures(str);
       const style = feats[0].getStyle()[0];
       expect(style.getZIndex()).toBe(1);
+      expect(style.getImage().getRotation()).toBe(1.5707963267948966);
       expectWriteResult(feats, str);
     });
   });

@@ -165,7 +165,9 @@ const sanitizeFeature = (feature) => {
     }
 
     if (image instanceof Icon) {
-      // Apply icon rotation if defined
+      /* Apply icon rotation if defined (by default only written as
+       * <heading> tag, which is not read as rotation value by the ol KML module)
+       */
       image.setRotation(parseFloat(feature.get('iconRotation')) || 0);
     }
 
