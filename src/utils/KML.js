@@ -164,6 +164,13 @@ const sanitizeFeature = (feature) => {
       }
     }
 
+    if (image instanceof Icon) {
+      /* Apply icon rotation if defined (by default only written as
+       * <heading> tag, which is not read as rotation value by the ol KML module)
+       */
+      image.setRotation(parseFloat(feature.get('iconRotation')) || 0);
+    }
+
     fill = undefined;
     stroke = undefined;
 
@@ -346,6 +353,11 @@ const writeFeatures = (layer, featureProjection) => {
           "Local image source isn't support for KML export." +
             'Should use remote web server',
         );
+      }
+
+      if (newStyle.image.getRotation()) {
+        // We set the icon rotation as extended data
+        clone.set('iconRotation', newStyle.image.getRotation());
       }
     }
 
