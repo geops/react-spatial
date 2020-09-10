@@ -1,7 +1,7 @@
 {
   "name": "react-spatial",
   "description": "Components to build React map apps.",
-  "version": "1.0.7-beta.1",
+  "version": "1.0.7-beta.2",
   "license": "MIT",
   "dependencies": {
     "abortcontroller-polyfill": "1.5.0",
@@ -56,7 +56,7 @@
     "jsts": "2.5.1",
     "lint-staged": "10.2.11",
     "mapbox-gl": "1.11.1",
-    "mobility-toolbox-js": "1.1.6-beta.4",
+    "mobility-toolbox-js": "1.1.6-beta.5",
     "node-sass": "4.14.1",
     "ol": "6.3.1",
     "prettier": "2.0.5",
