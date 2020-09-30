@@ -169,6 +169,16 @@ const sanitizeFeature = (feature) => {
        * <heading> tag, which is not read as rotation value by the ol KML module)
        */
       image.setRotation(parseFloat(feature.get('iconRotation')) || 0);
+
+      /* Value to be used for icon scaling with map
+       * e.g. icon.setScale(map.getView().getResolutionForZoom(zoomAtMaxIconSize) / map.getView().getResolution())
+       */
+      if (feature.get('zoomAtMaxIconSize')) {
+        feature.set(
+          'zoomAtMaxIconSize',
+          parseFloat(feature.get('zoomAtMaxIconSize')),
+        );
+      }
     }
 
     fill = undefined;
@@ -358,6 +368,12 @@ const writeFeatures = (layer, featureProjection) => {
       if (newStyle.image.getRotation()) {
         // We set the icon rotation as extended data
         clone.set('iconRotation', newStyle.image.getRotation());
+      }
+
+      // Set zoomAtMaxIconSize to use for icon-to-map proportional scaling
+      if (f.get('zoomAtMaxIconSize')) {
+        clone.set('zoomAtMaxIconSize', f.get('zoomAtMaxIconSize'));
+        newStyle.fill = null;
       }
     }
 
