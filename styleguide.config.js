@@ -5,6 +5,14 @@ module.exports = {
   version,
   template: {
     favicon: 'images/favicon.png',
+    head: {
+      links: [
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css?family=Lato:400,700',
+        }
+      ],
+    }
   },
   assetsDir: 'src/',
   styleguideDir: 'styleguide-build',
