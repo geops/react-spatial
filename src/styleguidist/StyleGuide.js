@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import Logo from 'react-styleguidist/lib/client/rsg-components/Logo';
 import Version from 'react-styleguidist/lib/client/rsg-components/Version';
 import Styled from 'react-styleguidist/lib/client/rsg-components/Styled';
 import docConfig from '../../doc/doc-config.json';
@@ -12,35 +11,49 @@ const styles = ({ mq }) => ({
     backgroundColor: 'white',
   },
   header: {
-    height: 60,
+    height: 100,
     position: 'absolute',
     top: 0,
     width: '100%',
-    color: '#61849c',
     borderBottom: '2px solid #61849c',
     backgroundColor: 'white',
+    padding: '0 70px',
+    [xsmall]: {
+      padding: '0 20px',
+    },
   },
   bar: {
     display: 'flex',
     alignItems: 'center',
     height: '100%',
+  },
+  logo: {
+    display: 'flex',
+    alignItems: 'center',
+    color: '#353535',
+    textDecoration: 'none',
+  },
+  image: {
+    width: 120,
+    cursor: 'pointer',
     [xsmall]: {
-      flexDirection: 'column',
-      alignItems: 'center',
+      width: 100,
     },
   },
   title: {
     fontFamily: 'Avenir, Helvetica, Arial, sans-serif',
-    fontSize: 20,
-    marginLeft: '1.5em',
-    color: '#61849c',
-    fontWeight: 'bold',
+    marginLeft: 15,
+    cursor: 'pointer',
+    fontSize: 22,
+    [xsmall]: {
+      fontSize: 15,
+    },
   },
   version: {
     padding: '10px 0 0 10px',
   },
   content: {
-    marginTop: 60,
+    marginTop: 100,
     height: 'calc(100% - 60px)',
     position: 'fixed',
     width: '100%',
@@ -67,7 +80,7 @@ const styles = ({ mq }) => ({
     border: '#e8e8e8 solid',
     borderWidth: '0 1px 0 0',
     position: 'fixed',
-    top: 60,
+    top: 100,
     left: 0,
     bottom: 0,
     width: '200px',
@@ -108,11 +121,14 @@ export function StyleGuideRenderer({
       <div>
         <header className={classes.header}>
           <div className={classes.bar}>
-            <Logo>
-              <a className={classes.title} href="/">
-                {docConfig.appName}
-              </a>
-            </Logo>
+            <a href="/" className={classes.logo}>
+              <img
+                className={classes.image}
+                src="../images/geops_logo.svg"
+                alt="not found"
+              />
+              <p className={classes.title}>{docConfig.appName}</p>
+            </a>
           </div>
         </header>
       </div>
