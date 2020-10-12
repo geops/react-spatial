@@ -49,7 +49,7 @@ const styles = ({ mq }) => ({
     },
   },
   title: {
-    marginLeft: 15,
+    marginLeft: 10,
     cursor: 'pointer',
   },
   link: {
