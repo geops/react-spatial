@@ -16,8 +16,10 @@ const styles = ({ mq }) => ({
     top: 0,
     width: '100%',
     borderBottom: '2px solid #61849c',
+    boxShadow: '0px 10px 15px #35353520',
     backgroundColor: 'white',
     padding: '0 70px',
+    zIndex: 1,
     [xsmall]: {
       padding: '0 20px',
     },
@@ -26,12 +28,18 @@ const styles = ({ mq }) => ({
     display: 'flex',
     alignItems: 'center',
     height: '100%',
+    justifyContent: 'space-between',
+    color: '#353535',
+    textDecoration: 'none',
+    fontFamily: 'Lato, sans-serif',
+    fontSize: 22,
+    [xsmall]: {
+      fontSize: 15,
+    },
   },
   logo: {
     display: 'flex',
     alignItems: 'center',
-    color: '#353535',
-    textDecoration: 'none',
   },
   image: {
     width: 120,
@@ -41,13 +49,19 @@ const styles = ({ mq }) => ({
     },
   },
   title: {
-    fontFamily: 'Avenir, Helvetica, Arial, sans-serif',
     marginLeft: 15,
     cursor: 'pointer',
-    fontSize: 22,
-    [xsmall]: {
-      fontSize: 15,
-    },
+  },
+  link: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    opacity: 0.7,
+    height: '100%',
+    width: 100,
+    fontSize: 18,
+    fontWeight: 400,
+    padding: '6px 12px',
   },
   version: {
     padding: '10px 0 0 10px',
@@ -57,6 +71,7 @@ const styles = ({ mq }) => ({
     height: 'calc(100% - 60px)',
     position: 'fixed',
     width: '100%',
+    zIndex: 0,
   },
   scrollable: {
     overflowY: 'scroll',
@@ -118,20 +133,26 @@ export function StyleGuideRenderer({
 
   return (
     <div className={classes.root}>
-      <div>
-        <header className={classes.header}>
-          <div className={classes.bar}>
-            <a href="/" className={classes.logo}>
-              <img
-                className={classes.image}
-                src="../images/geops_logo.svg"
-                alt="not found"
-              />
-              <p className={classes.title}>{docConfig.appName}</p>
-            </a>
-          </div>
-        </header>
-      </div>
+      <header className={classes.header}>
+        <div className={classes.bar}>
+          <a href="/" className={classes.logo}>
+            <img
+              className={classes.image}
+              src="../images/geops_logo.svg"
+              alt="not found"
+            />
+            <p className={classes.title}>{docConfig.appName}</p>
+          </a>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href={docConfig.githubRepo}
+            className={classes.link}
+          >
+            Code
+          </a>
+        </div>
+      </header>
       <div className={classes.content}>
         <div className={classes.scrollable}>
           <div className={classes.sidebar}>
