@@ -49,8 +49,11 @@ const styles = ({ mq }) => ({
     },
   },
   title: {
-    marginLeft: 10,
+    marginLeft: 15,
     cursor: 'pointer',
+    [xsmall]: {
+      width: 10,
+    },
   },
   link: {
     display: 'flex',
