@@ -40,9 +40,6 @@ const styles = ({ mq }) => ({
   components: {
     overflow: 'auto', // To prevent the pane from growing out of the screen
   },
-  promo: {
-    bottom: '120px !important',
-  },
   sidebar: {
     backgroundColor: '#f5f5f5',
     border: '#e8e8e8 solid',
@@ -103,7 +100,7 @@ export function StyleGuideRenderer({
             <main className={classes.main}>{children}</main>
           </div>
         </div>
-        <div id="promo" className={classes.promo}>
+        <div id="promo">
           <a
             href={docConfig.githubRepo}
             target="_blank"
