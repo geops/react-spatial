@@ -1,84 +1,31 @@
+/* eslint-disable import/no-unresolved */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { geopsTheme, Header, Footer } from '@geops/geops-ui';
+import { ThemeProvider } from '@material-ui/core/styles';
 import Version from 'react-styleguidist/lib/client/rsg-components/Version';
 import Styled from 'react-styleguidist/lib/client/rsg-components/Styled';
 import docConfig from '../../doc/doc-config.json';
-
-const xsmall = '@media (max-width: 600px)';
 
 const styles = ({ mq }) => ({
   root: {
     backgroundColor: 'white',
   },
-  header: {
-    height: 100,
-    position: 'absolute',
-    top: 0,
-    width: '100%',
-    borderBottom: '2px solid #61849c',
-    boxShadow: '0px 10px 15px #35353520',
-    backgroundColor: 'white',
-    padding: '0 70px',
-    zIndex: 1,
-    [xsmall]: {
-      padding: '0 20px',
-    },
-  },
-  bar: {
-    display: 'flex',
-    alignItems: 'center',
-    height: '100%',
-    justifyContent: 'space-between',
-    color: '#353535',
-    textDecoration: 'none',
-    fontFamily: 'Lato, sans-serif',
-    fontSize: 22,
-    [xsmall]: {
-      fontSize: 15,
-    },
-  },
-  logo: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  image: {
-    width: 120,
-    cursor: 'pointer',
-    [xsmall]: {
-      width: 100,
-    },
-  },
-  title: {
-    marginLeft: 15,
-    cursor: 'pointer',
-    [xsmall]: {
-      width: 10,
-    },
-  },
-  link: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    opacity: 0.7,
-    height: '100%',
-    width: 100,
-    fontSize: 18,
-    fontWeight: 400,
-    padding: '6px 12px',
-  },
   version: {
     padding: '10px 0 0 10px',
   },
   content: {
-    marginTop: 100,
-    height: 'calc(100% - 60px)',
+    top: 100,
+    bottom: 0,
+    marginBottom: 70,
+    height: 'calc(100vh - 60px)',
     position: 'fixed',
     width: '100%',
     zIndex: 0,
   },
   scrollable: {
     overflowY: 'scroll',
-    height: 'calc(100vh - 60px)',
+    height: 'calc(100vh - 170px)',
   },
   main: {
     maxWidth: 1000,
@@ -93,6 +40,9 @@ const styles = ({ mq }) => ({
   components: {
     overflow: 'auto', // To prevent the pane from growing out of the screen
   },
+  promo: {
+    bottom: '120px !important',
+  },
   sidebar: {
     backgroundColor: '#f5f5f5',
     border: '#e8e8e8 solid',
@@ -101,6 +51,7 @@ const styles = ({ mq }) => ({
     top: 100,
     left: 0,
     bottom: 0,
+    marginBottom: 70,
     width: '200px',
     overflow: 'auto',
   },
@@ -135,48 +86,35 @@ export function StyleGuideRenderer({
   window.apiKey = apiKey;
 
   return (
-    <div className={classes.root}>
-      <header className={classes.header}>
-        <div className={classes.bar}>
-          <a href="/" className={classes.logo}>
-            <img
-              className={classes.image}
-              src="../images/geops_logo.svg"
-              alt="not found"
-            />
-            <p className={classes.title}>{docConfig.appName}</p>
-          </a>
+    <ThemeProvider theme={geopsTheme}>
+      <div className={classes.root}>
+        <Header
+          title={docConfig.appName}
+          tabs={[{ label: 'Code', href: `${docConfig.githubRepo}` }]}
+        />
+        <div className={classes.content}>
+          <div className={classes.scrollable}>
+            <div className={classes.sidebar}>
+              <header className={classes.version}>
+                {version && <Version>{version}</Version>}
+              </header>
+              {hasSidebar ? toc : null}
+            </div>
+            <main className={classes.main}>{children}</main>
+          </div>
+        </div>
+        <div id="promo" className={classes.promo}>
           <a
+            href={docConfig.githubRepo}
             target="_blank"
             rel="noopener noreferrer"
-            href={docConfig.githubRepo}
-            className={classes.link}
           >
-            Code
+            <div id="promo-text">Fork me on GitHub</div>
           </a>
         </div>
-      </header>
-      <div className={classes.content}>
-        <div className={classes.scrollable}>
-          <div className={classes.sidebar}>
-            <header className={classes.version}>
-              {version && <Version>{version}</Version>}
-            </header>
-            {hasSidebar ? toc : null}
-          </div>
-          <main className={classes.main}>{children}</main>
-        </div>
       </div>
-      <div id="promo">
-        <a
-          href={docConfig.githubRepo}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <div id="promo-text">Fork me on GitHub</div>
-        </a>
-      </div>
-    </div>
+      <Footer />
+    </ThemeProvider>
   );
 }
 
