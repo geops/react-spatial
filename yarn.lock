@@ -1386,10 +1386,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@geops/geops-ui@0.1.4-beta.2":
-  version "0.1.4-beta.2"
-  resolved "https://registry.yarnpkg.com/@geops/geops-ui/-/geops-ui-0.1.4-beta.2.tgz#4b1a5d231e98fee4f6e5fe53dd48fd20173defd6"
-  integrity sha512-DWf/Qee/zu6IlOd7F33eDtI3vaPvgU6HgyVrnXbjRAYcWs5/TLvsB4+4Y/6m+F6x/i2U7avMeonDwYfFUZUdow==
+"@geops/geops-ui@0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@geops/geops-ui/-/geops-ui-0.1.4.tgz#0c4d0a2a83e571b2b7536fda09d01ec6f5c62d7e"
+  integrity sha512-z/ldNH/VZ0pd8hsKeG4Xz74GHaD9CUsY4wqC/nQs0zHamHDmwr/zqfknIhJaL41W/lM0rKKkiMhVoL0lAjcVwQ==
   dependencies:
     "@material-ui/core" "^4.11.0"
     "@material-ui/icons" "^4.9.1"
