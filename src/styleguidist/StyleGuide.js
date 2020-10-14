@@ -41,7 +41,7 @@ const styles = ({ mq }) => ({
     overflow: 'auto', // To prevent the pane from growing out of the screen
   },
   sidebar: {
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#EFEFEF',
     border: '#e8e8e8 solid',
     borderWidth: '0 1px 0 0',
     position: 'fixed',

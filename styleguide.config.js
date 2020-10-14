@@ -150,6 +150,15 @@ module.exports = {
       ],
     },
   },
+  theme: {
+    color: {
+      links: '#6987a1',
+      linkHover: '#76B833',
+    },
+    fontFamily: {
+      base: 'Lato, Arial, sans-serif',
+    },
+  },
   styles: {
     StyleGuide: {
       '@global body': {
