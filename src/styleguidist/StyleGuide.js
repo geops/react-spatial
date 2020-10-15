@@ -54,6 +54,17 @@ const styles = ({ mq }) => ({
   },
 });
 
+const links = [
+  {
+    label: 'Privacy Policy',
+    href: 'https://geops.ch/datenschutz',
+  },
+  {
+    label: 'Imprint',
+    href: 'https://geops.ch/impressum',
+  },
+];
+
 export function StyleGuideRenderer({
   classes,
   children,
@@ -110,7 +121,7 @@ export function StyleGuideRenderer({
           </a>
         </div>
       </div>
-      <Footer />
+      <Footer links={links} />
     </ThemeProvider>
   );
 }
