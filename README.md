@@ -8,7 +8,7 @@
 
 This library provides React components to build web applications and to visualize real-time geographical information based on [OpenLayers](https://openlayers.org/) and [Mapbox GL](https://docs.mapbox.com/mapbox-gl-js/api/).
 
-This library uses the [mobility-toolbox-js](https://mobility-toolbox-js.geops.de/) library.
+This library uses the [mobility-toolbox-js](https://mobility-toolbox-js.geops.io/) library.
 
 Documentation and examples at https://react-spatial.geops.de.
 
