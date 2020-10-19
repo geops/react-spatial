@@ -10,9 +10,9 @@ module.exports = {
         {
           rel: 'stylesheet',
           href: 'https://fonts.googleapis.com/css?family=Lato:400,700',
-        }
+        },
       ],
-    }
+    },
   },
   assetsDir: 'src/',
   styleguideDir: 'styleguide-build',
@@ -106,6 +106,9 @@ module.exports = {
         },
         {
           test: /^((?!url).)*\.svg$/,
+          exclude: [
+            path.resolve(__dirname, 'node_modules', '@geops', 'geops-ui'),
+          ],
           use: [
             {
               loader: 'babel-loader',
@@ -119,11 +122,25 @@ module.exports = {
           ],
         },
         {
+          test: /^((?!url).)*\.svg$/,
+          include: [
+            path.resolve(__dirname, 'node_modules', '@geops', 'geops-ui'), // Load geops-ui SVGs using file-loader
+          ],
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                jsx: true,
+              },
+            },
+          ],
+        },
+        {
           test: /\.url\.svg$/,
           loader: 'url-loader',
         },
         {
-          test: /\.png$/,
+          test: /\.png$|.ico$/,
           use: [
             {
               loader: 'url-loader',
@@ -131,6 +148,15 @@ module.exports = {
           ],
         },
       ],
+    },
+  },
+  theme: {
+    color: {
+      links: '#6987a1',
+      linkHover: '#76B833',
+    },
+    fontFamily: {
+      base: 'Lato, Arial, sans-serif',
     },
   },
   styles: {
