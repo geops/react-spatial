@@ -12,7 +12,6 @@ exports[`Popup should match snapshot with default values. 1`] = `
 >
   <div
     className="rs-popup-container"
-    role="dialog"
     tabIndex=""
   >
     <div
@@ -71,7 +70,6 @@ exports[`Popup should match snapshot with tabIndex defined. 1`] = `
 >
   <div
     className="rs-popup-container"
-    role="dialog"
     tabIndex="0"
   >
     <div
@@ -130,7 +128,6 @@ exports[`Popup should match snapshot without close button. 1`] = `
 >
   <div
     className="rs-popup-container"
-    role="dialog"
     tabIndex=""
   >
     <div
@@ -161,7 +158,6 @@ exports[`Popup should match snapshot without header. 1`] = `
 >
   <div
     className="rs-popup-container"
-    role="dialog"
     tabIndex=""
   >
     <div
