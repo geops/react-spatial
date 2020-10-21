@@ -50,6 +50,24 @@ const propTypes = {
   renderItemContent: PropTypes.func,
 
   /**
+   * Custom function to render custom content before the list of children of an item.
+   *
+   * @param {object} item The item to render.
+   *
+   * @return {node} A jsx node.
+   */
+  renderBeforeItem: PropTypes.func,
+
+  /**
+   * Custom function to render custom content after the list of children of an item.
+   *
+   * @param {object} item The item to render.
+   *
+   * @return {node} A jsx node.
+   */
+  renderAfterItem: PropTypes.func,
+
+  /**
    * Object holding title for the layer tree's buttons.
    */
   titles: PropTypes.shape({
@@ -86,6 +104,8 @@ const defaultProps = {
   getParentClassName: () => undefined,
   renderItem: null,
   renderItemContent: null,
+  renderBeforeItem: null,
+  renderAfterItem: null,
   titles: {
     layerShow: 'Show layer',
     layerHide: 'Hide layer',
@@ -295,6 +315,8 @@ class LayerTree extends Component {
     const {
       renderItem,
       renderItemContent,
+      renderBeforeItem,
+      renderAfterItem,
       padding,
       getParentClassName,
     } = this.props;
@@ -320,9 +342,11 @@ class LayerTree extends Component {
             ? renderItemContent(layer, this)
             : this.renderItemContent(layer)}
         </div>
+        {renderBeforeItem && renderBeforeItem(layer, level, this)}
         {[...children]
           .reverse()
           .map((child) => this.renderItem(child, level + 1))}
+        {renderAfterItem && renderAfterItem(layer, level, this)}
       </div>
     );
   }
