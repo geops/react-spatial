@@ -67,6 +67,22 @@ describe('LayerTree', () => {
       });
     });
 
+    test('when an item use renderBeforeItem.', () => {
+      renderLayerTree(data, {
+        renderAfterItem: (layer) => (
+          <div>Render name before item: {layer.name}</div>
+        ),
+      });
+    });
+
+    test('when an item use renderAfterItem.', () => {
+      renderLayerTree(data, {
+        renderAfterItem: (layer) => (
+          <div>Render name after item: {layer.name}</div>
+        ),
+      });
+    });
+
     test('when items are always expanded', () => {
       const dataExp = [
         {
