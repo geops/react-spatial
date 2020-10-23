@@ -259,7 +259,6 @@ class Popup extends PureComponent {
         <div
           className="rs-popup-container"
           tabIndex={tabIndex}
-          role="dialog"
           key={key}
           ref={(popupElement) => {
             this.setState({ popupElement });
