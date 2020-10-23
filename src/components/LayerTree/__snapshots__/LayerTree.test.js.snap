@@ -1842,6 +1842,10 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
       </div>
     </div>
     <div>
+      Render name before item: 
+      Road sample layers
+    </div>
+    <div>
       <div
         className="rs-layer-tree-item rs-visible"
         style={
@@ -1931,10 +1935,6 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
         Roads Seoul
       </div>
     </div>
-    <div>
-      Render name before item: 
-      Road sample layers
-    </div>
   </div>
   <div>
     <div
@@ -1978,6 +1978,10 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
           className="rs-layer-tree-arrow rs-layer-tree-arrow-expanded"
         />
       </div>
+    </div>
+    <div>
+      Render name before item: 
+      Vector sample layers
     </div>
     <div>
       <div
@@ -2114,10 +2118,6 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
         Polygons Samples
       </div>
     </div>
-    <div>
-      Render name before item: 
-      Vector sample layers
-    </div>
   </div>
   <div>
     <div
@@ -2163,6 +2163,10 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
       </div>
     </div>
     <div>
+      Render name before item: 
+      Other layers
+    </div>
+    <div>
       <div
         className="rs-layer-tree-item "
         style={
@@ -2201,6 +2205,10 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
             Countries
           </div>
         </div>
+      </div>
+      <div>
+        Render name before item: 
+        Countries
       </div>
       <div>
         <div
@@ -2292,10 +2300,6 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
           Countries 110m
         </div>
       </div>
-      <div>
-        Render name before item: 
-        Countries
-      </div>
     </div>
     <div>
       <div
@@ -2386,10 +2390,6 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
         Render name before item: 
         Switzerland
       </div>
-    </div>
-    <div>
-      Render name before item: 
-      Other layers
     </div>
   </div>
   <div>

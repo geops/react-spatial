@@ -69,7 +69,7 @@ describe('LayerTree', () => {
 
     test('when an item use renderBeforeItem.', () => {
       renderLayerTree(data, {
-        renderAfterItem: (layer) => (
+        renderBeforeItem: (layer) => (
           <div>Render name before item: {layer.name}</div>
         ),
       });
