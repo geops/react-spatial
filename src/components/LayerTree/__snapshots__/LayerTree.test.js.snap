@@ -1148,6 +1148,8 @@ exports[`LayerTree matches snapshots when an item use renderAfterItem. 1`] = `
       <div>
         Render name after item: 
         Vienna Streets
+        , level: 
+        1
       </div>
     </div>
     <div>
@@ -1193,11 +1195,15 @@ exports[`LayerTree matches snapshots when an item use renderAfterItem. 1`] = `
       <div>
         Render name after item: 
         Roads Seoul
+        , level: 
+        1
       </div>
     </div>
     <div>
       Render name after item: 
       Road sample layers
+      , level: 
+      0
     </div>
   </div>
   <div>
@@ -1286,6 +1292,8 @@ exports[`LayerTree matches snapshots when an item use renderAfterItem. 1`] = `
       <div>
         Render name after item: 
         Points Samples
+        , level: 
+        1
       </div>
     </div>
     <div>
@@ -1331,6 +1339,8 @@ exports[`LayerTree matches snapshots when an item use renderAfterItem. 1`] = `
       <div>
         Render name after item: 
         Lines Samples
+        , level: 
+        1
       </div>
     </div>
     <div>
@@ -1376,11 +1386,15 @@ exports[`LayerTree matches snapshots when an item use renderAfterItem. 1`] = `
       <div>
         Render name after item: 
         Polygons Samples
+        , level: 
+        1
       </div>
     </div>
     <div>
       Render name after item: 
       Vector sample layers
+      , level: 
+      0
     </div>
   </div>
   <div>
@@ -1509,6 +1523,8 @@ exports[`LayerTree matches snapshots when an item use renderAfterItem. 1`] = `
         <div>
           Render name after item: 
           Countries Borders
+          , level: 
+          2
         </div>
       </div>
       <div>
@@ -1554,11 +1570,15 @@ exports[`LayerTree matches snapshots when an item use renderAfterItem. 1`] = `
         <div>
           Render name after item: 
           Countries 110m
+          , level: 
+          2
         </div>
       </div>
       <div>
         Render name after item: 
         Countries
+        , level: 
+        1
       </div>
     </div>
     <div>
@@ -1604,6 +1624,8 @@ exports[`LayerTree matches snapshots when an item use renderAfterItem. 1`] = `
       <div>
         Render name after item: 
         USA Population Density
+        , level: 
+        1
       </div>
     </div>
     <div>
@@ -1649,11 +1671,15 @@ exports[`LayerTree matches snapshots when an item use renderAfterItem. 1`] = `
       <div>
         Render name after item: 
         Switzerland
+        , level: 
+        1
       </div>
     </div>
     <div>
       Render name after item: 
       Other layers
+      , level: 
+      0
     </div>
   </div>
   <div>
@@ -1699,6 +1725,8 @@ exports[`LayerTree matches snapshots when an item use renderAfterItem. 1`] = `
     <div>
       Render name after item: 
       OpenTopoMap
+      , level: 
+      0
     </div>
   </div>
   <div>
@@ -1744,6 +1772,8 @@ exports[`LayerTree matches snapshots when an item use renderAfterItem. 1`] = `
     <div>
       Render name after item: 
       OSM Baselayer Hot
+      , level: 
+      0
     </div>
   </div>
   <div>
@@ -1789,6 +1819,8 @@ exports[`LayerTree matches snapshots when an item use renderAfterItem. 1`] = `
     <div>
       Render name after item: 
       OSM Baselayer
+      , level: 
+      0
     </div>
   </div>
 </div>
@@ -1844,6 +1876,8 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
     <div>
       Render name before item: 
       Road sample layers
+      , level: 
+      0
     </div>
     <div>
       <div
@@ -1888,6 +1922,8 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
       <div>
         Render name before item: 
         Vienna Streets
+        , level: 
+        1
       </div>
     </div>
     <div>
@@ -1933,6 +1969,8 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
       <div>
         Render name before item: 
         Roads Seoul
+        , level: 
+        1
       </div>
     </div>
   </div>
@@ -1982,6 +2020,8 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
     <div>
       Render name before item: 
       Vector sample layers
+      , level: 
+      0
     </div>
     <div>
       <div
@@ -2026,6 +2066,8 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
       <div>
         Render name before item: 
         Points Samples
+        , level: 
+        1
       </div>
     </div>
     <div>
@@ -2071,6 +2113,8 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
       <div>
         Render name before item: 
         Lines Samples
+        , level: 
+        1
       </div>
     </div>
     <div>
@@ -2116,6 +2160,8 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
       <div>
         Render name before item: 
         Polygons Samples
+        , level: 
+        1
       </div>
     </div>
   </div>
@@ -2165,6 +2211,8 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
     <div>
       Render name before item: 
       Other layers
+      , level: 
+      0
     </div>
     <div>
       <div
@@ -2209,6 +2257,8 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
       <div>
         Render name before item: 
         Countries
+        , level: 
+        1
       </div>
       <div>
         <div
@@ -2253,6 +2303,8 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
         <div>
           Render name before item: 
           Countries Borders
+          , level: 
+          2
         </div>
       </div>
       <div>
@@ -2298,6 +2350,8 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
         <div>
           Render name before item: 
           Countries 110m
+          , level: 
+          2
         </div>
       </div>
     </div>
@@ -2344,6 +2398,8 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
       <div>
         Render name before item: 
         USA Population Density
+        , level: 
+        1
       </div>
     </div>
     <div>
@@ -2389,6 +2445,8 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
       <div>
         Render name before item: 
         Switzerland
+        , level: 
+        1
       </div>
     </div>
   </div>
@@ -2435,6 +2493,8 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
     <div>
       Render name before item: 
       OpenTopoMap
+      , level: 
+      0
     </div>
   </div>
   <div>
@@ -2480,6 +2540,8 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
     <div>
       Render name before item: 
       OSM Baselayer Hot
+      , level: 
+      0
     </div>
   </div>
   <div>
@@ -2525,6 +2587,8 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
     <div>
       Render name before item: 
       OSM Baselayer
+      , level: 
+      0
     </div>
   </div>
 </div>
