@@ -2,6 +2,15 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { geopsTheme, Header, Footer } from '@geops/geops-ui';
+import {
+  Hidden,
+  FormControl,
+  // InputLabel,
+  Select,
+  MenuItem,
+  ListSubheader,
+  Link,
+} from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Version from 'react-styleguidist/lib/client/rsg-components/Version';
 import Styled from 'react-styleguidist/lib/client/rsg-components/Styled';
@@ -17,7 +26,6 @@ const styles = ({ mq }) => ({
   content: {
     top: 100,
     bottom: 0,
-    marginBottom: 70,
     height: 'calc(100vh - 60px)',
     position: 'fixed',
     width: '100%',
@@ -25,14 +33,16 @@ const styles = ({ mq }) => ({
   },
   scrollable: {
     overflowY: 'scroll',
-    height: 'calc(100vh - 170px)',
+    height: 'calc(100vh - 100px)',
   },
   main: {
     maxWidth: 1000,
     padding: [[15, 30]],
-    paddingLeft: '230px',
+    paddingLeft: 230,
+    paddingTop: 50,
     margin: [[0, 'auto']],
     [mq.small]: {
+      marginTop: 50,
       padding: 15,
     },
     display: 'block',
@@ -48,11 +58,26 @@ const styles = ({ mq }) => ({
     top: 100,
     left: 0,
     bottom: 0,
-    marginBottom: 70,
     width: '200px',
     overflow: 'auto',
   },
+  dropdown: {
+    position: 'fixed',
+    backgroundColor: '#EFEFEF',
+    width: '100%',
+    zIndex: 99999,
+  },
 });
+
+const muiStyles = {
+  subHeader: {
+    fontWeight: 'bold',
+    fontSize: 20,
+  },
+  dropdownItem: {
+    fontSize: 15,
+  },
+};
 
 const links = [
   {
@@ -102,13 +127,53 @@ export function StyleGuideRenderer({
         />
         <div className={classes.content}>
           <div className={classes.scrollable}>
-            <div className={classes.sidebar}>
-              <header className={classes.version}>
-                {version && <Version>{version}</Version>}
-              </header>
-              {hasSidebar ? toc : null}
-            </div>
+            <Hidden mdDown>
+              <div className={classes.sidebar}>
+                <header className={classes.version}>
+                  {version && <Version>{version}</Version>}
+                </header>
+                {hasSidebar ? toc : null}
+              </div>
+            </Hidden>
+            <Hidden mdUp>
+              <div className={classes.dropdown}>
+                <FormControl fullWidth>
+                  <Select defaultValue="" id="component-select" labelWidth={20}>
+                    {/* <InputLabel htmlFor="component-select">
+                      Components
+                    </InputLabel> */}
+                    {/* <MenuItem value="">
+                      <Link href="/">Reset</Link>
+                    </MenuItem> */}
+                    {toc.props.sections.slice(0).map((section) => {
+                      return (
+                        <div>
+                          <ListSubheader
+                            style={muiStyles.subHeader}
+                            disableSticky
+                          >
+                            <Link
+                              href={`#section-${section.name.toLowerCase()}`}
+                            >
+                              {section.name}
+                            </Link>
+                          </ListSubheader>
+                          {section.components.map((component) => (
+                            <MenuItem value={component.name}>
+                              <Link href={`#${component.name.toLowerCase()}`}>
+                                {component.name}
+                              </Link>
+                            </MenuItem>
+                          ))}
+                        </div>
+                      );
+                    })}
+                  </Select>
+                </FormControl>
+              </div>
+            </Hidden>
             <main className={classes.main}>{children}</main>
+            <Footer links={links} />
           </div>
         </div>
         <div id="promo">
@@ -121,7 +186,6 @@ export function StyleGuideRenderer({
           </a>
         </div>
       </div>
-      <Footer links={links} />
     </ThemeProvider>
   );
 }
