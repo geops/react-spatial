@@ -5,7 +5,7 @@ import { geopsTheme, Header, Footer } from '@geops/geops-ui';
 import {
   Hidden,
   FormControl,
-  // InputLabel,
+  InputLabel,
   Select,
   MenuItem,
   ListSubheader,
@@ -34,6 +34,12 @@ const styles = ({ mq }) => ({
   scrollable: {
     overflowY: 'scroll',
     height: 'calc(100vh - 100px)',
+    [mq.small]: {
+      top: 60,
+      position: 'absolute',
+      width: '100%',
+      height: 'calc(100vh - 160px)',
+    },
   },
   main: {
     maxWidth: 1000,
@@ -42,7 +48,6 @@ const styles = ({ mq }) => ({
     paddingTop: 50,
     margin: [[0, 'auto']],
     [mq.small]: {
-      marginTop: 50,
       padding: 15,
     },
     display: 'block',
@@ -68,16 +73,6 @@ const styles = ({ mq }) => ({
     zIndex: 99999,
   },
 });
-
-const muiStyles = {
-  subHeader: {
-    fontWeight: 'bold',
-    fontSize: 20,
-  },
-  dropdownItem: {
-    fontSize: 15,
-  },
-};
 
 const links = [
   {
@@ -126,50 +121,73 @@ export function StyleGuideRenderer({
           tabs={[{ label: 'Code', href: `${docConfig.githubRepo}` }]}
         />
         <div className={classes.content}>
+          <Hidden mdUp>
+            <div className={classes.dropdown}>
+              <FormControl fullWidth>
+                <InputLabel
+                  style={{
+                    paddingLeft: 10,
+                    paddingBottom: 10,
+                  }}
+                  id="component-select"
+                >
+                  Components
+                </InputLabel>
+                <Select
+                  style={{
+                    paddingLeft: 10,
+                    paddingBottom: 10,
+                  }}
+                  defaultValue=""
+                  id="component-select"
+                  labelWidth={20}
+                  autoWidth
+                >
+                  {toc.props.sections.slice(1).map((section) => {
+                    return [
+                      <ListSubheader
+                        style={{
+                          fontWeight: 'bold',
+                          fontSize: 20,
+                        }}
+                        disableSticky
+                        value={section.name}
+                      >
+                        <Link
+                          style={{ display: 'block', width: '100%' }}
+                          href={`#section-${section.name.toLowerCase()}`}
+                        >
+                          {section.name}
+                        </Link>
+                      </ListSubheader>,
+                      ...section.components.map((component) => {
+                        return (
+                          <MenuItem
+                            style={{ display: 'block', width: '100%' }}
+                            value={component.name}
+                          >
+                            <Link
+                              style={{ display: 'block', width: '100%' }}
+                              href={`#${component.name.toLowerCase()}`}
+                            >
+                              {component.name}
+                            </Link>
+                          </MenuItem>
+                        );
+                      }),
+                    ];
+                  })}
+                </Select>
+              </FormControl>
+            </div>
+          </Hidden>
           <div className={classes.scrollable}>
-            <Hidden mdDown>
+            <Hidden smDown>
               <div className={classes.sidebar}>
                 <header className={classes.version}>
                   {version && <Version>{version}</Version>}
                 </header>
                 {hasSidebar ? toc : null}
-              </div>
-            </Hidden>
-            <Hidden mdUp>
-              <div className={classes.dropdown}>
-                <FormControl fullWidth>
-                  <Select defaultValue="" id="component-select" labelWidth={20}>
-                    {/* <InputLabel htmlFor="component-select">
-                      Components
-                    </InputLabel> */}
-                    {/* <MenuItem value="">
-                      <Link href="/">Reset</Link>
-                    </MenuItem> */}
-                    {toc.props.sections.slice(0).map((section) => {
-                      return (
-                        <div>
-                          <ListSubheader
-                            style={muiStyles.subHeader}
-                            disableSticky
-                          >
-                            <Link
-                              href={`#section-${section.name.toLowerCase()}`}
-                            >
-                              {section.name}
-                            </Link>
-                          </ListSubheader>
-                          {section.components.map((component) => (
-                            <MenuItem value={component.name}>
-                              <Link href={`#${component.name.toLowerCase()}`}>
-                                {component.name}
-                              </Link>
-                            </MenuItem>
-                          ))}
-                        </div>
-                      );
-                    })}
-                  </Select>
-                </FormControl>
               </div>
             </Hidden>
             <main className={classes.main}>{children}</main>
