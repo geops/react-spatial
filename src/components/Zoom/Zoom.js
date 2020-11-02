@@ -50,13 +50,25 @@ const defaultProps = {
   delta: 1,
 };
 
-const updateZoom = (map, zoomAction) => {
+const updateZoom = (map, zoomAction, zoomLimits) => {
   map.getView().cancelAnimations();
   const zoom = map.getView().getZoom();
 
-  map.getView().animate({
-    zoom: zoom + zoomAction,
-  });
+  if (zoomAction > 0 && zoom + zoomAction <= zoomLimits.maxZoom) {
+    return map.getView().animate({
+      zoom:
+        zoomAction > 0 && zoom + zoomAction <= zoomLimits.maxZoom
+          ? zoom + zoomAction
+          : zoomLimits.maxZoom,
+    });
+  }
+  // console.log(zoom + zoomAction);
+  // console.log(zoomLimits.minZoom);
+  if (zoomAction < 0 && zoom + zoomAction >= zoomLimits.minZoom) {
+    return map.getView().animate({
+      zoom: zoom + zoomAction,
+    });
+  }
 };
 
 /**
@@ -75,7 +87,10 @@ function Zoom({
   const zoomIn = useCallback(
     (evt) => {
       if (!evt.which || evt.which === 13) {
-        updateZoom(map, delta);
+        updateZoom(map, delta, {
+          minZoom: map.getView().getMinZoom(),
+          maxZoom: map.getView().getMaxZoom(),
+        });
       }
     },
     [map],
@@ -84,7 +99,10 @@ function Zoom({
   const zoomOut = useCallback(
     (evt) => {
       if (!evt.which || evt.which === 13) {
-        updateZoom(map, -delta);
+        updateZoom(map, -delta, {
+          minZoom: map.getView().getMinZoom(),
+          maxZoom: map.getView().getMaxZoom(),
+        });
       }
     },
     [map],
