@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 import { geopsTheme, Header, Footer } from '@geops/geops-ui';
 import {
   Hidden,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  ListSubheader,
+  ClickAwayListener,
+  Collapse,
+  List,
+  ListItem,
   Link,
 } from '@material-ui/core';
+import Open from '@material-ui/icons/ArrowDropDownTwoTone';
+import Close from '@material-ui/icons/ArrowDropUpTwoTone';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Version from 'react-styleguidist/lib/client/rsg-components/Version';
 import Styled from 'react-styleguidist/lib/client/rsg-components/Styled';
@@ -35,7 +36,7 @@ const styles = ({ mq }) => ({
     overflowY: 'scroll',
     height: 'calc(100vh - 100px)',
     [mq.small]: {
-      top: 60,
+      top: 50,
       position: 'absolute',
       width: '100%',
       height: 'calc(100vh - 160px)',
@@ -67,8 +68,13 @@ const styles = ({ mq }) => ({
     overflow: 'auto',
   },
   dropdown: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '0 10px 0',
     position: 'fixed',
-    backgroundColor: '#EFEFEF',
+    backgroundColor: '#efefef',
+    height: 40,
     width: '100%',
     zIndex: 99999,
   },
@@ -82,6 +88,9 @@ export function StyleGuideRenderer({
   hasSidebar,
 }) {
   const [apiKey, setApiKey] = useState();
+  const [dropdownOpen, toggleDropdown] = useState(false);
+  const [expanded, expandSection] = useState();
+  const [selected, setSelected] = useState('Components');
   useEffect(() => {
     fetch('https://developer.geops.io/publickey')
       .then((response) => response.json())
@@ -110,68 +119,89 @@ export function StyleGuideRenderer({
           tabs={[{ label: 'Code', href: `${docConfig.githubRepo}` }]}
         />
         <div className={classes.content}>
-          <Hidden mdUp>
-            <div className={classes.dropdown}>
-              <FormControl fullWidth>
-                <InputLabel
+          <Hidden smUp>
+            <div
+              role="button"
+              type="button"
+              className={classes.dropdown}
+              onClick={() => toggleDropdown(!dropdownOpen)}
+              onKeyDown={(e) => {
+                if (e.keyCode === 13) {
+                  toggleDropdown(!dropdownOpen);
+                }
+              }}
+              tabIndex={0}
+            >
+              {selected}
+              {dropdownOpen ? <Close /> : <Open />}
+            </div>
+            <Collapse in={dropdownOpen} timeout="auto" unmountOnExit>
+              <ClickAwayListener onClickAway={() => toggleDropdown(false)}>
+                <List
+                  component="div"
+                  disablePadding
                   style={{
-                    paddingLeft: 10,
-                    paddingBottom: 10,
+                    zIndex: 99999,
+                    backgroundColor: 'white',
+                    width: '100%',
+                    boxShadow: '0px 10px 15px #35353520',
+                    position: 'absolute',
+                    top: 40,
+                    overflowY: 'scroll',
                   }}
-                  id="component-select"
-                >
-                  Components
-                </InputLabel>
-                <Select
-                  style={{
-                    paddingLeft: 10,
-                    paddingBottom: 10,
-                  }}
-                  defaultValue=""
-                  id="component-select"
-                  labelWidth={20}
-                  autoWidth
                 >
                   {toc.props.sections.slice(1).map((section) => {
                     return [
-                      <ListSubheader
-                        style={{
-                          fontWeight: 'bold',
-                          fontSize: 20,
+                      <ListItem
+                        key={section.name}
+                        button
+                        onClick={() => {
+                          return expanded === section.name
+                            ? expandSection()
+                            : expandSection(section.name);
                         }}
-                        disableSticky
-                        value={section.name}
+                        style={{ fontWeight: 'bold' }}
                       >
-                        <Link
-                          style={{ display: 'block', width: '100%' }}
-                          href={`#section-${section.name.toLowerCase()}`}
-                        >
-                          {section.name}
-                        </Link>
-                      </ListSubheader>,
-                      ...section.components.map((component) => {
-                        return (
-                          <MenuItem
-                            style={{ display: 'block', width: '100%' }}
-                            value={component.name}
-                          >
-                            <Link
-                              style={{ display: 'block', width: '100%' }}
-                              href={`#${component.name.toLowerCase()}`}
-                            >
-                              {component.name}
-                            </Link>
-                          </MenuItem>
-                        );
-                      }),
+                        {section.name}
+                      </ListItem>,
+                      <Collapse
+                        key={`${section.name}-components`}
+                        in={expanded === section.name}
+                        timeout="auto"
+                        unmountOnExit
+                      >
+                        <List disablePadding>
+                          {section.components.map((component) => {
+                            return (
+                              <ListItem
+                                key={component.name}
+                                button
+                                style={{ paddingLeft: 32 }}
+                                onClick={() => {
+                                  setSelected(component.name);
+                                  toggleDropdown(false);
+                                }}
+                                tabIndex={-1}
+                              >
+                                <Link
+                                  style={{ display: 'block', width: '100%' }}
+                                  href={`#${component.name.toLowerCase()}`}
+                                >
+                                  {component.name}
+                                </Link>
+                              </ListItem>
+                            );
+                          })}
+                        </List>
+                      </Collapse>,
                     ];
                   })}
-                </Select>
-              </FormControl>
-            </div>
+                </List>
+              </ClickAwayListener>
+            </Collapse>
           </Hidden>
           <div className={classes.scrollable}>
-            <Hidden smDown>
+            <Hidden xsDown>
               <div className={classes.sidebar}>
                 <header className={classes.version}>
                   {version && <Version>{version}</Version>}
