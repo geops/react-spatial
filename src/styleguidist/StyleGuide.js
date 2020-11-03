@@ -51,10 +51,6 @@ const styles = ({ mq }) => ({
     [mq.small]: {
       padding: 15,
     },
-    display: 'block',
-  },
-  components: {
-    overflow: 'auto', // To prevent the pane from growing out of the screen
   },
   sidebar: {
     backgroundColor: '#EFEFEF',
@@ -78,6 +74,7 @@ const styles = ({ mq }) => ({
     width: '100%',
     zIndex: 99999,
     color: '#6987a1',
+    borderBottom: '1px solid #6987a1',
   },
 });
 
@@ -142,13 +139,13 @@ export function StyleGuideRenderer({
                   component="div"
                   disablePadding
                   style={{
-                    zIndex: 99999,
-                    backgroundColor: 'white',
                     width: '100%',
-                    boxShadow: '0px 10px 15px #35353520',
-                    position: 'absolute',
+                    overflow: 'auto',
+                    maxHeight: 'calc(100vh - 150px)',
                     top: 40,
-                    overflowY: 'scroll',
+                    backgroundColor: 'white',
+                    boxShadow: '0px 10px 15px #35353520',
+                    zIndex: 99999,
                   }}
                 >
                   {toc.props.sections.slice(1).map((section) => {
@@ -161,7 +158,11 @@ export function StyleGuideRenderer({
                             ? expandSection()
                             : expandSection(section.name);
                         }}
-                        style={{ fontWeight: 'bold', color: '#6987a1' }}
+                        style={{
+                          fontWeight: 'bold',
+                          color: '#6987a1',
+                          borderTop: '1px solid #e8e8e8',
+                        }}
                       >
                         {section.name}
                       </ListItem>,
@@ -171,29 +172,28 @@ export function StyleGuideRenderer({
                         timeout="auto"
                         unmountOnExit
                       >
-                        <List disablePadding component="div">
-                          {section.components.map((component) => {
-                            return (
-                              <ListItem
-                                key={component.name}
-                                button
-                                style={{ paddingLeft: 32 }}
-                                onClick={() => {
-                                  setSelected(component.name);
-                                  toggleDropdown(false);
-                                }}
-                                tabIndex={-1}
+                        {section.components.map((component) => {
+                          return (
+                            <ListItem
+                              key={component.name}
+                              button
+                              style={{ paddingLeft: 32 }}
+                              onClick={() => {
+                                setSelected(component.name);
+                                toggleDropdown(false);
+                              }}
+                              tabIndex={-1}
+                              selected={selected === component.name}
+                            >
+                              <Link
+                                style={{ display: 'block', width: '100%' }}
+                                href={`#${component.name.toLowerCase()}`}
                               >
-                                <Link
-                                  style={{ display: 'block', width: '100%' }}
-                                  href={`#${component.name.toLowerCase()}`}
-                                >
-                                  {component.name}
-                                </Link>
-                              </ListItem>
-                            );
-                          })}
-                        </List>
+                                {component.name}
+                              </Link>
+                            </ListItem>
+                          );
+                        })}
                       </Collapse>,
                     ];
                   })}
