@@ -74,17 +74,6 @@ const styles = ({ mq }) => ({
   },
 });
 
-const links = [
-  {
-    label: 'Privacy Policy',
-    href: 'https://geops.ch/datenschutz',
-  },
-  {
-    label: 'Imprint',
-    href: 'https://geops.ch/impressum',
-  },
-];
-
 export function StyleGuideRenderer({
   classes,
   children,
@@ -191,7 +180,7 @@ export function StyleGuideRenderer({
               </div>
             </Hidden>
             <main className={classes.main}>{children}</main>
-            <Footer links={links} />
+            <Footer />
           </div>
         </div>
         <div id="promo">
