@@ -36,7 +36,7 @@ const styles = ({ mq }) => ({
     overflowY: 'scroll',
     height: 'calc(100vh - 100px)',
     [mq.small]: {
-      top: 50,
+      top: 40,
       position: 'absolute',
       width: '100%',
       height: 'calc(100vh - 160px)',
@@ -46,7 +46,7 @@ const styles = ({ mq }) => ({
     maxWidth: 1000,
     padding: [[15, 30]],
     paddingLeft: 230,
-    paddingTop: 50,
+    paddingTop: 55,
     margin: [[0, 'auto']],
     [mq.small]: {
       padding: 15,
@@ -77,6 +77,7 @@ const styles = ({ mq }) => ({
     height: 40,
     width: '100%',
     zIndex: 99999,
+    color: '#6987a1',
   },
 });
 
