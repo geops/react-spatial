@@ -39,7 +39,7 @@ const styles = ({ mq }) => ({
       top: 40,
       position: 'absolute',
       width: '100%',
-      height: 'calc(100vh - 160px)',
+      height: 'calc(100vh - 140px)',
     },
   },
   main: {
