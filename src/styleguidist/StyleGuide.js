@@ -160,7 +160,7 @@ export function StyleGuideRenderer({
                             ? expandSection()
                             : expandSection(section.name);
                         }}
-                        style={{ fontWeight: 'bold' }}
+                        style={{ fontWeight: 'bold', color: '#6987a1' }}
                       >
                         {section.name}
                       </ListItem>,
@@ -170,7 +170,7 @@ export function StyleGuideRenderer({
                         timeout="auto"
                         unmountOnExit
                       >
-                        <List disablePadding>
+                        <List disablePadding component="div">
                           {section.components.map((component) => {
                             return (
                               <ListItem
