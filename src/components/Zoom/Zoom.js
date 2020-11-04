@@ -50,13 +50,6 @@ const defaultProps = {
   delta: 1,
 };
 
-const getZoomLimits = (map) => {
-  return {
-    minZoom: map.getView().getMinZoom() || 1.5, // Prevent minimum from being 0
-    maxZoom: map.getView().getMaxZoom() || 22, // Default maxZoom from BasicMap
-  };
-};
-
 const updateZoom = (map, zoomAction) => {
   map.getView().cancelAnimations();
   const zoom = map.getView().getZoom();
@@ -102,26 +95,37 @@ function Zoom({
   );
 
   useEffect(() => {
-    // Set disabled zoom controls on mount
-    setDisabledControls({
-      zoomIn: map.getView().getZoom() >= getZoomLimits(map).maxZoom,
-      zoomOut: map.getView().getZoom() <= getZoomLimits(map).minZoom,
-    });
-    setZoom(map.getView().getZoom());
-    map.getView().on('change', () => {
-      // Add listener to set disabled zoom controls on view change
-      setZoom(map.getView().getZoom());
+    const view = map.getView();
+    /* Some apps (e.g. Trafimage-Maps) do not load the correct zoom in time
+     * to update the "disabledControls" object, so we trigger a seperate hook (see below)
+     * using setZoom & currentZoom, which ensures it is written on mount and update.
+     */
+    setZoom(view.getZoom());
+    view.on('change', () => {
+      /* Add view listener to trigger zoom update on view change. */
+      setZoom(view.getZoom());
     });
   }, []);
 
   useEffect(() => {
+    const view = map.getView();
+    // We use the constrained max and min zoom, which is calculated including the viewport size
     setDisabledControls({
-      zoomIn: map.getView().getZoom() >= getZoomLimits(map).maxZoom,
-      zoomOut: map.getView().getZoom() <= getZoomLimits(map).minZoom,
+      zoomIn: view.getZoom() >= view.getConstrainedZoom(view.getMaxZoom()),
+      zoomOut: view.getZoom() <= view.getConstrainedZoom(view.getMinZoom()),
     });
   }, [currentZoom]);
 
   useEffect(() => {
+    /* Re-add the view listener in case the view was reloaded (e.g. when switching
+     * between certain topics in Trafimage-Maps)
+     */
+    map.on('change:view', () => {
+      map.getView().on('change', () => {
+        setZoom(map.getView().getZoom());
+      });
+    });
+
     let control;
     if (zoomSlider && ref.current) {
       control = new ZoomSlider();
