@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useEffect, useRef, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import { ZoomSlider } from 'ol/control';
@@ -50,25 +50,18 @@ const defaultProps = {
   delta: 1,
 };
 
-const updateZoom = (map, zoomAction, zoomLimits) => {
+const getZoomLimits = (map) => {
+  return {
+    minZoom: map.getView().getMinZoom() || 1.5, // Prevent minimum from being 0
+    maxZoom: map.getView().getMaxZoom() || 22, // Default maxZoom from BasicMap
+  };
+};
+
+const updateZoom = (map, zoomAction) => {
   map.getView().cancelAnimations();
   const zoom = map.getView().getZoom();
 
-  if (zoomAction > 0 && zoom + zoomAction <= zoomLimits.maxZoom) {
-    return map.getView().animate({
-      zoom:
-        zoomAction > 0 && zoom + zoomAction <= zoomLimits.maxZoom
-          ? zoom + zoomAction
-          : zoomLimits.maxZoom,
-    });
-  }
-  // console.log(zoom + zoomAction);
-  // console.log(zoomLimits.minZoom);
-  if (zoomAction < 0 && zoom + zoomAction >= zoomLimits.minZoom) {
-    return map.getView().animate({
-      zoom: zoom + zoomAction,
-    });
-  }
+  map.getView().animate({ zoom: zoom + zoomAction });
 };
 
 /**
@@ -84,13 +77,15 @@ function Zoom({
   ...other
 }) {
   const ref = useRef();
+  const [disabledControls, setDisabledControls] = useState({
+    zoomIn: false,
+    zoomOut: false,
+  });
+
   const zoomIn = useCallback(
     (evt) => {
       if (!evt.which || evt.which === 13) {
-        updateZoom(map, delta, {
-          minZoom: map.getView().getMinZoom(),
-          maxZoom: map.getView().getMaxZoom(),
-        });
+        updateZoom(map, delta);
       }
     },
     [map],
@@ -99,14 +94,27 @@ function Zoom({
   const zoomOut = useCallback(
     (evt) => {
       if (!evt.which || evt.which === 13) {
-        updateZoom(map, -delta, {
-          minZoom: map.getView().getMinZoom(),
-          maxZoom: map.getView().getMaxZoom(),
-        });
+        updateZoom(map, -delta);
       }
     },
     [map],
   );
+
+  useEffect(() => {
+    // Set disabled zoom controls on mount
+    setDisabledControls({
+      zoomIn: map.getView().getZoom() >= getZoomLimits(map).maxZoom,
+      zoomOut: map.getView().getZoom() <= getZoomLimits(map).minZoom,
+    });
+    map.getView().on('change', () => {
+      // Add listener to set disabled zoom controls on view change
+      const zoom = map.getView().getZoom();
+      setDisabledControls({
+        zoomIn: zoom >= getZoomLimits(map).maxZoom,
+        zoomOut: zoom <= getZoomLimits(map).minZoom,
+      });
+    });
+  }, []);
 
   useEffect(() => {
     let control;
@@ -128,27 +136,33 @@ function Zoom({
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <div className="rs-zooms-bar" {...other}>
-      <div
-        role="button"
+      <button
+        type="button"
         tabIndex={0}
-        className="rs-zoom-in"
+        className={`rs-zoom-in${
+          disabledControls.zoomIn ? ' rs-zoom-disabled' : ''
+        }`}
         title={titles.zoomIn}
         onClick={zoomIn}
         onKeyPress={zoomIn}
+        disabled={disabledControls.zoomIn}
       >
         {zoomInChildren}
-      </div>
+      </button>
       {zoomSlider ? <div className="rs-zoomslider-wrapper" ref={ref} /> : null}
-      <div
-        role="button"
+      <button
+        type="button"
         tabIndex={0}
-        className="rs-zoom-out"
+        className={`rs-zoom-out${
+          disabledControls.zoomOut ? ' rs-zoom-disabled' : ''
+        }`}
         title={titles.zoomOut}
         onClick={zoomOut}
         onKeyPress={zoomOut}
+        disabled={disabledControls.zoomOut}
       >
         {zoomOutChildren}
-      </div>
+      </button>
     </div>
   );
 }
