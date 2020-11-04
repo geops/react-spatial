@@ -101,7 +101,7 @@ function Zoom({
      * using setZoom & currentZoom, which ensures it is written on mount and update.
      */
     setZoom(view.getZoom());
-    view.on('change', () => {
+    view.on('propertychange', () => {
       /* Add view listener to trigger zoom update on view change. */
       setZoom(view.getZoom());
     });
@@ -121,7 +121,7 @@ function Zoom({
      * between certain topics in Trafimage-Maps)
      */
     map.on('change:view', () => {
-      map.getView().on('change', () => {
+      map.getView().on('propertychange', () => {
         setZoom(map.getView().getZoom());
       });
     });
