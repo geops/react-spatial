@@ -81,6 +81,7 @@ function Zoom({
     zoomIn: false,
     zoomOut: false,
   });
+  const [currentZoom, setZoom] = useState();
 
   const zoomIn = useCallback(
     (evt) => {
@@ -106,15 +107,19 @@ function Zoom({
       zoomIn: map.getView().getZoom() >= getZoomLimits(map).maxZoom,
       zoomOut: map.getView().getZoom() <= getZoomLimits(map).minZoom,
     });
+    setZoom(map.getView().getZoom());
     map.getView().on('change', () => {
       // Add listener to set disabled zoom controls on view change
-      const zoom = map.getView().getZoom();
-      setDisabledControls({
-        zoomIn: zoom >= getZoomLimits(map).maxZoom,
-        zoomOut: zoom <= getZoomLimits(map).minZoom,
-      });
+      setZoom(map.getView().getZoom());
     });
   }, []);
+
+  useEffect(() => {
+    setDisabledControls({
+      zoomIn: map.getView().getZoom() >= getZoomLimits(map).maxZoom,
+      zoomOut: map.getView().getZoom() <= getZoomLimits(map).minZoom,
+    });
+  }, [currentZoom]);
 
   useEffect(() => {
     let control;
