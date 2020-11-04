@@ -51,6 +51,7 @@ const styles = ({ mq }) => ({
     [mq.small]: {
       padding: 15,
     },
+    display: 'block',
   },
   sidebar: {
     backgroundColor: '#EFEFEF',
