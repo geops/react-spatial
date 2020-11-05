@@ -98,23 +98,22 @@ function Zoom({
 
   const zoomInDisabled = useMemo(() => {
     return (
-      map.getView().getZoom() >=
+      currentZoom >=
       map.getView().getConstrainedZoom(map.getView().getMaxZoom())
     );
   }, [currentZoom]);
 
   const zoomOutDisabled = useMemo(() => {
     return (
-      map.getView().getZoom() <=
+      currentZoom <=
       map.getView().getConstrainedZoom(map.getView().getMinZoom())
     );
   }, [currentZoom]);
 
   useEffect(() => {
-    /* Trigger recalculation of disabled zooms */
-    map.on('moveend', () => {
-      setZoom(map.getView().getZoom());
-    });
+    /* Trigger zoom update to disable zooms on max and min */
+    const zoomListener = () => setZoom(map.getView().getZoom());
+    map.on('moveend', zoomListener);
 
     let control;
     if (zoomSlider && ref.current) {
@@ -126,6 +125,7 @@ function Zoom({
       map.addControl(control);
     }
     return () => {
+      map.un('moveend', zoomListener);
       if (control) {
         map.removeControl(control);
       }
