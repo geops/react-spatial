@@ -86,9 +86,9 @@ describe('Zoom', () => {
     const spy = jest.spyOn(map, 'removeControl');
     const spy2 = jest.spyOn(map, 'addControl');
     const wrapper = mount(<Zoom map={map} zoomSlider />);
-    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledTimes(0);
     wrapper.unmount();
-    expect(spy).toHaveBeenCalledTimes(2);
+    expect(spy).toHaveBeenCalledTimes(1);
     expect(spy.mock.calls[0][0]).toBe(spy2.mock.calls[0][0]);
   });
 
@@ -98,9 +98,7 @@ describe('Zoom', () => {
     });
     const spy = jest.spyOn(map.getView(), 'setZoom');
     const wrapper = mount(<Zoom map={map} />);
-    expect(wrapper.find('.rs-zoom-in').hasClass('rs-zoom-disabled')).toEqual(
-      true,
-    );
+    expect(wrapper.find('.rs-zoom-in').prop('disabled')).toEqual(true);
     wrapper.find('.rs-zoom-in').first().simulate('click');
     expect(spy).toHaveBeenCalledTimes(0);
   });
@@ -111,9 +109,7 @@ describe('Zoom', () => {
     });
     const spy = jest.spyOn(map.getView(), 'setZoom');
     const wrapper = mount(<Zoom map={map} />);
-    expect(wrapper.find('.rs-zoom-out').hasClass('rs-zoom-disabled')).toEqual(
-      true,
-    );
+    expect(wrapper.find('.rs-zoom-out').prop('disabled')).toEqual(true);
     wrapper.find('.rs-zoom-out').first().simulate('click');
     expect(spy).toHaveBeenCalledTimes(0);
   });

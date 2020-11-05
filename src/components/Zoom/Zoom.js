@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useCallback, useState } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  useCallback,
+  useState,
+  useMemo,
+} from 'react';
 import PropTypes from 'prop-types';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import { ZoomSlider } from 'ol/control';
@@ -70,10 +76,6 @@ function Zoom({
   ...other
 }) {
   const ref = useRef();
-  const [disabledControls, setDisabledControls] = useState({
-    zoomIn: false,
-    zoomOut: false,
-  });
   const [currentZoom, setZoom] = useState();
 
   const zoomIn = useCallback(
@@ -94,36 +96,24 @@ function Zoom({
     [map],
   );
 
-  useEffect(() => {
-    const view = map.getView();
-    /* Some apps (e.g. Trafimage-Maps) do not load the correct zoom in time
-     * to update the "disabledControls" object, so we trigger a seperate hook (see below)
-     * using setZoom & currentZoom, which ensures it is written on mount and update.
-     */
-    setZoom(view.getZoom());
-    view.on('propertychange', () => {
-      /* Add view listener to trigger zoom update on view change. */
-      setZoom(view.getZoom());
-    });
-  }, []);
+  const zoomInDisabled = useMemo(() => {
+    return (
+      map.getView().getZoom() >=
+      map.getView().getConstrainedZoom(map.getView().getMaxZoom())
+    );
+  }, [currentZoom]);
 
-  useEffect(() => {
-    const view = map.getView();
-    // We use the constrained max and min zoom, which is calculated including the viewport size
-    setDisabledControls({
-      zoomIn: view.getZoom() >= view.getConstrainedZoom(view.getMaxZoom()),
-      zoomOut: view.getZoom() <= view.getConstrainedZoom(view.getMinZoom()),
-    });
+  const zoomOutDisabled = useMemo(() => {
+    return (
+      map.getView().getZoom() <=
+      map.getView().getConstrainedZoom(map.getView().getMinZoom())
+    );
   }, [currentZoom]);
 
   useEffect(() => {
-    /* Re-add the view listener in case the view was reloaded (e.g. when switching
-     * between certain topics in Trafimage-Maps)
-     */
-    map.on('change:view', () => {
-      map.getView().on('propertychange', () => {
-        setZoom(map.getView().getZoom());
-      });
+    /* Trigger recalculation of disabled zooms */
+    map.on('moveend', () => {
+      setZoom(map.getView().getZoom());
     });
 
     let control;
@@ -148,13 +138,11 @@ function Zoom({
       <button
         type="button"
         tabIndex={0}
-        className={`rs-zoom-in${
-          disabledControls.zoomIn ? ' rs-zoom-disabled' : ''
-        }`}
+        className="rs-zoom-in"
         title={titles.zoomIn}
         onClick={zoomIn}
         onKeyPress={zoomIn}
-        disabled={disabledControls.zoomIn}
+        disabled={zoomInDisabled}
       >
         {zoomInChildren}
       </button>
@@ -162,13 +150,11 @@ function Zoom({
       <button
         type="button"
         tabIndex={0}
-        className={`rs-zoom-out${
-          disabledControls.zoomOut ? ' rs-zoom-disabled' : ''
-        }`}
+        className="rs-zoom-out"
         title={titles.zoomOut}
         onClick={zoomOut}
         onKeyPress={zoomOut}
-        disabled={disabledControls.zoomOut}
+        disabled={zoomOutDisabled}
       >
         {zoomOutChildren}
       </button>
