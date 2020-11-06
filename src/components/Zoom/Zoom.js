@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  useCallback,
+  useState,
+  useMemo,
+} from 'react';
 import PropTypes from 'prop-types';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import { ZoomSlider } from 'ol/control';
@@ -54,9 +60,7 @@ const updateZoom = (map, zoomAction) => {
   map.getView().cancelAnimations();
   const zoom = map.getView().getZoom();
 
-  map.getView().animate({
-    zoom: zoom + zoomAction,
-  });
+  map.getView().animate({ zoom: zoom + zoomAction });
 };
 
 /**
@@ -72,6 +76,8 @@ function Zoom({
   ...other
 }) {
   const ref = useRef();
+  const [currentZoom, setZoom] = useState();
+
   const zoomIn = useCallback(
     (evt) => {
       if (!evt.which || evt.which === 13) {
@@ -90,7 +96,25 @@ function Zoom({
     [map],
   );
 
+  const zoomInDisabled = useMemo(() => {
+    return (
+      currentZoom >=
+      map.getView().getConstrainedZoom(map.getView().getMaxZoom())
+    );
+  }, [currentZoom]);
+
+  const zoomOutDisabled = useMemo(() => {
+    return (
+      currentZoom <=
+      map.getView().getConstrainedZoom(map.getView().getMinZoom())
+    );
+  }, [currentZoom]);
+
   useEffect(() => {
+    /* Trigger zoom update to disable zooms on max and min */
+    const zoomListener = () => setZoom(map.getView().getZoom());
+    map.on('moveend', zoomListener);
+
     let control;
     if (zoomSlider && ref.current) {
       control = new ZoomSlider();
@@ -101,6 +125,7 @@ function Zoom({
       map.addControl(control);
     }
     return () => {
+      map.un('moveend', zoomListener);
       if (control) {
         map.removeControl(control);
       }
@@ -110,27 +135,29 @@ function Zoom({
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <div className="rs-zooms-bar" {...other}>
-      <div
-        role="button"
+      <button
+        type="button"
         tabIndex={0}
         className="rs-zoom-in"
         title={titles.zoomIn}
         onClick={zoomIn}
         onKeyPress={zoomIn}
+        disabled={zoomInDisabled}
       >
         {zoomInChildren}
-      </div>
+      </button>
       {zoomSlider ? <div className="rs-zoomslider-wrapper" ref={ref} /> : null}
-      <div
-        role="button"
+      <button
+        type="button"
         tabIndex={0}
         className="rs-zoom-out"
         title={titles.zoomOut}
         onClick={zoomOut}
         onKeyPress={zoomOut}
+        disabled={zoomOutDisabled}
       >
         {zoomOutChildren}
-      </div>
+      </button>
     </div>
   );
 }
