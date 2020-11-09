@@ -16,7 +16,7 @@
     justify-content: center;
     align-items: center;
     transition: background-color 0.5s ease, color 0.5s ease;
-    border: none;
+    border: 0;
 
     &:disabled {
       pointer-events: none;
