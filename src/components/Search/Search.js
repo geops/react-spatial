@@ -121,6 +121,7 @@ function Search({
                 const filtered = suggestions.filter((s) => s.items.length > 0);
                 if (filtered.length > 0) {
                   const { items, section } = filtered[0];
+                  setValue(items[0].properties.name);
                   onSelect({ ...items[0], section });
                 }
               } else if (
