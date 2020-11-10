@@ -16,6 +16,7 @@ class StopFinder extends Engine {
   search(value) {
     return this.api.search({
       q: encodeURIComponent(value),
+      ...this.options,
     });
   }
 
