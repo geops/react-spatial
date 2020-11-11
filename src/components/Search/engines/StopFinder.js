@@ -20,6 +20,10 @@ class StopFinder extends Engine {
     });
   }
 
+  setApiKey(apiKey) {
+    this.api.apiKey = apiKey;
+  }
+
   render(item) {
     return <div>{item.properties.name}</div>;
   }

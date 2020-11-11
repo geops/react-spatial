@@ -76,6 +76,13 @@ function Search({
         stops: new StopFinder(null, { apiKey }),
       };
     }
+    if (apiKey) {
+      Object.values(engines).forEach((engine) => {
+        if (engine.setApiKey) {
+          engine.setApiKey(apiKey);
+        }
+      });
+    }
     return engines;
   }, [apiKey, engines]);
 
