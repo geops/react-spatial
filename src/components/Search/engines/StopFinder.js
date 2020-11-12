@@ -7,6 +7,8 @@ class StopFinder extends Engine {
   constructor(endpoint = 'https://api.geops.io/stops/v1/', options = {}) {
     super();
     this.options = options;
+    // apiKey is passed as key in StopsAPI, delete to avoid duplicates.
+    delete this.options.apiKey;
     this.api = new StopsAPI({
       url: endpoint,
       apiKey: options.apiKey,
@@ -18,6 +20,10 @@ class StopFinder extends Engine {
       q: encodeURIComponent(value),
       ...this.options,
     });
+  }
+
+  setApiKey(apiKey) {
+    this.api.apiKey = apiKey;
   }
 
   render(item) {
