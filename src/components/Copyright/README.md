@@ -18,6 +18,21 @@ const layers = [
       source: new OSM(),
     }),
   }),
+  new Layer({
+    copyright: '&copy; test2',
+    olLayer: new Tile({
+      source: new OSM(),
+    }),
+  }),
+  new Layer({
+    copyright: '&copy; OSM Contributors',
+    olLayer: new Tile({
+      source: new OSM(),
+    }),
+  }),
+  new MapboxLayer({
+    url: `https://maps.geops.io/styles/travic/style.json?key=${window.apiKey}`,
+  }),
   new MapboxLayer({
     url: `https://maps.geops.io/styles/travic/style.json?key=${window.apiKey}`,
   }),
