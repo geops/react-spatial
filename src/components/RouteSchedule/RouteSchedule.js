@@ -153,7 +153,7 @@ const renderRouteIdentifier = ({ routeIdentifier, longName }) => {
   return null;
 };
 
-const defaultRenderheader = ({ lineInfos, renderHeaderButtons }) => {
+const defaultRenderHeader = ({ lineInfos, renderHeaderButtons }) => {
   const {
     vehicleType,
     shortName,
@@ -188,6 +188,57 @@ const defaultRenderheader = ({ lineInfos, renderHeaderButtons }) => {
   );
 };
 
+const defaultRenderFooter = (props) => {
+  const { lineInfos, renderCopyright } = props;
+  if (!lineInfos.operator && !lineInfos.publisher) {
+    return null;
+  }
+  return <div className="rt-route-footer">{renderCopyright({ ...props })}</div>;
+};
+
+const defaultRenderLink = (title, text, url) => {
+  return (
+    <div className="rt-route-copyright-link">
+      {title}
+      {url ? (
+        <a href={url} target="_blank" rel="noreferrer">
+          {text}
+        </a>
+      ) : (
+        <>{text}</>
+      )}
+    </div>
+  );
+};
+
+const defaultRenderCopyright = ({ lineInfos, t }) => {
+  const titleOperator = t('Operator: ');
+  const titlePublisher = t('Publisher: ');
+  const titleLicense = t('Licence: ');
+  return (
+    <span className="rt-route-copyright">
+      {lineInfos.operator &&
+        defaultRenderLink(
+          titleOperator,
+          lineInfos.operator,
+          lineInfos.operatorUrl,
+        )}
+      {lineInfos.publisher &&
+        defaultRenderLink(
+          titlePublisher,
+          lineInfos.publisher,
+          lineInfos.publisherUrl,
+        )}
+      {lineInfos.license &&
+        defaultRenderLink(
+          titleLicense,
+          lineInfos.license,
+          lineInfos.licenseUrl,
+        )}
+    </span>
+  );
+};
+
 const propTypes = {
   /**
    * CSS class of the route schedule wrapper.
@@ -210,6 +261,16 @@ const propTypes = {
   renderHeader: PropTypes.func,
 
   /**
+   * Render Footer of the route scheduler.
+   */
+  renderFooter: PropTypes.func,
+
+  /**
+   * Render Copyright of the route scheduler.
+   */
+  renderCopyright: PropTypes.func,
+
+  /**
    * Render the status of the station image.
    */
   renderStationImg: PropTypes.func,
@@ -228,27 +289,43 @@ const propTypes = {
    * Function to render header buttons.
    */
   renderHeaderButtons: PropTypes.func,
+
+  /**
+   * Translation function.
+   * @param {function} Translation function returning the translated string.
+   */
+  t: PropTypes.func,
 };
 
 const defaultProps = {
   className: 'rt-route-schedule',
   lineInfos: null,
-  renderHeader: defaultRenderheader,
+  renderHeader: defaultRenderHeader,
   renderStation: defaultRenderStation,
   renderStationImg: defaultRenderStationImg,
+  renderCopyright: defaultRenderCopyright,
+  renderFooter: defaultRenderFooter,
   renderHeaderButtons: () => null,
   onStationClick: () => {},
+  t: (s) => s,
 };
 
 /**
  * RouteSchedule displays information, stops and punctuality about the clicked route.
  */
 function RouteSchedule(props) {
-  const { lineInfos, className, renderStation, renderHeader } = props;
+  const {
+    lineInfos,
+    className,
+    renderStation,
+    renderHeader,
+    renderFooter,
+  } = props;
 
   if (!lineInfos) {
     return null;
   }
+  console.log(lineInfos);
 
   return (
     <div className={className}>
@@ -258,6 +335,7 @@ function RouteSchedule(props) {
           renderStation({ ...props, stop, idx }),
         )}
       </div>
+      {renderFooter({ ...props })}
     </div>
   );
 }

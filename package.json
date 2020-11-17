@@ -17,11 +17,11 @@
     "resize-observer-polyfill": "1.5.1"
   },
   "peerDependencies": {
-    "mapbox-gl": "1.11.1",
-    "mobility-toolbox-js": "1.1.4",
-    "ol": "6.3.1",
-    "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "mapbox-gl": "^1",
+    "mobility-toolbox-js": "^1",
+    "ol": "^6",
+    "react": "^16",
+    "react-dom": "^16"
   },
   "devDependencies": {
     "@babel/core": "7.11.5",
@@ -59,7 +59,7 @@
     "jsts": "2.5.1",
     "lint-staged": "10.2.11",
     "mapbox-gl": "1.11.1",
-    "mobility-toolbox-js": "1.1.4",
+    "mobility-toolbox-js": "1.1.13-beta.1",
     "node-sass": "4.14.1",
     "ol": "6.3.1",
     "prettier": "2.0.5",

@@ -40,9 +40,15 @@
     }
   }
 
+  .rt-route-footer {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+  }
+
   .rt-route-body {
     font-size: 14px;
-    padding: 10px 20px;
+    padding: 0 20px;
 
     .rt-route-station {
       display: flex;
