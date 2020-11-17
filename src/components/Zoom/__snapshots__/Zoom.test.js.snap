@@ -6,13 +6,14 @@ exports[`Zoom should match snapshot with custom attributes 1`] = `
   tabIndex={-1}
   title="bar"
 >
-  <div
+  <button
     className="rs-zoom-in"
+    disabled={false}
     onClick={[Function]}
     onKeyPress={[Function]}
-    role="button"
     tabIndex={0}
     title="Zoom in"
+    type="button"
   >
     <svg
       fill="currentColor"
@@ -33,14 +34,15 @@ exports[`Zoom should match snapshot with custom attributes 1`] = `
         d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
       />
     </svg>
-  </div>
-  <div
+  </button>
+  <button
     className="rs-zoom-out"
+    disabled={false}
     onClick={[Function]}
     onKeyPress={[Function]}
-    role="button"
     tabIndex={0}
     title="Zoom out"
+    type="button"
   >
     <svg
       fill="currentColor"
@@ -61,7 +63,7 @@ exports[`Zoom should match snapshot with custom attributes 1`] = `
         d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
       />
     </svg>
-  </div>
+  </button>
 </div>
 `;
 
@@ -69,13 +71,14 @@ exports[`Zoom should match snapshot with zoom slider 1`] = `
 <div
   className="rs-zooms-bar"
 >
-  <div
+  <button
     className="rs-zoom-in"
+    disabled={false}
     onClick={[Function]}
     onKeyPress={[Function]}
-    role="button"
     tabIndex={0}
     title="Zoom in"
+    type="button"
   >
     <svg
       fill="currentColor"
@@ -96,17 +99,18 @@ exports[`Zoom should match snapshot with zoom slider 1`] = `
         d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
       />
     </svg>
-  </div>
+  </button>
   <div
     className="rs-zoomslider-wrapper"
   />
-  <div
+  <button
     className="rs-zoom-out"
+    disabled={false}
     onClick={[Function]}
     onKeyPress={[Function]}
-    role="button"
     tabIndex={0}
     title="Zoom out"
+    type="button"
   >
     <svg
       fill="currentColor"
@@ -127,7 +131,7 @@ exports[`Zoom should match snapshot with zoom slider 1`] = `
         d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
       />
     </svg>
-  </div>
+  </button>
 </div>
 `;
 
@@ -135,13 +139,14 @@ exports[`Zoom should match snapshot. 1`] = `
 <div
   className="rs-zooms-bar"
 >
-  <div
+  <button
     className="rs-zoom-in"
+    disabled={false}
     onClick={[Function]}
     onKeyPress={[Function]}
-    role="button"
     tabIndex={0}
     title="Zoom in"
+    type="button"
   >
     <svg
       fill="currentColor"
@@ -162,14 +167,15 @@ exports[`Zoom should match snapshot. 1`] = `
         d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
       />
     </svg>
-  </div>
-  <div
+  </button>
+  <button
     className="rs-zoom-out"
+    disabled={false}
     onClick={[Function]}
     onKeyPress={[Function]}
-    role="button"
     tabIndex={0}
     title="Zoom out"
+    type="button"
   >
     <svg
       fill="currentColor"
@@ -190,6 +196,6 @@ exports[`Zoom should match snapshot. 1`] = `
         d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
       />
     </svg>
-  </div>
+  </button>
 </div>
 `;

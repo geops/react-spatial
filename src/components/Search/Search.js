@@ -51,7 +51,7 @@ const propTypes = {
 
 const defaultProps = {
   apiKey: null,
-  engines: { stops: new StopFinder() },
+  engines: null,
   getRenderSectionTitle: () => () => null,
   onHighlight: () => null,
   shouldRenderSuggestions: (newValue) => newValue.trim().length > 2,
@@ -70,11 +70,28 @@ function Search({
   onSelect,
   className,
 }) {
+  const currentEngines = useMemo(() => {
+    if (!engines) {
+      return {
+        stops: new StopFinder(null, { apiKey }),
+      };
+    }
+    if (apiKey) {
+      Object.values(engines).forEach((engine) => {
+        if (engine.setApiKey) {
+          engine.setApiKey(apiKey);
+        }
+      });
+    }
+    return engines;
+  }, [apiKey, engines]);
+
   const [suggestions, setSuggestions] = useState([]);
   const [value, setValue] = useState('');
 
   const searchService = useMemo(
-    () => new SearchService({ apiKey, engines, setSuggestions }),
+    () =>
+      new SearchService({ apiKey, engines: currentEngines, setSuggestions }),
     [apiKey, engines, setSuggestions],
   );
 
@@ -98,7 +115,7 @@ function Search({
   }, [className]);
 
   return (
-    Object.keys(engines).length > 0 && (
+    Object.keys(currentEngines).length > 0 && (
       <div className="rt-search">
         <Autosuggest
           theme={theme}
@@ -111,7 +128,9 @@ function Search({
                 const filtered = suggestions.filter((s) => s.items.length > 0);
                 if (filtered.length > 0) {
                   const { items, section } = filtered[0];
-                  onSelect({ ...items[0], section });
+                  const targetSuggestion = { ...items[0], section };
+                  setValue(searchService.value(targetSuggestion));
+                  onSelect(targetSuggestion);
                 }
               } else if (
                 (key === 'ArrowDown' || key === 'ArrowUp') &&
