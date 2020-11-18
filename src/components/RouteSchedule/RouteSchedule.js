@@ -196,10 +196,9 @@ const defaultRenderFooter = (props) => {
   return <div className="rt-route-footer">{renderCopyright({ ...props })}</div>;
 };
 
-const defaultRenderLink = (title, text, url) => {
+const defaultRenderLink = (text, url) => {
   return (
     <div className="rt-route-copyright-link">
-      {title}
       {url ? (
         <a href={url} target="_blank" rel="noreferrer">
           {text}
@@ -211,30 +210,18 @@ const defaultRenderLink = (title, text, url) => {
   );
 };
 
-const defaultRenderCopyright = ({ lineInfos, t }) => {
-  const titleOperator = t('Operator: ');
-  const titlePublisher = t('Publisher: ');
-  const titleLicense = t('Licence: ');
+const defaultRenderCopyright = ({ lineInfos }) => {
   return (
     <span className="rt-route-copyright">
       {lineInfos.operator &&
-        defaultRenderLink(
-          titleOperator,
-          lineInfos.operator,
-          lineInfos.operatorUrl,
-        )}
+        defaultRenderLink(lineInfos.operator, lineInfos.operatorUrl)}
+      {lineInfos.operator && lineInfos.publisher && <span>&nbsp;-&nbsp;</span>}
       {lineInfos.publisher &&
-        defaultRenderLink(
-          titlePublisher,
-          lineInfos.publisher,
-          lineInfos.publisherUrl,
-        )}
+        defaultRenderLink(lineInfos.publisher, lineInfos.publisherUrl)}
+      {lineInfos.license && <span>&nbsp;(</span>}
       {lineInfos.license &&
-        defaultRenderLink(
-          titleLicense,
-          lineInfos.license,
-          lineInfos.licenseUrl,
-        )}
+        defaultRenderLink(lineInfos.license, lineInfos.licenseUrl)}
+      {lineInfos.license && ')'}
     </span>
   );
 };

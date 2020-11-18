@@ -7,11 +7,10 @@
 */
 @mixin a() {
   a {
-    color: $link-color;
+    color: $gray-base;
     text-decoration: $link-decoration;
 
     &:hover {
-      color: $link-color-hover;
       text-decoration: $link-decoration-hover;
     }
 

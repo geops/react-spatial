@@ -18,6 +18,9 @@
 @import '../../components/Search/Search.md.scss';
 @import '../../components/Overlay/Overlay.md.scss';
 
-body {
+// Load 'a' mixin
+@include a
+
+  body {
   font-family: $font-family;
 }
