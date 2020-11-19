@@ -312,7 +312,6 @@ function RouteSchedule(props) {
   if (!lineInfos) {
     return null;
   }
-  console.log(lineInfos);
 
   return (
     <div className={className}>
