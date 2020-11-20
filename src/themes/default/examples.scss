@@ -19,7 +19,7 @@
 @import '../../components/Overlay/Overlay.md.scss';
 
 // Load 'a' mixin
-@include a
+@include a;
 
 body {
   font-family: $font-family;
