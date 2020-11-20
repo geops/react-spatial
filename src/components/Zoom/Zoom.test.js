@@ -2,6 +2,8 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { configure, shallow, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import { act } from 'react-dom/test-utils';
+import MapEvent from 'ol/MapEvent';
 import OLView from 'ol/View';
 import OLMap from 'ol/Map';
 import Zoom from './Zoom';
@@ -81,7 +83,7 @@ describe('Zoom', () => {
     });
   });
 
-  test('remove zoomSlider control on unmount.', () => {
+  test('should remove zoomSlider control on unmount.', () => {
     const map = new OLMap({});
     const spy = jest.spyOn(map, 'removeControl');
     const spy2 = jest.spyOn(map, 'addControl');
@@ -91,4 +93,49 @@ describe('Zoom', () => {
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy.mock.calls[0][0]).toBe(spy2.mock.calls[0][0]);
   });
+
+  test('should disable zoom-in button on mount with max zoom..', () => {
+    const map = new OLMap({
+      view: new OLView({ maxZoom: 20, zoom: 20 }),
+    });
+    const spy = jest.spyOn(map.getView(), 'setZoom');
+    const wrapper = mount(<Zoom map={map} />);
+    act(() => {
+      map.dispatchEvent(new MapEvent('moveend', map));
+    });
+    wrapper.update();
+    expect(wrapper.find('.rs-zoom-in').prop('disabled')).toEqual(true);
+    wrapper.find('.rs-zoom-in').first().simulate('click');
+    expect(spy).toHaveBeenCalledTimes(0);
+  });
+
+  test('should disable zoom-out button on mount with min zoom.', () => {
+    const map = new OLMap({
+      view: new OLView({ minZoom: 2, zoom: 2 }),
+    });
+    const spy = jest.spyOn(map.getView(), 'setZoom');
+    const wrapper = mount(<Zoom map={map} />);
+    act(() => {
+      map.dispatchEvent(new MapEvent('moveend', map));
+    });
+    wrapper.update();
+    expect(wrapper.find('.rs-zoom-out').prop('disabled')).toEqual(true);
+    wrapper.find('.rs-zoom-out').first().simulate('click');
+    expect(spy).toHaveBeenCalledTimes(0);
+  });
+});
+
+test('should disable zoom-out button when reaching min zoom.', () => {
+  const map = new OLMap({
+    view: new OLView({ minZoom: 2, zoom: 3 }),
+  });
+  const spy = jest.spyOn(map.getView(), 'setZoom');
+  const wrapper = mount(<Zoom map={map} />);
+  wrapper.find('.rs-zoom-out').first().simulate('click');
+  expect(spy).toHaveBeenCalledTimes(1);
+  act(() => {
+    map.dispatchEvent(new MapEvent('moveend', map));
+  });
+  wrapper.update();
+  expect(wrapper.find('.rs-zoom-out').prop('disabled')).toEqual(true);
 });
