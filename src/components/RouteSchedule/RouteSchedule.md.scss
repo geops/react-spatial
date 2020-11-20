@@ -19,7 +19,7 @@
 
     .rt-route-header,
     .rt-route-footer {
-      flex: 0 0 auto;
+      flex: 0 0 auto; // 'auto' is for IE11
     }
 
     .rt-route-body {
