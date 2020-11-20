@@ -217,5 +217,38 @@ exports[`RouteSchedule matches snapshots. 1`] = `
       </div>
     </div>
   </div>
+  <div
+    className="rt-route-footer"
+  >
+    <span
+      className="rt-route-copyright"
+    >
+      <div
+        className="rt-route-copyright-link"
+      >
+        <a
+          href="foo.ch"
+          rel="noreferrer"
+          target="_blank"
+        >
+          foo
+        </a>
+      </div>
+      <span>
+         - 
+      </span>
+      <div
+        className="rt-route-copyright-link"
+      >
+        <a
+          href="bar.ch"
+          rel="noreferrer"
+          target="_blank"
+        >
+          bar
+        </a>
+      </div>
+    </span>
+  </div>
 </div>
 `;
