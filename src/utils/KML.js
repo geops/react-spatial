@@ -6,6 +6,7 @@ import GeometryCollection from 'ol/geom/GeometryCollection';
 import { Style, Text, Icon, Circle, Fill, Stroke } from 'ol/style';
 import { asString } from 'ol/color';
 import { kmlStyle } from './Styles';
+import getPolygonPattern from './getPolygonPattern';
 
 const applyTextStyleForIcon = (olIcon, olText) => {
   const size = olIcon.getSize() || [48, 48];
@@ -216,8 +217,19 @@ const sanitizeFeature = (feature) => {
     ];
 
     // Parse the fillPattern json string and store parsed object
-    if (feature.get('fillPattern')) {
-      feature.set('fillPattern', JSON.parse(feature.get('fillPattern')));
+    let fillPattern = feature.get('fillPattern');
+    if (fillPattern) {
+      fillPattern = JSON.parse(fillPattern);
+      feature.set('fillPattern', fillPattern);
+
+      /* We set the fill pattern for polygons */
+      if (!style.getFill()) {
+        styles[0].setFill(new Fill());
+      }
+      const patternOrColor = fillPattern.empty
+        ? [0, 0, 0, 0]
+        : getPolygonPattern(fillPattern.id, fillPattern.color);
+      styles[0].getFill().setColor(patternOrColor);
     }
 
     // Add line's icons styles
