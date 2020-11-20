@@ -63,7 +63,7 @@
     "mapbox-gl": "1.11.1",
     "mobility-toolbox-js": "1.1.13",
     "node-sass": "4.14.1",
-    "ol": "6.3.1",
+    "ol": "6.4.3",
     "prettier": "2.0.5",
     "proj4": "2.6.2",
     "prop-types": "15.7.2",
