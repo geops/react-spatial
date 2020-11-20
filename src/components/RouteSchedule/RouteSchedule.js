@@ -276,12 +276,6 @@ const propTypes = {
    * Function to render header buttons.
    */
   renderHeaderButtons: PropTypes.func,
-
-  /**
-   * Translation function.
-   * @param {function} Translation function returning the translated string.
-   */
-  t: PropTypes.func,
 };
 
 const defaultProps = {
@@ -294,7 +288,6 @@ const defaultProps = {
   renderFooter: defaultRenderFooter,
   renderHeaderButtons: () => null,
   onStationClick: () => {},
-  t: (s) => s,
 };
 
 /**
