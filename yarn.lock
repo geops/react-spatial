@@ -1386,21 +1386,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@geops/geops-ui@0.1.8":
+"@geops/geops-ui@0.1.8", "@geops/geops-ui@^0.1.8":
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/@geops/geops-ui/-/geops-ui-0.1.8.tgz#4df8f4bb8916d762e8b9667cf744fa8961c3598d"
   integrity sha512-ms3zDcXThMEoVP4wswdMZNajIlwr1mBlFDmtoe4qS1eN7b6iBgd3I2jJ1zSRSbuhaKMmyw7KX+iJcLv3/jY0zg==
-  dependencies:
-    "@material-ui/core" "^4.11.0"
-    "@material-ui/icons" "^4.9.1"
-    prop-types "^15.7.2"
-    react-router-dom "^5.2.0"
-    uuid "^8.3.1"
-
-"@geops/geops-ui@^0.1.5":
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/@geops/geops-ui/-/geops-ui-0.1.7.tgz#dedab2747f60d1fccee085b381dfc4e4ac227b2e"
-  integrity sha512-vbJH/ShdNDhUwGe9lD1Atk6k7w1ake9bSZdvz8WSRH8orY1fRjBjjohQEv9YQhQPn6YoJGIDgMxHP9KLVkkRZA==
   dependencies:
     "@material-ui/core" "^4.11.0"
     "@material-ui/icons" "^4.9.1"
@@ -9102,18 +9091,17 @@ mixin-deep@^1.2.0:
   dependencies:
     minimist "^1.2.5"
 
-mobility-toolbox-js@1.1.11:
-  version "1.1.11"
-  resolved "https://registry.yarnpkg.com/mobility-toolbox-js/-/mobility-toolbox-js-1.1.11.tgz#8c130b296b21683b6bb98cc5331511ef168efa4b"
-  integrity sha512-Xn4DqeiztX1DrS20KpzWFXlpk2ucpAtP21YysCzBSvTrXrdZY/8OTga8nsUncaF5tTWjzf3ng1ACertmG0UdwQ==
+mobility-toolbox-js@1.1.13:
+  version "1.1.13"
+  resolved "https://registry.yarnpkg.com/mobility-toolbox-js/-/mobility-toolbox-js-1.1.13.tgz#4423edbce38d2da66fae600ea8abe36bb4f7985a"
+  integrity sha512-viZ/SZhrJDlvMQuSxz1ap1ziMS6YhpbKR0Jpw12LUC+8Kbq8+oUUS5DIUIhCpmEgKfBU3fSjqdhv9CbUeFOgYA==
   dependencies:
-    "@geops/geops-ui" "^0.1.5"
+    "@geops/geops-ui" "^0.1.8"
     "@material-ui/core" "^4.9.14"
     "@material-ui/icons" "^4.9.1"
     "@material-ui/styles" "^4.9.14"
     codesandbox "^2.1.16"
     es6-mixin "^0.3.0"
-    lodash "^4.17.15"
     path "^0.12.7"
     prop-types "^15.7.2"
     query-string "^6.13.0"
