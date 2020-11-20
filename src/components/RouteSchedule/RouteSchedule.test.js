@@ -16,6 +16,10 @@ const lineInfos = {
   routeIdentifier: '03634.003849.004:9',
   longName: 'T 3',
   shortName: '3',
+  operator: 'foo',
+  operatorUrl: 'foo.ch',
+  publisher: 'bar',
+  publisherUrl: 'bar.ch',
   stations: [
     {
       stationId: '1',

@@ -26,7 +26,6 @@ const layers = [
 // Please get your own api key at https://developer.geops.io/.
 const { apiKey } = window;
 
-
 <div className="rt-stop-finder-example">
   <BasicMap
     map={map}
