@@ -18,6 +18,8 @@
 @import '../../components/Search/Search.md.scss';
 @import '../../components/Overlay/Overlay.md.scss';
 
+$link-color:  #000;
+$link-color-hover: #000;
 // Load 'a' mixin
 @include a;
 
