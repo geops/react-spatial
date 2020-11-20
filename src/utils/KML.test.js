@@ -29,7 +29,7 @@ const expectWriteResult = (feats, str) => {
 };
 
 describe('KML', () => {
-  describe('#readFeatures() and #writeFeatures()', () => {
+  describe('readFeatures() and writeFeatures()', () => {
     test('should read/write LineStyle and ExtendedData (linesDash, lineStartIcon and lineEndIcon).', () => {
       const str = `
         <kml ${xmlns}>

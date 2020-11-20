@@ -1,6 +1,6 @@
 import getPolygonPattern from './getPolygonPattern';
 
-describe('#getPolygonPattern()', () => {
+describe('getPolygonPattern()', () => {
   test('render pattern with default properties (id=1, color = [235, 0, 0, 1])', () => {
     const color = [235, 0, 0, 1];
     const pattern = getPolygonPattern();
