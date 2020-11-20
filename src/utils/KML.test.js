@@ -1,4 +1,3 @@
-import 'jest-canvas-mock';
 import { configure } from 'enzyme';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
@@ -30,7 +29,7 @@ const expectWriteResult = (feats, str) => {
 };
 
 describe('KML', () => {
-  describe('#read/writeFeatures()', () => {
+  describe('readFeatures() and writeFeatures()', () => {
     test('should read/write LineStyle and ExtendedData (linesDash, lineStartIcon and lineEndIcon).', () => {
       const str = `
         <kml ${xmlns}>
@@ -161,7 +160,7 @@ describe('KML', () => {
       expectWriteResult(feats, str);
     });
 
-    test('should add fillPattern attribute to feature if specified in extended data and apply correct outline styles.', () => {
+    test.only('should read and write lineDash and fillPattern style for polygon', () => {
       const str = `
         <kml ${xmlns}>
           <Document>
@@ -206,10 +205,15 @@ describe('KML', () => {
       const outlineStyle = styles[0].getStroke();
       expect(outlineStyle.getColor()).toEqual([235, 0, 0, 1]);
       expect(outlineStyle.getWidth()).toEqual(2);
+      const fillStyle = styles[0].getFill();
       expect(feature.get('fillPattern')).toEqual({
         id: 3,
         color: [235, 0, 0, 1],
       });
+      const color = fillStyle.getColor();
+      expect(color.canvas).toMatchSnapshot();
+      expect(color.id).toBe(3);
+      expect(color.color).toEqual([235, 0, 0, 1]);
       expectWriteResult(feats, str);
     });
 

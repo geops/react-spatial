@@ -3308,9 +3308,9 @@ camelcase@^6.0.0:
   integrity sha512-8KMDF1Vz2gzOq54ONPJS65IvTUaB1cHJ2DMM7MbPmLZljDH1qpzzLsWdiN9pHh6qvkRVDTi/07+eNGch/oLU4w==
 
 caniuse-lite@^1.0.30000989, caniuse-lite@^1.0.30001043, caniuse-lite@^1.0.30001087:
-  version "1.0.30001158"
-  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001158.tgz"
-  integrity sha512-s5loVYY+yKpuVA3HyW8BarzrtJvwHReuzugQXlv1iR3LKSReoFXRm86mT6hT7PEF5RxW+XQZg+6nYjlywYzQ+g==
+  version "1.0.30001159"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001159.tgz"
+  integrity sha512-w9Ph56jOsS8RL20K9cLND3u/+5WASWdhC/PPrf+V3/HsM3uHOavWOR1Xzakbv4Puo/srmPHudkmCRWM7Aq+/UA==
 
 canvas@2.6.1:
   version "2.6.1"
@@ -7535,6 +7535,11 @@ jest-canvas-mock@2.2.0:
   dependencies:
     cssfontparser "^1.2.1"
     parse-color "^1.0.0"
+
+jest-canvas-snapshot-serializer@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/jest-canvas-snapshot-serializer/-/jest-canvas-snapshot-serializer-1.0.1.tgz#27aed19d2b2c52f85012f1855947f7325f87bfcc"
+  integrity sha512-JOJkLhNninP1PltYJOuw8brUbobTQVUq9Lx0JYaTcUxGpz7OnO63EaUA7RHaEHASaglW/fizZ0dR8PEKt6Gnag==
 
 jest-changed-files@^26.1.0:
   version "26.1.0"
