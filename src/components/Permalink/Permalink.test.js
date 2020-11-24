@@ -210,4 +210,23 @@ describe('Permalink', () => {
       ),
     ).toBe(true);
   });
+
+  test("doesn't encode parameter automatically.", () => {
+    expect(window.location.search).toEqual('');
+    const layers = ConfigReader.readConfig([
+      {
+        id: 'lineSamples',
+        name: 'test:// encodign?character&',
+        visible: true,
+        data: {
+          type: 'vectorLayer',
+        },
+      },
+    ]);
+    const layerService = new LayerService(layers);
+    mount(<Permalink layerService={layerService} />);
+    expect('?layers=test://%20encodign?character&').toBe(
+      window.location.search,
+    );
+  });
 });
