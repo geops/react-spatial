@@ -191,15 +191,19 @@ class Permalink extends Component {
     const { params, history } = this.props;
     const oldParams = qs.parse(window.location.search);
     const parameters = { ...oldParams, ...params, ...this.state };
-    // We don't force encoding. The app using the Permalink is responsible to encode or not the parameter.
-    // We decide this to avoid having troubles with some parameters that needs enocding(url, strings with spaces)
+    // We don't force encoding. The app using the Permalink is responsible to
+    // encode or not the parameter. We decide this to avoid having troubles
+    // with some parameters that needs enocding(url, strings with spaces)
     // and some that don't (layers, baseLayers).
     const qStr = qs.stringify(parameters, { encode: false });
     const search = qStr ? `?${qStr}` : '';
-
+    // The browser seems to encode some character (space, accent...)
+    // automatically so to avoid infinite loop we compare the decoded uri.
     if (
       (!qStr && window.location.search) ||
-      (qStr && search !== window.location.search)
+      (qStr &&
+        decodeURIComponent(search) !==
+          decodeURIComponent(window.location.search))
     ) {
       if (history) {
         history.replace({ search });
