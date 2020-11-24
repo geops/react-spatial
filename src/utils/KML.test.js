@@ -160,7 +160,7 @@ describe('KML', () => {
       expectWriteResult(feats, str);
     });
 
-    test.only('should read and write lineDash and fillPattern style for polygon', () => {
+    test('should read and write lineDash and fillPattern style for polygon', () => {
       const str = `
         <kml ${xmlns}>
           <Document>

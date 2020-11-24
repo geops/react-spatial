@@ -32,7 +32,7 @@ const layerImages = {
     tabIndex={0}
   />
   <BaseLayerSwitcher
-    layers={layers}
+    layers={[layers[0], layers[1]]}
     layerImages={layerImages}
   />
 </div>;
