@@ -216,7 +216,7 @@ describe('Permalink', () => {
     const layers = ConfigReader.readConfig([
       {
         id: 'lineSamples',
-        name: 'test:// encodign?character&',
+        name: 'test:// encoding?character&',
         visible: true,
         data: {
           type: 'vectorLayer',
@@ -225,7 +225,7 @@ describe('Permalink', () => {
     ]);
     const layerService = new LayerService(layers);
     mount(<Permalink layerService={layerService} />);
-    expect('?layers=test://%20encodign?character&').toBe(
+    expect('?layers=test://%20encoding?character&').toBe(
       window.location.search,
     );
   });
