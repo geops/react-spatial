@@ -113,6 +113,7 @@ function BaseLayerSwitcher({
     if (baseLayers.length === 2) {
       /* On only two layer options the opener becomes a layer toggle button */
       const nextLayer = baseLayers.find((layer) => !layer.visible);
+      currentLayer.setVisible(false);
       setCurrentLayer(nextLayer);
       nextLayer.setVisible(true);
       return;
@@ -128,6 +129,7 @@ function BaseLayerSwitcher({
     }
     setCurrentLayer(layer);
     layer.setVisible(true);
+    baseLayers.filter((l) => l !== layer).forEach((l) => l.setVisible(false));
     setSwitcherOpen(false);
   };
 
