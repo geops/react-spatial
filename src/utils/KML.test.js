@@ -138,7 +138,7 @@ describe('KML', () => {
         </kml>
       `;
       const feats = KML.readFeatures(str);
-      const styles = feats[0].getStyle();
+      const styles = feats[0].getStyleFunction()();
       expect(feats.length).toBe(1);
       expect(styles.length).toBe(1);
 
@@ -160,7 +160,7 @@ describe('KML', () => {
       expectWriteResult(feats, str);
     });
 
-    test.only('should read and write lineDash and fillPattern style for polygon', () => {
+    test('should read and write lineDash and fillPattern style for polygon', () => {
       const str = `
         <kml ${xmlns}>
           <Document>
@@ -257,7 +257,7 @@ describe('KML', () => {
       </kml>
       `;
       const feats = KML.readFeatures(str);
-      const style = feats[0].getStyle()[0];
+      const style = feats[0].getStyleFunction()()[0];
       expect(style.getZIndex()).toBe(1);
       expect(style.getImage().getRotation()).toBe(1.5707963267948966);
       expect(feats[0].get('zoomAtMaxIconSize')).toBe(12.65397);

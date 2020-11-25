@@ -55,7 +55,7 @@ const getLineIcon = (feature, icon, color, start = true) => {
 };
 
 // Clean the uneeded feature's style and properties created by the KML parser.
-const sanitizeFeature = (feature) => {
+const sanitizeFeature = (feature, mapResolution) => {
   const geom = feature.getGeometry();
   let styles = feature.getStyleFunction();
 
@@ -171,9 +171,7 @@ const sanitizeFeature = (feature) => {
        */
       image.setRotation(parseFloat(feature.get('iconRotation')) || 0);
 
-      /* Value to be used for icon scaling with map
-       * e.g. icon.setScale(map.getView().getResolutionForZoom(zoomAtMaxIconSize) / map.getView().getResolution())
-       */
+      /* Replaced by pictureOptions, to be removed in react-spatial v2 */
       if (feature.get('zoomAtMaxIconSize')) {
         feature.set(
           'zoomAtMaxIconSize',
@@ -185,15 +183,37 @@ const sanitizeFeature = (feature) => {
     fill = undefined;
     stroke = undefined;
 
-    styles = [
-      new Style({
-        fill,
-        stroke,
-        image,
-        text,
-        zIndex: style.getZIndex(),
-      }),
-    ];
+    styles = (f, resolution) => {
+      /* Options to be used for picture scaling with map, should have at least
+       * a resolution attribute (this is the map resolution at the zoom level when
+       * the picture is created), can take an optional constant for further scale
+       * adjustment.
+       * e.g. { resolution: 0.123, constant: 1 / 6 }
+       */
+      if (feature.get('pictureOptions') && mapResolution) {
+        let pictureOptions = feature.get('pictureOptions');
+        if (typeof pictureOptions === 'string') {
+          pictureOptions = JSON.parse(feature.get('pictureOptions'));
+        }
+        feature.set('pictureOptions', pictureOptions);
+        if (pictureOptions.resolution) {
+          image.setScale(
+            (pictureOptions.resolution / resolution) *
+              pictureOptions.constant || 1,
+          );
+        }
+      }
+
+      return [
+        new Style({
+          fill,
+          stroke,
+          image,
+          text,
+          zIndex: style.getZIndex(),
+        }),
+      ];
+    };
 
     feature.setStyle(styles);
   }
@@ -262,12 +282,12 @@ const sanitizeFeature = (feature) => {
  * @param {String} kmlString A string representing a KML file.
  * @param {<ol.Projection|String>} featureProjection The projection used by the map.
  */
-const readFeatures = (kmlString, featureProjection) => {
+const readFeatures = (kmlString, featureProjection, mapResolution) => {
   const features = new KML().readFeatures(kmlString, {
     featureProjection,
   });
   features.forEach((feature) => {
-    sanitizeFeature(feature);
+    sanitizeFeature(feature, mapResolution);
   });
   return features;
 };
@@ -277,7 +297,7 @@ const readFeatures = (kmlString, featureProjection) => {
  * @param {VectorLayer} layer A react-spatial VectorLayer.
  * @param {<ol.Projection|String>} featureProjection The current projection used by the features.
  */
-const writeFeatures = (layer, featureProjection) => {
+const writeFeatures = (layer, featureProjection, mapResolution) => {
   let featString;
   const { olLayer } = layer;
   const exportFeatures = [];
@@ -304,9 +324,9 @@ const writeFeatures = (layer, featureProjection) => {
     let styles;
 
     if (clone.getStyleFunction()) {
-      styles = clone.getStyleFunction()(clone);
+      styles = clone.getStyleFunction()(clone, mapResolution);
     } else if (olLayer && olLayer.getStyleFunction()) {
-      styles = olLayer.getStyleFunction()(clone);
+      styles = olLayer.getStyleFunction()(clone, mapResolution);
     }
 
     const newStyle = {
@@ -372,7 +392,7 @@ const writeFeatures = (layer, featureProjection) => {
       if (!/(http(s?)):\/\//gi.test(imgSource)) {
         // eslint-disable-next-line no-console
         console.log(
-          "Local image source isn't support for KML export." +
+          'Local image source not supported for KML export.' +
             'Should use remote web server',
         );
       }
@@ -382,10 +402,14 @@ const writeFeatures = (layer, featureProjection) => {
         clone.set('iconRotation', newStyle.image.getRotation());
       }
 
-      // Set zoomAtMaxIconSize to use for icon-to-map proportional scaling
+      /* Replaced by mapResolutionForPicture, to be removed in react-spatial v2 */
       if (f.get('zoomAtMaxIconSize')) {
         clone.set('zoomAtMaxIconSize', f.get('zoomAtMaxIconSize'));
-        newStyle.fill = null;
+      }
+
+      // Set map resolution to use for icon-to-map proportional scaling
+      if (f.get('pictureOptions')) {
+        clone.set('pictureOptions', JSON.stringify(f.get('pictureOptions')));
       }
     }
 
