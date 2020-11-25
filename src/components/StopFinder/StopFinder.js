@@ -120,6 +120,7 @@ function StopFinder({
         renderInput={(params) => {
           return (
             <TextField
+              label="Search stops"
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...{
                 ...params,
@@ -166,9 +167,9 @@ StopFinder.propTypes = {
    * Order of these agencies chooses which agency will be preferred.
    * Available values : sbb, db
    */
-  agencies: PropTypes.oneOf([
+  agencies: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.arrayOf[PropTypes.string],
+    PropTypes.arrayOf(PropTypes.string),
   ]),
 
   /**
@@ -184,18 +185,18 @@ StopFinder.propTypes = {
   /**
    * minX,minY,maxX,maxY coordinates in WGS84 wherein the station should lie.
    */
-  bbox: PropTypes.oneOf([
+  bbox: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.arrayOf[PropTypes.number],
+    PropTypes.arrayOf(PropTypes.number),
   ]),
 
   /**
    * Array or a comma separated list of fields which should be used for look up.
    * Available values : id, name, coords
    */
-  field: PropTypes.oneOf([
+  field: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.arrayOf[PropTypes.string],
+    PropTypes.arrayOf(PropTypes.string),
   ]),
 
   /**
@@ -207,9 +208,9 @@ StopFinder.propTypes = {
    * Array or a comma separated list of mode of transpaorts which should be available.
    * Available values : bus, ferry, gondola, tram, rail, funicular, cable_car, subway
    */
-  mots: PropTypes.oneOf([
+  mots: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.arrayOf[PropTypes.string],
+    PropTypes.arrayOf(PropTypes.string),
   ]),
 
   /**
@@ -227,9 +228,9 @@ StopFinder.propTypes = {
    * Coordinates in WGS84 (in lat,lon order) used to rank stops close to this position higher.
    * Available values : id, name, coords
    */
-  refLocation: PropTypes.oneOf([
+  refLocation: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.arrayOf[PropTypes.number],
+    PropTypes.arrayOf(PropTypes.number),
   ]),
 
   /**
