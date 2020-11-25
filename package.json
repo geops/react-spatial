@@ -1,7 +1,7 @@
 {
   "name": "react-spatial",
   "description": "Components to build React map apps.",
-  "version": "1.0.14-beta.1",
+  "version": "1.0.14-beta.2",
   "license": "MIT",
   "dependencies": {
     "@geops/geops-ui": "0.1.8",
