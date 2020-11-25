@@ -11,9 +11,6 @@ import { fromLonLat } from 'ol/proj';
 import OSM from 'ol/source/OSM';
 import BasicMap from 'react-spatial/components/BasicMap';
 import StopFinder from 'react-spatial/components/StopFinder';
-import { Autocomplete } from '@material-ui/lab';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import {TextField} from '@material-ui/core';
 
 const map = new Map({ controls: [] });
 
