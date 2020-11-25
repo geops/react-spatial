@@ -77,7 +77,10 @@ module.exports = {
       name: 'Stops',
       description:
         'A collection of react components for spatial web development of stops components.',
-      components: ['src/components/Search/Search.js'],
+      components: [
+        'src/components/StopFinder/StopFinder.js',
+        'src/components/Search/Search.js',
+      ],
       exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
     },
   ],
