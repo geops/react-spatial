@@ -29,7 +29,7 @@ const layers = [
 // Please get your own api key at https://developer.geops.io/.
 const { apiKey } = window;
 
-<div className="rt-stop-finder-example">
+<>
   <BasicMap
     map={map}
     center={[951560, 6002550]}
@@ -38,48 +38,17 @@ const { apiKey } = window;
     tabIndex={0}
   />
 
-  <StopFinder apiKey={window.apiKey} onSelect={({geometry}) => {
-    map.getView().setCenter(fromLonLat(geometry.coordinates));
-  }} />
-
-
-  <StopFinder apiKey={window.apiKey} renderAutocomplete={(
-    suggestions,
-    inputValue,
-    setInputValue,
-    isOpen,
-    setOpen,
-    isLoading,
-  ) => (
-    <Autocomplete
-      style={{width:400}}
-      options={suggestions}
-      loading={isLoading}
-      open={isOpen}
-      inputValue={inputValue}
-      onOpen={() => {
-        setOpen(true);
-      }}
-      onClose={() => {
-        setOpen(false);
-      }}
-      onInputChange={(evt, val) => {
-        setInputValue(val);
-      }}
-      getOptionLabel={(option) => option.properties.name}
-      renderInput={(params) => {
-        console.log(params);
-        return (<TextField
-          // eslint-disable-next-line react/jsx-props-no-spreading
-          {...params}
-          label="lalal"
-          variant="outlined"
-          InputProps={{
-            ...params.InputProps,
-          }}
-        />);
-      }}
-    />
-  )} />
-</div>
+  <StopFinder
+    mots="gondola"
+    apiKey={apiKey}
+    onSelect={({ geometry }) => {
+      map.getView().setCenter(fromLonLat(geometry.coordinates));
+    }}
+    autocompleteProps={{
+      textFieldProps: {
+        label: 'Search for gondola',
+      },
+    }}
+  />
+</>
 ```

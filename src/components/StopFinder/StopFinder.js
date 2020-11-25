@@ -104,57 +104,59 @@ function StopFinder({
   }
 
   return (
-    <Autocomplete
-      fullWidth
-      autoComplete
-      autoHighlight
-      selectOnFocus
-      getOptionLabel={(option) => option.properties.name}
-      onChange={(evt, value, reason) => {
-        if (onSelect && reason === 'select-option') {
-          onSelect(value, evt);
-        }
-      }}
-      popupIcon={<FaSearch focusable={false} size={15} />}
-      renderInput={(params) => {
-        return (
-          <TextField
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            {...{
-              ...params,
-              ...((autocompleteProps || {}).textFieldProps || {}),
-            }}
-            InputProps={{
-              ...params.InputProps,
-              endAdornment: (
-                <>
-                  {isLoading && <CircularProgress size={20} />}
-                  {params.InputProps.endAdornment}
-                </>
-              ),
+    <>
+      <Autocomplete
+        fullWidth
+        autoComplete
+        autoHighlight
+        selectOnFocus
+        getOptionLabel={(option) => option.properties.name}
+        onChange={(evt, value, reason) => {
+          if (onSelect && reason === 'select-option') {
+            onSelect(value, evt);
+          }
+        }}
+        popupIcon={<FaSearch focusable={false} size={15} />}
+        renderInput={(params) => {
+          return (
+            <TextField
               // eslint-disable-next-line react/jsx-props-no-spreading
-              ...((autocompleteProps || {}).inputProps || {}),
-            }}
-          />
-        );
-      }}
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...autocompleteProps}
-      classes={{ ...classes, ...autocompleteProps.classes }}
-      inputValue={inputValue}
-      open={isOpen}
-      options={suggestions}
-      loading={isLoading}
-      onOpen={() => {
-        setOpen(true);
-      }}
-      onClose={() => {
-        setOpen(false);
-      }}
-      onInputChange={(evt, val) => {
-        setInputValue(val);
-      }}
-    />
+              {...{
+                ...params,
+                ...((autocompleteProps || {}).textFieldProps || {}),
+              }}
+              InputProps={{
+                ...params.InputProps,
+                endAdornment: (
+                  <>
+                    {isLoading && <CircularProgress size={20} />}
+                    {params.InputProps.endAdornment}
+                  </>
+                ),
+                // eslint-disable-next-line react/jsx-props-no-spreading
+                ...((autocompleteProps || {}).inputProps || {}),
+              }}
+            />
+          );
+        }}
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...autocompleteProps}
+        classes={{ ...classes, ...autocompleteProps.classes }}
+        inputValue={inputValue}
+        open={isOpen}
+        options={suggestions}
+        loading={isLoading}
+        onOpen={() => {
+          setOpen(true);
+        }}
+        onClose={() => {
+          setOpen(false);
+        }}
+        onInputChange={(evt, val) => {
+          setInputValue(val);
+        }}
+      />
+    </>
   );
 }
 
