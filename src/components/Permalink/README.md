@@ -74,7 +74,7 @@ const layers = [...baseLayers, swissBoundries]
 const layerService = new LayerService(baseLayers);
 
 <div className="rs-permalink-example">
-  <BasicMap center={[876887.69, 5928515.41]} map={map} layers={baseLayers} tabIndex={0} zoom={5} />
+  <BasicMap center={[876887.69, 5928515.41]} map={map} layers={layers} tabIndex={0} zoom={5} />
   <Permalink
     map={map}
     layerService={layerService}
