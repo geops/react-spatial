@@ -20,7 +20,7 @@ const { apiKey } = window;
 
 const center = [1149722.7037660484, 6618091.313553318];
 const map = new Map({ controls: [] });
-const layer1 = new MapboxLayer({
+const travicLayer = new MapboxLayer({
   url: `https://maps.geops.io/styles/travic/style.json?key=${apiKey}`,
   name: 'Travic',
   key: 'travic.baselayer',
@@ -28,7 +28,7 @@ const layer1 = new MapboxLayer({
   visible: true
 });
 
-const layer2 = new MapboxLayer({
+const basebrightLayer = new MapboxLayer({
   url: `https://maps.geops.io/styles/base_bright_v2/style.json?key=${apiKey}`,
   name: 'Base - Bright',
   key: 'basedark.baselayer',
@@ -36,7 +36,7 @@ const layer2 = new MapboxLayer({
   visible: false
 });
 
-const layer3 = new Layer({
+const osmLayer = new Layer({
   olLayer: new TileLayer({
     source: new XYZ({
       url: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -56,16 +56,18 @@ const layerImages = {
   'osm.baselayer': osmImage,
 };
 
+const layers = [travicLayer, basebrightLayer, osmLayer]
+
 <div className="rs-base-layer-example">
   <BasicMap
     map={map}
     center={center}
     zoom={6}
-    layers={[layer1, layer2, layer3]}
+    layers={layers}
     tabIndex={0}
   />
   <BaseLayerSwitcher
-    layers={[layer1, layer2, layer3]}
+    layers={layers}
     layerImages={layerImages}
   />
 </div>;
