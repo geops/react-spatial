@@ -1,7 +1,7 @@
 {
   "name": "react-spatial",
   "description": "Components to build React map apps.",
-  "version": "1.0.13",
+  "version": "1.0.14-beta.0",
   "license": "MIT",
   "dependencies": {
     "@geops/geops-ui": "0.1.8",
@@ -19,11 +19,11 @@
     "resize-observer-polyfill": "1.5.1"
   },
   "peerDependencies": {
-    "mapbox-gl": "^1",
-    "mobility-toolbox-js": "^1",
-    "ol": "^6",
-    "react": "^16",
-    "react-dom": "^16"
+    "mapbox-gl": "1.12.0",
+    "mobility-toolbox-js": "1.1.9",
+    "ol": "6.4.3",
+    "react": "16.13.1",
+    "react-dom": "16.13.1"
   },
   "devDependencies": {
     "@babel/core": "7.12.3",
@@ -61,8 +61,8 @@
     "jest-transform-file": "1.1.1",
     "jsts": "2.5.1",
     "lint-staged": "10.2.11",
-    "mapbox-gl": "1.11.1",
-    "mobility-toolbox-js": "1.1.13",
+    "mapbox-gl": "1.12.0",
+    "mobility-toolbox-js": "1.1.9",
     "node-sass": "4.14.1",
     "ol": "6.4.3",
     "prettier": "2.0.5",
