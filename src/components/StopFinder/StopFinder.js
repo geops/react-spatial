@@ -134,8 +134,6 @@ function StopFinder({
                     {params.InputProps.endAdornment}
                   </>
                 ),
-                // eslint-disable-next-line react/jsx-props-no-spreading
-                ...((autocompleteProps || {}).inputProps || {}),
               }}
             />
           );
@@ -178,7 +176,8 @@ StopFinder.propTypes = {
   apiKey: PropTypes.string,
 
   /**
-   * Properties apply to the default MUI Autocomplete component.
+   * Properties apply to the default [MUI Autocomplete component](https://material-ui.com/api/autocomplete/).
+   * We add a custom properties textFieldProps for the default [MUI TextField component](https://material-ui.com/api/text-field/) used by the Autocomplete.
    */
   autocompleteProps: PropTypes.object,
 
