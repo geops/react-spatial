@@ -4,7 +4,7 @@ This demonstrates the use of Popup.
 
 ```jsx
 import React, { useState, useMemo, useCallback } from 'react';
-import { Layer, } from 'mobility-toolbox-js/ol';
+import { Layer, MapboxLayer} from 'mobility-toolbox-js/ol';
 import { Vector as VectorLayer, Tile } from 'ol/layer';
 import { Map, Feature } from 'ol';
 import Point from 'ol/geom/Point';
@@ -18,10 +18,8 @@ import Popup from 'react-spatial/components/Popup';
 const map = new Map({ controls: [] });
 
 const layers = [
-  new Layer({
-    olLayer: new Tile({
-      source: new OSM(),
-    })
+  new MapboxLayer({
+    url: `https://maps.geops.io/styles/base_dark_v2/style.json?key=${apiKey}`,
   }),
   new Layer({
     olLayer: new VectorLayer({
