@@ -56,7 +56,7 @@ const layerImages = {
   'osm.baselayer': osmImage,
 };
 
-const layers = [travicLayer, basebrightLayer, osmLayer]
+const layers = [travicLayer, basebrightLayer, osmLayer];
 
 <div className="rs-base-layer-example">
   <BasicMap
