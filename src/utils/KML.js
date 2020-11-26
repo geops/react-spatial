@@ -302,20 +302,20 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
   const { olLayer } = layer;
   const exportFeatures = [];
 
-  olLayer.getSource().forEachFeature((f) => {
+  olLayer.getSource().forEachFeature((feature) => {
     // We silently ignore Circle elements as they are
     // not supported in kml.
-    if (f.getGeometry().getType() === 'Circle') {
+    if (feature.getGeometry().getType() === 'Circle') {
       return;
     }
 
-    const clone = f.clone();
-    clone.setId(f.getId());
-    clone.getGeometry().setProperties(f.getGeometry().getProperties());
+    const clone = feature.clone();
+    clone.setId(feature.getId());
+    clone.getGeometry().setProperties(feature.getGeometry().getProperties());
     clone.getGeometry().transform(featureProjection, 'EPSG:4326');
 
     // We remove all ExtendedData not related to style.
-    Object.keys(f.getProperties()).forEach((key) => {
+    Object.keys(feature.getProperties()).forEach((key) => {
       if (!/^(geometry|name|description)$/.test(key)) {
         clone.unset(key, true);
       }
@@ -323,10 +323,10 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
 
     let styles;
 
-    if (clone.getStyleFunction()) {
-      styles = clone.getStyleFunction()(clone, mapResolution);
+    if (feature.getStyleFunction()) {
+      styles = feature.getStyleFunction()(feature, mapResolution);
     } else if (olLayer && olLayer.getStyleFunction()) {
-      styles = olLayer.getStyleFunction()(clone, mapResolution);
+      styles = olLayer.getStyleFunction()(feature, mapResolution);
     }
 
     const newStyle = {
@@ -403,19 +403,22 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
       }
 
       /* Replaced by mapResolutionForPicture, to be removed in react-spatial v2 */
-      if (f.get('zoomAtMaxIconSize')) {
-        clone.set('zoomAtMaxIconSize', f.get('zoomAtMaxIconSize'));
+      if (feature.get('zoomAtMaxIconSize')) {
+        clone.set('zoomAtMaxIconSize', feature.get('zoomAtMaxIconSize'));
       }
 
       // Set map resolution to use for icon-to-map proportional scaling
-      if (f.get('pictureOptions')) {
-        clone.set('pictureOptions', JSON.stringify(f.get('pictureOptions')));
+      if (feature.get('pictureOptions')) {
+        clone.set(
+          'pictureOptions',
+          JSON.stringify(feature.get('pictureOptions')),
+        );
       }
     }
 
     // In case a fill pattern should be applied (use fillPattern attribute to store pattern id, color etc)
-    if (f.get('fillPattern')) {
-      clone.set('fillPattern', JSON.stringify(f.get('fillPattern')));
+    if (feature.get('fillPattern')) {
+      clone.set('fillPattern', JSON.stringify(feature.get('fillPattern')));
       newStyle.fill = null;
     }
 
@@ -436,8 +439,8 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
         extraLineStyle.getImage() instanceof Icon &&
         extraLineStyle.getGeometry()
       ) {
-        const coord = extraLineStyle.getGeometry()(f).getCoordinates();
-        const startCoord = f.getGeometry().getFirstCoordinate();
+        const coord = extraLineStyle.getGeometry()(feature).getCoordinates();
+        const startCoord = feature.getGeometry().getFirstCoordinate();
         if (coord[0] === startCoord[0] && coord[1] === startCoord[1]) {
           clone.set(
             'lineStartIcon',
