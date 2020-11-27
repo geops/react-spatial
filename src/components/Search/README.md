@@ -4,7 +4,7 @@ This demonstrates the use of the Search component.
 
 ```jsx
 import React from 'react';
-import { Layer } from 'mobility-toolbox-js/ol';
+import { MapboxLayer } from 'mobility-toolbox-js/ol';
 import Map from 'ol/Map';
 import Tile from 'ol/layer/Tile';
 import { fromLonLat } from 'ol/proj';
@@ -12,19 +12,17 @@ import OSM from 'ol/source/OSM';
 import BasicMap from 'react-spatial/components/BasicMap';
 import Search from 'react-spatial/components/Search';
 
-const map = new Map({ controls: [] });
-
-const layers = [
-  new Layer({
-    olLayer: new Tile({
-      source: new OSM(),
-    }),
-  }),
-];
-
 // The `apiKey` used here is for demonstration purposes only.
 // Please get your own api key at https://developer.geops.io/.
 const { apiKey } = window;
+
+const map = new Map({ controls: [] });
+
+const layers = [
+  new MapboxLayer({
+    url: `https://maps.geops.io/styles/travic/style.json?key=${apiKey}`,
+  }),
+];
 
 <div className="rt-stop-finder-example">
   <BasicMap

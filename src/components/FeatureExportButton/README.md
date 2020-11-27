@@ -4,7 +4,7 @@ This demonstrates the use of FeatureExportButton.
 
 ```jsx
 import React from 'react';
-import { Layer } from 'mobility-toolbox-js/ol';
+import { Layer, MapboxLayer } from 'mobility-toolbox-js/ol';
 import { Tile, Vector as VectorLayer } from 'ol/layer';
 import { Vector as VectorSource, OSM } from 'ol/source';
 import { Feature }  from 'ol';
@@ -40,10 +40,8 @@ const vectorLayer = new Layer({
 });
 
 const layers = [
-  new Layer({
-    olLayer: new Tile({
-      source: new OSM(),
-    }),
+  new MapboxLayer({
+    url: `https://maps.geops.io/styles/travic/style.json?key=${apiKey}`,
   }),
   vectorLayer,
 ];
