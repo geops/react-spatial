@@ -9141,10 +9141,10 @@ mixin-deep@^1.2.0:
   dependencies:
     minimist "^1.2.5"
 
-mobility-toolbox-js@1.1.14-beta.0:
-  version "1.1.14-beta.0"
-  resolved "https://registry.yarnpkg.com/mobility-toolbox-js/-/mobility-toolbox-js-1.1.14-beta.0.tgz#9533b493ae5f22e6591253de63ba048a221b370b"
-  integrity sha512-+rhqllVsgSOZoUr6SiImGLq94hwzsISQaHuXuXrIyGxECg7nZlQCf9H8VVSvlXQaix13JIT+kQWMkj7BaaLTGg==
+mobility-toolbox-js@1.1.14:
+  version "1.1.14"
+  resolved "https://registry.yarnpkg.com/mobility-toolbox-js/-/mobility-toolbox-js-1.1.14.tgz#cce1728de487e7ca30d7c0ada336e80a6fe789a6"
+  integrity sha512-GGQxTDs8QdXiwUNzTxFex6PEqkYCzc+3/INDK0r6qSDB7REk9hC1FpsVVsZx6JFoHI++oB6KSQniW9d/SLlkwg==
   dependencies:
     "@geops/geops-ui" "^0.1.8"
     "@material-ui/core" "^4.9.14"
