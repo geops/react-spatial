@@ -61,23 +61,12 @@ function StopFinder({
       ref_location: refLocation && refLocation.toString(),
     };
 
-    // TO REMOVE when mobility toolbox is upt to date
-    Object.keys(params).forEach(
-      (key) =>
-        (params[key] === undefined || params[key] === null) &&
-        delete params[key],
-    );
     api
       .search(params, abortController)
       .then((data) => {
         if (!data) {
           // Request cancelled
           return;
-        }
-
-        // TO REMOVE when mobility toolbox is up to date
-        if (data.error) {
-          throw new Error(data.error);
         }
         setSuggestions(data);
         setLoading(false);
