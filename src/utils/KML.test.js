@@ -217,7 +217,7 @@ describe('KML', () => {
       expectWriteResult(feats, str);
     });
 
-    test('should add zIndex and rotation to icon style and zoomAtMaxIconSize to feature properties.', () => {
+    test.only('should add zIndex and rotation to icon style and pictureOptions to feature properties.', () => {
       const str = `
       <kml ${xmlns}>
         <Document>
@@ -226,7 +226,6 @@ describe('KML', () => {
                 <description></description>
                 <Style>
                     <IconStyle>
-                        <scale>0.5</scale>
                         <heading>
                           1.5707963267948966
                         </heading>
@@ -242,11 +241,11 @@ describe('KML', () => {
                     <Data name="iconRotation">
                       <value>1.5707963267948966</value>
                     </Data>
+                    <Data name="pictureOptions">
+                      <value>{"resolution":4,"constant":0.5}</value>
+                    </Data>
                     <Data name="zIndex">
                         <value>1</value>
-                    </Data>
-                    <Data name="zoomAtMaxIconSize">
-                      <value>12.65397</value>
                     </Data>
                 </ExtendedData>
                 <Point>
@@ -256,11 +255,14 @@ describe('KML', () => {
         </Document>
       </kml>
       `;
-      const feats = KML.readFeatures(str);
+      const feats = KML.readFeatures(str, undefined, 3.5);
       const style = feats[0].getStyleFunction()()[0];
       expect(style.getZIndex()).toBe(1);
       expect(style.getImage().getRotation()).toBe(1.5707963267948966);
-      expect(feats[0].get('zoomAtMaxIconSize')).toBe(12.65397);
+      expect(feats[0].get('pictureOptions')).toEqual({
+        resolution: 4,
+        constant: 0.5,
+      });
       expectWriteResult(feats, str);
     });
   });
