@@ -4,8 +4,8 @@ The following example demonstrates the use of FeatureExportButton.
 
 ```jsx
 import React from 'react';
-import { Layer, MapboxLayer } from 'mobility-toolbox-js/ol';
-import { Tile, Vector as VectorLayer } from 'ol/layer';
+import { VectorLayer, MapboxLayer } from 'mobility-toolbox-js/ol';
+import { Tile, Vector } from 'ol/layer';
 import { Vector as VectorSource, OSM } from 'ol/source';
 import { Feature }  from 'ol';
 import {Point} from 'ol/geom';
@@ -15,8 +15,8 @@ import BasicMap from 'react-spatial/components/BasicMap';
 import FeatureExportButton from 'react-spatial/components/FeatureExportButton';
 
 
-const vectorLayer = new Layer({
-  olLayer: new VectorLayer({
+const vectorLayer = new VectorLayer({
+  olLayer: new Vector({
     style: new Style({
       image: new Icon({
         anchor: [0.5, 46],

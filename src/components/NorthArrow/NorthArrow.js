@@ -38,7 +38,7 @@ const getRotation = (map, rotationOffset) =>
   degrees(map.getView().getRotation()) + rotationOffset;
 
 /**
- * This NorthArrow component inserts an arrow pointing North into an
+ * This NorthArrow component inserts an arrow pointing north into an
  * [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
  */
 function NorthArrow({ map, rotationOffset, circled, children, ...other }) {

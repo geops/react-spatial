@@ -60,6 +60,10 @@ const defaultProps = {
   inputProps: {},
 };
 
+/**
+ * The Search component renders a text input field which searches for stops
+ * using the input string and centers the map on the selected stop.
+ */
 function Search({
   apiKey,
   engines,

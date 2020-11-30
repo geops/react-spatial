@@ -48,7 +48,8 @@ const defaultRenderButton = (icon, onClick, title) => {
 };
 
 /**
- * TrackerControl allows the user to control the speed of a trackerLayer.
+ * TrackerControl allows the user to control the speed of a
+ * [mobility-toolbox-js tracker layer](https://mobility-toolbox-js.geops.io/api/class/src/mapbox/layers/TrajservLayer%20js~TrajservLayer%20html-offset-anchor).
  */
 function TrackerControl({
   className,

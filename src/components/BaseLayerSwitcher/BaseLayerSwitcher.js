@@ -86,9 +86,9 @@ const getImageStyle = (url) => {
 };
 
 /**
- * The BaseLayerSwitcher is used to switch the visibility of
- * [mobility-toolbox-js Layer](https://mobility-toolbox-js.geops.io/api/identifiers%20html#ol-layers)
- * instances when defined as base layers.
+ * The BaseLayerSwitcher component renders a button interface for switching the visible
+ * [mobility-toolbox-js layer](https://mobility-toolbox-js.geops.io/api/identifiers%20html#ol-layers)
+ * when defined as base layer.
  */
 
 function BaseLayerSwitcher({

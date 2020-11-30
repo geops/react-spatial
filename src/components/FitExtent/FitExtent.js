@@ -29,7 +29,7 @@ const defaultProps = {
 };
 
 /**
- * This component creates a button that updates the current extent of
+ * The FitExtent component creates a button that updates the current extent of
  * an [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
  */
 function FitExtent({ map, extent, className, children, ...other }) {
