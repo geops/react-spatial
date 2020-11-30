@@ -8,7 +8,7 @@ import './BaseLayerSwitcher.scss';
 
 const propTypes = {
   /**
-   * An array of react-spatial layers.
+   * An array of [mobility-toolbox-js layers](https://mobility-toolbox-js.geops.io/api/identifiers%20html#ol-layers).
    */
   layers: PropTypes.arrayOf(PropTypes.instanceOf(Layer)).isRequired,
 
@@ -84,6 +84,12 @@ const getImageStyle = (url) => {
       }
     : null;
 };
+
+/**
+ * The BaseLayerSwitcher is used to switch the visibility of
+ * [mobility-toolbox-js Layer](https://mobility-toolbox-js.geops.io/api/identifiers%20html#ol-layers)
+ * instances when defined as base layers.
+ */
 
 function BaseLayerSwitcher({
   layers,

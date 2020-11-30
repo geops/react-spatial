@@ -1,11 +1,12 @@
 #
 
-This demonstrates the use of NorthArrowExample (Shift + click to rotate).
+The following example demonstrates the use of NorthArrowExample (Alt + Shift + click to rotate).
 
 ```jsx
 import React from 'react';
 import { Layer } from 'mobility-toolbox-js/ol';
 import Map from 'ol/Map';
+import { DragRotate, defaults } from 'ol/interaction';
 import Tile from 'ol/layer/Tile';
 import TileGrid from 'ol/tilegrid/TileGrid';
 import TileImageSource from 'ol/source/TileImage';
@@ -15,7 +16,7 @@ import NorthArrow from 'react-spatial/components/NorthArrow';
 
 const extent = [599500, 199309, 600714, 200002];
 
-const map = new Map({ controls: []});
+const map = new Map({ controls: [] });
 
 const layers = [
   new Layer({

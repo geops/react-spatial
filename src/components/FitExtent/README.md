@@ -1,6 +1,6 @@
 #
 
-This demonstrates the use of FitExtent.
+The following example demonstrates the use of FitExtent.
 
 ```jsx
 import React from 'react';

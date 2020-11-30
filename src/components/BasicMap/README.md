@@ -1,6 +1,6 @@
 #
 
-This demonstrates the use of BasicMap.
+The following example demonstrates the use of BasicMap.
 
 ```jsx
 import React from 'react';

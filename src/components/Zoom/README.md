@@ -1,6 +1,6 @@
 #
 
-This demonstrates the use of Zoom.
+The following example demonstrates the use of Zoom.
 
 ```jsx
 import React from 'react';

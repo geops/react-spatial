@@ -26,6 +26,12 @@ const defaultProps = {
   className: 'rs-copyright',
 };
 
+/**
+ * The Copyright component uses the *copyright* attribute from a
+ * [mobility-toolbox-js Layer](https://mobility-toolbox-js.geops.io/api/identifiers%20html#ol-layers)
+ * to render the layer copyrights.
+ */
+
 function Copyright({ layerService, format, ...other }) {
   const [, updateState] = useState();
   const forceUpdate = useCallback(() => updateState({}), []);

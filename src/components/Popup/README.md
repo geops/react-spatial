@@ -1,6 +1,6 @@
 #
 
-This demonstrates the use of Popup.
+The following example demonstrates the use of Popup.
 
 ```jsx
 import React, { useState, useMemo, useCallback } from 'react';

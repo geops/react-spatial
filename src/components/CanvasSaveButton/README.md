@@ -1,6 +1,6 @@
 #
 
-This demonstrates the use of CanvasSaveButton.
+The following example demonstrates the use of CanvasSaveButton.
 
 ```jsx
 import React from 'react';

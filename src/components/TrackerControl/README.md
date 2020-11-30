@@ -1,6 +1,6 @@
 #
 
-This demonstrates the use of TrackerControl.
+The following example demonstrates the use of TrackerControl.
 
 ```jsx
 import React from 'react';

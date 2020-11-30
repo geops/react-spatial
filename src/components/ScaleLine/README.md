@@ -1,6 +1,6 @@
 #
 
-This demonstrates the use of ScaleLine.
+The following example demonstrates the use of ScaleLine.
 
 ```js
 import React, { Component } from  'react';

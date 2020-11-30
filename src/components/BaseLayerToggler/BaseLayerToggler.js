@@ -10,7 +10,7 @@ import BasicMap from '../BasicMap';
 
 const propTypes = {
   /**
-   * An ol.Map.
+   * An [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html)
    */
   map: PropTypes.instanceOf(OLMap).isRequired,
 
@@ -68,6 +68,11 @@ const defaultProps = {
   },
 };
 
+/**
+ * The BaseLayerToggler is used to switch the visibility of
+ * [mobility-toolbox-js Layer](https://mobility-toolbox-js.geops.io/api/identifiers%20html#ol-layers)
+ * instances when defined as base layers.
+ */
 class BaseLayerToggler extends Component {
   static isDifferentLayers(prevLayers, layers) {
     if (prevLayers && layers) {

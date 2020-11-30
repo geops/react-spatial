@@ -1,6 +1,6 @@
 #
 
-This demonstrates the use of the Search component.
+The following example demonstrates the use of the Search component.
 
 ```jsx
 import React from 'react';

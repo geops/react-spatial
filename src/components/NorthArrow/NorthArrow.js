@@ -8,7 +8,7 @@ import NorthArrowCircle from '../../images/northArrowCircle.svg';
 
 const propTypes = {
   /**
-   * An ol map.
+   * An [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
    */
   map: PropTypes.instanceOf(OLMap).isRequired,
 
@@ -38,7 +38,8 @@ const getRotation = (map, rotationOffset) =>
   degrees(map.getView().getRotation()) + rotationOffset;
 
 /**
- * This component displays an arrow pointing the North of the map.
+ * This NorthArrow component inserts an arrow pointing North into an
+ * [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
  */
 function NorthArrow({ map, rotationOffset, circled, children, ...other }) {
   const [rotation, setRotation] = useState(rotationOffset);

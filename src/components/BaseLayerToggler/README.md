@@ -1,11 +1,10 @@
 #
-
-This demonstrates the use of BaseLayerToggler.
+The following example demonstrates the use of BaseLayerToggler:
 
 ```jsx
 import React from 'react';
 import Map from 'ol/Map';
-import { MapboxLayer, Layer } from 'mobility-toolbox-js/ol';
+import { Layer } from 'mobility-toolbox-js/ol';
 import TileLayer from 'ol/layer/Tile';
 import XYZ from 'ol/source/XYZ';
 import OSM from 'ol/source/OSM';

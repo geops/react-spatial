@@ -17,7 +17,8 @@ const propTypes = {
   format: PropTypes.func,
 
   /**
-   * An existing react-spatial Layer, using a valid ol.source.Vector
+   * An existing [mobility-toolbox-js Layer](https://mobility-toolbox-js.geops.io/api/identifiers%20html#ol-layers),
+   * using a valid [ol/source/Vector](https://openlayers.org/en/latest/apidoc/module-ol_source_Vector.html)
    */
   layer: PropTypes.instanceOf(Layer).isRequired,
 
@@ -34,8 +35,8 @@ const defaultProps = {
 };
 
 /**
- * This component displays a button to export geometry feature.<br>
- * Default export format is KML, which supported features' style export.<br>
+ * The FeatureExportButton component creates a button to export feature geometries.<br>
+ * The default export format is KML, which supports the features' style export.<br>
  * Other formats do not always support style export (See specific format specs).
  */
 class FeatureExportButton extends PureComponent {

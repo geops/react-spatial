@@ -1,6 +1,6 @@
 #
 
-This demonstrates the use of Geolocation.
+The following example demonstrates the use of Geolocation.
 
 ```jsx
 import React from 'react';

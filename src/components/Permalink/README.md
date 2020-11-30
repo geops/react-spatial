@@ -1,6 +1,6 @@
 #
 
-This demonstrates the use of Permalink.
+The following example demonstrates the use of Permalink.
 
 ```jsx
 import React from 'react';
@@ -14,7 +14,6 @@ import Permalink from 'react-spatial/components/Permalink';
 import BasicMap from 'react-spatial/components/BasicMap';
 import LayerService from 'react-spatial/LayerService';
 import Map from 'ol/Map';
-import ConfigReader from '../../ConfigReader';
 
 const map = new Map({ controls: [] });
 
@@ -50,17 +49,14 @@ const baseLayers = [
     name: 'Base - Bright',
     key: 'basebright.baselayer',
     isBaseLayer: true,
-    visible: true,
     properties: {
       radioGroup: 'baseLayer',
     },
   }),
-  new Layer({
-    olLayer: new TileLayer({
-      source: new OSM(),
-    }),
-    name: 'OSM',
-    key: 'osm.baselayer',
+  new MapboxLayer({
+    url: `https://maps.geops.io/styles/base_dark_v2/style.json?key=${apiKey}`,
+    name: 'Base - Dark',
+    key: 'basedark.baselayer',
     isBaseLayer: true,
     visible: false,
     properties: {
@@ -71,7 +67,7 @@ const baseLayers = [
 
 const layers = [...baseLayers, swissBoundries]
 
-const layerService = new LayerService(baseLayers);
+const layerService = new LayerService(layers);
 
 <div className="rs-permalink-example">
   <BasicMap center={[876887.69, 5928515.41]} map={map} layers={layers} tabIndex={0} zoom={5} />

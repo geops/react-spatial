@@ -16,7 +16,7 @@ const propTypes = {
    */
   format: PropTypes.oneOf(['image/jpeg', 'image/png']),
 
-  /** An existing [ol/Map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html). */
+  /** An  [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html). */
   map: PropTypes.instanceOf(OLMap),
 
   /**
@@ -111,7 +111,9 @@ const defaultProps = {
 };
 
 /**
- * This component displays a button to save canvas as an image.
+ * The CanvasSaveButton component creates a button to save
+ * an [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html)
+ * canvas as an image.
  */
 class CanvasSaveButton extends PureComponent {
   constructor(props) {

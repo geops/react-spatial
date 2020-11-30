@@ -1,6 +1,6 @@
 #
 
-This demonstrates the use of FeatureExportButton.
+The following example demonstrates the use of FeatureExportButton.
 
 ```jsx
 import React from 'react';
