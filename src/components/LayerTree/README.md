@@ -45,6 +45,9 @@ const vectorLayers = [
       new Layer({
         name: 'Countries',
         key: 'countries',
+        properties: {
+          radioGroup: 'radio',
+        },
         children: [
           new Layer({
             name: 'Countries Borders',
@@ -80,6 +83,9 @@ const vectorLayers = [
       new Layer({
         name: 'Vienna Streets',
         key: 'vienna.streets',
+        properties: {
+          radioGroup: 'radio',
+        },
         olLayer: new VectorLayer({
           source: new VectorSource({
             url: 'https://raw.githubusercontent.com/openlayers/openlayers/' +
@@ -101,6 +107,7 @@ const vectorLayers = [
 
 const layers = [...baseLayers, ...vectorLayers];
 const layerService = new LayerService(layers);
+console.log(layerService.getLayer('Countries Borders'));
 
 <div className="rs-layer-tree-example">
   <BasicMap layers={layers} center={[876887.69, 5928515.41]} zoom={3} tabIndex={0} />

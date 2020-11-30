@@ -3,58 +3,40 @@ import { configure, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import 'jest-canvas-mock';
 import { act } from 'react-dom/test-utils';
+import { Layer } from 'mobility-toolbox-js/ol';
 import Copyright from './Copyright';
-import ConfigReader from '../../ConfigReader';
 import LayerService from '../../LayerService';
 
 configure({ adapter: new Adapter() });
-
-const initLayerService = () => {
-  const data = [
-    {
-      name: 'OSM Baselayer',
-      copyright: '© OSM Contributors',
-      data: {
-        type: 'xyz',
-        url: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      },
-    },
-    {
-      name: 'OSM Baselayer Hot',
-      copyright: '© Hot OSM Contributors',
-      data: {
-        type: 'xyz',
-        url: 'https://c.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
-      },
-    },
-    {
-      name: 'OpenTopoMap',
-      copyright: '© Some Copyright',
-      data: {
-        type: 'xyz',
-        url: 'https://a.tile.opentopomap.org/{z}/{x}/{y}.png',
-      },
-    },
-    {
-      name: 'OpenTopoMap',
-      copyright: '© OSM Contributors',
-      data: {
-        type: 'xyz',
-        url: 'https://a.tile.opentopomap.org/{z}/{x}/{y}.png',
-      },
-    },
-  ];
-
-  const layers = ConfigReader.readConfig(data);
-  return new LayerService(layers);
-};
 
 let layerService;
 let layers;
 
 describe('Copyright', () => {
   beforeEach(() => {
-    layerService = initLayerService();
+    layers = [
+      new Layer({
+        name: 'bl1',
+        copyright: '© OSM Contributors',
+        visible: false,
+      }),
+      new Layer({
+        name: 'bl2',
+        copyright: '© Hot OSM Contributors',
+        visible: false,
+      }),
+      new Layer({
+        name: 'bl3',
+        copyright: '© Some Copyright',
+        visible: false,
+      }),
+      new Layer({
+        name: 'bl3',
+        copyright: '© OSM Contributors',
+        visible: false,
+      }),
+    ];
+    layerService = new LayerService(layers);
     layers = layerService.getLayersAsFlatArray();
   });
 
@@ -131,27 +113,19 @@ describe('Copyright', () => {
   });
 
   test('displays only when copyright is defined', () => {
-    const data = [
-      {
-        name: 'OSM Baselayer',
+    layers = [
+      new Layer({
+        name: 'bl3',
+        copyright: '© Some Copyright',
         visible: true,
-        copyright: 'OSM Contributors',
-        data: {
-          type: 'xyz',
-          url: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
-        },
-      },
-      {
-        name: 'OSM Baselayer Hot',
+      }),
+      new Layer({
+        name: 'bl3',
         visible: true,
-        data: {
-          type: 'xyz',
-          url: 'https://c.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
-        },
-      },
+      }),
     ];
 
-    const layService = new LayerService(ConfigReader.readConfig(data));
+    const layService = new LayerService(layers);
     const component = mount(
       <Copyright
         layerService={layService}

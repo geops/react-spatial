@@ -4,18 +4,15 @@ import { configure, shallow, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import 'jest-canvas-mock';
 import OLMap from 'ol/Map';
+import { Layer } from 'mobility-toolbox-js/ol';
 import renderer from 'react-test-renderer';
 import BaseLayerToggler from './BaseLayerToggler';
-import exampleData from '../../../data/ExampleData';
-import data from '../../../data/TreeData';
-import ConfigReader from '../../ConfigReader';
 import LayerService from '../../LayerService';
 
 configure({ adapter: new Adapter() });
 
-const shallowComp = (newData, props) => {
+const shallowComp = (layers, props) => {
   const map = new OLMap({});
-  const layers = ConfigReader.readConfig(newData || data);
   const layerService = new LayerService(layers);
   return shallow(
     <BaseLayerToggler
@@ -25,9 +22,8 @@ const shallowComp = (newData, props) => {
     />,
   );
 };
-const mountComp = (newData, props) => {
+const mountComp = (layers, props) => {
   const map = new OLMap({});
-  const layers = ConfigReader.readConfig(newData || data);
   const layerService = new LayerService(layers);
   return mount(
     <BaseLayerToggler
@@ -38,9 +34,8 @@ const mountComp = (newData, props) => {
   );
 };
 
-const expectSnapshot = (newData, props) => {
+const expectSnapshot = (layers, props) => {
   const map = new OLMap({});
-  const layers = ConfigReader.readConfig(newData || data);
   const layerService = new LayerService(layers);
   const component = renderer.create(
     <BaseLayerToggler
@@ -54,14 +49,34 @@ const expectSnapshot = (newData, props) => {
 };
 
 describe('BaseLayerToggler', () => {
+  let layers;
+
+  beforeEach(() => {
+    layers = [
+      new Layer({
+        name: 'bl1',
+        isBaseLayer: true,
+      }),
+      new Layer({
+        name: 'bl2',
+        isBaseLayer: true,
+        visible: false,
+      }),
+      new Layer({
+        name: 'bl3',
+        isBaseLayer: true,
+        visible: false,
+      }),
+    ];
+  });
   describe('matches snapshots', () => {
     test('using default properties.', () => {
-      expectSnapshot();
+      expectSnapshot(layers);
     });
   });
 
   test('initialize correctly the state', () => {
-    const wrapper = shallowComp();
+    const wrapper = shallowComp(layers);
     const comp = wrapper.instance();
     expect(comp.state.idx).toBe(1);
     expect(comp.state.layers.length).toBe(3);
@@ -69,7 +84,7 @@ describe('BaseLayerToggler', () => {
   });
 
   test('goes forward through all available layer except the current layer displayed on the map.', () => {
-    const wrapper = shallowComp();
+    const wrapper = shallowComp(layers);
     const comp = wrapper.instance();
     const layerVisible = comp.state.layers[0];
     expect(comp.state.layers.length).toBe(3);
@@ -87,7 +102,7 @@ describe('BaseLayerToggler', () => {
   });
 
   test('goes backward through all available layer except the current layer displayed on the map.', () => {
-    const wrapper = shallowComp();
+    const wrapper = shallowComp(layers);
     const comp = wrapper.instance();
     const layerVisible = comp.state.layers[0];
     expect(comp.state.layers.length).toBe(3);
@@ -105,7 +120,7 @@ describe('BaseLayerToggler', () => {
   });
 
   test('displays always a baseLayer on the map.', () => {
-    const wrapper = shallowComp();
+    const wrapper = shallowComp(layers);
     const comp = wrapper.instance();
     const layerVisible = comp.state.layers[0];
     expect(comp.state.layers.length).toBe(3);
@@ -119,7 +134,7 @@ describe('BaseLayerToggler', () => {
   });
 
   test('display on the map the layer clicked', () => {
-    const wrapper = mountComp(data);
+    const wrapper = mountComp(layers);
     const comp = wrapper.instance();
     expect(comp.state.layers.length).toBe(3);
     expect(comp.state.layers[0].visible).toBe(true);
@@ -132,12 +147,12 @@ describe('BaseLayerToggler', () => {
   });
 
   test('hide baseLayerToggler if only one baselayer', () => {
-    const wrapper = mountComp(exampleData);
+    const wrapper = mountComp([layers[0]]);
     expect(wrapper.find('.rs-base-layer-item').exists()).toBe(false);
   });
 
   test('should use children', () => {
-    const wrapper = shallowComp(null, {
+    const wrapper = shallowComp(layers, {
       prevButtonContent: 'prev',
       nextButtonContent: 'next',
     });

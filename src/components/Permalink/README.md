@@ -36,11 +36,11 @@ const swissBoundries = new Layer({
         }),
       }),
       stroke: new Stroke({
-            color: '#ffcc33',
-            width: 2,
-          }),
+          color: '#ffcc33',
+          width: 2,
         }),
-     })
+      }),
+    })
 });
 
 const baseLayers = [
