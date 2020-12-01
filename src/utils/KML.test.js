@@ -139,7 +139,7 @@ describe('KML', () => {
         </kml>
       `;
       const feats = KML.readFeatures(str);
-      const style = feats[0].getStyleFunction()();
+      const style = feats[0].getStyleFunction()(feats[0], 1);
       expect(feats.length).toBe(1);
       expect(style instanceof Style).toBe(true);
 
@@ -257,7 +257,7 @@ describe('KML', () => {
       </kml>
       `;
       const feats = KML.readFeatures(str);
-      const style = feats[0].getStyleFunction()();
+      const style = feats[0].getStyleFunction()(feats[0], 1);
       expect(style.getZIndex()).toBe(1);
       expect(style.getImage().getRotation()).toBe(1.5707963267948966);
       expect(feats[0].get('pictureOptions')).toEqual({

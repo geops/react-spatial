@@ -182,12 +182,13 @@ const sanitizeFeature = (feature) => {
        * adjustment.
        * e.g. { resolution: 0.123, defaultScale: 1 / 6 }
        */
-      if (feature.get('pictureOptions')) {
-        let pictureOptions = feature.get('pictureOptions');
+
+      if (feat.get('pictureOptions')) {
+        let pictureOptions = feat.get('pictureOptions');
         if (typeof pictureOptions === 'string') {
           pictureOptions = JSON.parse(pictureOptions);
         }
-        feature.set('pictureOptions', pictureOptions);
+        feat.set('pictureOptions', pictureOptions);
         if (pictureOptions.resolution) {
           image.setScale(
             (pictureOptions.resolution / resolution) *
