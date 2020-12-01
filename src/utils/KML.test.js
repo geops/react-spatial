@@ -1,6 +1,7 @@
 import { configure } from 'enzyme';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
+import { Style } from 'ol/style';
 import { get } from 'ol/proj';
 import Adapter from 'enzyme-adapter-react-16';
 import beautify from 'xml-beautifier';
@@ -138,25 +139,25 @@ describe('KML', () => {
         </kml>
       `;
       const feats = KML.readFeatures(str);
-      const styles = feats[0].getStyleFunction()();
+      const style = feats[0].getStyleFunction()();
       expect(feats.length).toBe(1);
-      expect(styles.length).toBe(1);
+      expect(style instanceof Style).toBe(true);
 
       // Text
-      const style = styles[0].getText();
-      expect(style.getText()).toBe('bar'); // spaces are trimmed.
-      expect(style.getFont()).toEqual('bold 16px arial');
-      expect(style.getFill()).toEqual({ color_: [32, 52, 126, 1] });
-      expect(style.getStroke()).toEqual(null);
-      expect(style.getScale()).toEqual(2);
-      expect(style.getRotation()).toEqual('2.303834612632515');
-      expect(style.getPadding()).toEqual([5, 6, 7, 8]);
-      expect(style.getBackgroundFill()).toEqual({
+      const styleText = style.getText();
+      expect(styleText.getText()).toBe('bar'); // spaces are trimmed.
+      expect(styleText.getFont()).toEqual('bold 16px arial');
+      expect(styleText.getFill()).toEqual({ color_: [32, 52, 126, 1] });
+      expect(styleText.getStroke()).toEqual(null);
+      expect(styleText.getScale()).toEqual(2);
+      expect(styleText.getRotation()).toEqual('2.303834612632515');
+      expect(styleText.getPadding()).toEqual([5, 6, 7, 8]);
+      expect(styleText.getBackgroundFill()).toEqual({
         color_: 'rgba(255,255,255,0.01)',
       });
-      expect(style.getTextAlign()).toEqual('right');
-      expect(style.getOffsetX()).toEqual(-90);
-      expect(style.getOffsetY()).toEqual(30);
+      expect(styleText.getTextAlign()).toEqual('right');
+      expect(styleText.getOffsetX()).toEqual(-90);
+      expect(styleText.getOffsetY()).toEqual(30);
       expectWriteResult(feats, str);
     });
 
@@ -217,7 +218,7 @@ describe('KML', () => {
       expectWriteResult(feats, str);
     });
 
-    test.only('should add zIndex and rotation to icon style and pictureOptions to feature properties.', () => {
+    test('should add zIndex and rotation to icon style and pictureOptions to feature properties.', () => {
       const str = `
       <kml ${xmlns}>
         <Document>
@@ -255,8 +256,8 @@ describe('KML', () => {
         </Document>
       </kml>
       `;
-      const feats = KML.readFeatures(str, undefined, 3.5);
-      const style = feats[0].getStyleFunction()()[0];
+      const feats = KML.readFeatures(str);
+      const style = feats[0].getStyleFunction()();
       expect(style.getZIndex()).toBe(1);
       expect(style.getImage().getRotation()).toBe(1.5707963267948966);
       expect(feats[0].get('pictureOptions')).toEqual({

@@ -55,7 +55,7 @@ const getLineIcon = (feature, icon, color, start = true) => {
 };
 
 // Clean the uneeded feature's style and properties created by the KML parser.
-const sanitizeFeature = (feature, mapResolution) => {
+const sanitizeFeature = (feature) => {
   const geom = feature.getGeometry();
   let styles = feature.getStyleFunction();
 
@@ -170,49 +170,39 @@ const sanitizeFeature = (feature, mapResolution) => {
        * <heading> tag, which is not read as rotation value by the ol KML module)
        */
       image.setRotation(parseFloat(feature.get('iconRotation')) || 0);
-
-      /* Replaced by pictureOptions, to be removed in react-spatial v2 */
-      if (feature.get('zoomAtMaxIconSize')) {
-        feature.set(
-          'zoomAtMaxIconSize',
-          parseFloat(feature.get('zoomAtMaxIconSize')),
-        );
-      }
     }
 
     fill = undefined;
     stroke = undefined;
 
-    styles = (f, resolution) => {
+    styles = (feat, resolution) => {
       /* Options to be used for picture scaling with map, should have at least
        * a resolution attribute (this is the map resolution at the zoom level when
        * the picture is created), can take an optional constant for further scale
        * adjustment.
-       * e.g. { resolution: 0.123, constant: 1 / 6 }
+       * e.g. { resolution: 0.123, defaultScale: 1 / 6 }
        */
-      if (feature.get('pictureOptions') && mapResolution) {
+      if (feature.get('pictureOptions')) {
         let pictureOptions = feature.get('pictureOptions');
         if (typeof pictureOptions === 'string') {
-          pictureOptions = JSON.parse(feature.get('pictureOptions'));
+          pictureOptions = JSON.parse(pictureOptions);
         }
         feature.set('pictureOptions', pictureOptions);
         if (pictureOptions.resolution) {
           image.setScale(
             (pictureOptions.resolution / resolution) *
-              pictureOptions.constant || 1,
+              pictureOptions.defaultScale || 1,
           );
         }
       }
 
-      return [
-        new Style({
-          fill,
-          stroke,
-          image,
-          text,
-          zIndex: style.getZIndex(),
-        }),
-      ];
+      return new Style({
+        fill,
+        stroke,
+        image,
+        text,
+        zIndex: style.getZIndex(),
+      });
     };
 
     feature.setStyle(styles);
@@ -282,12 +272,12 @@ const sanitizeFeature = (feature, mapResolution) => {
  * @param {String} kmlString A string representing a KML file.
  * @param {<ol.Projection|String>} featureProjection The projection used by the map.
  */
-const readFeatures = (kmlString, featureProjection, mapResolution) => {
+const readFeatures = (kmlString, featureProjection) => {
   const features = new KML().readFeatures(kmlString, {
     featureProjection,
   });
   features.forEach((feature) => {
-    sanitizeFeature(feature, mapResolution);
+    sanitizeFeature(feature);
   });
   return features;
 };
@@ -329,12 +319,14 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
       styles = olLayer.getStyleFunction()(feature, mapResolution);
     }
 
+    const mainStyle = styles[0] || styles;
+
     const newStyle = {
-      fill: styles[0].getFill(),
-      stroke: styles[0].getStroke(),
-      text: styles[0].getText(),
-      image: styles[0].getImage(),
-      zIndex: styles[0].getZIndex(),
+      fill: mainStyle.getFill(),
+      stroke: mainStyle.getStroke(),
+      text: mainStyle.getText(),
+      image: mainStyle.getImage(),
+      zIndex: mainStyle.getZIndex(),
     };
 
     if (newStyle.zIndex) {
@@ -432,7 +424,7 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
     }
 
     // In case we use line's icon .
-    const extraLineStyles = styles.slice(1);
+    const extraLineStyles = (Array.isArray(styles) && styles.slice(1)) || [];
     extraLineStyles.forEach((extraLineStyle) => {
       if (
         extraLineStyle &&
