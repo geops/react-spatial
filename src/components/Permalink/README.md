@@ -10,6 +10,9 @@ import { Vector as VectorSource, OSM } from 'ol/source';
 import { Style, Circle, Stroke, Fill } from 'ol/style';
 import GeoJSONFormat from 'ol/format/GeoJSON';
 import { Layer, MapboxLayer } from 'mobility-toolbox-js/ol';
+import { geopsTheme, Header, Footer } from '@geops/geops-ui';
+import { ThemeProvider } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import Permalink from 'react-spatial/components/Permalink';
 import BasicMap from 'react-spatial/components/BasicMap';
 import LayerService from 'react-spatial/LayerService';
@@ -69,35 +72,37 @@ const layers = [...baseLayers, swissBoundries]
 
 const layerService = new LayerService(layers);
 
-<div className="rs-permalink-example">
-  <BasicMap center={[876887.69, 5928515.41]} map={map} layers={layers} tabIndex={0} zoom={5} />
-  <Permalink
-    map={map}
-    layerService={layerService}
-    params={{
-      mode: 'custom',
-    }}
-    isLayerHidden={l => l.get('hideInLegend') || layerService.getParents(l).some(pl => pl.get('hideInLegend'))}
-  />
-  <div
-    role="button"
-    onClick={() => {
-      swissBoundries.setVisible(!swissBoundries.visible);
-    }}
-  >
-    Toggle Switzerland layer
-  </div>
-  <div
-    role="button"
-    onClick={() => {
-      if (baseLayers[1].visible) {
-        baseLayers[0].setVisible(true);
-      } else {
-        baseLayers[1].setVisible(true);
-      }
-    }}
-  >
-    Change base layer
-  </div>
-</div>;
+<ThemeProvider theme={geopsTheme}>
+  <div className="rs-permalink-example">
+    <BasicMap center={[876887.69, 5928515.41]} map={map} layers={layers} tabIndex={0} zoom={5} />
+    <Permalink
+      map={map}
+      layerService={layerService}
+      params={{
+        mode: 'custom',
+      }}
+      isLayerHidden={l => l.get('hideInLegend') || layerService.getParents(l).some(pl => pl.get('hideInLegend'))}
+    />
+    <div className="rs-permalink-example-btns">
+      <Button 
+        onClick={() => {
+          swissBoundries.setVisible(!swissBoundries.visible);
+        }}
+      >
+        Toggle Switzerland layer
+      </Button>
+      <Button 
+        onClick={() => {
+        if (baseLayers[1].visible) {
+          baseLayers[0].setVisible(true);
+        } else {
+          baseLayers[1].setVisible(true);
+        }
+      }}
+      >
+        Change base layer
+      </Button>
+    </div>
+  </div>;
+</ThemeProvider>
 ```

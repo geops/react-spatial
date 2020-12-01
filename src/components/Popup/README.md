@@ -50,12 +50,12 @@ const layers = [
 function PopupExample() {
   const [featureClicked, setFeatureClicked] = useState();
 
-  const content = useMemo(()=>{
-        return featureClicked &&
-        featureClicked
-          .getGeometry()
-          .getCoordinates()
-          .toString();
+  const content = useMemo(() => {
+    return featureClicked &&
+    featureClicked
+      .getGeometry()
+      .getCoordinates()
+      .toString();
   }, [featureClicked]);
 
   const onFeaturesClick = useCallback((features) => {

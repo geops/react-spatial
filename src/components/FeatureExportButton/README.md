@@ -11,6 +11,9 @@ import { Feature }  from 'ol';
 import {Point} from 'ol/geom';
 import { Icon, Style } from 'ol/style';
 import GPX from 'ol/format/GPX';
+import { geopsTheme, Header, Footer } from '@geops/geops-ui';
+import { ThemeProvider } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import BasicMap from 'react-spatial/components/BasicMap';
 import FeatureExportButton from 'react-spatial/components/FeatureExportButton';
 
@@ -46,24 +49,29 @@ const layers = [
   vectorLayer,
 ];
 
-
-<div className="rs-feature-export-example">
-  <BasicMap
-    center={[843119.531243, 6111943.000197]}
-    zoom={9}
-    layers={layers}
-    tabIndex={0}
-  />
-  <div>
-    <FeatureExportButton layer={vectorLayer}>
-      Export as KML
-    </FeatureExportButton>
-    <FeatureExportButton
-      format={GPX}
-      layer={vectorLayer}
-    >
-      Export as GPX
-    </FeatureExportButton>
+<ThemeProvider theme={geopsTheme}>
+  <div className="rs-feature-export-example">
+    <BasicMap
+      center={[843119.531243, 6111943.000197]}
+      zoom={9}
+      layers={layers}
+      tabIndex={0}
+    />
+    <div className="rs-feature-export-example-btns">
+      <FeatureExportButton layer={vectorLayer}>
+        <Button>
+          Export as KML
+        </Button>
+      </FeatureExportButton>
+      <FeatureExportButton
+        format={GPX}
+        layer={vectorLayer}
+      >
+        <Button>
+          Export as GPX
+        </Button>
+      </FeatureExportButton>
+    </div>
   </div>
-</div>
+</ThemeProvider>
 ```
