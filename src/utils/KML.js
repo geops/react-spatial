@@ -395,11 +395,6 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
         clone.set('iconRotation', newStyle.image.getRotation());
       }
 
-      /* Replaced by mapResolutionForPicture, to be removed in react-spatial v2 */
-      if (feature.get('zoomAtMaxIconSize')) {
-        clone.set('zoomAtMaxIconSize', feature.get('zoomAtMaxIconSize'));
-      }
-
       // Set map resolution to use for icon-to-map proportional scaling
       if (feature.get('pictureOptions')) {
         clone.set(
