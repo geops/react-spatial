@@ -243,7 +243,7 @@ describe('KML', () => {
                       <value>1.5707963267948966</value>
                     </Data>
                     <Data name="pictureOptions">
-                      <value>{"resolution":4,"constant":0.5}</value>
+                      <value>{"resolution":4,"defaultScale":0.5}</value>
                     </Data>
                     <Data name="zIndex">
                         <value>1</value>
@@ -262,7 +262,7 @@ describe('KML', () => {
       expect(style.getImage().getRotation()).toBe(1.5707963267948966);
       expect(feats[0].get('pictureOptions')).toEqual({
         resolution: 4,
-        constant: 0.5,
+        defaultScale: 0.5,
       });
       expectWriteResult(feats, str);
     });
