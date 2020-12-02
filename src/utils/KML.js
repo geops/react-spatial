@@ -51,6 +51,7 @@ const getLineIcon = (feature, icon, color, start = true) => {
       scale: icon.scale,
       imgSize: icon.size, // ie 11
     }),
+    zIndex: icon.zIndex,
   });
 };
 
@@ -170,30 +171,41 @@ const sanitizeFeature = (feature) => {
        * <heading> tag, which is not read as rotation value by the ol KML module)
        */
       image.setRotation(parseFloat(feature.get('iconRotation')) || 0);
-
-      /* Value to be used for icon scaling with map
-       * e.g. icon.setScale(map.getView().getResolutionForZoom(zoomAtMaxIconSize) / map.getView().getResolution())
-       */
-      if (feature.get('zoomAtMaxIconSize')) {
-        feature.set(
-          'zoomAtMaxIconSize',
-          parseFloat(feature.get('zoomAtMaxIconSize')),
-        );
-      }
     }
 
     fill = undefined;
     stroke = undefined;
 
-    styles = [
-      new Style({
+    styles = (feat, resolution) => {
+      /* Options to be used for picture scaling with map, should have at least
+       * a resolution attribute (this is the map resolution at the zoom level when
+       * the picture is created), can take an optional constant for further scale
+       * adjustment.
+       * e.g. { resolution: 0.123, defaultScale: 1 / 6 }
+       */
+
+      if (feat.get('pictureOptions')) {
+        let pictureOptions = feat.get('pictureOptions');
+        if (typeof pictureOptions === 'string') {
+          pictureOptions = JSON.parse(pictureOptions);
+        }
+        feat.set('pictureOptions', pictureOptions);
+        if (pictureOptions.resolution) {
+          image.setScale(
+            (pictureOptions.resolution / resolution) *
+              pictureOptions.defaultScale || 1,
+          );
+        }
+      }
+
+      return new Style({
         fill,
         stroke,
         image,
         text,
         zIndex: style.getZIndex(),
-      }),
-    ];
+      });
+    };
 
     feature.setStyle(styles);
   }
@@ -277,25 +289,25 @@ const readFeatures = (kmlString, featureProjection) => {
  * @param {VectorLayer} layer A react-spatial VectorLayer.
  * @param {<ol.Projection|String>} featureProjection The current projection used by the features.
  */
-const writeFeatures = (layer, featureProjection) => {
+const writeFeatures = (layer, featureProjection, mapResolution) => {
   let featString;
   const { olLayer } = layer;
   const exportFeatures = [];
 
-  olLayer.getSource().forEachFeature((f) => {
+  olLayer.getSource().forEachFeature((feature) => {
     // We silently ignore Circle elements as they are
     // not supported in kml.
-    if (f.getGeometry().getType() === 'Circle') {
+    if (feature.getGeometry().getType() === 'Circle') {
       return;
     }
 
-    const clone = f.clone();
-    clone.setId(f.getId());
-    clone.getGeometry().setProperties(f.getGeometry().getProperties());
+    const clone = feature.clone();
+    clone.setId(feature.getId());
+    clone.getGeometry().setProperties(feature.getGeometry().getProperties());
     clone.getGeometry().transform(featureProjection, 'EPSG:4326');
 
     // We remove all ExtendedData not related to style.
-    Object.keys(f.getProperties()).forEach((key) => {
+    Object.keys(feature.getProperties()).forEach((key) => {
       if (!/^(geometry|name|description)$/.test(key)) {
         clone.unset(key, true);
       }
@@ -303,18 +315,20 @@ const writeFeatures = (layer, featureProjection) => {
 
     let styles;
 
-    if (clone.getStyleFunction()) {
-      styles = clone.getStyleFunction()(clone);
+    if (feature.getStyleFunction()) {
+      styles = feature.getStyleFunction()(feature, mapResolution);
     } else if (olLayer && olLayer.getStyleFunction()) {
-      styles = olLayer.getStyleFunction()(clone);
+      styles = olLayer.getStyleFunction()(feature, mapResolution);
     }
 
+    const mainStyle = styles[0] || styles;
+
     const newStyle = {
-      fill: styles[0].getFill(),
-      stroke: styles[0].getStroke(),
-      text: styles[0].getText(),
-      image: styles[0].getImage(),
-      zIndex: styles[0].getZIndex(),
+      fill: mainStyle.getFill(),
+      stroke: mainStyle.getStroke(),
+      text: mainStyle.getText(),
+      image: mainStyle.getImage(),
+      zIndex: mainStyle.getZIndex(),
     };
 
     if (newStyle.zIndex) {
@@ -372,7 +386,7 @@ const writeFeatures = (layer, featureProjection) => {
       if (!/(http(s?)):\/\//gi.test(imgSource)) {
         // eslint-disable-next-line no-console
         console.log(
-          "Local image source isn't support for KML export." +
+          'Local image source not supported for KML export.' +
             'Should use remote web server',
         );
       }
@@ -382,16 +396,18 @@ const writeFeatures = (layer, featureProjection) => {
         clone.set('iconRotation', newStyle.image.getRotation());
       }
 
-      // Set zoomAtMaxIconSize to use for icon-to-map proportional scaling
-      if (f.get('zoomAtMaxIconSize')) {
-        clone.set('zoomAtMaxIconSize', f.get('zoomAtMaxIconSize'));
-        newStyle.fill = null;
+      // Set map resolution to use for icon-to-map proportional scaling
+      if (feature.get('pictureOptions')) {
+        clone.set(
+          'pictureOptions',
+          JSON.stringify(feature.get('pictureOptions')),
+        );
       }
     }
 
     // In case a fill pattern should be applied (use fillPattern attribute to store pattern id, color etc)
-    if (f.get('fillPattern')) {
-      clone.set('fillPattern', JSON.stringify(f.get('fillPattern')));
+    if (feature.get('fillPattern')) {
+      clone.set('fillPattern', JSON.stringify(feature.get('fillPattern')));
       newStyle.fill = null;
     }
 
@@ -405,15 +421,15 @@ const writeFeatures = (layer, featureProjection) => {
     }
 
     // In case we use line's icon .
-    const extraLineStyles = styles.slice(1);
+    const extraLineStyles = (Array.isArray(styles) && styles.slice(1)) || [];
     extraLineStyles.forEach((extraLineStyle) => {
       if (
         extraLineStyle &&
         extraLineStyle.getImage() instanceof Icon &&
         extraLineStyle.getGeometry()
       ) {
-        const coord = extraLineStyle.getGeometry()(f).getCoordinates();
-        const startCoord = f.getGeometry().getFirstCoordinate();
+        const coord = extraLineStyle.getGeometry()(feature).getCoordinates();
+        const startCoord = feature.getGeometry().getFirstCoordinate();
         if (coord[0] === startCoord[0] && coord[1] === startCoord[1]) {
           clone.set(
             'lineStartIcon',
@@ -421,6 +437,7 @@ const writeFeatures = (layer, featureProjection) => {
               url: extraLineStyle.getImage().getSrc(),
               scale: extraLineStyle.getImage().getScale(),
               size: extraLineStyle.getImage().getSize(),
+              zIndex: extraLineStyle.getZIndex(),
             }),
           );
         } else {
@@ -430,6 +447,7 @@ const writeFeatures = (layer, featureProjection) => {
               url: extraLineStyle.getImage().getSrc(),
               scale: extraLineStyle.getImage().getScale(),
               size: extraLineStyle.getImage().getSize(),
+              zIndex: extraLineStyle.getZIndex(),
             }),
           );
         }

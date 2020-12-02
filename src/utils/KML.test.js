@@ -1,6 +1,7 @@
 import { configure } from 'enzyme';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
+import { Style } from 'ol/style';
 import { get } from 'ol/proj';
 import Adapter from 'enzyme-adapter-react-16';
 import beautify from 'xml-beautifier';
@@ -44,8 +45,8 @@ describe('KML', () => {
                 </Style>
                 <ExtendedData>
                   <Data name="lineDash"><value>40,40</value></Data>
-                  <Data name="lineEndIcon"><value>{"url":"fooarrowend.png","scale":0.35,"size":[36,58]}</value></Data>
-                  <Data name="lineStartIcon"><value>{"url":"fooarrowstart.png","scale":0.35,"size":[36,58]}</value></Data>
+                  <Data name="lineEndIcon"><value>{"url":"fooarrowend.png","scale":0.35,"size":[36,58],"zIndex":1}</value></Data>
+                  <Data name="lineStartIcon"><value>{"url":"fooarrowstart.png","scale":0.35,"size":[36,58],"zIndex":1}</value></Data>
                 </ExtendedData>
                 <LineString><coordinates>0,1,0 3,5,0 40,25,0</coordinates></LineString>
             </Placemark>
@@ -74,6 +75,7 @@ describe('KML', () => {
         1,
         0,
       ]);
+      expect(lineStartStyle.getZIndex()).toEqual(1);
 
       // line end icon
       const lineEndStyle = styles[2];
@@ -87,6 +89,7 @@ describe('KML', () => {
         25,
         0,
       ]);
+      expect(lineEndStyle.getZIndex()).toEqual(1);
 
       expectWriteResult(feats, str);
     });
@@ -138,25 +141,25 @@ describe('KML', () => {
         </kml>
       `;
       const feats = KML.readFeatures(str);
-      const styles = feats[0].getStyle();
+      const style = feats[0].getStyleFunction()(feats[0], 1);
       expect(feats.length).toBe(1);
-      expect(styles.length).toBe(1);
+      expect(style instanceof Style).toBe(true);
 
       // Text
-      const style = styles[0].getText();
-      expect(style.getText()).toBe('bar'); // spaces are trimmed.
-      expect(style.getFont()).toEqual('bold 16px arial');
-      expect(style.getFill()).toEqual({ color_: [32, 52, 126, 1] });
-      expect(style.getStroke()).toEqual(null);
-      expect(style.getScale()).toEqual(2);
-      expect(style.getRotation()).toEqual('2.303834612632515');
-      expect(style.getPadding()).toEqual([5, 6, 7, 8]);
-      expect(style.getBackgroundFill()).toEqual({
+      const styleText = style.getText();
+      expect(styleText.getText()).toBe('bar'); // spaces are trimmed.
+      expect(styleText.getFont()).toEqual('bold 16px arial');
+      expect(styleText.getFill()).toEqual({ color_: [32, 52, 126, 1] });
+      expect(styleText.getStroke()).toEqual(null);
+      expect(styleText.getScale()).toEqual(2);
+      expect(styleText.getRotation()).toEqual('2.303834612632515');
+      expect(styleText.getPadding()).toEqual([5, 6, 7, 8]);
+      expect(styleText.getBackgroundFill()).toEqual({
         color_: 'rgba(255,255,255,0.01)',
       });
-      expect(style.getTextAlign()).toEqual('right');
-      expect(style.getOffsetX()).toEqual(-90);
-      expect(style.getOffsetY()).toEqual(30);
+      expect(styleText.getTextAlign()).toEqual('right');
+      expect(styleText.getOffsetX()).toEqual(-90);
+      expect(styleText.getOffsetY()).toEqual(30);
       expectWriteResult(feats, str);
     });
 
@@ -217,7 +220,7 @@ describe('KML', () => {
       expectWriteResult(feats, str);
     });
 
-    test('should add zIndex and rotation to icon style and zoomAtMaxIconSize to feature properties.', () => {
+    test('should add zIndex and rotation to icon style and pictureOptions to feature properties.', () => {
       const str = `
       <kml ${xmlns}>
         <Document>
@@ -226,7 +229,6 @@ describe('KML', () => {
                 <description></description>
                 <Style>
                     <IconStyle>
-                        <scale>0.5</scale>
                         <heading>
                           1.5707963267948966
                         </heading>
@@ -242,11 +244,11 @@ describe('KML', () => {
                     <Data name="iconRotation">
                       <value>1.5707963267948966</value>
                     </Data>
+                    <Data name="pictureOptions">
+                      <value>{"resolution":4,"defaultScale":0.5}</value>
+                    </Data>
                     <Data name="zIndex">
                         <value>1</value>
-                    </Data>
-                    <Data name="zoomAtMaxIconSize">
-                      <value>12.65397</value>
                     </Data>
                 </ExtendedData>
                 <Point>
@@ -257,10 +259,13 @@ describe('KML', () => {
       </kml>
       `;
       const feats = KML.readFeatures(str);
-      const style = feats[0].getStyle()[0];
+      const style = feats[0].getStyleFunction()(feats[0], 1);
       expect(style.getZIndex()).toBe(1);
       expect(style.getImage().getRotation()).toBe(1.5707963267948966);
-      expect(feats[0].get('zoomAtMaxIconSize')).toBe(12.65397);
+      expect(feats[0].get('pictureOptions')).toEqual({
+        resolution: 4,
+        defaultScale: 0.5,
+      });
       expectWriteResult(feats, str);
     });
   });
