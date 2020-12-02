@@ -9141,7 +9141,7 @@ mixin-deep@^1.2.0:
   dependencies:
     minimist "^1.2.5"
 
-mobility-toolbox-js@1.1.14:
+mobility-toolbox-js@^1.1.14:
   version "1.1.14"
   resolved "https://registry.yarnpkg.com/mobility-toolbox-js/-/mobility-toolbox-js-1.1.14.tgz#cce1728de487e7ca30d7c0ada336e80a6fe789a6"
   integrity sha512-GGQxTDs8QdXiwUNzTxFex6PEqkYCzc+3/INDK0r6qSDB7REk9hC1FpsVVsZx6JFoHI++oB6KSQniW9d/SLlkwg==
