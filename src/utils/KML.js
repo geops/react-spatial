@@ -51,6 +51,7 @@ const getLineIcon = (feature, icon, color, start = true) => {
       scale: icon.scale,
       imgSize: icon.size, // ie 11
     }),
+    zIndex: icon.zIndex,
   });
 };
 
@@ -436,6 +437,7 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
               url: extraLineStyle.getImage().getSrc(),
               scale: extraLineStyle.getImage().getScale(),
               size: extraLineStyle.getImage().getSize(),
+              zIndex: extraLineStyle.getZIndex(),
             }),
           );
         } else {
@@ -445,6 +447,7 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
               url: extraLineStyle.getImage().getSrc(),
               scale: extraLineStyle.getImage().getScale(),
               size: extraLineStyle.getImage().getSize(),
+              zIndex: extraLineStyle.getZIndex(),
             }),
           );
         }
