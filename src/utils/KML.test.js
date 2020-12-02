@@ -45,8 +45,8 @@ describe('KML', () => {
                 </Style>
                 <ExtendedData>
                   <Data name="lineDash"><value>40,40</value></Data>
-                  <Data name="lineEndIcon"><value>{"url":"fooarrowend.png","scale":0.35,"size":[36,58]}</value></Data>
-                  <Data name="lineStartIcon"><value>{"url":"fooarrowstart.png","scale":0.35,"size":[36,58]}</value></Data>
+                  <Data name="lineEndIcon"><value>{"url":"fooarrowend.png","scale":0.35,"size":[36,58],"zIndex":1}</value></Data>
+                  <Data name="lineStartIcon"><value>{"url":"fooarrowstart.png","scale":0.35,"size":[36,58],"zIndex":1}</value></Data>
                 </ExtendedData>
                 <LineString><coordinates>0,1,0 3,5,0 40,25,0</coordinates></LineString>
             </Placemark>
@@ -75,6 +75,7 @@ describe('KML', () => {
         1,
         0,
       ]);
+      expect(lineStartStyle.getZIndex()).toEqual(1);
 
       // line end icon
       const lineEndStyle = styles[2];
@@ -88,6 +89,7 @@ describe('KML', () => {
         25,
         0,
       ]);
+      expect(lineEndStyle.getZIndex()).toEqual(1);
 
       expectWriteResult(feats, str);
     });
