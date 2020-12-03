@@ -13,6 +13,13 @@ import LayerTree from 'react-spatial/components/LayerTree';
 import BasicMap from 'react-spatial/components/BasicMap';
 import LayerService from 'react-spatial/LayerService';
 
+const baseTravic = new MapboxLayer({
+  url: `https://maps.geops.io/styles/travic/style.json?key=${apiKey}`,
+  properties: {
+    hidden: true,
+  }
+});
+
 const baseDark = new MapboxLayer({
   url: `https://maps.geops.io/styles/base_dark_v2/style.json?key=${apiKey}`,
   name: 'Base - Dark',
@@ -35,7 +42,7 @@ const baseBright = new MapboxLayer({
 });
 
 const busLines = new MapboxStyleLayer({
-  name: 'Bus lines',
+  name: 'Bus routes',
   mapboxLayer: baseBright,
   styleLayer: {
     id: 'bus',
@@ -43,14 +50,14 @@ const busLines = new MapboxStyleLayer({
     source: 'busses',
     'source-layer': 'busses',
     paint: {
-      'line-color': 'rgba(255, 220, 0, 1)',
+      'line-color': 'rgba(111, 199, 0, 1)',
       'line-width': 2,
     },
   },
 });
 
 const railLines = new MapboxStyleLayer({
-  name: 'Railway lines',
+  name: 'Railways',
   mapboxLayer: baseBright,
   styleLayer: {
     id: 'rail',
@@ -64,14 +71,39 @@ const railLines = new MapboxStyleLayer({
   },
 });
 
+const passengerFrequencies = new MapboxStyleLayer({
+  name: 'Passenger frequencies',
+  mapboxLayer: baseBright,
+  styleLayer: {
+    id: 'passagierfrequenzen',
+    type: 'circle',
+    source: 'base',
+    'source-layer': 'osm_points',
+    filter: ['has', 'dwv'],
+    paint: {
+      'circle-radius': ['*', ['sqrt', ['/', ['get', 'dwv'], Math.PI]], 0.2],
+      'circle-color': 'rgb(255,220,0)',
+      'circle-stroke-width': 2,
+      'circle-stroke-color': 'rgb(255,220,0)',
+      'circle-opacity': [
+        'case',
+        ['boolean', ['feature-state', 'hover'], false],
+        1,
+        0.7,
+      ],
+    },
+  },
+});
+
 baseBright.addChild(busLines);
 baseBright.addChild(railLines);
+baseBright.addChild(passengerFrequencies);
 
-const layers = [baseDark, baseBright];
+const layers = [baseTravic, baseDark, baseBright];
 const layerService = new LayerService(layers);
 
 <div className="rs-layer-tree-example">
   <BasicMap layers={layers} center={[876887.69, 5928515.41]} zoom={8} tabIndex={0} />
-  <LayerTree layerService={layerService} />
+  <LayerTree layerService={layerService} isItemHidden={(layer) => layer.get('hidden')}/>
 </div>
 ```
