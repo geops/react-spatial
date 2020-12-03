@@ -44,13 +44,14 @@ const baseBright = new MapboxLayer({
 const busLines = new MapboxStyleLayer({
   name: 'Bus routes',
   mapboxLayer: baseBright,
+  visible: false,
   styleLayer: {
     id: 'bus',
     type: 'line',
     source: 'busses',
     'source-layer': 'busses',
     paint: {
-      'line-color': 'rgba(111, 199, 0, 1)',
+      'line-color': 'rgba(255, 220, 0, 1)',
       'line-width': 2,
     },
   },
@@ -82,9 +83,9 @@ const passengerFrequencies = new MapboxStyleLayer({
     filter: ['has', 'dwv'],
     paint: {
       'circle-radius': ['*', ['sqrt', ['/', ['get', 'dwv'], Math.PI]], 0.2],
-      'circle-color': 'rgb(255,220,0)',
+      'circle-color': 'rgb(254, 160, 0)',
       'circle-stroke-width': 2,
-      'circle-stroke-color': 'rgb(255,220,0)',
+      'circle-stroke-color': 'rgb(254, 160, 0)',
       'circle-opacity': [
         'case',
         ['boolean', ['feature-state', 'hover'], false],
