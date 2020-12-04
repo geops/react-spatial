@@ -331,7 +331,7 @@ class CanvasSaveButton extends PureComponent {
 
         // Spread syntax to convert from HTMLCollection to array,
         // in order to use .map/.forEach methods
-        [...canvases].forEach((canvas) => {
+        Array.from(canvases).forEach((canvas) => {
           if (!canvas.width || !canvas.height) {
             return;
           }
