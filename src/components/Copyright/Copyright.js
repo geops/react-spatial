@@ -27,8 +27,8 @@ const defaultProps = {
 };
 
 /**
- * The Copyright component uses the *copyright* attribute from a
- * [mobility-toolbox-js Layer](https://mobility-toolbox-js.geops.io/api/identifiers%20html#ol-layers)
+ * The Copyright component uses the
+ * [mobility-toolbox-js CopyrightControl](https://mobility-toolbox-js.geops.io/api/class/src/mapbox/controls/CopyrightControl%20js~CopyrightControl%20html-offset-anchor)
  * to render the layer copyrights.
  */
 function Copyright({ map, format, ...other }) {
