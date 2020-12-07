@@ -12,7 +12,7 @@ import OLMap from 'ol/Map';
 
 const propTypes = {
   /**
-   * An ol map.
+   * An [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
    */
   map: PropTypes.instanceOf(OLMap).isRequired,
 
@@ -64,7 +64,8 @@ const updateZoom = (map, zoomAction) => {
 };
 
 /**
- * This component creates a zoom wrapper.
+ * The Zoom component creates a zoom wrapper containing zoom-in and zoom-out buttons
+ * and an optional [ol/ZoomSlider](https://openlayers.org/en/latest/apidoc/module-ol_control_ZoomSlider-ZoomSlider.html).
  */
 function Zoom({
   map,

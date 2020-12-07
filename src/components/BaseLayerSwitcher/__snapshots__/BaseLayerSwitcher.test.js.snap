@@ -10,7 +10,14 @@ exports[`BaseLayerSwitcher matches snapshots using default properties. 1`] = `
     onClick={[Function]}
     onKeyPress={[Function]}
     role="button"
-    style={null}
+    style={
+      Object {
+        "backgroundImage": "url(bar)",
+        "backgroundPosition": "center",
+        "backgroundRepeat": "no-repeat",
+        "backgroundSize": "cover",
+      }
+    }
     tabIndex="0"
     title="Open Baselayer-Switcher"
   >
@@ -19,11 +26,6 @@ exports[`BaseLayerSwitcher matches snapshots using default properties. 1`] = `
     >
       Base layers
     </div>
-    <span
-      className="rs-alt-text"
-    >
-      Source not found
-    </span>
   </div>
   <div
     className="rs-base-layer-switcher-btn-wrapper"
@@ -35,19 +37,19 @@ exports[`BaseLayerSwitcher matches snapshots using default properties. 1`] = `
     }
   >
     <div
-      aria-label="OSM Baselayer"
+      aria-label="bl1"
       className="rs-base-layer-switcher-button"
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
       style={null}
       tabIndex="-1"
-      title="OSM Baselayer"
+      title="bl1"
     >
       <div
         className="rs-base-layer-switcher-title rs-active"
       >
-        OSM Baselayer
+        bl1
       </div>
       <span
         className="rs-alt-text"
@@ -66,19 +68,19 @@ exports[`BaseLayerSwitcher matches snapshots using default properties. 1`] = `
     }
   >
     <div
-      aria-label="OSM Baselayer Hot"
+      aria-label="bl2"
       className="rs-base-layer-switcher-button"
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
       style={null}
       tabIndex="-1"
-      title="OSM Baselayer Hot"
+      title="bl2"
     >
       <div
         className="rs-base-layer-switcher-title"
       >
-        OSM Baselayer Hot
+        bl2
       </div>
       <span
         className="rs-alt-text"
@@ -97,19 +99,19 @@ exports[`BaseLayerSwitcher matches snapshots using default properties. 1`] = `
     }
   >
     <div
-      aria-label="OpenTopoMap"
+      aria-label="bl3"
       className="rs-base-layer-switcher-button"
       onClick={[Function]}
       onKeyPress={[Function]}
       role="button"
       style={null}
       tabIndex="-1"
-      title="OpenTopoMap"
+      title="bl3"
     >
       <div
         className="rs-base-layer-switcher-title"
       >
-        OpenTopoMap
+        bl3
       </div>
       <span
         className="rs-alt-text"

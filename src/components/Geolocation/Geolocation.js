@@ -28,7 +28,7 @@ const propTypes = {
   children: PropTypes.node,
 
   /**
-   * Map.
+   * An [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
    */
   map: PropTypes.instanceOf(OLMap).isRequired,
 
@@ -67,7 +67,8 @@ const defaultProps = {
 };
 
 /**
- * This component displays a geolocator.
+ * The GeoLocation component creates a button to display the current device's location on an
+ * [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
  */
 class Geolocation extends PureComponent {
   constructor(props) {

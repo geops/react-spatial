@@ -6,7 +6,7 @@ import OLMousePosition from 'ol/control/MousePosition';
 
 const propTypes = {
   /**
-   * The current map.
+   * An [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
    */
   map: PropTypes.instanceOf(OLMap).isRequired,
 
@@ -77,6 +77,10 @@ const defaultProps = {
   projectionValue: null,
 };
 
+/**
+ * The MousePosition component renders a select box with map projection options
+ * and the cursor position in coordinates using the selected projection.
+ */
 function MousePosition({
   map,
   projections,

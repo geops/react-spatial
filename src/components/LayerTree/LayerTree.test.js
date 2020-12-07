@@ -4,21 +4,18 @@ import { configure, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import 'jest-canvas-mock';
 import renderer from 'react-test-renderer';
+import { Layer } from 'mobility-toolbox-js/ol';
 import LayerTree from './LayerTree';
-import data from '../../../data/TreeData';
-import ConfigReader from '../../ConfigReader';
 import LayerService from '../../LayerService';
 
 configure({ adapter: new Adapter() });
 
-const mountLayerTree = (newData) => {
-  const layers = ConfigReader.readConfig(newData);
+const mountLayerTree = (layers) => {
   const layerService = new LayerService(layers);
   return mount(<LayerTree layerService={layerService} />);
 };
 
-const renderLayerTree = (newData, props) => {
-  const layers = ConfigReader.readConfig(newData);
+const renderLayerTree = (layers, props) => {
   const layerService = new LayerService(layers);
   const component = renderer.create(
     <LayerTree layerService={layerService} {...(props || {})} />,
@@ -31,9 +28,50 @@ const classItem = '.rs-layer-tree-item';
 const toggleItem = '.rs-layer-tree-toggle';
 
 describe('LayerTree', () => {
+  let layers;
+
+  beforeEach(() => {
+    layers = [
+      new Layer({
+        name: 'root',
+      }),
+      new Layer({
+        name: '1',
+        children: [
+          new Layer({
+            name: '1-1',
+            properties: {
+              radioGroup: 'radio',
+            },
+          }),
+          new Layer({
+            name: '1-2',
+            properties: {
+              radioGroup: 'radio',
+            },
+            visible: false,
+            children: [
+              new Layer({
+                name: '1-2-1',
+                visible: false,
+              }),
+              new Layer({
+                name: '1-2-2',
+                visible: false,
+              }),
+              new Layer({
+                name: '2',
+                visible: false,
+              }),
+            ],
+          }),
+        ],
+      }),
+    ];
+  });
   describe('matches snapshots', () => {
     test('using default properties.', () => {
-      renderLayerTree(data);
+      renderLayerTree(layers);
     });
 
     test('when no layers.', () => {
@@ -46,29 +84,29 @@ describe('LayerTree', () => {
     });
 
     test('when renderItem is used.', () => {
-      renderLayerTree(data, {
+      renderLayerTree(layers, {
         renderItem: (item) => <div key={item.name}>{item.name}</div>,
       });
     });
 
     test('when classNames are used.', () => {
-      renderLayerTree(data, { className: 'foo' });
+      renderLayerTree(layers, { className: 'foo' });
     });
 
     test('when an item is hidden.', () => {
-      renderLayerTree(data, {
+      renderLayerTree(layers, {
         isItemHidden: (item) => !!item.children.length,
       });
     });
 
     test('when an item is hidden (different layer tree levels)', () => {
-      renderLayerTree(data, {
+      renderLayerTree(layers, {
         isItemHidden: (item) => item.isBaseLayer || item.get('hideInLegend'),
       });
     });
 
     test('when an item use renderBeforeItem.', () => {
-      renderLayerTree(data, {
+      renderLayerTree(layers, {
         renderBeforeItem: (layer, level) => (
           <div>
             Render name before item: {layer.name}, level: {level}
@@ -78,7 +116,7 @@ describe('LayerTree', () => {
     });
 
     test('when an item use renderAfterItem.', () => {
-      renderLayerTree(data, {
+      renderLayerTree(layers, {
         renderAfterItem: (layer, level) => (
           <div>
             Render name after item: {layer.name}, level: {level}
@@ -88,19 +126,19 @@ describe('LayerTree', () => {
     });
 
     test('when items are always expanded', () => {
-      const dataExp = [
-        {
+      const newLayers = [
+        new Layer({
           name: 'Expanded layer 1 (because of level 1)',
           visible: true,
           children: [
-            {
+            new Layer({
               name: 'Expanded layer 1.1 (because of isAlwaysExpanded=true)',
               visible: true,
               properties: {
                 isAlwaysExpanded: true,
               },
               children: [
-                {
+                new Layer({
                   name:
                     'Expanded layer 1.1.1 (because of isAlwaysExpanded=true)',
                   visible: true,
@@ -108,58 +146,58 @@ describe('LayerTree', () => {
                     isAlwaysExpanded: true,
                   },
                   children: [
-                    {
+                    new Layer({
                       name: 'Visible layer 1.1.1.1 (as parent is expanded)',
                       visible: true,
-                    },
+                    }),
                   ],
-                },
-                {
+                }),
+                new Layer({
                   name: 'Hidden layer 1.1.1 (because of hidden=true)',
                   visible: true,
                   properties: {
                     hideInLegend: true,
                   },
                   children: [
-                    {
+                    new Layer({
                       name: 'Invisible layer 1.1.1.1 (as parent is hidden)',
                       visible: true,
-                    },
+                    }),
                   ],
-                },
+                }),
               ],
-            },
-            {
+            }),
+            new Layer({
               name: 'Expanded layer 1.2 (because of isAlwaysExpanded=true)',
               visible: true,
               properties: {
                 isAlwaysExpanded: true,
               },
               children: [
-                {
+                new Layer({
                   name: 'Visible layer 1.2.1 (as parent is expanded)',
                   visible: true,
                   children: [
-                    {
+                    new Layer({
                       name:
                         'Invisible layer 1.2.1.1 (as parent isAlwaysExpanded=false)',
                       visible: true,
-                    },
+                    }),
                   ],
-                },
+                }),
               ],
-            },
+            }),
           ],
-        },
-        {
+        }),
+        new Layer({
           name: 'Expanded layer 2 (because of level 1)',
           visible: true,
           children: [
-            {
+            new Layer({
               name: 'Visible layer 2.1 (as parent is expanded)',
               visible: true,
               children: [
-                {
+                new Layer({
                   name:
                     'Invisible layer 2.1.1 (as parent isAlwaysExpanded=false)',
                   visible: true,
@@ -167,38 +205,38 @@ describe('LayerTree', () => {
                     isAlwaysExpanded: true,
                   },
                   children: [
-                    {
+                    new Layer({
                       name:
                         'Invisible layer 2.1.1.1 (as parent is not visible)',
                       visible: true,
-                    },
+                    }),
                   ],
-                },
+                }),
               ],
-            },
-            {
+            }),
+            new Layer({
               name: 'Visible layer 2.2 (as parent is expanded)',
               visible: true,
               children: [
-                {
+                new Layer({
                   name:
                     'Invisible layer 2.2.1 (as parent isAlwaysExpanded=false)',
                   visible: true,
                   children: [
-                    {
+                    new Layer({
                       name:
                         'Invisible layer 2.2.1.1 (as parent is not visible)',
                       visible: true,
-                    },
+                    }),
                   ],
-                },
+                }),
               ],
-            },
+            }),
           ],
-        },
+        }),
       ];
 
-      renderLayerTree(dataExp, {
+      renderLayerTree(newLayers, {
         isItemHidden: (item) => item.get('hideInLegend'),
       });
     });
@@ -208,13 +246,10 @@ describe('LayerTree', () => {
     let wrapper;
     let spy;
     let spy2;
-    const data2 = [
-      {
+    const newLayers = [
+      new Layer({
         name: 'foo',
-        data: {
-          type: 'xyz',
-        },
-      },
+      }),
     ];
     const expectCalled = () => {
       expect(spy).toHaveBeenCalledTimes(1);
@@ -225,7 +260,7 @@ describe('LayerTree', () => {
     beforeEach(() => {
       spy = jest.spyOn(LayerTree.prototype, 'onInputClick');
       spy2 = jest.spyOn(LayerTree.prototype, 'onToggle');
-      wrapper = mountLayerTree(data2);
+      wrapper = mountLayerTree(newLayers);
     });
 
     afterEach(() => {
@@ -252,21 +287,18 @@ describe('LayerTree', () => {
   describe('triggers onToggle', () => {
     let wrapper;
     let spy;
-    const data2 = [
-      {
+    const newLayers = [
+      new Layer({
         name: '1',
         children: [
-          {
+          new Layer({
             name: '1-1',
-          },
-          {
+          }),
+          new Layer({
             name: '1-1-1',
-            data: {
-              type: 'xyz',
-            },
-          },
+          }),
         ],
-      },
+      }),
     ];
 
     const expectCalled = () => {
@@ -275,7 +307,7 @@ describe('LayerTree', () => {
 
     beforeEach(() => {
       spy = jest.spyOn(LayerTree.prototype, 'onToggle');
-      wrapper = mountLayerTree(data2);
+      wrapper = mountLayerTree(newLayers);
     });
 
     test('when we click on toggle button (label+arrow) of an item with children', () => {

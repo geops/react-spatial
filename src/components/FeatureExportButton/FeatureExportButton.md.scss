@@ -1,16 +1,10 @@
 .rs-feature-export-example {
-  .rs-feature-export-button {
+  .rs-feature-export-example-btns {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 15px;
-    width: 150px;
-    height: 50px;
-    border-radius: 10px;
-    border: 2px solid $gray-lighter;
+    justify-content: space-evenly;
 
-    &:hover {
-      background-color: $gray-lighter;
+    .rs-feature-export-button {
+      margin: 15px;
     }
   }
 }

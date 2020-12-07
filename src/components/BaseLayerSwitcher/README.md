@@ -1,25 +1,53 @@
 #
-
-This demonstrates the use of BaseLayerSwitcher.
+The following example demonstrates the use of BaseLayerSwitcher:
 
 ```jsx
 import React from 'react';
 import Map from 'ol/Map';
+import TileLayer from 'ol/layer/Tile';
+import OSM from 'ol/source/OSM';
+import { MapboxLayer, Layer } from 'mobility-toolbox-js/ol';
 import BaseLayerSwitcher from 'react-spatial/components/BaseLayerSwitcher';
 import BasicMap from 'react-spatial/components/BasicMap';
-import ConfigReader from 'react-spatial/ConfigReader';
-import osmImage from 'react-spatial/images/baselayer/osm.baselayer.png';
-import osmhotImage from 'react-spatial/images/baselayer/osm.baselayer.hot.png';
-import openTopoImage from 'react-spatial/images/baselayer/open.topo.map.png';
+import osmImage from 'react-spatial/images/baselayer/baselayer.osm.png';
+import travicImage from 'react-spatial/images/baselayer/baselayer.travic.png';
+import basebrightImage from 'react-spatial/images/baselayer/baselayer.basebright.png';
 
 const center = [1149722.7037660484, 6618091.313553318];
 const map = new Map({ controls: [] });
-const layers = ConfigReader.readConfig(treeData);
+const travicLayer = new MapboxLayer({
+  url: `https://maps.geops.io/styles/travic/style.json?key=${apiKey}`,
+  name: 'Travic',
+  key: 'travic.baselayer',
+  isBaseLayer: true,
+  visible: true
+});
+
+const basebrightLayer = new MapboxLayer({
+  url: `https://maps.geops.io/styles/base_bright_v2/style.json?key=${apiKey}`,
+  name: 'Base - Bright',
+  key: 'basebright.baselayer',
+  isBaseLayer: true,
+  visible: false
+});
+
+const osmLayer = new Layer({
+  olLayer: new TileLayer({
+    source: new OSM(),
+  }),
+  name: 'OSM',
+  key: 'osm.baselayer',
+  visible: false,
+  isBaseLayer: true,
+});
+
 const layerImages = {
+  'travic.baselayer': travicImage,
+  'basebright.baselayer': basebrightImage,
   'osm.baselayer': osmImage,
-  'osm.baselayer.hot': osmhotImage,
-  'open.topo.map': openTopoImage,
 };
+
+const layers = [travicLayer, basebrightLayer, osmLayer];
 
 <div className="rs-base-layer-example">
   <BasicMap

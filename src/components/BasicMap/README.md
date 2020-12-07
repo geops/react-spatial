@@ -1,19 +1,17 @@
 #
 
-This demonstrates the use of BasicMap.
+The following example demonstrates the use of BasicMap.
 
 ```jsx
 import React from 'react';
-import { Layer } from 'mobility-toolbox-js/ol';
+import { MapboxLayer } from 'mobility-toolbox-js/ol';
 import Tile from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import BasicMap from 'react-spatial/components/BasicMap';
 
 const layers = [
-  new Layer({
-    olLayer: new Tile({
-      source: new OSM(),
-    }),
+  new MapboxLayer({
+    url: `https://maps.geops.io/styles/travic/style.json?key=${apiKey}`,
   })
 ];
 

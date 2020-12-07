@@ -18,7 +18,7 @@ const propTypes = {
     zoom: PropTypes.number,
   }),
 
-  /** Center of the ol.View. */
+  /** Center of the [ol/View](https://openlayers.org/en/latest/apidoc/module-ol_View-View.html). */
   center: PropTypes.arrayOf(PropTypes.number),
 
   /** Class name of the map container */
@@ -27,19 +27,19 @@ const propTypes = {
   /** Map extent */
   extent: PropTypes.arrayOf(PropTypes.number),
 
-  /** Openlayers fit options (https://openlayers.org/en/latest/apidoc/module-ol_View-View.html#fit) when extent is updated */
-  fitOptions: PropTypes.shape(),
+  /** Openlayers [fit options](https://openlayers.org/en/latest/apidoc/module-ol_View-View.html#fit) when extent is updated */
+  fitOptions: PropTypes.object,
 
-  /** Array of [ol/interaction]. */
+  /** Array of [ol/interaction](https://openlayers.org/en/latest/apidoc/module-ol_interaction_Interaction-Interaction.html). */
   interactions: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.instanceOf(Interaction)),
     PropTypes.instanceOf(OLCollection),
   ]),
 
-  /** Array of Layer to display. */
+  /** Array of [mobility-toolbox-js layers](https://mobility-toolbox-js.geops.io/api/identifiers%20html#ol-layers) to display. */
   layers: PropTypes.arrayOf(PropTypes.instanceOf(Layer)),
 
-  /** An existing [ol/Map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html). */
+  /** An [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html). */
   map: PropTypes.instanceOf(OLMap),
 
   /**
@@ -129,7 +129,7 @@ const defaultProps = {
 };
 
 /**
- * Display an OpenLayers Map.
+ * The BasicMap component renders an [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
  *
  * The map's view is created with the following parameters for the view:
  *  - projection: 'EPSG:3857'
@@ -137,8 +137,7 @@ const defaultProps = {
  *  - minZoom: 0
  *  - maxZoom: 22
  *
- * These options can be overrided by the viewOptions property.
- *
+ * These options can be overridden using the viewOptions property.
  */
 class BasicMap extends PureComponent {
   constructor(props) {

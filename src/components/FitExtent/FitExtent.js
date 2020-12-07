@@ -4,7 +4,7 @@ import OLMap from 'ol/Map';
 
 const propTypes = {
   /**
-   * An ol map.
+   * An [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
    */
   map: PropTypes.instanceOf(OLMap).isRequired,
 
@@ -29,7 +29,8 @@ const defaultProps = {
 };
 
 /**
- * This component creates a button to zoom to the given extent.
+ * The FitExtent component creates a button that updates the current extent of
+ * an [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
  */
 function FitExtent({ map, extent, className, children, ...other }) {
   const fit = useCallback((evt) => {

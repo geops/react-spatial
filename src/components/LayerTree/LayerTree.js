@@ -115,6 +115,12 @@ const defaultProps = {
   t: (s) => s,
 };
 
+/**
+ * The LayerTree component renders an interface for toggling
+ * [mobility-toolbox-js layers](https://mobility-toolbox-js.geops.io/api/identifiers%20html#ol-layers)
+ * and their corresponding child layers.
+ */
+
 class LayerTree extends Component {
   constructor(props) {
     super(props);

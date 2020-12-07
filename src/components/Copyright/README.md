@@ -1,6 +1,6 @@
 #
 
-This demonstrates the use of Copyright.
+The following example demonstrates the use of Copyright.
 
 ```js
 import React from  'react';

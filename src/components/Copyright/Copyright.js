@@ -26,6 +26,11 @@ const defaultProps = {
   className: 'rs-copyright',
 };
 
+/**
+ * The Copyright component uses the
+ * [mobility-toolbox-js CopyrightControl](https://mobility-toolbox-js.geops.io/api/class/src/mapbox/controls/CopyrightControl%20js~CopyrightControl%20html-offset-anchor)
+ * to render the layer copyrights.
+ */
 function Copyright({ map, format, ...other }) {
   const [copyrights, setCopyrights] = useState([]);
 

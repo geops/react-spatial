@@ -1,4 +1,4 @@
-# React Spatial
+# react-spatial
 
 [![npm](https://img.shields.io/npm/v/react-spatial.svg?style=flat-square)](https://www.npmjs.com/package/react-spatial)
 [![build](https://github.com/geops/react-spatial/workflows/main/badge.svg)](https://github.com/geops/react-spatial/actions?query=workflow%3Amain)
@@ -25,7 +25,7 @@ Your build pipeline needs to support ES6 modules and SASS.
 Import the main scss file in your project:
 
 ```bash
-import  'react-spatial/themes/default/index.scss';
+import 'react-spatial/themes/default/index.scss';
 ```
 
 ## More
