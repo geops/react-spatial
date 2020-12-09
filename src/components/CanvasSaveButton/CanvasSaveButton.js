@@ -329,7 +329,7 @@ class CanvasSaveButton extends PureComponent {
         let destCanvas;
         let destContext;
 
-        // Spread syntax to convert from HTMLCollection to array,
+        // Use Array.from method to convert from HTMLCollection to array,
         // in order to use .map/.forEach methods
         Array.from(canvases).forEach((canvas) => {
           if (!canvas.width || !canvas.height) {
