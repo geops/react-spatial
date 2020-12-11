@@ -1,6 +1,6 @@
 #
 
-This demonstrates the use of RouteSchedule.
+The following example demonstrates the use of RouteSchedule.
 
 ```jsx
 import React, { useState, useEffect } from 'react';

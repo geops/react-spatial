@@ -14,12 +14,12 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 
   /**
-   * Openlayers Map (https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
+   * An [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
    */
   map: PropTypes.instanceOf(OLMap).isRequired,
 
   /**
-   * Openlayers Feature (https://openlayers.org/en/latest/apidoc/module-ol_Feature-Feature.html).
+   * An [ol/Feature](https://openlayers.org/en/latest/apidoc/module-ol_Feature-Feature.html).
    */
   feature: PropTypes.instanceOf(Feature),
 
@@ -97,6 +97,11 @@ const defaultProps = {
   renderFooter: () => null,
 };
 
+/**
+ * The Popup component renders a popup over an
+ * [ol/Feature](https://openlayers.org/en/latest/apidoc/module-ol_Feature-Feature.html)
+ * on click.
+ */
 class Popup extends PureComponent {
   static renderHeader(props) {
     const { header, renderCloseButton } = props;

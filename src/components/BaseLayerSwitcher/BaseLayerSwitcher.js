@@ -8,7 +8,7 @@ import './BaseLayerSwitcher.scss';
 
 const propTypes = {
   /**
-   * An array of react-spatial layers.
+   * An array of [mobility-toolbox-js layers](https://mobility-toolbox-js.geops.io/api/identifiers%20html#ol-layers).
    */
   layers: PropTypes.arrayOf(PropTypes.instanceOf(Layer)).isRequired,
 
@@ -85,6 +85,12 @@ const getImageStyle = (url) => {
     : null;
 };
 
+/**
+ * The BaseLayerSwitcher component renders a button interface for switching the visible
+ * [mobility-toolbox-js layer](https://mobility-toolbox-js.geops.io/api/identifiers%20html#ol-layers)
+ * when defined as base layer.
+ */
+
 function BaseLayerSwitcher({
   layers,
   layerImages,
@@ -113,6 +119,7 @@ function BaseLayerSwitcher({
     if (baseLayers.length === 2) {
       /* On only two layer options the opener becomes a layer toggle button */
       const nextLayer = baseLayers.find((layer) => !layer.visible);
+      currentLayer.setVisible(false);
       setCurrentLayer(nextLayer);
       nextLayer.setVisible(true);
       return;
@@ -128,6 +135,7 @@ function BaseLayerSwitcher({
     }
     setCurrentLayer(layer);
     layer.setVisible(true);
+    baseLayers.filter((l) => l !== layer).forEach((l) => l.setVisible(false));
     setSwitcherOpen(false);
   };
 

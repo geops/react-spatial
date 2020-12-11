@@ -1,16 +1,7 @@
 .rs-permalink-example {
-  div[role='button'] {
-    display: inline-block;
-    width: 200px;
-    height: 20px;
-    text-align: center;
-    padding: 10px;
+  .rs-permalink-example-btns {
+    display: flex;
+    justify-content: space-evenly;
     margin: 10px;
-    border-radius: 10px;
-    border: 2px solid $gray-lighter;
-
-    &:hover {
-      background-color: $gray-lighter;
-    }
   }
 }

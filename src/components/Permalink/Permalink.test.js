@@ -5,18 +5,52 @@ import Adapter from 'enzyme-adapter-react-16';
 import MapEvent from 'ol/MapEvent';
 import OLMap from 'ol/Map';
 import View from 'ol/View';
-import data from '../../../data/TreeData';
-import data2 from '../../../data/ExampleData';
+import { Layer, MapboxLayer } from 'mobility-toolbox-js/ol';
 import LayerService from '../../LayerService';
-import ConfigReader from '../../ConfigReader';
 import Permalink from './Permalink';
 
 configure({ adapter: new Adapter() });
 
 describe('Permalink', () => {
+  let layers;
   beforeEach(() => {
     // Ensure default empty url.
     window.history.pushState({}, undefined, '/');
+    layers = [
+      new Layer({
+        name: 'Ultimate layer',
+        key: 'ultimate.layer',
+        visible: true,
+        properties: {
+          hideInLegend: true,
+        },
+      }),
+      new Layer({
+        name: 'Swiss boundries',
+        key: 'swiss.boundries',
+        visible: true,
+        properties: {
+          hideInLegend: true,
+        },
+      }),
+      new MapboxLayer({
+        name: 'Base - Bright',
+        key: 'basebright.baselayer',
+        isBaseLayer: true,
+        properties: {
+          radioGroup: 'baseLayer',
+        },
+      }),
+      new MapboxLayer({
+        name: 'Base - Dark',
+        key: 'basedark.baselayer',
+        isBaseLayer: true,
+        visible: false,
+        properties: {
+          radioGroup: 'baseLayer',
+        },
+      }),
+    ];
   });
 
   test('should initialize x, y & z with history.', () => {
@@ -71,18 +105,15 @@ describe('Permalink', () => {
 
   test('should initialize Permalink with layerService.', () => {
     expect(window.location.search).toEqual('');
-    const layers = ConfigReader.readConfig(data);
     const layerService = new LayerService(layers);
     mount(<Permalink layerService={layerService} />);
     const search =
-      '?baselayers=osm.baselayer,osm.baselayer.hot,open.topo.map&layers=switzerland.samples,usa.population.density,lines.samples,roads.seoul,vienna.streets';
-
+      '?baselayers=basebright.baselayer,basedark.baselayer&layers=ultimate.layer,swiss.boundries';
     expect(window.location.search).toEqual(search);
   });
 
   test('should initialize Permalink with isLayerHidden.', () => {
     expect(window.location.search).toEqual('');
-    const layers = ConfigReader.readConfig(data);
     const layerService = new LayerService(layers);
     mount(
       <Permalink
@@ -94,8 +125,7 @@ describe('Permalink', () => {
       />,
     );
     const search =
-      '?baselayers=osm.baselayer,osm.baselayer.hot,open.topo.map&layers=usa.population.density';
-
+      '?baselayers=basebright.baselayer,basedark.baselayer&layers=';
     expect(window.location.search).toEqual(search);
   });
 
@@ -165,13 +195,15 @@ describe('Permalink', () => {
 
   test('should react on layerService change.', () => {
     expect(window.location.search).toEqual('');
-    const layers = ConfigReader.readConfig(data);
     const layerService = new LayerService(layers);
     const permalink = mount(<Permalink layerService={layerService} />);
-    const search = '?layers=lines%20samples';
-
-    const layers2 = ConfigReader.readConfig(data2);
-    const layerService2 = new LayerService(layers2);
+    const search = '?layers=foo.layer';
+    const layerService2 = new LayerService([
+      new Layer({
+        name: 'foo',
+        key: 'foo.layer',
+      }),
+    ]);
     permalink.setProps({ layerService: layerService2 }).update();
 
     expect(window.location.search).toEqual(search);
@@ -179,33 +211,29 @@ describe('Permalink', () => {
 
   test('should react on layer visiblity change.', () => {
     expect(window.location.search).toEqual('');
-    const layers = ConfigReader.readConfig(data);
     const layerService = new LayerService(layers);
     mount(<Permalink layerService={layerService} />);
-    layerService.getLayer('Polygons Samples').setVisible(true);
+    layerService.getLayer('Swiss boundries').setVisible(true);
 
     expect(
-      /layers=switzerland\.samples,usa\.population\.density,polygon\.samples/.test(
-        window.location.search,
-      ),
+      /layers=ultimate.layer,swiss.boundries/.test(window.location.search),
     ).toBe(true);
   });
 
   test('should react on base layer visiblity change.', () => {
     expect(window.location.search).toEqual('');
-    const layers = ConfigReader.readConfig(data);
     const layerService = new LayerService(layers);
     mount(<Permalink layerService={layerService} />);
     expect(
-      /baselayers=osm\.baselayer,osm\.baselayer\.hot,open\.topo\.map/.test(
+      /baselayers=basebright.baselayer,basedark.baselayer/.test(
         window.location.search,
       ),
     ).toBe(true);
 
-    layerService.getLayer('OSM Baselayer Hot').setVisible(true);
+    layerService.getLayer('Base - Dark').setVisible(true);
 
     expect(
-      /baselayers=osm\.baselayer\.hot,osm\.baselayer,open\.topo\.map/.test(
+      /baselayers=basedark.baselayer,basebright.baselayer/.test(
         window.location.search,
       ),
     ).toBe(true);

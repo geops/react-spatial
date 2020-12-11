@@ -5,7 +5,7 @@ import OLMap from 'ol/Map';
 
 const propTypes = {
   /**
-   * Openlayers map.
+   * ol/map.
    */
   map: PropTypes.instanceOf(OLMap).isRequired,
 
@@ -13,13 +13,18 @@ const propTypes = {
    * Options for ol/control/ScaleLine.
    * See https://openlayers.org/en/latest/apidoc/module-ol_control_ScaleLine-ScaleLine.html
    */
-  options: PropTypes.shape(),
+  options: PropTypes.object,
 };
 
 const defaultProps = {
   options: {},
 };
 
+/**
+ * The ScaleLine component creates an
+ * [ol/control/ScaleLine](https://openlayers.org/en/latest/apidoc/module-ol_control_ScaleLine-ScaleLine.html)
+ * for an [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
+ */
 function ScaleLine({ map, options, ...other }) {
   const ref = useRef();
 

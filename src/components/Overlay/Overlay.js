@@ -79,6 +79,9 @@ const defaultProps = {
   onResizeStop: () => {},
 };
 
+/**
+ * The Overlay component creates a resizable, swipable overlay <div\>
+ */
 const Overlay = ({
   observe,
   className,

@@ -27,10 +27,6 @@ module.exports = {
   moduleAliases: {
     'react-spatial': path.resolve(__dirname, 'src'),
   },
-  context: {
-    exampleData: path.join(__dirname, 'data/ExampleData'),
-    treeData: path.join(__dirname, 'data/TreeData'),
-  },
   sections: [
     {
       name: '',
@@ -40,7 +36,7 @@ module.exports = {
     {
       name: 'Maps',
       description:
-        'A collection of react components for spatial web development of map components.',
+        'A collection of React components for spatial web development of map components.',
       components: [
         'src/components/BaseLayerSwitcher/[A-Z]*.js',
         'src/components/BaseLayerToggler/[A-Z]*.js',
@@ -65,7 +61,7 @@ module.exports = {
     {
       name: 'Realtime',
       description:
-        'A collection of react components for spatial web development of realtime components.',
+        'A collection of React components for spatial web development of realtime components.',
       components: [
         'src/components/RouteSchedule/[A-Z]*.js',
         'src/components/TrackerControl/[A-Z]*.js',
@@ -75,8 +71,7 @@ module.exports = {
     },
     {
       name: 'Stops',
-      description:
-        'A collection of react components for spatial web development of stops components.',
+      description: 'A collection of React components for spatial web development of stops components.',
       components: [
         'src/components/StopFinder/StopFinder.js',
         'src/components/Search/Search.js',

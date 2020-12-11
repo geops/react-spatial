@@ -1,163 +1,127 @@
+import 'jest-canvas-mock';
 import React from 'react';
 import { configure, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import 'jest-canvas-mock';
 import { act } from 'react-dom/test-utils';
+import { Map, View } from 'ol';
+import Tile from 'ol/Tile';
+import TileLayer from 'ol/layer/Tile';
+import TileSource from 'ol/source/Tile';
+import { createXYZ } from 'ol/tilegrid';
+import Layer from 'mobility-toolbox-js/ol/layers/Layer';
 import Copyright from './Copyright';
-import ConfigReader from '../../ConfigReader';
-import LayerService from '../../LayerService';
 
 configure({ adapter: new Adapter() });
 
-const initLayerService = () => {
-  const data = [
-    {
-      name: 'OSM Baselayer',
-      copyright: '© OSM Contributors',
-      data: {
-        type: 'xyz',
-        url: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      },
-    },
-    {
-      name: 'OSM Baselayer Hot',
-      copyright: '© Hot OSM Contributors',
-      data: {
-        type: 'xyz',
-        url: 'https://c.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
-      },
-    },
-    {
-      name: 'OpenTopoMap',
-      copyright: '© Some Copyright',
-      data: {
-        type: 'xyz',
-        url: 'https://a.tile.opentopomap.org/{z}/{x}/{y}.png',
-      },
-    },
-    {
-      name: 'OpenTopoMap',
-      copyright: '© OSM Contributors',
-      data: {
-        type: 'xyz',
-        url: 'https://a.tile.opentopomap.org/{z}/{x}/{y}.png',
-      },
-    },
-  ];
+const image = new Image();
+image.width = 256;
+image.height = 256;
 
-  const layers = ConfigReader.readConfig(data);
-  return new LayerService(layers);
+const tileLoadFunction = () => {
+  const tile = new Tile([0, 0, -1], 2 /* LOADED */);
+  tile.getImage = () => {
+    return image;
+  };
+  return tile;
 };
 
-let layerService;
+const getOLTileLayer = () => {
+  const layer = new TileLayer({
+    source: new TileSource({
+      projection: 'EPSG:3857',
+      tileGrid: createXYZ(),
+    }),
+  });
+  layer.getSource().getTile = tileLoadFunction;
+  return layer;
+};
+
+const getLayer = (copyrights, visible = true) => {
+  return new Layer({
+    visible,
+    copyrights,
+    olLayer: getOLTileLayer(),
+  });
+};
+
 let layers;
+let map;
 
 describe('Copyright', () => {
   beforeEach(() => {
-    layerService = initLayerService();
-    layers = layerService.getLayersAsFlatArray();
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+    layers = [getLayer('bar'), getLayer('foo', false)];
+    map = new Map({
+      target,
+      view: new View({
+        center: [0, 0],
+        zoom: 0,
+      }),
+      layers: layers.map((layer) => layer.olLayer),
+    });
+    map.setSize([200, 200]);
+    layers.forEach((layer) => {
+      layer.init(map);
+    });
+    act(() => {
+      map.renderSync();
+    });
+  });
+
+  afterEach(() => {
+    map.setTarget(null);
+    map = null;
   });
 
   test('is empty if no layers are visible', () => {
-    const component = mount(<Copyright layerService={layerService} />);
+    const component = mount(<Copyright map={map} />);
     expect(component.html()).toBe(null);
   });
 
   test('displays one copyright', () => {
-    layers[1].setVisible(true);
-    const component = mount(<Copyright layerService={layerService} />);
-    expect(component.text()).toBe('© Hot OSM Contributors');
+    const wrapper = mount(<Copyright map={map} />);
+    act(() => {
+      map.renderSync();
+    });
+    wrapper.update();
+    expect(wrapper.text()).toBe('bar');
   });
 
   test('displays 2 copyrights', () => {
+    const wrapper = mount(<Copyright map={map} />);
     layers[0].setVisible(true);
     layers[1].setVisible(true);
-    const component = mount(<Copyright layerService={layerService} />);
-    expect(component.text()).toBe(
-      '© OSM Contributors | © Hot OSM Contributors',
-    );
-  });
-
-  test('displays only unique copyrights', () => {
-    layers[0].setVisible(true);
-    layers[1].setVisible(true);
-    layers[3].setVisible(true);
-    const component = mount(<Copyright layerService={layerService} />);
-    expect(component.text()).toBe(
-      '© OSM Contributors | © Hot OSM Contributors',
-    );
-  });
-
-  test('displays a custom copyright', () => {
-    layers[1].setVisible(true);
-
-    const component = mount(
-      <Copyright
-        layerService={layerService}
-        format={(copyrights) => `Number of copyrights: ${copyrights.length}`}
-      />,
-    );
-
-    expect(component.text()).toBe('Number of copyrights: 1');
-  });
-
-  test('update copyright when visibility change.', () => {
-    const component = mount(<Copyright layerService={layerService} />);
-    expect(component.text()).toBe('');
     act(() => {
-      layers[1].setVisible(true);
+      map.renderSync();
     });
-    component.update();
-    expect(component.text()).toBe('© Hot OSM Contributors');
-    component.unmount();
+    wrapper.update();
+    expect(wrapper.text()).toBe('bar | foo');
   });
 
-  test('listen/unlisten "change:XXXX" on mount/unmount.', () => {
-    // mount
-    const spyOn = jest.spyOn(layerService, 'on');
-    const component = mount(<Copyright layerService={layerService} />);
-    expect(spyOn).toHaveBeenCalledTimes(2);
-    expect(spyOn.mock.calls[0][0]).toBe('change:visible');
-    expect(spyOn.mock.calls[1][0]).toBe('change:copyright');
-    const cb = spyOn.mock.calls[0][1];
-    const cb2 = spyOn.mock.calls[1][1];
-
-    // unmount
-    const spyUn = jest.spyOn(layerService, 'un');
-    component.unmount();
-    expect(spyUn).toHaveBeenCalledTimes(2);
-    expect(spyUn).toHaveBeenCalledWith('change:visible', cb);
-    expect(spyUn).toHaveBeenCalledWith('change:copyright', cb2);
-  });
-
-  test('displays only when copyright is defined', () => {
-    const data = [
-      {
-        name: 'OSM Baselayer',
-        visible: true,
-        copyright: 'OSM Contributors',
-        data: {
-          type: 'xyz',
-          url: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
-        },
-      },
-      {
-        name: 'OSM Baselayer Hot',
-        visible: true,
-        data: {
-          type: 'xyz',
-          url: 'https://c.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
-        },
-      },
-    ];
-
-    const layService = new LayerService(ConfigReader.readConfig(data));
-    const component = mount(
+  test('displays a copyright using a custom format', () => {
+    const wrapper = mount(
       <Copyright
-        layerService={layService}
+        map={map}
         format={(copyrights) => `Number of copyrights: ${copyrights.length}`}
       />,
     );
-    expect(component.text()).toBe('Number of copyrights: 1');
+
+    act(() => {
+      map.renderSync();
+    });
+    wrapper.update();
+
+    expect(wrapper.text()).toBe('Number of copyrights: 1');
+  });
+
+  test('set a custom className', () => {
+    const wrapper = mount(<Copyright map={map} className="foo" />);
+    expect(wrapper.find('.foo').length).toBe(1);
+  });
+
+  test('set a custom attribute to the root element', () => {
+    const wrapper = mount(<Copyright map={map} foo="bar" />);
+    expect(wrapper.find('[foo]').length).toBe(1);
   });
 });

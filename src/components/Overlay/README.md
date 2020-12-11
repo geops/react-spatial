@@ -1,6 +1,6 @@
 #
 
-This demonstrates the use of Sidebar.
+The following example demonstrates the use of Overlay.
 
 ```jsx
 import React, { useState, useEffect, useRef } from 'react';

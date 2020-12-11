@@ -1,12 +1,13 @@
-import React, { useMemo, useEffect, useState, useCallback } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import LayerService from '../../LayerService';
+import { Map } from 'ol';
+import CopyrightControl from 'mobility-toolbox-js/ol/controls/CopyrightControl';
 
 const propTypes = {
   /**
-   * A LayerService.
+   * A map.
    */
-  layerService: PropTypes.instanceOf(LayerService),
+  map: PropTypes.instanceOf(Map).isRequired,
 
   /**
    * Format function. Called with an array of copyrights from visible layers
@@ -21,37 +22,46 @@ const propTypes = {
 };
 
 const defaultProps = {
-  layerService: null,
   format: (copyrights) => copyrights.join(' | '),
   className: 'rs-copyright',
 };
 
-function Copyright({ layerService, format, ...other }) {
-  const [, updateState] = useState();
-  const forceUpdate = useCallback(() => updateState({}), []);
-  const copyrights = useMemo(() =>
-    // Array.from(new Set()) is use to remove duplicates.
-    Array.from(
-      new Set(
-        layerService
-          .getLayersAsFlatArray()
-          .filter((l) => l.visible)
-          .map((l) => l.copyright)
-          .filter((cr) => cr),
-      ),
-    ),
-  );
+/**
+ * The Copyright component uses the
+ * [mobility-toolbox-js CopyrightControl](https://mobility-toolbox-js.geops.io/api/class/src/mapbox/controls/CopyrightControl%20js~CopyrightControl%20html-offset-anchor)
+ * to render the layer copyrights.
+ */
+function Copyright({ map, format, ...other }) {
+  const [copyrights, setCopyrights] = useState([]);
 
+  const control = useMemo(() => {
+    return new CopyrightControl({
+      target: document.createElement('div'),
+      element: document.createElement('div'),
+      render() {
+        // eslint-disable-next-line react/no-this-in-sfc
+        const newCopyrights = this.getCopyrights();
+        if (copyrights.toString() !== newCopyrights.toString()) {
+          setCopyrights(newCopyrights);
+        }
+      },
+    });
+  }, []);
+
+  // Ensure the control is not associated to the wrong map
   useEffect(() => {
-    layerService.on('change:visible', forceUpdate);
-    layerService.on('change:copyright', forceUpdate);
-    return () => {
-      layerService.un('change:visible', forceUpdate);
-      layerService.un('change:copyright', forceUpdate);
-    };
-  }, [layerService]);
+    if (!control) {
+      return () => {};
+    }
 
-  if (!copyrights.length) {
+    control.map = map;
+
+    return () => {
+      control.map = null;
+    };
+  }, [map, control]);
+
+  if (!control || !control.getCopyrights().length) {
     return null;
   }
 
@@ -61,7 +71,7 @@ function Copyright({ layerService, format, ...other }) {
       {...other}
       // eslint-disable-next-line react/no-danger
       dangerouslySetInnerHTML={{
-        __html: format(copyrights),
+        __html: format(copyrights) || '',
       }}
     />
   );
