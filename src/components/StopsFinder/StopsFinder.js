@@ -7,6 +7,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import StopsFinderControl from 'mobility-toolbox-js/ol/controls/StopsFinderControl';
 import { Map } from 'ol';
 import { makeStyles } from '@material-ui/core';
+import StopsFinderOptions from './StopsFinderOption';
 
 const useStyles = makeStyles(() => {
   return {
@@ -146,8 +147,11 @@ function StopsFinder({
           />
         );
       }}
+      renderOption={(option) => {
+        return <StopsFinderOptions option={option} />;
+      }}
       // eslint-disable-next-line react/jsx-props-no-spreading
-      {...autocompleteProps}
+      {...{ ...autocompleteProps, textFieldProps: null }}
       classes={{ ...classes, ...autocompleteProps.classes }}
       inputValue={inputValue}
       open={isOpen}

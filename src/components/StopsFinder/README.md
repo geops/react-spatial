@@ -36,14 +36,14 @@ const { apiKey } = window;
   />
 
   <StopsFinder
-    mots="gondola"
+    map={map}
     apiKey={apiKey}
     onSelect={({ geometry }) => {
       map.getView().setCenter(fromLonLat(geometry.coordinates));
     }}
     autocompleteProps={{
       textFieldProps: {
-        label: 'Search for gondola',
+        label: 'Search for stops',
       },
     }}
   />
