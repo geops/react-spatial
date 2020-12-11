@@ -1,6 +1,6 @@
 #
 
-This demonstrates the use of the StopFinder component.
+This demonstrates the use of the StopsFinder component.
 
 ```jsx
 import React from 'react';
@@ -10,7 +10,7 @@ import Tile from 'ol/layer/Tile';
 import { fromLonLat } from 'ol/proj';
 import OSM from 'ol/source/OSM';
 import BasicMap from 'react-spatial/components/BasicMap';
-import StopFinder from 'react-spatial/components/StopFinder';
+import StopsFinder from 'react-spatial/components/StopsFinder';
 
 const map = new Map({ controls: [] });
 
@@ -35,7 +35,7 @@ const { apiKey } = window;
     tabIndex={0}
   />
 
-  <StopFinder
+  <StopsFinder
     mots="gondola"
     apiKey={apiKey}
     onSelect={({ geometry }) => {

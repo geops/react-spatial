@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => {
   };
 });
 
-function StopFinder({
+function StopsFinder({
   apiKey,
   autocompleteProps,
   url,
@@ -148,7 +148,7 @@ function StopFinder({
   );
 }
 
-StopFinder.propTypes = {
+StopsFinder.propTypes = {
   /**
    * Array or a comma separated list of agencies which should be available.
    * Order of these agencies chooses which agency will be preferred.
@@ -160,7 +160,7 @@ StopFinder.propTypes = {
   ]),
 
   /**
-   * geOps api key to access the StopFinder service.
+   * geOps api key to access the StopsFinder service.
    */
   apiKey: PropTypes.string,
 
@@ -227,12 +227,12 @@ StopFinder.propTypes = {
   renderAutocomplete: PropTypes.func,
 
   /**
-   * Url of the geOps StopFinder service.
+   * Url of the geOps StopsFinder service.
    */
   url: PropTypes.string,
 };
 
-StopFinder.defaultProps = {
+StopsFinder.defaultProps = {
   agencies: null,
   apiKey: null,
   autocompleteProps: {},
@@ -247,4 +247,4 @@ StopFinder.defaultProps = {
   renderAutocomplete: null,
 };
 
-export default StopFinder;
+export default StopsFinder;
