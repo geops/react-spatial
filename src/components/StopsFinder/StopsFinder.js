@@ -4,7 +4,8 @@ import { Autocomplete } from '@material-ui/lab';
 import { FaSearch } from 'react-icons/fa';
 import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import StopFinderAPI from 'mobility-toolbox-js/api/stops/StopsAPI';
+import StopsFinderControl from 'mobility-toolbox-js/ol/controls/StopsFinderControl';
+import { Map } from 'ol';
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(() => {
@@ -16,18 +17,19 @@ const useStyles = makeStyles(() => {
 });
 
 function StopsFinder({
+  agencies,
   apiKey,
   autocompleteProps,
-  url,
-  agencies,
   bbox,
   field,
   limit,
+  map,
   mots,
   onSelect,
   radius,
   refLocation,
   renderAutocomplete,
+  url,
 }) {
   const classes = useStyles();
   const [inputValue, setInputValue] = useState('');
@@ -35,10 +37,16 @@ function StopsFinder({
   const [isLoading, setLoading] = useState(false);
   const [isOpen, setOpen] = useState(false);
 
-  const api = useMemo(() => {
-    return new StopFinderAPI({
+  const control = useMemo(() => {
+    return new StopsFinderControl({
       url,
       apiKey,
+      target: document.createElement('div'),
+      element: document.createElement('div'),
+      render(newSuggestions = []) {
+        setSuggestions(newSuggestions);
+        setLoading(false);
+      },
     });
   }, [apiKey, url]);
 
@@ -50,8 +58,7 @@ function StopsFinder({
     }
     const abortController = new AbortController();
     setLoading(true);
-    const params = {
-      q: inputValue,
+    control.apiParams = {
       prefAgencies: agencies && agencies.toString(),
       bbox: bbox && bbox.toString(),
       field: field && field.toString(),
@@ -60,25 +67,38 @@ function StopsFinder({
       radius,
       ref_location: refLocation && refLocation.toString(),
     };
-
-    api
-      .search(params, abortController)
-      .then((data) => {
-        if (!data) {
-          // Request cancelled
-          return;
-        }
-        setSuggestions(data);
-        setLoading(false);
-      })
-      .catch(() => {
-        setSuggestions([]);
-        setLoading(false);
-      });
+    control.search(inputValue, abortController);
     return () => {
       abortController.abort();
     };
-  }, [inputValue]);
+  }, [
+    agencies,
+    bbox,
+    control,
+    field,
+    inputValue,
+    limit,
+    mots,
+    radius,
+    refLocation,
+  ]);
+
+  // Ensure the control is not associated to the wrong map
+  useEffect(() => {
+    if (!control) {
+      return () => {};
+    }
+
+    control.map = map;
+
+    return () => {
+      control.map = null;
+    };
+  }, [map, control]);
+
+  if (!control) {
+    return null;
+  }
 
   if (renderAutocomplete) {
     return renderAutocomplete(
@@ -93,58 +113,56 @@ function StopsFinder({
   }
 
   return (
-    <>
-      <Autocomplete
-        fullWidth
-        autoComplete
-        autoHighlight
-        selectOnFocus
-        getOptionLabel={(option) => option.properties.name}
-        onChange={(evt, value, reason) => {
-          if (onSelect && reason === 'select-option') {
-            onSelect(value, evt);
-          }
-        }}
-        popupIcon={<FaSearch focusable={false} size={15} />}
-        renderInput={(params) => {
-          return (
-            <TextField
-              label="Search stops"
-              // eslint-disable-next-line react/jsx-props-no-spreading
-              {...{
-                ...params,
-                ...((autocompleteProps || {}).textFieldProps || {}),
-              }}
-              InputProps={{
-                ...params.InputProps,
-                endAdornment: (
-                  <>
-                    {isLoading && <CircularProgress size={20} />}
-                    {params.InputProps.endAdornment}
-                  </>
-                ),
-              }}
-            />
-          );
-        }}
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        {...autocompleteProps}
-        classes={{ ...classes, ...autocompleteProps.classes }}
-        inputValue={inputValue}
-        open={isOpen}
-        options={suggestions}
-        loading={isLoading}
-        onOpen={() => {
-          setOpen(true);
-        }}
-        onClose={() => {
-          setOpen(false);
-        }}
-        onInputChange={(evt, val) => {
-          setInputValue(val);
-        }}
-      />
-    </>
+    <Autocomplete
+      fullWidth
+      autoComplete
+      autoHighlight
+      selectOnFocus
+      getOptionLabel={(option) => option.properties.name}
+      onChange={(evt, value, reason) => {
+        if (onSelect && reason === 'select-option') {
+          onSelect(value, evt);
+        }
+      }}
+      popupIcon={<FaSearch focusable={false} size={15} />}
+      renderInput={(params) => {
+        return (
+          <TextField
+            label="Search stops"
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...{
+              ...params,
+              ...((autocompleteProps || {}).textFieldProps || {}),
+            }}
+            InputProps={{
+              ...params.InputProps,
+              endAdornment: (
+                <>
+                  {isLoading && <CircularProgress size={20} />}
+                  {params.InputProps.endAdornment}
+                </>
+              ),
+            }}
+          />
+        );
+      }}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...autocompleteProps}
+      classes={{ ...classes, ...autocompleteProps.classes }}
+      inputValue={inputValue}
+      open={isOpen}
+      options={suggestions}
+      loading={isLoading}
+      onOpen={() => {
+        setOpen(true);
+      }}
+      onClose={() => {
+        setOpen(false);
+      }}
+      onInputChange={(evt, val) => {
+        setInputValue(val);
+      }}
+    />
   );
 }
 
@@ -191,6 +209,11 @@ StopsFinder.propTypes = {
    * Control how many matches will be returned.
    */
   limit: PropTypes.number,
+
+  /**
+   * A map.
+   */
+  map: PropTypes.instanceOf(Map).isRequired,
 
   /**
    * Array or a comma separated list of mode of transpaorts which should be available.
