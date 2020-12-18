@@ -109,7 +109,9 @@ const defaultRenderStation = ({
       onKeyPress={(e) => e.which === 13 && onStationClick(stop, e)}
     >
       <div className="rt-route-delay">
-        {typeof arrivalDelay === 'undefined' || isFirstStation ? null : (
+        {typeof arrivalDelay === 'undefined' || isFirstStation || cancelled ? (
+          ''
+        ) : (
           <span
             className={`rt-route-delay-arrival${` ${getDelayColor(
               arrivalDelay,
@@ -118,7 +120,9 @@ const defaultRenderStation = ({
             {`+${getDelayString(arrivalDelay)}`}
           </span>
         )}
-        {typeof departureDelay === 'undefined' || isLastStation ? null : (
+        {typeof departureDelay === 'undefined' || isLastStation || cancelled ? (
+          ''
+        ) : (
           <span
             className={`rt-route-delay-departure${` ${getDelayColor(
               departureDelay,
@@ -129,17 +133,23 @@ const defaultRenderStation = ({
         )}
       </div>
       <div className="rt-route-times">
-        <span className="rt-route-time-arrival">
+        <span
+          className={`rt-route-time-arrival ${
+            cancelled ? 'rt-route-cancelled' : ''
+          }`}
+        >
           {getHoursAndMinutes(arrivalTime)}
         </span>
-        <span className="rt-route-time-departure">
+        <span
+          className={`rt-route-time-departure ${
+            cancelled ? 'rt-route-cancelled' : ''
+          }`}
+        >
           {getHoursAndMinutes(departureTime)}
         </span>
       </div>
       {renderStationImg(stations, idx, stations.length, isNotStation)}
-      <div className={isLastStation && cancelled ? 'rt-route-cancelled' : null}>
-        {stationName}
-      </div>
+      <div className={cancelled ? 'rt-route-cancelled' : ''}>{stationName}</div>
     </div>
   );
 };
