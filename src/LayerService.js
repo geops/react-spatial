@@ -111,6 +111,7 @@ export default class LayerService {
   listenChangeEvt() {
     if (this.keys) {
       unByKey(this.keys);
+      this.keys = [];
     }
     this.getLayersAsFlatArray().forEach((layer) => {
       this.keys.push(

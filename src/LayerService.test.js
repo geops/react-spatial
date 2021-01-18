@@ -151,4 +151,10 @@ describe('LayerService', () => {
       expect(layerService.callbacks.foo[2]).toBe(undefined);
     });
   });
+
+  test('should unlisten keys in LayerService', () => {
+    expect(layerService.keys.length).toBe(14);
+    layerService.setLayers([]);
+    expect(layerService.keys.length).toBe(0);
+  });
 });
