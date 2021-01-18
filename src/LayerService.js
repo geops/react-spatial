@@ -1,3 +1,5 @@
+import { unByKey } from 'ol/Observable';
+
 /**
  * A layer service class to handle layer adding, removing and visiblity.
  */
@@ -107,6 +109,9 @@ export default class LayerService {
   }
 
   listenChangeEvt() {
+    if (this.keys) {
+      unByKey(this.keys);
+    }
     this.getLayersAsFlatArray().forEach((layer) => {
       this.keys.push(
         layer.on('change:copyright', (evt) => {
