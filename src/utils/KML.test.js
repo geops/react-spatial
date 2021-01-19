@@ -132,6 +132,12 @@ describe('KML', () => {
                 <Data name="textRotation">
                   <value>2.303834612632515</value>
                 </Data>
+                <Data name="textStrokeColor">
+                  <value>rgba(100,255,255,0.2)</value>
+                </Data>
+                <Data name="textStrokeWidth">
+                  <value>3</value>
+                </Data>
               </ExtendedData>
               <Point>
                 <coordinates>0,0,0</coordinates>
@@ -150,7 +156,15 @@ describe('KML', () => {
       expect(styleText.getText()).toBe('bar'); // spaces are trimmed.
       expect(styleText.getFont()).toEqual('bold 16px arial');
       expect(styleText.getFill()).toEqual({ color_: [32, 52, 126, 1] });
-      expect(styleText.getStroke()).toEqual(null);
+      expect(styleText.getStroke()).toEqual({
+        color_: 'rgba(100,255,255,0.2)',
+        width_: 3,
+        lineCap_: undefined,
+        lineDashOffset_: undefined,
+        lineDash_: null,
+        lineJoin_: undefined,
+        miterLimit_: undefined,
+      });
       expect(styleText.getScale()).toEqual(2);
       expect(styleText.getRotation()).toEqual('2.303834612632515');
       expect(styleText.getPadding()).toEqual([5, 6, 7, 8]);
