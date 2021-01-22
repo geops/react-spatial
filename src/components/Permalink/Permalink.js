@@ -66,6 +66,11 @@ const defaultProps = {
  * be added using __params__.
  */
 class Permalink extends Component {
+  static roundToTwo(num) {
+    // rounds number to two digits max if necessary.
+    return +`${Math.round(`${parseFloat(num)}e+2`)}e-2`;
+  }
+
   constructor(props) {
     super(props);
     this.state = {};
@@ -147,7 +152,7 @@ class Permalink extends Component {
     this.setState({
       x: this.roundCoord(center[0]),
       y: this.roundCoord(center[1]),
-      z: mapView.getZoom(),
+      z: Permalink.roundToTwo(mapView.getZoom()),
     });
   }
 
