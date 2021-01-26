@@ -84,14 +84,14 @@ const layerService = new LayerService(layers);
       isLayerHidden={l => l.get('hideInLegend') || layerService.getParents(l).some(pl => pl.get('hideInLegend'))}
     />
     <div className="rs-permalink-example-btns">
-      <Button 
+      <Button
         onClick={() => {
           swissBoundries.setVisible(!swissBoundries.visible);
         }}
       >
         Toggle Switzerland layer
       </Button>
-      <Button 
+      <Button
         onClick={() => {
         if (baseLayers[1].visible) {
           baseLayers[0].setVisible(true);
