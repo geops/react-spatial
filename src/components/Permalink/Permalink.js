@@ -147,7 +147,8 @@ class Permalink extends Component {
     this.setState({
       x: this.roundCoord(center[0]),
       y: this.roundCoord(center[1]),
-      z: mapView.getZoom(),
+      // rounds zoom to two digits max.
+      z: +`${Math.round(`${parseFloat(mapView.getZoom())}e+2`)}e-2`,
     });
   }
 

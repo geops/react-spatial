@@ -132,6 +132,15 @@ const sanitizeFeature = (feature) => {
         scale: style.getText().getScale(),
       });
 
+      if (feature.get('textStrokeColor') && feature.get('textStrokeWidth')) {
+        text.setStroke(
+          new Stroke({
+            color: feature.get('textStrokeColor'),
+            width: parseFloat(feature.get('textStrokeWidth')),
+          }),
+        );
+      }
+
       if (feature.get('textAlign')) {
         text.setTextAlign(feature.get('textAlign'));
       }
@@ -360,6 +369,19 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
 
     if (newStyle.text && newStyle.text.getOffsetY()) {
       clone.set('textOffsetY', newStyle.text.getOffsetY());
+    }
+
+    if (newStyle.text && newStyle.text.getStroke()) {
+      if (newStyle.text.getStroke().getColor()) {
+        clone.set(
+          'textStrokeColor',
+          asString(newStyle.text.getStroke().getColor()),
+        );
+      }
+
+      if (newStyle.text.getStroke().getWidth()) {
+        clone.set('textStrokeWidth', newStyle.text.getStroke().getWidth());
+      }
     }
 
     if (newStyle.text && newStyle.text.getBackgroundFill()) {

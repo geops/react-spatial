@@ -56,7 +56,19 @@ const propTypes = {
    */
   thresholdWidthForMobile: PropTypes.number,
 
+  /**
+   * Callback when stop resizing
+   * Pass following prop to re-resizable component
+   * (https://github.com/bokuweb/re-resizable)
+   */
   onResizeStop: PropTypes.func,
+
+  /**
+   * Callback when start resizing
+   * Pass following prop to re-resizable component
+   * (https://github.com/bokuweb/re-resizable)
+   */
+  onResizeStart: PropTypes.func,
 };
 
 const defaultMobileSize = {
@@ -77,6 +89,7 @@ const defaultProps = {
   mobileSize: defaultMobileSize,
   thresholdWidthForMobile: 768,
   onResizeStop: () => {},
+  onResizeStart: () => {},
 };
 
 /**
@@ -89,6 +102,7 @@ const Overlay = ({
   isMobileResizable,
   mobileSize,
   onResizeStop,
+  onResizeStart,
   thresholdWidthForMobile,
 }) => {
   const [isMobile, setIsMobile] = useState();
@@ -128,6 +142,7 @@ const Overlay = ({
           handleComponent={{
             top: <div className="tm-overlay-handler">&mdash;</div>,
           }}
+          onResizeStart={onResizeStart}
           onResizeStop={onResizeStop}
           handleStyles={{
             top: {
