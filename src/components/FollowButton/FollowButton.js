@@ -19,6 +19,11 @@ const propTypes = {
   routeIdentifier: PropTypes.string.isRequired,
 
   /**
+   * Property to use to indentify the route.
+   */
+  identifierProperty: PropTypes.string,
+
+  /**
    * Button is active.
    */
   active: PropTypes.bool.isRequired,
@@ -47,6 +52,7 @@ const propTypes = {
 const defaultProps = {
   className: 'rt-route-follow',
   title: 'Follow',
+  identifierProperty: 'routeIdentifier',
 };
 
 /**
@@ -87,10 +93,10 @@ class FollowButton extends PureComponent {
   }
 
   centerOnTrajectory(routeIdentifier) {
-    const { trackerLayer, setCenter } = this.props;
+    const { trackerLayer, setCenter, identifierProperty } = this.props;
 
     const [trajectory] = trackerLayer.getVehicle(
-      (r) => r.routeIdentifier === routeIdentifier,
+      (r) => r[identifierProperty] === routeIdentifier,
     );
     const firstCoord = trajectory && trajectory.coordinate;
     if (firstCoord) {
