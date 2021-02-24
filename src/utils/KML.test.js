@@ -264,6 +264,9 @@ describe('KML', () => {
                     <Data name="zIndex">
                         <value>1</value>
                     </Data>
+                    <Data name="zoomLimits">
+                      <value>[15,20]</value>
+                    </Data>
                 </ExtendedData>
                 <Point>
                     <coordinates>0,0,0</coordinates>
@@ -280,6 +283,7 @@ describe('KML', () => {
         resolution: 4,
         defaultScale: 0.5,
       });
+      expect(feats[0].get('zoomLimits')[1]).toEqual(20);
       expectWriteResult(feats, str);
     });
   });

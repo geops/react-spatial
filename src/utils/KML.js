@@ -55,10 +55,15 @@ const getLineIcon = (feature, icon, color, start = true) => {
   });
 };
 
-// Clean the uneeded feature's style and properties created by the KML parser.
+// Clean the unneeded feature's style and properties created by the KML parser.
 const sanitizeFeature = (feature) => {
   const geom = feature.getGeometry();
   let styles = feature.getStyleFunction();
+
+  // Parse zoomLimits string and store in properties
+  if (feature.get('zoomLimits')) {
+    feature.set('zoomLimits', JSON.parse(feature.get('zoomLimits')));
+  }
 
   // The use of clone is part of the scale fix line 156
   const tmpStyles = styles(feature);
@@ -215,8 +220,6 @@ const sanitizeFeature = (feature) => {
         zIndex: style.getZIndex(),
       });
     };
-
-    feature.setStyle(styles);
   }
 
   // Remove image and text styles for polygons and lines
@@ -274,8 +277,8 @@ const sanitizeFeature = (feature) => {
         ),
       );
     }
-    feature.setStyle(styles);
   }
+  feature.setStyle(styles);
 };
 
 /**
@@ -431,6 +434,11 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
     if (feature.get('fillPattern')) {
       clone.set('fillPattern', JSON.stringify(feature.get('fillPattern')));
       newStyle.fill = null;
+    }
+
+    // In case a fill pattern should be applied (use fillPattern attribute to store pattern id, color etc)
+    if (feature.get('zoomLimits')) {
+      clone.set('zoomLimits', JSON.stringify(feature.get('zoomLimits')));
     }
 
     // If only text is displayed we must specify an
