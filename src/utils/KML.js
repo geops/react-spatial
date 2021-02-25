@@ -436,7 +436,7 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
       newStyle.fill = null;
     }
 
-    // In case a fill pattern should be applied (use fillPattern attribute to store pattern id, color etc)
+    // The zoomLimits property is used to for feature rendering contraints in parent applications
     if (feature.get('zoomLimits')) {
       clone.set('zoomLimits', JSON.stringify(feature.get('zoomLimits')));
     }
