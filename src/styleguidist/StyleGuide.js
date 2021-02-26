@@ -20,6 +20,11 @@ import docConfig from '../../doc/doc-config.json';
 const styles = ({ mq }) => ({
   root: {
     backgroundColor: 'white',
+
+    '& .MuiAutocomplete-root': {
+      margin: '20px 0',
+      width: 300,
+    },
   },
   version: {
     padding: '10px 0 0 10px',
