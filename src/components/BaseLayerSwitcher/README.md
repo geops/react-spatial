@@ -16,7 +16,7 @@ import basebrightImage from 'react-spatial/images/baselayer/baselayer.basebright
 const center = [1149722.7037660484, 6618091.313553318];
 const map = new Map({ controls: [] });
 const travicLayer = new MapboxLayer({
-  url: `https://maps.geops.io/styles/travic_v2/style.json?key=${apiKey}`,
+  url: `https://maps.geops.io/styles/travic_v2_generalized/style.json?key=${apiKey}`,
   name: 'Travic',
   key: 'travic.baselayer',
   isBaseLayer: true,

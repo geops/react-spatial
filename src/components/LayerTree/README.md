@@ -14,7 +14,7 @@ import BasicMap from 'react-spatial/components/BasicMap';
 import LayerService from 'react-spatial/LayerService';
 
 const baseTravic = new MapboxLayer({
-  url: `https://maps.geops.io/styles/travic_v2/style.json?key=${apiKey}`,
+  url: `https://maps.geops.io/styles/travic_v2_generalized/style.json?key=${apiKey}`,
   properties: {
     hidden: true,
   }
