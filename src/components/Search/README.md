@@ -20,7 +20,7 @@ const map = new Map({ controls: [] });
 
 const layers = [
   new MapboxLayer({
-    url: `https://maps.geops.io/styles/travic/style.json?key=${apiKey}`,
+    url: `https://maps.geops.io/styles/travic_v2_generalized/style.json?key=${apiKey}`,
   }),
 ];
 
