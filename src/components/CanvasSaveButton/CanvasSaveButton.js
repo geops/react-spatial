@@ -236,21 +236,30 @@ class CanvasSaveButton extends PureComponent {
     destContext.restore();
   }
 
-  drawNorthArrow(destContext, destCanvas) {
-    const { scale, extraData } = this.props;
-    const { src, circled, width, height, rotation } = extraData.northArrow;
+  drawElement(
+    data,
+    destContext,
+    destCanvas,
+    srcFallback = () => null,
+    previousItemSize = [0, 0],
+  ) {
+    const { scale } = this.props;
+    const { src, circled, width, height, rotation } = data;
 
     return new Promise((resolve) => {
       const img = new Image();
       img.crossOrigin = 'Anonymous';
-      img.src = src || (circled ? NorthArrowCircle : NorthArrowSimple);
+      img.src = src || srcFallback(circled);
       img.onload = () => {
         destContext.save();
-        const arrowWidth = (width || 80) * scale;
-        const arrowHeight = (height || 80) * scale;
+        const elementWidth = (width || 80) * scale;
+        const elementHeight = (height || 80) * scale;
         destContext.translate(
-          destCanvas.width - 2 * this.padding - arrowWidth / 2,
-          destCanvas.height - 2 * this.padding - arrowHeight / 2,
+          destCanvas.width - 2 * this.padding - elementWidth / 2,
+          destCanvas.height -
+            2 * this.padding -
+            elementHeight / 2 -
+            previousItemSize[1],
         );
 
         if (rotation) {
@@ -260,16 +269,19 @@ class CanvasSaveButton extends PureComponent {
 
         destContext.drawImage(
           img,
-          -arrowWidth / 2,
-          -arrowHeight / 2,
-          arrowWidth,
-          arrowHeight,
+          -elementWidth / 2,
+          -elementHeight / 2,
+          elementWidth,
+          elementHeight,
         );
         destContext.restore();
 
         // Return the pixels width of the arrow and the margin right,
         // that must not be occupied by the copyright.
-        resolve(arrowWidth + 2 * this.padding);
+        resolve([
+          elementWidth + 2 * this.padding,
+          elementHeight + 2 * this.padding,
+        ]);
       };
 
       img.onerror = () => {
@@ -363,26 +375,45 @@ class CanvasSaveButton extends PureComponent {
           );
         });
 
-        // North arrow
-        let p = Promise.resolve();
-        if (destContext && extraData && extraData.northArrow) {
-          p = this.drawNorthArrow(destContext, destCanvas);
+        // Custom info
+        let logoPromise = Promise.resolve();
+        if (destContext && extraData && extraData.logo) {
+          logoPromise = this.drawElement(
+            extraData.logo,
+            destContext,
+            destCanvas,
+          );
         }
 
-        p.then((arrowWidth) => {
-          // Copyright
-          if (
-            destContext &&
-            extraData &&
-            extraData.copyright &&
-            extraData.copyright.text
-          ) {
-            const maxWidth = arrowWidth
-              ? destContext.canvas.width - arrowWidth
-              : destContext.canvas.width;
-            this.drawCopyright(destContext, destCanvas, maxWidth);
+        logoPromise.then((customItemSize = [0, 0]) => {
+          // North arrow
+          let arrowPromise = Promise.resolve();
+          if (destContext && extraData && extraData.northArrow) {
+            arrowPromise = this.drawElement(
+              extraData.northArrow,
+              destContext,
+              destCanvas,
+              (isCircle) => (isCircle ? NorthArrowCircle : NorthArrowSimple),
+              customItemSize,
+            );
           }
-          resolve(destCanvas);
+
+          // Copyright
+          arrowPromise.then((arrowWidth) => {
+            const widestElement = Math.max(customItemSize[0], arrowWidth);
+            if (
+              destContext &&
+              extraData &&
+              extraData.copyright &&
+              extraData.copyright.text
+            ) {
+              const maxWidth = widestElement
+                ? destContext.canvas.width - widestElement
+                : destContext.canvas.width;
+              this.drawCopyright(destContext, destCanvas, maxWidth);
+            }
+            resolve(destCanvas);
+          });
         });
       });
       mapToExport.renderSync();
