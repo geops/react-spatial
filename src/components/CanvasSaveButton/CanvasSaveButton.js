@@ -236,20 +236,15 @@ class CanvasSaveButton extends PureComponent {
     destContext.restore();
   }
 
-  drawElement(
-    data,
-    destContext,
-    destCanvas,
-    srcFallback = () => null,
-    previousItemSize = [0, 0],
-  ) {
+  drawElement(data, destCanvas, previousItemSize = [0, 0]) {
+    const destContext = destCanvas.getContext('2d');
     const { scale } = this.props;
-    const { src, circled, width, height, rotation } = data;
+    const { src, width, height, rotation } = data;
 
     return new Promise((resolve) => {
       const img = new Image();
       img.crossOrigin = 'Anonymous';
-      img.src = src || srcFallback(circled);
+      img.src = src;
       img.onload = () => {
         destContext.save();
         const elementWidth = (width || 80) * scale;
@@ -378,11 +373,7 @@ class CanvasSaveButton extends PureComponent {
         // Custom info
         let logoPromise = Promise.resolve();
         if (destContext && extraData && extraData.logo) {
-          logoPromise = this.drawElement(
-            extraData.logo,
-            destContext,
-            destCanvas,
-          );
+          logoPromise = this.drawElement(extraData.logo, destCanvas);
         }
 
         logoPromise.then((customItemSize = [0, 0]) => {
@@ -390,10 +381,13 @@ class CanvasSaveButton extends PureComponent {
           let arrowPromise = Promise.resolve();
           if (destContext && extraData && extraData.northArrow) {
             arrowPromise = this.drawElement(
-              extraData.northArrow,
-              destContext,
+              {
+                src: extraData.northArrow.circled
+                  ? NorthArrowCircle
+                  : NorthArrowSimple,
+                ...extraData.northArrow,
+              },
               destCanvas,
-              (isCircle) => (isCircle ? NorthArrowCircle : NorthArrowSimple),
               customItemSize,
             );
           }
