@@ -1,6 +1,5 @@
 /* eslint-disable import/no-unresolved */
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { geopsTheme, Header, Footer } from '@geops/geops-ui';
 import {
@@ -118,121 +117,119 @@ export function StyleGuideRenderer({
 
   return (
     <ThemeProvider theme={geopsTheme}>
-      <Router>
-        <div className={classes.root}>
-          <Header
-            title={docConfig.appName}
-            tabs={[{ label: 'Code', href: `${docConfig.githubRepo}` }]}
-          />
-          <div className={classes.content}>
-            <Hidden smUp>
-              <div
-                role="button"
-                type="button"
-                className={classes.dropdown}
-                onClick={() => toggleDropdown(!dropdownOpen)}
-                onKeyDown={(e) => {
-                  if (e.keyCode === 13) {
-                    toggleDropdown(!dropdownOpen);
-                  }
-                }}
-                tabIndex={0}
-              >
-                {selected}
-                {dropdownOpen ? <Close /> : <Open />}
-              </div>
-              <Collapse in={dropdownOpen} timeout="auto" unmountOnExit>
-                <ClickAwayListener onClickAway={() => toggleDropdown(false)}>
-                  <List
-                    component="div"
-                    disablePadding
-                    style={{
-                      width: '100%',
-                      overflow: 'auto',
-                      maxHeight: 'calc(100vh - 150px)',
-                      top: 40,
-                      backgroundColor: 'white',
-                      boxShadow: '0px 10px 15px #35353520',
-                      zIndex: 99999,
-                    }}
-                  >
-                    {toc.props.sections.slice(1).map((section) => {
-                      return [
-                        <ListItem
-                          key={section.name}
-                          button
-                          onClick={() => {
-                            return expanded === section.name
-                              ? expandSection()
-                              : expandSection(section.name);
-                          }}
-                          style={{
-                            fontWeight: 'bold',
-                            color: '#6987a1',
-                            borderTop: '1px solid #e8e8e8',
-                          }}
-                        >
-                          {section.name}
-                        </ListItem>,
-                        <Collapse
-                          key={`${section.name}-components`}
-                          in={expanded === section.name}
-                          timeout="auto"
-                          unmountOnExit
-                        >
-                          {section.components.map((component) => {
-                            return (
-                              <ListItem
-                                key={component.name}
-                                button
-                                style={{ paddingLeft: 32 }}
-                                onClick={() => {
-                                  setSelected(component.name);
-                                  toggleDropdown(false);
-                                }}
-                                tabIndex={-1}
-                                selected={selected === component.name}
-                              >
-                                <Link
-                                  style={{ display: 'block', width: '100%' }}
-                                  href={`#${component.name.toLowerCase()}`}
-                                >
-                                  {component.name}
-                                </Link>
-                              </ListItem>
-                            );
-                          })}
-                        </Collapse>,
-                      ];
-                    })}
-                  </List>
-                </ClickAwayListener>
-              </Collapse>
-            </Hidden>
-            <div className={classes.scrollable}>
-              <Hidden xsDown>
-                <div className={classes.sidebar}>
-                  <header className={classes.version}>
-                    {version && <Version>{version}</Version>}
-                  </header>
-                  {hasSidebar ? toc : null}
-                </div>
-              </Hidden>
-              <main className={classes.main}>{children}</main>
-              <Footer />
-            </div>
-          </div>
-          <div id="promo">
-            <a
-              href={docConfig.githubRepo}
-              target="_blank"
-              rel="noopener noreferrer"
+      <div className={classes.root}>
+        <Header
+          title={docConfig.appName}
+          tabs={[{ label: 'Code', href: `${docConfig.githubRepo}` }]}
+        />
+        <div className={classes.content}>
+          <Hidden smUp>
+            <div
+              role="button"
+              type="button"
+              className={classes.dropdown}
+              onClick={() => toggleDropdown(!dropdownOpen)}
+              onKeyDown={(e) => {
+                if (e.keyCode === 13) {
+                  toggleDropdown(!dropdownOpen);
+                }
+              }}
+              tabIndex={0}
             >
-              <div id="promo-text">Fork me on GitHub</div>
-            </a>
+              {selected}
+              {dropdownOpen ? <Close /> : <Open />}
+            </div>
+            <Collapse in={dropdownOpen} timeout="auto" unmountOnExit>
+              <ClickAwayListener onClickAway={() => toggleDropdown(false)}>
+                <List
+                  component="div"
+                  disablePadding
+                  style={{
+                    width: '100%',
+                    overflow: 'auto',
+                    maxHeight: 'calc(100vh - 150px)',
+                    top: 40,
+                    backgroundColor: 'white',
+                    boxShadow: '0px 10px 15px #35353520',
+                    zIndex: 99999,
+                  }}
+                >
+                  {toc.props.sections.slice(1).map((section) => {
+                    return [
+                      <ListItem
+                        key={section.name}
+                        button
+                        onClick={() => {
+                          return expanded === section.name
+                            ? expandSection()
+                            : expandSection(section.name);
+                        }}
+                        style={{
+                          fontWeight: 'bold',
+                          color: '#6987a1',
+                          borderTop: '1px solid #e8e8e8',
+                        }}
+                      >
+                        {section.name}
+                      </ListItem>,
+                      <Collapse
+                        key={`${section.name}-components`}
+                        in={expanded === section.name}
+                        timeout="auto"
+                        unmountOnExit
+                      >
+                        {section.components.map((component) => {
+                          return (
+                            <ListItem
+                              key={component.name}
+                              button
+                              style={{ paddingLeft: 32 }}
+                              onClick={() => {
+                                setSelected(component.name);
+                                toggleDropdown(false);
+                              }}
+                              tabIndex={-1}
+                              selected={selected === component.name}
+                            >
+                              <Link
+                                style={{ display: 'block', width: '100%' }}
+                                href={`#${component.name.toLowerCase()}`}
+                              >
+                                {component.name}
+                              </Link>
+                            </ListItem>
+                          );
+                        })}
+                      </Collapse>,
+                    ];
+                  })}
+                </List>
+              </ClickAwayListener>
+            </Collapse>
+          </Hidden>
+          <div className={classes.scrollable}>
+            <Hidden xsDown>
+              <div className={classes.sidebar}>
+                <header className={classes.version}>
+                  {version && <Version>{version}</Version>}
+                </header>
+                {hasSidebar ? toc : null}
+              </div>
+            </Hidden>
+            <main className={classes.main}>{children}</main>
+            <Footer />
           </div>
         </div>
-      </Router>
+        <div id="promo">
+          <a
+            href={docConfig.githubRepo}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div id="promo-text">Fork me on GitHub</div>
+          </a>
+        </div>
+      </div>
     </ThemeProvider>
   );
 }
