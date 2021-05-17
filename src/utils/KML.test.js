@@ -258,14 +258,17 @@ describe('KML', () => {
                     <Data name="iconRotation">
                       <value>1.5707963267948966</value>
                     </Data>
+                    <Data name="maxZoom">
+                      <value>20</value>
+                    </Data>
+                    <Data name="minZoom">
+                      <value>15</value>
+                    </Data>
                     <Data name="pictureOptions">
                       <value>{"resolution":4,"defaultScale":0.5}</value>
                     </Data>
                     <Data name="zIndex">
                         <value>1</value>
-                    </Data>
-                    <Data name="zoomLimits">
-                      <value>[15,20]</value>
                     </Data>
                 </ExtendedData>
                 <Point>
@@ -283,7 +286,8 @@ describe('KML', () => {
         resolution: 4,
         defaultScale: 0.5,
       });
-      expect(feats[0].get('zoomLimits')[1]).toEqual(20);
+      expect(feats[0].get('maxZoom')).toEqual(20);
+      expect(feats[0].get('minZoom')).toEqual(15);
       expectWriteResult(feats, str);
     });
   });

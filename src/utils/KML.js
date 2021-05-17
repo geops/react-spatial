@@ -60,9 +60,14 @@ const sanitizeFeature = (feature) => {
   const geom = feature.getGeometry();
   let styles = feature.getStyleFunction();
 
-  // Parse zoomLimits string and store in properties
-  if (feature.get('zoomLimits')) {
-    feature.set('zoomLimits', JSON.parse(feature.get('zoomLimits')));
+  // Store maxZoom in properties
+  if (feature.get('maxZoom')) {
+    feature.set('maxZoom', parseInt(feature.get('maxZoom'), 10));
+  }
+
+  // Store minZoom in properties
+  if (feature.get('minZoom')) {
+    feature.set('minZoom', parseInt(feature.get('minZoom'), 10));
   }
 
   // The use of clone is part of the scale fix line 156
@@ -436,9 +441,14 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
       newStyle.fill = null;
     }
 
-    // The zoomLimits property is used to for feature rendering contraints in parent applications
-    if (feature.get('zoomLimits')) {
-      clone.set('zoomLimits', JSON.stringify(feature.get('zoomLimits')));
+    // maxZoom: maximum zoom level at which the feature is displayed
+    if (feature.get('maxZoom')) {
+      clone.set('maxZoom', parseInt(feature.get('maxZoom'), 10));
+    }
+
+    // minZoom: minimum zoom level at which the feature is displayed
+    if (feature.get('minZoom')) {
+      clone.set('minZoom', parseInt(feature.get('minZoom'), 10));
     }
 
     // If only text is displayed we must specify an
