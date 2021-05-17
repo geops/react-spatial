@@ -15,6 +15,7 @@ import Map from 'ol/Map';
 import degrees from 'radians-degrees';
 import CanvasSaveButton from 'react-spatial/components/CanvasSaveButton';
 import BasicMap from 'react-spatial/components/BasicMap';
+import geopsLogo from 'react-spatial/images/geops_logo.png';
 
 const map = new Map({ controls: [] });
 
@@ -23,6 +24,7 @@ const layers = [
     olLayer: new Tile({
       source: new OSM(),
     }),
+    copyrights: '© layer-copyright',
   })
 ];
 
@@ -42,7 +44,7 @@ function CanvasSaveButtonExample() {
           extraData={{
             copyright: {
               text: () => {
-                return layers[0].copyright;
+                return layers[0].copyrights;
               },
             },
             northArrow: {
@@ -50,6 +52,11 @@ function CanvasSaveButtonExample() {
                 return degrees(map.getView().getRotation());
               },
               circled: true,
+            },
+            logo: {
+              src: geopsLogo,
+              height: 22,
+              width: 84,
             },
           }}
         >
