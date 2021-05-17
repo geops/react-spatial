@@ -259,7 +259,7 @@ describe('KML', () => {
                       <value>1.5707963267948966</value>
                     </Data>
                     <Data name="maxZoom">
-                      <value>20</value>
+                      <value>18.5</value>
                     </Data>
                     <Data name="minZoom">
                       <value>15</value>
@@ -286,7 +286,7 @@ describe('KML', () => {
         resolution: 4,
         defaultScale: 0.5,
       });
-      expect(feats[0].get('maxZoom')).toEqual(20);
+      expect(feats[0].get('maxZoom')).toEqual(18.5);
       expect(feats[0].get('minZoom')).toEqual(15);
       expectWriteResult(feats, str);
     });

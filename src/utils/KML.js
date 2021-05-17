@@ -62,12 +62,12 @@ const sanitizeFeature = (feature) => {
 
   // Store maxZoom in properties
   if (feature.get('maxZoom')) {
-    feature.set('maxZoom', parseInt(feature.get('maxZoom'), 10));
+    feature.set('maxZoom', parseFloat(feature.get('maxZoom'), 10));
   }
 
   // Store minZoom in properties
   if (feature.get('minZoom')) {
-    feature.set('minZoom', parseInt(feature.get('minZoom'), 10));
+    feature.set('minZoom', parseFloat(feature.get('minZoom'), 10));
   }
 
   // The use of clone is part of the scale fix line 156
@@ -443,12 +443,12 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
 
     // maxZoom: maximum zoom level at which the feature is displayed
     if (feature.get('maxZoom')) {
-      clone.set('maxZoom', parseInt(feature.get('maxZoom'), 10));
+      clone.set('maxZoom', parseFloat(feature.get('maxZoom'), 10));
     }
 
     // minZoom: minimum zoom level at which the feature is displayed
     if (feature.get('minZoom')) {
-      clone.set('minZoom', parseInt(feature.get('minZoom'), 10));
+      clone.set('minZoom', parseFloat(feature.get('minZoom'), 10));
     }
 
     // If only text is displayed we must specify an
