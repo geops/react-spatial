@@ -55,10 +55,20 @@ const getLineIcon = (feature, icon, color, start = true) => {
   });
 };
 
-// Clean the uneeded feature's style and properties created by the KML parser.
+// Clean the unneeded feature's style and properties created by the KML parser.
 const sanitizeFeature = (feature) => {
   const geom = feature.getGeometry();
   let styles = feature.getStyleFunction();
+
+  // Store maxZoom in properties
+  if (feature.get('maxZoom')) {
+    feature.set('maxZoom', parseFloat(feature.get('maxZoom'), 10));
+  }
+
+  // Store minZoom in properties
+  if (feature.get('minZoom')) {
+    feature.set('minZoom', parseFloat(feature.get('minZoom'), 10));
+  }
 
   // The use of clone is part of the scale fix line 156
   const tmpStyles = styles(feature);
@@ -215,8 +225,6 @@ const sanitizeFeature = (feature) => {
         zIndex: style.getZIndex(),
       });
     };
-
-    feature.setStyle(styles);
   }
 
   // Remove image and text styles for polygons and lines
@@ -274,8 +282,8 @@ const sanitizeFeature = (feature) => {
         ),
       );
     }
-    feature.setStyle(styles);
   }
+  feature.setStyle(styles);
 };
 
 /**
@@ -431,6 +439,16 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
     if (feature.get('fillPattern')) {
       clone.set('fillPattern', JSON.stringify(feature.get('fillPattern')));
       newStyle.fill = null;
+    }
+
+    // maxZoom: maximum zoom level at which the feature is displayed
+    if (feature.get('maxZoom')) {
+      clone.set('maxZoom', parseFloat(feature.get('maxZoom'), 10));
+    }
+
+    // minZoom: minimum zoom level at which the feature is displayed
+    if (feature.get('minZoom')) {
+      clone.set('minZoom', parseFloat(feature.get('minZoom'), 10));
     }
 
     // If only text is displayed we must specify an
