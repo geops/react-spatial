@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28.8" height="28.8" viewBox="0 0 28.8 28.8">
+  <g id="_3063_Metro_round_blue-01" data-name="3063_Metro_round_blue-01" transform="translate(0.228)">
+    <g id="Gruppe_33" data-name="Gruppe 33" transform="translate(-0.228)">
+      <circle id="Ellipse_20" data-name="Ellipse 20" cx="14.4" cy="14.4" r="14.4" transform="translate(0 0)" fill="#5c798f"/>
+    </g>
+    <g id="Gruppe_37" data-name="Gruppe 37" transform="translate(7.772 5)">
+      <g id="Gruppe_34" data-name="Gruppe 34" transform="translate(0.451 17.178)">
+        <path id="Pfad_120" data-name="Pfad 120" d="M120.222,63.414H108.705l1.668-1.654h8.181Z" transform="translate(-108.705 -61.76)" fill="#fff"/>
+      </g>
+      <path id="Pfad_121" data-name="Pfad 121" d="M118.37,49.813h-7.678a2.3,2.3,0,0,0-2.3,2.3V63.484a2.232,2.232,0,0,0,.043.446.824.824,0,0,0,.058.2,2.286,2.286,0,0,0,1.467,1.524.053.053,0,0,1,.043.014,2.666,2.666,0,0,0,.69.1h7.678a2.8,2.8,0,0,0,.359-.029h.029a2.237,2.237,0,0,0,1.84-1.754.878.878,0,0,0,.043-.187,2.157,2.157,0,0,0,.029-.316V52.114a2.3,2.3,0,0,0-2.3-2.3Zm-7.319,13.269a1.27,1.27,0,1,1,.9-.377A1.273,1.273,0,0,1,111.051,63.082Zm6.787,0a1.27,1.27,0,1,1,.9-.379,1.273,1.273,0,0,1-.9.379Zm1.553-6.413a1.092,1.092,0,0,1-1.093,1.093h-7.534a1.092,1.092,0,0,1-1.093-1.093V52.185a1.092,1.092,0,0,1,1.093-1.093H118.3a1.092,1.092,0,0,1,1.093,1.093Z" transform="translate(-108.391 -49.813)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

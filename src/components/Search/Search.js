@@ -18,6 +18,11 @@ const propTypes = {
   getRenderSectionTitle: PropTypes.func,
 
   /**
+   * Initial value for the search input field.
+   */
+  initialValue: PropTypes.string,
+
+  /**
    * Props for the search input field, see [react-autosuggest documentation](https://github.com/moroshko/react-autosuggest#input-props-prop) for details.
    */
   inputProps: PropTypes.object,
@@ -53,6 +58,7 @@ const defaultProps = {
   apiKey: null,
   engines: null,
   getRenderSectionTitle: () => () => null,
+  initialValue: '',
   onHighlight: () => null,
   shouldRenderSuggestions: (newValue) => newValue.trim().length > 2,
   onSelect: () => null,
@@ -68,6 +74,7 @@ function Search({
   apiKey,
   engines,
   getRenderSectionTitle,
+  initialValue,
   inputProps,
   onHighlight,
   shouldRenderSuggestions,
@@ -91,7 +98,7 @@ function Search({
   }, [apiKey, engines]);
 
   const [suggestions, setSuggestions] = useState([]);
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(initialValue);
 
   const searchService = useMemo(
     () =>

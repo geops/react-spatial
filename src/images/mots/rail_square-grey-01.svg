@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="_3000_Zug_square-grey-01" data-name="3000_Zug_square-grey-01" transform="translate(-556 -96)">
+    <rect id="Rechteck_93" data-name="Rechteck 93" width="24" height="24" rx="1" transform="translate(556 96)" fill="#666767"/>
+    <path id="Pfad_49" data-name="Pfad 49" d="M13.385,3.2h-2.26A5.525,5.525,0,0,0,7.232,4.832h0A5.4,5.4,0,0,0,5.6,8.6v7.785L8.865,19.65H15.52l3.265-3.265V8.725a5.525,5.525,0,0,0-1.632-3.892h0A5.437,5.437,0,0,0,13.385,3.2ZM9.241,15.63l-1.13-2.386H9.869L11,15.63Zm5.4,0H12.882l1.13-2.386H15.77Zm.377-5.022h0a12.242,12.242,0,0,1-6.027,0h0A2.009,2.009,0,0,1,7.483,8.473h0a4.018,4.018,0,0,1,1-2.637h0A3.39,3.39,0,0,1,11,4.707h1.883a3.316,3.316,0,0,1,2.637,1h0a3.641,3.641,0,0,1,1.13,2.762h0a2.135,2.135,0,0,1-1.633,2.139Z" transform="translate(555.916 95.294)" fill="#fff"/>
+    <rect id="Rechteck_94" data-name="Rechteck 94" width="6.655" height="1.256" transform="translate(564.781 115.947)" fill="#fff"/>
+  </g>
+</svg>
