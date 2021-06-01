@@ -363,12 +363,8 @@ class BaseLayerToggler extends Component {
   }
 
   render() {
-    const {
-      className,
-      titles,
-      prevButtonContent,
-      nextButtonContent,
-    } = this.props;
+    const { className, titles, prevButtonContent, nextButtonContent } =
+      this.props;
     const { layers, idx, fallbackImg, fallbackImgOpacity } = this.state;
 
     let footer = null;

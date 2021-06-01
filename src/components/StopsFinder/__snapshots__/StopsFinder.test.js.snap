@@ -110,7 +110,6 @@ exports[`StopsFinder matches snapshots. 1`] = `
               fill="currentColor"
               focusable={false}
               height={15}
-              size={15}
               stroke="currentColor"
               strokeWidth="0"
               style={

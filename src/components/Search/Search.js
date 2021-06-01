@@ -103,11 +103,11 @@ function Search({
   const searchService = useMemo(
     () =>
       new SearchService({ apiKey, engines: currentEngines, setSuggestions }),
-    [apiKey, engines, setSuggestions],
+    [apiKey, currentEngines],
   );
 
-  const theme = useMemo(() => {
-    return {
+  const theme = useMemo(
+    () => ({
       container: `${className}__container`,
       containerOpen: `${className}__container--open`,
       input: `${className}__input`,
@@ -122,8 +122,9 @@ function Search({
       sectionContainer: `${className}__section-container`,
       sectionContainerFirst: `${className}__section-container--first`,
       sectionTitle: `${className}__section-title`,
-    };
-  }, [className]);
+    }),
+    [className],
+  );
 
   return (
     Object.keys(currentEngines).length > 0 && (

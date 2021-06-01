@@ -19,9 +19,7 @@ image.height = 256;
 
 const tileLoadFunction = () => {
   const tile = new Tile([0, 0, -1], 2 /* LOADED */);
-  tile.getImage = () => {
-    return image;
-  };
+  tile.getImage = () => image;
   return tile;
 };
 
@@ -36,13 +34,12 @@ const getOLTileLayer = () => {
   return layer;
 };
 
-const getLayer = (copyrights, visible = true) => {
-  return new Layer({
+const getLayer = (copyrights, visible = true) =>
+  new Layer({
     visible,
     copyrights,
     olLayer: getOLTileLayer(),
   });
-};
 
 let layers;
 let map;

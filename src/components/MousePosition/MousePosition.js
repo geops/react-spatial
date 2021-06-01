@@ -109,7 +109,7 @@ function MousePosition({
     return () => {
       map.removeControl(mousePosition);
     };
-  }, []);
+  }, [map]);
 
   useEffect(() => {
     if (!projection || !control) {
@@ -127,7 +127,7 @@ function MousePosition({
         projections[0];
       setProjection(proj);
     }
-  }, [projectionValue]);
+  }, [projections, projectionValue]);
 
   const onChangeCb = useCallback(
     (evt) => {
@@ -135,7 +135,7 @@ function MousePosition({
       setProjection(newProj);
       onChange(evt, newProj);
     },
-    [projections],
+    [onChange, projections],
   );
 
   if (!projection || !projections || !projections.length) {

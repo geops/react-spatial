@@ -4,18 +4,16 @@ import { Autocomplete } from '@material-ui/lab';
 import { FaSearch } from 'react-icons/fa';
 import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import StopsFinderControl from 'mobility-toolbox-js/ol/controls/StopsFinderControl';
+import StopFinderControl from 'mobility-toolbox-js/ol/controls/StopFinderControl';
 import { Map } from 'ol';
 import { makeStyles } from '@material-ui/core';
 import StopsFinderOptions from './StopsFinderOption';
 
-const useStyles = makeStyles(() => {
-  return {
-    popupIndicatorOpen: {
-      transform: 'rotate(0)',
-    },
-  };
-});
+const useStyles = makeStyles(() => ({
+  popupIndicatorOpen: {
+    transform: 'rotate(0)',
+  },
+}));
 
 function StopsFinder({
   agencies,
@@ -38,18 +36,20 @@ function StopsFinder({
   const [isLoading, setLoading] = useState(false);
   const [isOpen, setOpen] = useState(false);
 
-  const control = useMemo(() => {
-    return new StopsFinderControl({
-      url,
-      apiKey,
-      target: document.createElement('div'),
-      element: document.createElement('div'),
-      render(newSuggestions = []) {
-        setSuggestions(newSuggestions);
-        setLoading(false);
-      },
-    });
-  }, [apiKey, url]);
+  const control = useMemo(
+    () =>
+      new StopFinderControl({
+        url,
+        apiKey,
+        target: document.createElement('div'),
+        element: document.createElement('div'),
+        render(newSuggestions = []) {
+          setSuggestions(newSuggestions);
+          setLoading(false);
+        },
+      }),
+    [apiKey, url],
+  );
 
   useEffect(() => {
     if (!inputValue) {
@@ -126,30 +126,26 @@ function StopsFinder({
         }
       }}
       popupIcon={<FaSearch focusable={false} size={15} />}
-      renderInput={(params) => {
-        return (
-          <TextField
-            label="Search stops"
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            {...{
-              ...params,
-              ...((autocompleteProps || {}).textFieldProps || {}),
-            }}
-            InputProps={{
-              ...params.InputProps,
-              endAdornment: (
-                <>
-                  {isLoading && <CircularProgress size={20} />}
-                  {params.InputProps.endAdornment}
-                </>
-              ),
-            }}
-          />
-        );
-      }}
-      renderOption={(option) => {
-        return <StopsFinderOptions option={option} />;
-      }}
+      renderInput={(params) => (
+        <TextField
+          label="Search stops"
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          {...{
+            ...params,
+            ...((autocompleteProps || {}).textFieldProps || {}),
+          }}
+          InputProps={{
+            ...params.InputProps,
+            endAdornment: (
+              <>
+                {isLoading && <CircularProgress size={20} />}
+                {params.InputProps.endAdornment}
+              </>
+            ),
+          }}
+        />
+      )}
+      renderOption={(option) => <StopsFinderOptions option={option} />}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...{ ...autocompleteProps, textFieldProps: null }}
       classes={{ ...classes, ...autocompleteProps.classes }}

@@ -130,8 +130,8 @@ class CanvasSaveButton extends PureComponent {
       evt.preventDefault();
       evt.stopPropagation();
     }
-    onSaveStart(map).then((mapToExport) => {
-      return this.createCanvasImage(mapToExport || map)
+    onSaveStart(map).then((mapToExport) =>
+      this.createCanvasImage(mapToExport || map)
         .then((canvas) => {
           this.downloadCanvasImage(canvas);
           onSaveEnd(mapToExport);
@@ -142,8 +142,8 @@ class CanvasSaveButton extends PureComponent {
             console.error(err);
           }
           onSaveEnd(mapToExport, err);
-        });
-    });
+        }),
+    );
   }
 
   getDownloadImageName() {
@@ -302,9 +302,8 @@ class CanvasSaveButton extends PureComponent {
 
     if (firstCoordinate && oppositeCoordinate) {
       const firstPixel = mapToExport.getPixelFromCoordinate(firstCoordinate);
-      const oppositePixel = mapToExport.getPixelFromCoordinate(
-        oppositeCoordinate,
-      );
+      const oppositePixel =
+        mapToExport.getPixelFromCoordinate(oppositeCoordinate);
       const pixelTopLeft = [
         firstPixel[0] <= oppositePixel[0] ? firstPixel[0] : oppositePixel[0],
         firstPixel[1] <= oppositePixel[1] ? firstPixel[1] : oppositePixel[1],

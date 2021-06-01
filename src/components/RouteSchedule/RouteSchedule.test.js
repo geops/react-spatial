@@ -64,12 +64,8 @@ const lineInfos = {
 describe('RouteSchedule', () => {
   beforeEach(() => {
     global.Date = jest.fn(() => ({
-      getHours: () => {
-        return 9;
-      },
-      getMinutes: () => {
-        return 1;
-      },
+      getHours: () => 9,
+      getMinutes: () => 1,
     }));
     Object.assign(Date, RealDate);
   });

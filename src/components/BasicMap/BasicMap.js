@@ -168,14 +168,8 @@ class BasicMap extends PureComponent {
   }
 
   componentDidMount() {
-    const {
-      layers,
-      extent,
-      viewOptions,
-      center,
-      zoom,
-      resolution,
-    } = this.props;
+    const { layers, extent, viewOptions, center, zoom, resolution } =
+      this.props;
     const { node } = this.state;
     this.map.setTarget(node);
 

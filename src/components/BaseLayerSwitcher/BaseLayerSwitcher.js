@@ -62,9 +62,7 @@ const defaultProps = {
   t: (s) => s,
 };
 
-const getVisibleLayer = (layers) => {
-  return layers.find((layer) => layer.visible);
-};
+const getVisibleLayer = (layers) => layers.find((layer) => layer.visible);
 
 const getNextImage = (currentLayer, layers, layerImages) => {
   const currentIndex = layers.indexOf(
@@ -74,8 +72,8 @@ const getNextImage = (currentLayer, layers, layerImages) => {
   return layerImages[nextIndex];
 };
 
-const getImageStyle = (url) => {
-  return url
+const getImageStyle = (url) =>
+  url
     ? {
         backgroundImage: `url(${url})`,
         backgroundSize: 'cover',
@@ -83,7 +81,6 @@ const getImageStyle = (url) => {
         backgroundPosition: 'center',
       }
     : null;
-};
 
 /**
  * The BaseLayerSwitcher component renders a button interface for switching the visible
