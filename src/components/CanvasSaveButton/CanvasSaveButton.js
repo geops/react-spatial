@@ -7,6 +7,11 @@ import NorthArrowCircle from '../../images/northArrowCircle.url.svg';
 
 const propTypes = {
   /**
+   * Automatically download the image saved.
+   */
+  autoDownload: PropTypes.bool,
+
+  /**
    * Children content of the button.
    */
   children: PropTypes.node,
@@ -99,6 +104,7 @@ const propTypes = {
 };
 
 const defaultProps = {
+  autoDownload: true,
   children: null,
   map: null,
   format: 'image/png',
@@ -124,7 +130,7 @@ class CanvasSaveButton extends PureComponent {
   }
 
   onClick(evt) {
-    const { map, onSaveStart, onSaveEnd } = this.props;
+    const { map, onSaveStart, onSaveEnd, autoDownload } = this.props;
     if (window.navigator.msSaveBlob) {
       // ie only
       evt.preventDefault();
@@ -133,8 +139,13 @@ class CanvasSaveButton extends PureComponent {
     onSaveStart(map).then((mapToExport) => {
       return this.createCanvasImage(mapToExport || map)
         .then((canvas) => {
-          this.downloadCanvasImage(canvas);
-          onSaveEnd(mapToExport);
+          if (autoDownload) {
+            this.downloadCanvasImage(canvas).then((blob) => {
+              onSaveEnd(mapToExport, canvas, blob);
+            });
+          } else {
+            onSaveEnd(mapToExport, canvas);
+          }
         })
         .catch((err) => {
           if (err) {
@@ -415,38 +426,43 @@ class CanvasSaveButton extends PureComponent {
   }
 
   downloadCanvasImage(canvas) {
-    const { format } = this.props;
-    if (/msie (9|10)/gi.test(window.navigator.userAgent.toLowerCase())) {
-      // ie 9 and 10
-      const url = canvas.toDataURL(format);
-      const w = window.open('about:blank', '');
-      w.document.write(`<img src="${url}" alt="from canvas"/>`);
-    } else if (window.navigator.msSaveBlob) {
-      // ie 11 and higher
-      let image;
-      try {
-        image = canvas.msToBlob();
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.log(e);
+    // Use blob for large images
+    const promise = new Promise((resolve) => {
+      const { format } = this.props;
+      if (/msie (9|10)/gi.test(window.navigator.userAgent.toLowerCase())) {
+        // ie 9 and 10
+        const url = canvas.toDataURL(format);
+        const w = window.open('about:blank', '');
+        w.document.write(`<img src="${url}" alt="from canvas"/>`);
+        resolve(url);
       }
-      window.navigator.msSaveBlob(
-        new Blob([image], {
+      if (window.navigator.msSaveBlob) {
+        // ie 11 and higher
+        let image;
+        try {
+          image = canvas.msToBlob();
+        } catch (e) {
+          // eslint-disable-next-line no-console
+          console.log(e);
+        }
+        const blob = new Blob([image], {
           type: format,
-        }),
-        this.getDownloadImageName(),
-      );
-    } else {
-      // Use blob for large images
-      canvas.toBlob((blob) => {
-        const link = document.createElement('a');
-        link.download = this.getDownloadImageName();
-        link.href = URL.createObjectURL(blob);
-        // append child to document for firefox to be able to download.
-        document.body.appendChild(link);
-        link.click();
-      }, format);
-    }
+        });
+        resolve(blob);
+        window.navigator.msSaveBlob(blob, this.getDownloadImageName());
+      } else {
+        canvas.toBlob((blob) => {
+          const link = document.createElement('a');
+          link.download = this.getDownloadImageName();
+          link.href = URL.createObjectURL(blob);
+          // append child to document for firefox to be able to download.
+          document.body.appendChild(link);
+          link.click();
+          resolve(blob);
+        }, format);
+      }
+    });
+    return promise;
   }
 
   render() {
@@ -459,6 +475,8 @@ class CanvasSaveButton extends PureComponent {
     delete other.format;
     delete other.map;
     delete other.coordinates;
+    delete other.autoDownload;
+    delete other.scale;
 
     return (
       <div
