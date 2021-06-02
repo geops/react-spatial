@@ -9,7 +9,6 @@ exports[`StopsFinder matches snapshots. 1`] = `
   onKeyDown={[Function]}
   onMouseDown={[Function]}
   role="combobox"
-  textFieldProps={null}
 >
   <div
     className="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"

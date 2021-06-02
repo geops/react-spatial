@@ -84,7 +84,7 @@ function Search({
   const currentEngines = useMemo(() => {
     if (!engines) {
       return {
-        stops: new StopFinder(null, { apiKey }),
+        stops: new StopFinder(undefined, { apiKey }),
       };
     }
     if (apiKey) {

@@ -112,6 +112,11 @@ function StopsFinder({
       setLoading,
     );
   }
+  const textFieldProps = {
+    ...((autocompleteProps || {}).textFieldProps || {}),
+  };
+  const autocProps = { ...autocompleteProps };
+  delete autocProps.textFieldProps;
 
   return (
     <Autocomplete
@@ -132,7 +137,7 @@ function StopsFinder({
           // eslint-disable-next-line react/jsx-props-no-spreading
           {...{
             ...params,
-            ...((autocompleteProps || {}).textFieldProps || {}),
+            ...textFieldProps,
           }}
           InputProps={{
             ...params.InputProps,
@@ -147,7 +152,7 @@ function StopsFinder({
       )}
       renderOption={(option) => <StopsFinderOptions option={option} />}
       // eslint-disable-next-line react/jsx-props-no-spreading
-      {...{ ...autocompleteProps, textFieldProps: null }}
+      {...autocProps}
       classes={{ ...classes, ...autocompleteProps.classes }}
       inputValue={inputValue}
       open={isOpen}

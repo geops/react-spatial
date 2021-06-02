@@ -1,4 +1,3 @@
-#
 
 This demonstrates the use of the StopsFinder component.
 
