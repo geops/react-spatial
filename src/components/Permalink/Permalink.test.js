@@ -26,8 +26,8 @@ describe('Permalink', () => {
         },
       }),
       new Layer({
-        name: 'Swiss boundries',
-        key: 'swiss.boundries',
+        name: 'Swiss boundaries',
+        key: 'swiss.boundaries',
         visible: true,
         properties: {
           hideInLegend: true,
@@ -108,7 +108,7 @@ describe('Permalink', () => {
     const layerService = new LayerService(layers);
     mount(<Permalink layerService={layerService} />);
     const search =
-      '?baselayers=basebright.baselayer,basedark.baselayer&layers=ultimate.layer,swiss.boundries';
+      '?baselayers=basebright.baselayer,basedark.baselayer&layers=ultimate.layer,swiss.boundaries';
     expect(window.location.search).toEqual(search);
   });
 
@@ -213,10 +213,10 @@ describe('Permalink', () => {
     expect(window.location.search).toEqual('');
     const layerService = new LayerService(layers);
     mount(<Permalink layerService={layerService} />);
-    layerService.getLayer('Swiss boundries').setVisible(true);
+    layerService.getLayer('Swiss boundaries').setVisible(true);
 
     expect(
-      /layers=ultimate.layer,swiss.boundries/.test(window.location.search),
+      /layers=ultimate.layer,swiss.boundaries/.test(window.location.search),
     ).toBe(true);
   });
 

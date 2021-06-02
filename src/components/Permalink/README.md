@@ -20,8 +20,8 @@ import Map from 'ol/Map';
 const map = new Map({ controls: [] });
 
 const swissBoundries = new Layer({
-  name: 'Swiss boundries',
-  key: 'swiss.boundries',
+  name: 'Swiss boundaries',
+  key: 'swiss.boundaries',
   visible: true,
   olLayer: new VectorLayer({
     source: new VectorSource({
