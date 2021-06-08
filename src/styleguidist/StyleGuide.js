@@ -30,7 +30,7 @@ const styles = ({ mq }) => ({
     padding: '10px 0 0 10px',
   },
   content: {
-    top: 100,
+    top: 68,
     bottom: 0,
     height: 'calc(100vh - 60px)',
     position: 'fixed',
