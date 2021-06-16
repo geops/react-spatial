@@ -1,5 +1,5 @@
 /* eslint-disable import/no-unresolved */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { geopsTheme, Header, Footer } from '@geops/geops-ui';
 import {
@@ -39,22 +39,23 @@ const styles = ({ mq }) => ({
   },
   scrollable: {
     overflowY: 'scroll',
-    height: 'calc(100vh - 100px)',
+    height: 'calc(100vh - 68px)',
     [mq.small]: {
       top: 40,
       position: 'absolute',
       width: '100%',
-      height: 'calc(100vh - 140px)',
+      height: 'calc(100vh - 108px)',
     },
   },
   main: {
+    margin: 'auto',
+    width: 'calc(100vw - 30px)',
     maxWidth: 1000,
     padding: [[15, 30]],
     paddingLeft: 230,
     paddingTop: 55,
-    margin: [[0, 'auto']],
     [mq.small]: {
-      padding: 15,
+      padding: 5,
     },
     display: 'block',
   },
@@ -63,7 +64,7 @@ const styles = ({ mq }) => ({
     border: '#e8e8e8 solid',
     borderWidth: '0 1px 0 0',
     position: 'fixed',
-    top: 100,
+    top: 68,
     left: 0,
     bottom: 0,
     width: '200px',
@@ -82,6 +83,12 @@ const styles = ({ mq }) => ({
     color: '#6987a1',
     borderBottom: '1px solid #6987a1',
   },
+  footerWrapper: {
+    marginLeft: 200,
+    [mq.small]: {
+      marginLeft: 0,
+    },
+  },
 });
 
 export function StyleGuideRenderer({
@@ -95,6 +102,7 @@ export function StyleGuideRenderer({
   const [dropdownOpen, toggleDropdown] = useState(false);
   const [expanded, expandSection] = useState();
   const [selected, setSelected] = useState('Components');
+  const ref = useRef();
   useEffect(() => {
     fetch('https://developer.geops.io/publickey')
       .then((response) => response.json())
@@ -207,7 +215,7 @@ export function StyleGuideRenderer({
               </ClickAwayListener>
             </Collapse>
           </Hidden>
-          <div className={classes.scrollable}>
+          <div className={classes.scrollable} ref={ref}>
             <Hidden xsDown>
               <div className={classes.sidebar}>
                 <header className={classes.version}>
@@ -217,7 +225,17 @@ export function StyleGuideRenderer({
               </div>
             </Hidden>
             <main className={classes.main}>{children}</main>
-            <Footer />
+            <div className={classes.footerWrapper}>
+              <Footer
+                onScrollToTop={() => {
+                  ref.current.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: 'smooth',
+                  });
+                }}
+              />
+            </div>
           </div>
         </div>
         <div id="promo">

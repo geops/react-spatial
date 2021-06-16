@@ -979,13 +979,11 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@geops/geops-ui@0.1.9-beta.8":
-  version "0.1.9-beta.8"
-  resolved "https://registry.yarnpkg.com/@geops/geops-ui/-/geops-ui-0.1.9-beta.8.tgz#b24bc4c6bda65aa901767e13e0e70687540b0560"
-  integrity sha512-04PePdLO55E8bczkB8rGGyDVXbyamaJCfzOa1PEERNaFZqtI57pSpCzp7yKFLSjR7CcDXAw+RlIUUe/sBWfTWQ==
+"@geops/geops-ui@0.1.11-beta.2":
+  version "0.1.11-beta.2"
+  resolved "https://registry.yarnpkg.com/@geops/geops-ui/-/geops-ui-0.1.11-beta.2.tgz#8eb7b37016d6d1bc5a389e7ea0164ed6a9d5e75d"
+  integrity sha512-5KlczripbrVXMYD4fpLv1L9b7iAEf7sW5aLE74u84jTKh/HXLjtcwBRmsqyZv9x0RJZ1eDAojfpfmZv0O5cPYA==
   dependencies:
-    "@material-ui/core" "^4.11.0"
-    "@material-ui/icons" "^4.9.1"
     prop-types "^15.7.2"
     react-app-polyfill "^2.0.0"
     react-router-dom "^5.2.0"

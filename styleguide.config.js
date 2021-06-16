@@ -185,6 +185,10 @@ module.exports = {
     Heading: {
       heading: {
         fontWeight: 900,
+        marginTop: 50,
+      },
+      heading1: {
+        marginTop: 0,
       },
     },
     Para: {
@@ -194,8 +198,12 @@ module.exports = {
       },
     },
     ComponentsList: {
+      isChild: {
+        fontSize: 16,
+      },
       item: {
         margin: '10px 0',
+        fontSize: 18,
       },
     },
   },
