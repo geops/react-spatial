@@ -194,7 +194,7 @@ module.exports = {
     Para: {
       para: {
         lineHeight: '2.25rem',
-        fontSize: '17px',
+        fontSize: '1.125rem'
       },
     },
     ComponentsList: {
