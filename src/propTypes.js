@@ -26,7 +26,7 @@ const lineInfos = PropTypes.shape({
   color: PropTypes.string,
   destination: PropTypes.string,
   feedsId: PropTypes.number,
-  id: PropTypes.number,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   license: PropTypes.string,
   licenseNote: PropTypes.string,
   licenseUrl: PropTypes.string,

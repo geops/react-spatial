@@ -6,7 +6,6 @@ exports[`CanvasSaveButton should match snapshot with a different attributes 1`] 
   onClick={[Function]}
   onKeyPress={[Function]}
   role="button"
-  scale={1}
   tabIndex="1"
   title="Karte als Bild speichern."
 >
@@ -45,7 +44,6 @@ exports[`CanvasSaveButton should match snapshot. 1`] = `
   onClick={[Function]}
   onKeyPress={[Function]}
   role="button"
-  scale={1}
   tabIndex={0}
 >
   <svg
