@@ -4,7 +4,7 @@ import { Autocomplete } from '@material-ui/lab';
 import { FaSearch } from 'react-icons/fa';
 import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import StopsFinderControl from 'mobility-toolbox-js/ol/controls/StopsFinderControl';
+import StopFinderControl from 'mobility-toolbox-js/ol/controls/StopFinderControl';
 import { Map } from 'ol';
 import { makeStyles } from '@material-ui/core';
 import StopsFinderOptions from './StopsFinderOption';
@@ -39,7 +39,7 @@ function StopsFinder({
   const [isOpen, setOpen] = useState(false);
 
   const control = useMemo(() => {
-    return new StopsFinderControl({
+    return new StopFinderControl({
       url,
       apiKey,
       target: document.createElement('div'),
