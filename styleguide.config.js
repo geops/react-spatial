@@ -180,6 +180,7 @@ module.exports = {
     Playground: {
       preview: {
         fontSize: '18px',
+        marginBottom: '24px',
       },
     },
     Heading: {
