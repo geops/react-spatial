@@ -97,7 +97,9 @@ const defaultRenderStation = ({
   const isNotStation = isNotStop(stop);
   return (
     <div
-      key={stationId}
+      // Train line can go in circle so begin and end have the same id,
+      // using the time in the key should fix the issue.
+      key={stationId + arrivalTime + departureTime}
       role="button"
       className={[
         'rt-route-station',
