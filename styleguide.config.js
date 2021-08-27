@@ -206,6 +206,11 @@ module.exports = {
         fontSize: 18,
       },
     },
+    Section: {
+      root: {
+        marginBottom: '120px',
+      },
+    },
   },
   showSidebar: true,
   styleguideComponents: {
