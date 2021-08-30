@@ -184,7 +184,8 @@ class Permalink extends Component {
           (l) =>
             !l.isBaseLayer &&
             l.visible &&
-            !l.hasVisibleChildren() &&
+            (!l.hasVisibleChildren() ||
+              (l.children || []).every((child) => isLayerHidden(child))) &&
             !isLayerHidden(l),
         )
         .map((l) => l.key)

@@ -50,6 +50,29 @@ describe('Permalink', () => {
           radioGroup: 'baseLayer',
         },
       }),
+      new Layer({
+        name: 'Layer with children that are hidden',
+        key: 'children.hidden.layer',
+        visible: true,
+        children: [
+          new Layer({
+            name: 'Child 1 hidden',
+            key: 'child.hidden.1',
+            visible: true,
+            properties: {
+              hideInLegend: true,
+            },
+          }),
+          new Layer({
+            name: 'Childr 2 hidden',
+            key: 'child.hidden.2',
+            visible: false,
+            properties: {
+              hideInLegend: true,
+            },
+          }),
+        ],
+      }),
     ];
   });
 
@@ -108,7 +131,7 @@ describe('Permalink', () => {
     const layerService = new LayerService(layers);
     mount(<Permalink layerService={layerService} />);
     const search =
-      '?baselayers=basebright.baselayer,basedark.baselayer&layers=ultimate.layer,swiss.boundaries';
+      '?baselayers=basebright.baselayer,basedark.baselayer&layers=ultimate.layer,swiss.boundaries,child.hidden.1';
     expect(window.location.search).toEqual(search);
   });
 
@@ -125,7 +148,7 @@ describe('Permalink', () => {
       />,
     );
     const search =
-      '?baselayers=basebright.baselayer,basedark.baselayer&layers=';
+      '?baselayers=basebright.baselayer,basedark.baselayer&layers=children.hidden.layer';
     expect(window.location.search).toEqual(search);
   });
 

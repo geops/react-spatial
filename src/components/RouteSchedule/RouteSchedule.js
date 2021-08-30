@@ -95,7 +95,9 @@ const defaultRenderStation = ({
   const isNotStation = isNotStop(stop);
   return (
     <div
-      key={stationId}
+      // Train line can go in circle so begin and end have the same id,
+      // using the time in the key should fix the issue.
+      key={stationId + arrivalTime + departureTime}
       role="button"
       className={[
         'rt-route-station',
@@ -176,6 +178,7 @@ const defaultRenderHeader = ({ lineInfos, renderHeaderButtons }) => {
       <span
         className="rt-route-icon"
         style={{
+          /* stylelint-disable value-keyword-case */
           backgroundColor: backgroundColor || bgColors[vehicleType],
           color: color || 'black',
         }}
