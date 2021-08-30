@@ -234,9 +234,11 @@ class Geolocation extends PureComponent {
   render() {
     const { children, className } = this.props;
     // Remove component props from other HTML props.
-    const other = Object.entries(this.props).reduce((props, [key, value]) => {
-      return propTypes[key] ? props : { ...props, [key]: value };
-    }, {});
+    const other = Object.entries(this.props).reduce(
+      (props, [key, value]) =>
+        propTypes[key] ? props : { ...props, [key]: value },
+      {},
+    );
     const { active } = this.state;
 
     return (

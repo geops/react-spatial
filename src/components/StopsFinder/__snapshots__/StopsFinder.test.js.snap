@@ -9,7 +9,6 @@ exports[`StopsFinder matches snapshots. 1`] = `
   onKeyDown={[Function]}
   onMouseDown={[Function]}
   role="combobox"
-  textFieldProps={null}
 >
   <div
     className="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
@@ -110,7 +109,6 @@ exports[`StopsFinder matches snapshots. 1`] = `
               fill="currentColor"
               focusable={false}
               height={15}
-              size={15}
               stroke="currentColor"
               strokeWidth="0"
               style={

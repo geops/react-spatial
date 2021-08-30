@@ -38,7 +38,7 @@ function ScaleLine({ map, options, ...other }) {
     return () => {
       map.removeControl(control);
     };
-  }, [map]);
+  }, [map, options]);
 
   // eslint-disable-next-line react/jsx-props-no-spreading
   return <div className="rs-scale-line" ref={ref} {...other} />;

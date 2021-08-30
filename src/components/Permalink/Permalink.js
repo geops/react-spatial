@@ -180,15 +180,14 @@ class Permalink extends Component {
     this.setState({
       layers: layerService
         .getLayersAsFlatArray()
-        .filter((l) => {
-          return (
+        .filter(
+          (l) =>
             !l.isBaseLayer &&
             l.visible &&
             (!l.hasVisibleChildren() ||
               (l.children || []).every((child) => isLayerHidden(child))) &&
-            !isLayerHidden(l)
-          );
-        })
+            !isLayerHidden(l),
+        )
         .map((l) => l.key)
         .join(),
       baselayers:

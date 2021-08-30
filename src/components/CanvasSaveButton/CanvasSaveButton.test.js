@@ -65,9 +65,7 @@ describe('CanvasSaveButton', () => {
   });
 
   test('should call onSaveBefore then download then onSaveEnd function on click.', async (done) => {
-    const saveStart = jest.fn((m) => {
-      return Promise.resolve(m);
-    });
+    const saveStart = jest.fn((m) => Promise.resolve(m));
     const saveEnd = jest.fn();
     const wrapper = shallow(
       <CanvasSaveButton
@@ -78,17 +76,14 @@ describe('CanvasSaveButton', () => {
         onSaveEnd={saveEnd}
         extraData={{
           copyright: {
-            text: () => {
-              return (
-                'contributors, SRTM | map style: © OpenTopoMap (CC-BY-SA)' +
-                'contributors, SRTM | map style: © OpenTopoMap (CC-BY-SA)' +
-                'contributors, SRTM | map style: © OpenTopoMap (CC-BY-SA)' +
-                'contributors, SRTM | map style: © OpenTopoMap (CC-BY-SA)' +
-                'contributors, SRTM | map style: © OpenTopoMap (CC-BY-SA)' +
-                'contributors, SRTM | map style: © OpenTopoMap (CC-BY-SA)' +
-                'contributors, SRTM | map style: © OpenTopoMap (CC-BY-SA)'
-              );
-            },
+            text: () =>
+              'contributors, SRTM | map style: © OpenTopoMap (CC-BY-SA)' +
+              'contributors, SRTM | map style: © OpenTopoMap (CC-BY-SA)' +
+              'contributors, SRTM | map style: © OpenTopoMap (CC-BY-SA)' +
+              'contributors, SRTM | map style: © OpenTopoMap (CC-BY-SA)' +
+              'contributors, SRTM | map style: © OpenTopoMap (CC-BY-SA)' +
+              'contributors, SRTM | map style: © OpenTopoMap (CC-BY-SA)' +
+              'contributors, SRTM | map style: © OpenTopoMap (CC-BY-SA)',
           },
         }}
       >

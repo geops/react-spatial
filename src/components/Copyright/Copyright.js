@@ -34,19 +34,22 @@ const defaultProps = {
 function Copyright({ map, format, ...other }) {
   const [copyrights, setCopyrights] = useState([]);
 
-  const control = useMemo(() => {
-    return new CopyrightControl({
-      target: document.createElement('div'),
-      element: document.createElement('div'),
-      render() {
-        // eslint-disable-next-line react/no-this-in-sfc
-        const newCopyrights = this.getCopyrights();
-        if (copyrights.toString() !== newCopyrights.toString()) {
-          setCopyrights(newCopyrights);
-        }
-      },
-    });
-  }, []);
+  const control = useMemo(
+    () =>
+      new CopyrightControl({
+        target: document.createElement('div'),
+        element: document.createElement('div'),
+        render() {
+          // eslint-disable-next-line react/no-this-in-sfc
+          const newCopyrights = this.getCopyrights();
+          if (copyrights.toString() !== newCopyrights.toString()) {
+            setCopyrights(newCopyrights);
+          }
+        },
+      }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
 
   // Ensure the control is not associated to the wrong map
   useEffect(() => {

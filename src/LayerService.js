@@ -83,13 +83,11 @@ export default class LayerService {
   }
 
   getFeatureInfoAtCoordinate(coordinate, layers) {
-    const promises = (layers || this.getQueryableLayers()).map((layer) => {
-      return layer
+    const promises = (layers || this.getQueryableLayers()).map((layer) =>
+      layer
         .getFeatureInfoAtCoordinate(coordinate)
-        .then((featureInfo) => {
-          return featureInfo;
-        });
-    });
+        .then((featureInfo) => featureInfo),
+    );
     return Promise.all(promises);
   }
 

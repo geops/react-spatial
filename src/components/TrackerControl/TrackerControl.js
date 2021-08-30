@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { IoIosSpeedometer } from 'react-icons/io';
 import { FaPlay, FaForward, FaBackward, FaRegDotCircle } from 'react-icons/fa';
@@ -31,21 +31,19 @@ const decreaseSpeed = (speed) => {
   return nextSpeed;
 };
 
-const defaultRenderButton = (icon, onClick, title) => {
-  return (
-    <div
-      aria-label={title}
-      role="button"
-      onClick={onClick}
-      onKeyPress={onClick}
-      className="rt-control-button"
-      tabIndex={0}
-      title={title}
-    >
-      {icon}
-    </div>
-  );
-};
+const defaultRenderButton = (icon, onClick, title) => (
+  <div
+    aria-label={title}
+    role="button"
+    onClick={onClick}
+    onKeyPress={onClick}
+    className="rt-control-button"
+    tabIndex={0}
+    title={title}
+  >
+    {icon}
+  </div>
+);
 
 /**
  * TrackerControl allows the user to control the speed of a
@@ -63,10 +61,15 @@ function TrackerControl({
 }) {
   const [speed, setSpeed] = useState(1);
 
-  const onSpeedChange = (newSpeed) => {
-    // eslint-disable-next-line no-param-reassign
-    trackerLayer.speed = newSpeed;
-  };
+  const onSpeedChange = useCallback(
+    (newSpeed) => {
+      if (trackerLayer) {
+        // eslint-disable-next-line no-param-reassign
+        trackerLayer.speed = newSpeed;
+      }
+    },
+    [trackerLayer],
+  );
 
   const resetDate = () => {
     trackerLayer.setCurrTime(new Date());

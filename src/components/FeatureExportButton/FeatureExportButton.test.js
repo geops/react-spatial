@@ -376,17 +376,13 @@ describe('FeatureExportButton', () => {
               }),
             }),
             new Style({
-              geometry: () => {
-                return new Point([4, 5]);
-              },
+              geometry: () => new Point([4, 5]),
               image: new Icon({
                 src: 'fooarrowend.png',
               }),
             }),
             new Style({
-              geometry: () => {
-                return new Point([0, 1]);
-              },
+              geometry: () => new Point([0, 1]),
               image: new Icon({
                 src: 'fooarrowstart.png',
               }),

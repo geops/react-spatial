@@ -38,9 +38,7 @@ const getDelayColor = (time) => {
  * Returns true if the train doesn't stop to the station.
  * @param {Object} stop Station information.
  */
-const isNotStop = (stop) => {
-  return !stop.arrivalTime && !stop.departureTime;
-};
+const isNotStop = (stop) => !stop.arrivalTime && !stop.departureTime;
 
 /**
  * Returns if the station has already been passed by the vehicule.
@@ -180,6 +178,7 @@ const defaultRenderHeader = ({ lineInfos, renderHeaderButtons }) => {
       <span
         className="rt-route-icon"
         style={{
+          /* stylelint-disable value-keyword-case */
           backgroundColor: backgroundColor || bgColors[vehicleType],
           color: color || 'black',
         }}
@@ -208,35 +207,31 @@ const defaultRenderFooter = (props) => {
   return <div className="rt-route-footer">{renderCopyright({ ...props })}</div>;
 };
 
-const defaultRenderLink = (text, url) => {
-  return (
-    <div className="rt-route-copyright-link">
-      {url ? (
-        <a href={url} target="_blank" rel="noreferrer">
-          {text}
-        </a>
-      ) : (
-        <>{text}</>
-      )}
-    </div>
-  );
-};
+const defaultRenderLink = (text, url) => (
+  <div className="rt-route-copyright-link">
+    {url ? (
+      <a href={url} target="_blank" rel="noreferrer">
+        {text}
+      </a>
+    ) : (
+      <>{text}</>
+    )}
+  </div>
+);
 
-const defaultRenderCopyright = ({ lineInfos }) => {
-  return (
-    <span className="rt-route-copyright">
-      {lineInfos.operator &&
-        defaultRenderLink(lineInfos.operator, lineInfos.operatorUrl)}
-      {lineInfos.operator && lineInfos.publisher && <span>&nbsp;-&nbsp;</span>}
-      {lineInfos.publisher &&
-        defaultRenderLink(lineInfos.publisher, lineInfos.publisherUrl)}
-      {lineInfos.license && <span>&nbsp;(</span>}
-      {lineInfos.license &&
-        defaultRenderLink(lineInfos.license, lineInfos.licenseUrl)}
-      {lineInfos.license && ')'}
-    </span>
-  );
-};
+const defaultRenderCopyright = ({ lineInfos }) => (
+  <span className="rt-route-copyright">
+    {lineInfos.operator &&
+      defaultRenderLink(lineInfos.operator, lineInfos.operatorUrl)}
+    {lineInfos.operator && lineInfos.publisher && <span>&nbsp;-&nbsp;</span>}
+    {lineInfos.publisher &&
+      defaultRenderLink(lineInfos.publisher, lineInfos.publisherUrl)}
+    {lineInfos.license && <span>&nbsp;(</span>}
+    {lineInfos.license &&
+      defaultRenderLink(lineInfos.license, lineInfos.licenseUrl)}
+    {lineInfos.license && ')'}
+  </span>
+);
 
 const propTypes = {
   /**
@@ -306,13 +301,8 @@ const defaultProps = {
  * RouteSchedule displays information, stops and punctuality about the clicked route.
  */
 function RouteSchedule(props) {
-  const {
-    lineInfos,
-    className,
-    renderStation,
-    renderHeader,
-    renderFooter,
-  } = props;
+  const { lineInfos, className, renderStation, renderHeader, renderFooter } =
+    props;
 
   if (!lineInfos) {
     return null;

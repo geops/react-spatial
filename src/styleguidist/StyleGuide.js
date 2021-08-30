@@ -154,55 +154,51 @@ export function StyleGuideRenderer({
                     zIndex: 99999,
                   }}
                 >
-                  {toc.props.sections.slice(1).map((section) => {
-                    return [
-                      <ListItem
-                        key={section.name}
-                        button
-                        onClick={() => {
-                          return expanded === section.name
-                            ? expandSection()
-                            : expandSection(section.name);
-                        }}
-                        style={{
-                          fontWeight: 'bold',
-                          color: '#6987a1',
-                          borderTop: '1px solid #e8e8e8',
-                        }}
-                      >
-                        {section.name}
-                      </ListItem>,
-                      <Collapse
-                        key={`${section.name}-components`}
-                        in={expanded === section.name}
-                        timeout="auto"
-                        unmountOnExit
-                      >
-                        {section.components.map((component) => {
-                          return (
-                            <ListItem
-                              key={component.name}
-                              button
-                              style={{ paddingLeft: 32 }}
-                              onClick={() => {
-                                setSelected(component.name);
-                                toggleDropdown(false);
-                              }}
-                              tabIndex={-1}
-                              selected={selected === component.name}
-                            >
-                              <Link
-                                style={{ display: 'block', width: '100%' }}
-                                href={`#${component.name.toLowerCase()}`}
-                              >
-                                {component.name}
-                              </Link>
-                            </ListItem>
-                          );
-                        })}
-                      </Collapse>,
-                    ];
-                  })}
+                  {toc.props.sections.slice(1).map((section) => [
+                    <ListItem
+                      key={section.name}
+                      button
+                      onClick={() =>
+                        expanded === section.name
+                          ? expandSection()
+                          : expandSection(section.name)
+                      }
+                      style={{
+                        fontWeight: 'bold',
+                        color: '#6987a1',
+                        borderTop: '1px solid #e8e8e8',
+                      }}
+                    >
+                      {section.name}
+                    </ListItem>,
+                    <Collapse
+                      key={`${section.name}-components`}
+                      in={expanded === section.name}
+                      timeout="auto"
+                      unmountOnExit
+                    >
+                      {section.components.map((component) => (
+                        <ListItem
+                          key={component.name}
+                          button
+                          style={{ paddingLeft: 32 }}
+                          onClick={() => {
+                            setSelected(component.name);
+                            toggleDropdown(false);
+                          }}
+                          tabIndex={-1}
+                          selected={selected === component.name}
+                        >
+                          <Link
+                            style={{ display: 'block', width: '100%' }}
+                            href={`#${component.name.toLowerCase()}`}
+                          >
+                            {component.name}
+                          </Link>
+                        </ListItem>
+                      ))}
+                    </Collapse>,
+                  ])}
                 </List>
               </ClickAwayListener>
             </Collapse>

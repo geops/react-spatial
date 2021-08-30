@@ -152,23 +152,30 @@ class BaseLayerToggler extends Component {
       }
 
       childLayers.forEach((layer) => {
-        if (layer.clone) {
-          let ml;
+        let cloned;
+        if (layer.mapboxLayer) {
           // MapboxStyleLayer
-          if (layer.mapboxLayer) {
-            ml = layer.mapboxLayer.clone();
-            ml.init(this.map); // Including addLayer
-            ml.setVisible(true);
-          }
-          const cloned = layer.clone(ml);
-          cloned.init(this.map); // Including addLayer
-          cloned.setVisible(true);
-        } else if (layer.olLayer && layer.olLayer instanceof TileLayer) {
-          this.map.addLayer(
-            new TileLayer({
+          cloned = layer.clone({ mapboxLayer: layer.mapboxLayer.clone() });
+        } else if (layer.olLayer instanceof TileLayer) {
+          // The clone method of mobility-toolbox-js will reuse the same
+          // TileLayer passed in parameter but it's not possible in ol
+          // to use the same layer in 2 maps so we have to recreate it.
+          cloned = layer.clone({
+            olLayer: new TileLayer({
               source: layer.olLayer.getSource(),
             }),
-          );
+          });
+        } else {
+          cloned = layer.clone();
+        }
+
+        cloned.init(this.map); // Including addLayer
+        cloned.setVisible(true);
+        if (
+          cloned.olLayer ||
+          (cloned.mapboxLayer && cloned.mapboxLayer.olLayer)
+        ) {
+          this.map.addLayer(cloned.olLayer || cloned.mapboxLayer.olLayer);
         }
         this.checkExtent();
       });
@@ -363,12 +370,8 @@ class BaseLayerToggler extends Component {
   }
 
   render() {
-    const {
-      className,
-      titles,
-      prevButtonContent,
-      nextButtonContent,
-    } = this.props;
+    const { className, titles, prevButtonContent, nextButtonContent } =
+      this.props;
     const { layers, idx, fallbackImg, fallbackImgOpacity } = this.state;
 
     let footer = null;

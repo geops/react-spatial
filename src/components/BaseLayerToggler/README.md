@@ -1,4 +1,3 @@
-#
 The following example demonstrates the use of BaseLayerToggler:
 
 ```jsx

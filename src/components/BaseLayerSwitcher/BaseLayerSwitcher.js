@@ -62,9 +62,7 @@ const defaultProps = {
   t: (s) => s,
 };
 
-const getVisibleLayer = (layers) => {
-  return layers.find((layer) => layer.visible);
-};
+const getVisibleLayer = (layers) => layers.find((layer) => layer.visible);
 
 const getNextImage = (currentLayer, layers, layerImages) => {
   const currentIndex = layers.indexOf(
@@ -74,8 +72,8 @@ const getNextImage = (currentLayer, layers, layerImages) => {
   return layerImages[nextIndex];
 };
 
-const getImageStyle = (url) => {
-  return url
+const getImageStyle = (url) =>
+  url
     ? {
         backgroundImage: `url(${url})`,
         backgroundSize: 'cover',
@@ -83,7 +81,6 @@ const getImageStyle = (url) => {
         backgroundPosition: 'center',
       }
     : null;
-};
 
 /**
  * The BaseLayerSwitcher component renders a button interface for switching the visible
@@ -186,30 +183,28 @@ function BaseLayerSwitcher({
 
   return (
     <div className={`${className}${openClass}`}>
-      {
-        <div
-          className={`rs-base-layer-switcher-button rs-opener${openClass}`}
-          role="button"
-          title={titles.openSwitcher}
-          aria-label={titles.openSwitcher}
-          onClick={handleSwitcherClick}
-          onKeyPress={(e) => {
-            if (e.which === 13) {
-              handleSwitcherClick();
-            }
-          }}
-          style={getImageStyle(nextImage)}
-          tabIndex="0"
-        >
-          <div className="rs-base-layer-switcher-title">
-            {baseLayers.length !== 2
-              ? titles.button
-              : baseLayers.find((layer) => !layer.visible) &&
-                t(baseLayers.find((layer) => !layer.visible).name)}
-          </div>
-          {nextImage ? null : <span className="rs-alt-text">{t(altText)}</span>}
+      <div
+        className={`rs-base-layer-switcher-button rs-opener${openClass}`}
+        role="button"
+        title={titles.openSwitcher}
+        aria-label={titles.openSwitcher}
+        onClick={handleSwitcherClick}
+        onKeyPress={(e) => {
+          if (e.which === 13) {
+            handleSwitcherClick();
+          }
+        }}
+        style={getImageStyle(nextImage)}
+        tabIndex="0"
+      >
+        <div className="rs-base-layer-switcher-title">
+          {baseLayers.length !== 2
+            ? titles.button
+            : baseLayers.find((layer) => !layer.visible) &&
+              t(baseLayers.find((layer) => !layer.visible).name)}
         </div>
-      }
+        {nextImage ? null : <span className="rs-alt-text">{t(altText)}</span>}
+      </div>
       {baseLayers.map((layer, idx) => {
         const layerName = layer.name;
         const activeClass = layerName === currentLayer.name ? ' rs-active' : '';

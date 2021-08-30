@@ -85,7 +85,7 @@ function Zoom({
         updateZoom(map, delta);
       }
     },
-    [map],
+    [delta, map],
   );
 
   const zoomOut = useCallback(
@@ -94,22 +94,22 @@ function Zoom({
         updateZoom(map, -delta);
       }
     },
-    [map],
+    [delta, map],
   );
 
-  const zoomInDisabled = useMemo(() => {
-    return (
+  const zoomInDisabled = useMemo(
+    () =>
       currentZoom >=
-      map.getView().getConstrainedZoom(map.getView().getMaxZoom())
-    );
-  }, [currentZoom]);
+      map.getView().getConstrainedZoom(map.getView().getMaxZoom()),
+    [currentZoom, map],
+  );
 
-  const zoomOutDisabled = useMemo(() => {
-    return (
+  const zoomOutDisabled = useMemo(
+    () =>
       currentZoom <=
-      map.getView().getConstrainedZoom(map.getView().getMinZoom())
-    );
-  }, [currentZoom]);
+      map.getView().getConstrainedZoom(map.getView().getMinZoom()),
+    [currentZoom, map],
+  );
 
   useEffect(() => {
     /* Trigger zoom update to disable zooms on max and min */
@@ -131,7 +131,7 @@ function Zoom({
         map.removeControl(control);
       }
     };
-  }, [map, zoomSlider, ref.current]);
+  }, [map, zoomSlider]);
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading

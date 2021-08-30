@@ -90,12 +90,8 @@ class ResizeHandler extends PureComponent {
   }
 
   onResize(entries) {
-    const {
-      maxHeightBrkpts,
-      maxWidthBrkpts,
-      stylePropHeight,
-      onResize,
-    } = this.props;
+    const { maxHeightBrkpts, maxWidthBrkpts, stylePropHeight, onResize } =
+      this.props;
 
     if (stylePropHeight) {
       const vh = window.innerHeight * 0.01;

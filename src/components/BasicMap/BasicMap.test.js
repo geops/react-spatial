@@ -165,9 +165,7 @@ describe('BasicMap', () => {
     expect(inst.map).toBeDefined();
     expect(inst.map.getLayers().getLength()).toBe(1);
     expect(inst.map.getView().calculateExtent()).toEqual([
-      -119.29915768648752,
-      -119.29915768648752,
-      119.29915768648752,
+      -119.29915768648752, -119.29915768648752, 119.29915768648752,
       119.29915768648752,
     ]);
   });
