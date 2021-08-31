@@ -14,18 +14,22 @@ const iconForMot = {};
   'cable_car',
   'subway',
 ].forEach((mot) => {
-  iconForMot[mot] = lazy(() => import(`../../images/mots/${mot}${ext}`));
+  iconForMot[mot] = lazy(() => {
+    return import(`../../images/mots/${mot}${ext}`);
+  });
 });
 
-const useStyles = makeStyles((theme) => ({
-  flex: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  icon: {
-    marginRight: theme.spacing(2),
-  },
-}));
+const useStyles = makeStyles((theme) => {
+  return {
+    flex: {
+      display: 'flex',
+      alignItems: 'center',
+    },
+    icon: {
+      marginRight: theme.spacing(2),
+    },
+  };
+});
 
 function StopsFinderOption({ option }) {
   const classes = useStyles();

@@ -112,7 +112,9 @@ const defaultProps = {
   extraData: null,
   coordinates: null,
   scale: 1,
-  onSaveStart: (map) => Promise.resolve(map),
+  onSaveStart: (map) => {
+    return Promise.resolve(map);
+  },
   onSaveEnd: () => {},
 };
 
@@ -136,8 +138,8 @@ class CanvasSaveButton extends PureComponent {
       evt.preventDefault();
       evt.stopPropagation();
     }
-    onSaveStart(map).then((mapToExport) =>
-      this.createCanvasImage(mapToExport || map)
+    onSaveStart(map).then((mapToExport) => {
+      return this.createCanvasImage(mapToExport || map)
         .then((canvas) => {
           if (autoDownload) {
             this.downloadCanvasImage(canvas).then((blob) => {
@@ -153,8 +155,8 @@ class CanvasSaveButton extends PureComponent {
             console.error(err);
           }
           onSaveEnd(mapToExport, err);
-        }),
-    );
+        });
+    });
   }
 
   getDownloadImageName() {
@@ -484,8 +486,12 @@ class CanvasSaveButton extends PureComponent {
         tabIndex={0}
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...other}
-        onClick={(e) => this.onClick(e)}
-        onKeyPress={(e) => e.which === 13 && this.onClick(e)}
+        onClick={(e) => {
+          return this.onClick(e);
+        }}
+        onKeyPress={(e) => {
+          return e.which === 13 && this.onClick(e);
+        }}
       >
         {children}
       </div>

@@ -89,9 +89,9 @@ class FollowButton extends PureComponent {
   centerOnTrajectory(routeIdentifier) {
     const { trackerLayer, setCenter } = this.props;
 
-    const [trajectory] = trackerLayer.getVehicle(
-      (r) => r.routeIdentifier === routeIdentifier,
-    );
+    const [trajectory] = trackerLayer.getVehicle((r) => {
+      return r.routeIdentifier === routeIdentifier;
+    });
     const firstCoord = trajectory && trajectory.coordinate;
     if (firstCoord) {
       setCenter(firstCoord);
@@ -107,7 +107,9 @@ class FollowButton extends PureComponent {
         className={`${className}${active ? ' rt-active' : ''}`}
         title={title}
         onClick={this.onClick}
-        onKeyPress={(e) => e.which === 13 && this.onClick}
+        onKeyPress={(e) => {
+          return e.which === 13 && this.onClick;
+        }}
         role="button"
         tabIndex={0}
       >

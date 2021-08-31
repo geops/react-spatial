@@ -84,7 +84,9 @@ class FilterButton extends PureComponent {
 
   render() {
     const { className, title, routeIdentifier, active, children } = this.props;
-    const toggle = () => this.toggleFilter(routeIdentifier);
+    const toggle = () => {
+      return this.toggleFilter(routeIdentifier);
+    };
 
     return (
       <div
@@ -92,7 +94,9 @@ class FilterButton extends PureComponent {
         className={`${className}${active ? ' rt-active' : ''}`}
         title={title}
         onClick={toggle}
-        onKeyPress={(e) => e.which === 13 && toggle()}
+        onKeyPress={(e) => {
+          return e.which === 13 && toggle();
+        }}
         role="button"
         tabIndex={0}
       >

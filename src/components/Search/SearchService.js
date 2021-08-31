@@ -2,7 +2,9 @@ class SearchService {
   constructor({ apiKey, engines, setSuggestions }) {
     this.engines = engines;
     this.setSuggestions = setSuggestions;
-    Object.entries(this.engines).forEach(([, e]) => e.setApiKey(apiKey));
+    Object.entries(this.engines).forEach(([, e]) => {
+      return e.setApiKey(apiKey);
+    });
   }
 
   countItems(section) {
@@ -39,9 +41,9 @@ class SearchService {
 
   upsert(section, items, position) {
     this.setSuggestions((oldSuggestions) => {
-      const sectionIndex = oldSuggestions.findIndex(
-        (s) => s.section === section,
-      );
+      const sectionIndex = oldSuggestions.findIndex((s) => {
+        return s.section === section;
+      });
       const start = sectionIndex === -1 ? position : sectionIndex;
       const deleteCount = sectionIndex === -1 ? 0 : 1;
       const newSuggestions = [...oldSuggestions];

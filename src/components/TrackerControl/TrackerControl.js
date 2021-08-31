@@ -31,19 +31,21 @@ const decreaseSpeed = (speed) => {
   return nextSpeed;
 };
 
-const defaultRenderButton = (icon, onClick, title) => (
-  <div
-    aria-label={title}
-    role="button"
-    onClick={onClick}
-    onKeyPress={onClick}
-    className="rt-control-button"
-    tabIndex={0}
-    title={title}
-  >
-    {icon}
-  </div>
-);
+const defaultRenderButton = (icon, onClick, title) => {
+  return (
+    <div
+      aria-label={title}
+      role="button"
+      onClick={onClick}
+      onKeyPress={onClick}
+      className="rt-control-button"
+      tabIndex={0}
+      title={title}
+    >
+      {icon}
+    </div>
+  );
+};
 
 /**
  * TrackerControl allows the user to control the speed of a
@@ -81,16 +83,32 @@ function TrackerControl({
 
   return (
     <div className={className}>
-      {renderButton(iconDateReset, () => resetDate(), 'reset date')}
+      {renderButton(
+        iconDateReset,
+        () => {
+          return resetDate();
+        },
+        'reset date',
+      )}
       {renderButton(
         iconSpeedDown,
-        () => setSpeed(decreaseSpeed(speed)),
+        () => {
+          return setSpeed(decreaseSpeed(speed));
+        },
         'speed down',
       )}
-      {renderButton(iconSpeedReset, () => setSpeed(1), 'speed reset')}
+      {renderButton(
+        iconSpeedReset,
+        () => {
+          return setSpeed(1);
+        },
+        'speed reset',
+      )}
       {renderButton(
         iconSpeedUp,
-        () => setSpeed(increaseSpeed(speed)),
+        () => {
+          return setSpeed(increaseSpeed(speed));
+        },
         'speed up',
       )}
       <div className="rt-tracker-speed">

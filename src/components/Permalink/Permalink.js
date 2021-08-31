@@ -52,7 +52,9 @@ const defaultProps = {
   map: null,
   params: {},
   coordinateDecimals: 2,
-  isLayerHidden: () => false,
+  isLayerHidden: () => {
+    return false;
+  },
 };
 
 /**
@@ -120,7 +122,9 @@ class Permalink extends Component {
     }
 
     if (map !== prevProps.map) {
-      this.moveEndRef = map.on('moveend', () => this.onMapMoved());
+      this.moveEndRef = map.on('moveend', () => {
+        return this.onMapMoved();
+      });
     }
 
     this.updateHistory();
@@ -171,7 +175,9 @@ class Permalink extends Component {
   updateLayers() {
     const { layerService, isLayerHidden } = this.props;
     const baseLayers = layerService.getBaseLayers();
-    const idx = baseLayers.findIndex((l) => l.visible);
+    const idx = baseLayers.findIndex((l) => {
+      return l.visible;
+    });
     if (idx !== -1) {
       const baseLayerVisible = baseLayers.splice(idx, 1);
       baseLayers.unshift(baseLayerVisible[0]);
@@ -180,18 +186,29 @@ class Permalink extends Component {
     this.setState({
       layers: layerService
         .getLayersAsFlatArray()
-        .filter(
-          (l) =>
+        .filter((l) => {
+          return (
             !l.isBaseLayer &&
             l.visible &&
             (!l.hasVisibleChildren() ||
-              (l.children || []).every((child) => isLayerHidden(child))) &&
-            !isLayerHidden(l),
-        )
-        .map((l) => l.key)
+              (l.children || []).every((child) => {
+                return isLayerHidden(child);
+              })) &&
+            !isLayerHidden(l)
+          );
+        })
+        .map((l) => {
+          return l.key;
+        })
         .join(),
       baselayers:
-        baseLayers.length > 1 ? baseLayers.map((l) => l.key).join() : undefined,
+        baseLayers.length > 1
+          ? baseLayers
+              .map((l) => {
+                return l.key;
+              })
+              .join()
+          : undefined,
     });
   }
 

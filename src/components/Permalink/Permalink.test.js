@@ -78,7 +78,9 @@ describe('Permalink', () => {
 
   test('should initialize x, y & z with history.', () => {
     const history = {
-      replace: jest.fn((v) => v),
+      replace: jest.fn((v) => {
+        return v;
+      }),
     };
 
     const params = {
@@ -141,10 +143,14 @@ describe('Permalink', () => {
     mount(
       <Permalink
         layerService={layerService}
-        isLayerHidden={(l) =>
-          l.get('hideInLegend') ||
-          layerService.getParents(l).some((pl) => pl.get('hideInLegend'))
-        }
+        isLayerHidden={(l) => {
+          return (
+            l.get('hideInLegend') ||
+            layerService.getParents(l).some((pl) => {
+              return pl.get('hideInLegend');
+            })
+          );
+        }}
       />,
     );
     const search =

@@ -284,14 +284,16 @@ class BasicMap extends PureComponent {
   }
 
   setLayers(layers = []) {
-    const layersToRemove = this.layers.filter(
-      (layer) => !layers.includes(layer),
-    );
+    const layersToRemove = this.layers.filter((layer) => {
+      return !layers.includes(layer);
+    });
     for (let i = 0; i < layersToRemove.length; i += 1) {
       this.terminateLayer(layersToRemove[i]);
     }
 
-    const layersToInit = layers.filter((layer) => !this.layers.includes(layer));
+    const layersToInit = layers.filter((layer) => {
+      return !this.layers.includes(layer);
+    });
     for (let i = 0; i < layersToInit.length; i += 1) {
       this.initLayer(layersToInit[i]);
     }
@@ -336,7 +338,9 @@ class BasicMap extends PureComponent {
       return;
     }
 
-    this.moveEndRef = this.map.on('moveend', (evt) => onMapMoved(evt));
+    this.moveEndRef = this.map.on('moveend', (evt) => {
+      return onMapMoved(evt);
+    });
   }
 
   listenSingleClick() {

@@ -63,10 +63,16 @@ const lineInfos = {
 
 describe('RouteSchedule', () => {
   beforeEach(() => {
-    global.Date = jest.fn(() => ({
-      getHours: () => 9,
-      getMinutes: () => 1,
-    }));
+    global.Date = jest.fn(() => {
+      return {
+        getHours: () => {
+          return 9;
+        },
+        getMinutes: () => {
+          return 1;
+        },
+      };
+    });
     Object.assign(Date, RealDate);
   });
 
@@ -81,7 +87,9 @@ describe('RouteSchedule', () => {
         lineInfos={lineInfos}
         trackerLayer={trackerLayer}
         setCenter={() => {}}
-        renderHeaderButtons={() => <div>Button</div>}
+        renderHeaderButtons={() => {
+          return <div>Button</div>;
+        }}
       />,
     );
     const tree = component.toJSON();

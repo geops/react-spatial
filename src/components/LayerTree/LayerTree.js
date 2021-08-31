@@ -100,8 +100,12 @@ const defaultProps = {
   layerService: undefined,
   className: 'rs-layer-tree',
   padding: 30,
-  isItemHidden: () => false,
-  getParentClassName: () => undefined,
+  isItemHidden: () => {
+    return false;
+  },
+  getParentClassName: () => {
+    return undefined;
+  },
   renderItem: null,
   renderItemContent: null,
   renderBeforeItem: null,
@@ -112,7 +116,9 @@ const defaultProps = {
     subLayerShow: 'Show sublayer',
     subLayerHide: 'Hide sublayer',
   },
-  t: (s) => s,
+  t: (s) => {
+    return s;
+  },
 };
 
 /**
@@ -128,13 +134,14 @@ class LayerTree extends Component {
     const initialExpandedLayerNames =
       layerService && layerService.getLayers()
         ? this.getExpandedLayers(
-            layerService
-              .getLayers()
-              .filter(
-                (l) =>
-                  !isItemHidden(l) &&
-                  l.getVisibleChildren().filter((c) => !isItemHidden(c)).length,
-              ),
+            layerService.getLayers().filter((l) => {
+              return (
+                !isItemHidden(l) &&
+                l.getVisibleChildren().filter((c) => {
+                  return !isItemHidden(c);
+                }).length
+              );
+            }),
           )
         : [];
 
@@ -192,9 +199,11 @@ class LayerTree extends Component {
    */
   getExpandedLayers(layers) {
     const { isItemHidden } = this.props;
-    const children = layers.flatMap((l) =>
-      l.children.filter((c) => !isItemHidden(c) && c.get('isAlwaysExpanded')),
-    );
+    const children = layers.flatMap((l) => {
+      return l.children.filter((c) => {
+        return !isItemHidden(c) && c.get('isAlwaysExpanded');
+      });
+    });
 
     if (!children.length) {
       return layers;
@@ -222,7 +231,11 @@ class LayerTree extends Component {
     const { titles, isItemHidden } = this.props;
     let tabIndex = 0;
 
-    if (!layer.children.filter((c) => !isItemHidden(c)).length) {
+    if (
+      !layer.children.filter((c) => {
+        return !isItemHidden(c);
+      }).length
+    ) {
       // We forbid focus on keypress event for first level layers and layers without children.
       tabIndex = -1;
     }
@@ -246,7 +259,9 @@ class LayerTree extends Component {
           tabIndex={-1}
           checked={layer.visible}
           readOnly
-          onClick={() => this.onInputClick(layer)}
+          onClick={() => {
+            return this.onInputClick(layer);
+          }}
         />
         <span />
       </label>
@@ -258,7 +273,9 @@ class LayerTree extends Component {
     const { expandedLayerNames } = this.state;
 
     if (
-      !layer.children.filter((c) => !isItemHidden(c)).length ||
+      !layer.children.filter((c) => {
+        return !isItemHidden(c);
+      }).length ||
       layer.get('isAlwaysExpanded')
     ) {
       return null;
@@ -281,8 +298,9 @@ class LayerTree extends Component {
     const onInputClick = () => {
       this.onInputClick(
         layer,
-        layer.children.filter((c) => !isItemHidden(c)).length &&
-          !layer.get('isAlwaysExpanded'),
+        layer.children.filter((c) => {
+          return !isItemHidden(c);
+        }).length && !layer.get('isAlwaysExpanded'),
       );
     };
     const title = `${t(layer.name)} ${
@@ -329,7 +347,11 @@ class LayerTree extends Component {
     const { expandedLayerNames } = this.state;
 
     const children = expandedLayerNames.includes(layer)
-      ? [...layer.children.filter((c) => !isItemHidden(c))]
+      ? [
+          ...layer.children.filter((c) => {
+            return !isItemHidden(c);
+          }),
+        ]
       : [];
 
     if (renderItem) {
@@ -349,9 +371,9 @@ class LayerTree extends Component {
             : this.renderItemContent(layer)}
         </div>
         {renderBeforeItem && renderBeforeItem(layer, level, this)}
-        {[...children]
-          .reverse()
-          .map((child) => this.renderItem(child, level + 1))}
+        {[...children].reverse().map((child) => {
+          return this.renderItem(child, level + 1);
+        })}
         {renderAfterItem && renderAfterItem(layer, level, this)}
       </div>
     );
@@ -368,9 +390,13 @@ class LayerTree extends Component {
     return (
       <>
         {layers
-          .filter((l) => !isItemHidden(l))
+          .filter((l) => {
+            return !isItemHidden(l);
+          })
           .reverse()
-          .map((l) => this.renderItem(l, 0))}
+          .map((l) => {
+            return this.renderItem(l, 0);
+          })}
       </>
     );
   }

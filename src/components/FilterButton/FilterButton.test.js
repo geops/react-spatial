@@ -36,7 +36,9 @@ test('FollowButton should toggle.', () => {
       className="rt-filter-button"
       routeIdentifier="test"
       active={filterActive}
-      onClick={(active) => setFilterActive(active)}
+      onClick={(active) => {
+        return setFilterActive(active);
+      }}
       trackerLayer={trackerLayer}
     >
       <MdFilterList />

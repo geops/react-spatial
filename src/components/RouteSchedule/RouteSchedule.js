@@ -39,7 +39,9 @@ const getDelayColor = (time) => {
  * Returns true if the train doesn't stop to the station.
  * @param {Object} stop Station information.
  */
-const isNotStop = (stop) => !stop.arrivalTime && !stop.departureTime;
+const isNotStop = (stop) => {
+  return !stop.arrivalTime && !stop.departureTime;
+};
 
 /**
  * Returns if the station has already been passed by the vehicule.
@@ -122,9 +124,13 @@ const defaultRenderStation = ({
         isStationPassed ? ' rt-passed' : '',
         isNotStation ? ' rt-no-stop' : '',
       ].join('')}
-      onClick={(e) => onStationClick(stop, e)}
+      onClick={(e) => {
+        return onStationClick(stop, e);
+      }}
       tabIndex={0}
-      onKeyPress={(e) => e.which === 13 && onStationClick(stop, e)}
+      onKeyPress={(e) => {
+        return e.which === 13 && onStationClick(stop, e);
+      }}
     >
       <div className="rt-route-delay">
         {typeof arrivalDelay === 'undefined' || isFirstStation || cancelled ? (
@@ -196,7 +202,7 @@ const defaultRenderHeader = ({ lineInfos, renderHeaderButtons }) => {
       <span
         className="rt-route-icon"
         style={{
-          /* stylelint-disable value-keyword-case */
+          /* stylelint-disable-next-line value-keyword-case */
           backgroundColor: backgroundColor || bgColors[vehicleType],
           color: color || 'black',
         }}
@@ -225,31 +231,35 @@ const defaultRenderFooter = (props) => {
   return <div className="rt-route-footer">{renderCopyright({ ...props })}</div>;
 };
 
-const defaultRenderLink = (text, url) => (
-  <div className="rt-route-copyright-link">
-    {url ? (
-      <a href={url} target="_blank" rel="noreferrer">
-        {text}
-      </a>
-    ) : (
-      <>{text}</>
-    )}
-  </div>
-);
+const defaultRenderLink = (text, url) => {
+  return (
+    <div className="rt-route-copyright-link">
+      {url ? (
+        <a href={url} target="_blank" rel="noreferrer">
+          {text}
+        </a>
+      ) : (
+        <>{text}</>
+      )}
+    </div>
+  );
+};
 
-const defaultRenderCopyright = ({ lineInfos }) => (
-  <span className="rt-route-copyright">
-    {lineInfos.operator &&
-      defaultRenderLink(lineInfos.operator, lineInfos.operatorUrl)}
-    {lineInfos.operator && lineInfos.publisher && <span>&nbsp;-&nbsp;</span>}
-    {lineInfos.publisher &&
-      defaultRenderLink(lineInfos.publisher, lineInfos.publisherUrl)}
-    {lineInfos.license && <span>&nbsp;(</span>}
-    {lineInfos.license &&
-      defaultRenderLink(lineInfos.license, lineInfos.licenseUrl)}
-    {lineInfos.license && ')'}
-  </span>
-);
+const defaultRenderCopyright = ({ lineInfos }) => {
+  return (
+    <span className="rt-route-copyright">
+      {lineInfos.operator &&
+        defaultRenderLink(lineInfos.operator, lineInfos.operatorUrl)}
+      {lineInfos.operator && lineInfos.publisher && <span>&nbsp;-&nbsp;</span>}
+      {lineInfos.publisher &&
+        defaultRenderLink(lineInfos.publisher, lineInfos.publisherUrl)}
+      {lineInfos.license && <span>&nbsp;(</span>}
+      {lineInfos.license &&
+        defaultRenderLink(lineInfos.license, lineInfos.licenseUrl)}
+      {lineInfos.license && ')'}
+    </span>
+  );
+};
 
 const propTypes = {
   /**
@@ -311,7 +321,9 @@ const defaultProps = {
   renderStationImg: defaultRenderStationImg,
   renderCopyright: defaultRenderCopyright,
   renderFooter: defaultRenderFooter,
-  renderHeaderButtons: () => null,
+  renderHeaderButtons: () => {
+    return null;
+  },
   onStationClick: () => {},
 };
 
@@ -330,9 +342,9 @@ function RouteSchedule(props) {
     <div className={className}>
       {renderHeader({ ...props })}
       <div className="rt-route-body">
-        {lineInfos.stations.map((stop, idx) =>
-          renderStation({ ...props, stop, idx }),
-        )}
+        {lineInfos.stations.map((stop, idx) => {
+          return renderStation({ ...props, stop, idx });
+        })}
       </div>
       {renderFooter({ ...props })}
     </div>

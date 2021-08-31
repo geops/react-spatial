@@ -234,11 +234,9 @@ class Geolocation extends PureComponent {
   render() {
     const { children, className } = this.props;
     // Remove component props from other HTML props.
-    const other = Object.entries(this.props).reduce(
-      (props, [key, value]) =>
-        propTypes[key] ? props : { ...props, [key]: value },
-      {},
-    );
+    const other = Object.entries(this.props).reduce((props, [key, value]) => {
+      return propTypes[key] ? props : { ...props, [key]: value };
+    }, {});
     const { active } = this.state;
 
     return (
@@ -246,8 +244,12 @@ class Geolocation extends PureComponent {
         role="button"
         tabIndex="0"
         className={`${className} ${active ? 'rs-active' : ''}`}
-        onClick={() => this.toggle()}
-        onKeyPress={(e) => e.which === 13 && this.toggle()}
+        onClick={() => {
+          return this.toggle();
+        }}
+        onKeyPress={(e) => {
+          return e.which === 13 && this.toggle();
+        }}
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...other}
       >

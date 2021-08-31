@@ -23,7 +23,9 @@ test('FollowButton should match snapshot.', () => {
       onClick={() => {}}
       routeIdentifier="test"
       trackerLayer={trackerLayer}
-      setCenter={() => funcs.onClick()}
+      setCenter={() => {
+        return funcs.onClick();
+      }}
     >
       <MdNavigation />
     </FollowButton>,
@@ -42,10 +44,14 @@ test('FollowButton should toggle.', () => {
       className="rt-follow-button"
       title="Follow up"
       active={followActive}
-      onClick={(active) => setFollowActive(active)}
+      onClick={(active) => {
+        return setFollowActive(active);
+      }}
       routeIdentifier="test"
       trackerLayer={trackerLayer}
-      setCenter={() => funcs.onClick()}
+      setCenter={() => {
+        return funcs.onClick();
+      }}
     >
       <MdNavigation />
     </FollowButton>,

@@ -54,7 +54,13 @@ describe('Popup', () => {
 
     test('without close button.', () => {
       const component = renderer.create(
-        <Popup map={map} feature={feat} renderCloseButton={() => null}>
+        <Popup
+          map={map}
+          feature={feat}
+          renderCloseButton={() => {
+            return null;
+          }}
+        >
           <div id="bar" />
         </Popup>,
       );
@@ -64,7 +70,13 @@ describe('Popup', () => {
 
     test('without header.', () => {
       const component = renderer.create(
-        <Popup map={map} feature={feat} renderHeader={() => null}>
+        <Popup
+          map={map}
+          feature={feat}
+          renderHeader={() => {
+            return null;
+          }}
+        >
           <div id="bar" />
         </Popup>,
       );
@@ -124,7 +136,9 @@ describe('Popup', () => {
 
   describe(`init position`, () => {
     test(`using popupCoordinate.`, () => {
-      map.getPixelFromCoordinate = jest.fn(() => [10, 200]);
+      map.getPixelFromCoordinate = jest.fn(() => {
+        return [10, 200];
+      });
       const component = mount(
         <Popup map={map} popupCoordinate={[1, 2]}>
           <div id="gux" />
@@ -133,14 +147,18 @@ describe('Popup', () => {
       expect(component.state().left).toBe(10);
       expect(component.state().top).toBe(200);
       component.setProps({ feature: featLine });
-      map.getPixelFromCoordinate = jest.fn(() => [11, 100]);
+      map.getPixelFromCoordinate = jest.fn(() => {
+        return [11, 100];
+      });
       component.setProps({ popupCoordinate: [9, 9] });
       expect(component.state().left).toBe(11);
       expect(component.state().top).toBe(100);
     });
 
     test(`using feature.`, () => {
-      map.getPixelFromCoordinate = jest.fn(() => [10, 200]);
+      map.getPixelFromCoordinate = jest.fn(() => {
+        return [10, 200];
+      });
       const component = mount(
         <Popup map={map} feature={feat}>
           <div id="gux" />
@@ -148,7 +166,9 @@ describe('Popup', () => {
       );
       expect(component.state().left).toBe(10);
       expect(component.state().top).toBe(200);
-      map.getPixelFromCoordinate = jest.fn(() => [11, 100]);
+      map.getPixelFromCoordinate = jest.fn(() => {
+        return [11, 100];
+      });
       component.setProps({ feature: featLine });
       expect(component.state().left).toBe(11);
       expect(component.state().top).toBe(100);
@@ -157,7 +177,9 @@ describe('Popup', () => {
 
   describe(`updates position`, () => {
     test(`on map postrender event.`, () => {
-      map.getPixelFromCoordinate = jest.fn(() => [10, 200]);
+      map.getPixelFromCoordinate = jest.fn(() => {
+        return [10, 200];
+      });
       const component = shallow(
         <Popup map={map} feature={feat}>
           <div id="gux" />
@@ -201,13 +223,17 @@ describe('Popup', () => {
     });
 
     test(`animate the map.`, () => {
-      map.getTarget().getBoundingClientRect = jest.fn(() => ({
-        bottom: -10,
-        left: 5,
-        right: -5,
-        top: 5,
-      }));
-      map.getPixelFromCoordinate = jest.fn(() => [10, 200]);
+      map.getTarget().getBoundingClientRect = jest.fn(() => {
+        return {
+          bottom: -10,
+          left: 5,
+          right: -5,
+          top: 5,
+        };
+      });
+      map.getPixelFromCoordinate = jest.fn(() => {
+        return [10, 200];
+      });
       const spy = jest.spyOn(map.getView(), 'animate');
       mount(
         <Popup map={map} feature={feat} panIntoView>
@@ -219,7 +245,9 @@ describe('Popup', () => {
     });
 
     test(`using panRect`, () => {
-      map.getPixelFromCoordinate = jest.fn(() => [10, 200]);
+      map.getPixelFromCoordinate = jest.fn(() => {
+        return [10, 200];
+      });
       const spy = jest.spyOn(map.getView(), 'animate');
       mount(
         <Popup
@@ -236,7 +264,9 @@ describe('Popup', () => {
     });
 
     test(`doesn't animate the map`, () => {
-      map.getPixelFromCoordinate = jest.fn(() => [10, 200]);
+      map.getPixelFromCoordinate = jest.fn(() => {
+        return [10, 200];
+      });
       const spy = jest.spyOn(map.getView(), 'animate');
       mount(
         <Popup
@@ -253,7 +283,9 @@ describe('Popup', () => {
   });
 
   test(`deregisters postrender on unmount.`, () => {
-    map.getPixelFromCoordinate = jest.fn(() => [10, 200]);
+    map.getPixelFromCoordinate = jest.fn(() => {
+      return [10, 200];
+    });
     const component = shallow(
       <Popup map={map} feature={featLine}>
         <div id="gux" />

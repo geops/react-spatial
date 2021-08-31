@@ -98,13 +98,17 @@ describe('LayerTree', () => {
 
     test('when an item is hidden.', () => {
       renderLayerTree(layers, {
-        isItemHidden: (item) => !!item.children.length,
+        isItemHidden: (item) => {
+          return !!item.children.length;
+        },
       });
     });
 
     test('when an item is hidden (different layer tree levels)', () => {
       renderLayerTree(layers, {
-        isItemHidden: (item) => item.isBaseLayer || item.get('hideInLegend'),
+        isItemHidden: (item) => {
+          return item.isBaseLayer || item.get('hideInLegend');
+        },
       });
     });
 
@@ -240,7 +244,9 @@ describe('LayerTree', () => {
       ];
 
       renderLayerTree(newLayers, {
-        isItemHidden: (item) => item.get('hideInLegend'),
+        isItemHidden: (item) => {
+          return item.get('hideInLegend');
+        },
       });
     });
   });

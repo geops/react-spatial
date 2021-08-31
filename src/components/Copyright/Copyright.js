@@ -22,7 +22,9 @@ const propTypes = {
 };
 
 const defaultProps = {
-  format: (copyrights) => copyrights.join(' | '),
+  format: (copyrights) => {
+    return copyrights.join(' | ');
+  },
   className: 'rs-copyright',
 };
 
@@ -35,8 +37,8 @@ function Copyright({ map, format, ...other }) {
   const [copyrights, setCopyrights] = useState([]);
 
   const control = useMemo(
-    () =>
-      new CopyrightControl({
+    () => {
+      return new CopyrightControl({
         target: document.createElement('div'),
         element: document.createElement('div'),
         render() {
@@ -46,7 +48,8 @@ function Copyright({ map, format, ...other }) {
             setCopyrights(newCopyrights);
           }
         },
-      }),
+      });
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );

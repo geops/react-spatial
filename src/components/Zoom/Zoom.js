@@ -97,23 +97,25 @@ function Zoom({
     [delta, map],
   );
 
-  const zoomInDisabled = useMemo(
-    () =>
+  const zoomInDisabled = useMemo(() => {
+    return (
       currentZoom >=
-      map.getView().getConstrainedZoom(map.getView().getMaxZoom()),
-    [currentZoom, map],
-  );
+      map.getView().getConstrainedZoom(map.getView().getMaxZoom())
+    );
+  }, [currentZoom, map]);
 
-  const zoomOutDisabled = useMemo(
-    () =>
+  const zoomOutDisabled = useMemo(() => {
+    return (
       currentZoom <=
-      map.getView().getConstrainedZoom(map.getView().getMinZoom()),
-    [currentZoom, map],
-  );
+      map.getView().getConstrainedZoom(map.getView().getMinZoom())
+    );
+  }, [currentZoom, map]);
 
   useEffect(() => {
     /* Trigger zoom update to disable zooms on max and min */
-    const zoomListener = () => setZoom(map.getView().getZoom());
+    const zoomListener = () => {
+      return setZoom(map.getView().getZoom());
+    };
     map.on('moveend', zoomListener);
 
     let control;

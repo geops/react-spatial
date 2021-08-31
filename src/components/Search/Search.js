@@ -57,11 +57,21 @@ const propTypes = {
 const defaultProps = {
   apiKey: null,
   engines: null,
-  getRenderSectionTitle: () => () => null,
+  getRenderSectionTitle: () => {
+    return () => {
+      return null;
+    };
+  },
   initialValue: '',
-  onHighlight: () => null,
-  shouldRenderSuggestions: (newValue) => newValue.trim().length > 2,
-  onSelect: () => null,
+  onHighlight: () => {
+    return null;
+  },
+  shouldRenderSuggestions: (newValue) => {
+    return newValue.trim().length > 2;
+  },
+  onSelect: () => {
+    return null;
+  },
   className: 'rt-search',
   inputProps: {},
 };
@@ -100,14 +110,16 @@ function Search({
   const [suggestions, setSuggestions] = useState([]);
   const [value, setValue] = useState(initialValue);
 
-  const searchService = useMemo(
-    () =>
-      new SearchService({ apiKey, engines: currentEngines, setSuggestions }),
-    [apiKey, currentEngines],
-  );
+  const searchService = useMemo(() => {
+    return new SearchService({
+      apiKey,
+      engines: currentEngines,
+      setSuggestions,
+    });
+  }, [apiKey, currentEngines]);
 
-  const theme = useMemo(
-    () => ({
+  const theme = useMemo(() => {
+    return {
       container: `${className}__container`,
       containerOpen: `${className}__container--open`,
       input: `${className}__input`,
@@ -122,9 +134,8 @@ function Search({
       sectionContainer: `${className}__section-container`,
       sectionContainerFirst: `${className}__section-container--first`,
       sectionTitle: `${className}__section-title`,
-    }),
-    [className],
-  );
+    };
+  }, [className]);
 
   return (
     Object.keys(currentEngines).length > 0 && (
@@ -134,10 +145,14 @@ function Search({
           inputProps={{
             autoFocus: true,
             tabIndex: 0,
-            onChange: (e, { newValue }) => setValue(newValue),
+            onChange: (e, { newValue }) => {
+              return setValue(newValue);
+            },
             onKeyUp: ({ key }) => {
               if (key === 'Enter') {
-                const filtered = suggestions.filter((s) => s.items.length > 0);
+                const filtered = suggestions.filter((s) => {
+                  return s.items.length > 0;
+                });
                 if (filtered.length > 0) {
                   const { items, section } = filtered[0];
                   const targetSuggestion = { ...items[0], section };
@@ -155,21 +170,35 @@ function Search({
             ...inputProps,
           }}
           multiSection
-          getSectionSuggestions={({ items, section }) =>
-            items ? items.map((i) => ({ ...i, section })) : []
-          }
-          getSuggestionValue={(suggestion) => searchService.value(suggestion)}
-          onSuggestionsFetchRequested={({ value: newValue }) =>
-            searchService.search(newValue)
-          }
-          onSuggestionsClearRequested={() => setSuggestions([])}
-          onSuggestionHighlighted={({ suggestion }) => onHighlight(suggestion)}
-          onSuggestionSelected={(e, { suggestion }) => onSelect(suggestion)}
-          renderSuggestion={(suggestion) => searchService.render(suggestion)}
+          getSectionSuggestions={({ items, section }) => {
+            return items
+              ? items.map((i) => {
+                  return { ...i, section };
+                })
+              : [];
+          }}
+          getSuggestionValue={(suggestion) => {
+            return searchService.value(suggestion);
+          }}
+          onSuggestionsFetchRequested={({ value: newValue }) => {
+            return searchService.search(newValue);
+          }}
+          onSuggestionsClearRequested={() => {
+            return setSuggestions([]);
+          }}
+          onSuggestionHighlighted={({ suggestion }) => {
+            return onHighlight(suggestion);
+          }}
+          onSuggestionSelected={(e, { suggestion }) => {
+            return onSelect(suggestion);
+          }}
+          renderSuggestion={(suggestion) => {
+            return searchService.render(suggestion);
+          }}
           renderSectionTitle={getRenderSectionTitle(searchService)}
-          shouldRenderSuggestions={(newValue) =>
-            shouldRenderSuggestions(newValue)
-          }
+          shouldRenderSuggestions={(newValue) => {
+            return shouldRenderSuggestions(newValue);
+          }}
           suggestions={suggestions}
         />
         {value && (
@@ -177,7 +206,9 @@ function Search({
             type="button"
             tabIndex={0}
             className="rt-search-button rt-search-button-clear"
-            onClick={() => setValue('')}
+            onClick={() => {
+              return setValue('');
+            }}
           >
             <FaTimes />
           </button>

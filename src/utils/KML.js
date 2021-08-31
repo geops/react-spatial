@@ -80,7 +80,9 @@ const sanitizeFeature = (feature) => {
       feature
         .get('lineDash')
         .split(',')
-        .map((l) => parseInt(l, 10)),
+        .map((l) => {
+          return parseInt(l, 10);
+        }),
     );
   }
 
@@ -176,7 +178,9 @@ const sanitizeFeature = (feature) => {
           feature
             .get('textPadding')
             .split(',')
-            .map((n) => parseFloat(n)),
+            .map((n) => {
+              return parseFloat(n);
+            }),
         );
       }
 

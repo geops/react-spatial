@@ -19,7 +19,9 @@ image.height = 256;
 
 const tileLoadFunction = () => {
   const tile = new Tile([0, 0, -1], 2 /* LOADED */);
-  tile.getImage = () => image;
+  tile.getImage = () => {
+    return image;
+  };
   return tile;
 };
 
@@ -34,12 +36,13 @@ const getOLTileLayer = () => {
   return layer;
 };
 
-const getLayer = (copyrights, visible = true) =>
-  new Layer({
+const getLayer = (copyrights, visible = true) => {
+  return new Layer({
     visible,
     copyrights,
     olLayer: getOLTileLayer(),
   });
+};
 
 let layers;
 let map;
@@ -55,7 +58,9 @@ describe('Copyright', () => {
         center: [0, 0],
         zoom: 0,
       }),
-      layers: layers.map((layer) => layer.olLayer),
+      layers: layers.map((layer) => {
+        return layer.olLayer;
+      }),
     });
     map.setSize([200, 200]);
     layers.forEach((layer) => {
@@ -100,7 +105,9 @@ describe('Copyright', () => {
     const wrapper = mount(
       <Copyright
         map={map}
-        format={(copyrights) => `Number of copyrights: ${copyrights.length}`}
+        format={(copyrights) => {
+          return `Number of copyrights: ${copyrights.length}`;
+        }}
       />,
     );
 

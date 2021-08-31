@@ -26,21 +26,23 @@ function ComponentsList({
   useHashId,
   hashPath,
 }) {
-  const mappedItems = items.map((item) => ({
-    ...item,
-    href: item.href
-      ? item.href
-      : // Conflict with Permalink Component: Remove the first '/' to avoid page reload on click
-        getUrl({
-          name: item.name,
-          slug: item.slug,
-          anchor: !useRouterLinks,
-          hashPath: useRouterLinks ? hashPath : false,
-          id: useRouterLinks ? useHashId : false,
-        })
-          .replace(/^\/index.html+/g, '')
-          .replace(/^\/+/g, ''),
-  }));
+  const mappedItems = items.map((item) => {
+    return {
+      ...item,
+      href: item.href
+        ? item.href
+        : // Conflict with Permalink Component: Remove the first '/' to avoid page reload on click
+          getUrl({
+            name: item.name,
+            slug: item.slug,
+            anchor: !useRouterLinks,
+            hashPath: useRouterLinks ? hashPath : false,
+            id: useRouterLinks ? useHashId : false,
+          })
+            .replace(/^\/index.html+/g, '')
+            .replace(/^\/+/g, ''),
+    };
+  });
   return <ComponentsListRenderer classes={classes} items={mappedItems} />;
 }
 

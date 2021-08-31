@@ -23,7 +23,9 @@ export default class LayerService {
     this.layers = layers;
     this.listenChangeEvt();
     // When we change the layers we trigger an change:layers event
-    (this.callbacks['change:layers'] || []).forEach((cb) => cb(layers));
+    (this.callbacks['change:layers'] || []).forEach((cb) => {
+      return cb(layers);
+    });
   }
 
   getLayersAsFlatArray(optLayers) {
@@ -37,13 +39,15 @@ export default class LayerService {
   }
 
   getLayer(name) {
-    return this.getLayersAsFlatArray().find((l) => l.name === name);
+    return this.getLayersAsFlatArray().find((l) => {
+      return l.name === name;
+    });
   }
 
   getParent(child) {
-    return this.getLayersAsFlatArray().find(
-      (l) => !!l.children.includes(child),
-    );
+    return this.getLayersAsFlatArray().find((l) => {
+      return !!l.children.includes(child);
+    });
   }
 
   getParents(child) {
@@ -64,30 +68,34 @@ export default class LayerService {
 
   getRadioGroupLayers(radioGroupName) {
     if (radioGroupName) {
-      return this.getLayersAsFlatArray().filter(
-        (l) => l.get('radioGroup') === radioGroupName,
-      );
+      return this.getLayersAsFlatArray().filter((l) => {
+        return l.get('radioGroup') === radioGroupName;
+      });
     }
 
     return null;
   }
 
   getBaseLayers() {
-    return this.getLayersAsFlatArray().filter((l) => l.isBaseLayer);
+    return this.getLayersAsFlatArray().filter((l) => {
+      return l.isBaseLayer;
+    });
   }
 
   getQueryableLayers() {
-    return this.getLayersAsFlatArray().filter(
-      (layer) => layer.visible && layer.isQueryable,
-    );
+    return this.getLayersAsFlatArray().filter((layer) => {
+      return layer.visible && layer.isQueryable;
+    });
   }
 
   getFeatureInfoAtCoordinate(coordinate, layers) {
-    const promises = (layers || this.getQueryableLayers()).map((layer) =>
-      layer
+    const promises = (layers || this.getQueryableLayers()).map((layer) => {
+      return layer
         .getFeatureInfoAtCoordinate(coordinate)
-        .then((featureInfo) => featureInfo),
-    );
+        .then((featureInfo) => {
+          return featureInfo;
+        });
+    });
     return Promise.all(promises);
   }
 
@@ -114,9 +122,9 @@ export default class LayerService {
     this.getLayersAsFlatArray().forEach((layer) => {
       this.keys.push(
         layer.on('change:copyright', (evt) => {
-          (this.callbacks['change:copyright'] || []).forEach((cb) =>
-            cb(evt.target),
-          );
+          (this.callbacks['change:copyright'] || []).forEach((cb) => {
+            return cb(evt.target);
+          });
         }),
         layer.on('change:visible', (evt) => {
           const { visible } = evt.target;
@@ -129,7 +137,9 @@ export default class LayerService {
           ) {
             const siblings = this.getRadioGroupLayers(
               layer.get('radioGroup'),
-            ).filter((l) => l !== layer);
+            ).filter((l) => {
+              return l !== layer;
+            });
 
             siblings.forEach((s) => {
               if (
@@ -158,14 +168,17 @@ export default class LayerService {
             !evt.stopPropagationUp &&
             parentLayer &&
             (visible ||
-              (!visible && !parentLayer.children.find((c) => c.visible)))
+              (!visible &&
+                !parentLayer.children.find((c) => {
+                  return c.visible;
+                })))
           ) {
             parentLayer.setVisible(visible, true, false, false);
           }
 
-          (this.callbacks['change:visible'] || []).forEach((cb) =>
-            cb(evt.target),
-          );
+          (this.callbacks['change:visible'] || []).forEach((cb) => {
+            return cb(evt.target);
+          });
         }),
       );
     });

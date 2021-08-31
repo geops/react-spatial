@@ -59,21 +59,29 @@ const defaultProps = {
   },
   closeButtonImage: <FaChevronLeft />,
   layerImages: undefined,
-  t: (s) => s,
+  t: (s) => {
+    return s;
+  },
 };
 
-const getVisibleLayer = (layers) => layers.find((layer) => layer.visible);
+const getVisibleLayer = (layers) => {
+  return layers.find((layer) => {
+    return layer.visible;
+  });
+};
 
 const getNextImage = (currentLayer, layers, layerImages) => {
   const currentIndex = layers.indexOf(
-    layers.find((layer) => layer === currentLayer),
+    layers.find((layer) => {
+      return layer === currentLayer;
+    }),
   );
   const nextIndex = currentIndex + 1 === layers.length ? 0 : currentIndex + 1;
   return layerImages[nextIndex];
 };
 
-const getImageStyle = (url) =>
-  url
+const getImageStyle = (url) => {
+  return url
     ? {
         backgroundImage: `url(${url})`,
         backgroundSize: 'cover',
@@ -81,6 +89,7 @@ const getImageStyle = (url) =>
         backgroundPosition: 'center',
       }
     : null;
+};
 
 /**
  * The BaseLayerSwitcher component renders a button interface for switching the visible
@@ -97,7 +106,9 @@ function BaseLayerSwitcher({
   closeButtonImage,
   t,
 }) {
-  const baseLayers = layers.filter((layer) => layer.isBaseLayer);
+  const baseLayers = layers.filter((layer) => {
+    return layer.isBaseLayer;
+  });
   const [switcherOpen, setSwitcherOpen] = useState(false);
   const [isClosed, setIsClosed] = useState(true);
   const [currentLayer, setCurrentLayer] = useState(
@@ -106,8 +117,12 @@ function BaseLayerSwitcher({
 
   /* Images are loaded from props if provided, fallback from layer */
   const images = layerImages
-    ? Object.keys(layerImages).map((layerImage) => layerImages[layerImage])
-    : baseLayers.map((layer) => layer.get('previewImage'));
+    ? Object.keys(layerImages).map((layerImage) => {
+        return layerImages[layerImage];
+      })
+    : baseLayers.map((layer) => {
+        return layer.get('previewImage');
+      });
 
   const openClass = switcherOpen ? ' rs-open' : '';
   const hiddenStyle = switcherOpen && !isClosed ? 'visible' : 'hidden';
@@ -115,7 +130,9 @@ function BaseLayerSwitcher({
   const handleSwitcherClick = () => {
     if (baseLayers.length === 2) {
       /* On only two layer options the opener becomes a layer toggle button */
-      const nextLayer = baseLayers.find((layer) => !layer.visible);
+      const nextLayer = baseLayers.find((layer) => {
+        return !layer.visible;
+      });
       currentLayer.setVisible(false);
       setCurrentLayer(nextLayer);
       nextLayer.setVisible(true);
@@ -132,7 +149,13 @@ function BaseLayerSwitcher({
     }
     setCurrentLayer(layer);
     layer.setVisible(true);
-    baseLayers.filter((l) => l !== layer).forEach((l) => l.setVisible(false));
+    baseLayers
+      .filter((l) => {
+        return l !== layer;
+      })
+      .forEach((l) => {
+        return l.setVisible(false);
+      });
     setSwitcherOpen(false);
   };
 
@@ -158,7 +181,9 @@ function BaseLayerSwitcher({
         setIsClosed(false);
       }, 800);
     }
-    return () => clearTimeout(timeout);
+    return () => {
+      return clearTimeout(timeout);
+    };
   }, [switcherOpen]);
 
   if (!baseLayers || baseLayers.length < 2 || !currentLayer) {
@@ -170,8 +195,12 @@ function BaseLayerSwitcher({
       <div
         className="rs-base-layer-switcher-close-btn"
         role="button"
-        onClick={() => setSwitcherOpen(false)}
-        onKeyPress={(e) => e.which === 13 && setSwitcherOpen(false)}
+        onClick={() => {
+          return setSwitcherOpen(false);
+        }}
+        onKeyPress={(e) => {
+          return e.which === 13 && setSwitcherOpen(false);
+        }}
         tabIndex={switcherOpen ? '0' : '-1'}
         aria-label={titles.closeSwitcher}
         title={titles.closeSwitcher}
@@ -200,8 +229,14 @@ function BaseLayerSwitcher({
         <div className="rs-base-layer-switcher-title">
           {baseLayers.length !== 2
             ? titles.button
-            : baseLayers.find((layer) => !layer.visible) &&
-              t(baseLayers.find((layer) => !layer.visible).name)}
+            : baseLayers.find((layer) => {
+                return !layer.visible;
+              }) &&
+              t(
+                baseLayers.find((layer) => {
+                  return !layer.visible;
+                }).name,
+              )}
         </div>
         {nextImage ? null : <span className="rs-alt-text">{t(altText)}</span>}
       </div>
@@ -216,7 +251,9 @@ function BaseLayerSwitcher({
             key={layer.key}
             className="rs-base-layer-switcher-btn-wrapper"
             style={{
+              /* stylelint-disable-next-line value-keyword-case */
               overflow: hiddenStyle,
+              /* stylelint-disable-next-line value-keyword-case */
               zIndex: baseLayers.length - idx,
             }}
           >
@@ -225,7 +262,9 @@ function BaseLayerSwitcher({
               role="button"
               title={t(layerName)}
               aria-label={t(layerName)}
-              onClick={() => onLayerSelect(layer)}
+              onClick={() => {
+                return onLayerSelect(layer);
+              }}
               onKeyPress={(e) => {
                 if (e.which === 13) {
                   onLayerSelect(layer);
