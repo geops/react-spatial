@@ -1,7 +1,7 @@
 {
   "name": "react-spatial",
   "description": "Components to build React map apps.",
-  "version": "1.0.28",
+  "version": "1.0.29-beta.0",
   "license": "MIT",
   "dependencies": {
     "@geops/geops-ui": "0.1.10",
@@ -26,11 +26,11 @@
     "react-dom": "16.13.1"
   },
   "devDependencies": {
-    "@babel/core": "7.14.3",
-    "@babel/eslint-parser": "7.14.4",
-    "@babel/plugin-transform-runtime": "7.14.3",
-    "@babel/preset-env": "7.14.4",
-    "@babel/preset-react": "7.13.13",
+    "@babel/core": "7.15.0",
+    "@babel/eslint-parser": "7.15.0",
+    "@babel/plugin-transform-runtime": "7.15.0",
+    "@babel/preset-env": "7.15.0",
+    "@babel/preset-react": "7.14.5",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "27.0.2",
     "babel-loader": "8.2.2",
@@ -44,7 +44,7 @@
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-import": "2.24.2",
     "eslint-plugin-jsx-a11y": "6.4.1",
-    "eslint-plugin-prettier": "3.4.1",
+    "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-react": "7.25.1",
     "eslint-plugin-react-hooks": "4.2.0",
     "fixpack": "4.0.0",
@@ -125,6 +125,10 @@
       "prettier"
     ],
     "rules": {
+      "arrow-body-style": [
+        "error",
+        "always"
+      ],
       "import/no-extraneous-dependencies": [
         "error",
         {
