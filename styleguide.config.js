@@ -127,6 +127,18 @@ module.exports = {
           ],
           use: [
             {
+              loader: require.resolve('@svgr/webpack'),
+              options: {
+                svgoConfig: {
+                  plugins: [
+                    {
+                      removeViewBox: false,
+                    },
+                  ],
+                },
+              },
+            },
+            {
               loader: 'file-loader',
               options: {
                 jsx: true,
@@ -195,7 +207,7 @@ module.exports = {
     Para: {
       para: {
         lineHeight: '2.25rem',
-        fontSize: '1.125rem'
+        fontSize: '1.125rem',
       },
     },
     ComponentsList: {
