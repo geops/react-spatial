@@ -31,7 +31,7 @@ const styles = ({ mq }) => {
       padding: '10px 0 0 10px',
     },
     content: {
-      top: 68, // 100
+      top: 68,
       bottom: 0,
       height: 'calc(100vh - 60px)',
       position: 'fixed',
@@ -45,7 +45,7 @@ const styles = ({ mq }) => {
         top: 40,
         position: 'absolute',
         width: '100%',
-        height: 'calc(100vh - 108px)', // 'calc(100vh - 140px)',
+        height: 'calc(100vh - 108px)',
       },
     },
     main: {
@@ -60,23 +60,12 @@ const styles = ({ mq }) => {
       },
       display: 'block',
     },
-    // main: {
-    //   maxWidth: 1000,
-    //   padding: [[15, 30]],
-    //   paddingLeft: 230,
-    //   paddingTop: 55,
-    //   margin: [[0, 'auto']],
-    //   [mq.small]: {
-    //     padding: 15,
-    //   },
-    //   display: 'block',
-    // },
     sidebar: {
       backgroundColor: '#EFEFEF',
       border: '#e8e8e8 solid',
       borderWidth: '0 1px 0 0',
       position: 'fixed',
-      top: 68, // 100
+      top: 68,
       left: 0,
       bottom: 0,
       width: '200px',
