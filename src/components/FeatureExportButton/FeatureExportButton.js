@@ -96,13 +96,15 @@ class FeatureExportButton extends PureComponent {
         tabIndex={0}
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...other}
-        onClick={() =>
-          FeatureExportButton.exportFeatures(layer, projection, format)
-        }
-        onKeyPress={(evt) =>
-          evt.which === 13 &&
-          FeatureExportButton.exportFeatures(layer, projection, format)
-        }
+        onClick={() => {
+          return FeatureExportButton.exportFeatures(layer, projection, format);
+        }}
+        onKeyPress={(evt) => {
+          return (
+            evt.which === 13 &&
+            FeatureExportButton.exportFeatures(layer, projection, format)
+          );
+        }}
       >
         {children}
       </div>

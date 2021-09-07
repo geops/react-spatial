@@ -17,79 +17,92 @@ import Version from 'react-styleguidist/lib/client/rsg-components/Version';
 import Styled from 'react-styleguidist/lib/client/rsg-components/Styled';
 import docConfig from '../../doc/doc-config.json';
 
-const styles = ({ mq }) => ({
-  root: {
-    backgroundColor: 'white',
+const styles = ({ mq }) => {
+  return {
+    root: {
+      backgroundColor: 'white',
 
-    '& .MuiAutocomplete-root': {
-      margin: '20px 0',
-      width: 300,
+      '& .MuiAutocomplete-root': {
+        margin: '20px 0',
+        width: 300,
+      },
     },
-  },
-  version: {
-    padding: '10px 0 0 10px',
-  },
-  content: {
-    top: 68,
-    bottom: 0,
-    height: 'calc(100vh - 60px)',
-    position: 'fixed',
-    width: '100%',
-    zIndex: 0,
-  },
-  scrollable: {
-    overflowY: 'scroll',
-    height: 'calc(100vh - 68px)',
-    [mq.small]: {
-      top: 40,
-      position: 'absolute',
+    version: {
+      padding: '10px 0 0 10px',
+    },
+    content: {
+      top: 68, // 100
+      bottom: 0,
+      height: 'calc(100vh - 60px)',
+      position: 'fixed',
       width: '100%',
-      height: 'calc(100vh - 108px)',
+      zIndex: 0,
     },
-  },
-  main: {
-    margin: 'auto',
-    width: 'calc(100vw - 30px)',
-    maxWidth: 1000,
-    padding: [[15, 30]],
-    paddingLeft: 230,
-    paddingTop: 55,
-    [mq.small]: {
-      padding: 5,
+    scrollable: {
+      overflowY: 'scroll',
+      height: 'calc(100vh - 68px)',
+      [mq.small]: {
+        top: 40,
+        position: 'absolute',
+        width: '100%',
+        height: 'calc(100vh - 108px)', // 'calc(100vh - 140px)',
+      },
     },
-    display: 'block',
-  },
-  sidebar: {
-    backgroundColor: '#EFEFEF',
-    border: '#e8e8e8 solid',
-    borderWidth: '0 1px 0 0',
-    position: 'fixed',
-    top: 68,
-    left: 0,
-    bottom: 0,
-    width: '200px',
-    overflow: 'auto',
-  },
-  dropdown: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: '0 10px 0',
-    position: 'fixed',
-    backgroundColor: '#efefef',
-    height: 40,
-    width: '100%',
-    zIndex: 99999,
-    color: '#6987a1',
-    borderBottom: '1px solid #6987a1',
-  },
-  footerWrapper: {
-    marginLeft: 200,
-    [mq.small]: {
-      marginLeft: 0,
+    main: {
+      margin: 'auto',
+      width: 'calc(100vw - 30px)',
+      maxWidth: 1000,
+      padding: [[15, 30]],
+      paddingLeft: 230,
+      paddingTop: 55,
+      [mq.small]: {
+        padding: 5,
+      },
+      display: 'block',
     },
-  },
-});
+    // main: {
+    //   maxWidth: 1000,
+    //   padding: [[15, 30]],
+    //   paddingLeft: 230,
+    //   paddingTop: 55,
+    //   margin: [[0, 'auto']],
+    //   [mq.small]: {
+    //     padding: 15,
+    //   },
+    //   display: 'block',
+    // },
+    sidebar: {
+      backgroundColor: '#EFEFEF',
+      border: '#e8e8e8 solid',
+      borderWidth: '0 1px 0 0',
+      position: 'fixed',
+      top: 68, // 100
+      left: 0,
+      bottom: 0,
+      width: '200px',
+      overflow: 'auto',
+    },
+    dropdown: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      padding: '0 10px 0',
+      position: 'fixed',
+      backgroundColor: '#efefef',
+      height: 40,
+      width: '100%',
+      zIndex: 99999,
+      color: '#6987a1',
+      borderBottom: '1px solid #6987a1',
+    },
+    footerWrapper: {
+      marginLeft: 200,
+      [mq.small]: {
+        marginLeft: 0,
+      },
+    },
+  };
+};
 
 export function StyleGuideRenderer({
   classes,
@@ -105,7 +118,9 @@ export function StyleGuideRenderer({
   const ref = useRef();
   useEffect(() => {
     fetch('https://developer.geops.io/publickey')
-      .then((response) => response.json())
+      .then((response) => {
+        return response.json();
+      })
       .then((data) => {
         setApiKey(data.key);
       })
@@ -136,7 +151,9 @@ export function StyleGuideRenderer({
               role="button"
               type="button"
               className={classes.dropdown}
-              onClick={() => toggleDropdown(!dropdownOpen)}
+              onClick={() => {
+                return toggleDropdown(!dropdownOpen);
+              }}
               onKeyDown={(e) => {
                 if (e.keyCode === 13) {
                   toggleDropdown(!dropdownOpen);
@@ -148,7 +165,11 @@ export function StyleGuideRenderer({
               {dropdownOpen ? <Close /> : <Open />}
             </div>
             <Collapse in={dropdownOpen} timeout="auto" unmountOnExit>
-              <ClickAwayListener onClickAway={() => toggleDropdown(false)}>
+              <ClickAwayListener
+                onClickAway={() => {
+                  return toggleDropdown(false);
+                }}
+              >
                 <List
                   component="div"
                   disablePadding
@@ -158,7 +179,7 @@ export function StyleGuideRenderer({
                     maxHeight: 'calc(100vh - 150px)',
                     top: 40,
                     backgroundColor: 'white',
-                    boxShadow: '0px 10px 15px #35353520',
+                    boxShadow: '0 10px 15px #35353520',
                     zIndex: 99999,
                   }}
                 >

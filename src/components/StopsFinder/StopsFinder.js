@@ -112,6 +112,11 @@ function StopsFinder({
       setLoading,
     );
   }
+  const textFieldProps = {
+    ...((autocompleteProps || {}).textFieldProps || {}),
+  };
+  const autocProps = { ...autocompleteProps };
+  delete autocProps.textFieldProps;
 
   return (
     <Autocomplete
@@ -119,7 +124,9 @@ function StopsFinder({
       autoComplete
       autoHighlight
       selectOnFocus
-      getOptionLabel={(option) => option.properties.name}
+      getOptionLabel={(option) => {
+        return option.properties.name;
+      }}
       onChange={(evt, value, reason) => {
         if (onSelect && reason === 'select-option') {
           onSelect(value, evt);
@@ -133,7 +140,7 @@ function StopsFinder({
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...{
               ...params,
-              ...((autocompleteProps || {}).textFieldProps || {}),
+              ...textFieldProps,
             }}
             InputProps={{
               ...params.InputProps,
@@ -151,7 +158,7 @@ function StopsFinder({
         return <StopsFinderOptions option={option} />;
       }}
       // eslint-disable-next-line react/jsx-props-no-spreading
-      {...{ ...autocompleteProps, textFieldProps: null }}
+      {...autocProps}
       classes={{ ...classes, ...autocompleteProps.classes }}
       inputValue={inputValue}
       open={isOpen}

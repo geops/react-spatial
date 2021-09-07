@@ -163,7 +163,12 @@ describe('Geolocation', () => {
     const spy = jest.spyOn(ErrorHandler, 'onError');
 
     const wrapper = mount(
-      <Geolocation map={map} onError={() => ErrorHandler.onError()} />,
+      <Geolocation
+        map={map}
+        onError={() => {
+          return ErrorHandler.onError();
+        }}
+      />,
     );
 
     wrapper.find('.rs-geolocation').first().simulate('click');

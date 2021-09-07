@@ -77,8 +77,16 @@ class BaseLayerToggler extends Component {
   static isDifferentLayers(prevLayers, layers) {
     if (prevLayers && layers) {
       return (
-        JSON.stringify(prevLayers.map((l) => l.key)) !==
-        JSON.stringify(layers.map((l) => l.key))
+        JSON.stringify(
+          prevLayers.map((l) => {
+            return l.key;
+          }),
+        ) !==
+        JSON.stringify(
+          layers.map((l) => {
+            return l.key;
+          }),
+        )
       );
     }
     return false;
@@ -152,23 +160,30 @@ class BaseLayerToggler extends Component {
       }
 
       childLayers.forEach((layer) => {
-        if (layer.clone) {
-          let ml;
+        let cloned;
+        if (layer.mapboxLayer) {
           // MapboxStyleLayer
-          if (layer.mapboxLayer) {
-            ml = layer.mapboxLayer.clone();
-            ml.init(this.map); // Including addLayer
-            ml.setVisible(true);
-          }
-          const cloned = layer.clone(ml);
-          cloned.init(this.map); // Including addLayer
-          cloned.setVisible(true);
-        } else if (layer.olLayer && layer.olLayer instanceof TileLayer) {
-          this.map.addLayer(
-            new TileLayer({
+          cloned = layer.clone({ mapboxLayer: layer.mapboxLayer.clone() });
+        } else if (layer.olLayer instanceof TileLayer) {
+          // The clone method of mobility-toolbox-js will reuse the same
+          // TileLayer passed in parameter but it's not possible in ol
+          // to use the same layer in 2 maps so we have to recreate it.
+          cloned = layer.clone({
+            olLayer: new TileLayer({
               source: layer.olLayer.getSource(),
             }),
-          );
+          });
+        } else {
+          cloned = layer.clone();
+        }
+
+        cloned.init(this.map); // Including addLayer
+        cloned.setVisible(true);
+        if (
+          cloned.olLayer ||
+          (cloned.mapboxLayer && cloned.mapboxLayer.olLayer)
+        ) {
+          this.map.addLayer(cloned.olLayer || cloned.mapboxLayer.olLayer);
         }
         this.checkExtent();
       });
@@ -185,7 +200,9 @@ class BaseLayerToggler extends Component {
   setNextVisible(nextLayer) {
     const { layers } = this.state;
     // Unset visibility to all layers before showing the next layer.
-    layers.forEach((l) => l.visible && l.setVisible(false, true, true, true));
+    layers.forEach((l) => {
+      return l.visible && l.setVisible(false, true, true, true);
+    });
     nextLayer.setVisible(true);
   }
 
@@ -363,12 +380,8 @@ class BaseLayerToggler extends Component {
   }
 
   render() {
-    const {
-      className,
-      titles,
-      prevButtonContent,
-      nextButtonContent,
-    } = this.props;
+    const { className, titles, prevButtonContent, nextButtonContent } =
+      this.props;
     const { layers, idx, fallbackImg, fallbackImgOpacity } = this.state;
 
     let footer = null;
@@ -383,8 +396,12 @@ class BaseLayerToggler extends Component {
           <div
             className="rs-base-layer-previous"
             role="button"
-            onClick={() => this.previous()}
-            onKeyPress={(e) => e.which === 13 && this.previous()}
+            onClick={() => {
+              return this.previous();
+            }}
+            onKeyPress={(e) => {
+              return e.which === 13 && this.previous();
+            }}
             tabIndex="0"
             aria-label={titles.prevButton}
             title={titles.prevButton}
@@ -394,8 +411,12 @@ class BaseLayerToggler extends Component {
           <div
             className="rs-base-layer-next"
             role="button"
-            onClick={() => this.next()}
-            onKeyPress={(e) => e.which === 13 && this.next()}
+            onClick={() => {
+              return this.next();
+            }}
+            onKeyPress={(e) => {
+              return e.which === 13 && this.next();
+            }}
             tabIndex="0"
             aria-label={titles.nextButton}
             title={titles.nextButton}
@@ -415,14 +436,21 @@ class BaseLayerToggler extends Component {
           role="button"
           title={titles.button}
           aria-label={titles.button}
-          onClick={() => this.setNextVisible(nextLayer)}
-          onKeyPress={(e) => e.which === 13 && this.setNextVisible(nextLayer)}
+          onClick={() => {
+            return this.setNextVisible(nextLayer);
+          }}
+          onKeyPress={(e) => {
+            return e.which === 13 && this.setNextVisible(nextLayer);
+          }}
           tabIndex="0"
         >
           <img
             src={fallbackImg}
             alt={fallbackImg}
-            style={{ opacity: fallbackImgOpacity }}
+            style={{
+              /* stylelint-disable-next-line value-keyword-case */
+              opacity: fallbackImgOpacity,
+            }}
             className="rs-base-layer-image"
           />
           <BasicMap

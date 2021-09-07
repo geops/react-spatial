@@ -14,7 +14,9 @@ const iconForMot = {};
   'cable_car',
   'subway',
 ].forEach((mot) => {
-  iconForMot[mot] = lazy(() => import(`../../images/mots/${mot}${ext}`));
+  iconForMot[mot] = lazy(() => {
+    return import(`../../images/mots/${mot}${ext}`);
+  });
 });
 
 const useStyles = makeStyles((theme) => {

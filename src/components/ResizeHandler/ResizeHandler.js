@@ -66,7 +66,9 @@ class ResizeHandler extends PureComponent {
 
   constructor(props) {
     super(props);
-    this.observer = new ResizeObserver((entries) => this.onResize(entries));
+    this.observer = new ResizeObserver((entries) => {
+      return this.onResize(entries);
+    });
     this.nodes = [];
   }
 
@@ -90,12 +92,8 @@ class ResizeHandler extends PureComponent {
   }
 
   onResize(entries) {
-    const {
-      maxHeightBrkpts,
-      maxWidthBrkpts,
-      stylePropHeight,
-      onResize,
-    } = this.props;
+    const { maxHeightBrkpts, maxWidthBrkpts, stylePropHeight, onResize } =
+      this.props;
 
     if (stylePropHeight) {
       const vh = window.innerHeight * 0.01;
@@ -163,7 +161,9 @@ class ResizeHandler extends PureComponent {
     }
 
     if (this.nodes.length) {
-      this.nodes.forEach((node) => this.observer.observe(node));
+      this.nodes.forEach((node) => {
+        return this.observer.observe(node);
+      });
     }
   }
 

@@ -1,1 +1,3 @@
-global.URL.createObjectURL = jest.fn(() => 'fooblob');
+global.URL.createObjectURL = jest.fn(() => {
+  return 'fooblob';
+});

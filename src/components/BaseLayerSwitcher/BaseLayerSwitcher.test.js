@@ -60,7 +60,9 @@ describe('BaseLayerSwitcher', () => {
     comp.find('.rs-opener').at(0).simulate('click');
     comp.find('.rs-base-layer-switcher-button').at(3).simulate('click');
     expect(
-      comp.props().layers.filter((layer) => layer.isBaseLayer)[2].visible,
+      comp.props().layers.filter((layer) => {
+        return layer.isBaseLayer;
+      })[2].visible,
     ).toBe(true);
     expect(comp.find('.rs-base-layer-switcher rs-open').exists()).toBe(false);
   });
@@ -68,11 +70,15 @@ describe('BaseLayerSwitcher', () => {
   test('toggles base map instead of opening when only two base layers', () => {
     const comp = mount(<BaseLayerSwitcher layers={layers.slice(0, 2)} />);
     expect(
-      comp.props().layers.filter((layer) => layer.isBaseLayer)[0].visible,
+      comp.props().layers.filter((layer) => {
+        return layer.isBaseLayer;
+      })[0].visible,
     ).toBe(true);
     comp.find('.rs-opener').at(0).simulate('click');
     expect(
-      comp.props().layers.filter((layer) => layer.isBaseLayer)[1].visible,
+      comp.props().layers.filter((layer) => {
+        return layer.isBaseLayer;
+      })[1].visible,
     ).toBe(true);
     expect(comp.find('.rs-base-layer-switcher rs-open').exists()).toBe(false);
   });

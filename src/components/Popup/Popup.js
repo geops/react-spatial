@@ -94,7 +94,9 @@ const defaultProps = {
   onCloseClick: () => {},
   renderHeader: null,
   renderCloseButton: null,
-  renderFooter: () => null,
+  renderFooter: () => {
+    return null;
+  },
 };
 
 /**
@@ -121,8 +123,12 @@ class Popup extends PureComponent {
         className="rs-popup-close-bt"
         title={titles.closeButton}
         aria-label={titles.closeButton}
-        onClick={() => onCloseClick()}
-        onKeyPress={(evt) => evt.which === 13 && onCloseClick()}
+        onClick={() => {
+          return onCloseClick();
+        }}
+        onKeyPress={(evt) => {
+          return evt.which === 13 && onCloseClick();
+        }}
       >
         <MdClose focusable={false} />
       </div>

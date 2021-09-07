@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { IoIosSpeedometer } from 'react-icons/io';
 import { FaPlay, FaForward, FaBackward, FaRegDotCircle } from 'react-icons/fa';
@@ -63,10 +63,15 @@ function TrackerControl({
 }) {
   const [speed, setSpeed] = useState(1);
 
-  const onSpeedChange = (newSpeed) => {
-    // eslint-disable-next-line no-param-reassign
-    trackerLayer.speed = newSpeed;
-  };
+  const onSpeedChange = useCallback(
+    (newSpeed) => {
+      if (trackerLayer) {
+        // eslint-disable-next-line no-param-reassign
+        trackerLayer.speed = newSpeed;
+      }
+    },
+    [trackerLayer],
+  );
 
   const resetDate = () => {
     trackerLayer.setCurrTime(new Date());
@@ -78,16 +83,32 @@ function TrackerControl({
 
   return (
     <div className={className}>
-      {renderButton(iconDateReset, () => resetDate(), 'reset date')}
+      {renderButton(
+        iconDateReset,
+        () => {
+          return resetDate();
+        },
+        'reset date',
+      )}
       {renderButton(
         iconSpeedDown,
-        () => setSpeed(decreaseSpeed(speed)),
+        () => {
+          return setSpeed(decreaseSpeed(speed));
+        },
         'speed down',
       )}
-      {renderButton(iconSpeedReset, () => setSpeed(1), 'speed reset')}
+      {renderButton(
+        iconSpeedReset,
+        () => {
+          return setSpeed(1);
+        },
+        'speed reset',
+      )}
       {renderButton(
         iconSpeedUp,
-        () => setSpeed(increaseSpeed(speed)),
+        () => {
+          return setSpeed(increaseSpeed(speed));
+        },
         'speed up',
       )}
       <div className="rt-tracker-speed">

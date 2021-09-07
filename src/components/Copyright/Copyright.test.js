@@ -58,7 +58,9 @@ describe('Copyright', () => {
         center: [0, 0],
         zoom: 0,
       }),
-      layers: layers.map((layer) => layer.olLayer),
+      layers: layers.map((layer) => {
+        return layer.olLayer;
+      }),
     });
     map.setSize([200, 200]);
     layers.forEach((layer) => {
@@ -103,7 +105,9 @@ describe('Copyright', () => {
     const wrapper = mount(
       <Copyright
         map={map}
-        format={(copyrights) => `Number of copyrights: ${copyrights.length}`}
+        format={(copyrights) => {
+          return `Number of copyrights: ${copyrights.length}`;
+        }}
       />,
     );
 

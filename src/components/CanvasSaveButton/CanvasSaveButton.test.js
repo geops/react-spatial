@@ -99,8 +99,12 @@ describe('CanvasSaveButton', () => {
     link.click = jest.fn();
     const div = document.createElement('div');
     const canvas = document.createElement('canvas');
-    canvas.toBlob = jest.fn((callback) => callback());
-    global.URL.createObjectURL = jest.fn(() => 'fooblob');
+    canvas.toBlob = jest.fn((callback) => {
+      return callback();
+    });
+    global.URL.createObjectURL = jest.fn(() => {
+      return 'fooblob';
+    });
     // We use a spy here to be able to correctly restore the initial function
     const spy3 = jest
       .spyOn(global.document, 'createElement')

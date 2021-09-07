@@ -85,7 +85,10 @@ describe('LayerTree', () => {
 
     test('when renderItem is used.', () => {
       renderLayerTree(layers, {
-        renderItem: (item) => <div key={item.name}>{item.name}</div>,
+        renderItem: (item) => {
+          const { name } = item;
+          return <div key={name}>{name}</div>;
+        },
       });
     });
 
@@ -95,33 +98,43 @@ describe('LayerTree', () => {
 
     test('when an item is hidden.', () => {
       renderLayerTree(layers, {
-        isItemHidden: (item) => !!item.children.length,
+        isItemHidden: (item) => {
+          return !!item.children.length;
+        },
       });
     });
 
     test('when an item is hidden (different layer tree levels)', () => {
       renderLayerTree(layers, {
-        isItemHidden: (item) => item.isBaseLayer || item.get('hideInLegend'),
+        isItemHidden: (item) => {
+          return item.isBaseLayer || item.get('hideInLegend');
+        },
       });
     });
 
     test('when an item use renderBeforeItem.', () => {
       renderLayerTree(layers, {
-        renderBeforeItem: (layer, level) => (
-          <div>
-            Render name before item: {layer.name}, level: {level}
-          </div>
-        ),
+        renderBeforeItem: (layer, level) => {
+          const { name } = layer;
+          return (
+            <div>
+              Render name before item: {name}, level: {level}
+            </div>
+          );
+        },
       });
     });
 
     test('when an item use renderAfterItem.', () => {
       renderLayerTree(layers, {
-        renderAfterItem: (layer, level) => (
-          <div>
-            Render name after item: {layer.name}, level: {level}
-          </div>
-        ),
+        renderAfterItem: (layer, level) => {
+          const { name } = layer;
+          return (
+            <div>
+              Render name after item: {name}, level: {level}
+            </div>
+          );
+        },
       });
     });
 
@@ -139,8 +152,7 @@ describe('LayerTree', () => {
               },
               children: [
                 new Layer({
-                  name:
-                    'Expanded layer 1.1.1 (because of isAlwaysExpanded=true)',
+                  name: 'Expanded layer 1.1.1 (because of isAlwaysExpanded=true)',
                   visible: true,
                   properties: {
                     isAlwaysExpanded: true,
@@ -179,8 +191,7 @@ describe('LayerTree', () => {
                   visible: true,
                   children: [
                     new Layer({
-                      name:
-                        'Invisible layer 1.2.1.1 (as parent isAlwaysExpanded=false)',
+                      name: 'Invisible layer 1.2.1.1 (as parent isAlwaysExpanded=false)',
                       visible: true,
                     }),
                   ],
@@ -198,16 +209,14 @@ describe('LayerTree', () => {
               visible: true,
               children: [
                 new Layer({
-                  name:
-                    'Invisible layer 2.1.1 (as parent isAlwaysExpanded=false)',
+                  name: 'Invisible layer 2.1.1 (as parent isAlwaysExpanded=false)',
                   visible: true,
                   properties: {
                     isAlwaysExpanded: true,
                   },
                   children: [
                     new Layer({
-                      name:
-                        'Invisible layer 2.1.1.1 (as parent is not visible)',
+                      name: 'Invisible layer 2.1.1.1 (as parent is not visible)',
                       visible: true,
                     }),
                   ],
@@ -219,13 +228,11 @@ describe('LayerTree', () => {
               visible: true,
               children: [
                 new Layer({
-                  name:
-                    'Invisible layer 2.2.1 (as parent isAlwaysExpanded=false)',
+                  name: 'Invisible layer 2.2.1 (as parent isAlwaysExpanded=false)',
                   visible: true,
                   children: [
                     new Layer({
-                      name:
-                        'Invisible layer 2.2.1.1 (as parent is not visible)',
+                      name: 'Invisible layer 2.2.1.1 (as parent is not visible)',
                       visible: true,
                     }),
                   ],
@@ -237,7 +244,9 @@ describe('LayerTree', () => {
       ];
 
       renderLayerTree(newLayers, {
-        isItemHidden: (item) => item.get('hideInLegend'),
+        isItemHidden: (item) => {
+          return item.get('hideInLegend');
+        },
       });
     });
   });

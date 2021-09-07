@@ -34,8 +34,9 @@ const defaultProps = {
   children: null,
 };
 
-const getRotation = (map, rotationOffset) =>
-  degrees(map.getView().getRotation()) + rotationOffset;
+const getRotation = (map, rotationOffset) => {
+  return degrees(map.getView().getRotation()) + rotationOffset;
+};
 
 /**
  * This NorthArrow component inserts an arrow pointing north into an

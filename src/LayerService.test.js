@@ -90,7 +90,9 @@ describe('LayerService', () => {
   });
 
   test('should call back on visibility changes.', () => {
-    const callback = jest.fn(() => 42);
+    const callback = jest.fn(() => {
+      return 42;
+    });
     layerService.on('change:visible', callback);
     layerService.getLayer('2').setVisible(true);
     expect(callback.mock.calls.length).toBe(3);

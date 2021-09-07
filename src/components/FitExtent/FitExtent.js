@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import OLMap from 'ol/Map';
 
@@ -33,13 +33,13 @@ const defaultProps = {
  * an [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
  */
 function FitExtent({ map, extent, className, children, ...other }) {
-  const fit = useCallback((evt) => {
+  const fit = (evt) => {
     if (evt.which && evt.which !== 13) {
       return;
     }
     map.getView().cancelAnimations();
     map.getView().fit(extent, map.getSize());
-  });
+  };
 
   return (
     <div

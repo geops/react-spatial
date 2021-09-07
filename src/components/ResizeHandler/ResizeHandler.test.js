@@ -186,7 +186,9 @@ describe('ResizeHandler', () => {
   describe('when observe property is set', () => {
     test('try t get  an html node from a string on (un)mount', () => {
       const div = document.createElement('div');
-      document.querySelectorAll = jest.fn().mockImplementation(() => [div]);
+      document.querySelectorAll = jest.fn().mockImplementation(() => {
+        return [div];
+      });
       const spy = jest.spyOn(ResizeObserver.prototype, 'observe');
       const spy2 = jest.spyOn(ResizeObserver.prototype, 'disconnect');
       mount(<StrComponent />);

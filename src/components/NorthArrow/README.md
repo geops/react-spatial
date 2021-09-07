@@ -1,4 +1,3 @@
-#
 
 The following example demonstrates the use of NorthArrowExample (Alt + Shift + click to rotate).
 

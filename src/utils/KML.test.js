@@ -71,9 +71,7 @@ describe('KML', () => {
       expect(lineStartStyle.getImage().getColor()).toEqual([0, 102, 5, 1]);
       expect(lineStartStyle.getImage().getRotateWithView()).toBe(true);
       expect(lineStartStyle.getGeometry()(feats[0]).getCoordinates()).toEqual([
-        0,
-        1,
-        0,
+        0, 1, 0,
       ]);
       expect(lineStartStyle.getZIndex()).toEqual(1);
 
@@ -85,9 +83,7 @@ describe('KML', () => {
       expect(lineEndStyle.getImage().getRotateWithView()).toBe(true);
       expect(lineEndStyle.getImage().getColor()).toEqual([0, 102, 5, 1]);
       expect(lineEndStyle.getGeometry()(feats[0]).getCoordinates()).toEqual([
-        40,
-        25,
-        0,
+        40, 25, 0,
       ]);
       expect(lineEndStyle.getZIndex()).toEqual(1);
 

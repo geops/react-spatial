@@ -91,7 +91,9 @@ function MousePosition({
   const [projection, setProjection] = useState(
     projections &&
       ((projectionValue &&
-        projections.find((p) => p.value === projectionValue.value)) ||
+        projections.find((p) => {
+          return p.value === projectionValue.value;
+        })) ||
         projections[0]),
   );
   const [control, setControl] = useState();
@@ -109,7 +111,7 @@ function MousePosition({
     return () => {
       map.removeControl(mousePosition);
     };
-  }, []);
+  }, [map]);
 
   useEffect(() => {
     if (!projection || !control) {
@@ -123,19 +125,23 @@ function MousePosition({
     if (projections) {
       const proj =
         (projectionValue &&
-          projections.find((p) => p.value === projectionValue.value)) ||
+          projections.find((p) => {
+            return p.value === projectionValue.value;
+          })) ||
         projections[0];
       setProjection(proj);
     }
-  }, [projectionValue]);
+  }, [projections, projectionValue]);
 
   const onChangeCb = useCallback(
     (evt) => {
-      const newProj = projections.find((opt) => evt.target.value === opt.value);
+      const newProj = projections.find((opt) => {
+        return evt.target.value === opt.value;
+      });
       setProjection(newProj);
       onChange(evt, newProj);
     },
-    [projections],
+    [onChange, projections],
   );
 
   if (!projection || !projections || !projections.length) {
@@ -150,11 +156,13 @@ function MousePosition({
         value={projection.value}
         onChange={onChangeCb}
       >
-        {projections.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
+        {projections.map((option) => {
+          return (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          );
+        })}
       </select>
       <span ref={ref} className="rs-coordinates" />
     </div>

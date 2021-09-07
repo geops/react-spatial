@@ -26,8 +26,8 @@ describe('Permalink', () => {
         },
       }),
       new Layer({
-        name: 'Swiss boundries',
-        key: 'swiss.boundries',
+        name: 'Swiss boundaries',
+        key: 'swiss.boundaries',
         visible: true,
         properties: {
           hideInLegend: true,
@@ -50,12 +50,37 @@ describe('Permalink', () => {
           radioGroup: 'baseLayer',
         },
       }),
+      new Layer({
+        name: 'Layer with children that are hidden',
+        key: 'children.hidden.layer',
+        visible: true,
+        children: [
+          new Layer({
+            name: 'Child 1 hidden',
+            key: 'child.hidden.1',
+            visible: true,
+            properties: {
+              hideInLegend: true,
+            },
+          }),
+          new Layer({
+            name: 'Childr 2 hidden',
+            key: 'child.hidden.2',
+            visible: false,
+            properties: {
+              hideInLegend: true,
+            },
+          }),
+        ],
+      }),
     ];
   });
 
   test('should initialize x, y & z with history.', () => {
     const history = {
-      replace: jest.fn((v) => v),
+      replace: jest.fn((v) => {
+        return v;
+      }),
     };
 
     const params = {
@@ -108,7 +133,7 @@ describe('Permalink', () => {
     const layerService = new LayerService(layers);
     mount(<Permalink layerService={layerService} />);
     const search =
-      '?baselayers=basebright.baselayer,basedark.baselayer&layers=ultimate.layer,swiss.boundries';
+      '?baselayers=basebright.baselayer,basedark.baselayer&layers=ultimate.layer,swiss.boundaries,child.hidden.1';
     expect(window.location.search).toEqual(search);
   });
 
@@ -118,14 +143,18 @@ describe('Permalink', () => {
     mount(
       <Permalink
         layerService={layerService}
-        isLayerHidden={(l) =>
-          l.get('hideInLegend') ||
-          layerService.getParents(l).some((pl) => pl.get('hideInLegend'))
-        }
+        isLayerHidden={(l) => {
+          return (
+            l.get('hideInLegend') ||
+            layerService.getParents(l).some((pl) => {
+              return pl.get('hideInLegend');
+            })
+          );
+        }}
       />,
     );
     const search =
-      '?baselayers=basebright.baselayer,basedark.baselayer&layers=';
+      '?baselayers=basebright.baselayer,basedark.baselayer&layers=children.hidden.layer';
     expect(window.location.search).toEqual(search);
   });
 
@@ -213,10 +242,10 @@ describe('Permalink', () => {
     expect(window.location.search).toEqual('');
     const layerService = new LayerService(layers);
     mount(<Permalink layerService={layerService} />);
-    layerService.getLayer('Swiss boundries').setVisible(true);
+    layerService.getLayer('Swiss boundaries').setVisible(true);
 
     expect(
-      /layers=ultimate.layer,swiss.boundries/.test(window.location.search),
+      /layers=ultimate.layer,swiss.boundaries/.test(window.location.search),
     ).toBe(true);
   });
 

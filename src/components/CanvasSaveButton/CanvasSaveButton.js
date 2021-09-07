@@ -112,7 +112,9 @@ const defaultProps = {
   extraData: null,
   coordinates: null,
   scale: 1,
-  onSaveStart: (map) => Promise.resolve(map),
+  onSaveStart: (map) => {
+    return Promise.resolve(map);
+  },
   onSaveEnd: () => {},
 };
 
@@ -313,9 +315,8 @@ class CanvasSaveButton extends PureComponent {
 
     if (firstCoordinate && oppositeCoordinate) {
       const firstPixel = mapToExport.getPixelFromCoordinate(firstCoordinate);
-      const oppositePixel = mapToExport.getPixelFromCoordinate(
-        oppositeCoordinate,
-      );
+      const oppositePixel =
+        mapToExport.getPixelFromCoordinate(oppositeCoordinate);
       const pixelTopLeft = [
         firstPixel[0] <= oppositePixel[0] ? firstPixel[0] : oppositePixel[0],
         firstPixel[1] <= oppositePixel[1] ? firstPixel[1] : oppositePixel[1],
@@ -485,8 +486,12 @@ class CanvasSaveButton extends PureComponent {
         tabIndex={0}
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...other}
-        onClick={(e) => this.onClick(e)}
-        onKeyPress={(e) => e.which === 13 && this.onClick(e)}
+        onClick={(e) => {
+          return this.onClick(e);
+        }}
+        onKeyPress={(e) => {
+          return e.which === 13 && this.onClick(e);
+        }}
       >
         {children}
       </div>
