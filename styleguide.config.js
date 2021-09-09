@@ -127,6 +127,18 @@ module.exports = {
           ],
           use: [
             {
+              loader: require.resolve('@svgr/webpack'),
+              options: {
+                svgoConfig: {
+                  plugins: [
+                    {
+                      removeViewBox: false,
+                    },
+                  ],
+                },
+              },
+            },
+            {
               loader: 'file-loader',
               options: {
                 jsx: true,
@@ -155,7 +167,18 @@ module.exports = {
       linkHover: '#76B833',
     },
     fontFamily: {
-      base: 'Lato, Arial, sans-serif',
+      base: 'Lato',
+    },
+    fontSize: {
+      base: 16,
+      text: 17,
+      small: 14,
+      h1: 48,
+      h2: 36,
+      h3: 24,
+      h4: 18,
+      h5: 16,
+      h6: 16,
     },
   },
   styles: {
@@ -168,7 +191,37 @@ module.exports = {
     },
     Playground: {
       preview: {
-        fontSize: '12px',
+        fontSize: '18px',
+        marginBottom: '24px',
+      },
+    },
+    Heading: {
+      heading: {
+        fontWeight: 900,
+        marginTop: 50,
+      },
+      heading1: {
+        marginTop: 0,
+      },
+    },
+    Para: {
+      para: {
+        lineHeight: '2.25rem',
+        fontSize: '1.125rem',
+      },
+    },
+    ComponentsList: {
+      isChild: {
+        fontSize: 16,
+      },
+      item: {
+        margin: '10px 0',
+        fontSize: 18,
+      },
+    },
+    Section: {
+      root: {
+        marginBottom: '120px',
       },
     },
   },
