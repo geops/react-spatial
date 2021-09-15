@@ -547,19 +547,27 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
 };
 
 /**
- * Write the <Camera> tag into a KML document. Returns the KML string with added <Camera> tag
+ * Removes the <Camera> tag from a KML string. Returns the KML string with removed <Camera> tag.
  * @param {String} kmlString A string representing a KML file.
- * @param {Object} cameraAttributes Object containing the camera tags (longitude, latitude, altitude, heading, tilt, altitudeMode, roll)
- *    as keys with corresponding values. See https://developers.google.com/kml/documentation/kmlreference#camera
  */
-const writeDocumentCamera = (kmlString, cameraAttributes) => {
+const removeDocumentCamera = (kmlString) => {
   const kmlDoc = parse(kmlString);
-
   // Remove old Camera node
   const oldCameraNode = kmlDoc.getElementsByTagName('Camera')[0];
   if (oldCameraNode) {
     oldCameraNode.remove();
   }
+  return new XMLSerializer().serializeToString(kmlDoc);
+};
+
+/**
+ * Write the <Camera> tag into a KML string. Returns the KML string with added <Camera> tag.
+ * @param {String} kmlString A string representing a KML file.
+ * @param {Object} cameraAttributes Object containing the camera tags (longitude, latitude, altitude, heading, tilt, altitudeMode, roll)
+ *    as keys with corresponding values. See https://developers.google.com/kml/documentation/kmlreference#camera
+ */
+const writeDocumentCamera = (kmlString, cameraAttributes) => {
+  const kmlDoc = parse(removeDocumentCamera(kmlString));
 
   if (cameraAttributes) {
     // Create Camera node with child attributes if the cameraAttributes object is defined
@@ -602,5 +610,6 @@ export default {
   readFeatures,
   writeFeatures,
   writeDocumentCamera,
+  removeDocumentCamera,
   readDocumentCamera,
 };
