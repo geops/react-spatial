@@ -5,6 +5,7 @@ import MultiPoint from 'ol/geom/MultiPoint';
 import GeometryCollection from 'ol/geom/GeometryCollection';
 import { Style, Text, Icon, Circle, Fill, Stroke } from 'ol/style';
 import { asString } from 'ol/color';
+import { parse } from 'ol/xml';
 import { kmlStyle } from './Styles';
 import getPolygonPattern from './getPolygonPattern';
 
@@ -545,4 +546,61 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
   return featString;
 };
 
-export default { readFeatures, writeFeatures };
+/**
+ * Write the <Camera> tag into a KML document. Returns the KML string with added <Camera> tag
+ * @param {String} kmlString A string representing a KML file.
+ * @param {Object} cameraAttributes Object containing the camera tags (longitude, latitude, altitude, heading, tilt, altitudeMode, roll)
+ *    as keys with corresponding values. See https://developers.google.com/kml/documentation/kmlreference#camera
+ */
+const writeDocumentCamera = (kmlString, cameraAttributes) => {
+  const kmlDoc = parse(kmlString);
+
+  // Remove old Camera node
+  const oldCameraNode = kmlDoc.getElementsByTagName('Camera')[0];
+  if (oldCameraNode) {
+    oldCameraNode.remove();
+  }
+
+  if (cameraAttributes) {
+    // Create Camera node with child attributes if the cameraAttributes object is defined
+    const cameraNode = kmlDoc.createElement('Camera');
+    Object.keys(cameraAttributes).forEach((key) => {
+      const cameraAttribute = kmlDoc.createElement(
+        `${key.charAt(0).toUpperCase() + key.slice(1)}`,
+      );
+      cameraAttribute.innerHTML = cameraAttributes[key];
+      cameraNode.appendChild(cameraAttribute);
+    });
+    const documentNode = kmlDoc.getElementsByTagName('Document')[0];
+    documentNode.appendChild(cameraNode);
+  }
+
+  return new XMLSerializer().serializeToString(kmlDoc);
+};
+
+/**
+ * Read the <Camera> tag from a KML document. Returns an object containing the <Camera> attributes as keys + values
+ * @param {String} kmlString A string representing a KML file.
+ */
+const readDocumentCamera = (kmlString) => {
+  const cameraObject = {};
+  const kmlDoc = parse(kmlString);
+  const cameraNode = kmlDoc.getElementsByTagName('Camera')[0];
+  if (cameraNode && cameraNode.childNodes.length) {
+    cameraNode.childNodes.forEach((node) => {
+      cameraObject[`${node.nodeName.toLowerCase()}`] = !Number.isNaN(
+        parseFloat(node.innerHTML),
+      )
+        ? parseFloat(node.innerHTML)
+        : node.innerHTML;
+    });
+  }
+  return cameraObject;
+};
+
+export default {
+  readFeatures,
+  writeFeatures,
+  writeDocumentCamera,
+  readDocumentCamera,
+};
