@@ -29,31 +29,31 @@ const CAMERA_PARSERS = makeStructureNS(NAMESPACE_URIS, {
 
 class KML extends OLKML {
   /**
-   * Read the regions of the KML.
+   * Read the cameras of the KML.
    *
    * @param {Document|Element|string} source Source.
-   * @return {Array<Object>} Regions.
+   * @return {Array<Object>} Cameras.
    * @api
    */
   readCamera(source) {
-    const regions = [];
+    const cameras = [];
     if (typeof source === 'string') {
       const doc = parse(source);
-      extend(regions, this.readCameraFromDocument(doc));
+      extend(cameras, this.readCameraFromDocument(doc));
     } else if (isDocument(source)) {
       extend(
-        regions,
+        cameras,
         this.readCameraFromDocument(/** @type {Document} */ (source)),
       );
     } else {
-      extend(regions, this.readCameraFromNode(/** @type {Element} */ (source)));
+      extend(cameras, this.readCameraFromNode(/** @type {Element} */ (source)));
     }
-    return regions;
+    return cameras;
   }
 
   /**
    * @param {Document} doc Document.
-   * @return {Array<Object>} Region.
+   * @return {Array<Object>} Cameras.
    */
   readCameraFromDocument(doc) {
     const cameras = [];
@@ -67,7 +67,7 @@ class KML extends OLKML {
 
   /**
    * @param {Element} node Node.
-   * @return {Array<Object>} Region.
+   * @return {Array<Object>} Cameras.
    * @api
    */
   readCameraFromNode(node) {
