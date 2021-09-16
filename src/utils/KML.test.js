@@ -288,7 +288,7 @@ describe('KML', () => {
     });
   });
 
-  describe('writeDocumentCamera()/readDocumentCamera()', () => {
+  describe('writeDocumentCamera()', () => {
     const str = `
       <kml ${xmlns}>
         <Document>
@@ -333,14 +333,6 @@ describe('KML', () => {
     test('should remove the present <Camera> tag when called without cameraAttributes.', () => {
       const kmlWithoutKamera = KML.writeDocumentCamera(strWithCam);
       expect(beautify(kmlWithoutKamera)).toEqual(beautify(str));
-    });
-
-    test('should read the <Camera> attributes correctly.', () => {
-      const camAttributes = KML.readDocumentCamera(strWithCam);
-      expect(camAttributes.heading).toEqual(270);
-      expect(camAttributes.altitude).toEqual(300);
-      expect(camAttributes.longitude).toEqual(5.8);
-      expect(camAttributes.latitude).toEqual(41.6);
     });
   });
 });

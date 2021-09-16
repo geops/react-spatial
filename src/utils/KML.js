@@ -586,30 +586,9 @@ const writeDocumentCamera = (kmlString, cameraAttributes) => {
   return new XMLSerializer().serializeToString(kmlDoc);
 };
 
-/**
- * Read the <Camera> tag from a KML document. Returns an object containing the <Camera> attributes as keys + values
- * @param {String} kmlString A string representing a KML file.
- */
-const readDocumentCamera = (kmlString) => {
-  const cameraObject = {};
-  const kmlDoc = parse(kmlString);
-  const cameraNode = kmlDoc.getElementsByTagName('Camera')[0];
-  if (cameraNode && cameraNode.childNodes.length) {
-    cameraNode.childNodes.forEach((node) => {
-      cameraObject[`${node.nodeName.toLowerCase()}`] = !Number.isNaN(
-        parseFloat(node.innerHTML),
-      )
-        ? parseFloat(node.innerHTML)
-        : node.innerHTML;
-    });
-  }
-  return cameraObject;
-};
-
 export default {
   readFeatures,
   writeFeatures,
   writeDocumentCamera,
   removeDocumentCamera,
-  readDocumentCamera,
 };
