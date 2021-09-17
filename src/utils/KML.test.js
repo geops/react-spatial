@@ -287,4 +287,52 @@ describe('KML', () => {
       expectWriteResult(feats, str);
     });
   });
+
+  describe('writeDocumentCamera()', () => {
+    const str = `
+      <kml ${xmlns}>
+        <Document>
+          <name>
+            CamTest
+          </name>
+        </Document>
+      </kml>`;
+
+    const strWithCam = `<kml ${xmlns}>
+        <Document>
+            <name>
+                CamTest
+            </name>
+            <Camera xmlns="">
+                <Heading>
+                    270
+                </Heading>
+                <Altitude>
+                    300
+                </Altitude>
+                <Longitude>
+                    5.8
+                </Longitude>
+                <Latitude>
+                    41.6
+                </Latitude>
+            </Camera>
+        </Document>
+      </kml>`;
+
+    test('should insert the correct <Camera> tag.', () => {
+      const kmlWithKamera = KML.writeDocumentCamera(str, {
+        heading: 270,
+        altitude: 300,
+        longitude: 5.8,
+        latitude: 41.6,
+      });
+      expect(beautify(kmlWithKamera)).toEqual(beautify(strWithCam));
+    });
+
+    test('should remove the present <Camera> tag when called without cameraAttributes.', () => {
+      const kmlWithoutKamera = KML.writeDocumentCamera(strWithCam);
+      expect(beautify(kmlWithoutKamera)).toEqual(beautify(str));
+    });
+  });
 });
