@@ -40,6 +40,16 @@ const restoreGeolocation = () => {
   global.navigator.geolocation = geolocationBackup;
 };
 
+class CallbackHandler {
+  static onError() {}
+
+  static onSuccess() {}
+
+  static onActivate() {}
+
+  static onDeactivate() {}
+}
+
 describe('Geolocation', () => {
   let map;
 
@@ -153,20 +163,49 @@ describe('Geolocation', () => {
     restoreGeolocation();
   });
 
+  test(`success/activate/deactivate callback functions should be called`, () => {
+    mockGeolocation();
+    const spyOnSuccess = jest.spyOn(CallbackHandler, 'onSuccess');
+    const spyOnActivate = jest.spyOn(CallbackHandler, 'onActivate');
+    const spyOnDeactivate = jest.spyOn(CallbackHandler, 'onDeactivate');
+
+    const wrapper = mount(
+      <Geolocation
+        map={map}
+        onSuccess={() => {
+          return CallbackHandler.onSuccess();
+        }}
+        onActivate={() => {
+          return CallbackHandler.onActivate();
+        }}
+        onDeactivate={() => {
+          return CallbackHandler.onDeactivate();
+        }}
+      />,
+    );
+
+    wrapper.find('.rs-geolocation').first().simulate('click');
+
+    expect(spyOnActivate).toHaveBeenCalled();
+    expect(spyOnSuccess).toHaveBeenCalled();
+
+    wrapper.find('.rs-geolocation').first().simulate('click');
+
+    expect(spyOnDeactivate).toHaveBeenCalled();
+
+    restoreGeolocation();
+  });
+
   test(`error function should be called`, () => {
     mockMissingGeolocation();
 
-    class ErrorHandler {
-      static onError() {}
-    }
-
-    const spy = jest.spyOn(ErrorHandler, 'onError');
+    const spy = jest.spyOn(CallbackHandler, 'onError');
 
     const wrapper = mount(
       <Geolocation
         map={map}
         onError={() => {
-          return ErrorHandler.onError();
+          return CallbackHandler.onError();
         }}
       />,
     );
@@ -194,18 +233,16 @@ describe('Geolocation', () => {
       restoreGeolocation();
     });
 
-    test('no center after drag', () => {
+    test('sets isRecenteringToPosition=false after pointerdrag event with the noCenterAfterDrag prop', () => {
       mockGeolocation();
 
-      const center1 = [742952.8821531708, 6330118.608483334];
-      map.getView().setCenter(center1);
-
       const component = shallow(<Geolocation map={map} noCenterAfterDrag />);
-      map.dispatchEvent(new MapEvent('pointerdrag', map));
       component.instance().toggle();
 
-      const center2 = map.getView().getCenter();
-      expect(center1).toEqual(center2);
+      expect(component.instance().isRecenteringToPosition).toEqual(true);
+
+      map.dispatchEvent(new MapEvent('pointerdrag', map));
+      expect(component.instance().isRecenteringToPosition).toEqual(false);
 
       restoreGeolocation();
     });

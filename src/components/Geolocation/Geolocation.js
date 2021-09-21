@@ -5,6 +5,7 @@ import OLMap from 'ol/Map';
 import { transform } from 'ol/proj';
 import Point from 'ol/geom/Point';
 import Feature from 'ol/Feature';
+import { unByKey } from 'ol/Observable';
 
 import Style from 'ol/style/Style';
 import Circle from 'ol/style/Circle';
@@ -38,6 +39,21 @@ const propTypes = {
   onError: PropTypes.func,
 
   /**
+   * Function triggered after successful geoLocation calls. Takes the ol/map, the current lat/lon coordinate and the component instance as arguments.
+   */
+  onSuccess: PropTypes.func,
+
+  /**
+   * Function triggered after the geolocation is activated. Takes the ol/map and the component instance as arguments.
+   */
+  onActivate: PropTypes.func,
+
+  /**
+   * Function triggered after the geolocation is deactivated. Takes the ol/map and the component instance as arguments..
+   */
+  onDeactivate: PropTypes.func,
+
+  /**
    * If true, the map is not centered after it has been dragged once.
    */
   noCenterAfterDrag: PropTypes.bool,
@@ -61,6 +77,9 @@ const defaultProps = {
   className: 'rs-geolocation',
   children: <FaRegDotCircle focusable={false} />,
   onError: () => {},
+  onSuccess: () => {},
+  onActivate: () => {},
+  onDeactivate: () => {},
   noCenterAfterDrag: false,
   alwaysRecenterToPosition: true,
   colorOrStyleFunc: [235, 0, 0],
@@ -73,18 +92,12 @@ const defaultProps = {
 class Geolocation extends PureComponent {
   constructor(props) {
     super(props);
-    const { map, noCenterAfterDrag } = this.props;
 
     this.layer = new VectorLayer({
       source: new VectorSource(),
     });
 
     this.isRecenteringToPosition = true;
-    if (noCenterAfterDrag) {
-      map.on('pointerdrag', () => {
-        this.isRecenteringToPosition = false;
-      });
-    }
 
     this.state = {
       active: false,
@@ -118,7 +131,7 @@ class Geolocation extends PureComponent {
   }
 
   deactivate() {
-    const { noCenterAfterDrag } = this.props;
+    const { map, noCenterAfterDrag, onDeactivate } = this.props;
     window.clearInterval(this.interval);
     this.layer.setMap(null);
     navigator.geolocation.clearWatch(this.watch);
@@ -131,10 +144,12 @@ class Geolocation extends PureComponent {
       active: false,
     });
     this.point = undefined;
+    onDeactivate(map, this);
+    unByKey(this.dragListener);
   }
 
   activate() {
-    const { map } = this.props;
+    const { map, noCenterAfterDrag, onActivate } = this.props;
 
     this.projection = map.getView().getProjection().getCode();
     this.point = new Point([0, 0]);
@@ -149,10 +164,18 @@ class Geolocation extends PureComponent {
         enableHighAccuracy: true,
       },
     );
+
+    if (noCenterAfterDrag) {
+      this.dragListener = map.on('pointerdrag', () => {
+        this.isRecenteringToPosition = false;
+      });
+    }
+
+    onActivate(map, this);
   }
 
   update({ coords: { latitude, longitude } }) {
-    const { map, alwaysRecenterToPosition } = this.props;
+    const { map, alwaysRecenterToPosition, onSuccess } = this.props;
 
     const position = transform(
       [longitude, latitude],
@@ -167,6 +190,8 @@ class Geolocation extends PureComponent {
         this.isRecenteringToPosition = false;
       }
     }
+
+    onSuccess(map, [latitude, longitude], this);
   }
 
   highlight() {
