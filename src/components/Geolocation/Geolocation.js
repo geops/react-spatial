@@ -131,18 +131,16 @@ class Geolocation extends PureComponent {
   }
 
   deactivate() {
-    const { map, noCenterAfterDrag, onDeactivate } = this.props;
+    const { map, onDeactivate } = this.props;
     window.clearInterval(this.interval);
     this.layer.setMap(null);
     navigator.geolocation.clearWatch(this.watch);
 
-    if (!noCenterAfterDrag) {
-      this.isRecenteringToPosition = true;
-    }
-
     this.setState({
       active: false,
     });
+
+    this.isRecenteringToPosition = true;
     this.point = undefined;
     onDeactivate(map, this);
     unByKey(this.dragListener);
