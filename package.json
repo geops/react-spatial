@@ -189,17 +189,13 @@
     "(src|__mocks__)/**/*.js": [
       "eslint --fix",
       "prettier --write",
-      "git add",
-      "yarn lint",
       "yarn test --bail --findRelatedTests"
     ],
     "package.json": [
-      "fixpack --sortToTop name --sortToTop description --sortToTop version --sortToTop license --sortToTop author --sortToTop main --sortToTop files --sortToTop proxy --sortToTop dependencies --sortToTop peerDependencies --sortToTop devDependencies --sortToTop scripts",
-      "git add"
+      "fixpack --sortToTop name --sortToTop description --sortToTop version --sortToTop license --sortToTop author --sortToTop main --sortToTop files --sortToTop proxy --sortToTop dependencies --sortToTop peerDependencies --sortToTop devDependencies --sortToTop scripts"
     ],
     "src/**/*.{css,scss}": [
-      "stylelint --fix",
-      "git add"
+      "stylelint --fix"
     ]
   },
   "prettier": {
