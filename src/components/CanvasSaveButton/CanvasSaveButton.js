@@ -354,7 +354,8 @@ class CanvasSaveButton extends PureComponent {
         for (let i = 0; i < canvases.length; i += 1) {
           const canvas = canvases[i];
           if (!canvas.width || !canvas.height) {
-            return;
+            // eslint-disable-next-line no-continue
+            continue;
           }
           const clip = this.calculatePixelsToExport(mapToExport) || {
             x: 0,
