@@ -342,9 +342,10 @@ class CanvasSaveButton extends PureComponent {
     return new Promise((resolve) => {
       mapToExport.once('rendercomplete', () => {
         // Find all layer canvases and add it to dest canvas.
-        const canvases = mapToExport
-          .getTargetElement()
-          .getElementsByTagName('canvas');
+        const canvases = [
+          ...(mapToExport.getTargetElement().getElementsByTagName('canvas') ||
+            []),
+        ];
 
         // Create the canvas to export with the good size.
         let destCanvas;
