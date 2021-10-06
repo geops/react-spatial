@@ -342,16 +342,17 @@ class CanvasSaveButton extends PureComponent {
     return new Promise((resolve) => {
       mapToExport.once('rendercomplete', () => {
         // Find all layer canvases and add it to dest canvas.
-        const canvases = [
-          ...(mapToExport.getTargetElement().getElementsByTagName('canvas') ||
-            []),
-        ];
+        const canvases = mapToExport
+          .getTargetElement()
+          .getElementsByTagName('canvas');
 
         // Create the canvas to export with the good size.
         let destCanvas;
         let destContext;
 
-        canvases.forEach((canvas) => {
+        // canvases is an HTMLCollection, we don't try to transform to array because some compilers like cra doesn't translate it right.
+        for (let i = 0; i < canvases.length; i += 1) {
+          const canvas = canvases[i];
           if (!canvas.width || !canvas.height) {
             return;
           }
@@ -381,7 +382,7 @@ class CanvasSaveButton extends PureComponent {
             destCanvas.width,
             destCanvas.height,
           );
-        });
+        }
 
         // Custom info
         let logoPromise = Promise.resolve();
