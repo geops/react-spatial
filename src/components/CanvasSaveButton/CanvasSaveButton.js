@@ -350,9 +350,12 @@ class CanvasSaveButton extends PureComponent {
         let destCanvas;
         let destContext;
 
-        canvases.forEach((canvas) => {
+        // canvases is an HTMLCollection, we don't try to transform to array because some compilers like cra doesn't translate it right.
+        for (let i = 0; i < canvases.length; i += 1) {
+          const canvas = canvases[i];
           if (!canvas.width || !canvas.height) {
-            return;
+            // eslint-disable-next-line no-continue
+            continue;
           }
           const clip = this.calculatePixelsToExport(mapToExport) || {
             x: 0,
@@ -380,7 +383,7 @@ class CanvasSaveButton extends PureComponent {
             destCanvas.width,
             destCanvas.height,
           );
-        });
+        }
 
         // Custom info
         let logoPromise = Promise.resolve();
