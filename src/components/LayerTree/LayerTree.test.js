@@ -138,6 +138,12 @@ describe('LayerTree', () => {
       });
     });
 
+    test('when collapseInvisibleLayers is true.', () => {
+      renderLayerTree(layers, {
+        collapseInvisibleLayers: true,
+      });
+    });
+
     test('when items are always expanded', () => {
       const newLayers = [
         new Layer({
