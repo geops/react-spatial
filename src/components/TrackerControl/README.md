@@ -13,6 +13,7 @@ import TrackerControl from 'react-spatial/components/TrackerControl';
 // Please get your own api key at https://developer.geops.io/.
 const trackerLayer = new TrajservLayer({
   apiKey: window.apiKey,
+  live: false
 });
 
 const layers = [
