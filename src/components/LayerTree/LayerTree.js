@@ -90,11 +90,11 @@ const propTypes = {
   }),
 
   /**
-   * Boolean determining whether children collapse when their parent is deactivated
-   * @param {...(boolean|function)} updateChildrenOnToggle Boolean or function returning a boolean.
+   * Boolean determining whether children collapse/expand when their parent is toggled
+   * @param {...(boolean|function)} toggleExpandChildren Boolean or function returning a boolean.
    * @return {boolean} True or false
    */
-  updateChildrenOnToggle: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
+  toggleExpandChildren: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
 
   /**
    * Translation function.
@@ -126,7 +126,7 @@ const defaultProps = {
   t: (s) => {
     return s;
   },
-  updateChildrenOnToggle: false,
+  toggleExpandChildren: false,
 };
 
 /**
@@ -254,11 +254,11 @@ class LayerTree extends Component {
   }
 
   updateTree(layers) {
-    const { updateChildrenOnToggle } = this.props;
+    const { toggleExpandChildren } = this.props;
     if (
-      typeof updateChildrenOnToggle === 'function'
-        ? updateChildrenOnToggle(layers)
-        : updateChildrenOnToggle
+      typeof toggleExpandChildren === 'function'
+        ? toggleExpandChildren(layers)
+        : toggleExpandChildren
     ) {
       layers.forEach((l) => {
         this.expandLayer(l);
