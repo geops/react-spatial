@@ -111,7 +111,7 @@ const layerService = new LayerService(layers);
   <LayerTree
     layerService={layerService}
     isItemHidden={(layer) => layer.get('hidden')}
-    collapseInvisibleLayers
+    toggleExpandChildren
   />
 </div>;
 ```

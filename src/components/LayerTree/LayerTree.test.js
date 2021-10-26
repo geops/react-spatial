@@ -140,7 +140,7 @@ describe('LayerTree', () => {
 
     test('when collapseInvisibleLayers is true.', () => {
       renderLayerTree(layers, {
-        collapseInvisibleLayers: true,
+        toggleExpandChildren: true,
       });
     });
 

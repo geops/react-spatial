@@ -1098,14 +1098,14 @@ exports[`LayerTree matches snapshots when collapseInvisibleLayers is true. 1`] =
           <span />
         </label>
         <div
-          aria-expanded={true}
-          aria-label="1-1 Hide sublayer"
+          aria-expanded={false}
+          aria-label="1-1 Show sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="1-1 Hide sublayer"
+          title="1-1 Show sublayer"
         >
           <div>
             1-1
@@ -1140,14 +1140,14 @@ exports[`LayerTree matches snapshots when collapseInvisibleLayers is true. 1`] =
         <span />
       </label>
       <div
-        aria-expanded={true}
-        aria-label="root Hide sublayer"
+        aria-expanded={false}
+        aria-label="root Show sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="root Hide sublayer"
+        title="root Show sublayer"
       >
         <div>
           root

@@ -90,12 +90,11 @@ const propTypes = {
   }),
 
   /**
-   * Boolean determining whether items collapse sublayers when they change visibility to false
+   * Boolean determining whether children collapse when their parent is deactivated
+   * @param {...(boolean|function)} updateChildrenOnToggle Boolean or function returning a boolean.
+   * @return {boolean} True or false
    */
-  collapseInvisibleLayers: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.func,
-  ]),
+  updateChildrenOnToggle: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
 
   /**
    * Translation function.
@@ -127,7 +126,7 @@ const defaultProps = {
   t: (s) => {
     return s;
   },
-  collapseInvisibleLayers: false,
+  updateChildrenOnToggle: false,
 };
 
 /**
@@ -255,11 +254,11 @@ class LayerTree extends Component {
   }
 
   updateTree(layers) {
-    const { collapseInvisibleLayers } = this.props;
+    const { updateChildrenOnToggle } = this.props;
     if (
-      typeof collapseInvisibleLayers === 'function'
-        ? collapseInvisibleLayers(layers)
-        : collapseInvisibleLayers
+      typeof updateChildrenOnToggle === 'function'
+        ? updateChildrenOnToggle(layers)
+        : updateChildrenOnToggle
     ) {
       layers.forEach((l) => {
         this.expandLayer(l);
