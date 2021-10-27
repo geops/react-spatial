@@ -159,7 +159,6 @@ class LayerTree extends Component {
     };
     this.updateLayers = this.updateLayers.bind(this);
     this.olKeys = [];
-    this.expandAccumulator = [];
   }
 
   componentDidMount() {
