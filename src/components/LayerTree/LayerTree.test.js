@@ -138,9 +138,17 @@ describe('LayerTree', () => {
       });
     });
 
-    test('when toggleExpandChildren is true.', () => {
+    test('when expandChildren is true.', () => {
       renderLayerTree(layers, {
-        toggleExpandChildren: true,
+        expandChildren: true,
+      });
+    });
+
+    test('when expandChildren is a function.', () => {
+      renderLayerTree(layers, {
+        expandChildren: (lyrs) => {
+          return lyrs.length === 3;
+        },
       });
     });
 

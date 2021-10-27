@@ -91,10 +91,10 @@ const propTypes = {
 
   /**
    * Boolean determining whether children collapse/expand when their parent is toggled
-   * @param {...(boolean|function)} toggleExpandChildren Boolean or function returning a boolean.
+   * @param {...(boolean|function)} expandChildren Boolean or function returning a boolean.
    * @return {boolean} True or false
    */
-  toggleExpandChildren: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
+  expandChildren: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
 
   /**
    * Translation function.
@@ -126,7 +126,7 @@ const defaultProps = {
   t: (s) => {
     return s;
   },
-  toggleExpandChildren: false,
+  expandChildren: false,
 };
 
 /**
@@ -159,7 +159,7 @@ class LayerTree extends Component {
     };
     this.updateLayers = this.updateLayers.bind(this);
     this.olKeys = [];
-    this.expandedAccumulator = [];
+    this.expandAccumulator = [];
   }
 
   componentDidMount() {
@@ -230,14 +230,20 @@ class LayerTree extends Component {
   }
 
   updateLayers() {
-    const { layerService, toggleExpandChildren } = this.props;
+    const { layerService, expandChildren } = this.props;
     const layers = layerService.getLayers();
     if (
-      typeof toggleExpandChildren === 'function'
-        ? toggleExpandChildren(layers)
-        : toggleExpandChildren
+      typeof expandChildren === 'function'
+        ? expandChildren(layers)
+        : expandChildren
     ) {
-      this.updateTree(layers);
+      layers.forEach((l) => {
+        this.expandLayer(l);
+      });
+      this.setState({
+        expandedLayers: this.expandAccumulator,
+      });
+      this.expandAccumulator = [];
     }
     this.setState({
       layers,
@@ -255,18 +261,8 @@ class LayerTree extends Component {
           return this.expandLayer(c);
         });
       }
-      this.expandedAccumulator = [...this.expandedAccumulator, layer];
+      this.expandAccumulator = [...this.expandAccumulator, layer];
     }
-  }
-
-  updateTree(layers) {
-    layers.forEach((l) => {
-      this.expandLayer(l);
-    });
-    this.setState({
-      expandedLayers: this.expandedAccumulator,
-    });
-    this.expandedAccumulator = [];
   }
 
   renderInput(layer) {

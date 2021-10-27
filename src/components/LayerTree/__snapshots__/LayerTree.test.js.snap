@@ -981,6 +981,360 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
 </div>
 `;
 
+exports[`LayerTree matches snapshots when expandChildren is a function. 1`] = `
+<div
+  className="rs-layer-tree"
+>
+  <div>
+    <div
+      className="rs-layer-tree-item rs-visible"
+      style={
+        Object {
+          "paddingLeft": "0px",
+        }
+      }
+    >
+      <label
+        aria-label="Hide layer"
+        className="rs-layer-tree-input rs-layer-tree-input-checkbox rs-checkbox"
+        onKeyPress={[Function]}
+        tabIndex={0}
+        title="Hide layer"
+      >
+        <input
+          checked={true}
+          onClick={[Function]}
+          readOnly={true}
+          tabIndex={-1}
+          type="checkbox"
+        />
+        <span />
+      </label>
+      <div
+        aria-expanded={true}
+        aria-label="1 Hide sublayer"
+        className="rs-layer-tree-toggle"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+        title="1 Hide sublayer"
+      >
+        <div>
+          1
+        </div>
+        <div
+          className="rs-layer-tree-arrow rs-layer-tree-arrow-expanded"
+        />
+      </div>
+    </div>
+    <div>
+      <div
+        className="rs-layer-tree-item "
+        style={
+          Object {
+            "paddingLeft": "30px",
+          }
+        }
+      >
+        <label
+          aria-label="Show layer"
+          className="rs-layer-tree-input rs-layer-tree-input-radio rs-radio"
+          onKeyPress={[Function]}
+          tabIndex={0}
+          title="Show layer"
+        >
+          <input
+            checked={false}
+            onClick={[Function]}
+            readOnly={true}
+            tabIndex={-1}
+            type="radio"
+          />
+          <span />
+        </label>
+        <div
+          aria-expanded={false}
+          aria-label="1-2 Show sublayer"
+          className="rs-layer-tree-toggle"
+          onClick={[Function]}
+          onKeyPress={[Function]}
+          role="button"
+          tabIndex={0}
+          title="1-2 Show sublayer"
+        >
+          <div>
+            1-2
+          </div>
+          <div
+            className="rs-layer-tree-arrow rs-layer-tree-arrow-collapsed"
+          />
+        </div>
+      </div>
+    </div>
+    <div>
+      <div
+        className="rs-layer-tree-item rs-visible"
+        style={
+          Object {
+            "paddingLeft": "30px",
+          }
+        }
+      >
+        <label
+          aria-label="Hide layer"
+          className="rs-layer-tree-input rs-layer-tree-input-radio rs-radio"
+          onKeyPress={[Function]}
+          tabIndex={-1}
+          title="Hide layer"
+        >
+          <input
+            checked={true}
+            onClick={[Function]}
+            readOnly={true}
+            tabIndex={-1}
+            type="radio"
+          />
+          <span />
+        </label>
+        <div
+          aria-expanded={false}
+          aria-label="1-1 Show sublayer"
+          className="rs-layer-tree-toggle"
+          onClick={[Function]}
+          onKeyPress={[Function]}
+          role="button"
+          tabIndex={0}
+          title="1-1 Show sublayer"
+        >
+          <div>
+            1-1
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div
+      className="rs-layer-tree-item rs-visible"
+      style={
+        Object {
+          "paddingLeft": "0px",
+        }
+      }
+    >
+      <label
+        aria-label="Hide layer"
+        className="rs-layer-tree-input rs-layer-tree-input-checkbox rs-checkbox"
+        onKeyPress={[Function]}
+        tabIndex={-1}
+        title="Hide layer"
+      >
+        <input
+          checked={true}
+          onClick={[Function]}
+          readOnly={true}
+          tabIndex={-1}
+          type="checkbox"
+        />
+        <span />
+      </label>
+      <div
+        aria-expanded={false}
+        aria-label="root Show sublayer"
+        className="rs-layer-tree-toggle"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+        title="root Show sublayer"
+      >
+        <div>
+          root
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`LayerTree matches snapshots when expandChildren is true. 1`] = `
+<div
+  className="rs-layer-tree"
+>
+  <div>
+    <div
+      className="rs-layer-tree-item rs-visible"
+      style={
+        Object {
+          "paddingLeft": "0px",
+        }
+      }
+    >
+      <label
+        aria-label="Hide layer"
+        className="rs-layer-tree-input rs-layer-tree-input-checkbox rs-checkbox"
+        onKeyPress={[Function]}
+        tabIndex={0}
+        title="Hide layer"
+      >
+        <input
+          checked={true}
+          onClick={[Function]}
+          readOnly={true}
+          tabIndex={-1}
+          type="checkbox"
+        />
+        <span />
+      </label>
+      <div
+        aria-expanded={true}
+        aria-label="1 Hide sublayer"
+        className="rs-layer-tree-toggle"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+        title="1 Hide sublayer"
+      >
+        <div>
+          1
+        </div>
+        <div
+          className="rs-layer-tree-arrow rs-layer-tree-arrow-expanded"
+        />
+      </div>
+    </div>
+    <div>
+      <div
+        className="rs-layer-tree-item "
+        style={
+          Object {
+            "paddingLeft": "30px",
+          }
+        }
+      >
+        <label
+          aria-label="Show layer"
+          className="rs-layer-tree-input rs-layer-tree-input-radio rs-radio"
+          onKeyPress={[Function]}
+          tabIndex={0}
+          title="Show layer"
+        >
+          <input
+            checked={false}
+            onClick={[Function]}
+            readOnly={true}
+            tabIndex={-1}
+            type="radio"
+          />
+          <span />
+        </label>
+        <div
+          aria-expanded={false}
+          aria-label="1-2 Show sublayer"
+          className="rs-layer-tree-toggle"
+          onClick={[Function]}
+          onKeyPress={[Function]}
+          role="button"
+          tabIndex={0}
+          title="1-2 Show sublayer"
+        >
+          <div>
+            1-2
+          </div>
+          <div
+            className="rs-layer-tree-arrow rs-layer-tree-arrow-collapsed"
+          />
+        </div>
+      </div>
+    </div>
+    <div>
+      <div
+        className="rs-layer-tree-item rs-visible"
+        style={
+          Object {
+            "paddingLeft": "30px",
+          }
+        }
+      >
+        <label
+          aria-label="Hide layer"
+          className="rs-layer-tree-input rs-layer-tree-input-radio rs-radio"
+          onKeyPress={[Function]}
+          tabIndex={-1}
+          title="Hide layer"
+        >
+          <input
+            checked={true}
+            onClick={[Function]}
+            readOnly={true}
+            tabIndex={-1}
+            type="radio"
+          />
+          <span />
+        </label>
+        <div
+          aria-expanded={true}
+          aria-label="1-1 Hide sublayer"
+          className="rs-layer-tree-toggle"
+          onClick={[Function]}
+          onKeyPress={[Function]}
+          role="button"
+          tabIndex={0}
+          title="1-1 Hide sublayer"
+        >
+          <div>
+            1-1
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div
+      className="rs-layer-tree-item rs-visible"
+      style={
+        Object {
+          "paddingLeft": "0px",
+        }
+      }
+    >
+      <label
+        aria-label="Hide layer"
+        className="rs-layer-tree-input rs-layer-tree-input-checkbox rs-checkbox"
+        onKeyPress={[Function]}
+        tabIndex={-1}
+        title="Hide layer"
+      >
+        <input
+          checked={true}
+          onClick={[Function]}
+          readOnly={true}
+          tabIndex={-1}
+          type="checkbox"
+        />
+        <span />
+      </label>
+      <div
+        aria-expanded={true}
+        aria-label="root Hide sublayer"
+        className="rs-layer-tree-toggle"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+        title="root Hide sublayer"
+      >
+        <div>
+          root
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`LayerTree matches snapshots when items are always expanded 1`] = `
 <div
   className="rs-layer-tree"
@@ -1387,183 +1741,6 @@ exports[`LayerTree matches snapshots when renderItem is used. 1`] = `
   </div>
   <div>
     root
-  </div>
-</div>
-`;
-
-exports[`LayerTree matches snapshots when toggleExpandChildren is true. 1`] = `
-<div
-  className="rs-layer-tree"
->
-  <div>
-    <div
-      className="rs-layer-tree-item rs-visible"
-      style={
-        Object {
-          "paddingLeft": "0px",
-        }
-      }
-    >
-      <label
-        aria-label="Hide layer"
-        className="rs-layer-tree-input rs-layer-tree-input-checkbox rs-checkbox"
-        onKeyPress={[Function]}
-        tabIndex={0}
-        title="Hide layer"
-      >
-        <input
-          checked={true}
-          onClick={[Function]}
-          readOnly={true}
-          tabIndex={-1}
-          type="checkbox"
-        />
-        <span />
-      </label>
-      <div
-        aria-expanded={true}
-        aria-label="1 Hide sublayer"
-        className="rs-layer-tree-toggle"
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-        title="1 Hide sublayer"
-      >
-        <div>
-          1
-        </div>
-        <div
-          className="rs-layer-tree-arrow rs-layer-tree-arrow-expanded"
-        />
-      </div>
-    </div>
-    <div>
-      <div
-        className="rs-layer-tree-item "
-        style={
-          Object {
-            "paddingLeft": "30px",
-          }
-        }
-      >
-        <label
-          aria-label="Show layer"
-          className="rs-layer-tree-input rs-layer-tree-input-radio rs-radio"
-          onKeyPress={[Function]}
-          tabIndex={0}
-          title="Show layer"
-        >
-          <input
-            checked={false}
-            onClick={[Function]}
-            readOnly={true}
-            tabIndex={-1}
-            type="radio"
-          />
-          <span />
-        </label>
-        <div
-          aria-expanded={false}
-          aria-label="1-2 Show sublayer"
-          className="rs-layer-tree-toggle"
-          onClick={[Function]}
-          onKeyPress={[Function]}
-          role="button"
-          tabIndex={0}
-          title="1-2 Show sublayer"
-        >
-          <div>
-            1-2
-          </div>
-          <div
-            className="rs-layer-tree-arrow rs-layer-tree-arrow-collapsed"
-          />
-        </div>
-      </div>
-    </div>
-    <div>
-      <div
-        className="rs-layer-tree-item rs-visible"
-        style={
-          Object {
-            "paddingLeft": "30px",
-          }
-        }
-      >
-        <label
-          aria-label="Hide layer"
-          className="rs-layer-tree-input rs-layer-tree-input-radio rs-radio"
-          onKeyPress={[Function]}
-          tabIndex={-1}
-          title="Hide layer"
-        >
-          <input
-            checked={true}
-            onClick={[Function]}
-            readOnly={true}
-            tabIndex={-1}
-            type="radio"
-          />
-          <span />
-        </label>
-        <div
-          aria-expanded={true}
-          aria-label="1-1 Hide sublayer"
-          className="rs-layer-tree-toggle"
-          onClick={[Function]}
-          onKeyPress={[Function]}
-          role="button"
-          tabIndex={0}
-          title="1-1 Hide sublayer"
-        >
-          <div>
-            1-1
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div>
-    <div
-      className="rs-layer-tree-item rs-visible"
-      style={
-        Object {
-          "paddingLeft": "0px",
-        }
-      }
-    >
-      <label
-        aria-label="Hide layer"
-        className="rs-layer-tree-input rs-layer-tree-input-checkbox rs-checkbox"
-        onKeyPress={[Function]}
-        tabIndex={-1}
-        title="Hide layer"
-      >
-        <input
-          checked={true}
-          onClick={[Function]}
-          readOnly={true}
-          tabIndex={-1}
-          type="checkbox"
-        />
-        <span />
-      </label>
-      <div
-        aria-expanded={true}
-        aria-label="root Hide sublayer"
-        className="rs-layer-tree-toggle"
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-        title="root Hide sublayer"
-      >
-        <div>
-          root
-        </div>
-      </div>
-    </div>
   </div>
 </div>
 `;
