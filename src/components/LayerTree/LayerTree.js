@@ -237,32 +237,30 @@ class LayerTree extends Component {
         ? expandChildren(layers)
         : expandChildren
     ) {
-      layers.forEach((l) => {
-        this.expandLayer(l);
-      });
       this.setState({
-        expandedLayers: this.expandAccumulator,
+        expandedLayers: layers.flatMap((l) => {
+          return this.expandLayer(l);
+        }),
       });
-      this.expandAccumulator = [];
     }
     this.setState({
       layers,
     });
   }
 
-  expandLayer(layer) {
+  expandLayer(layer, expLayers = []) {
     const { isItemHidden } = this.props;
     if (layer.visible && !isItemHidden(layer)) {
-      const children = layer.children.filter((c) => {
-        return !isItemHidden(c) && !c.get('isAlwaysExpanded');
-      });
-      if (children.length) {
-        children.forEach((c) => {
-          return this.expandLayer(c);
+      const children = layer.children
+        .filter((c) => {
+          return !isItemHidden(c) && !c.get('isAlwaysExpanded');
+        })
+        .flatMap((c) => {
+          return this.expandLayer(c, expLayers);
         });
-      }
-      this.expandAccumulator = [...this.expandAccumulator, layer];
+      return [...expLayers, ...children, layer];
     }
+    return expLayers;
   }
 
   renderInput(layer) {
