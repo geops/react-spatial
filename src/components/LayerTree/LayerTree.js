@@ -230,9 +230,15 @@ class LayerTree extends Component {
   }
 
   updateLayers() {
-    const { layerService } = this.props;
+    const { layerService, toggleExpandChildren } = this.props;
     const layers = layerService.getLayers();
-    this.updateTree(layers);
+    if (
+      typeof toggleExpandChildren === 'function'
+        ? toggleExpandChildren(layers)
+        : toggleExpandChildren
+    ) {
+      this.updateTree(layers);
+    }
     this.setState({
       layers,
     });
@@ -254,21 +260,13 @@ class LayerTree extends Component {
   }
 
   updateTree(layers) {
-    const { toggleExpandChildren } = this.props;
-    if (
-      typeof toggleExpandChildren === 'function'
-        ? toggleExpandChildren(layers)
-        : toggleExpandChildren
-    ) {
-      layers.forEach((l) => {
-        this.expandLayer(l);
-      });
-      this.setState({
-        expandedLayers: this.expandedAccumulator,
-      });
-
-      this.expandedAccumulator = [];
-    }
+    layers.forEach((l) => {
+      this.expandLayer(l);
+    });
+    this.setState({
+      expandedLayers: this.expandedAccumulator,
+    });
+    this.expandedAccumulator = [];
   }
 
   renderInput(layer) {
