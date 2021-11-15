@@ -1127,16 +1127,6 @@
     react-router-dom "^5.2.0"
     uuid "^8.3.1"
 
-"@geops/geops-ui@^0.1.8":
-  version "0.1.12"
-  resolved "https://registry.yarnpkg.com/@geops/geops-ui/-/geops-ui-0.1.12.tgz#fe52dc609cad9f0ce928a2673825cfcb180b6471"
-  integrity sha512-qKtrnvbvux4Pxz5eK5H6a75BdS6AfdRwfJJj1Bpzui/2+m4i6g0QV9xisQEAqcfZ4rqhF+5BO5XM5Ljrwr5psQ==
-  dependencies:
-    prop-types "^15.7.2"
-    react-app-polyfill "^2.0.0"
-    react-router-dom "^5.2.0"
-    uuid "^8.3.1"
-
 "@humanwhocodes/config-array@^0.5.0":
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.5.0.tgz#1407967d4c6eecd7388f83acf1eaf4d0c6e58ef9"
@@ -9361,12 +9351,12 @@ mkdirp@^1.0.3:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
-mobility-toolbox-js@1.3.5:
-  version "1.3.5"
-  resolved "https://registry.yarnpkg.com/mobility-toolbox-js/-/mobility-toolbox-js-1.3.5.tgz#80a58d98b95afd910cbd8e38c66726eb2992cda8"
-  integrity sha512-TRptQxDCszmBeAuMEmhPzj2oGQtVEDtIrzS7o7nR+E/ja3HA+FXIoR+kbWLqnqoXPnL9USs3SKOB6Geu0mDN9g==
+mobility-toolbox-js@^1.4.4:
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/mobility-toolbox-js/-/mobility-toolbox-js-1.4.4.tgz#4228e0fd76dfb8b2113617e4970b31b1a51a915c"
+  integrity sha512-NVup1kebJrwCawwKLWvUB0qMMGjSGVFzpjC8uehxRp2FrVpyx2m4KFyyqQB/tYlPsmvA1jVcR0WmWb/Ie7yYIQ==
   dependencies:
-    "@geops/geops-ui" "^0.1.8"
+    "@geops/geops-ui" "0.1.11"
     "@material-ui/core" "^4.9.14"
     "@material-ui/icons" "^4.9.1"
     "@material-ui/styles" "^4.9.14"
@@ -9378,6 +9368,7 @@ mobility-toolbox-js@1.3.5:
     react "^16.13.1"
     react-app-polyfill "^1.0.6"
     react-dom "^16.13.1"
+    react-icons "^4.2.0"
     react-markdown "^4.3.1"
     react-router "^5.2.0"
     react-router-dom "^5.2.0"
@@ -11206,6 +11197,11 @@ react-icons@^3.8.0:
   integrity sha512-JRgiI/vdF6uyBgyZhVyYJUZAop95Sy4XDe/jmT3R/bKliFWpO/uZBwvSjWEdxwzec7SYbEPNPck0Kff2tUGM2Q==
   dependencies:
     camelcase "^5.0.0"
+
+react-icons@^4.2.0:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.3.1.tgz#2fa92aebbbc71f43d2db2ed1aed07361124e91ca"
+  integrity sha512-cB10MXLTs3gVuXimblAdI71jrJx8njrJZmNMEMC+sQu5B/BIOmlsAjskdqpn81y8UBVEGuHODd7/ci5DvoSzTQ==
 
 react-is@^16.13.1, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.6:
   version "16.13.1"
