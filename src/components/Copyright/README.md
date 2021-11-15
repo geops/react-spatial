@@ -1,20 +1,19 @@
-
 The following example demonstrates the use of Copyright.
 
 ```js
-import React from  'react';
+import React from 'react';
 import Map from 'ol/Map';
 import Tile from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
-import {defaults} from 'ol/control';
+import { defaults } from 'ol/control';
 import { Layer, MapboxLayer } from 'mobility-toolbox-js/ol';
 import BasicMap from 'react-spatial/components/BasicMap';
 import Copyright from 'react-spatial/components/Copyright';
 
 const map = new Map({
   controls: defaults({
-    attribution: false
-  })
+    attribution: false,
+  }),
 });
 
 const layers = [
@@ -26,12 +25,12 @@ const layers = [
     olLayer: new Tile({
       source: new OSM(),
     }),
-  })
+  }),
 ];
 window.layers = layers;
 
-<div>
+<div className="rs-copyright-example">
   <BasicMap map={map} layers={layers} tabIndex={0} />
   <Copyright map={map} />
-</div>
+</div>;
 ```
