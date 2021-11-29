@@ -91,8 +91,7 @@
     "build": "buble --no modules,asyncAwait -i src -o build --objectAssign Object.assign --sourcemap && cp package.json README.md LICENSE build && cp -rf src/images build",
     "coverage": "yarn test --coverage --coverageDirectory=coverage",
     "cp": "generact --root src/components",
-    "doc": "bash ./scripts/prepare-doc.sh",
-    "doc:server": "styleguidist server",
+    "doc": "styleguidist build",
     "format": "prettier --write 'src/**/*.js' && eslint 'src/**/*.js' --fix && stylelint 'src/**/*.css' 'src/**/*.scss' --fix",
     "link2": "cmdToAdd=$(node ./scripts/read-pkg-json.js add) && $cmdToAdd && yarn build && cmdToRemove=$(node ./scripts/read-pkg-json.js remove) && $cmdToRemove && cd build && yarn link",
     "lint": "eslint 'src/**/*.js' && stylelint 'src/**/*.css' 'src/**/*.scss'",
@@ -100,7 +99,7 @@
     "prebuild": "rm -rf build/",
     "publish:beta": "yarn publish:public --tag beta",
     "publish:public": "yarn version && git push origin HEAD && yarn build && yarn publish build/",
-    "start": "yarn doc:server",
+    "start": "styleguidist server",
     "test": "jest"
   },
   "browserslist": [
