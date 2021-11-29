@@ -111,7 +111,7 @@ const defaultRenderStation = ({
   const { stations } = lineInfos;
   const isFirstStation = idx === 0;
   const isLastStation = idx === stations.length - 1;
-  const isStationPassed = isPassed(stop, trackerLayer.currTime, stations, idx);
+  const isStationPassed = isPassed(stop, trackerLayer.time, stations, idx);
   const isNotStation = isNotStop(stop);
   return (
     <div
