@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { TrackerLayer } from 'mobility-toolbox-js/ol';
-import { bgColors } from 'mobility-toolbox-js/common/trackerConfig';
+import { getBgColor } from 'mobility-toolbox-js/common/trackerConfig';
 import {
   getHoursAndMinutes,
   getDelayString,
@@ -179,16 +179,19 @@ const defaultRenderStation = ({
 };
 
 const renderRouteIdentifier = ({ routeIdentifier, longName }) => {
-  // first part of the id, without leading zeros.
-  const id = parseInt(routeIdentifier.split('.')[0], 10);
-  if (!longName.includes(id)) {
-    return ` (${id})`;
+  if (routeIdentifier) {
+    // first part of the id, without leading zeros.
+    const id = parseInt(routeIdentifier.split('.')[0], 10);
+    if (!longName.includes(id)) {
+      return ` (${id})`;
+    }
   }
   return null;
 };
 
 const defaultRenderHeader = ({ lineInfos, renderHeaderButtons }) => {
   const {
+    type,
     vehicleType,
     shortName,
     longName,
@@ -203,7 +206,7 @@ const defaultRenderHeader = ({ lineInfos, renderHeaderButtons }) => {
         className="rt-route-icon"
         style={{
           /* stylelint-disable-next-line value-keyword-case */
-          backgroundColor: backgroundColor || bgColors[vehicleType],
+          backgroundColor: backgroundColor || getBgColor(type || vehicleType),
           color: color || 'black',
         }}
       >
