@@ -34,7 +34,7 @@ function RouteScheduleExample() {
   const [followActive, setFollowActive] = useState(false);
   const [center, setCenter] = useState([951560, 6002550]);
   useEffect(()=> {
-    trackerLayer.onClick((newLineInfos)=> {
+    trackerLayer.onClick(([newLineInfos])=> {
       setLineInfos(newLineInfos);
     });
   }, []);

@@ -7,7 +7,7 @@ import { getBgColor } from 'mobility-toolbox-js/common/trackerConfig';
 import {
   getHoursAndMinutes,
   getDelayString,
-} from 'mobility-toolbox-js/common/timeUtils';
+} from 'mobility-toolbox-js/common/utils';
 import ReactTransitPropTypes from '../../propTypes';
 import firstStation from '../../images/RouteSchedule/firstStation.png';
 import station from '../../images/RouteSchedule/station.png';
@@ -340,7 +340,7 @@ function RouteSchedule(props) {
   if (!lineInfos) {
     return null;
   }
-
+  console.log(lineInfos);
   return (
     <div className={className}>
       {renderHeader({ ...props })}
