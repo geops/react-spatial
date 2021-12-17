@@ -1,7 +1,7 @@
 import React, { useMemo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Map } from 'ol';
-import CopyrightControl from 'mobility-toolbox-js/ol/controls/CopyrightControl';
+import { CopyrightControl } from 'mobility-toolbox-js/ol';
 
 const propTypes = {
   /**

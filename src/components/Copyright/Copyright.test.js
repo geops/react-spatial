@@ -8,7 +8,7 @@ import Tile from 'ol/Tile';
 import TileLayer from 'ol/layer/Tile';
 import TileSource from 'ol/source/Tile';
 import { createXYZ } from 'ol/tilegrid';
-import Layer from 'mobility-toolbox-js/ol/layers/Layer';
+import { Layer } from 'mobility-toolbox-js/ol';
 import Copyright from './Copyright';
 
 configure({ adapter: new Adapter() });

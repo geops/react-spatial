@@ -4,7 +4,7 @@ import { Autocomplete } from '@material-ui/lab';
 import { FaSearch } from 'react-icons/fa';
 import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import StopFinderControl from 'mobility-toolbox-js/ol/controls/StopFinderControl';
+import { StopFinderControl } from 'mobility-toolbox-js/ol';
 import { Map } from 'ol';
 import { makeStyles } from '@material-ui/core';
 import StopsFinderOptions from './StopsFinderOption';
