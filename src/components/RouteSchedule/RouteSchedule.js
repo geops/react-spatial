@@ -195,10 +195,10 @@ const defaultRenderHeader = ({ lineInfos, renderHeaderButtons }) => {
     vehicleType,
     shortName,
     longName,
-    color,
-    backgroundColor,
+    stroke,
     destination,
     routeIdentifier,
+    text_color: textColor,
   } = lineInfos;
   return (
     <div className="rt-route-header">
@@ -206,8 +206,8 @@ const defaultRenderHeader = ({ lineInfos, renderHeaderButtons }) => {
         className="rt-route-icon"
         style={{
           /* stylelint-disable-next-line value-keyword-case */
-          backgroundColor: backgroundColor || getBgColor(type || vehicleType),
-          color: color || 'black',
+          backgroundColor: stroke || getBgColor(type || vehicleType),
+          color: textColor || 'black',
         }}
       >
         {shortName}
@@ -340,7 +340,7 @@ function RouteSchedule(props) {
   if (!lineInfos) {
     return null;
   }
-  console.log(lineInfos);
+
   return (
     <div className={className}>
       {renderHeader({ ...props })}
