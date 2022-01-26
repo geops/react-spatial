@@ -4,10 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { TrackerLayer } from 'mobility-toolbox-js/ol';
 import { getBgColor } from 'mobility-toolbox-js/common/trackerConfig';
-import {
-  getHoursAndMinutes,
-  getDelayString,
-} from 'mobility-toolbox-js/common/utils';
+import { getHoursAndMinutes, getDelayString } from '../../utils/timeUtils';
 import ReactTransitPropTypes from '../../propTypes';
 import firstStation from '../../images/RouteSchedule/firstStation.png';
 import station from '../../images/RouteSchedule/station.png';
