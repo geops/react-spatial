@@ -11,7 +11,7 @@ exports[`RouteSchedule matches snapshots. 1`] = `
       className="rt-route-icon"
       style={
         Object {
-          "backgroundColor": "ff8a00",
+          "backgroundColor": "#ffb400",
           "color": "black",
         }
       }

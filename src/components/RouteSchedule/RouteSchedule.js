@@ -114,7 +114,7 @@ const defaultRenderStation = ({
     <div
       // Train line can go in circle so begin and end have the same id,
       // using the time in the key should fix the issue.
-      key={stationId + arrivalTime + departureTime}
+      key={(stationId || stationName) + arrivalTime + departureTime}
       role="button"
       className={[
         'rt-route-station',
@@ -192,10 +192,10 @@ const defaultRenderHeader = ({ lineInfos, renderHeaderButtons }) => {
     vehicleType,
     shortName,
     longName,
-    color,
-    backgroundColor,
+    stroke,
     destination,
     routeIdentifier,
+    text_color: textColor,
   } = lineInfos;
   return (
     <div className="rt-route-header">
@@ -203,8 +203,8 @@ const defaultRenderHeader = ({ lineInfos, renderHeaderButtons }) => {
         className="rt-route-icon"
         style={{
           /* stylelint-disable-next-line value-keyword-case */
-          backgroundColor: backgroundColor || getBgColor(type || vehicleType),
-          color: color || 'black',
+          backgroundColor: stroke || getBgColor(type || vehicleType),
+          color: textColor || 'black',
         }}
       >
         {shortName}
