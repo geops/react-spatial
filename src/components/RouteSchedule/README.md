@@ -36,10 +36,14 @@ function RouteScheduleExample() {
   const [center, setCenter] = useState([951560, 6002550]);
   useEffect(()=> {
     trackerLayer.onClick(([feature])=> {
-      const vehicleId = feature.get('train_id');
-      trackerLayer.api.getStopSequence(vehicleId).then((stopSequence) => {
-        setLineInfos(stopSequence[0]);
-      });
+      if (feature) {
+        const vehicleId = feature.get('train_id');
+        trackerLayer.api.getStopSequence(vehicleId).then((stopSequence) => {
+          setLineInfos(stopSequence[0]);
+        });
+      } else {
+        setLineInfos();
+      }
     });
   }, []);
 

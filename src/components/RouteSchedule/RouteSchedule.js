@@ -114,7 +114,7 @@ const defaultRenderStation = ({
     <div
       // Train line can go in circle so begin and end have the same id,
       // using the time in the key should fix the issue.
-      key={stationId + arrivalTime + departureTime}
+      key={(stationId || stationName) + arrivalTime + departureTime}
       role="button"
       className={[
         'rt-route-station',
