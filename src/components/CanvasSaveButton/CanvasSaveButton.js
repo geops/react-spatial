@@ -224,7 +224,11 @@ class CanvasSaveButton extends PureComponent {
   drawCopyright(destContext, destCanvas, maxWidth) {
     const { extraData, scale } = this.props;
     const { text, font, fillStyle, background } = extraData.copyright;
-    const copyright = typeof text === 'function' ? text() : text;
+    let copyright = typeof text === 'function' ? text() : text;
+
+    if (Array.isArray(copyright)) {
+      copyright = copyright.join();
+    }
 
     destContext.save();
     destContext.scale(scale, scale);
