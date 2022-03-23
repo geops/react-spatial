@@ -236,11 +236,7 @@ class CanvasSaveButton extends PureComponent {
       scale,
     );
 
-    // eslint-disable-next-line no-param-reassign
     destContext.scale(scale, scale);
-    // eslint-disable-next-line no-param-reassign
-    destContext.font = font || '12px Arial';
-    // eslint-disable-next-line no-param-reassign
     destContext.fillStyle = fillStyle || 'black';
 
     // We search if the display on 2 line is necessary
