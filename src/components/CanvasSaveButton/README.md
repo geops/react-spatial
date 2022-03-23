@@ -43,7 +43,7 @@ function CanvasSaveButtonExample() {
           extraData={{
             copyright: {
               text: () => {
-                return layers[0].copyrights;
+                return layers[0].copyrights.join(', ');
               },
             },
             northArrow: {
