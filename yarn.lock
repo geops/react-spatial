@@ -1161,10 +1161,10 @@
     react-router-dom "^5.2.0"
     uuid "^8.3.1"
 
-"@geops/geops-ui@0.1.12":
-  version "0.1.12"
-  resolved "https://registry.yarnpkg.com/@geops/geops-ui/-/geops-ui-0.1.12.tgz#fe52dc609cad9f0ce928a2673825cfcb180b6471"
-  integrity sha512-qKtrnvbvux4Pxz5eK5H6a75BdS6AfdRwfJJj1Bpzui/2+m4i6g0QV9xisQEAqcfZ4rqhF+5BO5XM5Ljrwr5psQ==
+"@geops/geops-ui@0.1.13":
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/@geops/geops-ui/-/geops-ui-0.1.13.tgz#ba796cf574a74eb90e68e7f34aa7cd3303e711c4"
+  integrity sha512-v8n0IbVXWsUAFvnwzem3z3JfpVQaO2oR3CoA42HhwmPy6Fx51svNGYAiwRURL/hI+sS4PjJ+s8jpiTikZ4kB0g==
   dependencies:
     prop-types "^15.7.2"
     react-app-polyfill "^2.0.0"
