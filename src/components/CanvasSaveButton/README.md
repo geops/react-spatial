@@ -43,8 +43,8 @@ function CanvasSaveButtonExample() {
           extraData={{
             copyright: {
               text: () => {
-                return layers[0].copyrights.join(', ');
-              },
+                return layers[0].copyrights.join(', ') +"© SBB/CFF/FFS | © geOps Tiles | © OpenStreetMap Contributors | © imagico | © OpenMapTiles | Datenschutz | Impressum | Datenschutz | Impressum | © geOps Tiles | © OpenStreetMap Contributors | © imagico | © OpenMapTiles";
+                },
             },
             northArrow: {
               rotation: () => {

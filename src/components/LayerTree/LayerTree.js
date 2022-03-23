@@ -175,7 +175,7 @@ class LayerTree extends Component {
 
   componentWillUnmount() {
     const { layerService } = this.props;
-    layerService.un('change', this.updateLayers);
+    layerService.un('change:visible', this.updateLayers);
   }
 
   onInputClick(layer, toggle = false) {
@@ -222,9 +222,9 @@ class LayerTree extends Component {
   updateLayerService() {
     const { layerService } = this.props;
     if (layerService) {
-      layerService.un('change', this.updateLayers);
+      layerService.un('change:visible', this.updateLayers);
       this.updateLayers();
-      layerService.on('change', this.updateLayers);
+      layerService.on('change:visible', this.updateLayers);
     }
   }
 

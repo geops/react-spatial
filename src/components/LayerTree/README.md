@@ -99,7 +99,7 @@ baseBright.addChild(railLines);
 baseBright.addChild(passengerFrequencies);
 
 const layers = [baseTravic, baseDark, baseBright];
-// const layerService = new LayerService(layers);
+const layerService = new LayerService(layers);
 
 <div className="rs-layer-tree-example">
   <BasicMap
@@ -109,7 +109,7 @@ const layers = [baseTravic, baseDark, baseBright];
     tabIndex={0}
   />
   <LayerTree
-    layers={layers}
+    layerService={layerService}
     isItemHidden={(layer) => layer.get('hidden')}
     expandChildren
   />
