@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import OLMap from 'ol/Map';
@@ -188,64 +189,124 @@ class CanvasSaveButton extends PureComponent {
     return destContext.font;
   }
 
-  // If minimal fontsize is reached, divide copyright in two lines.
-  splitCopyrightLine(destContext, destCanvas, maxWidth, copyright, scale) {
-    let newCopyright = copyright;
-    const wordNumber = copyright.split(' ').length;
+  // eslint-disable-next-line class-methods-use-this
+  drawTextBackground(
+    destContext,
+    textMeasure,
+    textX,
+    textY,
+    padding,
+    styleOptions = {},
+  ) {
+    /// get width of text
+    const { width, height, actualBoundingBoxAscent } = textMeasure;
+    destContext.save();
+    // Dflt is a white background
+    destContext.fillStyle = 'rgba(255,255,255,.8)';
 
-    for (let i = 0; i < wordNumber; i += 1) {
-      newCopyright = newCopyright.substring(0, newCopyright.lastIndexOf(' '));
-      // Stop removing word when fits within one line.
-      if (destContext.measureText(newCopyright).width * scale < maxWidth) {
-        break;
-      }
+    // To simplify usability the user could pass a boolean to use only default values.
+    if (typeof styleOptions === 'object') {
+      Object.entries(styleOptions).forEach(([key, value]) => {
+        destContext[key] = value;
+      });
     }
 
-    // Draw fist line (line break isn't supported for fillText).
-    destContext.fillText(
-      newCopyright,
-      this.padding,
-      destCanvas.height / scale - 3 * this.padding,
+    /// draw background rect assuming height of font
+    destContext.fillRect(
+      textX - padding,
+      textY - actualBoundingBoxAscent - padding,
+      width + padding * 2,
+      height + padding * 2,
     );
-
-    // Draw second line.
-    destContext.fillText(
-      copyright.replace(newCopyright, ''),
-      this.padding,
-      destCanvas.height / scale - this.padding,
-    );
+    destContext.restore();
   }
 
   drawCopyright(destContext, destCanvas, maxWidth) {
     const { extraData, scale } = this.props;
-    const { text, font, fillStyle } = extraData.copyright;
-    const copyright = typeof text === 'function' ? text() : text;
-    this.multilineCopyright = false;
+    const { text, font, fillStyle, background } = extraData.copyright;
+    let copyright = typeof text === 'function' ? text() : text;
+
+    if (Array.isArray(copyright)) {
+      copyright = copyright.join();
+    }
 
     destContext.save();
     destContext.scale(scale, scale);
-    // eslint-disable-next-line no-param-reassign
     destContext.font = font || '12px Arial';
-    // eslint-disable-next-line no-param-reassign
+    destContext.font = this.decreaseFontSize(
+      destContext,
+      maxWidth - this.padding,
+      copyright,
+      scale,
+    );
+
+    destContext.scale(scale, scale);
     destContext.fillStyle = fillStyle || 'black';
 
-    this.decreaseFontSize(destContext, maxWidth, copyright, scale);
+    // We search if the display on 2 line is necessary
+    let firstLine = copyright;
+    const wordNumber = copyright.split(' ').length;
 
+    // If the text is bigger than the max width we split itinto 2 lines
     if (this.multilineCopyright) {
-      this.splitCopyrightLine(
+      for (let i = 0; i < wordNumber; i += 1) {
+        firstLine = firstLine.substring(0, firstLine.lastIndexOf(' '));
+        // Stop removing word when fits within one line.
+        if (
+          destContext.measureText(firstLine).width * scale <
+          maxWidth - this.padding
+        ) {
+          break;
+        }
+      }
+    }
+    const secondLine = copyright.replace(firstLine, '');
+
+    // Draw first line (line break isn't supported for fillText).
+    const textX = this.padding;
+    let textMeasure = destContext.measureText(firstLine);
+    textMeasure.height =
+      textMeasure.actualBoundingBoxAscent +
+      textMeasure.actualBoundingBoxDescent;
+    let firstLineY = destCanvas.height / scale - this.padding;
+    const secondLineY = firstLineY;
+    const paddingBetweenLines = 3;
+    const paddingBackground = paddingBetweenLines / 2;
+
+    if (secondLine) {
+      firstLineY -= textMeasure.height + paddingBetweenLines;
+    }
+    if (background) {
+      this.drawTextBackground(
         destContext,
-        destCanvas,
-        maxWidth,
-        copyright,
-        scale,
-      );
-    } else {
-      destContext.fillText(
-        copyright,
-        this.padding,
-        destCanvas.height / scale - this.padding,
+        textMeasure,
+        textX,
+        firstLineY,
+        paddingBackground,
+        background,
       );
     }
+    destContext.fillText(firstLine, textX, firstLineY);
+
+    // Draw second line.
+    if (secondLine) {
+      textMeasure = destContext.measureText(secondLine);
+      textMeasure.height =
+        textMeasure.actualBoundingBoxAscent +
+        textMeasure.actualBoundingBoxDescent;
+      if (background) {
+        this.drawTextBackground(
+          destContext,
+          textMeasure,
+          textX,
+          secondLineY,
+          paddingBackground,
+          background,
+        );
+      }
+      destContext.fillText(secondLine, textX, secondLineY);
+    }
+
     destContext.restore();
   }
 
