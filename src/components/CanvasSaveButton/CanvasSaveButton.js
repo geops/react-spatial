@@ -235,7 +235,7 @@ class CanvasSaveButton extends PureComponent {
     destContext.font = font || '12px Arial';
     destContext.font = this.decreaseFontSize(
       destContext,
-      maxWidth,
+      maxWidth - this.padding,
       copyright,
       scale,
     );
@@ -252,7 +252,10 @@ class CanvasSaveButton extends PureComponent {
       for (let i = 0; i < wordNumber; i += 1) {
         firstLine = firstLine.substring(0, firstLine.lastIndexOf(' '));
         // Stop removing word when fits within one line.
-        if (destContext.measureText(firstLine).width * scale < maxWidth) {
+        if (
+          destContext.measureText(firstLine).width * scale <
+          maxWidth - this.padding
+        ) {
           break;
         }
       }
