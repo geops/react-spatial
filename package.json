@@ -18,9 +18,9 @@
     "resize-observer-polyfill": "1.5.1"
   },
   "peerDependencies": {
-    "mapbox-gl": "^1.13.0",
-    "mobility-toolbox-js": "^1.6.3",
-    "ol": "^6.4.3",
+    "mapbox-gl": "^1",
+    "mobility-toolbox-js": "^1",
+    "ol": "^6",
     "react": "^16",
     "react-dom": "^16"
   },
