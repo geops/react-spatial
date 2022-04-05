@@ -186,6 +186,7 @@ class CanvasSaveButton extends PureComponent {
       fontSize - 1 > minFontSize &&
       destContext.measureText(copyright).width * scale > maxWidth
     );
+
     return destContext.font;
   }
 
@@ -452,7 +453,7 @@ class CanvasSaveButton extends PureComponent {
           logoPromise = this.drawElement(extraData.logo, destCanvas);
         }
 
-        logoPromise.then((customItemSize = [0, 0]) => {
+        logoPromise.then((logoSize = [0, 0]) => {
           // North arrow
           let arrowPromise = Promise.resolve();
           if (destContext && extraData && extraData.northArrow) {
@@ -464,13 +465,13 @@ class CanvasSaveButton extends PureComponent {
                 ...extraData.northArrow,
               },
               destCanvas,
-              customItemSize,
+              logoSize,
             );
           }
 
           // Copyright
-          arrowPromise.then((arrowWidth) => {
-            const widestElement = Math.max(customItemSize[0], arrowWidth);
+          arrowPromise.then((arrowSize = [0, 0]) => {
+            const widestElement = Math.max(logoSize[0], arrowSize[0]);
             if (
               destContext &&
               extraData &&
