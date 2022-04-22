@@ -121,8 +121,8 @@ export default class LayerService {
     }
     this.getLayersAsFlatArray().forEach((layer) => {
       this.keys.push(
-        layer.on('change:copyright', (evt) => {
-          (this.callbacks['change:copyright'] || []).forEach((cb) => {
+        layer.on('change:copyrights', (evt) => {
+          (this.callbacks['change:copyrights'] || []).forEach((cb) => {
             return cb(evt.target);
           });
         }),
