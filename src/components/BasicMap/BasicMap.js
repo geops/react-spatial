@@ -221,7 +221,7 @@ class BasicMap extends PureComponent {
     }
 
     if (prevProps.layers !== layers) {
-      this.setLayers(layers);
+      this.setLayers(layers, prevProps.layers);
     }
 
     // Creates a new view if necessary before updating the others prop.
@@ -283,19 +283,12 @@ class BasicMap extends PureComponent {
     this.setState({ node });
   }
 
-  setLayers(layers = []) {
-    const layersToRemove = this.layers.filter((layer) => {
-      return !layers.includes(layer);
-    });
-    for (let i = 0; i < layersToRemove.length; i += 1) {
-      this.terminateLayer(layersToRemove[i]);
+  setLayers(layers = [], prevLayers = []) {
+    for (let i = 0; i < prevLayers.length; i += 1) {
+      this.terminateLayer(prevLayers[i]);
     }
-
-    const layersToInit = layers.filter((layer) => {
-      return !this.layers.includes(layer);
-    });
-    for (let i = 0; i < layersToInit.length; i += 1) {
-      this.initLayer(layersToInit[i]);
+    for (let i = 0; i < layers.length; i += 1) {
+      this.initLayer(layers[i]);
     }
     this.layers = layers;
   }
