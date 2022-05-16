@@ -251,7 +251,7 @@ describe('BasicMap', () => {
   });
 
   describe('#setLayers()', () => {
-    test('only init layers which are not already on the map.', () => {
+    test('init all layers and terminate al previous layer.', () => {
       const layer0 = new Layer({ key: 'test1' });
       const spyInit0 = jest.spyOn(layer0, 'init');
       const spyTerminate0 = jest.spyOn(layer0, 'terminate');
@@ -291,12 +291,12 @@ describe('BasicMap', () => {
       expect(spyInit0).toHaveBeenCalledTimes(1);
       expect(spyInit1).toHaveBeenCalledTimes(1);
       expect(spyInit2).toHaveBeenCalledTimes(1);
-      expect(spyInit3).toHaveBeenCalledTimes(1);
+      expect(spyInit3).toHaveBeenCalledTimes(2);
       expect(spyInit4).toHaveBeenCalledTimes(1);
       expect(spyTerminate0).toHaveBeenCalledTimes(1);
       expect(spyTerminate1).toHaveBeenCalledTimes(2);
       expect(spyTerminate2).toHaveBeenCalledTimes(1);
-      expect(spyTerminate3).toHaveBeenCalledTimes(1);
+      expect(spyTerminate3).toHaveBeenCalledTimes(3);
       expect(spyTerminate4).toHaveBeenCalledTimes(1);
       expect(map.instance().layers).toBe(layers);
     });
