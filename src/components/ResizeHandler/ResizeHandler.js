@@ -6,9 +6,9 @@ import ResizeObserver from 'resize-observer-polyfill';
 const propTypes = {
   observe: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.instanceOf(Element),
+    PropTypes.node,
     PropTypes.instanceOf(Component),
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+    PropTypes.shape({ current: PropTypes.node }),
     PropTypes.shape({ current: PropTypes.instanceOf(Component) }),
   ]),
   maxHeightBrkpts: PropTypes.objectOf(PropTypes.number),
@@ -140,7 +140,7 @@ class ResizeHandler extends PureComponent {
     this.observer.disconnect();
     const { observe } = this.props;
 
-    if (!observe || typeof window === 'undefined') {
+    if (!observe) {
       return;
     }
 
