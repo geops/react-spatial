@@ -21,8 +21,8 @@
     "mapbox-gl": "^1",
     "mobility-toolbox-js": "^1",
     "ol": "^6",
-    "react": "^16",
-    "react-dom": "^16"
+    "react": "^18",
+    "react-dom": "^18"
   },
   "devDependencies": {
     "@babel/core": "7.15.0",
@@ -66,7 +66,7 @@
     "jsts": "2.7.3",
     "lint-staged": "11.2.0",
     "mapbox-gl": "1.13.1",
-    "mobility-toolbox-js": "1.6.3",
+    "mobility-toolbox-js": "1.7.10-beta.3",
     "ol": "6.6.1",
     "prettier": "2.4.1",
     "proj4": "2.7.5",
