@@ -140,7 +140,7 @@ class ResizeHandler extends PureComponent {
     this.observer.disconnect();
     const { observe } = this.props;
 
-    if (!observe) {
+    if (!observe || typeof window === 'undefined') {
       return;
     }
 
