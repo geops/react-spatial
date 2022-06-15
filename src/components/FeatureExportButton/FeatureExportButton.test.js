@@ -2,7 +2,7 @@ import 'jest-canvas-mock';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { configure, mount, shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { Layer } from 'mobility-toolbox-js/ol';
 import GPX from 'ol/format/GPX';
 import VectorSource from 'ol/source/Vector';

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { act } from 'react-dom/test-utils';
 import { configure, mount } from 'enzyme';
 import renderer from 'react-test-renderer';
-import Adapter from 'enzyme-adapter-react-16';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import ResizeObserver from 'resize-observer-polyfill';
 import { Resizable } from 're-resizable';
 import Overlay from './Overlay';

@@ -21,8 +21,8 @@
     "mapbox-gl": "^1",
     "mobility-toolbox-js": "^1",
     "ol": "^6",
-    "react": "^18",
-    "react-dom": "^18"
+    "react": "^17",
+    "react-dom": "^17"
   },
   "devDependencies": {
     "@babel/core": "7.15.0",
@@ -34,6 +34,7 @@
     "@testing-library/jest-dom": "5.16.3",
     "@testing-library/react": "12.1.4",
     "@testing-library/user-event": "13.5.0",
+    "@wojtekmaj/enzyme-adapter-react-17": "0.6.7",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "27.0.2",
     "babel-loader": "8.2.2",
@@ -41,7 +42,6 @@
     "canvas": "2.8.0",
     "css-loader": "5.2.6",
     "enzyme": "3.11.0",
-    "enzyme-adapter-react-16": "1.15.6",
     "eslint": "7.32.0",
     "eslint-config-airbnb": "18.2.1",
     "eslint-config-prettier": "8.3.0",
