@@ -153,11 +153,20 @@ class Permalink extends Component {
   onMapMoved() {
     const { map } = this.props;
     const mapView = map.getView();
-    const { center } = mapView.getProperties();
+    const center = mapView.getCenter();
+    const params = {};
+
+    if (
+      center !== undefined &&
+      center[0] !== undefined &&
+      center[1] !== undefined
+    ) {
+      params.x = this.roundCoord(center[0]);
+      params.y = this.roundCoord(center[1]);
+    }
 
     this.setState({
-      x: this.roundCoord(center[0]),
-      y: this.roundCoord(center[1]),
+      ...params,
       // rounds zoom to two digits max.
       z: +`${Math.round(`${parseFloat(mapView.getZoom())}e+2`)}e-2`,
     });
