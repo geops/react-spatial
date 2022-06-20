@@ -4,6 +4,8 @@
   "version": "1.1.6",
   "license": "MIT",
   "dependencies": {
+    "@commitlint/cli": "17.0.2",
+    "@commitlint/config-conventional": "17.0.2",
     "@geops/geops-ui": "0.1.13",
     "@material-ui/core": "4.12.3",
     "@material-ui/icons": "4.11.2",
@@ -53,7 +55,7 @@
     "file-loader": "6.2.0",
     "fixpack": "3.0.6",
     "generact": "0.4.0",
-    "husky": "4.2.5",
+    "husky": "8.0.1",
     "identity-obj-proxy": "3.0.0",
     "jest": "26.6.3",
     "jest-canvas-mock": "2.3.1",
@@ -79,6 +81,7 @@
     "react-test-renderer": "16.13.1",
     "sass": "1.49.9",
     "sass-loader": "10.2.0",
+    "standard-version": "9.5.0",
     "stream-array": "1.1.2",
     "style-loader": "2.0.0",
     "stylelint": "13.13.1",
@@ -100,8 +103,11 @@
     "lint": "eslint 'src/**/*.js' && stylelint 'src/**/*.css' 'src/**/*.scss'",
     "postbuild": "cp package.json build/ && cd src && find .  -name '*.scss' | cpio -pdm ../build",
     "prebuild": "rm -rf build/",
-    "publish:beta": "yarn publish:public --tag beta",
-    "publish:public": "yarn version && git push origin HEAD && yarn build && yarn publish build/",
+    "publish:beta": "yarn release -- --prerelease beta --skip.changelog && git push origin HEAD && yarn run build && yarn publish build/ --access public --tag beta",
+    "publish:beta:dryrun": "yarn release -- --prerelease beta --dry-run --skip.changelog",
+    "publish:public": "yarn release && git push origin HEAD && yarn build  && git push --tags && yarn publish build/",
+    "publish:public:dryrun": "yarn release --dry-run",
+    "release": "standard-version",
     "start": "styleguidist server",
     "test": "jest"
   },
@@ -150,14 +156,6 @@
       "react/forbid-prop-types": "Off",
       "prettier/prettier": "error",
       "jsx-a11y/no-access-key": "Off"
-    }
-  },
-  "husky": {
-    "hooks": {
-      "post-checkout": "yarn install --frozen-lockfile",
-      "post-merge": "yarn install --frozen-lockfile",
-      "post-rebase": "yarn install --frozen-lockfile",
-      "pre-commit": "sort && CI=true lint-staged   "
     }
   },
   "jest": {
