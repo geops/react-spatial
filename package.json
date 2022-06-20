@@ -4,8 +4,8 @@
   "version": "1.1.6",
   "license": "MIT",
   "dependencies": {
-    "@commitlint/cli": "^17.0.2",
-    "@commitlint/config-conventional": "^17.0.2",
+    "@commitlint/cli": "17.0.2",
+    "@commitlint/config-conventional": "17.0.2",
     "@geops/geops-ui": "0.1.13",
     "@material-ui/core": "4.12.3",
     "@material-ui/icons": "4.11.2",
@@ -119,9 +119,9 @@
   ],
   "commitlint": {
     "rules": {
-      "body-case": [
+      "subject-case": [
         0,
-        "always",
+        "never",
         "sentence-case"
       ]
     }
