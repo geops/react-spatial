@@ -121,7 +121,7 @@
     "rules": {
       "subject-case": [
         0,
-        "never",
+        "always",
         "sentence-case"
       ]
     }
