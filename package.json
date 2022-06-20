@@ -117,15 +117,6 @@
     "not ie <= 10",
     "not op_mini all"
   ],
-  "commitlint": {
-    "rules": {
-      "subject-case": [
-        0,
-        "always",
-        "sentence-case"
-      ]
-    }
-  },
   "eslintConfig": {
     "env": {
       "node": true,
