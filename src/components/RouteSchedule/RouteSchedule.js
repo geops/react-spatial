@@ -3,14 +3,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { TrackerLayer } from 'mobility-toolbox-js/ol';
-import { trackerConfig, timeUtils } from 'mobility-toolbox-js/common';
+import { getBgColor } from 'mobility-toolbox-js/common/trackerConfig';
+import { getHoursAndMinutes, getDelayString } from '../../utils/timeUtils';
 import ReactTransitPropTypes from '../../propTypes';
 import firstStation from '../../images/RouteSchedule/firstStation.png';
 import station from '../../images/RouteSchedule/station.png';
 import lastStation from '../../images/RouteSchedule/lastStation.png';
 import line from '../../images/RouteSchedule/line.png';
-
-const { getHoursAndMinutes, getDelayString } = timeUtils;
 
 /**
  * Returns a color class to display the delay.
@@ -204,9 +203,8 @@ const defaultRenderHeader = ({ lineInfos, renderHeaderButtons }) => {
         className="rt-route-icon"
         style={{
           /* stylelint-disable-next-line value-keyword-case */
-          backgroundColor:
-            backgroundColor || trackerConfig.bgColors[vehicleType],
-          color: color || 'black',
+          backgroundColor: stroke || getBgColor(type || vehicleType),
+          color: textColor || 'black',
         }}
       >
         {shortName}
