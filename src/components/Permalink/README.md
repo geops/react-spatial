@@ -3,9 +3,8 @@ The following example demonstrates the use of Permalink.
 
 ```jsx
 import React from 'react';
-import TileLayer from 'ol/layer/Tile';
-import { Tile, Vector as VectorLayer } from 'ol/layer';
-import { Vector as VectorSource, OSM } from 'ol/source';
+import VectorSource from 'ol/source/Vector';
+import VectorLayer from 'ol/layer/Vector';
 import { Style, Circle, Stroke, Fill } from 'ol/style';
 import GeoJSONFormat from 'ol/format/GeoJSON';
 import { Layer, MapboxLayer } from 'mobility-toolbox-js/ol';
