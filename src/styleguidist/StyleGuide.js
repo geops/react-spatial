@@ -106,7 +106,7 @@ export function StyleGuideRenderer({
   const [selected, setSelected] = useState('Components');
   const ref = useRef();
   useEffect(() => {
-    fetch('https://developer.geops.io/publickey')
+    fetch('https://backend.developer.geops.io/publickey')
       .then((response) => {
         return response.json();
       })

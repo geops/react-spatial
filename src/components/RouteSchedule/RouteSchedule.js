@@ -10,7 +10,6 @@ import station from '../../images/RouteSchedule/station.png';
 import lastStation from '../../images/RouteSchedule/lastStation.png';
 import line from '../../images/RouteSchedule/line.png';
 
-console.log(timeUtils);
 const { getHoursAndMinutes, getDelayString } = timeUtils;
 
 /**
@@ -110,13 +109,13 @@ const defaultRenderStation = ({
   const { stations } = lineInfos;
   const isFirstStation = idx === 0;
   const isLastStation = idx === stations.length - 1;
-  const isStationPassed = isPassed(stop, trackerLayer.currTime, stations, idx);
+  const isStationPassed = isPassed(stop, trackerLayer.time, stations, idx);
   const isNotStation = isNotStop(stop);
   return (
     <div
       // Train line can go in circle so begin and end have the same id,
       // using the time in the key should fix the issue.
-      key={stationId + arrivalTime + departureTime}
+      key={(stationId || stationName) + arrivalTime + departureTime}
       role="button"
       className={[
         'rt-route-station',
@@ -178,23 +177,26 @@ const defaultRenderStation = ({
 };
 
 const renderRouteIdentifier = ({ routeIdentifier, longName }) => {
-  // first part of the id, without leading zeros.
-  const id = parseInt(routeIdentifier.split('.')[0], 10);
-  if (!longName.includes(id)) {
-    return ` (${id})`;
+  if (routeIdentifier) {
+    // first part of the id, without leading zeros.
+    const id = parseInt(routeIdentifier.split('.')[0], 10);
+    if (!longName.includes(id)) {
+      return ` (${id})`;
+    }
   }
   return null;
 };
 
 const defaultRenderHeader = ({ lineInfos, renderHeaderButtons }) => {
   const {
+    type,
     vehicleType,
     shortName,
     longName,
-    color,
-    backgroundColor,
+    stroke,
     destination,
     routeIdentifier,
+    text_color: textColor,
   } = lineInfos;
   return (
     <div className="rt-route-header">

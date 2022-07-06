@@ -1,8 +1,7 @@
-
 The following example demonstrates the use of LayerTree.
 
 ```jsx
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { MapboxLayer, MapboxStyleLayer, Layer } from 'mobility-toolbox-js/ol';
 import { Style, Circle, Stroke, Fill } from 'ol/style';
 import VectorLayer from 'ol/layer/Vector';
@@ -16,7 +15,7 @@ const baseTravic = new MapboxLayer({
   url: `https://maps.geops.io/styles/travic_v2/style.json?key=${apiKey}`,
   properties: {
     hidden: true,
-  }
+  },
 });
 
 const baseDark = new MapboxLayer({
@@ -103,7 +102,16 @@ const layers = [baseTravic, baseDark, baseBright];
 const layerService = new LayerService(layers);
 
 <div className="rs-layer-tree-example">
-  <BasicMap layers={layers} center={[876887.69, 5928515.41]} zoom={8} tabIndex={0} />
-  <LayerTree layerService={layerService} isItemHidden={(layer) => layer.get('hidden')}/>
-</div>
+  <BasicMap
+    layers={layers}
+    center={[876887.69, 5928515.41]}
+    zoom={8}
+    tabIndex={0}
+  />
+  <LayerTree
+    layerService={layerService}
+    isItemHidden={(layer) => layer.get('hidden')}
+    expandChildren
+  />
+</div>;
 ```

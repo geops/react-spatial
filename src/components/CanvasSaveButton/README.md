@@ -44,7 +44,7 @@ function CanvasSaveButtonExample() {
             copyright: {
               text: () => {
                 return layers[0].copyrights;
-              },
+                },
             },
             northArrow: {
               rotation: () => {

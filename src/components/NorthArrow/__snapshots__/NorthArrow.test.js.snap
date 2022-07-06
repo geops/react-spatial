@@ -42,7 +42,7 @@ exports[`NorthArrow should match snapshot with children. 1`] = `
   >
     <circle
       cx="8.5"
-      cy="8.501"
+      cy="8.5"
       r="2.5"
     />
     <path

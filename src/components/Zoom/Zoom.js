@@ -26,7 +26,7 @@ const propTypes = {
    */
   titles: PropTypes.shape({
     zoomIn: PropTypes.string,
-    zoomOut: PropTypes.stirng,
+    zoomOut: PropTypes.string,
   }),
 
   /**

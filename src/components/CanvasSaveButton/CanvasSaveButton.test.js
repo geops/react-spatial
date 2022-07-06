@@ -122,7 +122,6 @@ describe('CanvasSaveButton', () => {
       });
     const spy = jest.spyOn(CanvasSaveButton.prototype, 'createCanvasImage');
     const spy2 = jest.spyOn(CanvasSaveButton.prototype, 'downloadCanvasImage');
-    const spy4 = jest.spyOn(CanvasSaveButton.prototype, 'splitCopyrightLine');
     jest
       .spyOn(olMap.getTargetElement(), 'getElementsByTagName')
       .mockReturnValue([canvas]);
@@ -141,11 +140,9 @@ describe('CanvasSaveButton', () => {
       expect(link.href).toBe('http://localhost/fooblob');
       expect(link.download).toBe('.jpg');
       expect(link.click).toHaveBeenCalledTimes(1);
-      expect(spy4).toHaveBeenCalledTimes(1);
       spy.mockRestore();
       spy2.mockRestore();
       spy3.mockRestore();
-      spy4.mockRestore();
       done();
     });
   });

@@ -1,13 +1,7 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import { configure, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import 'jest-canvas-mock';
-import renderer from 'react-test-renderer';
 import { Layer } from 'mobility-toolbox-js/ol';
+import { fireEvent, render } from '@testing-library/react';
 import BaseLayerSwitcher from './BaseLayerSwitcher';
-
-configure({ adapter: new Adapter() });
 
 describe('BaseLayerSwitcher', () => {
   let layers;
@@ -38,48 +32,53 @@ describe('BaseLayerSwitcher', () => {
 
   describe('matches snapshots', () => {
     test('using default properties.', () => {
-      const component = renderer.create(
+      const { container } = render(
         <BaseLayerSwitcher layers={layers} layerImages={layerImages} />,
       );
-      const tree = component.toJSON();
-      expect(tree).toMatchSnapshot();
+      expect(container.innerHTML).toMatchSnapshot();
     });
   });
 
   test('the correct baselayer is visible on mount', () => {
-    const comp = mount(
-      <BaseLayerSwitcher layers={layers} layerImages={layerImages} />,
-    );
-    expect(comp.props().layers[0].visible).toBe(true);
+    render(<BaseLayerSwitcher layers={layers} layerImages={layerImages} />);
+    expect(layers[0].visible).toBe(true);
   });
 
-  test('removes open class and switches layer on click', () => {
-    const comp = mount(
+  test('removes open class and switches layer on click', async () => {
+    const { container } = render(
       <BaseLayerSwitcher layers={layers} layerImages={layerImages} />,
     );
-    comp.find('.rs-opener').at(0).simulate('click');
-    comp.find('.rs-base-layer-switcher-button').at(3).simulate('click');
+    await fireEvent.click(container.querySelector('.rs-opener'));
+    await fireEvent.click(
+      container.querySelectorAll('.rs-base-layer-switcher-button')[3],
+    );
     expect(
-      comp.props().layers.filter((layer) => {
+      layers.filter((layer) => {
         return layer.isBaseLayer;
       })[2].visible,
     ).toBe(true);
-    expect(comp.find('.rs-base-layer-switcher rs-open').exists()).toBe(false);
+    expect(!!container.querySelector('.rs-base-layer-switcher rs-open')).toBe(
+      false,
+    );
   });
 
-  test('toggles base map instead of opening when only two base layers', () => {
-    const comp = mount(<BaseLayerSwitcher layers={layers.slice(0, 2)} />);
+  test('toggles base map instead of opening when only two base layers', async () => {
+    const { container } = render(
+      <BaseLayerSwitcher layers={layers.slice(0, 2)} />,
+    );
     expect(
-      comp.props().layers.filter((layer) => {
+      layers.filter((layer) => {
         return layer.isBaseLayer;
       })[0].visible,
     ).toBe(true);
-    comp.find('.rs-opener').at(0).simulate('click');
+    await fireEvent.click(container.querySelector('.rs-opener'));
     expect(
-      comp.props().layers.filter((layer) => {
+      layers.filter((layer) => {
         return layer.isBaseLayer;
       })[1].visible,
     ).toBe(true);
-    expect(comp.find('.rs-base-layer-switcher rs-open').exists()).toBe(false);
+    expect(!!container.querySelector('.rs-base-layer-switcher rs-open')).toBe(
+      false,
+    );
   });
 });

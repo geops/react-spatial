@@ -222,7 +222,15 @@ class Permalink extends Component {
   updateHistory() {
     const { params, history, replace } = this.props;
     const oldParams = qs.parse(window.location.search);
-    const parameters = { ...oldParams, ...params, ...this.state };
+    const parameters = { ...oldParams, ...this.state, ...params };
+
+    // Remove parameters that are undefined or null
+    Object.entries(parameters).forEach(([key, value]) => {
+      if (value === undefined || value === null) {
+        delete parameters[key];
+      }
+    });
+
     // encodeURI to encode spaces, accents, etc. but not characters like ;,/?:@&=+$-_.!~*'()
     const qStr = encodeURI(qs.stringify(parameters, { encode: false }));
     const search = qStr ? `?${qStr}` : '';

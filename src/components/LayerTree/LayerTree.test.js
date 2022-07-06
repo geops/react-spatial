@@ -138,6 +138,20 @@ describe('LayerTree', () => {
       });
     });
 
+    test('when expandChildren is true.', () => {
+      renderLayerTree(layers, {
+        expandChildren: true,
+      });
+    });
+
+    test('when expandChildren is a function.', () => {
+      renderLayerTree(layers, {
+        expandChildren: (lyrs) => {
+          return lyrs.length === 3;
+        },
+      });
+    });
+
     test('when items are always expanded', () => {
       const newLayers = [
         new Layer({
