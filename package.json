@@ -44,7 +44,6 @@
     "canvas": "2.8.0",
     "css-loader": "5.2.6",
     "enzyme": "3.11.0",
-    "enzyme-adapter-react-16": "1.15.6",
     "eslint": "7.32.0",
     "eslint-config-airbnb": "18.2.1",
     "eslint-config-prettier": "8.3.0",
@@ -58,7 +57,7 @@
     "generact": "0.4.0",
     "husky": "8.0.1",
     "identity-obj-proxy": "3.0.0",
-    "jest": "27.2.4",
+    "jest": "26",
     "jest-canvas-mock": "2.3.1",
     "jest-canvas-snapshot-serializer": "1.0.1",
     "jest-date-mock": "1.0.8",
@@ -167,7 +166,7 @@
       "\\.(jpg|jpeg|png|gif|webp)$": "jest-transform-file"
     },
     "transformIgnorePatterns": [
-      "node_modules/(?!(jsts|ol|mobility-toolbox-js)|@geops)"
+      "node_modules/(?!(jsts|ol|mobility-toolbox-js)|@geops|geotiff|quick-lru)"
     ],
     "testMatch": [
       "<rootDir>/src/**/?(*.)+(spec|test).[jt]s?(x)"
