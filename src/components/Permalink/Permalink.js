@@ -129,6 +129,7 @@ class Permalink extends Component {
     }
 
     if (map !== prevProps.map) {
+      unByKey(this.moveEndRef);
       this.moveEndRef = map.on('moveend', () => {
         return this.onMapMoved();
       });
@@ -138,11 +139,9 @@ class Permalink extends Component {
   }
 
   componentWillUnmount() {
-    const { layerService, map } = this.props;
+    const { layerService } = this.props;
 
-    if (map) {
-      unByKey(this.moveEndRef);
-    }
+    unByKey(this.moveEndRef);
 
     if (layerService) {
       layerService.un('change:layers', this.updateLayers);
