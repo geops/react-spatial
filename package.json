@@ -36,14 +36,14 @@
     "@testing-library/jest-dom": "5.16.3",
     "@testing-library/react": "12.1.4",
     "@testing-library/user-event": "13.5.0",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.3",
     "babel-core": "7.0.0-bridge.0",
-    "babel-jest": "27.0.2",
+    "babel-jest": "27.2.4",
     "babel-loader": "8.2.2",
     "buble": "0.20.0",
     "canvas": "2.8.0",
     "css-loader": "5.2.6",
     "enzyme": "3.11.0",
-    "enzyme-adapter-react-16": "1.15.6",
     "eslint": "7.32.0",
     "eslint-config-airbnb": "18.2.1",
     "eslint-config-prettier": "8.3.0",
@@ -68,17 +68,17 @@
     "jsts": "2.7.3",
     "lint-staged": "11.2.0",
     "mapbox-gl": "1.13.1",
-    "mobility-toolbox-js": "1.6.3",
-    "ol": "6.6.1",
+    "mobility-toolbox-js": "1.7.13",
+    "ol": "6.14.1",
     "prettier": "2.4.1",
     "proj4": "2.7.5",
     "prop-types": "15.7.2",
-    "react": "16.14.0",
+    "react": "17.0.2",
     "react-app-polyfill": "2.0.0",
-    "react-dom": "16.14.0",
+    "react-dom": "17.0.2",
     "react-styleguidist": "11.0.8",
     "react-svg-loader": "3.0.3",
-    "react-test-renderer": "16.13.1",
+    "react-test-renderer": "17.0.2",
     "sass": "1.49.9",
     "sass-loader": "10.2.0",
     "standard-version": "9.5.0",
@@ -166,7 +166,7 @@
       "\\.(jpg|jpeg|png|gif|webp)$": "jest-transform-file"
     },
     "transformIgnorePatterns": [
-      "node_modules/(?!(jsts|ol|mobility-toolbox-js)|@geops)"
+      "node_modules/(?!(jsts|ol|mobility-toolbox-js)|@geops|geotiff|quick-lru)"
     ],
     "testMatch": [
       "<rootDir>/src/**/?(*.)+(spec|test).[jt]s?(x)"

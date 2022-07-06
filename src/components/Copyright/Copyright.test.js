@@ -1,7 +1,7 @@
 import 'jest-canvas-mock';
 import React from 'react';
 import { configure, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { act } from 'react-dom/test-utils';
 import { Map, View } from 'ol';
 import Tile from 'ol/Tile';

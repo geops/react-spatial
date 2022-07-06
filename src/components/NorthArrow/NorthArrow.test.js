@@ -3,7 +3,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { act } from 'react-dom/test-utils';
 import { configure, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import MapEvent from 'ol/MapEvent';
 import OLMap from 'ol/Map';
 import OLView from 'ol/View';

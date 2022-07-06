@@ -48,6 +48,8 @@ exports[`FeatureExportButton triggers onClick #createFeatureString() using KMLFo
     <Placemark>
       <Style>
         <IconStyle>
+        <scale>2
+        </scale>
         <Icon>
         <href>https://openlayers.org/en/latest/examples/data/icon.png
         </href>

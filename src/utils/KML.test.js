@@ -236,6 +236,9 @@ describe('KML', () => {
                 <description></description>
                 <Style>
                     <IconStyle>
+                        <scale>
+                          2
+                        </scale>
                         <heading>
                           1.5707963267948966
                         </heading>

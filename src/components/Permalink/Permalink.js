@@ -44,6 +44,12 @@ const propTypes = {
    * @return {bool} true if the item is not displayed in the permalink
    */
   isLayerHidden: PropTypes.func,
+
+  /**
+   * Custom function to be called when the permalink is updated.
+   * This property has priority over the history parameter and window.history.replaceState calls.
+   */
+  replace: PropTypes.func,
 };
 
 const defaultProps = {
@@ -55,6 +61,7 @@ const defaultProps = {
   isLayerHidden: () => {
     return false;
   },
+  replace: null,
 };
 
 /**
@@ -213,7 +220,7 @@ class Permalink extends Component {
   }
 
   updateHistory() {
-    const { params, history } = this.props;
+    const { params, history, replace } = this.props;
     const oldParams = qs.parse(window.location.search);
     const parameters = { ...oldParams, ...this.state, ...params };
 
@@ -232,7 +239,9 @@ class Permalink extends Component {
       (!qStr && window.location.search) ||
       (qStr && search !== window.location.search)
     ) {
-      if (history) {
+      if (replace) {
+        replace({ parameters, search });
+      } else if (history) {
         history.replace({ search });
       } else {
         const { hash } = window.location;
