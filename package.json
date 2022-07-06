@@ -25,10 +25,10 @@
     "react-dom": "^16"
   },
   "devDependencies": {
-    "@babel/core": "7.15.5",
-    "@babel/eslint-parser": "7.15.7",
+    "@babel/core": "7.15.0",
+    "@babel/eslint-parser": "7.15.0",
     "@babel/plugin-transform-runtime": "7.15.0",
-    "@babel/preset-env": "7.15.6",
+    "@babel/preset-env": "7.15.0",
     "@babel/preset-react": "7.14.5",
     "@commitlint/cli": "17.0.2",
     "@commitlint/config-conventional": "17.0.2",
@@ -57,7 +57,7 @@
     "generact": "0.4.0",
     "husky": "8.0.1",
     "identity-obj-proxy": "3.0.0",
-    "jest": "26",
+    "jest": "26.6.3",
     "jest-canvas-mock": "2.3.1",
     "jest-canvas-snapshot-serializer": "1.0.1",
     "jest-date-mock": "1.0.8",
