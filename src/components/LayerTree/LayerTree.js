@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Layer, getLayersAsFlatArray } from 'mobility-toolbox-js/ol';
+import { unByKey } from 'ol/Observable';
 
 const propTypes = {
   /**
    * Layers provider.
    */
-  layerService: PropTypes.object,
+  layers: PropTypes.arrayOf(Layer),
 
   /**
    * CSS class to apply on the container.
@@ -104,7 +106,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  layerService: undefined,
+  layers: [],
   className: 'rs-layer-tree',
   padding: 30,
   isItemHidden: () => {
@@ -138,51 +140,59 @@ const defaultProps = {
 class LayerTree extends Component {
   constructor(props) {
     super(props);
-    const { layerService, isItemHidden } = this.props;
-    const initialExpandedLayers =
-      layerService && layerService.getLayers()
-        ? this.getExpandedLayers(
-            layerService.getLayers().filter((l) => {
-              return (
-                !isItemHidden(l) &&
-                l.getVisibleChildren().filter((c) => {
+
+    const { layers, isItemHidden } = this.props;
+    const initialExpandedLayers = layers
+      ? this.getExpandedLayers(
+          layers.filter((l) => {
+            return (
+              !isItemHidden(l) &&
+              (l.children || [])
+                .filter((child) => {
+                  return child.visible;
+                })
+                .filter((c) => {
                   return !isItemHidden(c);
                 }).length
-              );
-            }),
-          )
-        : [];
+            );
+          }),
+        )
+      : [];
 
     this.state = {
-      layers: layerService ? layerService.getLayers() : [],
+      rootLayer: new Layer(),
       expandedLayers: initialExpandedLayers,
+      revision: 0,
     };
-    this.updateLayers = this.updateLayers.bind(this);
+    // this.updateLayers = this.updateLayers.bind(this);
     this.olKeys = [];
   }
 
   componentDidMount() {
-    this.updateLayerService();
+    this.updateLayers();
   }
 
   componentDidUpdate(prevProps) {
-    const { layerService } = this.props;
+    const { layers } = this.props;
 
-    if (layerService !== prevProps.layerService) {
-      this.updateLayerService();
+    if (layers !== prevProps.layers) {
+      this.updateLayers();
     }
   }
 
   componentWillUnmount() {
-    const { layerService } = this.props;
-    layerService.un('change:visible', this.updateLayers);
+    unByKey(this.olKeys);
+    this.olKeys = [];
   }
 
   onInputClick(layer, toggle = false) {
     if (toggle) {
       this.onToggle(layer);
-    } else {
+    } else if (layer.setVisible) {
       layer.setVisible(!layer.visible);
+    } else {
+      // eslint-disable-next-line no-param-reassign
+      layer.visible = !layer.visible;
     }
   }
 
@@ -194,7 +204,6 @@ class LayerTree extends Component {
     } else {
       expandedLayers.push(...this.getExpandedLayers([layer]));
     }
-
     this.setState({ expandedLayers });
   }
 
@@ -219,32 +228,41 @@ class LayerTree extends Component {
     return [...layers, this.getExpandedLayers(children)].flat();
   }
 
-  updateLayerService() {
-    const { layerService } = this.props;
-    if (layerService) {
-      layerService.un('change:visible', this.updateLayers);
-      this.updateLayers();
-      layerService.on('change:visible', this.updateLayers);
-    }
-  }
-
   updateLayers() {
-    const { layerService, expandChildren } = this.props;
-    const layers = layerService.getLayers();
+    const { layers, expandChildren } = this.props;
+
+    // Update the root layer
+    let rootLayer = new Layer();
+    if (Array.isArray(layers)) {
+      if (layers.length === 1) {
+        [rootLayer] = layers;
+      }
+      rootLayer = new Layer({ children: layers });
+    } else {
+      rootLayer = layers;
+    }
+
+    getLayersAsFlatArray(rootLayer).forEach((layer) => {
+      this.olKeys.push(
+        layer.on('propertychange', (evt) => {
+          const { revision } = this.state;
+          this.setState({ revision: revision + 1 });
+        }),
+      );
+    });
+
+    const state = { rootLayer };
     if (
       typeof expandChildren === 'function'
         ? expandChildren(layers)
         : expandChildren
     ) {
-      this.setState({
-        expandedLayers: layers.flatMap((l) => {
-          return this.expandLayer(l);
-        }),
+      state.expandedLayers = rootLayer.children.flatMap((l) => {
+        return this.expandLayer(l);
       });
     }
-    this.setState({
-      layers,
-    });
+
+    this.setState(state);
   }
 
   expandLayer(layer, expLayers = []) {
@@ -267,7 +285,7 @@ class LayerTree extends Component {
     let tabIndex = 0;
 
     if (
-      !layer.children.filter((c) => {
+      !(layer.children || []).filter((c) => {
         return !isItemHidden(c);
       }).length
     ) {
@@ -275,7 +293,7 @@ class LayerTree extends Component {
       tabIndex = -1;
     }
 
-    const inputType = layer.get('radioGroup') ? 'radio' : 'checkbox';
+    const inputType = layer.get('group') ? 'radio' : 'checkbox';
     return (
       // eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/no-noninteractive-element-interactions
       <label
@@ -308,7 +326,7 @@ class LayerTree extends Component {
     const { expandedLayers } = this.state;
 
     if (
-      !layer.children.filter((c) => {
+      !(layer.children || []).filter((c) => {
         return !isItemHidden(c);
       }).length ||
       layer.get('isAlwaysExpanded')
@@ -330,19 +348,19 @@ class LayerTree extends Component {
   renderToggleButton(layer) {
     const { t, titles, isItemHidden } = this.props;
     const { expandedLayers } = this.state;
+
     const onInputClick = () => {
       this.onInputClick(
         layer,
-        layer.children.filter((c) => {
+        (layer.children || []).filter((c) => {
           return !isItemHidden(c);
         }).length && !layer.get('isAlwaysExpanded'),
       );
     };
     const title = `${t(layer.name)} ${
-      !expandedLayers.includes(layer)
-        ? titles.subLayerShow
-        : titles.subLayerHide
+      expandedLayers.includes(layer) ? titles.subLayerHide : titles.subLayerShow
     }`;
+
     return (
       <div
         role="button"
@@ -371,6 +389,7 @@ class LayerTree extends Component {
 
   renderItem(layer, level) {
     const { isItemHidden } = this.props;
+    const { expandedLayers } = this.state;
     const {
       renderItem,
       renderItemContent,
@@ -379,11 +398,10 @@ class LayerTree extends Component {
       padding,
       getParentClassName,
     } = this.props;
-    const { expandedLayers } = this.state;
 
     const children = expandedLayers.includes(layer)
       ? [
-          ...layer.children.filter((c) => {
+          ...(layer.children || []).filter((c) => {
             return !isItemHidden(c);
           }),
         ]
@@ -416,15 +434,15 @@ class LayerTree extends Component {
 
   renderTree() {
     const { isItemHidden } = this.props;
-    const { layers } = this.state;
+    const { rootLayer } = this.state;
 
-    if (!layers) {
+    if (!rootLayer?.children?.length) {
       return null;
     }
 
     return (
       <>
-        {layers
+        {rootLayer.children
           .filter((l) => {
             return !isItemHidden(l);
           })

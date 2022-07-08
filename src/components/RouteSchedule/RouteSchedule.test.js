@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import 'jest-date-mock';
-import { TrajservLayer } from 'mobility-toolbox-js/ol';
+import { TralisLayer as TrackerLayer } from 'mobility-toolbox-js/ol';
 import RouteSchedule from '.';
 
 const RealDate = Date;
@@ -78,7 +78,7 @@ describe('RouteSchedule', () => {
   });
 
   test('matches snapshots.', () => {
-    const trackerLayer = new TrajservLayer();
+    const trackerLayer = new TrackerLayer();
     const component = renderer.create(
       <RouteSchedule
         lineInfos={lineInfos}

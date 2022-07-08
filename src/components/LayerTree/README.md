@@ -9,45 +9,24 @@ import VectorSource from 'ol/source/Vector';
 import GeoJSONFormat from 'ol/format/GeoJSON';
 import LayerTree from 'react-spatial/components/LayerTree';
 import BasicMap from 'react-spatial/components/BasicMap';
-import LayerService from 'react-spatial/LayerService';
 
-const baseTravic = new MapboxLayer({
-  url: `https://maps.geops.io/styles/travic_v2/style.json?key=${apiKey}`,
-  properties: {
-    hidden: true,
-  },
-});
-
-const baseDark = new MapboxLayer({
-  url: `https://maps.geops.io/styles/base_dark_v2/style.json?key=${apiKey}`,
-  name: 'Base - Dark',
-  key: 'basedark.baselayer',
-  isBaseLayer: true,
-  visible: false,
-  properties: {
-    radioGroup: 'baseLayer',
-  },
-});
 
 const baseBright = new MapboxLayer({
-  url: `https://maps.geops.io/styles/base_bright_v2/style.json?key=${apiKey}`,
   name: 'Base - Bright',
-  key: 'basebright.baselayer',
-  isBaseLayer: true,
-  properties: {
-    radioGroup: 'baseLayer',
-  },
+  group: 'baseLayer',
+  url: `https://maps.geops.io/styles/base_bright_v2/style.json?key=${apiKey}`,
 });
 
 const busLines = new MapboxStyleLayer({
-  name: 'Bus routes',
+  name: 'Tramway routes',
   mapboxLayer: baseBright,
   visible: false,
   styleLayer: {
     id: 'bus',
     type: 'line',
-    source: 'busses',
-    'source-layer': 'busses',
+    source: 'base',
+    'source-layer': 'osm_edges',
+    filter: ['==', 'vehicle_type_prior', 'Tram' ],
     paint: {
       'line-color': 'rgba(255, 220, 0, 1)',
       'line-width': 3,
@@ -56,13 +35,14 @@ const busLines = new MapboxStyleLayer({
 });
 
 const railLines = new MapboxStyleLayer({
-  name: 'Railways',
+  name: 'Railways routes',
   mapboxLayer: baseBright,
   styleLayer: {
     id: 'rail',
     type: 'line',
     source: 'base',
     'source-layer': 'osm_edges',
+    filter: ['==', 'vehicle_type_prior', 'Zug' ],
     paint: {
       'line-color': 'rgba(255, 0, 0, 1)',
       'line-width': 2,
@@ -94,12 +74,30 @@ const passengerFrequencies = new MapboxStyleLayer({
   },
 });
 
-baseBright.addChild(busLines);
-baseBright.addChild(railLines);
-baseBright.addChild(passengerFrequencies);
+// const baseBrightGroup = new Layer ({
+//   name: 'Base - Bright',
+//   group: 'baseLayer',
+//   children: [baseBright, passengerFrequencies, railLines, busLines],
+// })
+baseBright.children = [passengerFrequencies, railLines, busLines];
 
-const layers = [baseTravic, baseDark, baseBright];
-const layerService = new LayerService(layers);
+const baseDark = new MapboxLayer({
+  name: 'Base - Dark',
+  group: 'baseLayer',
+  visible: false,
+  url: `https://maps.geops.io/styles/base_dark_v2/style.json?key=${apiKey}`,
+});
+
+const baseTravic = new MapboxLayer({
+  url: `https://maps.geops.io/styles/travic_v2/style.json?key=${apiKey}`,
+  group: 'baseLayer',
+  visible: false,
+  properties: {
+    hidden: true,
+  },
+});
+
+const layers = [ baseDark, baseTravic, baseBright ];
 
 <div className="rs-layer-tree-example">
   <BasicMap
@@ -109,7 +107,7 @@ const layerService = new LayerService(layers);
     tabIndex={0}
   />
   <LayerTree
-    layerService={layerService}
+    layers={layers}
     isItemHidden={(layer) => layer.get('hidden')}
     expandChildren
   />

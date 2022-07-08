@@ -15,16 +15,13 @@ describe('BaseLayerSwitcher', () => {
     layers = [
       new Layer({
         name: 'bl1',
-        isBaseLayer: true,
       }),
       new Layer({
         name: 'bl2',
-        isBaseLayer: true,
         visible: false,
       }),
       new Layer({
         name: 'bl3',
-        isBaseLayer: true,
         visible: false,
       }),
     ];
@@ -52,11 +49,7 @@ describe('BaseLayerSwitcher', () => {
     await fireEvent.click(
       container.querySelectorAll('.rs-base-layer-switcher-button')[3],
     );
-    expect(
-      layers.filter((layer) => {
-        return layer.isBaseLayer;
-      })[2].visible,
-    ).toBe(true);
+    expect(layers[2].visible).toBe(true);
     expect(!!container.querySelector('.rs-base-layer-switcher rs-open')).toBe(
       false,
     );
@@ -66,17 +59,9 @@ describe('BaseLayerSwitcher', () => {
     const { container } = render(
       <BaseLayerSwitcher layers={layers.slice(0, 2)} />,
     );
-    expect(
-      layers.filter((layer) => {
-        return layer.isBaseLayer;
-      })[0].visible,
-    ).toBe(true);
+    expect(layers[0].visible).toBe(true);
     await fireEvent.click(container.querySelector('.rs-opener'));
-    expect(
-      layers.filter((layer) => {
-        return layer.isBaseLayer;
-      })[1].visible,
-    ).toBe(true);
+    expect(layers[1].visible).toBe(true);
     expect(!!container.querySelector('.rs-base-layer-switcher rs-open')).toBe(
       false,
     );

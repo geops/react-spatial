@@ -76,14 +76,14 @@ describe('LayerService', () => {
   });
 
   test('should toggle radio layers.', () => {
-    layerService.getLayer('1-1').setVisible(true);
+    layerService.getLayer('1-1').visible = true;
     expect(layerService.getLayer('1-1').visible).toBe(true);
-    layerService.getLayer('1-2').setVisible(true);
+    layerService.getLayer('1-2').visible = true;
     expect(layerService.getLayer('1-1').visible).toBe(false);
   });
 
   test('should toggle child layers.', () => {
-    layerService.getLayer('1-2').setVisible(true);
+    layerService.getLayer('1-2').visible = true;
     expect(layerService.getLayer('1-2-1').visible).toBe(true);
     expect(layerService.getLayer('1-2-2').visible).toBe(true);
     expect(layerService.getLayer('2').visible).toBe(true);
@@ -94,8 +94,8 @@ describe('LayerService', () => {
       return 42;
     });
     layerService.on('change:visible', callback);
-    layerService.getLayer('2').setVisible(true);
-    expect(callback.mock.calls.length).toBe(3);
+    layerService.getLayer('2').visible = true;
+    expect(callback.mock.calls.length).toBe(5);
   });
 
   test('should set children from constructor', () => {
