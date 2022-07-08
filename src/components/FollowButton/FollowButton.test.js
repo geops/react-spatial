@@ -3,7 +3,7 @@ import renderer from 'react-test-renderer';
 import { configure, shallow } from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { MdNavigation } from 'react-icons/md';
-import { TrajservLayer } from 'mobility-toolbox-js/ol';
+import { TralisLayer as TrackerLayer } from 'mobility-toolbox-js/ol';
 import FollowButton from '.';
 
 configure({ adapter: new Adapter() });
@@ -12,7 +12,7 @@ const funcs = {
   onClick: () => {},
 };
 
-const trackerLayer = new TrajservLayer();
+const trackerLayer = new TrackerLayer();
 
 test('FollowButton should match snapshot.', () => {
   const component = renderer.create(

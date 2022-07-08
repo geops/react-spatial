@@ -3,7 +3,7 @@ The following example demonstrates the use of TrackerControl.
 
 ```jsx
 import React from 'react';
-import { Layer, TrajservLayer } from 'mobility-toolbox-js/ol';
+import { Layer, TralisLayer as TrackerLayer } from 'mobility-toolbox-js/ol';
 import Tile from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import BasicMap from 'react-spatial/components/BasicMap';
@@ -11,7 +11,7 @@ import TrackerControl from 'react-spatial/components/TrackerControl';
 
 // The `apiKey` used here is for demonstration purposes only.
 // Please get your own api key at https://developer.geops.io/.
-const trackerLayer = new TrajservLayer({
+const trackerLayer = new TrackerLayer({
   apiKey: window.apiKey,
   live: false
 });

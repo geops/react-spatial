@@ -13,7 +13,6 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Permalink from 'react-spatial/components/Permalink';
 import BasicMap from 'react-spatial/components/BasicMap';
-import LayerService from 'react-spatial/LayerService';
 import Map from 'ol/Map';
 
 const map = new Map({ controls: [] });
@@ -68,23 +67,29 @@ const baseLayers = [
 
 const layers = [...baseLayers, swissBoundries]
 
-const layerService = new LayerService(layers);
-
 <ThemeProvider theme={geopsTheme}>
   <div className="rs-permalink-example">
     <BasicMap center={[876887.69, 5928515.41]} map={map} layers={layers} tabIndex={0} zoom={5} />
     <Permalink
       map={map}
-      layerService={layerService}
+      layers={layers}
       params={{
         mode: 'custom',
       }}
-      isLayerHidden={l => l.get('hideInLegend') || layerService.getParents(l).some(pl => pl.get('hideInLegend'))}
+      isLayerHidden={l => {
+          let hasParentHidden = false;
+          let { parent } = l;
+          while (!hasParentHidden && parent) {
+            hasParentHidden = parent.get('hideInLegend');
+            parent = parent.parent;
+          }        
+          return l.get('hideInLegend') || hasParentHidden;
+      }}
     />
     <div className="rs-permalink-example-btns">
       <Button
         onClick={() => {
-          swissBoundries.setVisible(!swissBoundries.visible);
+          swissBoundries.visible = !swissBoundries.visible;
         }}
       >
         Toggle Switzerland layer
@@ -92,9 +97,9 @@ const layerService = new LayerService(layers);
       <Button
         onClick={() => {
         if (baseLayers[1].visible) {
-          baseLayers[0].setVisible(true);
+          baseLayers[0].visible = true;
         } else {
-          baseLayers[1].setVisible(true);
+          baseLayers[1].visible = true;
         }
       }}
       >

@@ -33,7 +33,7 @@ export default class LayerService {
     (optLayers || this.getLayers() || []).forEach((l) => {
       layers.push(l);
       const { children } = l;
-      layers = layers.concat(this.getLayersAsFlatArray(children));
+      layers = layers.concat(this.getLayersAsFlatArray(children || []));
     });
     return layers;
   }
@@ -147,7 +147,8 @@ export default class LayerService {
                 s.get('radioGroup') &&
                 evt.target.get('radioGroup') === s.get('radioGroup')
               ) {
-                s.setVisible(false, false, true, true);
+                // eslint-disable-next-line no-param-reassign
+                s.visible = false;
               }
             });
           }
@@ -155,7 +156,8 @@ export default class LayerService {
           // Apply to children
           if (!evt.stopPropagationDown && layer.children) {
             layer.children.forEach((child) => {
-              child.setVisible(visible, false, true, false);
+              // eslint-disable-next-line no-param-reassign
+              child.visible = visible;
             });
           }
 
@@ -173,7 +175,7 @@ export default class LayerService {
                   return c.visible;
                 })))
           ) {
-            parentLayer.setVisible(visible, true, false, false);
+            parentLayer.visible = visible;
           }
 
           (this.callbacks['change:visible'] || []).forEach((cb) => {

@@ -6,10 +6,21 @@ import MapEvent from 'ol/MapEvent';
 import OLMap from 'ol/Map';
 import View from 'ol/View';
 import { Layer, MapboxLayer } from 'mobility-toolbox-js/ol';
-import LayerService from '../../LayerService';
+import { render } from '@testing-library/react';
 import Permalink from './Permalink';
 
 configure({ adapter: new Adapter() });
+
+const defaultIsLayerHidden = (l) => {
+  let isParentHidden = false;
+  let { parent } = l;
+  while (!isParentHidden && parent) {
+    isParentHidden = parent.get('hideInLegend');
+    parent = parent.parent;
+  }
+
+  return l.get('hideInLegend') || isParentHidden;
+};
 
 describe('Permalink', () => {
   let layers;
@@ -28,7 +39,7 @@ describe('Permalink', () => {
       new Layer({
         name: 'Swiss boundaries',
         key: 'swiss.boundaries',
-        visible: true,
+        visible: false,
         properties: {
           hideInLegend: true,
         },
@@ -36,18 +47,18 @@ describe('Permalink', () => {
       new MapboxLayer({
         name: 'Base - Bright',
         key: 'basebright.baselayer',
-        isBaseLayer: true,
+        group: 'baseLayer',
         properties: {
-          radioGroup: 'baseLayer',
+          isBaseLayer: true,
         },
       }),
       new MapboxLayer({
         name: 'Base - Dark',
         key: 'basedark.baselayer',
-        isBaseLayer: true,
         visible: false,
+        group: 'baseLayer',
         properties: {
-          radioGroup: 'baseLayer',
+          isBaseLayer: true,
         },
       }),
       new Layer({
@@ -128,31 +139,17 @@ describe('Permalink', () => {
     expect(window.location.search).toEqual(search);
   });
 
-  test('should initialize Permalink with layerService.', () => {
+  test('should initialize Permalink with layers.', () => {
     expect(window.location.search).toEqual('');
-    const layerService = new LayerService(layers);
-    mount(<Permalink layerService={layerService} />);
+    mount(<Permalink layers={layers} />);
     const search =
-      '?baselayers=basebright.baselayer,basedark.baselayer&layers=ultimate.layer,swiss.boundaries,child.hidden.1';
+      '?baselayers=basebright.baselayer,basedark.baselayer&layers=ultimate.layer,child.hidden.1';
     expect(window.location.search).toEqual(search);
   });
 
   test('should initialize Permalink with isLayerHidden.', () => {
     expect(window.location.search).toEqual('');
-    const layerService = new LayerService(layers);
-    mount(
-      <Permalink
-        layerService={layerService}
-        isLayerHidden={(l) => {
-          return (
-            l.get('hideInLegend') ||
-            layerService.getParents(l).some((pl) => {
-              return pl.get('hideInLegend');
-            })
-          );
-        }}
-      />,
-    );
+    mount(<Permalink layers={layers} isLayerHidden={defaultIsLayerHidden} />);
     const search =
       '?baselayers=basebright.baselayer,basedark.baselayer&layers=children.hidden.layer';
     expect(window.location.search).toEqual(search);
@@ -222,49 +219,55 @@ describe('Permalink', () => {
     expect(window.location.search).toEqual(search);
   });
 
-  test('should react on layerService change.', () => {
+  test('should react on layers change.', () => {
     expect(window.location.search).toEqual('');
-    const layerService = new LayerService(layers);
-    const permalink = mount(<Permalink layerService={layerService} />);
-    const search = '?layers=foo.layer';
-    const layerService2 = new LayerService([
-      new Layer({
-        name: 'foo',
-        key: 'foo.layer',
-      }),
-    ]);
-    permalink.setProps({ layerService: layerService2 }).update();
+    const permalink = mount(<Permalink layers={layers} />);
+    let layersParam = new URLSearchParams(window.location.search).get('layers');
+    expect(layersParam).toBe('ultimate.layer,child.hidden.1');
 
-    expect(window.location.search).toEqual(search);
+    permalink
+      .setProps({
+        layers: [
+          new Layer({
+            name: 'foo',
+            key: 'foo.layer',
+          }),
+        ],
+      })
+      .update();
+
+    layersParam = new URLSearchParams(window.location.search).get('layers');
+    expect(layersParam).toBe('foo.layer');
   });
 
   test('should react on layer visiblity change.', () => {
     expect(window.location.search).toEqual('');
-    const layerService = new LayerService(layers);
-    mount(<Permalink layerService={layerService} />);
-    layerService.getLayer('Swiss boundaries').setVisible(true);
+    mount(<Permalink layers={layers} />);
+    let layersParam = new URLSearchParams(window.location.search).get('layers');
+    expect(layersParam).toBe('ultimate.layer,child.hidden.1');
 
-    expect(
-      /layers=ultimate.layer,swiss.boundaries/.test(window.location.search),
-    ).toBe(true);
+    layers.find((l) => {
+      return l.name === 'Swiss boundaries';
+    }).visible = true;
+
+    layersParam = new URLSearchParams(window.location.search).get('layers');
+    expect(layersParam).toBe('ultimate.layer,swiss.boundaries,child.hidden.1');
   });
 
   test('should react on base layer visiblity change.', () => {
     expect(window.location.search).toEqual('');
-    const layerService = new LayerService(layers);
-    mount(<Permalink layerService={layerService} />);
-    expect(
-      /baselayers=basebright.baselayer,basedark.baselayer/.test(
-        window.location.search,
-      ),
-    ).toBe(true);
+    render(<Permalink layers={layers} />);
 
-    layerService.getLayer('Base - Dark').setVisible(true);
+    let baseLayers = new URLSearchParams(window.location.search).get(
+      'baselayers',
+    );
+    expect(baseLayers).toBe('basebright.baselayer,basedark.baselayer');
 
-    expect(
-      /baselayers=basedark.baselayer,basebright.baselayer/.test(
-        window.location.search,
-      ),
-    ).toBe(true);
+    layers.find((l) => {
+      return l.name === 'Base - Dark';
+    }).visible = true;
+
+    baseLayers = new URLSearchParams(window.location.search).get('baselayers');
+    expect(baseLayers).toBe('basedark.baselayer,basebright.baselayer');
   });
 });

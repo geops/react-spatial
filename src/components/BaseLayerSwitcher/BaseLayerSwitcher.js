@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import { FaChevronLeft } from 'react-icons/fa';
 import { Layer } from 'mobility-toolbox-js/ol';
 
-import './BaseLayerSwitcher.scss';
-
 const propTypes = {
   /**
    * An array of [mobility-toolbox-js layers](https://mobility-toolbox-js.geops.io/api/identifiers%20html#ol-layers).
@@ -106,13 +104,10 @@ function BaseLayerSwitcher({
   closeButtonImage,
   t,
 }) {
-  const baseLayers = layers.filter((layer) => {
-    return layer.isBaseLayer;
-  });
   const [switcherOpen, setSwitcherOpen] = useState(false);
   const [isClosed, setIsClosed] = useState(true);
   const [currentLayer, setCurrentLayer] = useState(
-    getVisibleLayer(baseLayers) || baseLayers[0],
+    getVisibleLayer(layers) || layers[0],
   );
 
   /* Images are loaded from props if provided, fallback from layer */
@@ -120,7 +115,7 @@ function BaseLayerSwitcher({
     ? Object.keys(layerImages).map((layerImage) => {
         return layerImages[layerImage];
       })
-    : baseLayers.map((layer) => {
+    : layers.map((layer) => {
         return layer.get('previewImage');
       });
 
@@ -128,14 +123,22 @@ function BaseLayerSwitcher({
   const hiddenStyle = switcherOpen && !isClosed ? 'visible' : 'hidden';
 
   const handleSwitcherClick = () => {
-    if (baseLayers.length === 2) {
+    if (layers.length === 2) {
       /* On only two layer options the opener becomes a layer toggle button */
-      const nextLayer = baseLayers.find((layer) => {
+      const nextLayer = layers.find((layer) => {
         return !layer.visible;
       });
-      currentLayer.setVisible(false);
+      if (currentLayer.setVisible) {
+        currentLayer.setVisible(false);
+      } else {
+        currentLayer.visible = false;
+      }
       setCurrentLayer(nextLayer);
-      nextLayer.setVisible(true);
+      if (nextLayer.setVisible) {
+        nextLayer.setVisible(true);
+      } else {
+        nextLayer.visible = true;
+      }
       return;
     }
     // eslint-disable-next-line consistent-return
@@ -148,26 +151,36 @@ function BaseLayerSwitcher({
       return;
     }
     setCurrentLayer(layer);
-    layer.setVisible(true);
-    baseLayers
+    if (layer.setVisible) {
+      layer.setVisible(true);
+    } else {
+      // eslint-disable-next-line no-param-reassign
+      layer.visible = true;
+    }
+    layers
       .filter((l) => {
         return l !== layer;
       })
       .forEach((l) => {
-        return l.setVisible(false);
+        if (l.setVisible) {
+          l.setVisible(false);
+        } else {
+          // eslint-disable-next-line no-param-reassign
+          l.visible = false;
+        }
       });
     setSwitcherOpen(false);
   };
 
   /* Get next image for closed button */
-  const nextImage = getNextImage(currentLayer, baseLayers, images);
+  const nextImage = getNextImage(currentLayer, layers, images);
 
   useEffect(() => {
     /* Ensure correct layer is active on app load */
-    if (currentLayer !== getVisibleLayer(baseLayers)) {
-      setCurrentLayer(getVisibleLayer(baseLayers) || baseLayers[0]);
+    if (currentLayer !== getVisibleLayer(layers)) {
+      setCurrentLayer(getVisibleLayer(layers) || layers[0]);
     }
-  }, [currentLayer, baseLayers]);
+  }, [currentLayer, layers]);
 
   useEffect(() => {
     /* Used for correct layer image render with animation */
@@ -186,7 +199,7 @@ function BaseLayerSwitcher({
     };
   }, [switcherOpen]);
 
-  if (!baseLayers || baseLayers.length < 2 || !currentLayer) {
+  if (!layers || layers.length < 2 || !currentLayer) {
     return null;
   }
 
@@ -227,20 +240,20 @@ function BaseLayerSwitcher({
         tabIndex="0"
       >
         <div className="rs-base-layer-switcher-title">
-          {baseLayers.length !== 2
+          {layers.length !== 2
             ? titles.button
-            : baseLayers.find((layer) => {
+            : layers.find((layer) => {
                 return !layer.visible;
               }) &&
               t(
-                baseLayers.find((layer) => {
+                layers.find((layer) => {
                   return !layer.visible;
                 }).name,
               )}
         </div>
         {nextImage ? null : <span className="rs-alt-text">{t(altText)}</span>}
       </div>
-      {baseLayers.map((layer, idx) => {
+      {layers.map((layer, idx) => {
         const layerName = layer.name;
         const activeClass = layerName === currentLayer.name ? ' rs-active' : '';
         const imageStyle = getImageStyle(
@@ -254,7 +267,7 @@ function BaseLayerSwitcher({
               /* stylelint-disable-next-line value-keyword-case */
               overflow: hiddenStyle,
               /* stylelint-disable-next-line value-keyword-case */
-              zIndex: baseLayers.length - idx,
+              zIndex: layers.length - idx,
             }}
           >
             <div

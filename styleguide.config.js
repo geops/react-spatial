@@ -39,7 +39,6 @@ module.exports = {
         'A collection of React components for spatial web development of map components.',
       components: [
         'src/components/BaseLayerSwitcher/[A-Z]*.js',
-        'src/components/BaseLayerToggler/[A-Z]*.js',
         'src/components/BasicMap/[A-Z]*.js',
         'src/components/CanvasSaveButton/[A-Z]*.js',
         'src/components/Copyright/[A-Z]*.js',
