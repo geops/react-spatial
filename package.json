@@ -21,8 +21,8 @@
     "mapbox-gl": "^1",
     "mobility-toolbox-js": "^1",
     "ol": "^6",
-    "react": "^17",
-    "react-dom": "^17"
+    "react": "^16",
+    "react-dom": "^16"
   },
   "devDependencies": {
     "@babel/core": "7.15.0",
