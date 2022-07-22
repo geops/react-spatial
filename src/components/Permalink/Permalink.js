@@ -80,10 +80,7 @@ const defaultProps = {
  * This component handles permalink logic. Injecting an
  * __[ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html)__
  * will add the *map center* (x, y) and the *zoom* (z) parameters to the permalink.
- * Injecting
- * __[layers](https://github.com/geops/react-spatial/blob/master/src/LayerService.js)__
- * (including at least one layer)
- * will add the *baselayers* and/or *layers* parameters. Further parameters can
+ * Injecting layers will add the *baselayers* and/or *layers* parameters. Further parameters can
  * be added using __params__.
  */
 class Permalink extends PureComponent {
