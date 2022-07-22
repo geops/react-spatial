@@ -37,3 +37,7 @@ import 'react-spatial/themes/default/index.scss';
 ## Bugs
 
 Please use the [GitHub issue tracker](https://github.com/geops/react-spatial/issues) for all bugs and feature requests. Before creating a new issue, do a quick search to see if the problem has been reported already.
+
+## Version 1.x.x
+
+The master branch is now open for the version 2 development. The version 1 is now available in 1.x.x branch.

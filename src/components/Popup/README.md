@@ -4,10 +4,11 @@ The following example demonstrates the use of Popup.
 ```jsx
 import React, { useState, useMemo, useCallback } from 'react';
 import { Layer, MapboxLayer} from 'mobility-toolbox-js/ol';
-import { Vector as VectorLayer, Tile } from 'ol/layer';
+import VectorLayer from 'ol/layer/Vector';
 import { Map, Feature } from 'ol';
 import Point from 'ol/geom/Point';
-import { Vector as VectorSource, OSM } from 'ol/source';
+import OSM from 'ol/source/OSM';
+import VectorSource from 'ol/source/Vector';
 import TileGrid from 'ol/tilegrid/TileGrid';
 import { getCenter } from 'ol/extent';
 import { Style, Circle, Fill, Icon } from 'ol/style';

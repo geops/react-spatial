@@ -3,11 +3,11 @@ The following example demonstrates the use of FeatureExportButton.
 
 ```jsx
 import React from 'react';
-import { VectorLayer, MapboxLayer } from 'mobility-toolbox-js/ol';
-import { Tile, Vector } from 'ol/layer';
-import { Vector as VectorSource, OSM } from 'ol/source';
-import { Feature }  from 'ol';
-import {Point} from 'ol/geom';
+import { Layer, MapboxLayer } from 'mobility-toolbox-js/ol';
+import VectorLayer from 'ol/layer/Vector';
+import VectorSource from 'ol/source/Vector';
+import Feature from 'ol/Feature';
+import Point from 'ol/geom/Point';
 import { Icon, Style } from 'ol/style';
 import GPX from 'ol/format/GPX';
 import { geopsTheme, Header, Footer } from '@geops/geops-ui';
@@ -17,8 +17,8 @@ import BasicMap from 'react-spatial/components/BasicMap';
 import FeatureExportButton from 'react-spatial/components/FeatureExportButton';
 
 
-const vectorLayer = new VectorLayer({
-  olLayer: new Vector({
+const vectorLayer = new Layer({
+  olLayer: new VectorLayer({
     style: new Style({
       image: new Icon({
         anchor: [0.5, 46],

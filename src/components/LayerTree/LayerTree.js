@@ -68,9 +68,9 @@ const propTypes = {
   renderAfterItem: PropTypes.func,
 
   /**
-   * Custom function to render custom content after the list of children of an item.
+   * Custom function to render the label.
    *
-   * @param {object} item The item to render.
+   * @param {string} item The label to render.
    * @param {LayerTree} comp The LayerTree component.
    *
    * @return {node} A jsx node.

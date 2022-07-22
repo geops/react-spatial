@@ -10,7 +10,7 @@
 - [ ] The images added are optimized.
 - [ ] Everything in ticket description has been fixed.
 - [ ] The author of the MR has made its own review before assigning the reviewer.
-- [ ] The title means something for a human being.
+- [ ] The title means something for a human being and follows the [conventional commits](https://www.conventionalcommits.org/) specification.
 - [ ] The title contains [WIP] if it's necessary.
 - [ ] Labels applied. if it's a release? a hotfix?
 - [ ] Tests added.

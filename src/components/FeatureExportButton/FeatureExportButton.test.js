@@ -154,7 +154,7 @@ describe('FeatureExportButton', () => {
             FeatureExportButton.defaultProps.format,
           );
           const expectedString =
-            '<Style><IconStyle><Icon><href>' +
+            '<Style><IconStyle><scale>2</scale><Icon><href>' +
             'https://openlayers.org/en/latest/examples/data/icon.png' +
             '</href></Icon></IconStyle></Style>';
           expect(exportString.match(/<Style>(.*?)<\/Style>/g)[0]).toBe(

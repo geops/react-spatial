@@ -1,7 +1,7 @@
 {
   "name": "react-spatial",
   "description": "Components to build React map apps.",
-  "version": "1.2.0-beta.9",
+  "version": "1.2.0",
   "license": "MIT",
   "dependencies": {
     "@geops/geops-ui": "0.1.13",
@@ -30,13 +30,15 @@
     "@babel/plugin-transform-runtime": "7.15.0",
     "@babel/preset-env": "7.15.0",
     "@babel/preset-react": "7.14.5",
+    "@commitlint/cli": "17.0.2",
+    "@commitlint/config-conventional": "17.0.2",
     "@svgr/webpack": "5.5.0",
     "@testing-library/jest-dom": "5.16.3",
     "@testing-library/react": "12.1.4",
     "@testing-library/user-event": "13.5.0",
     "@wojtekmaj/enzyme-adapter-react-17": "0.6.7",
     "babel-core": "7.0.0-bridge.0",
-    "babel-jest": "27.0.2",
+    "babel-jest": "27.2.4",
     "babel-loader": "8.2.2",
     "buble": "0.20.0",
     "canvas": "2.8.0",
@@ -53,7 +55,7 @@
     "file-loader": "6.2.0",
     "fixpack": "3.0.6",
     "generact": "0.4.0",
-    "husky": "4.2.5",
+    "husky": "8.0.1",
     "identity-obj-proxy": "3.0.0",
     "jest": "26.6.3",
     "jest-canvas-mock": "2.3.1",
@@ -66,19 +68,20 @@
     "jsts": "2.7.3",
     "lint-staged": "11.2.0",
     "mapbox-gl": "1.13.1",
-    "mobility-toolbox-js": "1.7.10-beta.3",
-    "ol": "6.6.1",
+    "mobility-toolbox-js": "1.7.13",
+    "ol": "6.14.1",
     "prettier": "2.4.1",
     "proj4": "2.7.5",
     "prop-types": "15.7.2",
-    "react": "17",
+    "react": "17.0.2",
     "react-app-polyfill": "2.0.0",
-    "react-dom": "17",
+    "react-dom": "17.0.2",
     "react-styleguidist": "11.0.8",
     "react-svg-loader": "3.0.3",
-    "react-test-renderer": "16.13.1",
+    "react-test-renderer": "17.0.2",
     "sass": "1.49.9",
     "sass-loader": "10.2.0",
+    "standard-version": "9.5.0",
     "stream-array": "1.1.2",
     "style-loader": "2.0.0",
     "stylelint": "13.13.1",
@@ -100,8 +103,11 @@
     "lint": "eslint 'src/**/*.js' && stylelint 'src/**/*.css' 'src/**/*.scss'",
     "postbuild": "cp package.json build/ && cd src && find .  -name '*.scss' | cpio -pdm ../build",
     "prebuild": "rm -rf build/",
-    "publish:beta": "yarn publish:public --tag beta",
-    "publish:public": "yarn version && git push origin HEAD && yarn build && yarn publish build/",
+    "publish:beta": "yarn release -- --prerelease beta --skip.changelog && git push origin HEAD && yarn run build && git push --tags && yarn publish build/ --tag beta",
+    "publish:beta:dryrun": "yarn release -- --prerelease beta --dry-run --skip.changelog",
+    "publish:public": "yarn release && git push origin HEAD && yarn build  && git push --tags && yarn publish build/",
+    "publish:public:dryrun": "yarn release --dry-run",
+    "release": "standard-version",
     "start": "styleguidist server",
     "test": "jest"
   },
@@ -152,14 +158,6 @@
       "jsx-a11y/no-access-key": "Off"
     }
   },
-  "husky": {
-    "hooks": {
-      "post-checkout": "yarn install --frozen-lockfile",
-      "post-merge": "yarn install --frozen-lockfile",
-      "post-rebase": "yarn install --frozen-lockfile",
-      "pre-commit": "sort && CI=true lint-staged   "
-    }
-  },
   "jest": {
     "maxConcurrency": 10,
     "transform": {
@@ -168,7 +166,7 @@
       "\\.(jpg|jpeg|png|gif|webp)$": "jest-transform-file"
     },
     "transformIgnorePatterns": [
-      "node_modules/(?!(jsts|ol|mobility-toolbox-js)|@geops)"
+      "node_modules/(?!(jsts|ol|mobility-toolbox-js)|@geops|geotiff|quick-lru)"
     ],
     "testMatch": [
       "<rootDir>/src/**/?(*.)+(spec|test).[jt]s?(x)"
