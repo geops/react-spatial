@@ -105,8 +105,7 @@ const defaultRenderStation = ({
     state,
     stationName,
   } = stop;
-  const cancelled =
-    state === 'JOURNEY_CANCELLED' || state === 'JOURNEY_CANCELLED';
+  const cancelled = state === 'JOURNEY_CANCELLED' || state === 'STOP_CANCELLED';
   const { stations } = lineInfos;
   const isFirstStation = idx === 0;
   const isLastStation = idx === stations.length - 1;
