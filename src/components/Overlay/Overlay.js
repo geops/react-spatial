@@ -19,9 +19,9 @@ const propTypes = {
    */
   observe: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.instanceOf(Element),
+    PropTypes.node,
     PropTypes.instanceOf(Component),
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+    PropTypes.shape({ current: PropTypes.node }),
     PropTypes.shape({ current: PropTypes.instanceOf(Component) }),
   ]),
 

@@ -68,6 +68,16 @@ const propTypes = {
   renderAfterItem: PropTypes.func,
 
   /**
+   * Custom function to render the label.
+   *
+   * @param {string} item The label to render.
+   * @param {LayerTree} comp The LayerTree component.
+   *
+   * @return {node} A jsx node.
+   */
+  renderLabel: PropTypes.func,
+
+  /**
    * Object holding title for the layer tree's buttons.
    */
   titles: PropTypes.shape({
@@ -117,6 +127,10 @@ const defaultProps = {
   renderItemContent: null,
   renderBeforeItem: null,
   renderAfterItem: null,
+  renderLabel: (layer, layerComp) => {
+    const { t } = layerComp.props;
+    return t(layer.name);
+  },
   titles: {
     layerShow: 'Show layer',
     layerHide: 'Hide layer',
@@ -328,7 +342,7 @@ class LayerTree extends Component {
   // Render a button which expands/collapse the layer if there is children
   // or simulate a click on the input otherwise.
   renderToggleButton(layer) {
-    const { t, titles, isItemHidden } = this.props;
+    const { t, titles, isItemHidden, renderLabel } = this.props;
     const { expandedLayers } = this.state;
     const onInputClick = () => {
       this.onInputClick(
@@ -354,7 +368,7 @@ class LayerTree extends Component {
         onClick={onInputClick}
         onKeyPress={onInputClick}
       >
-        <div>{t(layer.name)}</div>
+        <div>{renderLabel(layer, this)}</div>
         {this.renderArrow(layer)}
       </div>
     );
