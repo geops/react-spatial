@@ -81,13 +81,13 @@ const defaultRenderStationImg = (
   isNotStation,
 ) => {
   const { length } = stations;
-  let src = station;
+  let src = station.src || station;
   if (index === 0) {
-    src = firstStation;
+    src = firstStation.src || firstStation;
   } else if (index === length - 1) {
-    src = lastStation;
+    src = lastStation.src || lastStation;
   } else if (isNotStation) {
-    src = line;
+    src = line.src || line;
   }
   return <img src={src} alt="routeScheduleLine" className="rt-route-icon" />;
 };
@@ -106,9 +106,10 @@ const defaultRenderStation = ({
     departureDelay,
     arrivalTime,
     departureTime,
-    cancelled,
+    state,
     stationName,
   } = stop;
+  const cancelled = state === 'JOURNEY_CANCELLED' || state === 'STOP_CANCELLED';
   const { stations } = lineInfos;
   const isFirstStation = idx === 0;
   const isLastStation = idx === stations.length - 1;
