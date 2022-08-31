@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { TralisLayer as TrackerLayer } from 'mobility-toolbox-js/ol';
+import { RealtimeLayer as TrackerLayer } from 'mobility-toolbox-js/ol';
 import TrackerControl from '.';
 
 describe('TrackerControl', () => {

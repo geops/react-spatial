@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { IoIosSpeedometer } from 'react-icons/io';
 import { FaPlay, FaForward, FaBackward, FaRegDotCircle } from 'react-icons/fa';
-import { TralisLayer as TrackerLayer } from 'mobility-toolbox-js/ol';
+import { RealtimeLayer as TrackerLayer } from 'mobility-toolbox-js/ol';
 
 const increaseSpeed = (speed) => {
   let delta = 0.1;
@@ -49,7 +49,7 @@ const defaultRenderButton = (icon, onClick, title) => {
 
 /**
  * TrackerControl allows the user to control the speed of a
- * [mobility-toolbox-js tracker layer](https://mobility-toolbox-js.geops.io/api/class/src/mapbox/layers/TralisLayer%20js~TralisLayer%20html-offset-anchor).
+ * [mobility-toolbox-js tracker layer](https://mobility-toolbox-js.geops.io/api/class/src/mapbox/layers/RealtimeLayer%20js~RealtimeLayer%20html-offset-anchor).
  */
 function TrackerControl({
   className,

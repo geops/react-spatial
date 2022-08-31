@@ -258,7 +258,7 @@ class LayerTree extends Component {
 
     getLayersAsFlatArray(rootLayer).forEach((layer) => {
       this.olKeys.push(
-        layer.on('propertychange', (evt) => {
+        layer.on('propertychange', () => {
           const { revision } = this.state;
           this.setState({ revision: revision + 1 });
         }),

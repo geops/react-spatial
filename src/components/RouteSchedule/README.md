@@ -3,7 +3,7 @@ The following example demonstrates the use of RouteSchedule.
 
 ```jsx
 import React, { useState, useEffect } from 'react';
-import { Layer, TralisLayer } from 'mobility-toolbox-js/ol';
+import { Layer, RealtimeLayer } from 'mobility-toolbox-js/ol';
 import Tile from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import BasicMap from 'react-spatial/components/BasicMap';
@@ -15,7 +15,7 @@ import Follow from 'react-spatial/images/FollowButton/follow.svg';
 
 // The `apiKey` used here is for demonstration purposes only.
 // Please get your own api key at https://developer.geops.io/.
-const trackerLayer = new TralisLayer({
+const trackerLayer = new RealtimeLayer({
   url: 'wss://tralis-tracker-api.geops.io/ws',
   apiKey: window.apiKey,
 });

@@ -115,7 +115,12 @@ class Permalink extends PureComponent {
             }
           } else if (
             !l.isBaseLayer &&
-            !l.hasVisibleChildren() &&
+            !(
+              l.hasVisibleChildren ||
+              l.children.some((ll) => {
+                return ll.visible;
+              })
+            ) &&
             !isLayerHidden(l)
           ) {
             if (l.setVisible) {
@@ -231,7 +236,7 @@ class Permalink extends PureComponent {
         const allChildrenHidden = children.every((child) => {
           return isLayerHidden(child);
         });
-        const hasVisibleChildren = children.find((child) => {
+        const hasVisibleChildren = children.some((child) => {
           return child.visible;
         });
         return (

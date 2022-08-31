@@ -3,7 +3,7 @@ import renderer from 'react-test-renderer';
 import { configure, shallow } from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { MdNavigation } from 'react-icons/md';
-import { TralisLayer as TrackerLayer } from 'mobility-toolbox-js/ol';
+import { RealtimeLayer as TrackerLayer } from 'mobility-toolbox-js/ol';
 import FollowButton from '.';
 
 configure({ adapter: new Adapter() });

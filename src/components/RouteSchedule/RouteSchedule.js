@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  TralisLayer as TrackerLayer,
+  RealtimeLayer as TrackerLayer,
   trackerConfig,
 } from 'mobility-toolbox-js/ol';
 import { getHoursAndMinutes, getDelayString } from '../../utils/timeUtils';

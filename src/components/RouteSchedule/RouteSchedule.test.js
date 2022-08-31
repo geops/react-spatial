@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import 'jest-date-mock';
-import { TralisLayer as TrackerLayer } from 'mobility-toolbox-js/ol';
+import { RealtimeLayer as TrackerLayer } from 'mobility-toolbox-js/ol';
 import RouteSchedule from '.';
 
 const RealDate = Date;

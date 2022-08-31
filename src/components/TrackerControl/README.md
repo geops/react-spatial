@@ -3,7 +3,7 @@ The following example demonstrates the use of TrackerControl.
 
 ```jsx
 import React from 'react';
-import { Layer, TralisLayer as TrackerLayer } from 'mobility-toolbox-js/ol';
+import { Layer, RealtimeLayer as TrackerLayer } from 'mobility-toolbox-js/ol';
 import Tile from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import BasicMap from 'react-spatial/components/BasicMap';

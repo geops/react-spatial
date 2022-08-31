@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import qs from 'query-string';
 import PropTypes from 'prop-types';
-import { TralisLayer as TrackerLayer } from 'mobility-toolbox-js/ol';
+import { RealtimeLayer as TrackerLayer } from 'mobility-toolbox-js/ol';
 
 const propTypes = {
   /**
