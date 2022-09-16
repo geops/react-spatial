@@ -7,7 +7,7 @@ const propTypes = {
   /**
    * Layers provider.
    */
-  layers: PropTypes.arrayOf(Layer),
+  layers: PropTypes.arrayOf(PropTypes.instanceOf(Layer)),
 
   /**
    * CSS class to apply on the container.

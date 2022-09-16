@@ -61,10 +61,7 @@ module.exports = {
       name: 'Realtime',
       description:
         'A collection of React components for spatial web development of realtime components.',
-      components: [
-        'src/components/RouteSchedule/[A-Z]*.js',
-        'src/components/TrackerControl/[A-Z]*.js',
-      ],
+      components: ['src/components/RouteSchedule/[A-Z]*.js'],
       exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
       usageMode: 'collapse', // 'hide' | 'collapse' | 'expand'
     },
@@ -72,10 +69,7 @@ module.exports = {
       name: 'Stops',
       description:
         'A collection of React components for spatial web development of stops components.',
-      components: [
-        'src/components/StopsFinder/StopsFinder.js',
-        'src/components/Search/Search.js',
-      ],
+      components: ['src/components/StopsFinder/StopsFinder.js'],
       exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
     },
   ],

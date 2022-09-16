@@ -4,7 +4,7 @@
 [![build](https://github.com/geops/react-spatial/workflows/main/badge.svg)](https://github.com/geops/react-spatial/actions?query=workflow%3Amain)
 [![Renovate](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/8f7b7082-8998-4e1f-9a34-4d8cd18e6003/deploy-status)](https://app.netlify.com/sites/react-spatial/deploys)
+![Vercel](https://vercelbadge.vercel.app/api/geops/react-spatial)
 
 This library provides React components to build web applications and to visualize real-time geographical information based on [OpenLayers](https://openlayers.org/) and [Mapbox GL](https://docs.mapbox.com/mapbox-gl-js/api/).
 

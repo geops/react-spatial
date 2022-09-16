@@ -78,7 +78,7 @@ describe('RouteSchedule', () => {
   });
 
   test('matches snapshots.', () => {
-    const trackerLayer = new TrackerLayer();
+    const trackerLayer = new TrackerLayer({});
     const component = renderer.create(
       <RouteSchedule
         lineInfos={lineInfos}

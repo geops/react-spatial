@@ -95,8 +95,8 @@ describe('Permalink', () => {
     };
 
     const params = {
-      x: 0,
-      y: 0,
+      x: 1000,
+      y: 1000,
       z: 7,
     };
 
@@ -105,21 +105,21 @@ describe('Permalink', () => {
     permalink
       .setProps({
         params: {
-          x: 1,
-          y: 2,
+          x: 1001,
+          y: 1002,
           z: 7,
         },
       })
       .update();
-    const search = '?x=1&y=2&z=7';
+    const search = '?x=1001&y=1002&z=7';
 
     expect(history.replace.mock.results[0].value.search).toEqual(search);
   });
 
   test('should initialize x, y & z Permalink without history.', () => {
     const params = {
-      x: 0,
-      y: 0,
+      x: 1000,
+      y: 1000,
       z: 7,
     };
 
@@ -128,13 +128,13 @@ describe('Permalink', () => {
     permalink
       .setProps({
         params: {
-          x: 1,
-          y: 2,
+          x: 1001,
+          y: 1002,
           z: 7,
         },
       })
       .update();
-    const search = '?x=1&y=2&z=7';
+    const search = '?x=1001&y=1002&z=7';
 
     expect(window.location.search).toEqual(search);
   });
@@ -160,13 +160,13 @@ describe('Permalink', () => {
     const olMap = new OLMap({
       controls: [],
       view: new View({
-        center: [1, 2],
+        center: [1001, 1002],
         zoom: 5,
       }),
     });
     mount(<Permalink map={olMap} />);
     olMap.dispatchEvent(new MapEvent('moveend', olMap));
-    const search = '?x=1&y=2&z=5';
+    const search = '?x=1001&y=1002&z=5';
 
     expect(window.location.search).toEqual(search);
   });
@@ -176,13 +176,13 @@ describe('Permalink', () => {
     const olMap = new OLMap({
       controls: [],
       view: new View({
-        center: [10.555555, 10.5555555],
+        center: [10010.555555, 10010.5555555],
         zoom: 5,
       }),
     });
     mount(<Permalink map={olMap} />);
     olMap.dispatchEvent(new MapEvent('moveend', olMap));
-    const search = '?x=10.56&y=10.56&z=5';
+    const search = '?x=10010.56&y=10010.56&z=5';
 
     expect(window.location.search).toEqual(search);
   });
@@ -192,13 +192,13 @@ describe('Permalink', () => {
     const olMap = new OLMap({
       controls: [],
       view: new View({
-        center: [10.99999, 1.000001],
+        center: [10010.99999, 1001.000001],
         zoom: 5,
       }),
     });
     mount(<Permalink map={olMap} />);
     olMap.dispatchEvent(new MapEvent('moveend', olMap));
-    const search = '?x=11&y=1&z=5';
+    const search = '?x=10011&y=1001&z=5';
 
     expect(window.location.search).toEqual(search);
   });
@@ -208,13 +208,13 @@ describe('Permalink', () => {
     const olMap = new OLMap({
       controls: [],
       view: new View({
-        center: [10.555555, 10.5555555],
+        center: [10010.555555, 10010.5555555],
         zoom: 5,
       }),
     });
     mount(<Permalink map={olMap} coordinateDecimals={4} />);
     olMap.dispatchEvent(new MapEvent('moveend', olMap));
-    const search = '?x=10.5556&y=10.5556&z=5';
+    const search = '?x=10010.5556&y=10010.5556&z=5';
 
     expect(window.location.search).toEqual(search);
   });

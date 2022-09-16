@@ -16,13 +16,13 @@ let map;
 configure({ adapter: new Adapter() });
 
 const feat = new Feature({
-  geometry: new Point([0, 0]),
+  geometry: new Point([1000, 1000]),
 });
 
 const featLine = new Feature({
   geometry: new Line([
-    [0, 0],
-    [1, 1],
+    [1000, 1000],
+    [2000, 2000],
   ]),
 });
 
@@ -137,41 +137,41 @@ describe('Popup', () => {
   describe(`init position`, () => {
     test(`using popupCoordinate.`, () => {
       map.getPixelFromCoordinate = jest.fn(() => {
-        return [10, 200];
+        return [10010, 100200];
       });
       const component = mount(
-        <Popup map={map} popupCoordinate={[1, 2]}>
+        <Popup map={map} popupCoordinate={[1001, 1002]}>
           <div id="gux" />
         </Popup>,
       );
-      expect(component.state().left).toBe(10);
-      expect(component.state().top).toBe(200);
+      expect(component.state().left).toBe(10010);
+      expect(component.state().top).toBe(100200);
       component.setProps({ feature: featLine });
       map.getPixelFromCoordinate = jest.fn(() => {
-        return [11, 100];
+        return [10011, 100100];
       });
-      component.setProps({ popupCoordinate: [9, 9] });
-      expect(component.state().left).toBe(11);
-      expect(component.state().top).toBe(100);
+      component.setProps({ popupCoordinate: [1009, 1009] });
+      expect(component.state().left).toBe(10011);
+      expect(component.state().top).toBe(100100);
     });
 
     test(`using feature.`, () => {
       map.getPixelFromCoordinate = jest.fn(() => {
-        return [10, 200];
+        return [10010, 100200];
       });
       const component = mount(
         <Popup map={map} feature={feat}>
           <div id="gux" />
         </Popup>,
       );
-      expect(component.state().left).toBe(10);
-      expect(component.state().top).toBe(200);
+      expect(component.state().left).toBe(10010);
+      expect(component.state().top).toBe(100200);
       map.getPixelFromCoordinate = jest.fn(() => {
-        return [11, 100];
+        return [10011, 100100];
       });
       component.setProps({ feature: featLine });
-      expect(component.state().left).toBe(11);
-      expect(component.state().top).toBe(100);
+      expect(component.state().left).toBe(10011);
+      expect(component.state().top).toBe(100100);
     });
   });
 
@@ -205,7 +205,7 @@ describe('Popup', () => {
       map = new OLMap({
         target,
         view: new View({
-          center: [0, 0],
+          center: [1000, 1000],
           resolutions: [1],
           zoom: 0,
         }),
@@ -232,7 +232,7 @@ describe('Popup', () => {
         };
       });
       map.getPixelFromCoordinate = jest.fn(() => {
-        return [10, 200];
+        return [10, 20];
       });
       const spy = jest.spyOn(map.getView(), 'animate');
       mount(
@@ -241,7 +241,10 @@ describe('Popup', () => {
         </Popup>,
       );
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith({ center: [5, -10], duration: 500 });
+      expect(spy).toHaveBeenCalledWith({
+        center: [1005, 990],
+        duration: 500,
+      });
     });
 
     test(`using panRect`, () => {
@@ -260,7 +263,10 @@ describe('Popup', () => {
         </Popup>,
       );
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith({ center: [0, -10], duration: 500 });
+      expect(spy).toHaveBeenCalledWith({
+        center: [1000, 990],
+        duration: 500,
+      });
     });
 
     test(`doesn't animate the map`, () => {
