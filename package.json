@@ -1,7 +1,7 @@
 {
   "name": "react-spatial",
   "description": "Components to build React map apps.",
-  "version": "1.2.3-beta.6",
+  "version": "1.2.3-beta.7",
   "license": "MIT",
   "dependencies": {
     "@geops/geops-ui": "0.1.13",
@@ -96,7 +96,7 @@
     "xml-beautifier": "0.5.0"
   },
   "scripts": {
-    "esbuild": "esbuild src/*.js src/**/*.js src/**/**/*.js src/**/**/**/*.js --target=chrome100 --outdir=build/ --loader:.js=jsx --sourcemap=external",
+    "esbuild": "esbuild src/*.js src/**/*.js src/**/**/*.js --target=chrome100 --outdir=build/ --loader:.js=jsx --sourcemap=external",
     "buble": "buble --no modules,asyncAwait -i src -o build --objectAssign Object.assign --sourcemap",
     "build": "yarn esbuild && find build -type f -name '*.test.*' -delete && rm -rf build/styleguidist && cp package.json README.md LICENSE build && cp -rf src/images build && cp -rf src/themes build",
     "coverage": "yarn test --coverage --coverageDirectory=coverage",
