@@ -2,14 +2,18 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TrackerLayer } from 'mobility-toolbox-js/ol';
-import { getBgColor } from 'mobility-toolbox-js/common/trackerConfig';
+import {
+  RealtimeLayer as TrackerLayer,
+  trackerConfig,
+} from 'mobility-toolbox-js/ol';
 import { getHoursAndMinutes, getDelayString } from '../../utils/timeUtils';
 import ReactTransitPropTypes from '../../propTypes';
 import firstStation from '../../images/RouteSchedule/firstStation.png';
 import station from '../../images/RouteSchedule/station.png';
 import lastStation from '../../images/RouteSchedule/lastStation.png';
 import line from '../../images/RouteSchedule/line.png';
+
+const { getBgColor } = trackerConfig;
 
 /**
  * Returns a color class to display the delay.

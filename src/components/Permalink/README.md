@@ -8,12 +8,9 @@ import VectorLayer from 'ol/layer/Vector';
 import { Style, Circle, Stroke, Fill } from 'ol/style';
 import GeoJSONFormat from 'ol/format/GeoJSON';
 import { Layer, MapboxLayer } from 'mobility-toolbox-js/ol';
-import { geopsTheme, Header, Footer } from '@geops/geops-ui';
-import { ThemeProvider } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Permalink from 'react-spatial/components/Permalink';
 import BasicMap from 'react-spatial/components/BasicMap';
-import LayerService from 'react-spatial/LayerService';
 import Map from 'ol/Map';
 
 const map = new Map({ controls: [] });
@@ -49,58 +46,60 @@ const baseLayers = [
     url: `https://maps.geops.io/styles/base_bright_v2/style.json?key=${apiKey}`,
     name: 'Base - Bright',
     key: 'basebright.baselayer',
-    isBaseLayer: true,
-    properties: {
-      radioGroup: 'baseLayer',
-    },
   }),
   new MapboxLayer({
     url: `https://maps.geops.io/styles/base_dark_v2/style.json?key=${apiKey}`,
     name: 'Base - Dark',
     key: 'basedark.baselayer',
-    isBaseLayer: true,
     visible: false,
-    properties: {
-      radioGroup: 'baseLayer',
-    },
   }),
 ];
 
-const layers = [...baseLayers, swissBoundries]
+const layers = [...baseLayers, swissBoundries];
 
-const layerService = new LayerService(layers);
-
-<ThemeProvider theme={geopsTheme}>
-  <div className="rs-permalink-example">
-    <BasicMap center={[876887.69, 5928515.41]} map={map} layers={layers} tabIndex={0} zoom={5} />
-    <Permalink
-      map={map}
-      layerService={layerService}
-      params={{
-        mode: 'custom',
+<div className="rs-permalink-example">
+  <BasicMap center={[876887.69, 5928515.41]} map={map} layers={layers} tabIndex={0} zoom={5} />
+  <Permalink
+    map={map}
+    layers={layers}
+    params={{
+      mode: 'custom',
+    }}
+    isBaseLayer={l=>{
+      return baseLayers.includes(l);
+    }}
+    isLayerHidden={l => {
+        let hasParentHidden = false;
+        let { parent } = l;
+        while (!hasParentHidden && parent) {
+          hasParentHidden = parent.get('hideInLegend');
+          parent = parent.parent;
+        }        
+        return l.get('hideInLegend') || hasParentHidden;
+    }}
+  />
+  <div className="rs-permalink-example-btns">
+    <Button
+      onClick={() => {
+        swissBoundries.visible = !swissBoundries.visible;
       }}
-      isLayerHidden={l => l.get('hideInLegend') || layerService.getParents(l).some(pl => pl.get('hideInLegend'))}
-    />
-    <div className="rs-permalink-example-btns">
-      <Button
-        onClick={() => {
-          swissBoundries.setVisible(!swissBoundries.visible);
-        }}
-      >
-        Toggle Switzerland layer
-      </Button>
-      <Button
-        onClick={() => {
-        if (baseLayers[1].visible) {
-          baseLayers[0].setVisible(true);
-        } else {
-          baseLayers[1].setVisible(true);
-        }
-      }}
-      >
-        Change base layer
-      </Button>
-    </div>
-  </div>;
-</ThemeProvider>
+    >
+      Toggle Switzerland layer
+    </Button>
+    <Button
+      onClick={() => {
+      if (baseLayers[1].visible) {
+        baseLayers[0].visible = true;
+        baseLayers[1].visible = false;
+      } else {
+        baseLayers[0].visible = false;
+        baseLayers[1].visible = true;
+      }
+      map.resize();
+    }}
+    >
+      Change base layer
+    </Button>
+  </div>
+</div>;
 ```

@@ -3,19 +3,19 @@ The following example demonstrates the use of RouteSchedule.
 
 ```jsx
 import React, { useState, useEffect } from 'react';
-import { Layer, TralisLayer } from 'mobility-toolbox-js/ol';
+import { Layer, RealtimeLayer } from 'mobility-toolbox-js/ol';
 import Tile from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import BasicMap from 'react-spatial/components/BasicMap';
 import RouteSchedule from 'react-spatial/components/RouteSchedule';
-import FilterButton from 'react-spatial/components/FilterButton';
-import FollowButton from 'react-spatial/components/FollowButton';
-import Filter from 'react-spatial/images/FilterButton/filter.svg';
-import Follow from 'react-spatial/images/FollowButton/follow.svg';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import { FaFilter } from 'react-icons/fa';
+import GpsFixedIcon from '@material-ui/icons/GpsFixed';
+
 
 // The `apiKey` used here is for demonstration purposes only.
 // Please get your own api key at https://developer.geops.io/.
-const trackerLayer = new TralisLayer({
+const trackerLayer = new RealtimeLayer({
   url: 'wss://tralis-tracker-api.geops.io/ws',
   apiKey: window.apiKey,
 });
@@ -29,11 +29,22 @@ const layers = [
   trackerLayer,
 ];
 
+let updateInterval;
+
+
+const getVehicleCoord = (routeIdentifier) => {
+  const [trajectory] = trackerLayer.getVehicle((traj) => {
+    return traj.properties.route_identifier === routeIdentifier;
+  });
+  return trajectory && trajectory.properties.coordinate;
+};
+
 function RouteScheduleExample() {
   const [lineInfos, setLineInfos] = useState(null);
   const [filterActive, setFilterActive] = useState(false);
   const [followActive, setFollowActive] = useState(false);
   const [center, setCenter] = useState([951560, 6002550]);
+
   useEffect(()=> {
     trackerLayer.onClick(([feature])=> {
       if (feature) {
@@ -51,6 +62,7 @@ function RouteScheduleExample() {
     trackerLayer.map.updateSize();
   }, [lineInfos]);
 
+
   return (
     <div className="rt-route-schedule-example">
       <RouteSchedule
@@ -58,25 +70,36 @@ function RouteScheduleExample() {
         trackerLayer={trackerLayer}
         renderHeaderButtons={routeIdentifier => (
           <>
-            <FilterButton
-              title="Filter"
-              active={filterActive}
-              onClick={active => setFilterActive(active)}
-              routeIdentifier={routeIdentifier}
-              trackerLayer={trackerLayer}
-            >
-              <Filter />
-            </FilterButton>
-            <FollowButton
-              setCenter={setCenter}
-              title="Follow"
-              active={followActive}
-              onClick={active => setFollowActive(active)}
-              routeIdentifier={routeIdentifier}
-              trackerLayer={trackerLayer}
-            >
-              <Follow />
-            </FollowButton>
+            <ToggleButton 
+              selected={filterActive}
+              onClick={() => {              
+                if (!filterActive) {                
+                  trackerLayer.filter = (trajectory) => {
+                    return trajectory.properties.route_identifier === routeIdentifier;
+                  };
+                } else {
+                  trackerLayer.filter = null;
+                }
+                setFilterActive(!filterActive);
+              }}>
+              <FaFilter />              
+            </ToggleButton>
+            <ToggleButton 
+              selected={followActive}
+              onClick={() => {            
+                clearInterval(updateInterval);
+                if (!followActive) {
+                  updateInterval = window.setInterval(() => {        
+                    const coord = getVehicleCoord(routeIdentifier);
+                    if (coord) {
+                      setCenter(coord);
+                    }
+                  }, 50);
+                }
+                setFollowActive(!followActive);
+              }}>
+              <GpsFixedIcon />              
+            </ToggleButton>
           </>
         )}
       />

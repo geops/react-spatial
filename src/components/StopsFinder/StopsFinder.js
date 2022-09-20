@@ -44,8 +44,8 @@ function StopsFinder({
       apiKey,
       target: document.createElement('div'),
       element: document.createElement('div'),
-      render(newSuggestions = []) {
-        setSuggestions(newSuggestions);
+      render(newSuggestions = { features: [] }) {
+        setSuggestions(newSuggestions.features);
         setLoading(false);
       },
     });

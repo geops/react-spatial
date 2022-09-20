@@ -21,6 +21,13 @@
     .rt-route-buttons {
       margin-left: auto;
       display: flex;
+
+      button {
+        width: 35px;
+        height: 35px;
+        margin: 10px 5px 15px 5px;
+        color: black;
+      }
     }
 
     .rt-route-icon {

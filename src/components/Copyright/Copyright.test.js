@@ -64,7 +64,7 @@ describe('Copyright', () => {
     });
     map.setSize([200, 200]);
     layers.forEach((layer) => {
-      layer.init(map);
+      layer.attachToMap(map);
     });
     act(() => {
       map.renderSync();
@@ -72,6 +72,9 @@ describe('Copyright', () => {
   });
 
   afterEach(() => {
+    layers.forEach((layer) => {
+      layer.detachFromMap(map);
+    });
     map.setTarget(null);
     map = null;
   });
@@ -92,8 +95,8 @@ describe('Copyright', () => {
 
   test('displays 2 copyrights', () => {
     const wrapper = mount(<Copyright map={map} />);
-    layers[0].setVisible(true);
-    layers[1].setVisible(true);
+    layers[0].visible = true;
+    layers[1].visible = true;
     act(() => {
       map.renderSync();
     });

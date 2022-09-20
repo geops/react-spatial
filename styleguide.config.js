@@ -39,7 +39,6 @@ module.exports = {
         'A collection of React components for spatial web development of map components.',
       components: [
         'src/components/BaseLayerSwitcher/[A-Z]*.js',
-        'src/components/BaseLayerToggler/[A-Z]*.js',
         'src/components/BasicMap/[A-Z]*.js',
         'src/components/CanvasSaveButton/[A-Z]*.js',
         'src/components/Copyright/[A-Z]*.js',
@@ -62,10 +61,7 @@ module.exports = {
       name: 'Realtime',
       description:
         'A collection of React components for spatial web development of realtime components.',
-      components: [
-        'src/components/RouteSchedule/[A-Z]*.js',
-        'src/components/TrackerControl/[A-Z]*.js',
-      ],
+      components: ['src/components/RouteSchedule/[A-Z]*.js'],
       exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
       usageMode: 'collapse', // 'hide' | 'collapse' | 'expand'
     },
@@ -73,10 +69,7 @@ module.exports = {
       name: 'Stops',
       description:
         'A collection of React components for spatial web development of stops components.',
-      components: [
-        'src/components/StopsFinder/StopsFinder.js',
-        'src/components/Search/Search.js',
-      ],
+      components: ['src/components/StopsFinder/StopsFinder.js'],
       exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
     },
   ],

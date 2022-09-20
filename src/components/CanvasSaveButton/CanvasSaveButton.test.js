@@ -33,7 +33,7 @@ describe('CanvasSaveButton', () => {
         zoom: 0,
       }),
     });
-    olMap.getView().setCenter([1, 1]);
+    olMap.getView().setCenter([1000, 1000]);
   });
 
   afterEach(() => {

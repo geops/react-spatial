@@ -3,7 +3,6 @@
 */
 @import './index.scss';
 @import '../../components/BaseLayerSwitcher/BaseLayerSwitcher.md.scss';
-@import '../../components/BaseLayerToggler/BaseLayerToggler.md.scss';
 @import '../../components/BasicMap/BasicMap.md.scss';
 @import '../../components/CanvasSaveButton/CanvasSaveButton.md.scss';
 @import '../../components/FeatureExportButton/FeatureExportButton.md.scss';
@@ -16,7 +15,6 @@
 @import '../../components/Zoom/Zoom.md.scss';
 @import '../../components/RouteSchedule/RouteSchedule.md.scss';
 @import '../../components/Copyright/Copyright.md.scss';
-@import '../../components/Search/Search.md.scss';
 @import '../../components/Overlay/Overlay.md.scss';
 
 $link-color: #000;

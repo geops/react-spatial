@@ -6,19 +6,16 @@ import 'jest-canvas-mock';
 import renderer from 'react-test-renderer';
 import { Layer } from 'mobility-toolbox-js/ol';
 import LayerTree from './LayerTree';
-import LayerService from '../../LayerService';
 
 configure({ adapter: new Adapter() });
 
 const mountLayerTree = (layers) => {
-  const layerService = new LayerService(layers);
-  return mount(<LayerTree layerService={layerService} />);
+  return mount(<LayerTree layers={layers} />);
 };
 
 const renderLayerTree = (layers, props) => {
-  const layerService = new LayerService(layers);
   const component = renderer.create(
-    <LayerTree layerService={layerService} {...(props || {})} />,
+    <LayerTree layers={layers} {...(props || {})} />,
   );
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
@@ -40,12 +37,14 @@ describe('LayerTree', () => {
         children: [
           new Layer({
             name: '1-1',
+            group: 'radio',
             properties: {
               radioGroup: 'radio',
             },
           }),
           new Layer({
             name: '1-2',
+            group: 'radio',
             properties: {
               radioGroup: 'radio',
             },
@@ -75,10 +74,7 @@ describe('LayerTree', () => {
     });
 
     test('when no layers.', () => {
-      const layerService = new LayerService();
-      const component = renderer.create(
-        <LayerTree layerService={layerService} />,
-      );
+      const component = renderer.create(<LayerTree layers={[]} />);
       const tree = component.toJSON();
       expect(tree).toMatchSnapshot();
     });

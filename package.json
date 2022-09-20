@@ -1,7 +1,7 @@
 {
   "name": "react-spatial",
   "description": "Components to build React map apps.",
-  "version": "1.2.2",
+  "version": "1.2.3-beta.7",
   "license": "MIT",
   "dependencies": {
     "@geops/geops-ui": "0.1.13",
@@ -14,7 +14,7 @@
     "re-resizable": "6.9.1",
     "react-autosuggest": "10.1.0",
     "react-draggable": "4.4.4",
-    "react-icons": "4.3.1",
+    "react-icons": "4.4.0",
     "resize-observer-polyfill": "1.5.1"
   },
   "peerDependencies": {
@@ -44,6 +44,7 @@
     "canvas": "2.8.0",
     "css-loader": "5.2.6",
     "enzyme": "3.11.0",
+    "esbuild": "^0.15.6",
     "eslint": "7.32.0",
     "eslint-config-airbnb": "18.2.1",
     "eslint-config-prettier": "8.3.0",
@@ -68,7 +69,8 @@
     "jsts": "2.7.3",
     "lint-staged": "11.2.0",
     "mapbox-gl": "1.13.1",
-    "mobility-toolbox-js": "1.7.13",
+    "maplibre-gl": "2.4.0",
+    "mobility-toolbox-js": "2.0.0-beta.51",
     "ol": "6.14.1",
     "prettier": "2.4.1",
     "proj4": "2.7.5",
@@ -94,7 +96,9 @@
     "xml-beautifier": "0.5.0"
   },
   "scripts": {
-    "build": "buble --no modules,asyncAwait -i src -o build --objectAssign Object.assign --sourcemap && cp package.json README.md LICENSE build && cp -rf src/images build",
+    "esbuild": "esbuild src/*.js src/**/*.js src/**/**/*.js --target=chrome100 --outdir=build/ --loader:.js=jsx --sourcemap=external",
+    "buble": "buble --no modules,asyncAwait -i src -o build --objectAssign Object.assign --sourcemap",
+    "build": "yarn esbuild && find build -type f -name '*.test.*' -delete && rm -rf build/styleguidist && cp package.json README.md LICENSE build && cp -rf src/images build && cp -rf src/themes build",
     "coverage": "yarn test --coverage --coverageDirectory=coverage",
     "cp": "generact --root src/components",
     "doc": "styleguidist build",
@@ -114,8 +118,9 @@
   "browserslist": [
     ">0.2%",
     "not dead",
-    "not ie <= 10",
-    "not op_mini all"
+    "not op_mini all",
+    "not ie <= 11",
+    "not android < 5"
   ],
   "eslintConfig": {
     "env": {
