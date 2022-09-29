@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   RealtimeLayer as TrackerLayer,
-  trackerConfig,
+  realtimeConfig,
 } from 'mobility-toolbox-js/ol';
 import { getHoursAndMinutes, getDelayString } from '../../utils/timeUtils';
 import ReactTransitPropTypes from '../../propTypes';
@@ -13,7 +13,7 @@ import station from '../../images/RouteSchedule/station.png';
 import lastStation from '../../images/RouteSchedule/lastStation.png';
 import line from '../../images/RouteSchedule/line.png';
 
-const { getBgColor } = trackerConfig;
+const { getBgColor } = realtimeConfig;
 
 /**
  * Returns a color class to display the delay.
