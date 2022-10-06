@@ -62,7 +62,7 @@ const isPassed = (stop, time, stops, idx) => {
   }
 
   // Sometimes stop.departureDelay is undefined.
-  const timeToCompare = stop.departureTime || stop.arrivalTime || 0;
+  const timeToCompare = stop.aimedDepartureTime || stop.aimedArrivalTime || 0;
   const delayToCompare = stop.departureDelay || stop.arrivalDelay || 0;
   return timeToCompare + delayToCompare <= time;
 };
@@ -164,14 +164,14 @@ const defaultRenderStation = ({
             cancelled ? 'rt-route-cancelled' : ''
           }`}
         >
-          {getHoursAndMinutes(arrivalTime)}
+          {getHoursAndMinutes(aimedArrivalTime)}
         </span>
         <span
           className={`rt-route-time-departure ${
             cancelled ? 'rt-route-cancelled' : ''
           }`}
         >
-          {getHoursAndMinutes(departureTime)}
+          {getHoursAndMinutes(aimedDepartureTime)}
         </span>
       </div>
       {renderStationImg(stations, idx, isStationPassed, isNotStation)}
