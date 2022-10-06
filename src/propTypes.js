@@ -5,13 +5,13 @@ const STATE_LEAVING = 'LEAVING';
 
 const station = PropTypes.shape({
   arrivalDelay: PropTypes.number, // time in milliseconds.
-  arrivalTime: PropTypes.number, // time in milliseconds.
-  arrivalTimeWithDelay: PropTypes.number, // time in milliseconds with the delay included.
+  aimedArrivalTime: PropTypes.number, // time in milliseconds.
+  arrivalTime: PropTypes.number, // time in milliseconds with the delay included.
   cancelled: PropTypes.bool,
   coordinates: PropTypes.arrayOf(PropTypes.number),
+  aimedDepartureTime: PropTypes.number, // time in milliseconds.
   departureDelay: PropTypes.number, // time in milliseconds.
-  departureTime: PropTypes.number, // time in milliseconds.
-  departureTimeWithDelay: PropTypes.number, // time in milliseconds with the delay included
+  departureTime: PropTypes.number, // time in milliseconds with the delay included
   noDropOff: PropTypes.bool,
   noPickUp: PropTypes.bool,
   stationId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
