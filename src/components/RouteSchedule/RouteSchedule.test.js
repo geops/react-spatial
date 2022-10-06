@@ -23,9 +23,11 @@ const lineInfos = {
       stationName: 'first stop',
       coordinates: [8.51772, 47.3586],
       arrivalDelay: 60000, // +1m
-      arrivalTime: 1571729580000,
+      arrivalTime: 1571729580000 + 60000,
+      aimedArrivalTime: 1571729580000,
       departureDelay: 60000,
-      departureTime: 1571729580000,
+      aimedDepartureTime: 1571729580000,
+      departureTime: 1571729580000 + 60000,
     },
     {
       stationId: '2',
@@ -33,8 +35,10 @@ const lineInfos = {
       coordinates: [8.54119, 47.36646],
       arrivalDelay: 0, // +0
       arrivalTime: 1571729903000,
+      aimedArrivalTime: 1571729903000,
       departureDelay: 120000, // +2m
-      departureTime: 1571729903000,
+      aimedDepartureTime: 1571729903000,
+      departureTime: 1571729903000 + 120000,
     },
     {
       stationId: '4',
@@ -42,17 +46,21 @@ const lineInfos = {
       coordinates: [8.54119, 47.36646],
       arrivalDelay: null, // +0
       arrivalTime: 0,
+      aimedArrivalTime: 0,
       departureDelay: null, // +2m
       departureTime: 0,
+      aimedDepartureTime: 0,
     },
     {
       stationId: '3',
       stationName: 'third stop',
       coordinates: [8.54119, 50],
       arrivalDelay: 240000, // +4m
-      arrivalTime: 1571730323000,
+      aimedArrivalTime: 1571730323000,
+      arrivalTime: 1571730323000 + 240000,
       departureDelay: 0, // +0
       departureTime: 0,
+      aimedDepartureTime: 0,
     },
   ],
   vehicleType: 0,

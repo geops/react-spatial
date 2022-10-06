@@ -108,6 +108,8 @@ const defaultRenderStation = ({
     departureTime,
     state,
     stationName,
+    aimedArrivalTime,
+    aimedDepartureTime,
   } = stop;
   const cancelled = state === 'JOURNEY_CANCELLED' || state === 'STOP_CANCELLED';
   const { stations } = lineInfos;
