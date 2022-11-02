@@ -294,7 +294,7 @@ class LayerTree extends Component {
     return expLayers;
   }
 
-  renderInput(layer) {
+  renderInput(layer, inputProps) {
     const { titles, isItemHidden } = this.props;
     let tabIndex = 0;
 
@@ -317,7 +317,7 @@ class LayerTree extends Component {
         aria-label={layer.visible ? titles.layerHide : titles.layerShow}
         onKeyPress={(e) => {
           if (e.which === 13) {
-            this.onInputClick(layer);
+            this.onInputClick(layer, undefined, inputType);
           }
         }}
       >
@@ -327,8 +327,10 @@ class LayerTree extends Component {
           checked={layer.visible}
           readOnly
           onClick={() => {
-            return this.onInputClick(layer);
+            return this.onInputClick(layer, undefined, inputType);
           }}
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          {...inputProps}
         />
         <span />
       </label>
@@ -359,7 +361,7 @@ class LayerTree extends Component {
 
   // Render a button which expands/collapse the layer if there is children
   // or simulate a click on the input otherwise.
-  renderToggleButton(layer) {
+  renderToggleButton(layer, toggleProps) {
     const { t, titles, isItemHidden, renderLabel } = this.props;
     const { expandedLayers } = this.state;
 
@@ -385,6 +387,8 @@ class LayerTree extends Component {
         aria-label={title}
         onClick={onInputClick}
         onKeyPress={onInputClick}
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...toggleProps}
       >
         <div>{renderLabel(layer, this)}</div>
         {this.renderArrow(layer)}
@@ -392,11 +396,11 @@ class LayerTree extends Component {
     );
   }
 
-  renderItemContent(layer) {
+  renderItemContent(layer, inputProps = {}, toggleProps = {}) {
     return (
       <>
-        {this.renderInput(layer)}
-        {this.renderToggleButton(layer)}
+        {this.renderInput(layer, inputProps)}
+        {this.renderToggleButton(layer, toggleProps)}
       </>
     );
   }

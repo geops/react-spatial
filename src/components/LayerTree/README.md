@@ -10,28 +10,10 @@ import GeoJSONFormat from 'ol/format/GeoJSON';
 import LayerTree from 'react-spatial/components/LayerTree';
 import BasicMap from 'react-spatial/components/BasicMap';
 
-
 const baseBright = new MapboxLayer({
   name: 'Base - Bright',
   group: 'baseLayer',
   url: `https://maps.geops.io/styles/base_bright_v2/style.json?key=${apiKey}`,
-});
-
-const busLines = new MapboxStyleLayer({
-  name: 'Tramway routes',
-  mapboxLayer: baseBright,
-  visible: false,
-  styleLayer: {
-    id: 'bus',
-    type: 'line',
-    source: 'base',
-    'source-layer': 'osm_edges',
-    filter: ['==', 'vehicle_type_prior', 'Tram' ],
-    paint: {
-      'line-color': 'rgba(255, 220, 0, 1)',
-      'line-width': 3,
-    },
-  },
 });
 
 const railLines = new MapboxStyleLayer({
@@ -42,7 +24,7 @@ const railLines = new MapboxStyleLayer({
     type: 'line',
     source: 'base',
     'source-layer': 'osm_edges',
-    filter: ['==', 'vehicle_type_prior', 'Zug' ],
+    filter: ['==', 'vehicle_type_prior', 'Zug'],
     paint: {
       'line-color': 'rgba(255, 0, 0, 1)',
       'line-width': 2,
@@ -74,12 +56,7 @@ const passengerFrequencies = new MapboxStyleLayer({
   },
 });
 
-// const baseBrightGroup = new Layer ({
-//   name: 'Base - Bright',
-//   group: 'baseLayer',
-//   children: [baseBright, passengerFrequencies, railLines, busLines],
-// })
-baseBright.children = [passengerFrequencies, railLines, busLines];
+baseBright.children = [passengerFrequencies, railLines];
 
 const baseDark = new MapboxLayer({
   name: 'Base - Dark',
@@ -97,7 +74,7 @@ const baseTravic = new MapboxLayer({
   },
 });
 
-const layers = [ baseDark, baseTravic, baseBright ];
+const layers = [baseDark, baseTravic, baseBright];
 
 <div className="rs-layer-tree-example">
   <BasicMap
