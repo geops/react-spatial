@@ -44,8 +44,11 @@ const propTypes = {
 
   /**
    * Custom function to render only the content of an item in the tree.
+   * inputProps und toggleProps can be used when calling the default renderItemContent function
+   * (comp.renderItemContent(layer, inputProps, toggleProps)) to overwrite the default input and label props
    *
-   * @param {object} item The item to render.
+   * @param {Layer} layer The layer the item content is created for
+   * @param {LayerTree} comp The LayerTree component.
    *
    * @return {node} A jsx node.
    */
