@@ -317,7 +317,7 @@ class LayerTree extends Component {
         aria-label={layer.visible ? titles.layerHide : titles.layerShow}
         onKeyPress={(e) => {
           if (e.which === 13) {
-            this.onInputClick(layer, undefined, inputType);
+            this.onInputClick(layer);
           }
         }}
       >
@@ -327,7 +327,7 @@ class LayerTree extends Component {
           checked={layer.visible}
           readOnly
           onClick={() => {
-            return this.onInputClick(layer, undefined, inputType);
+            return this.onInputClick(layer);
           }}
           // eslint-disable-next-line react/jsx-props-no-spreading
           {...inputProps}
