@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/geops/react-spatial/compare/v1.3.0-beta.1...v1.3.0) (2022-11-14)
+
+
+### Bug Fixes
+
+* **LayerTree:** add input and toggle props for layer tree renderItemContent ([#697](https://github.com/geops/react-spatial/issues/697)) ([8df5237](https://github.com/geops/react-spatial/commit/8df5237482373dc9c9de1ab9cfecefaf3472dcba))
+
 ### [1.2.2](https://github.com/geops/react-spatial/compare/v1.2.1...v1.2.2) (2022-07-22)
 
 ### [1.2.1](https://github.com/geops/react-spatial/compare/v1.2.0...v1.2.1) (2022-07-22)
