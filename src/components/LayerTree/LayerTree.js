@@ -44,8 +44,11 @@ const propTypes = {
 
   /**
    * Custom function to render only the content of an item in the tree.
+   * inputProps und toggleProps can be used when calling the default renderItemContent function
+   * (comp.renderItemContent(layer, inputProps, toggleProps)) to overwrite the default input and label props
    *
-   * @param {object} item The item to render.
+   * @param {Layer} layer The layer the item content is created for
+   * @param {LayerTree} comp The LayerTree component.
    *
    * @return {node} A jsx node.
    */
@@ -294,7 +297,7 @@ class LayerTree extends Component {
     return expLayers;
   }
 
-  renderInput(layer) {
+  renderInput(layer, inputProps) {
     const { titles, isItemHidden } = this.props;
     let tabIndex = 0;
 
@@ -329,6 +332,8 @@ class LayerTree extends Component {
           onClick={() => {
             return this.onInputClick(layer);
           }}
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          {...inputProps}
         />
         <span />
       </label>
@@ -359,7 +364,7 @@ class LayerTree extends Component {
 
   // Render a button which expands/collapse the layer if there is children
   // or simulate a click on the input otherwise.
-  renderToggleButton(layer) {
+  renderToggleButton(layer, toggleProps) {
     const { t, titles, isItemHidden, renderLabel } = this.props;
     const { expandedLayers } = this.state;
 
@@ -385,6 +390,8 @@ class LayerTree extends Component {
         aria-label={title}
         onClick={onInputClick}
         onKeyPress={onInputClick}
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...toggleProps}
       >
         <div>{renderLabel(layer, this)}</div>
         {this.renderArrow(layer)}
@@ -392,11 +399,11 @@ class LayerTree extends Component {
     );
   }
 
-  renderItemContent(layer) {
+  renderItemContent(layer, inputProps = {}, toggleProps = {}) {
     return (
       <>
-        {this.renderInput(layer)}
-        {this.renderToggleButton(layer)}
+        {this.renderInput(layer, inputProps)}
+        {this.renderToggleButton(layer, toggleProps)}
       </>
     );
   }

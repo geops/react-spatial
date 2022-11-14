@@ -1,7 +1,7 @@
 {
   "name": "react-spatial",
   "description": "Components to build React map apps.",
-  "version": "1.3.0-beta.1",
+  "version": "1.3.0-beta.2",
   "license": "MIT",
   "dependencies": {
     "@geops/geops-ui": "0.1.13",
@@ -96,12 +96,12 @@
     "xml-beautifier": "0.5.0"
   },
   "scripts": {
-    "esbuild": "esbuild src/*.js src/**/*.js src/**/**/*.js --target=chrome100 --outdir=build/ --loader:.js=jsx --sourcemap=external",
     "buble": "buble --no modules,asyncAwait -i src -o build --objectAssign Object.assign --sourcemap",
     "build": "yarn esbuild && find build -type f -name '*.test.*' -delete && rm -rf build/styleguidist && cp package.json README.md LICENSE build && cp -rf src/images build && cp -rf src/themes build",
     "coverage": "yarn test --coverage --coverageDirectory=coverage",
     "cp": "generact --root src/components",
     "doc": "styleguidist build",
+    "esbuild": "esbuild src/*.js src/**/*.js src/**/**/*.js --target=chrome100 --outdir=build/ --loader:.js=jsx --sourcemap=external",
     "format": "prettier --write 'src/**/*.js' && eslint 'src/**/*.js' --fix && stylelint 'src/**/*.css' 'src/**/*.scss' --fix",
     "link2": "cmdToAdd=$(node ./scripts/read-pkg-json.js add) && $cmdToAdd && yarn build && cmdToRemove=$(node ./scripts/read-pkg-json.js remove) && $cmdToRemove && cd build && yarn link",
     "lint": "eslint 'src/**/*.js' && stylelint 'src/**/*.css' 'src/**/*.scss'",
