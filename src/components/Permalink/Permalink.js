@@ -114,14 +114,11 @@ class Permalink extends PureComponent {
               l.visible = true;
             }
           } else if (
-            !l.isBaseLayer &&
-            !(
-              l.hasVisibleChildren ||
-              l.children.some((ll) => {
-                return ll.visible;
-              })
-            ) &&
-            !isLayerHidden(l)
+            !isBaseLayer(l) &&
+            !isLayerHidden(l) &&
+            !l.children.some((ll) => {
+              return ll.visible;
+            })
           ) {
             if (l.setVisible) {
               l.setVisible(false);
