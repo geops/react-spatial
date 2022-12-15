@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.2](https://github.com/geops/react-spatial/compare/v1.3.1...v1.3.2) (2022-12-15)
+
+
+### Bug Fixes
+
+* fix use of baselayers permalink and baselayerswitcher ([#699](https://github.com/geops/react-spatial/issues/699)) ([23af45f](https://github.com/geops/react-spatial/commit/23af45f5681cc50cfc4c60502b71c161a478fe71))
+
 ### [1.3.1](https://github.com/geops/react-spatial/compare/v1.3.1-beta.0...v1.3.1) (2022-12-15)
 
 
