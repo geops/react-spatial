@@ -18,16 +18,14 @@ const travicLayer = new MapboxLayer({
   url: `https://maps.geops.io/styles/travic_v2/style.json?key=${apiKey}`,
   name: 'Travic',
   key: 'travic.baselayer',
-  isBaseLayer: true,
-  visible: true
+  visible: true,
 });
 
 const basebrightLayer = new MapboxLayer({
   url: `https://maps.geops.io/styles/base_bright_v2/style.json?key=${apiKey}`,
   name: 'Base - Bright',
   key: 'basebright.baselayer',
-  isBaseLayer: true,
-  visible: false
+  visible: false,
 });
 
 const osmLayer = new Layer({
@@ -37,7 +35,6 @@ const osmLayer = new Layer({
   name: 'OSM',
   key: 'osm.baselayer',
   visible: false,
-  isBaseLayer: true,
 });
 
 const layerImages = {

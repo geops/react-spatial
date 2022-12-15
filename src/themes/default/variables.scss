@@ -2,7 +2,7 @@
 * This file defines variables.
 */
 
-// Color
+/*  Color */
 $brand-primary: #eb0000;
 $brand-secondary: #003d85;
 $gray-base: #000;
@@ -12,29 +12,29 @@ $gray: lighten($gray-base, 33.5%);
 $gray-dark: lighten($gray-base, 20%);
 $gray-darker: lighten($gray-base, 13.5%);
 
-// Text
+/* Text */
 $font-family: arial, sans-serif;
 $font-family-bold: arial, sans-serif;
 $font-size-base: 15px;
 $font-size-small: ceil($font-size-base * 0.85);
 $font-size-large: ceil($font-size-base * 1.25);
 
-//Shadow
+/* Shadow */
 $box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
 
-// Padding
+/* Padding */
 $padding-base: 5px;
 $padding-base-vertical: 5px;
 $padding-base-horizontal: 5px;
 
-// Link
+/* Link */
 $link-color: $brand-primary;
 $link-color-hover: darken($brand-primary, 10%);
 $link-color-active: darken($brand-primary, 5%);
 $link-decoration: none;
 $link-decoration-hover: underline;
 
-// Buttons
+/* Buttons */
 $btn-primary-color: $brand-primary;
 $btn-primary-color-hover: darken($brand-primary, 10%);
 $btn-primary-color-active: darken($brand-primary, 5%);
@@ -45,14 +45,14 @@ $btn-size-base: 50px;
 $btn-size-small: ceil($btn-size-base * 0.85);
 $btn-size-large: ceil($btn-size-base * 1.25);
 
-// Z-index
+/* Z-index */
 $zindex-base: 0;
 $zindex-lower: 200;
 $zindex-low: 400;
 $zindex-high: 600;
 $zindex-higher: 800;
 
-// Others
+/*  Others */
 $header-height: 55px;
 $footer-height: 25px;
 $sidebar-open-width: 200px;
