@@ -107,7 +107,6 @@ class Permalink extends PureComponent {
         const visibleLayers = urlParams.layers.split(',');
         getLayersAsFlatArray(layers).forEach((l) => {
           if (visibleLayers.includes(l.key)) {
-            console.log('layers visible true', l.key);
             if (l.setVisible) {
               l.setVisible(true);
             } else {
@@ -121,7 +120,6 @@ class Permalink extends PureComponent {
               return ll.visible;
             })
           ) {
-            console.log('layers visible false', l.key);
             if (l.setVisible) {
               l.setVisible(false);
             } else {
