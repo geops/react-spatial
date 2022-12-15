@@ -245,7 +245,17 @@ class Permalink extends PureComponent {
     let baseLayersParam;
     const baseLayers = getLayersAsFlatArray(layers).filter(isBaseLayer);
     if (baseLayers.length) {
-      baseLayersParam = baseLayers
+      // First baselayers in order of visibility, top layer is first
+      const visibleBaseLayers = (
+        baseLayers.filter((l) => {
+          return l.visible;
+        }) || []
+      ).reverse();
+      const nonVisibleBaseLayers =
+        baseLayers.filter((l) => {
+          return !l.visible;
+        }) || [];
+      baseLayersParam = [...visibleBaseLayers, ...nonVisibleBaseLayers]
         .sort((a, b) => {
           if (a.visible === b.visible) {
             return 0;

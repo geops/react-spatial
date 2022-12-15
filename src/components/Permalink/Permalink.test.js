@@ -113,7 +113,7 @@ describe('Permalink', () => {
       .update();
     const search = '?x=1001&y=1002&z=7';
 
-    expect(history.replace.mock.results[0].value.search).toEqual(search);
+    expect(history.replace.mock.results[1].value.search).toEqual(search);
   });
 
   test('should initialize x, y & z Permalink without history.', () => {
