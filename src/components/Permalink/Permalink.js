@@ -107,6 +107,7 @@ class Permalink extends PureComponent {
         const visibleLayers = urlParams.layers.split(',');
         getLayersAsFlatArray(layers).forEach((l) => {
           if (visibleLayers.includes(l.key)) {
+            console.log('layers visible true', l.key);
             if (l.setVisible) {
               l.setVisible(true);
             } else {
@@ -120,6 +121,7 @@ class Permalink extends PureComponent {
               return ll.visible;
             })
           ) {
+            console.log('layers visible false', l.key);
             if (l.setVisible) {
               l.setVisible(false);
             } else {
@@ -131,20 +133,21 @@ class Permalink extends PureComponent {
       }
 
       // Set baser layer visibility based on 'baseLayers' parameter.
-      const visibleBaseLayers = (urlParams.baselayers || '').split(',');
-      getLayersAsFlatArray(layers)
-        .filter(isBaseLayer)
-        .forEach((baseLayer) => {
-          if (baseLayer.key === visibleBaseLayers[0]) {
+      // Show the first of the list then hide the others
+      const visibleBaseLayer = (urlParams.baselayers || '').split(',')[0];
+      if (visibleBaseLayer) {
+        getLayersAsFlatArray(layers)
+          .filter(isBaseLayer)
+          .forEach((baseLayer) => {
+            const visible = baseLayer.key === visibleBaseLayer;
             if (baseLayer.setVisible) {
-              baseLayer.setVisible(true); // The radio group will hide the others baseLayers automatically
+              baseLayer.setVisible(visible);
             } else {
               // eslint-disable-next-line no-param-reassign
-              baseLayer.visible = true;
+              baseLayer.visible = visible;
             }
-          }
-        });
-
+          });
+      }
       this.updateLayers();
     }
   }
@@ -208,75 +211,63 @@ class Permalink extends PureComponent {
     const { layers, isLayerHidden, isBaseLayer } = this.props;
     const { revision } = this.state;
 
-    const rootLayer = new Layer({ children: layers });
-
     unByKey(this.onPropertyChangeKeys);
-    getLayersAsFlatArray(rootLayer).forEach((layer) => {
-      this.onPropertyChangeKeys.push(
-        layer.on('change:visible', () => {
-          this.setState({ revision: revision + 1 });
-        }),
-      );
+    this.onPropertyChangeKeys = getLayersAsFlatArray(layers).map((layer) => {
+      return layer.on('change:visible', () => {
+        this.setState({ revision: revision + 1 });
+      });
     });
-    const baseLayers = getLayersAsFlatArray(rootLayer).filter(isBaseLayer);
-    const idx = baseLayers.findIndex((l) => {
-      return l.visible;
-    });
-    if (idx !== -1) {
-      const baseLayerVisible = baseLayers.splice(idx, 1);
-      baseLayers.unshift(baseLayerVisible[0]);
+
+    // layers param
+    let layersParam;
+    if (layers.length) {
+      layersParam = getLayersAsFlatArray(layers)
+        .filter((l) => {
+          const children = l.children || [];
+          const allChildrenHidden = children.every((child) => {
+            return isLayerHidden(child);
+          });
+          const hasVisibleChildren = children.some((child) => {
+            return child.visible;
+          });
+          return (
+            !isBaseLayer(l) &&
+            !isLayerHidden(l) &&
+            l.visible &&
+            (!hasVisibleChildren || allChildrenHidden)
+          );
+        })
+        .map((l) => {
+          return l.key;
+        })
+        .join();
     }
 
-    const layersParam = getLayersAsFlatArray(layers)
-      .filter((l) => {
-        const children = l.children || [];
-        const allChildrenHidden = children.every((child) => {
-          return isLayerHidden(child);
-        });
-        const hasVisibleChildren = children.some((child) => {
-          return child.visible;
-        });
-        return (
-          !isBaseLayer(l) &&
-          !isLayerHidden(l) &&
-          l.visible &&
-          (!hasVisibleChildren || allChildrenHidden)
-        );
-      })
-      .map((l) => {
-        return l.key;
-      })
-      .join();
-
-    const baseLayersParam =
-      baseLayers.length > 1
-        ? baseLayers
-            .sort((a, b) => {
-              if (a.visible === b.visible) {
-                return 0;
-              }
-              if (a.visible && !b.visible) {
-                return -1;
-              }
-              return 1;
-            })
-            .map((l) => {
-              return l.key;
-            })
-            .join()
-        : undefined;
+    // baselayers param
+    let baseLayersParam;
+    const baseLayers = getLayersAsFlatArray(layers).filter(isBaseLayer);
+    if (baseLayers.length) {
+      baseLayersParam = baseLayers
+        .sort((a, b) => {
+          if (a.visible === b.visible) {
+            return 0;
+          }
+          if (a.visible && !b.visible) {
+            return -1;
+          }
+          return 1;
+        })
+        .map((l) => {
+          return l.key;
+        })
+        .join();
+    }
 
     // Only add parameters if there is actually some layers added.
-    const state = {};
-
-    if (layers?.length) {
-      state.layers = layersParam;
-    }
-    if (baseLayers?.length) {
-      state.baselayers = baseLayersParam;
-    }
-
-    this.setState(state);
+    this.setState({
+      layers: layersParam,
+      baselayers: baseLayersParam,
+    });
   }
 
   updateHistory() {

@@ -7,6 +7,7 @@ import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import { MapboxLayer, Layer } from 'mobility-toolbox-js/ol';
 import BaseLayerSwitcher from 'react-spatial/components/BaseLayerSwitcher';
+import Permalink from 'react-spatial/components/Permalink';
 import BasicMap from 'react-spatial/components/BasicMap';
 import osmImage from 'react-spatial/images/baselayer/baselayer.osm.png';
 import travicImage from 'react-spatial/images/baselayer/baselayer.travic.png';
@@ -18,16 +19,16 @@ const travicLayer = new MapboxLayer({
   url: `https://maps.geops.io/styles/travic_v2/style.json?key=${apiKey}`,
   name: 'Travic',
   key: 'travic.baselayer',
-  isBaseLayer: true,
-  visible: true
+  visible: true,
+  group:'base'
 });
 
 const basebrightLayer = new MapboxLayer({
   url: `https://maps.geops.io/styles/base_bright_v2/style.json?key=${apiKey}`,
   name: 'Base - Bright',
   key: 'basebright.baselayer',
-  isBaseLayer: true,
-  visible: false
+  visible: false,
+  group:'base'
 });
 
 const osmLayer = new Layer({
@@ -37,7 +38,7 @@ const osmLayer = new Layer({
   name: 'OSM',
   key: 'osm.baselayer',
   visible: false,
-  isBaseLayer: true,
+  group:'base'
 });
 
 const layerImages = {
@@ -59,6 +60,16 @@ const layers = [travicLayer, basebrightLayer, osmLayer];
   <BaseLayerSwitcher
     layers={layers}
     layerImages={layerImages}
+  />
+  <Permalink
+    map={map}
+    layers={layers}
+    params={{
+      mode: 'custom',
+    }}
+    isBaseLayer={l=>{
+      return layers.includes(l);
+    }}
   />
 </div>;
 ```

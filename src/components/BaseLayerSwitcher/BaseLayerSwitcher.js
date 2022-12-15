@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FaChevronLeft } from 'react-icons/fa';
 import { Layer } from 'mobility-toolbox-js/ol';
+import { unByKey } from 'ol/Observable';
 
 const propTypes = {
   /**
@@ -109,6 +110,20 @@ function BaseLayerSwitcher({
   const [currentLayer, setCurrentLayer] = useState(
     getVisibleLayer(layers) || layers[0],
   );
+
+  useEffect(() => {
+    // Update the layer selected when a visibility changes.
+    const olKeys = (layers || []).map((layer) => {
+      return layer.on('change:visible', (evt) => {
+        if (evt.target.visible && currentLayer !== evt.target) {
+          setCurrentLayer(evt.target);
+        }
+      });
+    });
+    return () => {
+      unByKey(olKeys);
+    };
+  }, [currentLayer, layers]);
 
   /* Images are loaded from props if provided, fallback from layer */
   const images = layerImages
