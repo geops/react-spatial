@@ -118,7 +118,6 @@ const propTypes = {
       font: PropTypes.string,
       fillStyle: PropTypes.oneOfType([
         PropTypes.string,
-        PropTypes.instanceOf(CanvasGradient),
         PropTypes.instanceOf(CanvasPattern),
       ]),
       background: PropTypes.bool,
