@@ -6,6 +6,14 @@ import { getTopLeft, getBottomRight } from 'ol/extent';
 import NorthArrowSimple from '../../images/northArrow.url.svg';
 import NorthArrowCircle from '../../images/northArrowCircle.url.svg';
 
+const extraDataImgPropType = PropTypes.shape({
+  src: PropTypes.string,
+  width: PropTypes.number,
+  height: PropTypes.number,
+  rotation: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+  circled: PropTypes.bool,
+});
+
 const propTypes = {
   /**
    * Automatically download the image saved.
@@ -72,7 +80,7 @@ const propTypes = {
       },
       northArrow,  // True if the north arrow
                    // should be placed with default configuration
-                   // (default image, rotation=0, circled=False)
+                   // (default image, rotation=0, circled=false)
     }
    * Example 2:
    *
@@ -101,7 +109,21 @@ const propTypes = {
       },
     }
    */
-  extraData: PropTypes.object,
+  extraData: PropTypes.shape({
+    logo: extraDataImgPropType,
+    northArrow: extraDataImgPropType,
+    qrCode: extraDataImgPropType,
+    copyright: PropTypes.shape({
+      text: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+      font: PropTypes.string,
+      fillStyle: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.instanceOf(CanvasGradient),
+        PropTypes.instanceOf(CanvasPattern),
+      ]),
+      background: PropTypes.bool,
+    }),
+  }),
 };
 
 const defaultProps = {
@@ -130,6 +152,11 @@ class CanvasSaveButton extends PureComponent {
     const { format } = this.props;
     this.fileExt = format === 'image/jpeg' ? 'jpg' : 'png';
     this.padding = 5;
+  }
+
+  static getMargin(destCanvas) {
+    const newMargin = destCanvas.width / 100; // 1% of the canvas width
+    return newMargin;
   }
 
   onClick(evt) {
@@ -248,7 +275,7 @@ class CanvasSaveButton extends PureComponent {
     let firstLine = copyright;
     const wordNumber = copyright.split(' ').length;
 
-    // If the text is bigger than the max width we split itinto 2 lines
+    // If the text is bigger than the max width we split it into 2 lines
     if (this.multilineCopyright) {
       for (let i = 0; i < wordNumber; i += 1) {
         firstLine = firstLine.substring(0, firstLine.lastIndexOf(' '));
@@ -264,7 +291,7 @@ class CanvasSaveButton extends PureComponent {
     const secondLine = copyright.replace(firstLine, '');
 
     // Draw first line (line break isn't supported for fillText).
-    const textX = this.padding;
+    const textX = this.margin;
     let textMeasure = destContext.measureText(firstLine);
     textMeasure.height =
       textMeasure.actualBoundingBoxAscent +
@@ -308,10 +335,21 @@ class CanvasSaveButton extends PureComponent {
       destContext.fillText(secondLine, textX, secondLineY);
     }
 
+    const firstLineMetrics = destContext.measureText(firstLine);
+    const secondLineMetrics = destContext.measureText(secondLine);
+    const heightFirstLine =
+      firstLineMetrics.actualBoundingBoxAscent +
+      firstLineMetrics.actualBoundingBoxDescent;
+    const heightSecondLine =
+      secondLineMetrics.actualBoundingBoxAscent +
+      secondLineMetrics.actualBoundingBoxDescent;
+    this.copyrightY =
+      destCanvas.height -
+      (heightFirstLine + paddingBetweenLines + heightSecondLine) / 2;
     destContext.restore();
   }
 
-  drawElement(data, destCanvas, previousItemSize = [0, 0]) {
+  drawElement(data, destCanvas, previousItemSize = [0, 0], side = 'right') {
     const destContext = destCanvas.getContext('2d');
     const { scale } = this.props;
     const { src, width, height, rotation } = data;
@@ -324,13 +362,19 @@ class CanvasSaveButton extends PureComponent {
         destContext.save();
         const elementWidth = (width || 80) * scale;
         const elementHeight = (height || 80) * scale;
-        destContext.translate(
-          destCanvas.width - 2 * this.padding - elementWidth / 2,
-          destCanvas.height -
-            2 * this.padding -
-            elementHeight / 2 -
-            previousItemSize[1],
-        );
+        const left =
+          side === 'left'
+            ? this.margin + elementWidth / 2
+            : destCanvas.width - this.margin - elementWidth / 2;
+        const top =
+          (side === 'left' && this.copyrightY
+            ? this.copyrightY - 2 * this.padding
+            : destCanvas.height) -
+          this.margin -
+          elementHeight / 2 -
+          previousItemSize[1];
+
+        destContext.translate(left, top);
 
         if (rotation) {
           const angle = typeof rotation === 'function' ? rotation() : rotation;
@@ -447,6 +491,8 @@ class CanvasSaveButton extends PureComponent {
           );
         }
 
+        this.margin = CanvasSaveButton.getMargin(destCanvas);
+
         // Custom info
         let logoPromise = Promise.resolve();
         if (destContext && extraData && extraData.logo) {
@@ -479,11 +525,22 @@ class CanvasSaveButton extends PureComponent {
               extraData.copyright.text
             ) {
               const maxWidth = widestElement
-                ? destContext.canvas.width - widestElement
+                ? destContext.canvas.width - widestElement - this.margin
                 : destContext.canvas.width;
               this.drawCopyright(destContext, destCanvas, maxWidth);
             }
-            resolve(destCanvas);
+            let qrCodePromise = Promise.resolve();
+            if (destContext && extraData && extraData.qrCode) {
+              qrCodePromise = this.drawElement(
+                extraData.qrCode,
+                destCanvas,
+                undefined,
+                'left',
+              );
+            }
+            qrCodePromise.then(() => {
+              return resolve(destCanvas);
+            });
           });
         });
       });
