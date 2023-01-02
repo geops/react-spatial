@@ -148,8 +148,6 @@ const defaultProps = {
 class CanvasSaveButton extends PureComponent {
   constructor(props) {
     super(props);
-    const { format } = this.props;
-    this.fileExt = format === 'image/jpeg' ? 'jpg' : 'png';
     this.padding = 5;
   }
 
@@ -187,9 +185,11 @@ class CanvasSaveButton extends PureComponent {
   }
 
   getDownloadImageName() {
+    const { format } = this.props;
+    const fileExt = format === 'image/jpeg' ? 'jpg' : 'png';
     return (
       `${window.document.title.replace(/ /g, '_').toLowerCase()}` +
-      `.${this.fileExt}`
+      `.${fileExt}`
     );
   }
 
