@@ -1,4 +1,3 @@
-
 The following example demonstrates the use of CanvasSaveButton.
 
 ```jsx
@@ -15,6 +14,7 @@ import degrees from 'radians-degrees';
 import CanvasSaveButton from 'react-spatial/components/CanvasSaveButton';
 import BasicMap from 'react-spatial/components/BasicMap';
 import geopsLogo from 'react-spatial/images/geops_logo.png';
+import qrCode from 'react-spatial/images/geops_qr.png';
 
 const map = new Map({ controls: [] });
 
@@ -24,7 +24,7 @@ const layers = [
       source: new OSM(),
     }),
     copyrights: '© layer-copyright',
-  })
+  }),
 ];
 
 function CanvasSaveButtonExample() {
@@ -44,7 +44,8 @@ function CanvasSaveButtonExample() {
             copyright: {
               text: () => {
                 return layers[0].copyrights;
-                },
+              },
+              background: true,
             },
             northArrow: {
               rotation: () => {
@@ -57,11 +58,14 @@ function CanvasSaveButtonExample() {
               height: 22,
               width: 84,
             },
+            qrCode: {
+              src: qrCode,
+              height: 50,
+              width: 50,
+            },
           }}
         >
-          <Button>
-            Export Map
-          </Button>
+          <Button>Export Map</Button>
         </CanvasSaveButton>
       </div>
     </ThemeProvider>
