@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/geops/react-spatial/compare/v1.3.2...v1.4.0) (2023-01-09)
+
+
+### Features
+
+* **CanvasSaveButton:** add extraData.qrCode option to insert QR code in canvas export  ([#700](https://github.com/geops/react-spatial/issues/700)) ([16be889](https://github.com/geops/react-spatial/commit/16be889d97682c2a2d21c2fa17d55cae205e09da))
+
 ### [1.3.2](https://github.com/geops/react-spatial/compare/v1.3.1...v1.3.2) (2022-12-15)
 
 
