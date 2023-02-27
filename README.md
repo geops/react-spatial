@@ -10,7 +10,7 @@ This library provides React components to build web applications and to visualiz
 
 This library uses the [mobility-toolbox-js](https://mobility-toolbox-js.geops.io/) library.
 
-Documentation and examples at https://react-spatial.geops.de.
+Documentation and examples at https://react-spatial.geops.io.
 
 ## Getting Started
 
