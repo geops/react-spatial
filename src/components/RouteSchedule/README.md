@@ -50,7 +50,7 @@ function RouteScheduleExample() {
       if (feature) {
         const vehicleId = feature.get('train_id');
         trackerLayer.api.getStopSequence(vehicleId).then((stopSequence) => {
-          setLineInfos(stopSequence[0]);
+          setLineInfos(stopSequence.content[0]);
         });
       } else {
         setLineInfos();
@@ -68,10 +68,16 @@ function RouteScheduleExample() {
       <RouteSchedule
         lineInfos={lineInfos}
         trackerLayer={trackerLayer}
+        onStationClick={(stop, evt)=> {
+          if (stop.coordinate) {
+            trackerLayer.map.getView().setCenter(stop.coordinate);
+          }
+        }}
         renderHeaderButtons={routeIdentifier => (
           <>
             <ToggleButton 
               selected={filterActive}
+              value=""
               onClick={() => {              
                 if (!filterActive) {                
                   trackerLayer.filter = (trajectory) => {
@@ -86,6 +92,7 @@ function RouteScheduleExample() {
             </ToggleButton>
             <ToggleButton 
               selected={followActive}
+              value=""
               onClick={() => {            
                 clearInterval(updateInterval);
                 if (!followActive) {
