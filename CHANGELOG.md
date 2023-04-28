@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/geops/react-spatial/compare/v1.4.1...v1.5.0) (2023-04-28)
+
+
+### Features
+
+* update react 18 and clean dependencies ([9064937](https://github.com/geops/react-spatial/commit/9064937aa975f072a84b0ad82e791e79ed129c8f))
+
 ### [1.4.1](https://github.com/geops/react-spatial/compare/v1.4.0...v1.4.1) (2023-04-28)
 
 
