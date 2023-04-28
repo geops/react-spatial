@@ -9,6 +9,8 @@ import PropTypes from 'prop-types';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import { ZoomSlider } from 'ol/control';
 import OLMap from 'ol/Map';
+import { easeOut } from 'ol/easing';
+import { unByKey } from 'ol/Observable';
 
 const propTypes = {
   /**
@@ -56,11 +58,19 @@ const defaultProps = {
   delta: 1,
 };
 
-const updateZoom = (map, zoomAction) => {
-  map.getView().cancelAnimations();
-  const zoom = map.getView().getZoom();
-
-  map.getView().animate({ zoom: zoom + zoomAction });
+const updateZoom = (map, delta) => {
+  const view = map.getView();
+  const currentZoom = view.getZoom();
+  const newZoom = currentZoom + delta;
+  const constrainedZoom = view.getConstrainedZoom(newZoom);
+  if (view.getAnimating()) {
+    view.cancelAnimations();
+  }
+  view.animate({
+    zoom: constrainedZoom,
+    duration: 250,
+    easing: easeOut,
+  });
 };
 
 /**
@@ -112,11 +122,10 @@ function Zoom({
   }, [currentZoom, map]);
 
   useEffect(() => {
-    /* Trigger zoom update to disable zooms on max and min */
-    const zoomListener = () => {
-      return setZoom(map.getView().getZoom());
-    };
-    map.on('moveend', zoomListener);
+    // Trigger zoom update to disable zooms on max and min
+    const listenerKey = map.on('moveend', () => {
+      setZoom(map.getView().getZoom());
+    });
 
     let control;
     if (zoomSlider && ref.current) {
@@ -128,7 +137,7 @@ function Zoom({
       map.addControl(control);
     }
     return () => {
-      map.un('moveend', zoomListener);
+      unByKey(listenerKey);
       if (control) {
         map.removeControl(control);
       }
