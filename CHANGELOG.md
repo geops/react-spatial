@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.1](https://github.com/geops/react-spatial/compare/v1.4.0...v1.4.1) (2023-04-28)
+
+
+### Bug Fixes
+
+* use a more intuitive zooming behavior ([2d43f31](https://github.com/geops/react-spatial/commit/2d43f3189096b2195e0b550e8fb2d9d994746a8a))
+
 ## [1.4.0](https://github.com/geops/react-spatial/compare/v1.3.2...v1.4.0) (2023-01-09)
 
 
