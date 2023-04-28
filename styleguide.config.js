@@ -1,3 +1,4 @@
+const TerserPlugin = require('terser-webpack-plugin');
 const path = require('path');
 const { version } = require('./package.json');
 
@@ -73,23 +74,49 @@ module.exports = {
   webpackConfig: {
     optimization: {
       minimize: false, // Terser minification is broken since webpack 5
+      minimizer: [
+        // new TerserPlugin({
+        //   test: /build\//,
+        //   include: /\/build/,
+        // }),
+        // new TerserPlugin<SwcOptions>({
+        //   minify: TerserPlugin.swcMinify,
+        //   terserOptions: {
+        //     // `swc` options
+        //   },
+        // }),
+        // new TerserPlugin<UglifyJSOptions>({
+        //   minify: TerserPlugin.uglifyJsMinify,
+        //   terserOptions: {
+        //     // `uglif-js` options
+        //   },
+        // }),
+        new TerserPlugin({
+          minify: TerserPlugin.esbuildMinify,
+          // test: /Line\.js$/,
+          terserOptions: {
+            // `esbuild` options
+            // loader: '.js=jsx',
+            loader: 'jsx',
+          },
+        }),
+      ],
     },
     module: {
       rules: [
         // Babel loader, will use your project’s .babelrc
-        // Transpile node dependencies, node deps are often not transpiled for IE11
-        {
-          test: [
-            /\/node_modules\/(regexpu-core|unicode-.*|chalk|acorn-.*|query-string|strict-uri-encode|javascript-stringify)/,
-            /\/node_modules\/(split-on-first|react-dev-utils|ansi-styles|jsts|estree-walker|strip-ansi|mobility-toolbox-js)/,
-          ],
-          loader: 'babel-loader',
-        },
         // Transpile js
         {
-          test: /(?!test)\.js$/,
-          exclude: /node_modules/,
-          loader: 'babel-loader',
+          // Match js, jsx, ts & tsx files
+          test: /\.[jt]sx?$/,
+          loader: 'esbuild-loader',
+          options: {
+            // JavaScript version to compile to
+            target: 'es2015',
+            loader: 'jsx',
+            minify: true,
+            sourcemap: true,
+          },
         },
         // Load css and scss files.
         {
@@ -102,9 +129,7 @@ module.exports = {
             path.resolve(__dirname, 'node_modules', '@geops', 'geops-ui'),
           ],
           use: [
-            {
-              loader: 'babel-loader',
-            },
+            { loader: 'babel-loader' },
             {
               loader: 'react-svg-loader',
               options: {
