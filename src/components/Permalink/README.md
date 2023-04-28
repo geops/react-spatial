@@ -95,7 +95,7 @@ const layers = [...baseLayers, swissBoundries];
         baseLayers[0].visible = false;
         baseLayers[1].visible = true;
       }
-      map.resize();
+      map.updateSize();
     }}
     >
       Change base layer

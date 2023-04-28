@@ -8,7 +8,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
     <div
       className="rs-layer-tree-item rs-visible"
       style={
-        Object {
+        {
           "paddingLeft": "0px",
         }
       }
@@ -51,7 +51,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       <div
         className="rs-layer-tree-item "
         style={
-          Object {
+          {
             "paddingLeft": "30px",
           }
         }
@@ -95,7 +95,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       <div
         className="rs-layer-tree-item rs-visible"
         style={
-          Object {
+          {
             "paddingLeft": "30px",
           }
         }
@@ -137,7 +137,7 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
     <div
       className="rs-layer-tree-item rs-visible"
       style={
-        Object {
+        {
           "paddingLeft": "0px",
         }
       }
@@ -185,7 +185,7 @@ exports[`LayerTree matches snapshots when an item is hidden (different layer tre
     <div
       className="rs-layer-tree-item rs-visible"
       style={
-        Object {
+        {
           "paddingLeft": "0px",
         }
       }
@@ -228,7 +228,7 @@ exports[`LayerTree matches snapshots when an item is hidden (different layer tre
       <div
         className="rs-layer-tree-item "
         style={
-          Object {
+          {
             "paddingLeft": "30px",
           }
         }
@@ -272,7 +272,7 @@ exports[`LayerTree matches snapshots when an item is hidden (different layer tre
       <div
         className="rs-layer-tree-item rs-visible"
         style={
-          Object {
+          {
             "paddingLeft": "30px",
           }
         }
@@ -314,7 +314,7 @@ exports[`LayerTree matches snapshots when an item is hidden (different layer tre
     <div
       className="rs-layer-tree-item rs-visible"
       style={
-        Object {
+        {
           "paddingLeft": "0px",
         }
       }
@@ -362,7 +362,7 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
     <div
       className="rs-layer-tree-item rs-visible"
       style={
-        Object {
+        {
           "paddingLeft": "0px",
         }
       }
@@ -410,7 +410,7 @@ exports[`LayerTree matches snapshots when an item use renderAfterItem. 1`] = `
     <div
       className="rs-layer-tree-item rs-visible"
       style={
-        Object {
+        {
           "paddingLeft": "0px",
         }
       }
@@ -453,7 +453,7 @@ exports[`LayerTree matches snapshots when an item use renderAfterItem. 1`] = `
       <div
         className="rs-layer-tree-item "
         style={
-          Object {
+          {
             "paddingLeft": "30px",
           }
         }
@@ -503,7 +503,7 @@ exports[`LayerTree matches snapshots when an item use renderAfterItem. 1`] = `
       <div
         className="rs-layer-tree-item rs-visible"
         style={
-          Object {
+          {
             "paddingLeft": "30px",
           }
         }
@@ -557,7 +557,7 @@ exports[`LayerTree matches snapshots when an item use renderAfterItem. 1`] = `
     <div
       className="rs-layer-tree-item rs-visible"
       style={
-        Object {
+        {
           "paddingLeft": "0px",
         }
       }
@@ -611,7 +611,7 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
     <div
       className="rs-layer-tree-item rs-visible"
       style={
-        Object {
+        {
           "paddingLeft": "0px",
         }
       }
@@ -660,7 +660,7 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
       <div
         className="rs-layer-tree-item "
         style={
-          Object {
+          {
             "paddingLeft": "30px",
           }
         }
@@ -710,7 +710,7 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
       <div
         className="rs-layer-tree-item rs-visible"
         style={
-          Object {
+          {
             "paddingLeft": "30px",
           }
         }
@@ -758,7 +758,7 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
     <div
       className="rs-layer-tree-item rs-visible"
       style={
-        Object {
+        {
           "paddingLeft": "0px",
         }
       }
@@ -812,7 +812,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
     <div
       className="rs-layer-tree-item rs-visible"
       style={
-        Object {
+        {
           "paddingLeft": "0px",
         }
       }
@@ -855,7 +855,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       <div
         className="rs-layer-tree-item "
         style={
-          Object {
+          {
             "paddingLeft": "30px",
           }
         }
@@ -899,7 +899,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       <div
         className="rs-layer-tree-item rs-visible"
         style={
-          Object {
+          {
             "paddingLeft": "30px",
           }
         }
@@ -941,7 +941,7 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
     <div
       className="rs-layer-tree-item rs-visible"
       style={
-        Object {
+        {
           "paddingLeft": "0px",
         }
       }
@@ -989,7 +989,7 @@ exports[`LayerTree matches snapshots when expandChildren is a function. 1`] = `
     <div
       className="rs-layer-tree-item rs-visible"
       style={
-        Object {
+        {
           "paddingLeft": "0px",
         }
       }
@@ -1032,7 +1032,7 @@ exports[`LayerTree matches snapshots when expandChildren is a function. 1`] = `
       <div
         className="rs-layer-tree-item "
         style={
-          Object {
+          {
             "paddingLeft": "30px",
           }
         }
@@ -1076,7 +1076,7 @@ exports[`LayerTree matches snapshots when expandChildren is a function. 1`] = `
       <div
         className="rs-layer-tree-item rs-visible"
         style={
-          Object {
+          {
             "paddingLeft": "30px",
           }
         }
@@ -1118,7 +1118,7 @@ exports[`LayerTree matches snapshots when expandChildren is a function. 1`] = `
     <div
       className="rs-layer-tree-item rs-visible"
       style={
-        Object {
+        {
           "paddingLeft": "0px",
         }
       }
@@ -1166,7 +1166,7 @@ exports[`LayerTree matches snapshots when expandChildren is true. 1`] = `
     <div
       className="rs-layer-tree-item rs-visible"
       style={
-        Object {
+        {
           "paddingLeft": "0px",
         }
       }
@@ -1209,7 +1209,7 @@ exports[`LayerTree matches snapshots when expandChildren is true. 1`] = `
       <div
         className="rs-layer-tree-item "
         style={
-          Object {
+          {
             "paddingLeft": "30px",
           }
         }
@@ -1253,7 +1253,7 @@ exports[`LayerTree matches snapshots when expandChildren is true. 1`] = `
       <div
         className="rs-layer-tree-item rs-visible"
         style={
-          Object {
+          {
             "paddingLeft": "30px",
           }
         }
@@ -1295,7 +1295,7 @@ exports[`LayerTree matches snapshots when expandChildren is true. 1`] = `
     <div
       className="rs-layer-tree-item rs-visible"
       style={
-        Object {
+        {
           "paddingLeft": "0px",
         }
       }
@@ -1343,7 +1343,7 @@ exports[`LayerTree matches snapshots when items are always expanded 1`] = `
     <div
       className="rs-layer-tree-item rs-visible"
       style={
-        Object {
+        {
           "paddingLeft": "0px",
         }
       }
@@ -1386,7 +1386,7 @@ exports[`LayerTree matches snapshots when items are always expanded 1`] = `
       <div
         className="rs-layer-tree-item rs-visible"
         style={
-          Object {
+          {
             "paddingLeft": "30px",
           }
         }
@@ -1430,7 +1430,7 @@ exports[`LayerTree matches snapshots when items are always expanded 1`] = `
       <div
         className="rs-layer-tree-item rs-visible"
         style={
-          Object {
+          {
             "paddingLeft": "30px",
           }
         }
@@ -1475,7 +1475,7 @@ exports[`LayerTree matches snapshots when items are always expanded 1`] = `
     <div
       className="rs-layer-tree-item rs-visible"
       style={
-        Object {
+        {
           "paddingLeft": "0px",
         }
       }
@@ -1518,7 +1518,7 @@ exports[`LayerTree matches snapshots when items are always expanded 1`] = `
       <div
         className="rs-layer-tree-item rs-visible"
         style={
-          Object {
+          {
             "paddingLeft": "30px",
           }
         }
@@ -1558,7 +1558,7 @@ exports[`LayerTree matches snapshots when items are always expanded 1`] = `
         <div
           className="rs-layer-tree-item rs-visible"
           style={
-            Object {
+            {
               "paddingLeft": "60px",
             }
           }
@@ -1603,7 +1603,7 @@ exports[`LayerTree matches snapshots when items are always expanded 1`] = `
       <div
         className="rs-layer-tree-item rs-visible"
         style={
-          Object {
+          {
             "paddingLeft": "30px",
           }
         }
@@ -1643,7 +1643,7 @@ exports[`LayerTree matches snapshots when items are always expanded 1`] = `
         <div
           className="rs-layer-tree-item rs-visible"
           style={
-            Object {
+            {
               "paddingLeft": "60px",
             }
           }
@@ -1683,7 +1683,7 @@ exports[`LayerTree matches snapshots when items are always expanded 1`] = `
           <div
             className="rs-layer-tree-item rs-visible"
             style={
-              Object {
+              {
                 "paddingLeft": "90px",
               }
             }

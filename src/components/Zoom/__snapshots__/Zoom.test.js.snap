@@ -22,7 +22,7 @@ exports[`Zoom should match snapshot with custom attributes 1`] = `
       stroke="currentColor"
       strokeWidth="0"
       style={
-        Object {
+        {
           "color": undefined,
         }
       }
@@ -51,7 +51,7 @@ exports[`Zoom should match snapshot with custom attributes 1`] = `
       stroke="currentColor"
       strokeWidth="0"
       style={
-        Object {
+        {
           "color": undefined,
         }
       }
@@ -87,7 +87,7 @@ exports[`Zoom should match snapshot with zoom slider 1`] = `
       stroke="currentColor"
       strokeWidth="0"
       style={
-        Object {
+        {
           "color": undefined,
         }
       }
@@ -119,7 +119,7 @@ exports[`Zoom should match snapshot with zoom slider 1`] = `
       stroke="currentColor"
       strokeWidth="0"
       style={
-        Object {
+        {
           "color": undefined,
         }
       }
@@ -155,7 +155,7 @@ exports[`Zoom should match snapshot. 1`] = `
       stroke="currentColor"
       strokeWidth="0"
       style={
-        Object {
+        {
           "color": undefined,
         }
       }
@@ -184,7 +184,7 @@ exports[`Zoom should match snapshot. 1`] = `
       stroke="currentColor"
       strokeWidth="0"
       style={
-        Object {
+        {
           "color": undefined,
         }
       }

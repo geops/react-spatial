@@ -10,7 +10,7 @@ import { Layer } from 'mobility-toolbox-js/ol';
 import Tile from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import Map from 'ol/Map';
-import degrees from 'radians-degrees';
+import { toDegrees } from 'ol/math';
 import CanvasSaveButton from 'react-spatial/components/CanvasSaveButton';
 import BasicMap from 'react-spatial/components/BasicMap';
 import geopsLogo from 'react-spatial/images/geops_logo.png';
@@ -49,7 +49,7 @@ function CanvasSaveButtonExample() {
             },
             northArrow: {
               rotation: () => {
-                return degrees(map.getView().getRotation());
+                return toDegrees(map.getView().getRotation());
               },
               circled: true,
             },

@@ -8,12 +8,8 @@
     "@material-ui/core": "4.12.3",
     "@material-ui/icons": "4.11.2",
     "@material-ui/lab": "4.0.0-alpha.60",
-    "abortcontroller-polyfill": "1.7.3",
     "query-string": "7.0.1",
-    "radians-degrees": "1.0.0",
     "re-resizable": "6.9.1",
-    "react-autosuggest": "10.1.0",
-    "react-draggable": "4.4.4",
     "react-icons": "4.4.0",
     "resize-observer-polyfill": "1.5.1"
   },
@@ -25,23 +21,18 @@
     "react-dom": "^16"
   },
   "devDependencies": {
-    "@babel/core": "7.15.0",
-    "@babel/eslint-parser": "7.15.0",
-    "@babel/plugin-transform-runtime": "7.15.0",
     "@babel/preset-env": "7.15.0",
     "@babel/preset-react": "7.14.5",
+    "@cfaester/enzyme-adapter-react-18": "0.7.0",
     "@commitlint/cli": "17.0.2",
     "@commitlint/config-conventional": "17.0.2",
     "@svgr/webpack": "5.5.0",
-    "@testing-library/jest-dom": "5.16.3",
-    "@testing-library/react": "12.1.4",
-    "@testing-library/user-event": "13.5.0",
-    "@wojtekmaj/enzyme-adapter-react-17": "0.6.7",
-    "babel-core": "7.0.0-bridge.0",
-    "babel-jest": "27.2.4",
+    "@testing-library/jest-dom": "5.16.5",
+    "@testing-library/react": "14.0.0",
+    "@testing-library/user-event": "14.4.3",
+    "babel-jest": "29.5.0",
     "babel-loader": "8.2.2",
-    "buble": "0.20.0",
-    "canvas": "2.8.0",
+    "canvas": "2.11.2",
     "css-loader": "5.2.6",
     "enzyme": "3.11.0",
     "esbuild": "^0.15.6",
@@ -57,31 +48,29 @@
     "fixpack": "3.0.6",
     "generact": "0.4.0",
     "husky": "8.0.1",
-    "identity-obj-proxy": "3.0.0",
+    "identity-obj-proxy": "^3.0.0",
     "is-ci": "3.0.1",
-    "jest": "26.6.3",
-    "jest-canvas-mock": "2.3.1",
-    "jest-canvas-snapshot-serializer": "1.0.1",
+    "jest": "29.5.0",
+    "jest-canvas-mock": "2.5.0",
     "jest-date-mock": "1.0.8",
+    "jest-environment-jsdom": "^29.5.0",
     "jest-fetch-mock": "3.0.3",
     "jest-serializer-html": "7.1.0",
-    "jest-svg-transformer": "1.0.0",
     "jest-transform-file": "1.1.1",
     "jsts": "2.7.3",
     "lint-staged": "11.2.0",
     "mapbox-gl": "1.13.1",
     "maplibre-gl": "2.4.0",
-    "mobility-toolbox-js": "2.0.0-beta.54",
+    "mobility-toolbox-js": "2.0.0-beta.79",
     "ol": "6.14.1",
     "prettier": "2.4.1",
     "proj4": "2.7.5",
     "prop-types": "15.7.2",
-    "react": "17.0.2",
-    "react-app-polyfill": "2.0.0",
-    "react-dom": "17.0.2",
-    "react-styleguidist": "11.0.8",
+    "react": "18",
+    "react-dom": "18",
+    "react-styleguidist": "13.1.1",
     "react-svg-loader": "3.0.3",
-    "react-test-renderer": "17.0.2",
+    "react-test-renderer": "18.2.0",
     "sass": "1.49.9",
     "sass-loader": "10.2.0",
     "standard-version": "9.5.0",
@@ -93,11 +82,10 @@
     "stylelint-scss": "3.21.0",
     "url-loader": "4.1.1",
     "vinyl-fs": "3.0.3",
-    "webpack": "4.46.0",
+    "webpack": "^5.81.0",
     "xml-beautifier": "0.5.0"
   },
   "scripts": {
-    "buble": "buble --no modules,asyncAwait -i src -o build --objectAssign Object.assign --sourcemap",
     "build": "yarn esbuild && find build -type f -name '*.test.*' -delete && rm -rf build/styleguidist && cp package.json README.md LICENSE build && cp -rf src/images build && cp -rf src/themes build",
     "coverage": "yarn test --coverage --coverageDirectory=coverage",
     "cp": "generact --root src/components",
@@ -131,20 +119,19 @@
       "es6": true,
       "jest": true
     },
-    "parser": "@babel/eslint-parser",
     "extends": [
       "airbnb",
       "airbnb/hooks",
       "prettier"
     ],
+    "parserOptions": {
+      "ecmaVersion": "latest"
+    },
     "plugins": [
       "prettier"
     ],
     "rules": {
-      "arrow-body-style": [
-        "error",
-        "always"
-      ],
+      "arrow-body-style": "off",
       "import/no-extraneous-dependencies": [
         "error",
         {
@@ -166,11 +153,10 @@
     }
   },
   "jest": {
-    "maxConcurrency": 10,
+    "testEnvironment": "jsdom",
     "transform": {
       ".+\\.js$": "babel-jest",
-      ".+\\.svg$": "jest-svg-transformer",
-      "\\.(jpg|jpeg|png|gif|webp)$": "jest-transform-file"
+      ".+\\.svg$": "jest-transformer-svg"
     },
     "transformIgnorePatterns": [
       "node_modules/(?!(jsts|ol|mobility-toolbox-js)|@geops|geotiff|quick-lru)"
@@ -179,11 +165,10 @@
       "<rootDir>/src/**/?(*.)+(spec|test).[jt]s?(x)"
     ],
     "moduleNameMapper": {
-      ".+\\.scss$": "identity-obj-proxy"
+      "\\.(jpg|jpeg|png|gif|webp|scss)$": "identity-obj-proxy"
     },
     "snapshotSerializers": [
-      "jest-serializer-html",
-      "jest-canvas-snapshot-serializer"
+      "jest-serializer-html"
     ],
     "testPathIgnorePatterns": [
       "<rootDir>/(build|coverage|public|doc|packages)"

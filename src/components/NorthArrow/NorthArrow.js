@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import OLMap from 'ol/Map';
 import { unByKey } from 'ol/Observable';
-import degrees from 'radians-degrees';
+import { toDegrees } from 'ol/math';
 import NorthArrowSimple from '../../images/northArrow.svg';
 import NorthArrowCircle from '../../images/northArrowCircle.svg';
 
@@ -35,7 +35,7 @@ const defaultProps = {
 };
 
 const getRotation = (map, rotationOffset) => {
-  return degrees(map.getView().getRotation()) + rotationOffset;
+  return toDegrees(map.getView().getRotation()) + rotationOffset;
 };
 
 /**

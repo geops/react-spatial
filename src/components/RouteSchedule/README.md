@@ -33,6 +33,7 @@ let updateInterval;
 
 
 const getVehicleCoord = (routeIdentifier) => {
+          console.log(trackerLayer.getVehicle);
   const [trajectory] = trackerLayer.getVehicle((traj) => {
     return traj.properties.route_identifier === routeIdentifier;
   });
@@ -50,7 +51,7 @@ function RouteScheduleExample() {
       if (feature) {
         const vehicleId = feature.get('train_id');
         trackerLayer.api.getStopSequence(vehicleId).then((stopSequence) => {
-          setLineInfos(stopSequence[0]);
+          setLineInfos(stopSequence.content[0]);
         });
       } else {
         setLineInfos();

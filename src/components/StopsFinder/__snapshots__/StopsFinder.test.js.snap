@@ -112,7 +112,7 @@ exports[`StopsFinder matches snapshots. 1`] = `
               stroke="currentColor"
               strokeWidth="0"
               style={
-                Object {
+                {
                   "color": undefined,
                 }
               }

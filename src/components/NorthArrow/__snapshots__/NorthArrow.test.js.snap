@@ -4,7 +4,7 @@ exports[`NorthArrow should match snapshot rotated. 1`] = `
 <div
   className="rs-north-arrow"
   style={
-    Object {
+    {
       "transform": "rotate(45deg)",
     }
   }
@@ -19,7 +19,7 @@ exports[`NorthArrow should match snapshot with children. 1`] = `
 <div
   className="rs-north-arrow"
   style={
-    Object {
+    {
       "transform": "rotate(0deg)",
     }
   }
@@ -31,7 +31,7 @@ exports[`NorthArrow should match snapshot with children. 1`] = `
     stroke="currentColor"
     strokeWidth="0"
     style={
-      Object {
+      {
         "color": undefined,
       }
     }
@@ -56,7 +56,7 @@ exports[`NorthArrow should match snapshot with circle. 1`] = `
 <div
   className="rs-north-arrow"
   style={
-    Object {
+    {
       "transform": "rotate(0deg)",
     }
   }
@@ -71,7 +71,7 @@ exports[`NorthArrow should match snapshot with custom attributes. 1`] = `
 <div
   className="test-class"
   style={
-    Object {
+    {
       "transform": "rotate(0deg)",
     }
   }
@@ -87,7 +87,7 @@ exports[`NorthArrow should match snapshot with default value. 1`] = `
 <div
   className="rs-north-arrow"
   style={
-    Object {
+    {
       "transform": "rotate(0deg)",
     }
   }

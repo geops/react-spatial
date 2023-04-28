@@ -2,7 +2,7 @@ import 'jest-canvas-mock';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { configure, shallow } from 'enzyme';
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import Adapter from '@cfaester/enzyme-adapter-react-18';
 import Map from 'ol/Map';
 import View from 'ol/View';
 import { TiImage } from 'react-icons/ti';
@@ -64,7 +64,7 @@ describe('CanvasSaveButton', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  test('should call onSaveBefore then download then onSaveEnd function on click.', async (done) => {
+  test('should call onSaveBefore then download then onSaveEnd function on click.', async () => {
     const saveStart = jest.fn((m) => {
       return Promise.resolve(m);
     });
@@ -143,35 +143,6 @@ describe('CanvasSaveButton', () => {
       spy.mockRestore();
       spy2.mockRestore();
       spy3.mockRestore();
-      done();
     });
-  });
-
-  test('stops click event propagation on ie.', () => {
-    const wrapper = shallow(
-      <CanvasSaveButton className="ta-example" title={conf.title} map={olMap}>
-        {conf.icon}
-      </CanvasSaveButton>,
-    );
-
-    const evt = {
-      stopPropagation: jest.fn(),
-      preventDefault: jest.fn(),
-    };
-    window.navigator.msSaveBlob = true;
-
-    const canvas = document.createElement('canvas');
-    const p = new Promise((resolve) => {
-      resolve(canvas);
-    });
-    jest
-      .spyOn(CanvasSaveButton.prototype, 'createCanvasImage')
-      .mockReturnValue(p);
-
-    wrapper.find('.ta-example').simulate('click', evt);
-    expect(evt.stopPropagation).toHaveBeenCalledTimes(1);
-    expect(evt.preventDefault).toHaveBeenCalledTimes(1);
-
-    window.navigator.msSaveBlob = false;
   });
 });

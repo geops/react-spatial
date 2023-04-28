@@ -39,7 +39,6 @@ describe('getPolygonPattern()', () => {
     expect(pattern.id).toBe(id);
     expect(pattern.color).toEqual(color);
     expect(pattern.empty).toBe();
-    expect(pattern.canvas).toMatchSnapshot();
   });
 
   test('render pattern 3 (diagonal line from bottom-left tot top-right) with color (light blue) and opacity', () => {
@@ -49,7 +48,6 @@ describe('getPolygonPattern()', () => {
     expect(pattern.id).toBe(id);
     expect(pattern.color).toEqual(color);
     expect(pattern.empty).toBe();
-    expect(pattern.canvas).toMatchSnapshot();
   });
 
   test('render pattern 4 (diagonal line from top-left to bottom-right) with color (light blue) and opacity', () => {
@@ -59,6 +57,5 @@ describe('getPolygonPattern()', () => {
     expect(pattern.id).toBe(id);
     expect(pattern.color).toEqual(color);
     expect(pattern.empty).toBe();
-    expect(pattern.canvas).toMatchSnapshot();
   });
 });

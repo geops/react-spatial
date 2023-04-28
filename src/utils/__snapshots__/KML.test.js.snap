@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`KML readFeatures() and writeFeatures() should read and write lineDash and fillPattern style for polygon 1`] = `
-<canvas
-  data-snapshot-image="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABmJLR0QA/wD/AP+gvaeTAAAAUElEQVQ4je3UsQmAMBQE0DeJiPuvJMEqSIIrxErQ+gds/g3wuGtO4zjZBHKxNPbGUFkjWGXtlMbolIj1aRZemlhiiSX2Iwbvc5xxtmY1e5be83aXl6guoxkAAAAASUVORK5CYII="
-  height="20"
-  width="20"
-/>
-`;

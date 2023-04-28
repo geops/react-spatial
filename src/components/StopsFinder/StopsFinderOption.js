@@ -41,7 +41,7 @@ function StopsFinderOption({ option }) {
           if (value) {
             const MotIcon = iconForMot[key];
             return (
-              <span className={classes.icon}>
+              <span className={classes.icon} key={key}>
                 <MotIcon />
               </span>
             );

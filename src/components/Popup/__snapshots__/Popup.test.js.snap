@@ -4,7 +4,7 @@ exports[`Popup should match snapshot with default values. 1`] = `
 <div
   className="rs-popup"
   style={
-    Object {
+    {
       "left": 0,
       "top": 0,
     }
@@ -33,7 +33,7 @@ exports[`Popup should match snapshot with default values. 1`] = `
           stroke="currentColor"
           strokeWidth="0"
           style={
-            Object {
+            {
               "color": undefined,
             }
           }
@@ -66,7 +66,7 @@ exports[`Popup should match snapshot with tabIndex defined. 1`] = `
 <div
   className="rs-popup"
   style={
-    Object {
+    {
       "left": 0,
       "top": 0,
     }
@@ -95,7 +95,7 @@ exports[`Popup should match snapshot with tabIndex defined. 1`] = `
           stroke="currentColor"
           strokeWidth="0"
           style={
-            Object {
+            {
               "color": undefined,
             }
           }
@@ -128,7 +128,7 @@ exports[`Popup should match snapshot without close button. 1`] = `
 <div
   className="rs-popup"
   style={
-    Object {
+    {
       "left": 0,
       "top": 0,
     }
@@ -158,7 +158,7 @@ exports[`Popup should match snapshot without header. 1`] = `
 <div
   className="rs-popup"
   style={
-    Object {
+    {
       "left": 0,
       "top": 0,
     }

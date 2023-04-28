@@ -2,7 +2,7 @@
 /* eslint-disable  react/no-multi-comp,react/prefer-stateless-function,react/prop-types */
 import React from 'react';
 import { configure, mount, shallow } from 'enzyme';
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import Adapter from '@cfaester/enzyme-adapter-react-18';
 import ResizeObserver from 'resize-observer-polyfill';
 import ResizeHandler from './ResizeHandler';
 

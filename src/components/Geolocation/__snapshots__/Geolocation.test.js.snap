@@ -15,7 +15,7 @@ exports[`Geolocation should match snapshot minimum props 1`] = `
     stroke="currentColor"
     strokeWidth="0"
     style={
-      Object {
+      {
         "color": undefined,
       }
     }
@@ -45,7 +45,7 @@ exports[`Geolocation should match snapshot with class name 1`] = `
     stroke="currentColor"
     strokeWidth="0"
     style={
-      Object {
+      {
         "color": undefined,
       }
     }
@@ -76,7 +76,7 @@ exports[`Geolocation should match snapshot with title 1`] = `
     stroke="currentColor"
     strokeWidth="0"
     style={
-      Object {
+      {
         "color": undefined,
       }
     }

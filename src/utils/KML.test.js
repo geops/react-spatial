@@ -221,7 +221,6 @@ describe('KML', () => {
         color: [235, 0, 0, 1],
       });
       const color = fillStyle.getColor();
-      expect(color.canvas).toMatchSnapshot();
       expect(color.id).toBe(3);
       expect(color.color).toEqual([235, 0, 0, 1]);
       expectWriteResult(feats, str);

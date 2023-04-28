@@ -1,15 +1,11 @@
 import 'jest-canvas-mock';
 import React from 'react';
-import { configure, mount } from 'enzyme';
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import MapEvent from 'ol/MapEvent';
 import OLMap from 'ol/Map';
 import View from 'ol/View';
 import { Layer, MapboxLayer } from 'mobility-toolbox-js/ol';
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import Permalink from './Permalink';
-
-configure({ adapter: new Adapter() });
 
 const defaultIsLayerHidden = (l) => {
   let isParentHidden = false;
@@ -100,17 +96,22 @@ describe('Permalink', () => {
       z: 7,
     };
 
-    const permalink = mount(<Permalink params={params} history={history} />);
+    const { rerender } = render(
+      <Permalink params={params} history={history} />,
+    );
 
-    permalink
-      .setProps({
-        params: {
-          x: 1001,
-          y: 1002,
-          z: 7,
-        },
-      })
-      .update();
+    act(() => {
+      rerender(
+        <Permalink
+          params={{
+            x: 1001,
+            y: 1002,
+            z: 7,
+          }}
+          history={history}
+        />,
+      );
+    });
     const search = '?x=1001&y=1002&z=7';
 
     expect(history.replace.mock.results[1].value.search).toEqual(search);
@@ -123,17 +124,18 @@ describe('Permalink', () => {
       z: 7,
     };
 
-    const permalink = mount(<Permalink params={params} />);
-
-    permalink
-      .setProps({
-        params: {
-          x: 1001,
-          y: 1002,
-          z: 7,
-        },
-      })
-      .update();
+    const { rerender } = render(<Permalink params={params} />);
+    act(() => {
+      rerender(
+        <Permalink
+          params={{
+            x: 1001,
+            y: 1002,
+            z: 7,
+          }}
+        />,
+      );
+    });
     const search = '?x=1001&y=1002&z=7';
 
     expect(window.location.search).toEqual(search);
@@ -141,7 +143,7 @@ describe('Permalink', () => {
 
   test('should initialize Permalink with layers.', () => {
     expect(window.location.search).toEqual('');
-    mount(<Permalink layers={layers} />);
+    render(<Permalink layers={layers} />);
     const search =
       '?baselayers=basebright.baselayer,basedark.baselayer&layers=ultimate.layer,child.hidden.1';
     expect(window.location.search).toEqual(search);
@@ -149,7 +151,7 @@ describe('Permalink', () => {
 
   test('should initialize Permalink with isLayerHidden.', () => {
     expect(window.location.search).toEqual('');
-    mount(<Permalink layers={layers} isLayerHidden={defaultIsLayerHidden} />);
+    render(<Permalink layers={layers} isLayerHidden={defaultIsLayerHidden} />);
     const search =
       '?baselayers=basebright.baselayer,basedark.baselayer&layers=children.hidden.layer';
     expect(window.location.search).toEqual(search);
@@ -164,8 +166,10 @@ describe('Permalink', () => {
         zoom: 5,
       }),
     });
-    mount(<Permalink map={olMap} />);
-    olMap.dispatchEvent(new MapEvent('moveend', olMap));
+    render(<Permalink map={olMap} />);
+    act(() => {
+      olMap.dispatchEvent(new MapEvent('moveend', olMap));
+    });
     const search = '?x=1001&y=1002&z=5';
 
     expect(window.location.search).toEqual(search);
@@ -180,8 +184,12 @@ describe('Permalink', () => {
         zoom: 5,
       }),
     });
-    mount(<Permalink map={olMap} />);
-    olMap.dispatchEvent(new MapEvent('moveend', olMap));
+    render(<Permalink map={olMap} />);
+
+    act(() => {
+      olMap.dispatchEvent(new MapEvent('moveend', olMap));
+    });
+
     const search = '?x=10010.56&y=10010.56&z=5';
 
     expect(window.location.search).toEqual(search);
@@ -196,11 +204,11 @@ describe('Permalink', () => {
         zoom: 5,
       }),
     });
-    mount(<Permalink map={olMap} />);
-    olMap.dispatchEvent(new MapEvent('moveend', olMap));
-    const search = '?x=10011&y=1001&z=5';
-
-    expect(window.location.search).toEqual(search);
+    render(<Permalink map={olMap} />);
+    act(() => {
+      olMap.dispatchEvent(new MapEvent('moveend', olMap));
+    });
+    expect(window.location.search).toEqual('?x=10011&y=1001&z=5');
   });
 
   test('should limit 4 decimals with props "coordinateDecimals".', () => {
@@ -212,29 +220,29 @@ describe('Permalink', () => {
         zoom: 5,
       }),
     });
-    mount(<Permalink map={olMap} coordinateDecimals={4} />);
-    olMap.dispatchEvent(new MapEvent('moveend', olMap));
-    const search = '?x=10010.5556&y=10010.5556&z=5';
+    render(<Permalink map={olMap} coordinateDecimals={4} />);
+    act(() => {
+      olMap.dispatchEvent(new MapEvent('moveend', olMap));
+    });
 
-    expect(window.location.search).toEqual(search);
+    expect(window.location.search).toEqual('?x=10010.5556&y=10010.5556&z=5');
   });
 
   test('should react on layers change.', () => {
     expect(window.location.search).toEqual('');
-    const permalink = mount(<Permalink layers={layers} />);
+    const { rerender } = render(<Permalink layers={layers} />);
     let layersParam = new URLSearchParams(window.location.search).get('layers');
     expect(layersParam).toBe('ultimate.layer,child.hidden.1');
-
-    permalink
-      .setProps({
-        layers: [
+    rerender(
+      <Permalink
+        layers={[
           new Layer({
             name: 'foo',
             key: 'foo.layer',
           }),
-        ],
-      })
-      .update();
+        ]}
+      />,
+    );
 
     layersParam = new URLSearchParams(window.location.search).get('layers');
     expect(layersParam).toBe('foo.layer');
@@ -242,13 +250,15 @@ describe('Permalink', () => {
 
   test('should react on layer visiblity change.', () => {
     expect(window.location.search).toEqual('');
-    mount(<Permalink layers={layers} />);
+    render(<Permalink layers={layers} />);
     let layersParam = new URLSearchParams(window.location.search).get('layers');
     expect(layersParam).toBe('ultimate.layer,child.hidden.1');
 
-    layers.find((l) => {
-      return l.name === 'Swiss boundaries';
-    }).visible = true;
+    act(() => {
+      layers.find((l) => {
+        return l.name === 'Swiss boundaries';
+      }).visible = true;
+    });
 
     layersParam = new URLSearchParams(window.location.search).get('layers');
     expect(layersParam).toBe('ultimate.layer,swiss.boundaries,child.hidden.1');
@@ -263,9 +273,11 @@ describe('Permalink', () => {
     );
     expect(baseLayers).toBe('basebright.baselayer,basedark.baselayer');
 
-    layers.find((l) => {
-      return l.name === 'Base - Dark';
-    }).visible = true;
+    act(() => {
+      layers.find((l) => {
+        return l.name === 'Base - Dark';
+      }).visible = true;
+    });
 
     baseLayers = new URLSearchParams(window.location.search).get('baselayers');
     expect(baseLayers).toBe('basedark.baselayer,basebright.baselayer');
