@@ -71,6 +71,9 @@ module.exports = {
     },
   ],
   webpackConfig: {
+    optimization: {
+      minimize: false, // Terser minification is broken since webpack 5
+    },
     module: {
       rules: [
         // Babel loader, will use your project’s .babelrc
@@ -84,7 +87,7 @@ module.exports = {
         },
         // Transpile js
         {
-          test: /\.jsx?$/,
+          test: /(?!test)\.js$/,
           exclude: /node_modules/,
           loader: 'babel-loader',
         },

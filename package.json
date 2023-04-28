@@ -31,7 +31,7 @@
     "@testing-library/react": "14.0.0",
     "@testing-library/user-event": "14.4.3",
     "babel-jest": "29.5.0",
-    "babel-loader": "8.2.2",
+    "babel-loader": "9.1.2",
     "canvas": "2.11.2",
     "css-loader": "5.2.6",
     "enzyme": "3.11.0",
