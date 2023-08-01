@@ -1,7 +1,7 @@
 {
   "name": "react-spatial",
   "description": "Components to build React map apps.",
-  "version": "1.5.2-beta.6",
+  "version": "1.5.2-beta.7",
   "license": "MIT",
   "dependencies": {
     "@geops/geops-ui": "0.1.13",
@@ -97,10 +97,10 @@
     "format": "prettier --write 'src/**/*.js' && eslint 'src/**/*.js' --fix && stylelint 'src/**/*.css' 'src/**/*.scss' --fix",
     "link2": "cmdToAdd=$(node ./scripts/read-pkg-json.js add) && $cmdToAdd && yarn build && cmdToRemove=$(node ./scripts/read-pkg-json.js remove) && $cmdToRemove && cd build && yarn link",
     "lint": "eslint 'src/**/*.js' && stylelint 'src/**/*.css' 'src/**/*.scss'",
-    "postbuild": "cp package.json build/ && cd src && find .  -name '*.scss' | cpio -pdm ../build",
+    "postbuild": "cp package.json build/ && cd src && find .  -name '*.scss' | cpio -pdm ../build && cd ..",
     "prebuild": "rm -rf build/",
-    "prepare": "dir || is-ci || HUSKY_DEBUG=1 husky install",
-    "publish:beta": "yarn release -- --prerelease beta --skip.changelog && git push origin HEAD && yarn run build && git push --tags && yarn publish build/ --tag beta && cd ..",
+    "prepare": "dir || is-ci || husky install",
+    "publish:beta": "yarn release -- --prerelease beta --skip.changelog && git push origin HEAD && yarn run build && git push --tags && yarn publish build/ --tag beta",
     "publish:beta:dryrun": "yarn release -- --prerelease beta --dry-run --skip.changelog",
     "publish:public": "yarn release && git push origin HEAD && yarn build  && git push --tags && yarn publish build/",
     "publish:public:dryrun": "yarn release --dry-run",
