@@ -1,7 +1,7 @@
 {
   "name": "react-spatial",
   "description": "Components to build React map apps.",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "license": "MIT",
   "dependencies": {
     "@geops/geops-ui": "0.1.13",
@@ -100,9 +100,9 @@
     "postbuild": "cp package.json build/ && cd src && find .  -name '*.scss' | cpio -pdm ../build",
     "prebuild": "rm -rf build/",
     "prepare": "is-ci || husky install",
-    "publish:beta": "yarn release -- --prerelease beta --skip.changelog && git push origin HEAD && yarn run build && git push --tags && yarn publish build/ --tag beta",
+    "publish:beta": "yarn release -- --prerelease beta --skip.changelog && git push origin HEAD && yarn run build && git push --tags && HUSKY=0 yarn publish build/ --tag beta",
     "publish:beta:dryrun": "yarn release -- --prerelease beta --dry-run --skip.changelog",
-    "publish:public": "yarn release && git push origin HEAD && yarn build  && git push --tags && yarn publish build/",
+    "publish:public": "yarn release && git push origin HEAD && yarn build  && git push --tags && HUSKY=0 yarn publish build/",
     "publish:public:dryrun": "yarn release --dry-run",
     "release": "standard-version",
     "start": "styleguidist server",
