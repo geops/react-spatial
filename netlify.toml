@@ -1,3 +1,0 @@
-[build]
-  publish = "styleguide-build"
-  command = "yarn doc"

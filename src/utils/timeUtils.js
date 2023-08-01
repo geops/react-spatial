@@ -24,7 +24,11 @@ export const getHoursAndMinutes = (timeInMs) => {
  * @param {Number} timeInMs Delay time in milliseconds.
  * @ignore
  */
-export const getDelayString = (timeInMs) => {
+export const getDelayString = (delayInMs) => {
+  let timeInMs = delayInMs;
+  if (timeInMs < 0) {
+    timeInMs = 0;
+  }
   const h = Math.floor(timeInMs / 3600000);
   const m = Math.floor((timeInMs % 3600000) / 60000);
   const s = Math.floor(((timeInMs % 3600000) % 60000) / 1000);

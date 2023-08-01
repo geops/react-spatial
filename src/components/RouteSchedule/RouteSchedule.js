@@ -63,7 +63,13 @@ const isPassed = (stop, time, stops, idx) => {
 
   // Sometimes stop.departureDelay is undefined.
   const timeToCompare = stop.aimedDepartureTime || stop.aimedArrivalTime || 0;
-  const delayToCompare = stop.departureDelay || stop.arrivalDelay || 0;
+  let delayToCompare = stop.departureDelay || stop.arrivalDelay || 0;
+
+  // It could happens that the delay is negative we simply ignores it.
+  if (delayToCompare < 0) {
+    delayToCompare = 0;
+  }
+
   return timeToCompare + delayToCompare <= time;
 };
 
