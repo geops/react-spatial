@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.5](https://github.com/geops/react-spatial/compare/v1.5.4...v1.5.5) (2023-09-20)
+
+
+### Bug Fixes
+
+* manage time_based stop in route schedule component ([117e279](https://github.com/geops/react-spatial/commit/117e2798e99d17623cc62363eb1f1800a00c0145))
+
 ### [1.5.4](https://github.com/geops/react-spatial/compare/v1.5.3...v1.5.4) (2023-08-01)
 
 
