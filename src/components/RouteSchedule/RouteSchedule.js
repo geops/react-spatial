@@ -119,12 +119,10 @@ const RouteStop = ({
   const isFirstStation = idx === 0;
   const isLastStation = idx === stations.length - 1;
   const isNotStation = isNotStop(stop);
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [isStationPassed, setIsStationPassed] = useState(
     isPassed(stop, trackerLayer.time, stations, idx),
   );
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     let timeout = null;
     // We have to refresh the stop when the state it's time_based
