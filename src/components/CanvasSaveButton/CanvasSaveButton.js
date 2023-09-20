@@ -14,6 +14,10 @@ const extraDataImgPropType = PropTypes.shape({
   circled: PropTypes.bool,
 });
 
+// support server-side rendering where `Element` will not be defined
+const CanvasPatternType =
+  typeof CanvasPattern === 'undefined' ? Function : CanvasPattern;
+
 const propTypes = {
   /**
    * Automatically download the image saved.
@@ -118,7 +122,7 @@ const propTypes = {
       font: PropTypes.string,
       fillStyle: PropTypes.oneOfType([
         PropTypes.string,
-        PropTypes.instanceOf(CanvasPattern),
+        PropTypes.instanceOf(CanvasPatternType),
       ]),
       background: PropTypes.bool,
     }),
