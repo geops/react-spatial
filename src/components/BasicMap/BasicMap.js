@@ -212,6 +212,13 @@ class BasicMap extends PureComponent {
     const { node } = this.state;
 
     if (prevState.node !== node) {
+      if (zoom) {
+        this.map.getView().setZoom(zoom);
+      }
+
+      if (resolution) {
+        this.map.getView().setResolution(resolution);
+      }
       this.map.setTarget(node);
 
       // When the node is set we reinitialize the extent with the extent property.

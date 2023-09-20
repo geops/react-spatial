@@ -2,6 +2,10 @@ import PropTypes from 'prop-types';
 
 const STATE_BOARDING = 'BOARDING';
 const STATE_LEAVING = 'LEAVING';
+const STATE_PENDING = 'PENDING';
+const STATE_TIME_BASED = 'TIME_BASED';
+const STATE_STOP_CANCELLED = 'STOP_CANCELLED';
+const STATE_JOURNEY_CANCELLED = 'JOURNEY_CANCELLED';
 
 const station = PropTypes.shape({
   arrivalDelay: PropTypes.number, // time in milliseconds.
@@ -17,7 +21,15 @@ const station = PropTypes.shape({
   stationId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   stationName: PropTypes.string,
   wheelchairAccessible: PropTypes.bool,
-  state: PropTypes.oneOf([null, STATE_BOARDING, STATE_LEAVING]),
+  state: PropTypes.oneOf([
+    null,
+    STATE_BOARDING,
+    STATE_LEAVING,
+    STATE_PENDING,
+    STATE_TIME_BASED,
+    STATE_STOP_CANCELLED,
+    STATE_JOURNEY_CANCELLED,
+  ]),
 });
 
 const lineInfos = PropTypes.shape({

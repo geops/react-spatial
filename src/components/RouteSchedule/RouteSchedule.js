@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unused-prop-types */
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   RealtimeLayer as TrackerLayer,
@@ -98,7 +98,7 @@ const defaultRenderStationImg = (
   return <img src={src} alt="routeScheduleLine" className="rt-route-icon" />;
 };
 
-const defaultRenderStation = ({
+const RouteStop = ({
   lineInfos,
   onStationClick,
   trackerLayer,
@@ -107,11 +107,8 @@ const defaultRenderStation = ({
   idx,
 }) => {
   const {
-    stationId,
     arrivalDelay,
     departureDelay,
-    arrivalTime,
-    departureTime,
     state,
     stationName,
     aimedArrivalTime,
@@ -121,13 +118,28 @@ const defaultRenderStation = ({
   const { stations } = lineInfos;
   const isFirstStation = idx === 0;
   const isLastStation = idx === stations.length - 1;
-  const isStationPassed = isPassed(stop, trackerLayer.time, stations, idx);
   const isNotStation = isNotStop(stop);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [isStationPassed, setIsStationPassed] = useState(
+    isPassed(stop, trackerLayer.time, stations, idx),
+  );
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    let timeout = null;
+    // We have to refresh the stop when the state it's time_based
+    if (!isStationPassed && stop.state === 'TIME_BASED') {
+      timeout = setInterval(() => {
+        setIsStationPassed(isPassed(stop, trackerLayer.time, stations, idx));
+      }, 20000);
+    }
+    return () => {
+      clearInterval(timeout);
+    };
+  }, [stop, isStationPassed, trackerLayer, stations, idx]);
+
   return (
     <div
-      // Train line can go in circle so begin and end have the same id,
-      // using the time in the key should fix the issue.
-      key={(stationId || stationName) + arrivalTime + departureTime}
       role="button"
       className={[
         'rt-route-station',
@@ -185,6 +197,20 @@ const defaultRenderStation = ({
       {renderStationImg(stations, idx, isStationPassed, isNotStation)}
       <div className={cancelled ? 'rt-route-cancelled' : ''}>{stationName}</div>
     </div>
+  );
+};
+
+const defaultRenderStation = (props) => {
+  const { stationId, arrivalTime, departureTime, stationName } = props.stop;
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  return (
+    <RouteStop
+      // Train line can go in circle so begin and end have the same id,
+      // using the time in the key should fix the issue.
+      key={(stationId || stationName) + arrivalTime + departureTime}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...props}
+    />
   );
 };
 

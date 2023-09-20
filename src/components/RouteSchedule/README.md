@@ -33,7 +33,6 @@ let updateInterval;
 
 
 const getVehicleCoord = (routeIdentifier) => {
-          console.log(trackerLayer.getVehicle);
   const [trajectory] = trackerLayer.getVehicle((traj) => {
     return traj.properties.route_identifier === routeIdentifier;
   });
@@ -63,7 +62,6 @@ function RouteScheduleExample() {
     trackerLayer.map.updateSize();
   }, [lineInfos]);
 
-
   return (
     <div className="rt-route-schedule-example">
       <RouteSchedule
@@ -72,6 +70,7 @@ function RouteScheduleExample() {
         renderHeaderButtons={routeIdentifier => (
           <>
             <ToggleButton 
+              value="filter"
               selected={filterActive}
               onClick={() => {              
                 if (!filterActive) {                
@@ -86,6 +85,7 @@ function RouteScheduleExample() {
               <FaFilter />              
             </ToggleButton>
             <ToggleButton 
+              value="follow"
               selected={followActive}
               onClick={() => {            
                 clearInterval(updateInterval);
