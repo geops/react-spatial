@@ -2,7 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [1.5.6](https://github.com/geops/react-spatial/compare/v1.5.6-beta.0...v1.5.6) (2023-09-20)
+### [1.5.6](https://github.com/geops/react-spatial/compare/v1.5.5...v1.5.6) (2023-09-20)
+
+### Bug Fixes
+
+* fix prop-types definition for server side rendering ([f979f735b27dcc04c7cb6589e29a2607b2585391](https://github.com/geops/react-spatial/commit/f979f735b27dcc04c7cb6589e29a2607b2585391))
+  
 
 ### [1.5.5](https://github.com/geops/react-spatial/compare/v1.5.4...v1.5.5) (2023-09-20)
 
