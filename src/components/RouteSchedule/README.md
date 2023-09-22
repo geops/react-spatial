@@ -44,17 +44,30 @@ function RouteScheduleExample() {
   const [filterActive, setFilterActive] = useState(false);
   const [followActive, setFollowActive] = useState(false);
   const [center, setCenter] = useState([951560, 6002550]);
+  const [feature, setFeature] = useState();
+
+  useEffect(()=> {
+    let vehicleId = null;
+    if (feature) {
+      vehicleId = feature.get('train_id');
+      trackerLayer.api.subscribeStopSequence(vehicleId, ({ content: [stopSequence] }) => {
+        if (stopSequence) {
+          setLineInfos(stopSequence);
+        }
+      });
+    } else {
+      setLineInfos();
+    }
+  return ()=> {
+    if (vehicleId){
+      trackerLayer.api.unsubscribeStopSequence(vehicleId);
+    }
+  }
+  }, [feature]);
 
   useEffect(()=> {
     trackerLayer.onClick(([feature])=> {
-      if (feature) {
-        const vehicleId = feature.get('train_id');
-        trackerLayer.api.getStopSequence(vehicleId).then((stopSequence) => {
-          setLineInfos(stopSequence.content[0]);
-        });
-      } else {
-        setLineInfos();
-      }
+      setFeature(feature);
     });
   }, []);
 
