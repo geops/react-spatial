@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.7](https://github.com/geops/react-spatial/compare/v1.5.6...v1.5.7) (2023-09-22)
+
+
+### Bug Fixes
+
+* fix time_based state management in route schedule component ([60cf0fe](https://github.com/geops/react-spatial/commit/60cf0fe9673ccb2cad5ecae7271834e54c1e6c2a))
+
 ### [1.5.6](https://github.com/geops/react-spatial/compare/v1.5.5...v1.5.6) (2023-09-20)
 
 ### Bug Fixes
