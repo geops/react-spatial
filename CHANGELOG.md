@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0](https://github.com/geops/react-spatial/compare/v1.5.7...v1.6.0) (2023-10-06)
+
+
+### Features
+
+* remove KMLFormat, remove use a ResizeHandler in BasicMap, update deps ([df436ca](https://github.com/geops/react-spatial/commit/df436ca402fba629ceb611d0c6d1603c00d3b5ff))
+
 ### [1.5.7](https://github.com/geops/react-spatial/compare/v1.5.6...v1.5.7) (2023-09-22)
 
 
