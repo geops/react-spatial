@@ -4,13 +4,13 @@ import React, {
   useCallback,
   useState,
   useMemo,
-} from 'react';
-import PropTypes from 'prop-types';
-import { FaPlus, FaMinus } from 'react-icons/fa';
-import { ZoomSlider } from 'ol/control';
-import OLMap from 'ol/Map';
-import { easeOut } from 'ol/easing';
-import { unByKey } from 'ol/Observable';
+} from "react";
+import PropTypes from "prop-types";
+import { FaPlus, FaMinus } from "react-icons/fa";
+import { ZoomSlider } from "ol/control";
+import OLMap from "ol/Map";
+import { easeOut } from "ol/easing";
+import { unByKey } from "ol/Observable";
 
 const propTypes = {
   /**
@@ -49,8 +49,8 @@ const propTypes = {
 
 const defaultProps = {
   titles: {
-    zoomIn: 'Zoom in',
-    zoomOut: 'Zoom out',
+    zoomIn: "Zoom in",
+    zoomOut: "Zoom out",
   },
   zoomInChildren: <FaPlus focusable={false} />,
   zoomOutChildren: <FaMinus focusable={false} />,
@@ -123,7 +123,7 @@ function Zoom({
 
   useEffect(() => {
     // Trigger zoom update to disable zooms on max and min
-    const listenerKey = map.on('moveend', () => {
+    const listenerKey = map.on("moveend", () => {
       setZoom(map.getView().getZoom());
     });
 

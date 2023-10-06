@@ -4,7 +4,7 @@
   transition: 800ms width;
   overflow: hidden;
   display: flex;
-  padding: 2px 2px;
+  padding: 2px;
   pointer-events: none;
 
   &.rs-open {
@@ -20,7 +20,7 @@
     width: 100px;
     min-width: 100px;
     margin-right: 4px;
-    background-color: rgb(197, 197, 197);
+    background-color: rgb(197 197 197);
     border: 2px solid white;
     box-sizing: border-box;
     pointer-events: auto;
@@ -81,7 +81,7 @@
     font-size: 10px;
     padding: 2px 0;
     color: white;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgb(0 0 0 / 70%);
     text-align: center;
 
     &.rs-active {

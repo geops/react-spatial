@@ -1,7 +1,7 @@
-import React, { useMemo, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { Map } from 'ol';
-import { CopyrightControl } from 'mobility-toolbox-js/ol';
+import React, { useMemo, useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { Map } from "ol";
+import { CopyrightControl } from "mobility-toolbox-js/ol";
 
 const propTypes = {
   /**
@@ -23,9 +23,9 @@ const propTypes = {
 
 const defaultProps = {
   format: (copyrights) => {
-    return copyrights.join(' | ');
+    return copyrights.join(" | ");
   },
-  className: 'rs-copyright',
+  className: "rs-copyright",
 };
 
 /**
@@ -39,8 +39,8 @@ function Copyright({ map, format, ...other }) {
   const control = useMemo(
     () => {
       return new CopyrightControl({
-        target: document.createElement('div'),
-        element: document.createElement('div'),
+        target: document.createElement("div"),
+        element: document.createElement("div"),
         render() {
           // eslint-disable-next-line react/no-this-in-sfc
           const newCopyrights = this.getCopyrights();
@@ -77,7 +77,7 @@ function Copyright({ map, format, ...other }) {
       {...other}
       // eslint-disable-next-line react/no-danger
       dangerouslySetInnerHTML={{
-        __html: format(copyrights) || '',
+        __html: format(copyrights) || "",
       }}
     />
   );

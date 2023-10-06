@@ -1,18 +1,18 @@
-import { DEVICE_PIXEL_RATIO } from 'ol/has';
+import { DEVICE_PIXEL_RATIO } from "ol/has";
 
 const getPolygonPattern = (patternId = 1, color = [235, 0, 0, 1]) => {
   if (patternId === 1) {
     return color;
   }
 
-  const canvasElement = document.createElement('canvas');
+  const canvasElement = document.createElement("canvas");
   const pixelRatio = DEVICE_PIXEL_RATIO;
 
   canvasElement.width = 20 * pixelRatio;
   canvasElement.height = 20 * pixelRatio;
 
   let pattern = {};
-  const ctx = canvasElement.getContext('2d');
+  const ctx = canvasElement.getContext("2d");
   ctx.strokeStyle = `rgba(${color.toString()})`;
   ctx.fillStyle = `rgba(${color.toString()})`;
   ctx.lineWidth = 3;
@@ -44,7 +44,7 @@ const getPolygonPattern = (patternId = 1, color = [235, 0, 0, 1]) => {
       ctx.fill();
       ctx.closePath();
 
-      pattern = ctx.createPattern(canvasElement, 'repeat');
+      pattern = ctx.createPattern(canvasElement, "repeat");
       pattern.canvas = canvasElement;
       break;
     case 3:
@@ -77,7 +77,7 @@ const getPolygonPattern = (patternId = 1, color = [235, 0, 0, 1]) => {
       ctx.fill();
       ctx.closePath();
 
-      pattern = ctx.createPattern(canvasElement, 'repeat');
+      pattern = ctx.createPattern(canvasElement, "repeat");
       pattern.canvas = canvasElement;
       break;
     case 4:
@@ -110,7 +110,7 @@ const getPolygonPattern = (patternId = 1, color = [235, 0, 0, 1]) => {
       ctx.fill();
       ctx.closePath();
 
-      pattern = ctx.createPattern(canvasElement, 'repeat');
+      pattern = ctx.createPattern(canvasElement, "repeat");
       pattern.canvas = canvasElement;
       break;
     default:

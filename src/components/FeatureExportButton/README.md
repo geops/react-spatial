@@ -25,7 +25,7 @@ const vectorLayer = new Layer({
         anchorXUnits: 'fraction',
         anchorYUnits: 'pixels',
         src: 'https://openlayers.org/en/latest/examples/data/icon.png',
-        imgSize: [32, 48]
+        size: [32, 48]
       })
     }),
     source: new VectorSource({

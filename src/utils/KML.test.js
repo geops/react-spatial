@@ -1,9 +1,9 @@
-import VectorLayer from 'ol/layer/Vector';
-import VectorSource from 'ol/source/Vector';
-import { Style } from 'ol/style';
-import { get } from 'ol/proj';
-import beautify from 'xml-beautifier';
-import KML from './KML';
+import VectorLayer from "ol/layer/Vector";
+import VectorSource from "ol/source/Vector";
+import { Style } from "ol/style";
+import { get } from "ol/proj";
+import beautify from "xml-beautifier";
+import KML from "./KML";
 
 const xmlns =
   'xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/kml/2.2 https://developers.google.com/kml/schema/kml22gx.xsd"';
@@ -13,22 +13,22 @@ const expectWriteResult = (feats, str) => {
     beautify(
       KML.writeFeatures(
         {
-          name: 'lala',
+          name: "lala",
           olLayer: new VectorLayer({
             source: new VectorSource({
               features: feats,
             }),
           }),
         },
-        get('EPSG:4326'),
+        get("EPSG:4326"),
       ),
     ),
   ).toEqual(beautify(str));
 };
 
-describe('KML', () => {
-  describe('readFeatures() and writeFeatures()', () => {
-    test('should read/write LineStyle and ExtendedData (linesDash, lineStartIcon and lineEndIcon).', () => {
+describe("KML", () => {
+  describe("readFeatures() and writeFeatures()", () => {
+    test("should read/write LineStyle and ExtendedData (linesDash, lineStartIcon and lineEndIcon).", () => {
       const str = `
         <kml ${xmlns}>
           <Document>
@@ -87,7 +87,7 @@ describe('KML', () => {
       expectWriteResult(feats, str);
     });
 
-    test('should read/write TextStyle and ExtendedData.', () => {
+    test("should read/write TextStyle and ExtendedData.", () => {
       const str = `
         <kml ${xmlns}>
           <Document>
@@ -146,11 +146,11 @@ describe('KML', () => {
 
       // Text
       const styleText = style.getText();
-      expect(styleText.getText()).toBe('bar'); // spaces are trimmed.
-      expect(styleText.getFont()).toEqual('bold 16px arial');
+      expect(styleText.getText()).toBe("bar"); // spaces are trimmed.
+      expect(styleText.getFont()).toEqual("bold 16px arial");
       expect(styleText.getFill()).toEqual({ color_: [32, 52, 126, 1] });
       expect(styleText.getStroke()).toEqual({
-        color_: 'rgba(100,255,255,0.2)',
+        color_: "rgba(100,255,255,0.2)",
         width_: 3,
         lineCap_: undefined,
         lineDashOffset_: undefined,
@@ -159,18 +159,18 @@ describe('KML', () => {
         miterLimit_: undefined,
       });
       expect(styleText.getScale()).toEqual(2);
-      expect(styleText.getRotation()).toEqual('2.303834612632515');
+      expect(styleText.getRotation()).toEqual("2.303834612632515");
       expect(styleText.getPadding()).toEqual([5, 6, 7, 8]);
       expect(styleText.getBackgroundFill()).toEqual({
-        color_: 'rgba(255,255,255,0.01)',
+        color_: "rgba(255,255,255,0.01)",
       });
-      expect(styleText.getTextAlign()).toEqual('right');
+      expect(styleText.getTextAlign()).toEqual("right");
       expect(styleText.getOffsetX()).toEqual(-90);
       expect(styleText.getOffsetY()).toEqual(30);
       expectWriteResult(feats, str);
     });
 
-    test('should read and write lineDash and fillPattern style for polygon', () => {
+    test("should read and write lineDash and fillPattern style for polygon", () => {
       const str = `
         <kml ${xmlns}>
           <Document>
@@ -216,7 +216,7 @@ describe('KML', () => {
       expect(outlineStyle.getColor()).toEqual([235, 0, 0, 1]);
       expect(outlineStyle.getWidth()).toEqual(2);
       const fillStyle = styles[0].getFill();
-      expect(feature.get('fillPattern')).toEqual({
+      expect(feature.get("fillPattern")).toEqual({
         id: 3,
         color: [235, 0, 0, 1],
       });
@@ -226,7 +226,7 @@ describe('KML', () => {
       expectWriteResult(feats, str);
     });
 
-    test('should add zIndex and rotation to icon style and pictureOptions to feature properties.', () => {
+    test("should add zIndex and rotation to icon style and pictureOptions to feature properties.", () => {
       const str = `
       <kml ${xmlns}>
         <Document>
@@ -277,17 +277,17 @@ describe('KML', () => {
       const style = feats[0].getStyleFunction()(feats[0], 1);
       expect(style.getZIndex()).toBe(1);
       expect(style.getImage().getRotation()).toBe(1.5707963267948966);
-      expect(feats[0].get('pictureOptions')).toEqual({
+      expect(feats[0].get("pictureOptions")).toEqual({
         resolution: 4,
         defaultScale: 0.5,
       });
-      expect(feats[0].get('maxZoom')).toEqual(18.5);
-      expect(feats[0].get('minZoom')).toEqual(15);
+      expect(feats[0].get("maxZoom")).toEqual(18.5);
+      expect(feats[0].get("minZoom")).toEqual(15);
       expectWriteResult(feats, str);
     });
   });
 
-  describe('writeDocumentCamera()', () => {
+  describe("writeDocumentCamera()", () => {
     const str = `
       <kml ${xmlns}>
         <Document>
@@ -319,7 +319,7 @@ describe('KML', () => {
         </Document>
       </kml>`;
 
-    test('should insert the correct <Camera> tag.', () => {
+    test("should insert the correct <Camera> tag.", () => {
       const kmlWithKamera = KML.writeDocumentCamera(str, {
         heading: 270,
         altitude: 300,
@@ -329,7 +329,7 @@ describe('KML', () => {
       expect(beautify(kmlWithKamera)).toEqual(beautify(strWithCam));
     });
 
-    test('should remove the present <Camera> tag when called without cameraAttributes.', () => {
+    test("should remove the present <Camera> tag when called without cameraAttributes.", () => {
       const kmlWithoutKamera = KML.writeDocumentCamera(strWithCam);
       expect(beautify(kmlWithoutKamera)).toEqual(beautify(str));
     });

@@ -1,1 +1,1 @@
-export { default } from './MousePosition';
+export { default } from "./MousePosition";

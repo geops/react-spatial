@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
-import PropTypes from 'prop-types';
-import OLMap from 'ol/Map';
-import { createStringXY } from 'ol/coordinate';
-import OLMousePosition from 'ol/control/MousePosition';
+import React, { useState, useRef, useEffect, useCallback } from "react";
+import PropTypes from "prop-types";
+import OLMap from "ol/Map";
+import { createStringXY } from "ol/coordinate";
+import OLMousePosition from "ol/control/MousePosition";
 
 const propTypes = {
   /**
@@ -66,12 +66,12 @@ const defaultProps = {
   onChange: () => {},
   projections: [
     {
-      label: 'EPSG:4326',
-      value: 'EPSG:4326',
+      label: "EPSG:4326",
+      value: "EPSG:4326",
     },
     {
-      label: 'EPSG:3857',
-      value: 'EPSG:3857',
+      label: "EPSG:3857",
+      value: "EPSG:3857",
     },
   ],
   projectionValue: null,
@@ -102,8 +102,8 @@ function MousePosition({
   useEffect(() => {
     const mousePosition = new OLMousePosition({
       target: ref.current,
-      undefinedHTML: '&nbsp;',
-      className: '',
+      undefinedHTML: "&nbsp;",
+      className: "",
     });
     map.addControl(mousePosition);
     setControl(mousePosition);

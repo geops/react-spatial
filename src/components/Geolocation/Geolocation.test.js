@@ -1,13 +1,13 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
-import { configure, mount, shallow } from 'enzyme';
-import Adapter from '@cfaester/enzyme-adapter-react-18';
+import React from "react";
+import renderer from "react-test-renderer";
+import { configure, mount, shallow } from "enzyme";
+import Adapter from "@cfaester/enzyme-adapter-react-18";
 
-import 'jest-canvas-mock';
-import Map from 'ol/Map';
-import View from 'ol/View';
-import MapEvent from 'ol/MapEvent';
-import Geolocation from './Geolocation';
+import "jest-canvas-mock";
+import Map from "ol/Map";
+import View from "ol/View";
+import MapEvent from "ol/MapEvent";
+import Geolocation from "./Geolocation";
 
 configure({ adapter: new Adapter() });
 
@@ -50,17 +50,17 @@ class CallbackHandler {
   static onDeactivate() {}
 }
 
-describe('Geolocation', () => {
+describe("Geolocation", () => {
   let map;
 
   beforeEach(() => {
-    const target = document.createElement('div');
+    const target = document.createElement("div");
     const { style } = target;
-    style.position = 'absolute';
-    style.left = '-1000px';
-    style.top = '-1000px';
-    style.width = '100px';
-    style.height = '100px';
+    style.position = "absolute";
+    style.left = "-1000px";
+    style.top = "-1000px";
+    style.width = "100px";
+    style.height = "100px";
     document.body.appendChild(target);
 
     map = new Map({
@@ -83,14 +83,14 @@ describe('Geolocation', () => {
     map.dispose();
   });
 
-  describe('should match snapshot', () => {
-    test('minimum props', () => {
+  describe("should match snapshot", () => {
+    test("minimum props", () => {
       const component = renderer.create(<Geolocation map={map} />);
       const tree = component.toJSON();
       expect(tree).toMatchSnapshot();
     });
 
-    test('with title', () => {
+    test("with title", () => {
       const component = renderer.create(
         <Geolocation map={map} title="Lokalisieren" />,
       );
@@ -98,7 +98,7 @@ describe('Geolocation', () => {
       expect(tree).toMatchSnapshot();
     });
 
-    test('with class name', () => {
+    test("with class name", () => {
       const component = renderer.create(
         <Geolocation map={map} className="my-class-name" />,
       );
@@ -107,45 +107,45 @@ describe('Geolocation', () => {
     });
   });
 
-  test('should use children', () => {
+  test("should use children", () => {
     mockGeolocation();
 
     const wrapper = mount(<Geolocation map={map}>test</Geolocation>);
 
-    const text = wrapper.find('.rs-geolocation').first().text();
+    const text = wrapper.find(".rs-geolocation").first().text();
 
-    expect(text).toBe('test');
+    expect(text).toBe("test");
 
     restoreGeolocation();
   });
 
-  describe('button classes', () => {
-    test('class should be active', () => {
+  describe("button classes", () => {
+    test("class should be active", () => {
       mockGeolocation();
 
       const wrapper = mount(<Geolocation map={map} />);
       const basic = wrapper.getDOMNode();
 
-      wrapper.find('.rs-geolocation').first().simulate('click');
+      wrapper.find(".rs-geolocation").first().simulate("click");
 
-      expect(basic.className).toBe('rs-geolocation rs-active');
+      expect(basic.className).toBe("rs-geolocation rs-active");
 
       restoreGeolocation();
     });
 
-    test('class should not be active', () => {
+    test("class should not be active", () => {
       mockGeolocation();
 
       const wrapper = mount(<Geolocation map={map} />);
       const basic = wrapper.getDOMNode();
 
       wrapper
-        .find('.rs-geolocation')
+        .find(".rs-geolocation")
         .first()
-        .simulate('click')
-        .simulate('click');
+        .simulate("click")
+        .simulate("click");
 
-      expect(basic.className).toBe('rs-geolocation ');
+      expect(basic.className).toBe("rs-geolocation ");
 
       restoreGeolocation();
     });
@@ -156,7 +156,7 @@ describe('Geolocation', () => {
 
     const component = shallow(<Geolocation map={map} />);
     const instance = component.instance();
-    const spy = jest.spyOn(instance, 'highlight');
+    const spy = jest.spyOn(instance, "highlight");
     instance.toggle();
     expect(spy).toHaveBeenCalled();
 
@@ -165,9 +165,9 @@ describe('Geolocation', () => {
 
   test(`success/activate/deactivate callback functions should be called`, () => {
     mockGeolocation();
-    const spyOnSuccess = jest.spyOn(CallbackHandler, 'onSuccess');
-    const spyOnActivate = jest.spyOn(CallbackHandler, 'onActivate');
-    const spyOnDeactivate = jest.spyOn(CallbackHandler, 'onDeactivate');
+    const spyOnSuccess = jest.spyOn(CallbackHandler, "onSuccess");
+    const spyOnActivate = jest.spyOn(CallbackHandler, "onActivate");
+    const spyOnDeactivate = jest.spyOn(CallbackHandler, "onDeactivate");
 
     const wrapper = mount(
       <Geolocation
@@ -184,12 +184,12 @@ describe('Geolocation', () => {
       />,
     );
 
-    wrapper.find('.rs-geolocation').first().simulate('click');
+    wrapper.find(".rs-geolocation").first().simulate("click");
 
     expect(spyOnActivate).toHaveBeenCalled();
     expect(spyOnSuccess).toHaveBeenCalled();
 
-    wrapper.find('.rs-geolocation').first().simulate('click');
+    wrapper.find(".rs-geolocation").first().simulate("click");
 
     expect(spyOnDeactivate).toHaveBeenCalled();
 
@@ -199,7 +199,7 @@ describe('Geolocation', () => {
   test(`error function should be called`, () => {
     mockMissingGeolocation();
 
-    const spy = jest.spyOn(CallbackHandler, 'onError');
+    const spy = jest.spyOn(CallbackHandler, "onError");
 
     const wrapper = mount(
       <Geolocation
@@ -210,15 +210,15 @@ describe('Geolocation', () => {
       />,
     );
 
-    wrapper.find('.rs-geolocation').first().simulate('click');
+    wrapper.find(".rs-geolocation").first().simulate("click");
 
     expect(spy).toHaveBeenCalled();
 
     restoreGeolocation();
   });
 
-  describe('map centering', () => {
-    test('centers map', () => {
+  describe("map centering", () => {
+    test("centers map", () => {
       mockGeolocation();
 
       const center1 = [742952.8821531708, 6330118.608483334];
@@ -233,7 +233,7 @@ describe('Geolocation', () => {
       restoreGeolocation();
     });
 
-    test('sets isRecenteringToPosition=false after pointerdrag event with the noCenterAfterDrag prop', () => {
+    test("sets isRecenteringToPosition=false after pointerdrag event with the noCenterAfterDrag prop", () => {
       mockGeolocation();
 
       const component = shallow(<Geolocation map={map} noCenterAfterDrag />);
@@ -241,14 +241,14 @@ describe('Geolocation', () => {
 
       expect(component.instance().isRecenteringToPosition).toEqual(true);
 
-      map.dispatchEvent(new MapEvent('pointerdrag', map));
+      map.dispatchEvent(new MapEvent("pointerdrag", map));
       expect(component.instance().isRecenteringToPosition).toEqual(false);
 
       restoreGeolocation();
     });
   });
 
-  test('custom style function', () => {
+  test("custom style function", () => {
     mockGeolocation();
 
     const styleFunc = jest.fn();

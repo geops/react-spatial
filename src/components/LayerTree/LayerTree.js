@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Layer, getLayersAsFlatArray } from 'mobility-toolbox-js/ol';
-import { unByKey } from 'ol/Observable';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Layer, getLayersAsFlatArray } from "mobility-toolbox-js/ol";
+import { unByKey } from "ol/Observable";
 
 const propTypes = {
   /**
@@ -120,7 +120,7 @@ const propTypes = {
 
 const defaultProps = {
   layers: [],
-  className: 'rs-layer-tree',
+  className: "rs-layer-tree",
   padding: 30,
   isItemHidden: () => {
     return false;
@@ -137,10 +137,10 @@ const defaultProps = {
     return t(layer.name);
   },
   titles: {
-    layerShow: 'Show layer',
-    layerHide: 'Hide layer',
-    subLayerShow: 'Show sublayer',
-    subLayerHide: 'Hide sublayer',
+    layerShow: "Show layer",
+    layerHide: "Hide layer",
+    subLayerShow: "Show sublayer",
+    subLayerHide: "Hide sublayer",
   },
   t: (s) => {
     return s;
@@ -235,7 +235,7 @@ class LayerTree extends Component {
     const { isItemHidden } = this.props;
     const children = layers.flatMap((l) => {
       return l.children.filter((c) => {
-        return !isItemHidden(c) && c.get('isAlwaysExpanded');
+        return !isItemHidden(c) && c.get("isAlwaysExpanded");
       });
     });
 
@@ -261,7 +261,7 @@ class LayerTree extends Component {
 
     getLayersAsFlatArray(rootLayer).forEach((layer) => {
       this.olKeys.push(
-        layer.on('propertychange', () => {
+        layer.on("propertychange", () => {
           const { revision } = this.state;
           this.setState({ revision: revision + 1 });
         }),
@@ -270,7 +270,7 @@ class LayerTree extends Component {
 
     const state = { rootLayer };
     if (
-      typeof expandChildren === 'function'
+      typeof expandChildren === "function"
         ? expandChildren(layers)
         : expandChildren
     ) {
@@ -287,7 +287,7 @@ class LayerTree extends Component {
     if (layer.visible && !isItemHidden(layer)) {
       const children = layer.children
         .filter((c) => {
-          return !isItemHidden(c) && !c.get('isAlwaysExpanded');
+          return !isItemHidden(c) && !c.get("isAlwaysExpanded");
         })
         .flatMap((c) => {
           return this.expandLayer(c, expLayers);
@@ -310,7 +310,7 @@ class LayerTree extends Component {
       tabIndex = -1;
     }
 
-    const inputType = layer.get('group') ? 'radio' : 'checkbox';
+    const inputType = layer.get("group") ? "radio" : "checkbox";
     return (
       // eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/no-noninteractive-element-interactions
       <label
@@ -348,7 +348,7 @@ class LayerTree extends Component {
       !(layer.children || []).filter((c) => {
         return !isItemHidden(c);
       }).length ||
-      layer.get('isAlwaysExpanded')
+      layer.get("isAlwaysExpanded")
     ) {
       return null;
     }
@@ -356,7 +356,7 @@ class LayerTree extends Component {
     return (
       <div
         className={`rs-layer-tree-arrow rs-layer-tree-arrow-${
-          !expandedLayers.includes(layer) ? 'collapsed' : 'expanded'
+          !expandedLayers.includes(layer) ? "collapsed" : "expanded"
         }`}
       />
     );
@@ -373,7 +373,7 @@ class LayerTree extends Component {
         layer,
         (layer.children || []).filter((c) => {
           return !isItemHidden(c);
-        }).length && !layer.get('isAlwaysExpanded'),
+        }).length && !layer.get("isAlwaysExpanded"),
       );
     };
     const title = `${t(layer.name)} ${
@@ -435,7 +435,7 @@ class LayerTree extends Component {
     return (
       <div className={getParentClassName()} key={layer.key}>
         <div
-          className={`rs-layer-tree-item ${layer.visible ? 'rs-visible' : ''}`}
+          className={`rs-layer-tree-item ${layer.visible ? "rs-visible" : ""}`}
           style={{
             paddingLeft: `${padding * level}px`,
           }}

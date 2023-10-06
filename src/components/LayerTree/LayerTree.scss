@@ -14,13 +14,11 @@
 
   .rs-layer-tree-arrow-collapsed {
     transform: rotate(45deg);
-    -webkit-transform: rotate(45deg);
     margin-top: -3px;
   }
 
   .rs-layer-tree-arrow-expanded {
     transform: rotate(-135deg);
-    -webkit-transform: rotate(-135deg);
     margin-top: 3px;
   }
 
@@ -115,8 +113,6 @@
       height: 10px;
       border: solid $brand-primary;
       border-width: 0 1px 1px 0;
-      -webkit-transform: rotate(45deg);
-      -ms-transform: rotate(45deg);
       transform: rotate(45deg);
     }
 

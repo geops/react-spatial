@@ -6,7 +6,7 @@
   .rt-route-header {
     display: flex;
     align-items: center;
-    padding: 15px 10px 0 10px;
+    padding: 15px 10px 0;
 
     .rt-route-title {
       display: flex;
@@ -25,7 +25,7 @@
       button {
         width: 35px;
         height: 35px;
-        margin: 10px 5px 15px 5px;
+        margin: 10px 5px 15px;
         color: black;
       }
     }
@@ -87,23 +87,23 @@
         padding: 0 3px;
 
         .green {
-          color: rgb(0, 160, 12);
+          color: rgb(0 160 12);
         }
 
         .orange {
-          color: rgb(247, 191, 0);
+          color: rgb(247 191 0);
         }
 
         .light-red {
-          color: rgb(255, 74, 0);
+          color: rgb(255 74 0);
         }
 
         .middle-red {
-          color: rgb(232, 0, 0);
+          color: rgb(232 0 0);
         }
 
         .dark-red {
-          color: rgb(237, 0, 76);
+          color: rgb(237 0 76);
         }
       }
     }
@@ -140,6 +140,6 @@
 
   .rt-route-cancelled {
     text-decoration: line-through;
-    color: rgb(236, 43, 43);
+    color: rgb(236 43 43);
   }
 }

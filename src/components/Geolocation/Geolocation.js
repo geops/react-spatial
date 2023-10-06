@@ -1,21 +1,21 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import React, { PureComponent } from "react";
+import PropTypes from "prop-types";
 
-import OLMap from 'ol/Map';
-import { transform } from 'ol/proj';
-import Point from 'ol/geom/Point';
-import Feature from 'ol/Feature';
-import { unByKey } from 'ol/Observable';
+import OLMap from "ol/Map";
+import { transform } from "ol/proj";
+import Point from "ol/geom/Point";
+import Feature from "ol/Feature";
+import { unByKey } from "ol/Observable";
 
-import Style from 'ol/style/Style';
-import Circle from 'ol/style/Circle';
-import Fill from 'ol/style/Fill';
-import Stroke from 'ol/style/Stroke';
+import Style from "ol/style/Style";
+import Circle from "ol/style/Circle";
+import Fill from "ol/style/Fill";
+import Stroke from "ol/style/Stroke";
 
-import VectorLayer from 'ol/layer/Vector';
-import VectorSource from 'ol/source/Vector';
+import VectorLayer from "ol/layer/Vector";
+import VectorSource from "ol/source/Vector";
 
-import { FaRegDotCircle } from 'react-icons/fa';
+import { FaRegDotCircle } from "react-icons/fa";
 
 const propTypes = {
   /**
@@ -74,7 +74,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  className: 'rs-geolocation',
+  className: "rs-geolocation",
   children: <FaRegDotCircle focusable={false} />,
   onError: () => {},
   onSuccess: () => {},
@@ -112,7 +112,7 @@ class Geolocation extends PureComponent {
   toggle() {
     const { active } = this.state;
     const { onError } = this.props;
-    const geolocation = 'geolocation' in navigator;
+    const geolocation = "geolocation" in navigator;
 
     if (!geolocation) {
       onError();
@@ -164,7 +164,7 @@ class Geolocation extends PureComponent {
     );
 
     if (noCenterAfterDrag) {
-      this.dragListener = map.on('pointerdrag', () => {
+      this.dragListener = map.on("pointerdrag", () => {
         this.isRecenteringToPosition = false;
       });
     }
@@ -177,7 +177,7 @@ class Geolocation extends PureComponent {
 
     const position = transform(
       [longitude, latitude],
-      'EPSG:4326',
+      "EPSG:4326",
       this.projection,
     );
     this.point.setCoordinates(position);
@@ -222,7 +222,7 @@ class Geolocation extends PureComponent {
             radius: 20,
             rotation,
             fill: new Fill({
-              color: 'rgba(255, 255, 255, 0.01)',
+              color: "rgba(255, 255, 255, 0.01)",
             }),
             stroke: new Stroke({
               lineDash: [30, 10],
@@ -266,7 +266,7 @@ class Geolocation extends PureComponent {
       <div
         role="button"
         tabIndex="0"
-        className={`${className} ${active ? 'rs-active' : ''}`}
+        className={`${className} ${active ? "rs-active" : ""}`}
         onClick={() => {
           return this.toggle();
         }}

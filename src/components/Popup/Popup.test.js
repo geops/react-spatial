@@ -1,15 +1,15 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
-import { configure, mount, shallow } from 'enzyme';
-import Adapter from '@cfaester/enzyme-adapter-react-18';
-import 'jest-canvas-mock';
+import React from "react";
+import renderer from "react-test-renderer";
+import { configure, mount, shallow } from "enzyme";
+import Adapter from "@cfaester/enzyme-adapter-react-18";
+import "jest-canvas-mock";
 
-import OLMap from 'ol/Map';
-import View from 'ol/View';
-import Feature from 'ol/Feature';
-import Point from 'ol/geom/Point';
-import Line from 'ol/geom/LineString';
-import Popup from './Popup';
+import OLMap from "ol/Map";
+import View from "ol/View";
+import Feature from "ol/Feature";
+import Point from "ol/geom/Point";
+import Line from "ol/geom/LineString";
+import Popup from "./Popup";
 
 let map;
 
@@ -26,13 +26,13 @@ const featLine = new Feature({
   ]),
 });
 
-describe('Popup', () => {
+describe("Popup", () => {
   beforeEach(() => {
     map = new OLMap({});
   });
 
-  describe('should match snapshot', () => {
-    test('without feature', () => {
+  describe("should match snapshot", () => {
+    test("without feature", () => {
       const component = renderer.create(
         <Popup map={map}>
           <div id="foo" />
@@ -42,7 +42,7 @@ describe('Popup', () => {
       expect(tree).toMatchSnapshot();
     });
 
-    test('with default values.', () => {
+    test("with default values.", () => {
       const component = renderer.create(
         <Popup map={map} feature={feat}>
           <div id="foo" />
@@ -52,7 +52,7 @@ describe('Popup', () => {
       expect(tree).toMatchSnapshot();
     });
 
-    test('without close button.', () => {
+    test("without close button.", () => {
       const component = renderer.create(
         <Popup
           map={map}
@@ -68,7 +68,7 @@ describe('Popup', () => {
       expect(tree).toMatchSnapshot();
     });
 
-    test('without header.', () => {
+    test("without header.", () => {
       const component = renderer.create(
         <Popup
           map={map}
@@ -84,7 +84,7 @@ describe('Popup', () => {
       expect(tree).toMatchSnapshot();
     });
 
-    test('with tabIndex defined.', () => {
+    test("with tabIndex defined.", () => {
       const component = renderer.create(
         <Popup map={map} feature={feat} tabIndex="0">
           <div id="bar" />
@@ -96,8 +96,8 @@ describe('Popup', () => {
   });
 
   [
-    ['click', {}],
-    ['keypress', { which: 13 }],
+    ["click", {}],
+    ["keypress", { which: 13 }],
   ].forEach((evt) => {
     test(`should trigger onCloseClick function on ${evt[0]} event.`, () => {
       const spy = jest.fn(() => {});
@@ -109,7 +109,7 @@ describe('Popup', () => {
       );
 
       component
-        .find('div')
+        .find("div")
         .at(3)
         .simulate(...evt);
       expect(spy).toHaveBeenCalled();
@@ -124,7 +124,7 @@ describe('Popup', () => {
       // test if no js error triggered by the default value
       try {
         component
-          .find('div')
+          .find("div")
           .at(3)
           .simulate(...evt);
         expect(true).toBe(true);
@@ -185,21 +185,21 @@ describe('Popup', () => {
           <div id="gux" />
         </Popup>,
       );
-      const spy = jest.spyOn(component.instance(), 'updatePixelPosition');
-      map.dispatchEvent({ type: 'postrender' });
+      const spy = jest.spyOn(component.instance(), "updatePixelPosition");
+      map.dispatchEvent({ type: "postrender" });
       expect(spy).toHaveBeenCalledTimes(1);
     });
   });
 
   describe(`#panIntoView`, () => {
     beforeEach(() => {
-      const target = document.createElement('div');
+      const target = document.createElement("div");
       const { style } = target;
-      style.position = 'absolute';
-      style.left = '-1000px';
-      style.top = '-1000px';
-      style.width = '100px';
-      style.height = '100px';
+      style.position = "absolute";
+      style.left = "-1000px";
+      style.top = "-1000px";
+      style.width = "100px";
+      style.height = "100px";
       document.body.appendChild(target);
 
       map = new OLMap({
@@ -234,7 +234,7 @@ describe('Popup', () => {
       map.getPixelFromCoordinate = jest.fn(() => {
         return [10, 20];
       });
-      const spy = jest.spyOn(map.getView(), 'animate');
+      const spy = jest.spyOn(map.getView(), "animate");
       mount(
         <Popup map={map} feature={feat} panIntoView>
           <div id="gux" />
@@ -251,7 +251,7 @@ describe('Popup', () => {
       map.getPixelFromCoordinate = jest.fn(() => {
         return [10, 200];
       });
-      const spy = jest.spyOn(map.getView(), 'animate');
+      const spy = jest.spyOn(map.getView(), "animate");
       mount(
         <Popup
           map={map}
@@ -273,7 +273,7 @@ describe('Popup', () => {
       map.getPixelFromCoordinate = jest.fn(() => {
         return [10, 200];
       });
-      const spy = jest.spyOn(map.getView(), 'animate');
+      const spy = jest.spyOn(map.getView(), "animate");
       mount(
         <Popup
           map={map}
@@ -297,11 +297,11 @@ describe('Popup', () => {
         <div id="gux" />
       </Popup>,
     );
-    const spy = jest.spyOn(component.instance(), 'updatePixelPosition');
-    map.dispatchEvent({ type: 'postrender' });
+    const spy = jest.spyOn(component.instance(), "updatePixelPosition");
+    map.dispatchEvent({ type: "postrender" });
     expect(spy).toHaveBeenCalledTimes(1);
     component.unmount();
-    map.dispatchEvent({ type: 'postrender' });
+    map.dispatchEvent({ type: "postrender" });
     expect(spy).toHaveBeenCalledTimes(1);
   });
 });

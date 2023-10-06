@@ -1,7 +1,7 @@
-import React, { Component, useState } from 'react';
-import PropTypes from 'prop-types';
-import { Resizable } from 're-resizable';
-import ResizeHandler from '../ResizeHandler';
+import React, { Component, useState } from "react";
+import PropTypes from "prop-types";
+import { Resizable } from "re-resizable";
+import ResizeHandler from "../ResizeHandler";
 
 const propTypes = {
   /**
@@ -73,12 +73,12 @@ const propTypes = {
 
 const defaultMobileSize = {
   defaultSize: {
-    width: '100%',
-    height: '25%',
+    width: "100%",
+    height: "25%",
   },
   size: undefined,
-  maximalHeight: '100%',
-  minimalHeight: '25%',
+  maximalHeight: "100%",
+  minimalHeight: "25%",
 };
 
 const defaultProps = {
@@ -95,7 +95,7 @@ const defaultProps = {
 /**
  * The Overlay component creates a resizable, swipable overlay <div\>
  */
-const Overlay = ({
+function Overlay({
   observe,
   className,
   children,
@@ -104,7 +104,7 @@ const Overlay = ({
   onResizeStop,
   onResizeStart,
   thresholdWidthForMobile,
-}) => {
+}) {
   const [isMobile, setIsMobile] = useState();
 
   const onResize = (entries) => {
@@ -125,7 +125,7 @@ const Overlay = ({
       {isMobile ? (
         <Resizable
           style={{
-            position: 'absolute',
+            position: "absolute",
           }}
           enable={{
             top: isMobileResizable,
@@ -146,29 +146,29 @@ const Overlay = ({
           onResizeStop={onResizeStop}
           handleStyles={{
             top: {
-              top: '-20px',
-              height: '20px',
-              padding: '20px 0',
-              width: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              top: "-20px",
+              height: "20px",
+              padding: "20px 0",
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             },
           }}
           size={resizableMobileSize.size}
           defaultSize={mobileSize && resizableMobileSize.defaultSize}
-          className={`tm-overlay-mobile${className ? ` ${className}` : ''}`}
+          className={`tm-overlay-mobile${className ? ` ${className}` : ""}`}
         >
           <div className="tm-overlay-mobile-content">{children}</div>
         </Resizable>
       ) : (
-        <div className={`tm-overlay${className ? ` ${className}` : ''}`}>
+        <div className={`tm-overlay${className ? ` ${className}` : ""}`}>
           {children}
         </div>
       )}
     </>
   );
-};
+}
 
 Overlay.propTypes = propTypes;
 Overlay.defaultProps = defaultProps;

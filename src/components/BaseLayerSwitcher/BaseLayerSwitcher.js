@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/interactive-supports-focus */
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { FaChevronLeft } from 'react-icons/fa';
-import { Layer } from 'mobility-toolbox-js/ol';
-import { unByKey } from 'ol/Observable';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { FaChevronLeft } from "react-icons/fa";
+import { Layer } from "mobility-toolbox-js/ol";
+import { unByKey } from "ol/Observable";
 
 const propTypes = {
   /**
@@ -49,12 +49,12 @@ const propTypes = {
 };
 
 const defaultProps = {
-  className: 'rs-base-layer-switcher',
-  altText: 'Source not found',
+  className: "rs-base-layer-switcher",
+  altText: "Source not found",
   titles: {
-    button: 'Base layers',
-    openSwitcher: 'Open Baselayer-Switcher',
-    closeSwitcher: 'Close Baselayer-Switcher',
+    button: "Base layers",
+    openSwitcher: "Open Baselayer-Switcher",
+    closeSwitcher: "Close Baselayer-Switcher",
   },
   closeButtonImage: <FaChevronLeft />,
   layerImages: undefined,
@@ -83,9 +83,9 @@ const getImageStyle = (url) => {
   return url
     ? {
         backgroundImage: `url(${url})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
       }
     : null;
 };
@@ -114,7 +114,7 @@ function BaseLayerSwitcher({
   useEffect(() => {
     // Update the layer selected when a visibility changes.
     const olKeys = (layers || []).map((layer) => {
-      return layer.on('change:visible', (evt) => {
+      return layer.on("change:visible", (evt) => {
         if (evt.target.visible && currentLayer !== evt.target) {
           setCurrentLayer(evt.target);
         }
@@ -131,11 +131,11 @@ function BaseLayerSwitcher({
         return layerImages[layerImage];
       })
     : layers.map((layer) => {
-        return layer.get('previewImage');
+        return layer.get("previewImage");
       });
 
-  const openClass = switcherOpen ? ' rs-open' : '';
-  const hiddenStyle = switcherOpen && !isClosed ? 'visible' : 'hidden';
+  const openClass = switcherOpen ? " rs-open" : "";
+  const hiddenStyle = switcherOpen && !isClosed ? "visible" : "hidden";
 
   const handleSwitcherClick = () => {
     if (layers.length === 2) {
@@ -229,7 +229,7 @@ function BaseLayerSwitcher({
         onKeyPress={(e) => {
           return e.which === 13 && setSwitcherOpen(false);
         }}
-        tabIndex={switcherOpen ? '0' : '-1'}
+        tabIndex={switcherOpen ? "0" : "-1"}
         aria-label={titles.closeSwitcher}
         title={titles.closeSwitcher}
       >
@@ -270,9 +270,9 @@ function BaseLayerSwitcher({
       </div>
       {layers.map((layer, idx) => {
         const layerName = layer.name;
-        const activeClass = layerName === currentLayer.name ? ' rs-active' : '';
+        const activeClass = layerName === currentLayer.name ? " rs-active" : "";
         const imageStyle = getImageStyle(
-          layerImages ? layerImages[`${layer.key}`] : layer.get('previewImage'),
+          layerImages ? layerImages[`${layer.key}`] : layer.get("previewImage"),
         );
         return (
           <div
@@ -299,7 +299,7 @@ function BaseLayerSwitcher({
                 }
               }}
               style={imageStyle}
-              tabIndex={switcherOpen ? '0' : '-1'}
+              tabIndex={switcherOpen ? "0" : "-1"}
             >
               <div className={`rs-base-layer-switcher-title${activeClass}`}>
                 {t(layerName)}

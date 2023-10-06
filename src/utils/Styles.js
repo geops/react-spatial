@@ -1,11 +1,11 @@
-import { Fill, Stroke, Circle, Style, Text } from 'ol/style';
+import { Fill, Stroke, Circle, Style, Text } from "ol/style";
 
 // Default style for Ol
 const fill = new Fill({
-  color: 'rgba(255,255,255,0.4)',
+  color: "rgba(255,255,255,0.4)",
 });
 const stroke = new Stroke({
-  color: '#3399CC',
+  color: "#3399CC",
   width: 1.25,
 });
 const dfltOlStyle = new Style({
@@ -36,7 +36,7 @@ const kmlStyle = new Style({
   stroke: kmlStroke,
   image: kmlcircle,
   text: new Text({
-    font: 'normal 16px Helvetica',
+    font: "normal 16px Helvetica",
     fill: kmlFill,
     stroke: new Stroke({
       color: [255, 255, 255, 1],

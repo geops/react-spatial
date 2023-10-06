@@ -1,26 +1,26 @@
-import 'jest-canvas-mock';
-import React from 'react';
-import renderer from 'react-test-renderer';
-import { act } from 'react-dom/test-utils';
-import { configure, mount } from 'enzyme';
-import Adapter from '@cfaester/enzyme-adapter-react-18';
-import MapEvent from 'ol/MapEvent';
-import OLMap from 'ol/Map';
-import OLView from 'ol/View';
-import { TiImage } from 'react-icons/ti';
-import NorthArrow from './NorthArrow';
+import "jest-canvas-mock";
+import React from "react";
+import renderer from "react-test-renderer";
+import { act } from "react-dom/test-utils";
+import { configure, mount } from "enzyme";
+import Adapter from "@cfaester/enzyme-adapter-react-18";
+import MapEvent from "ol/MapEvent";
+import OLMap from "ol/Map";
+import OLView from "ol/View";
+import { TiImage } from "react-icons/ti";
+import NorthArrow from "./NorthArrow";
 
 configure({ adapter: new Adapter() });
 let olView;
 let olMap;
 
-describe('NorthArrow', () => {
+describe("NorthArrow", () => {
   beforeEach(() => {
     olView = new OLView();
     olMap = new OLMap({ view: olView });
   });
 
-  test('should match snapshot with default value.', () => {
+  test("should match snapshot with default value.", () => {
     let component;
     renderer.act(() => {
       component = renderer.create(<NorthArrow map={olMap} />);
@@ -29,7 +29,7 @@ describe('NorthArrow', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  test('should match snapshot with custom attributes.', () => {
+  test("should match snapshot with custom attributes.", () => {
     let component;
     renderer.act(() => {
       component = renderer.create(
@@ -40,7 +40,7 @@ describe('NorthArrow', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  test('should match snapshot with children.', () => {
+  test("should match snapshot with children.", () => {
     let component;
     renderer.act(() => {
       component = renderer.create(
@@ -53,7 +53,7 @@ describe('NorthArrow', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  test('should match snapshot rotated.', () => {
+  test("should match snapshot rotated.", () => {
     let component;
     renderer.act(() => {
       component = renderer.create(
@@ -64,7 +64,7 @@ describe('NorthArrow', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  test('should match snapshot with circle.', () => {
+  test("should match snapshot with circle.", () => {
     let component;
     renderer.act(() => {
       component = renderer.create(<NorthArrow circled map={olMap} />);
@@ -73,27 +73,27 @@ describe('NorthArrow', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  test('should react on view rotation (transform: `rotate(20deg)`)', () => {
+  test("should react on view rotation (transform: `rotate(20deg)`)", () => {
     const wrapper = mount(<NorthArrow map={olMap} />);
     // Trigger view rotation
     olMap.getView().setRotation(0.3490658503988659);
     act(() => {
-      olMap.dispatchEvent(new MapEvent('postrender', olMap));
+      olMap.dispatchEvent(new MapEvent("postrender", olMap));
       // 20 degrees = 0.3490658503988659 radians
     });
     expect(wrapper.html()).toMatchSnapshot();
   });
 
-  test('should react on view rotation with offset (transform: `rotate(10deg)`)', () => {
+  test("should react on view rotation with offset (transform: `rotate(10deg)`)", () => {
     const wrapper = mount(<NorthArrow map={olMap} rotationOffset={-10} />);
     olMap.getView().setRotation(0.3490658503988659);
     act(() => {
-      olMap.dispatchEvent(new MapEvent('postrender', olMap));
+      olMap.dispatchEvent(new MapEvent("postrender", olMap));
     });
     expect(wrapper.html()).toMatchSnapshot();
   });
 
-  test('should remove post render event on unmount', () => {
+  test("should remove post render event on unmount", () => {
     const wrapper = mount(<NorthArrow map={olMap} rotationOffset={-10} />);
     // eslint-disable-next-line no-underscore-dangle
     expect(olMap.listeners_.postrender.length).toBe(4);

@@ -1,12 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
-import renderer from 'react-test-renderer';
-import { configure, mount } from 'enzyme';
-import Adapter from '@cfaester/enzyme-adapter-react-18';
-import 'jest-canvas-mock';
-import OLMap from 'ol/Map';
-import OLMousePosition from 'ol/control/MousePosition';
-import MousePosition from './MousePosition';
+import React from "react";
+import renderer from "react-test-renderer";
+import { configure, mount } from "enzyme";
+import Adapter from "@cfaester/enzyme-adapter-react-18";
+import "jest-canvas-mock";
+import OLMap from "ol/Map";
+import OLMousePosition from "ol/control/MousePosition";
+import MousePosition from "./MousePosition";
 
 configure({ adapter: new Adapter() });
 const expectSnapshot = (props) => {
@@ -16,46 +16,46 @@ const expectSnapshot = (props) => {
   expect(tree).toMatchSnapshot();
 };
 
-describe('MousePosition', () => {
-  describe('matches snapshots', () => {
-    test('using default values.', () => {
+describe("MousePosition", () => {
+  describe("matches snapshots", () => {
+    test("using default values.", () => {
       expectSnapshot({});
     });
 
-    test('using no projections.', () => {
+    test("using no projections.", () => {
       expectSnapshot({
         projections: [],
       });
     });
 
-    test('using only one projection', () => {
+    test("using only one projection", () => {
       expectSnapshot({
-        projections: [{ label: 'foo', value: 'foo' }],
+        projections: [{ label: "foo", value: "foo" }],
       });
     });
 
-    test('using multiple projections.', () => {
+    test("using multiple projections.", () => {
       expectSnapshot({
         projections: [
-          { label: 'foo', value: 'foo' },
-          { label: 'bar', value: 'bar' },
+          { label: "foo", value: "foo" },
+          { label: "bar", value: "bar" },
         ],
       });
     });
   });
 
-  test('add MousePosition control to the map.', () => {
+  test("add MousePosition control to the map.", () => {
     const map = new OLMap({});
-    const spy = jest.spyOn(map, 'removeControl');
-    const spy2 = jest.spyOn(map, 'addControl');
+    const spy = jest.spyOn(map, "removeControl");
+    const spy2 = jest.spyOn(map, "addControl");
     const fn = jest.fn();
     mount(
       <MousePosition
         map={map}
         projections={[
           {
-            label: 'EPSG:4326',
-            value: 'EPSG:4326',
+            label: "EPSG:4326",
+            value: "EPSG:4326",
             format: fn,
           },
         ]}
@@ -65,14 +65,14 @@ describe('MousePosition', () => {
     expect(spy).toHaveBeenCalledTimes(0);
     expect(spy2).toHaveBeenCalledTimes(1);
     expect(ctrl).toBeInstanceOf(OLMousePosition);
-    expect(ctrl.getProjection().getCode()).toBe('EPSG:4326');
+    expect(ctrl.getProjection().getCode()).toBe("EPSG:4326");
     expect(ctrl.getCoordinateFormat()).toBe(fn);
   });
 
-  test('add/remove MousePosition control on mount/unmount.', () => {
+  test("add/remove MousePosition control on mount/unmount.", () => {
     const map = new OLMap({});
-    const spy = jest.spyOn(map, 'removeControl');
-    const spy2 = jest.spyOn(map, 'addControl');
+    const spy = jest.spyOn(map, "removeControl");
+    const spy2 = jest.spyOn(map, "addControl");
     const wrapper = mount(<MousePosition map={map} />);
     expect(spy).toHaveBeenCalledTimes(0);
     expect(spy2).toHaveBeenCalledTimes(1);
@@ -81,7 +81,7 @@ describe('MousePosition', () => {
     expect(spy.mock.calls[0][0]).toBe(spy2.mock.calls[0][0]);
   });
 
-  test('triggers onChange when select projection.', () => {
+  test("triggers onChange when select projection.", () => {
     const map = new OLMap({});
     const onChange = jest.fn(() => {});
     const wrapper = mount(
@@ -90,8 +90,8 @@ describe('MousePosition', () => {
         onChange={onChange}
         projections={[
           {
-            label: 'EPSG:4326',
-            value: 'EPSG:4326',
+            label: "EPSG:4326",
+            value: "EPSG:4326",
             format: jest.fn(),
           },
         ]}
@@ -99,22 +99,22 @@ describe('MousePosition', () => {
     );
     // onChange triggered on instantiation.
     expect(onChange).toHaveBeenCalledTimes(0);
-    wrapper.find('select').simulate('change', {});
+    wrapper.find("select").simulate("change", {});
     expect(onChange).toHaveBeenCalledTimes(1);
   });
 
-  test('applies new format and value when we select a new projection.', () => {
+  test("applies new format and value when we select a new projection.", () => {
     const map = new OLMap({});
-    const spy = jest.spyOn(map, 'addControl');
+    const spy = jest.spyOn(map, "addControl");
     const projs = [
       {
-        label: 'EPSG:4326',
-        value: 'EPSG:4326',
+        label: "EPSG:4326",
+        value: "EPSG:4326",
         format: jest.fn(),
       },
       {
-        label: 'EPSG:3857',
-        value: 'EPSG:3857',
+        label: "EPSG:3857",
+        value: "EPSG:3857",
         format: jest.fn(),
       },
     ];
@@ -124,8 +124,8 @@ describe('MousePosition', () => {
     expect(ctrl.getProjection().getCode()).toBe(projs[0].value);
     expect(ctrl.getCoordinateFormat()).toBe(projs[0].format);
     wrapper
-      .find('select')
-      .simulate('change', { target: { value: 'EPSG:3857' } });
+      .find("select")
+      .simulate("change", { target: { value: "EPSG:3857" } });
     expect(ctrl.getProjection().getCode()).toBe(projs[1].value);
     expect(ctrl.getCoordinateFormat()).toBe(projs[1].format);
   });

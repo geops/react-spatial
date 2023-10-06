@@ -17,7 +17,7 @@ Documentation and examples at https://react-spatial.geops.io.
 Install the [react-spatial](https://www.npmjs.com/package/react-spatial) package:
 
 ```bash
-yarn add mobility-toolbox-js mapbox-gl ol react-spatial
+yarn add mobility-toolbox-js mapbox-gl mapblibre-gl ol react-spatial
 ```
 
 Your build pipeline needs to support ES6 modules and SASS.
@@ -37,7 +37,3 @@ import 'react-spatial/themes/default/index.scss';
 ## Bugs
 
 Please use the [GitHub issue tracker](https://github.com/geops/react-spatial/issues) for all bugs and feature requests. Before creating a new issue, do a quick search to see if the problem has been reported already.
-
-## Version 1.x.x
-
-The master branch is now open for the version 2 development. The version 1 is now available in 1.x.x branch.

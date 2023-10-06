@@ -1,11 +1,11 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-const STATE_BOARDING = 'BOARDING';
-const STATE_LEAVING = 'LEAVING';
-const STATE_PENDING = 'PENDING';
-const STATE_TIME_BASED = 'TIME_BASED';
-const STATE_STOP_CANCELLED = 'STOP_CANCELLED';
-const STATE_JOURNEY_CANCELLED = 'JOURNEY_CANCELLED';
+const STATE_BOARDING = "BOARDING";
+const STATE_LEAVING = "LEAVING";
+const STATE_PENDING = "PENDING";
+const STATE_TIME_BASED = "TIME_BASED";
+const STATE_STOP_CANCELLED = "STOP_CANCELLED";
+const STATE_JOURNEY_CANCELLED = "JOURNEY_CANCELLED";
 
 const station = PropTypes.shape({
   arrivalDelay: PropTypes.number, // time in milliseconds.

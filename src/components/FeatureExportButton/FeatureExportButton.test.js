@@ -1,28 +1,28 @@
-import 'jest-canvas-mock';
-import React from 'react';
-import renderer from 'react-test-renderer';
-import { configure, mount, shallow } from 'enzyme';
-import Adapter from '@cfaester/enzyme-adapter-react-18';
-import { Layer } from 'mobility-toolbox-js/ol';
-import GPX from 'ol/format/GPX';
-import VectorSource from 'ol/source/Vector';
-import Style from 'ol/style/Style';
-import Icon from 'ol/style/Icon';
-import Text from 'ol/style/Text';
-import Fill from 'ol/style/Fill';
-import Stroke from 'ol/style/Stroke';
-import Circle from 'ol/geom/Circle';
-import Point from 'ol/geom/Point';
-import LineString from 'ol/geom/LineString';
-import Feature from 'ol/Feature';
-import VectorLayer from 'ol/layer/Vector';
+import "jest-canvas-mock";
+import React from "react";
+import renderer from "react-test-renderer";
+import { configure, mount, shallow } from "enzyme";
+import Adapter from "@cfaester/enzyme-adapter-react-18";
+import { Layer } from "mobility-toolbox-js/ol";
+import GPX from "ol/format/GPX";
+import VectorSource from "ol/source/Vector";
+import Style from "ol/style/Style";
+import Icon from "ol/style/Icon";
+import Text from "ol/style/Text";
+import Fill from "ol/style/Fill";
+import Stroke from "ol/style/Stroke";
+import Circle from "ol/geom/Circle";
+import Point from "ol/geom/Point";
+import LineString from "ol/geom/LineString";
+import Feature from "ol/Feature";
+import VectorLayer from "ol/layer/Vector";
 
-import FeatureExportButton from '.';
+import FeatureExportButton from ".";
 
 configure({ adapter: new Adapter() });
 
 const layer = new Layer({
-  name: 'Sample layer',
+  name: "Sample layer",
   olLayer: new VectorLayer({
     source: new VectorSource({
       features: [
@@ -34,15 +34,15 @@ const layer = new Layer({
   }),
 });
 
-describe('FeatureExportButton', () => {
-  describe('should match snapshot', () => {
-    test('with default attributes.', () => {
+describe("FeatureExportButton", () => {
+  describe("should match snapshot", () => {
+    test("with default attributes.", () => {
       const component = renderer.create(<FeatureExportButton layer={layer} />);
       const tree = component.toJSON();
       expect(tree).toMatchSnapshot();
     });
 
-    test('should match snapshot with cutom attributes.', () => {
+    test("should match snapshot with cutom attributes.", () => {
       const component = renderer.create(
         <FeatureExportButton
           layer={layer}
@@ -56,7 +56,7 @@ describe('FeatureExportButton', () => {
       expect(tree).toMatchSnapshot();
     });
 
-    test('should match snapshot with children passed.', () => {
+    test("should match snapshot with children passed.", () => {
       const component = renderer.create(
         <FeatureExportButton layer={layer}>
           <div>Foo</div>
@@ -67,7 +67,7 @@ describe('FeatureExportButton', () => {
     });
   });
 
-  describe('triggers onClick', () => {
+  describe("triggers onClick", () => {
     // Use library 'jest-environment-jsdom-fourteen'
     // to allow jest test of format.writeFeatures(feats).
     const renderLayer = (featNumbers) => {
@@ -81,7 +81,7 @@ describe('FeatureExportButton', () => {
       }
 
       return new Layer({
-        name: 'ExportLayer',
+        name: "ExportLayer",
         olLayer: new VectorLayer({
           source: new VectorSource({
             features: featsArray,
@@ -94,8 +94,8 @@ describe('FeatureExportButton', () => {
 
     const textStyle = new Style({
       text: new Text({
-        text: 'text name',
-        font: 'normal 16px Helvetica',
+        text: "text name",
+        font: "normal 16px Helvetica",
         stroke: new Stroke({
           color: [255, 255, 255, 1],
           width: 3,
@@ -103,14 +103,14 @@ describe('FeatureExportButton', () => {
       }),
     });
 
-    test('should be trigger click function.', () => {
+    test("should be trigger click function.", () => {
       const wrapper = shallow(<FeatureExportButton layer={iconLayer} />);
-      const spy = jest.spyOn(FeatureExportButton, 'exportFeatures');
-      wrapper.find('.rs-feature-export-button').simulate('click');
+      const spy = jest.spyOn(FeatureExportButton, "exportFeatures");
+      wrapper.find(".rs-feature-export-button").simulate("click");
       expect(spy).toHaveBeenCalledTimes(1);
     });
 
-    test('should use attributes for parsing', () => {
+    test("should use attributes for parsing", () => {
       const wrapper = mount(
         <FeatureExportButton
           format={GPX}
@@ -118,14 +118,14 @@ describe('FeatureExportButton', () => {
           layer={iconLayer}
         />,
       );
-      const spy = jest.spyOn(FeatureExportButton, 'exportFeatures');
-      wrapper.find('.rs-feature-export-button').simulate('click');
-      expect(spy).toHaveBeenCalledWith(iconLayer, 'EPSG:4326', GPX);
+      const spy = jest.spyOn(FeatureExportButton, "exportFeatures");
+      wrapper.find(".rs-feature-export-button").simulate("click");
+      expect(spy).toHaveBeenCalledWith(iconLayer, "EPSG:4326", GPX);
     });
 
-    describe('#createFeatureString()', () => {
-      describe('using KMLFormat', () => {
-        test('should export kml by default.', () => {
+    describe("#createFeatureString()", () => {
+      describe("using KMLFormat", () => {
+        test("should export kml by default.", () => {
           const exportString = FeatureExportButton.createFeatureString(
             iconLayer,
             FeatureExportButton.defaultProps.projection,
@@ -137,9 +137,9 @@ describe('FeatureExportButton', () => {
         const iconStyle = new Style({
           image: new Icon({
             anchor: [0.5, 46],
-            anchorXUnits: 'fraction',
-            anchorYUnits: 'pixels',
-            src: 'https://openlayers.org/en/latest/examples/data/icon.png',
+            anchorXUnits: "fraction",
+            anchorYUnits: "pixels",
+            src: "https://openlayers.org/en/latest/examples/data/icon.png",
           }),
         });
 
@@ -147,35 +147,35 @@ describe('FeatureExportButton', () => {
           f.setStyle(iconStyle);
         });
 
-        test('should export icon style in kml.', () => {
+        test("should export icon style in kml.", () => {
           const exportString = FeatureExportButton.createFeatureString(
             iconLayer,
             FeatureExportButton.defaultProps.projection,
             FeatureExportButton.defaultProps.format,
           );
           const expectedString =
-            '<Style><IconStyle><scale>2</scale><Icon><href>' +
-            'https://openlayers.org/en/latest/examples/data/icon.png' +
-            '</href></Icon></IconStyle></Style>';
+            "<Style><IconStyle><scale>2</scale><Icon><href>" +
+            "https://openlayers.org/en/latest/examples/data/icon.png" +
+            "</href></Icon></IconStyle></Style>";
           expect(exportString.match(/<Style>(.*?)<\/Style>/g)[0]).toBe(
             expectedString,
           );
         });
 
-        test('should export with layer name.', () => {
+        test("should export with layer name.", () => {
           const namedlayer = renderLayer(1);
           const exportString = FeatureExportButton.createFeatureString(
             namedlayer,
             FeatureExportButton.defaultProps.projection,
             FeatureExportButton.defaultProps.format,
           );
-          const expectedname = '<name>ExportLayer</name>';
+          const expectedname = "<name>ExportLayer</name>";
           expect(exportString.match(/<name>(.*?)<\/name>/g)[0]).toBe(
             expectedname,
           );
         });
 
-        test('should export without layer name.', () => {
+        test("should export without layer name.", () => {
           const unnamedlayer = renderLayer(1);
           const exportString = FeatureExportButton.createFeatureString(
             unnamedlayer,
@@ -187,7 +187,7 @@ describe('FeatureExportButton', () => {
           ).toBe(false);
         });
 
-        test('should export text style in kml.', () => {
+        test("should export text style in kml.", () => {
           const textlayer = renderLayer(2);
 
           textlayer.olLayer.getSource().forEachFeature((f) => {
@@ -199,14 +199,14 @@ describe('FeatureExportButton', () => {
             FeatureExportButton.defaultProps.format,
           );
           const expectedStyle =
-            '<Style><IconStyle><scale>0</scale></IconStyle>' +
-            '<LabelStyle><color>ff333333</color></LabelStyle></Style>';
+            "<Style><IconStyle><scale>0</scale></IconStyle>" +
+            "<LabelStyle><color>ff333333</color></LabelStyle></Style>";
           expect(exportString.match(/<Style>(.*?)<\/Style>/g)[0]).toBe(
             expectedStyle,
           );
         });
 
-        test('should only export none-empty text style in kml.', () => {
+        test("should only export none-empty text style in kml.", () => {
           const textlayer = renderLayer(2);
 
           textlayer.olLayer.getSource().forEachFeature((f) => {
@@ -224,8 +224,8 @@ describe('FeatureExportButton', () => {
 
           const newStyle = new Style({
             text: new Text({
-              text: '',
-              font: 'normal 16px Helvetica',
+              text: "",
+              font: "normal 16px Helvetica",
               stroke: new Stroke({
                 color: [255, 255, 255, 1],
                 width: 3,
@@ -248,7 +248,7 @@ describe('FeatureExportButton', () => {
 
         test("should not export 'Cirle geom' (kml unsupported).", () => {
           const circleLayer = new Layer({
-            name: 'ExportLayer',
+            name: "ExportLayer",
             olLayer: new VectorLayer({
               source: new VectorSource({
                 features: [
@@ -265,11 +265,11 @@ describe('FeatureExportButton', () => {
 
           const circleStyle = new Style({
             stroke: new Stroke({
-              color: 'red',
+              color: "red",
               width: 3,
             }),
             fill: new Fill({
-              color: 'rgba(255, 0, 0, 0.1)',
+              color: "rgba(255, 0, 0, 0.1)",
             }),
           });
 
@@ -284,7 +284,7 @@ describe('FeatureExportButton', () => {
           expect(exportString).toBe(undefined);
         });
 
-        test('should export extended data.', () => {
+        test("should export extended data.", () => {
           const extendedLayer = renderLayer(1);
 
           const style = new Style({
@@ -293,11 +293,11 @@ describe('FeatureExportButton', () => {
               lineDash: [40, 40],
             }),
             text: new Text({
-              text: 'text name',
-              font: 'normal 18px Arial',
+              text: "text name",
+              font: "normal 18px Arial",
               rotation: 0.5,
               backgroundFill: new Fill({
-                color: 'rgba(255,255,255,0.01)',
+                color: "rgba(255,255,255,0.01)",
               }),
             }),
           });
@@ -320,7 +320,7 @@ describe('FeatureExportButton', () => {
           ).toBe(expectedStyle);
         });
 
-        test('should not export others extended data than style.', () => {
+        test("should not export others extended data than style.", () => {
           const extendedLayer = renderLayer(1);
 
           const style = new Style({
@@ -329,18 +329,18 @@ describe('FeatureExportButton', () => {
               lineDash: [40, 40],
             }),
             text: new Text({
-              text: 'text name',
-              font: 'normal 18px Arial',
+              text: "text name",
+              font: "normal 18px Arial",
               rotation: 0.5,
               backgroundFill: new Fill({
-                color: 'rgba(255,255,255,0.01)',
+                color: "rgba(255,255,255,0.01)",
               }),
             }),
           });
 
           extendedLayer.olLayer.getSource().forEachFeature((f) => {
             f.setStyle(style);
-            f.set('foo', 'bar');
+            f.set("foo", "bar");
           });
           const exportString = FeatureExportButton.createFeatureString(
             extendedLayer,
@@ -357,7 +357,7 @@ describe('FeatureExportButton', () => {
           ).toBe(expectedStyle);
         });
 
-        test('should export lineStartIcon and lineEndIcon style.', () => {
+        test("should export lineStartIcon and lineEndIcon style.", () => {
           const extendedLayer = renderLayer(1);
           const line = new Feature({
             geometry: new LineString([
@@ -380,7 +380,7 @@ describe('FeatureExportButton', () => {
                 return new Point([4, 5]);
               },
               image: new Icon({
-                src: 'fooarrowend.png',
+                src: "fooarrowend.png",
               }),
             }),
             new Style({
@@ -388,7 +388,7 @@ describe('FeatureExportButton', () => {
                 return new Point([0, 1]);
               },
               image: new Icon({
-                src: 'fooarrowstart.png',
+                src: "fooarrowstart.png",
               }),
             }),
           ];
@@ -405,7 +405,7 @@ describe('FeatureExportButton', () => {
             '<value>{"url":"fooarrowend.png","scale":1,"size":null}</value></Data>' +
             '<Data name="lineStartIcon">' +
             '<value>{"url":"fooarrowstart.png","scale":1,"size":null}</value></Data>' +
-            '</ExtendedData>';
+            "</ExtendedData>";
 
           expect(
             exportString.match(/<ExtendedData>(.*?)<\/ExtendedData>/g)[0],

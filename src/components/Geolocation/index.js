@@ -1,1 +1,1 @@
-export { default } from './Geolocation';
+export { default } from "./Geolocation";

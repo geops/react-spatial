@@ -1,11 +1,11 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import React, { PureComponent } from "react";
+import PropTypes from "prop-types";
 
-import { MdClose } from 'react-icons/md';
-import OLMap from 'ol/Map';
-import Feature from 'ol/Feature';
-import { getCenter } from 'ol/extent';
-import { unByKey } from 'ol/Observable';
+import { MdClose } from "react-icons/md";
+import OLMap from "ol/Map";
+import Feature from "ol/Feature";
+import { getCenter } from "ol/extent";
+import { unByKey } from "ol/Observable";
 
 const propTypes = {
   /**
@@ -88,9 +88,9 @@ const defaultProps = {
   panIntoView: false,
   panRect: null,
   popupCoordinate: null,
-  className: 'rs-popup',
-  tabIndex: '',
-  titles: { closeButton: 'Close' },
+  className: "rs-popup",
+  tabIndex: "",
+  titles: { closeButton: "Close" },
   onCloseClick: () => {},
   renderHeader: null,
   renderCloseButton: null,
@@ -149,7 +149,7 @@ class Popup extends PureComponent {
     const { map } = this.props;
     this.updatePixelPosition();
 
-    this.postrenderKey = map.on('postrender', () => {
+    this.postrenderKey = map.on("postrender", () => {
       this.updatePixelPosition();
     });
   }

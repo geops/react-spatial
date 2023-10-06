@@ -1,1 +1,1 @@
-export { default } from './BaseLayerSwitcher';
+export { default } from "./BaseLayerSwitcher";

@@ -1,1 +1,1 @@
-export { default } from './ScaleLine';
+export { default } from "./ScaleLine";

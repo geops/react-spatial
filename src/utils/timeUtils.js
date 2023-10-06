@@ -13,7 +13,7 @@ export const pad = (integer) => {
  */
 export const getHoursAndMinutes = (timeInMs) => {
   if (!timeInMs || timeInMs <= 0) {
-    return '';
+    return "";
   }
   const date = new Date(timeInMs);
   return `${pad(date.getHours())}:${pad(date.getMinutes())}`;
@@ -34,7 +34,7 @@ export const getDelayString = (delayInMs) => {
   const s = Math.floor(((timeInMs % 3600000) % 60000) / 1000);
 
   if (s === 0 && h === 0 && m === 0) {
-    return '0';
+    return "0";
   }
   if (s === 0 && h === 0) {
     return `${m}m`;

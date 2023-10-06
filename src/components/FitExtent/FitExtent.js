@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import OLMap from 'ol/Map';
+import React from "react";
+import PropTypes from "prop-types";
+import OLMap from "ol/Map";
 
 const propTypes = {
   /**
@@ -25,7 +25,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  className: 'rs-fit-extent',
+  className: "rs-fit-extent",
 };
 
 /**

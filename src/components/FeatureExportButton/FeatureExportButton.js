@@ -1,8 +1,8 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import KMLFormat from 'ol/format/KML';
-import { Layer } from 'mobility-toolbox-js/ol';
-import KML from '../../utils/KML';
+import React, { PureComponent } from "react";
+import PropTypes from "prop-types";
+import KMLFormat from "ol/format/KML";
+import { Layer } from "mobility-toolbox-js/ol";
+import KML from "../../utils/KML";
 
 const propTypes = {
   /**
@@ -31,7 +31,7 @@ const propTypes = {
 const defaultProps = {
   children: null,
   format: KMLFormat,
-  projection: 'EPSG:3857',
+  projection: "EPSG:3857",
 };
 
 /**
@@ -58,19 +58,19 @@ class FeatureExportButton extends PureComponent {
     const now = new Date()
       .toJSON()
       .slice(0, 20)
-      .replace(/[.:T-]+/g, '');
+      .replace(/[.:T-]+/g, "");
     const featString = this.createFeatureString(layer, projection, format);
 
     const formatString = featString
       ? featString.match(/<(\w+)\s+\w+.*?>/)[1]
-      : 'xml';
+      : "xml";
 
     const fileName = `exported_features_${now}.${formatString}`;
-    const charset = document.characterSet || 'UTF-8';
+    const charset = document.characterSet || "UTF-8";
     const type = `${
-      formatString === 'kml'
-        ? 'data:application/vnd.google-earth.kml+xml'
-        : 'data:text/xml'
+      formatString === "kml"
+        ? "data:application/vnd.google-earth.kml+xml"
+        : "data:text/xml"
     };charset=${charset}`;
 
     if (featString) {
@@ -78,7 +78,7 @@ class FeatureExportButton extends PureComponent {
         // ie 11 and higher
         window.navigator.msSaveBlob(new Blob([featString], { type }), fileName);
       } else {
-        const link = document.createElement('a');
+        const link = document.createElement("a");
         link.download = fileName;
         link.href = `${type},${encodeURIComponent(featString)}`;
         link.click();

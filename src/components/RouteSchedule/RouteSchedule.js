@@ -1,17 +1,17 @@
 /* eslint-disable react/no-unused-prop-types */
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import {
   RealtimeLayer as TrackerLayer,
   realtimeConfig,
-} from 'mobility-toolbox-js/ol';
-import { getHoursAndMinutes, getDelayString } from '../../utils/timeUtils';
-import ReactTransitPropTypes from '../../propTypes';
-import firstStation from '../../images/RouteSchedule/firstStation.png';
-import station from '../../images/RouteSchedule/station.png';
-import lastStation from '../../images/RouteSchedule/lastStation.png';
-import line from '../../images/RouteSchedule/line.png';
+} from "mobility-toolbox-js/ol";
+import { getHoursAndMinutes, getDelayString } from "../../utils/timeUtils";
+import ReactTransitPropTypes from "../../propTypes";
+import firstStation from "../../images/RouteSchedule/firstStation.png";
+import station from "../../images/RouteSchedule/station.png";
+import lastStation from "../../images/RouteSchedule/lastStation.png";
+import line from "../../images/RouteSchedule/line.png";
 
 const { getBgColor } = realtimeConfig;
 
@@ -22,18 +22,18 @@ const { getBgColor } = realtimeConfig;
 const getDelayColor = (time) => {
   const secs = Math.round(((time / 1800 / 2) * 3600) / 1000);
   if (secs >= 3600) {
-    return 'dark-red';
+    return "dark-red";
   }
   if (secs >= 500) {
-    return 'middle-red';
+    return "middle-red";
   }
   if (secs >= 300) {
-    return 'light-red';
+    return "light-red";
   }
   if (secs >= 180) {
-    return 'orange';
+    return "orange";
   }
-  return 'green';
+  return "green";
 };
 
 /**
@@ -98,14 +98,14 @@ const defaultRenderStationImg = (
   return <img src={src} alt="routeScheduleLine" className="rt-route-icon" />;
 };
 
-const RouteStop = ({
+function RouteStop({
   lineInfos,
   onStationClick,
   trackerLayer,
   renderStationImg,
   stop,
   idx,
-}) => {
+}) {
   const {
     arrivalDelay,
     departureDelay,
@@ -114,7 +114,7 @@ const RouteStop = ({
     aimedArrivalTime,
     aimedDepartureTime,
   } = stop;
-  const cancelled = state === 'JOURNEY_CANCELLED' || state === 'STOP_CANCELLED';
+  const cancelled = state === "JOURNEY_CANCELLED" || state === "STOP_CANCELLED";
   const { stations } = lineInfos;
   const isFirstStation = idx === 0;
   const isLastStation = idx === stations.length - 1;
@@ -128,7 +128,7 @@ const RouteStop = ({
     setIsStationPassed(isStopPassed);
 
     // We have to refresh the stop when the state it's time_based
-    if (stop.state === 'TIME_BASED' && !isStopPassed) {
+    if (stop.state === "TIME_BASED" && !isStopPassed) {
       timeout = setInterval(() => {
         setIsStationPassed(isPassed(stop, trackerLayer.time, stations, idx));
       }, 20000);
@@ -142,10 +142,10 @@ const RouteStop = ({
     <div
       role="button"
       className={[
-        'rt-route-station',
-        isStationPassed ? ' rt-passed' : '',
-        isNotStation ? ' rt-no-stop' : '',
-      ].join('')}
+        "rt-route-station",
+        isStationPassed ? " rt-passed" : "",
+        isNotStation ? " rt-no-stop" : "",
+      ].join("")}
       onClick={(e) => {
         return onStationClick(stop, e);
       }}
@@ -155,8 +155,8 @@ const RouteStop = ({
       }}
     >
       <div className="rt-route-delay">
-        {typeof arrivalDelay === 'undefined' || isFirstStation || cancelled ? (
-          ''
+        {typeof arrivalDelay === "undefined" || isFirstStation || cancelled ? (
+          ""
         ) : (
           <span
             className={`rt-route-delay-arrival${` ${getDelayColor(
@@ -166,8 +166,8 @@ const RouteStop = ({
             {`+${getDelayString(arrivalDelay)}`}
           </span>
         )}
-        {typeof departureDelay === 'undefined' || isLastStation || cancelled ? (
-          ''
+        {typeof departureDelay === "undefined" || isLastStation || cancelled ? (
+          ""
         ) : (
           <span
             className={`rt-route-delay-departure${` ${getDelayColor(
@@ -181,24 +181,24 @@ const RouteStop = ({
       <div className="rt-route-times">
         <span
           className={`rt-route-time-arrival ${
-            cancelled ? 'rt-route-cancelled' : ''
+            cancelled ? "rt-route-cancelled" : ""
           }`}
         >
           {getHoursAndMinutes(aimedArrivalTime)}
         </span>
         <span
           className={`rt-route-time-departure ${
-            cancelled ? 'rt-route-cancelled' : ''
+            cancelled ? "rt-route-cancelled" : ""
           }`}
         >
           {getHoursAndMinutes(aimedDepartureTime)}
         </span>
       </div>
       {renderStationImg(stations, idx, isStationPassed, isNotStation)}
-      <div className={cancelled ? 'rt-route-cancelled' : ''}>{stationName}</div>
+      <div className={cancelled ? "rt-route-cancelled" : ""}>{stationName}</div>
     </div>
   );
-};
+}
 
 const defaultRenderStation = (props) => {
   const { stationId, arrivalTime, departureTime, stationName } = props.stop;
@@ -217,7 +217,7 @@ const defaultRenderStation = (props) => {
 const renderRouteIdentifier = ({ routeIdentifier, longName }) => {
   if (routeIdentifier) {
     // first part of the id, without leading zeros.
-    const id = parseInt(routeIdentifier.split('.')[0], 10);
+    const id = parseInt(routeIdentifier.split(".")[0], 10);
     if (!longName.includes(id)) {
       return ` (${id})`;
     }
@@ -243,7 +243,7 @@ const defaultRenderHeader = ({ lineInfos, renderHeaderButtons }) => {
         style={{
           /* stylelint-disable-next-line value-keyword-case */
           backgroundColor: stroke || getBgColor(type || vehicleType),
-          color: textColor || 'black',
+          color: textColor || "black",
         }}
       >
         {shortName}
@@ -278,7 +278,7 @@ const defaultRenderLink = (text, url) => {
           {text}
         </a>
       ) : (
-        <>{text}</>
+        text
       )}
     </div>
   );
@@ -295,7 +295,7 @@ const defaultRenderCopyright = ({ lineInfos }) => {
       {lineInfos.license && <span>&nbsp;(</span>}
       {lineInfos.license &&
         defaultRenderLink(lineInfos.license, lineInfos.licenseUrl)}
-      {lineInfos.license && ')'}
+      {lineInfos.license && ")"}
     </span>
   );
 };
@@ -353,7 +353,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  className: 'rt-route-schedule',
+  className: "rt-route-schedule",
   lineInfos: null,
   renderHeader: defaultRenderHeader,
   renderStation: defaultRenderStation,

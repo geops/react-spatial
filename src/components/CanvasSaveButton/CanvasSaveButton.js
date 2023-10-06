@@ -1,10 +1,10 @@
 /* eslint-disable no-param-reassign */
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import OLMap from 'ol/Map';
-import { getTopLeft, getBottomRight } from 'ol/extent';
-import NorthArrowSimple from '../../images/northArrow.url.svg';
-import NorthArrowCircle from '../../images/northArrowCircle.url.svg';
+import React, { PureComponent } from "react";
+import PropTypes from "prop-types";
+import OLMap from "ol/Map";
+import { getTopLeft, getBottomRight } from "ol/extent";
+import NorthArrowSimple from "../../images/northArrow.url.svg";
+import NorthArrowCircle from "../../images/northArrowCircle.url.svg";
 
 const extraDataImgPropType = PropTypes.shape({
   src: PropTypes.string,
@@ -16,7 +16,7 @@ const extraDataImgPropType = PropTypes.shape({
 
 // support server-side rendering where `Element` will not be defined
 const CanvasPatternType =
-  typeof CanvasPattern === 'undefined' ? Function : CanvasPattern;
+  typeof CanvasPattern === "undefined" ? Function : CanvasPattern;
 
 const propTypes = {
   /**
@@ -32,7 +32,7 @@ const propTypes = {
   /**
    * Output format of the image.
    */
-  format: PropTypes.oneOf(['image/jpeg', 'image/png']),
+  format: PropTypes.oneOf(["image/jpeg", "image/png"]),
 
   /** An  [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html). */
   map: PropTypes.instanceOf(OLMap),
@@ -133,7 +133,7 @@ const defaultProps = {
   autoDownload: true,
   children: null,
   map: null,
-  format: 'image/png',
+  format: "image/png",
   extent: null,
   extraData: null,
   coordinates: null,
@@ -190,9 +190,9 @@ class CanvasSaveButton extends PureComponent {
 
   getDownloadImageName() {
     const { format } = this.props;
-    const fileExt = format === 'image/jpeg' ? 'jpg' : 'png';
+    const fileExt = format === "image/jpeg" ? "jpg" : "png";
     return (
-      `${window.document.title.replace(/ /g, '_').toLowerCase()}` +
+      `${window.document.title.replace(/ /g, "_").toLowerCase()}` +
       `.${fileExt}`
     );
   }
@@ -204,7 +204,7 @@ class CanvasSaveButton extends PureComponent {
     let fontSize;
     do {
       sizeMatch = destContext.font.match(/[0-9]+(?:\.[0-9]+)?(px)/i);
-      fontSize = parseInt(sizeMatch[0].replace(sizeMatch[1], ''), 10);
+      fontSize = parseInt(sizeMatch[0].replace(sizeMatch[1], ""), 10);
 
       // eslint-disable-next-line no-param-reassign
       destContext.font = destContext.font.replace(fontSize, fontSize - 1);
@@ -233,10 +233,10 @@ class CanvasSaveButton extends PureComponent {
     const { width, height, actualBoundingBoxAscent } = textMeasure;
     destContext.save();
     // Dflt is a white background
-    destContext.fillStyle = 'rgba(255,255,255,.8)';
+    destContext.fillStyle = "rgba(255,255,255,.8)";
 
     // To simplify usability the user could pass a boolean to use only default values.
-    if (typeof styleOptions === 'object') {
+    if (typeof styleOptions === "object") {
       Object.entries(styleOptions).forEach(([key, value]) => {
         destContext[key] = value;
       });
@@ -255,7 +255,7 @@ class CanvasSaveButton extends PureComponent {
   drawCopyright(destContext, destCanvas, maxWidth) {
     const { extraData, scale } = this.props;
     const { text, font, fillStyle, background } = extraData.copyright;
-    let copyright = typeof text === 'function' ? text() : text;
+    let copyright = typeof text === "function" ? text() : text;
 
     if (Array.isArray(copyright)) {
       copyright = copyright.join();
@@ -263,7 +263,7 @@ class CanvasSaveButton extends PureComponent {
 
     destContext.save();
     destContext.scale(scale, scale);
-    destContext.font = font || '12px Arial';
+    destContext.font = font || "12px Arial";
     destContext.font = this.decreaseFontSize(
       destContext,
       maxWidth - this.padding,
@@ -272,16 +272,16 @@ class CanvasSaveButton extends PureComponent {
     );
 
     destContext.scale(scale, scale);
-    destContext.fillStyle = fillStyle || 'black';
+    destContext.fillStyle = fillStyle || "black";
 
     // We search if the display on 2 line is necessary
     let firstLine = copyright;
-    const wordNumber = copyright.split(' ').length;
+    const wordNumber = copyright.split(" ").length;
 
     // If the text is bigger than the max width we split it into 2 lines
     if (this.multilineCopyright) {
       for (let i = 0; i < wordNumber; i += 1) {
-        firstLine = firstLine.substring(0, firstLine.lastIndexOf(' '));
+        firstLine = firstLine.substring(0, firstLine.lastIndexOf(" "));
         // Stop removing word when fits within one line.
         if (
           destContext.measureText(firstLine).width * scale <
@@ -291,7 +291,7 @@ class CanvasSaveButton extends PureComponent {
         }
       }
     }
-    const secondLine = copyright.replace(firstLine, '');
+    const secondLine = copyright.replace(firstLine, "");
 
     // Draw first line (line break isn't supported for fillText).
     const textX = this.margin;
@@ -352,25 +352,25 @@ class CanvasSaveButton extends PureComponent {
     destContext.restore();
   }
 
-  drawElement(data, destCanvas, previousItemSize = [0, 0], side = 'right') {
-    const destContext = destCanvas.getContext('2d');
+  drawElement(data, destCanvas, previousItemSize = [0, 0], side = "right") {
+    const destContext = destCanvas.getContext("2d");
     const { scale } = this.props;
     const { src, width, height, rotation } = data;
 
     return new Promise((resolve) => {
       const img = new Image();
-      img.crossOrigin = 'Anonymous';
+      img.crossOrigin = "Anonymous";
       img.src = src;
       img.onload = () => {
         destContext.save();
         const elementWidth = (width || 80) * scale;
         const elementHeight = (height || 80) * scale;
         const left =
-          side === 'left'
+          side === "left"
             ? this.margin + elementWidth / 2
             : destCanvas.width - this.margin - elementWidth / 2;
         const top =
-          (side === 'left' && this.copyrightY
+          (side === "left" && this.copyrightY
             ? this.copyrightY - 2 * this.padding
             : destCanvas.height) -
           this.margin -
@@ -380,7 +380,7 @@ class CanvasSaveButton extends PureComponent {
         destContext.translate(left, top);
 
         if (rotation) {
-          const angle = typeof rotation === 'function' ? rotation() : rotation;
+          const angle = typeof rotation === "function" ? rotation() : rotation;
           destContext.rotate(angle * (Math.PI / 180));
         }
 
@@ -449,11 +449,11 @@ class CanvasSaveButton extends PureComponent {
     const { extraData } = this.props;
 
     return new Promise((resolve) => {
-      mapToExport.once('rendercomplete', () => {
+      mapToExport.once("rendercomplete", () => {
         // Find all layer canvases and add it to dest canvas.
         const canvases = mapToExport
           .getTargetElement()
-          .getElementsByTagName('canvas');
+          .getElementsByTagName("canvas");
 
         // Create the canvas to export with the good size.
         let destCanvas;
@@ -474,10 +474,10 @@ class CanvasSaveButton extends PureComponent {
           };
 
           if (!destCanvas) {
-            destCanvas = document.createElement('canvas');
+            destCanvas = document.createElement("canvas");
             destCanvas.width = clip.w;
             destCanvas.height = clip.h;
-            destContext = destCanvas.getContext('2d');
+            destContext = destCanvas.getContext("2d");
           }
 
           // Draw canvas to the canvas to export.
@@ -538,7 +538,7 @@ class CanvasSaveButton extends PureComponent {
                 extraData.qrCode,
                 destCanvas,
                 undefined,
-                'left',
+                "left",
               );
             }
             qrCodePromise.then(() => {
@@ -558,7 +558,7 @@ class CanvasSaveButton extends PureComponent {
       if (/msie (9|10)/gi.test(window.navigator.userAgent.toLowerCase())) {
         // ie 9 and 10
         const url = canvas.toDataURL(format);
-        const w = window.open('about:blank', '');
+        const w = window.open("about:blank", "");
         w.document.write(`<img src="${url}" alt="from canvas"/>`);
         resolve(url);
       }
@@ -578,7 +578,7 @@ class CanvasSaveButton extends PureComponent {
         window.navigator.msSaveBlob(blob, this.getDownloadImageName());
       } else {
         canvas.toBlob((blob) => {
-          const link = document.createElement('a');
+          const link = document.createElement("a");
           link.download = this.getDownloadImageName();
           link.href = URL.createObjectURL(blob);
           // append child to document for firefox to be able to download.

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import OLMap from 'ol/Map';
-import { unByKey } from 'ol/Observable';
-import { toDegrees } from 'ol/math';
-import NorthArrowSimple from '../../images/northArrow.svg';
-import NorthArrowCircle from '../../images/northArrowCircle.svg';
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import OLMap from "ol/Map";
+import { unByKey } from "ol/Observable";
+import { toDegrees } from "ol/math";
+import NorthArrowSimple from "../../images/northArrow.svg";
+import NorthArrowCircle from "../../images/northArrowCircle.svg";
 
 const propTypes = {
   /**
@@ -49,7 +49,7 @@ function NorthArrow({ map, rotationOffset, circled, children, ...other }) {
     if (!map) {
       return null;
     }
-    const key = map.on('postrender', () => {
+    const key = map.on("postrender", () => {
       setRotation(getRotation(map, rotationOffset));
     });
     return () => {

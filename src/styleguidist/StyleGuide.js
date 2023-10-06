@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved */
-import React, { useEffect, useState, useRef } from 'react';
-import PropTypes from 'prop-types';
-import { geopsTheme, Header, Footer } from '@geops/geops-ui';
+import React, { useEffect, useState, useRef } from "react";
+import PropTypes from "prop-types";
+import { geopsTheme, Header, Footer } from "@geops/geops-ui";
 import {
   Hidden,
   ClickAwayListener,
@@ -9,48 +9,48 @@ import {
   List,
   ListItem,
   Link,
-} from '@material-ui/core';
-import Open from '@material-ui/icons/ArrowDropDownTwoTone';
-import Close from '@material-ui/icons/ArrowDropUpTwoTone';
-import { ThemeProvider } from '@material-ui/core/styles';
-import Version from 'react-styleguidist/lib/client/rsg-components/Version';
-import Styled from 'react-styleguidist/lib/client/rsg-components/Styled';
-import docConfig from '../../doc/doc-config.json';
+} from "@material-ui/core";
+import Open from "@material-ui/icons/ArrowDropDownTwoTone";
+import Close from "@material-ui/icons/ArrowDropUpTwoTone";
+import { ThemeProvider } from "@material-ui/core/styles";
+import Version from "react-styleguidist/lib/client/rsg-components/Version";
+import Styled from "react-styleguidist/lib/client/rsg-components/Styled";
+import docConfig from "../../doc/doc-config.json";
 
 const styles = ({ mq }) => {
   return {
     root: {
-      backgroundColor: 'white',
+      backgroundColor: "white",
 
-      '& .MuiAutocomplete-root': {
-        margin: '20px 0',
+      "& .MuiAutocomplete-root": {
+        margin: "20px 0",
         width: 300,
       },
     },
     version: {
-      padding: '10px 0 0 10px',
+      padding: "10px 0 0 10px",
     },
     content: {
       top: 68,
       bottom: 0,
-      height: 'calc(100vh - 60px)',
-      position: 'fixed',
-      width: '100%',
+      height: "calc(100vh - 60px)",
+      position: "fixed",
+      width: "100%",
       zIndex: 0,
     },
     scrollable: {
-      overflowY: 'scroll',
-      height: 'calc(100vh - 68px)',
+      overflowY: "scroll",
+      height: "calc(100vh - 68px)",
       [mq.small]: {
         top: 40,
-        position: 'absolute',
-        width: '100%',
-        height: 'calc(100vh - 108px)',
+        position: "absolute",
+        width: "100%",
+        height: "calc(100vh - 108px)",
       },
     },
     main: {
-      margin: 'auto',
-      width: 'calc(100vw - 30px)',
+      margin: "auto",
+      width: "calc(100vw - 30px)",
       maxWidth: 1000,
       padding: [[15, 30]],
       paddingLeft: 230,
@@ -58,31 +58,31 @@ const styles = ({ mq }) => {
       [mq.small]: {
         padding: 5,
       },
-      display: 'block',
+      display: "block",
     },
     sidebar: {
-      backgroundColor: '#EFEFEF',
-      border: '#e8e8e8 solid',
-      borderWidth: '0 1px 0 0',
-      position: 'fixed',
+      backgroundColor: "#EFEFEF",
+      border: "#e8e8e8 solid",
+      borderWidth: "0 1px 0 0",
+      position: "fixed",
       top: 68,
       left: 0,
       bottom: 0,
-      width: '200px',
-      overflow: 'auto',
+      width: "200px",
+      overflow: "auto",
     },
     dropdown: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      padding: '0 10px 0',
-      position: 'fixed',
-      backgroundColor: '#efefef',
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      padding: "0 10px 0",
+      position: "fixed",
+      backgroundColor: "#efefef",
       height: 40,
-      width: '100%',
+      width: "100%",
       zIndex: 99999,
-      color: '#6987a1',
-      borderBottom: '1px solid #6987a1',
+      color: "#6987a1",
+      borderBottom: "1px solid #6987a1",
     },
     footerWrapper: {
       marginLeft: 200,
@@ -103,10 +103,10 @@ export function StyleGuideRenderer({
   const [apiKey, setApiKey] = useState();
   const [dropdownOpen, toggleDropdown] = useState(false);
   const [expanded, expandSection] = useState();
-  const [selected, setSelected] = useState('Components');
+  const [selected, setSelected] = useState("Components");
   const ref = useRef();
   useEffect(() => {
-    fetch('https://backend.developer.geops.io/publickey')
+    fetch("https://backend.developer.geops.io/publickey")
       .then((response) => {
         return response.json();
       })
@@ -114,9 +114,9 @@ export function StyleGuideRenderer({
         setApiKey(data.key);
       })
       .catch(() => {
-        setApiKey('error');
+        setApiKey("error");
         // eslint-disable-next-line no-console
-        console.error('Request to get the apiKey failed');
+        console.error("Request to get the apiKey failed");
       });
   }, []);
 
@@ -132,7 +132,7 @@ export function StyleGuideRenderer({
       <div className={classes.root}>
         <Header
           title={docConfig.appName}
-          tabs={[{ label: 'Code', href: `${docConfig.githubRepo}` }]}
+          tabs={[{ label: "Code", href: `${docConfig.githubRepo}` }]}
         />
         <div className={classes.content}>
           <Hidden smUp>
@@ -163,12 +163,12 @@ export function StyleGuideRenderer({
                   component="div"
                   disablePadding
                   style={{
-                    width: '100%',
-                    overflow: 'auto',
-                    maxHeight: 'calc(100vh - 150px)',
+                    width: "100%",
+                    overflow: "auto",
+                    maxHeight: "calc(100vh - 150px)",
                     top: 40,
-                    backgroundColor: 'white',
-                    boxShadow: '0 10px 15px #35353520',
+                    backgroundColor: "white",
+                    boxShadow: "0 10px 15px #35353520",
                     zIndex: 99999,
                   }}
                 >
@@ -183,9 +183,9 @@ export function StyleGuideRenderer({
                             : expandSection(section.name);
                         }}
                         style={{
-                          fontWeight: 'bold',
-                          color: '#6987a1',
-                          borderTop: '1px solid #e8e8e8',
+                          fontWeight: "bold",
+                          color: "#6987a1",
+                          borderTop: "1px solid #e8e8e8",
                         }}
                       >
                         {section.name}
@@ -210,7 +210,7 @@ export function StyleGuideRenderer({
                               selected={selected === component.name}
                             >
                               <Link
-                                style={{ display: 'block', width: '100%' }}
+                                style={{ display: "block", width: "100%" }}
                                 href={`#${component.name.toLowerCase()}`}
                               >
                                 {component.name}
@@ -241,7 +241,7 @@ export function StyleGuideRenderer({
                   ref.current.scrollTo({
                     top: 0,
                     left: 0,
-                    behavior: 'smooth',
+                    behavior: "smooth",
                   });
                 }}
               />

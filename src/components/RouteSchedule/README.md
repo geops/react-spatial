@@ -16,7 +16,7 @@ import GpsFixedIcon from '@material-ui/icons/GpsFixed';
 // The `apiKey` used here is for demonstration purposes only.
 // Please get your own api key at https://developer.geops.io/.
 const trackerLayer = new RealtimeLayer({
-  url: 'wss://tralis-tracker-api.geops.io/ws',
+  url: 'wss://api.geops.io/tracker-ws/v1/ws',
   apiKey: window.apiKey,
 });
 

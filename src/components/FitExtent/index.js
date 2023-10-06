@@ -1,1 +1,1 @@
-export { default } from './FitExtent';
+export { default } from "./FitExtent";

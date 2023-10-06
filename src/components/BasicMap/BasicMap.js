@@ -1,14 +1,13 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { defaults as defaultInteractions } from 'ol/interaction';
-import { equals } from 'ol/extent';
-import OLMap from 'ol/Map';
-import OLCollection from 'ol/Collection';
-import View from 'ol/View';
-import { unByKey } from 'ol/Observable';
-import Interaction from 'ol/interaction/Interaction';
-import { Layer } from 'mobility-toolbox-js/ol';
-import ResizeHandler from '../ResizeHandler';
+import React, { PureComponent } from "react";
+import PropTypes from "prop-types";
+import { defaults as defaultInteractions } from "ol/interaction";
+import { equals } from "ol/extent";
+import OLMap from "ol/Map";
+import OLCollection from "ol/Collection";
+import View from "ol/View";
+import { unByKey } from "ol/Observable";
+import Interaction from "ol/interaction/Interaction";
+import { Layer } from "mobility-toolbox-js/ol";
 
 const propTypes = {
   /** Map animation options */
@@ -99,7 +98,7 @@ const propTypes = {
 const defaultProps = {
   animationOptions: undefined,
   center: [0, 0],
-  className: 'rs-map',
+  className: "rs-map",
   extent: undefined,
   fitOptions: {
     duration: 1000,
@@ -118,12 +117,12 @@ const defaultProps = {
   onMapMoved: undefined,
   resolution: undefined,
   tabIndex: undefined,
-  ariaLabel: 'map',
+  ariaLabel: "map",
   viewOptions: {
     minZoom: 0,
     maxZoom: 22,
     extent: undefined,
-    projection: 'EPSG:3857',
+    projection: "EPSG:3857",
   },
   zoom: 1,
 };
@@ -160,7 +159,6 @@ class BasicMap extends PureComponent {
       node: null,
     };
 
-    this.layers = [];
     this.moveEndRef = null;
     this.singleClickRef = null;
     this.pointerMoveRef = null;
@@ -180,9 +178,9 @@ class BasicMap extends PureComponent {
     // // so we have to force it to none for mobile.
     // // https://github.com/openlayers/openlayers/pull/10187/files
     const viewPort = this.map.getViewport();
-    viewPort.style.touchAction = 'none';
-    viewPort.style.msTouchAction = 'none';
-    viewPort.setAttribute('touch-action', 'none');
+    viewPort.style.touchAction = "none";
+    viewPort.style.msTouchAction = "none";
+    viewPort.setAttribute("touch-action", "none");
 
     // Fit only work if the map has a size.
     if (this.map.getSize() && extent) {
@@ -297,7 +295,6 @@ class BasicMap extends PureComponent {
     for (let i = 0; i < layers.length; i += 1) {
       this.initLayer(layers[i]);
     }
-    this.layers = layers;
   }
 
   initLayer(layer) {
@@ -353,7 +350,7 @@ class BasicMap extends PureComponent {
       return;
     }
 
-    this.moveEndRef = this.map.on('moveend', (evt) => {
+    this.moveEndRef = this.map.on("moveend", (evt) => {
       return onMapMoved(evt);
     });
   }
@@ -366,7 +363,7 @@ class BasicMap extends PureComponent {
       return;
     }
 
-    this.singleClickRef = this.map.on('singleclick', (evt) => {
+    this.singleClickRef = this.map.on("singleclick", (evt) => {
       const features = evt.map.getFeaturesAtPixel(
         evt.pixel,
         featuresClickOptions,
@@ -383,7 +380,7 @@ class BasicMap extends PureComponent {
       return;
     }
 
-    this.pointerMoveRef = this.map.on('pointermove', (evt) => {
+    this.pointerMoveRef = this.map.on("pointermove", (evt) => {
       const features = evt.map.getFeaturesAtPixel(evt.pixel);
       onFeaturesHover(features || [], evt);
     });
@@ -391,7 +388,6 @@ class BasicMap extends PureComponent {
 
   render() {
     const { className, tabIndex, ariaLabel, style } = this.props;
-    const { node } = this.state;
     return (
       <div
         className={className}
@@ -400,16 +396,7 @@ class BasicMap extends PureComponent {
         aria-label={ariaLabel}
         tabIndex={tabIndex}
         style={style}
-      >
-        <ResizeHandler
-          maxHeightBrkpts={null}
-          maxWidthBrkpts={null}
-          observe={node}
-          onResize={() => {
-            this.map.updateSize();
-          }}
-        />
-      </div>
+      />
     );
   }
 }

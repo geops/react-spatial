@@ -1,21 +1,21 @@
 /**
 * This file is loaded by the styleguide and provide additionnal css for all examples.
 */
-@import './index.scss';
-@import '../../components/BaseLayerSwitcher/BaseLayerSwitcher.md.scss';
-@import '../../components/BasicMap/BasicMap.md.scss';
-@import '../../components/CanvasSaveButton/CanvasSaveButton.md.scss';
-@import '../../components/FeatureExportButton/FeatureExportButton.md.scss';
-@import '../../components/FitExtent/FitExtent.md.scss';
-@import '../../components/Geolocation/Geolocation.md.scss';
-@import '../../components/LayerTree/LayerTree.md.scss';
-@import '../../components/MousePosition/MousePosition.md.scss';
-@import '../../components/Permalink/Permalink.md.scss';
-@import '../../components/Popup/Popup.md.scss';
-@import '../../components/Zoom/Zoom.md.scss';
-@import '../../components/RouteSchedule/RouteSchedule.md.scss';
-@import '../../components/Copyright/Copyright.md.scss';
-@import '../../components/Overlay/Overlay.md.scss';
+@import './index';
+@import '../../components/BaseLayerSwitcher/BaseLayerSwitcher.md';
+@import '../../components/BasicMap/BasicMap.md';
+@import '../../components/CanvasSaveButton/CanvasSaveButton.md';
+@import '../../components/FeatureExportButton/FeatureExportButton.md';
+@import '../../components/FitExtent/FitExtent.md';
+@import '../../components/Geolocation/Geolocation.md';
+@import '../../components/LayerTree/LayerTree.md';
+@import '../../components/MousePosition/MousePosition.md';
+@import '../../components/Permalink/Permalink.md';
+@import '../../components/Popup/Popup.md';
+@import '../../components/Zoom/Zoom.md';
+@import '../../components/RouteSchedule/RouteSchedule.md';
+@import '../../components/Copyright/Copyright.md';
+@import '../../components/Overlay/Overlay.md';
 
 $link-color: #000;
 $link-color-hover: #000;

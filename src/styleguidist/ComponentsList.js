@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 // Import default implementation from react-styleguidist using the full path
-import ComponentsListRenderer from 'react-styleguidist/lib/client/rsg-components/ComponentsList/ComponentsListRenderer';
-import getUrl from 'react-styleguidist/lib/client/utils/getUrl';
+import ComponentsListRenderer from "react-styleguidist/lib/client/rsg-components/ComponentsList/ComponentsListRenderer";
+import getUrl from "react-styleguidist/lib/client/utils/getUrl";
 
 const propTypes = {
   items: PropTypes.array.isRequired,
@@ -39,8 +39,8 @@ function ComponentsList({
             hashPath: useRouterLinks ? hashPath : false,
             id: useRouterLinks ? useHashId : false,
           })
-            .replace(/^\/index.html+/g, '')
-            .replace(/^\/+/g, ''),
+            .replace(/^\/index.html+/g, "")
+            .replace(/^\/+/g, ""),
     };
   });
   return <ComponentsListRenderer classes={classes} items={mappedItems} />;

@@ -1,13 +1,13 @@
-import KML from 'ol/format/KML';
-import { Feature } from 'ol';
-import Point from 'ol/geom/Point';
-import MultiPoint from 'ol/geom/MultiPoint';
-import GeometryCollection from 'ol/geom/GeometryCollection';
-import { Style, Text, Icon, Circle, Fill, Stroke } from 'ol/style';
-import { asString } from 'ol/color';
-import { parse } from 'ol/xml';
-import { kmlStyle } from './Styles';
-import getPolygonPattern from './getPolygonPattern';
+import KML from "ol/format/KML";
+import { Feature } from "ol";
+import Point from "ol/geom/Point";
+import MultiPoint from "ol/geom/MultiPoint";
+import GeometryCollection from "ol/geom/GeometryCollection";
+import { Style, Text, Icon, Circle, Fill, Stroke } from "ol/style";
+import { asString } from "ol/color";
+import { parse } from "ol/xml";
+import { kmlStyle } from "./Styles";
+import getPolygonPattern from "./getPolygonPattern";
 
 const applyTextStyleForIcon = (olIcon, olText) => {
   const size = olIcon.getSize() || [48, 48];
@@ -22,7 +22,7 @@ const applyTextStyleForIcon = (olIcon, olText) => {
   ];
   olText.setOffsetX(offset[0]);
   olText.setOffsetY(offset[1]);
-  olText.setTextAlign('left');
+  olText.setTextAlign("left");
 };
 
 const getVertexCoord = (geom, start = true, index = 0) => {
@@ -50,7 +50,7 @@ const getLineIcon = (feature, icon, color, start = true) => {
       rotation: -rotation,
       rotateWithView: true,
       scale: icon.scale,
-      imgSize: icon.size, // ie 11
+      size: icon.size, // ie 11
     }),
     zIndex: icon.zIndex,
   });
@@ -62,13 +62,13 @@ const sanitizeFeature = (feature) => {
   let styles = feature.getStyleFunction();
 
   // Store maxZoom in properties
-  if (feature.get('maxZoom')) {
-    feature.set('maxZoom', parseFloat(feature.get('maxZoom'), 10));
+  if (feature.get("maxZoom")) {
+    feature.set("maxZoom", parseFloat(feature.get("maxZoom"), 10));
   }
 
   // Store minZoom in properties
-  if (feature.get('minZoom')) {
-    feature.set('minZoom', parseFloat(feature.get('minZoom'), 10));
+  if (feature.get("minZoom")) {
+    feature.set("minZoom", parseFloat(feature.get("minZoom"), 10));
   }
 
   // The use of clone is part of the scale fix line 156
@@ -76,11 +76,11 @@ const sanitizeFeature = (feature) => {
   const style = (Array.isArray(tmpStyles) ? tmpStyles[0] : tmpStyles).clone();
 
   let stroke = style.getStroke();
-  if (stroke && feature.get('lineDash')) {
+  if (stroke && feature.get("lineDash")) {
     stroke.setLineDash(
       feature
-        .get('lineDash')
-        .split(',')
+        .get("lineDash")
+        .split(",")
         .map((l) => {
           return parseInt(l, 10);
         }),
@@ -93,8 +93,8 @@ const sanitizeFeature = (feature) => {
     stroke = undefined;
   }
 
-  if (feature.get('zIndex')) {
-    style.setZIndex(parseInt(feature.get('zIndex'), 10));
+  if (feature.get("zIndex")) {
+    style.setZIndex(parseInt(feature.get("zIndex"), 10));
   }
 
   // if the feature is a Point and we are offline, we use default vector
@@ -110,7 +110,7 @@ const sanitizeFeature = (feature) => {
 
     // If the feature has name we display it on the map as Google does
     if (
-      feature.get('name') &&
+      feature.get("name") &&
       style.getText() &&
       style.getText().getScale() !== 0
     ) {
@@ -124,18 +124,18 @@ const sanitizeFeature = (feature) => {
       }
 
       // We replace empty white spaces used to keep normal spaces before and after the name.
-      let name = feature.get('name');
+      let name = feature.get("name");
       if (/\u200B/g.test(name)) {
-        name = name.replace(/\u200B/g, '');
-        feature.set('name', name);
+        name = name.replace(/\u200B/g, "");
+        feature.set("name", name);
       }
 
       text = new Text({
-        font: feature.get('textFont') || 'normal 16px Helvetica',
-        text: feature.get('name'),
+        font: feature.get("textFont") || "normal 16px Helvetica",
+        text: feature.get("name"),
         fill: style.getText().getFill(),
         // rotation unsupported by KML, taken instead from custom field.
-        rotation: feature.get('textRotation') || 0,
+        rotation: feature.get("textRotation") || 0,
         // since ol 6.3.1 : https://github.com/openlayers/openlayers/pull/10613/files#diff-1883da8b57e690db7ea0c35ce53c880aR925
         // a default textstroke is added to mimic google earth.
         // it was not the case before, the stroke was always null. So to keep
@@ -145,40 +145,40 @@ const sanitizeFeature = (feature) => {
         scale: style.getText().getScale(),
       });
 
-      if (feature.get('textStrokeColor') && feature.get('textStrokeWidth')) {
+      if (feature.get("textStrokeColor") && feature.get("textStrokeWidth")) {
         text.setStroke(
           new Stroke({
-            color: feature.get('textStrokeColor'),
-            width: parseFloat(feature.get('textStrokeWidth')),
+            color: feature.get("textStrokeColor"),
+            width: parseFloat(feature.get("textStrokeWidth")),
           }),
         );
       }
 
-      if (feature.get('textAlign')) {
-        text.setTextAlign(feature.get('textAlign'));
+      if (feature.get("textAlign")) {
+        text.setTextAlign(feature.get("textAlign"));
       }
 
-      if (feature.get('textOffsetX')) {
-        text.setOffsetX(parseFloat(feature.get('textOffsetX')));
+      if (feature.get("textOffsetX")) {
+        text.setOffsetX(parseFloat(feature.get("textOffsetX")));
       }
 
-      if (feature.get('textOffsetY')) {
-        text.setOffsetY(parseFloat(feature.get('textOffsetY')));
+      if (feature.get("textOffsetY")) {
+        text.setOffsetY(parseFloat(feature.get("textOffsetY")));
       }
 
-      if (feature.get('textBackgroundFillColor')) {
+      if (feature.get("textBackgroundFillColor")) {
         text.setBackgroundFill(
           new Fill({
-            color: feature.get('textBackgroundFillColor'),
+            color: feature.get("textBackgroundFillColor"),
           }),
         );
       }
 
-      if (feature.get('textPadding')) {
+      if (feature.get("textPadding")) {
         text.setPadding(
           feature
-            .get('textPadding')
-            .split(',')
+            .get("textPadding")
+            .split(",")
             .map((n) => {
               return parseFloat(n);
             }),
@@ -194,7 +194,7 @@ const sanitizeFeature = (feature) => {
       /* Apply icon rotation if defined (by default only written as
        * <heading> tag, which is not read as rotation value by the ol KML module)
        */
-      image.setRotation(parseFloat(feature.get('iconRotation')) || 0);
+      image.setRotation(parseFloat(feature.get("iconRotation")) || 0);
     }
 
     fill = undefined;
@@ -208,12 +208,12 @@ const sanitizeFeature = (feature) => {
        * e.g. { resolution: 0.123, defaultScale: 1 / 6 }
        */
 
-      if (feat.get('pictureOptions')) {
-        let pictureOptions = feat.get('pictureOptions');
-        if (typeof pictureOptions === 'string') {
+      if (feat.get("pictureOptions")) {
+        let pictureOptions = feat.get("pictureOptions");
+        if (typeof pictureOptions === "string") {
           pictureOptions = JSON.parse(pictureOptions);
         }
-        feat.set('pictureOptions', pictureOptions);
+        feat.set("pictureOptions", pictureOptions);
         if (pictureOptions.resolution) {
           image.setScale(
             (pictureOptions.resolution / resolution) *
@@ -251,10 +251,10 @@ const sanitizeFeature = (feature) => {
     ];
 
     // Parse the fillPattern json string and store parsed object
-    let fillPattern = feature.get('fillPattern');
+    let fillPattern = feature.get("fillPattern");
     if (fillPattern) {
       fillPattern = JSON.parse(fillPattern);
-      feature.set('fillPattern', fillPattern);
+      feature.set("fillPattern", fillPattern);
 
       /* We set the fill pattern for polygons */
       if (!style.getFill()) {
@@ -267,21 +267,21 @@ const sanitizeFeature = (feature) => {
     }
 
     // Add line's icons styles
-    if (feature.get('lineStartIcon')) {
+    if (feature.get("lineStartIcon")) {
       styles.push(
         getLineIcon(
           feature,
-          JSON.parse(feature.get('lineStartIcon')),
+          JSON.parse(feature.get("lineStartIcon")),
           stroke.getColor(),
         ),
       );
     }
 
-    if (feature.get('lineEndIcon')) {
+    if (feature.get("lineEndIcon")) {
       styles.push(
         getLineIcon(
           feature,
-          JSON.parse(feature.get('lineEndIcon')),
+          JSON.parse(feature.get("lineEndIcon")),
           stroke.getColor(),
           false,
         ),
@@ -319,14 +319,14 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
   olLayer.getSource().forEachFeature((feature) => {
     // We silently ignore Circle elements as they are
     // not supported in kml.
-    if (feature.getGeometry().getType() === 'Circle') {
+    if (feature.getGeometry().getType() === "Circle") {
       return;
     }
 
     const clone = feature.clone();
     clone.setId(feature.getId());
     clone.getGeometry().setProperties(feature.getGeometry().getProperties());
-    clone.getGeometry().transform(featureProjection, 'EPSG:4326');
+    clone.getGeometry().transform(featureProjection, "EPSG:4326");
 
     // We remove all ExtendedData not related to style.
     Object.keys(feature.getProperties()).forEach((key) => {
@@ -354,7 +354,7 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
     };
 
     if (newStyle.zIndex) {
-      clone.set('zIndex', newStyle.zIndex);
+      clone.set("zIndex", newStyle.zIndex);
     }
 
     // If we see spaces at the beginning or at the end we add a empty
@@ -365,51 +365,51 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
 
     // Set custom properties to be converted in extendedData in KML.
     if (newStyle.text && newStyle.text.getRotation()) {
-      clone.set('textRotation', newStyle.text.getRotation());
+      clone.set("textRotation", newStyle.text.getRotation());
     }
 
     if (newStyle.text && newStyle.text.getFont()) {
-      clone.set('textFont', newStyle.text.getFont());
+      clone.set("textFont", newStyle.text.getFont());
     }
 
     if (newStyle.text && newStyle.text.getTextAlign()) {
-      clone.set('textAlign', newStyle.text.getTextAlign());
+      clone.set("textAlign", newStyle.text.getTextAlign());
     }
 
     if (newStyle.text && newStyle.text.getOffsetX()) {
-      clone.set('textOffsetX', newStyle.text.getOffsetX());
+      clone.set("textOffsetX", newStyle.text.getOffsetX());
     }
 
     if (newStyle.text && newStyle.text.getOffsetY()) {
-      clone.set('textOffsetY', newStyle.text.getOffsetY());
+      clone.set("textOffsetY", newStyle.text.getOffsetY());
     }
 
     if (newStyle.text && newStyle.text.getStroke()) {
       if (newStyle.text.getStroke().getColor()) {
         clone.set(
-          'textStrokeColor',
+          "textStrokeColor",
           asString(newStyle.text.getStroke().getColor()),
         );
       }
 
       if (newStyle.text.getStroke().getWidth()) {
-        clone.set('textStrokeWidth', newStyle.text.getStroke().getWidth());
+        clone.set("textStrokeWidth", newStyle.text.getStroke().getWidth());
       }
     }
 
     if (newStyle.text && newStyle.text.getBackgroundFill()) {
       clone.set(
-        'textBackgroundFillColor',
+        "textBackgroundFillColor",
         asString(newStyle.text.getBackgroundFill().getColor()),
       );
     }
 
     if (newStyle.text && newStyle.text.getPadding()) {
-      clone.set('textPadding', newStyle.text.getPadding().join());
+      clone.set("textPadding", newStyle.text.getPadding().join());
     }
 
     if (newStyle.stroke && newStyle.stroke.getLineDash()) {
-      clone.set('lineDash', newStyle.stroke.getLineDash().join(','));
+      clone.set("lineDash", newStyle.stroke.getLineDash().join(","));
     }
 
     if (newStyle.image instanceof Circle) {
@@ -421,46 +421,46 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
       if (!/(http(s?)):\/\//gi.test(imgSource)) {
         // eslint-disable-next-line no-console
         console.log(
-          'Local image source not supported for KML export.' +
-            'Should use remote web server',
+          "Local image source not supported for KML export." +
+            "Should use remote web server",
         );
       }
 
       if (newStyle.image.getRotation()) {
         // We set the icon rotation as extended data
-        clone.set('iconRotation', newStyle.image.getRotation());
+        clone.set("iconRotation", newStyle.image.getRotation());
       }
 
       // Set map resolution to use for icon-to-map proportional scaling
-      if (feature.get('pictureOptions')) {
+      if (feature.get("pictureOptions")) {
         clone.set(
-          'pictureOptions',
-          JSON.stringify(feature.get('pictureOptions')),
+          "pictureOptions",
+          JSON.stringify(feature.get("pictureOptions")),
         );
       }
     }
 
     // In case a fill pattern should be applied (use fillPattern attribute to store pattern id, color etc)
-    if (feature.get('fillPattern')) {
-      clone.set('fillPattern', JSON.stringify(feature.get('fillPattern')));
+    if (feature.get("fillPattern")) {
+      clone.set("fillPattern", JSON.stringify(feature.get("fillPattern")));
       newStyle.fill = null;
     }
 
     // maxZoom: maximum zoom level at which the feature is displayed
-    if (feature.get('maxZoom')) {
-      clone.set('maxZoom', parseFloat(feature.get('maxZoom'), 10));
+    if (feature.get("maxZoom")) {
+      clone.set("maxZoom", parseFloat(feature.get("maxZoom"), 10));
     }
 
     // minZoom: minimum zoom level at which the feature is displayed
-    if (feature.get('minZoom')) {
-      clone.set('minZoom', parseFloat(feature.get('minZoom'), 10));
+    if (feature.get("minZoom")) {
+      clone.set("minZoom", parseFloat(feature.get("minZoom"), 10));
     }
 
     // If only text is displayed we must specify an
     // image style with scale=0
     if (newStyle.text && !newStyle.image) {
       newStyle.image = new Icon({
-        src: 'noimage',
+        src: "noimage",
         scale: 0,
       });
     }
@@ -477,7 +477,7 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
         const startCoord = feature.getGeometry().getFirstCoordinate();
         if (coord[0] === startCoord[0] && coord[1] === startCoord[1]) {
           clone.set(
-            'lineStartIcon',
+            "lineStartIcon",
             JSON.stringify({
               url: extraLineStyle.getImage().getSrc(),
               scale: extraLineStyle.getImage().getScale(),
@@ -487,7 +487,7 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
           );
         } else {
           clone.set(
-            'lineEndIcon',
+            "lineEndIcon",
             JSON.stringify({
               url: extraLineStyle.getImage().getSrc(),
               scale: extraLineStyle.getImage().getScale(),
@@ -527,12 +527,12 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
     // Remove no image hack
     featString = featString.replace(
       /<Icon>\s*<href>noimage<\/href>\s*<\/Icon>/g,
-      '',
+      "",
     );
 
     // Remove empty placemark added to have
     // <Document> tag
-    featString = featString.replace(/<Placemark\/>/g, '');
+    featString = featString.replace(/<Placemark\/>/g, "");
 
     // Add KML document name
     if (layer.name) {
@@ -553,7 +553,7 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
 const removeDocumentCamera = (kmlString) => {
   const kmlDoc = parse(kmlString);
   // Remove old Camera node
-  const oldCameraNode = kmlDoc.getElementsByTagName('Camera')[0];
+  const oldCameraNode = kmlDoc.getElementsByTagName("Camera")[0];
   if (oldCameraNode) {
     oldCameraNode.remove();
   }
@@ -571,7 +571,7 @@ const writeDocumentCamera = (kmlString, cameraAttributes) => {
 
   if (cameraAttributes) {
     // Create Camera node with child attributes if the cameraAttributes object is defined
-    const cameraNode = kmlDoc.createElement('Camera');
+    const cameraNode = kmlDoc.createElement("Camera");
     Object.keys(cameraAttributes).forEach((key) => {
       const cameraAttribute = kmlDoc.createElement(
         `${key.charAt(0).toUpperCase() + key.slice(1)}`,
@@ -579,7 +579,7 @@ const writeDocumentCamera = (kmlString, cameraAttributes) => {
       cameraAttribute.innerHTML = cameraAttributes[key];
       cameraNode.appendChild(cameraAttribute);
     });
-    const documentNode = kmlDoc.getElementsByTagName('Document')[0];
+    const documentNode = kmlDoc.getElementsByTagName("Document")[0];
     documentNode.appendChild(cameraNode);
   }
 

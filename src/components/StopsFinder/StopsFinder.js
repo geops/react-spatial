@@ -1,18 +1,18 @@
-import React, { useMemo, useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { Autocomplete } from '@material-ui/lab';
-import { FaSearch } from 'react-icons/fa';
-import TextField from '@material-ui/core/TextField';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { StopFinderControl } from 'mobility-toolbox-js/ol';
-import { Map } from 'ol';
-import { makeStyles } from '@material-ui/core';
-import StopsFinderOptions from './StopsFinderOption';
+import React, { useMemo, useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { Autocomplete } from "@material-ui/lab";
+import { FaSearch } from "react-icons/fa";
+import TextField from "@material-ui/core/TextField";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { StopFinderControl } from "mobility-toolbox-js/ol";
+import { Map } from "ol";
+import { makeStyles } from "@material-ui/core";
+import StopsFinderOptions from "./StopsFinderOption";
 
 const useStyles = makeStyles(() => {
   return {
     popupIndicatorOpen: {
-      transform: 'rotate(0)',
+      transform: "rotate(0)",
     },
   };
 });
@@ -33,7 +33,7 @@ function StopsFinder({
   url,
 }) {
   const classes = useStyles();
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [isOpen, setOpen] = useState(false);
@@ -42,8 +42,8 @@ function StopsFinder({
     return new StopFinderControl({
       url,
       apiKey,
-      target: document.createElement('div'),
-      element: document.createElement('div'),
+      target: document.createElement("div"),
+      element: document.createElement("div"),
       render(newSuggestions = { features: [] }) {
         setSuggestions(newSuggestions.features);
         setLoading(false);
@@ -128,7 +128,7 @@ function StopsFinder({
         return option.properties.name;
       }}
       onChange={(evt, value, reason) => {
-        if (onSelect && reason === 'select-option') {
+        if (onSelect && reason === "select-option") {
           onSelect(value, evt);
         }
       }}

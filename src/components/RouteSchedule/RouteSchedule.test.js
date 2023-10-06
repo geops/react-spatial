@@ -1,26 +1,26 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
-import 'jest-date-mock';
-import { RealtimeLayer as TrackerLayer } from 'mobility-toolbox-js/ol';
-import RouteSchedule from '.';
+import React from "react";
+import renderer from "react-test-renderer";
+import "jest-date-mock";
+import { RealtimeLayer as TrackerLayer } from "mobility-toolbox-js/ol";
+import RouteSchedule from ".";
 
 const RealDate = Date;
 
 const lineInfos = {
-  backgroundColor: 'ff8a00',
-  destination: 'Station name',
+  backgroundColor: "ff8a00",
+  destination: "Station name",
   id: 9959310,
-  routeIdentifier: '03634.003849.004:9',
-  longName: 'T 3',
-  shortName: '3',
-  operator: 'foo',
-  operatorUrl: 'foo.ch',
-  publisher: 'bar',
-  publisherUrl: 'bar.ch',
+  routeIdentifier: "03634.003849.004:9",
+  longName: "T 3",
+  shortName: "3",
+  operator: "foo",
+  operatorUrl: "foo.ch",
+  publisher: "bar",
+  publisherUrl: "bar.ch",
   stations: [
     {
-      stationId: '1',
-      stationName: 'first stop',
+      stationId: "1",
+      stationName: "first stop",
       coordinates: [8.51772, 47.3586],
       arrivalDelay: 60000, // +1m
       arrivalTime: 1571729580000 + 60000,
@@ -30,8 +30,8 @@ const lineInfos = {
       departureTime: 1571729580000 + 60000,
     },
     {
-      stationId: '2',
-      stationName: 'second stop',
+      stationId: "2",
+      stationName: "second stop",
       coordinates: [8.54119, 47.36646],
       arrivalDelay: 0, // +0
       arrivalTime: 1571729903000,
@@ -41,8 +41,8 @@ const lineInfos = {
       departureTime: 1571729903000 + 120000,
     },
     {
-      stationId: '4',
-      stationName: 'no stop',
+      stationId: "4",
+      stationName: "no stop",
       coordinates: [8.54119, 47.36646],
       arrivalDelay: null, // +0
       arrivalTime: 0,
@@ -52,8 +52,8 @@ const lineInfos = {
       aimedDepartureTime: 0,
     },
     {
-      stationId: '3',
-      stationName: 'third stop',
+      stationId: "3",
+      stationName: "third stop",
       coordinates: [8.54119, 50],
       arrivalDelay: 240000, // +4m
       aimedArrivalTime: 1571730323000,
@@ -66,7 +66,7 @@ const lineInfos = {
   vehicleType: 0,
 };
 
-describe('RouteSchedule', () => {
+describe("RouteSchedule", () => {
   beforeEach(() => {
     global.Date = jest.fn(() => {
       return {
@@ -85,7 +85,7 @@ describe('RouteSchedule', () => {
     global.Date = RealDate;
   });
 
-  test('matches snapshots.', () => {
+  test("matches snapshots.", () => {
     const trackerLayer = new TrackerLayer({});
     const component = renderer.create(
       <RouteSchedule

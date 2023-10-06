@@ -1,9 +1,8 @@
-import { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import qs from 'query-string';
-import OLMap from 'ol/Map';
-import { unByKey } from 'ol/Observable';
-import { Layer, getLayersAsFlatArray } from 'mobility-toolbox-js/ol';
+import { PureComponent } from "react";
+import PropTypes from "prop-types";
+import OLMap from "ol/Map";
+import { unByKey } from "ol/Observable";
+import { Layer, getLayersAsFlatArray } from "mobility-toolbox-js/ol";
 
 const propTypes = {
   /**
@@ -72,7 +71,7 @@ const defaultProps = {
     return false;
   },
   isBaseLayer: (layer) => {
-    return layer.get('isBaseLayer');
+    return layer.get("isBaseLayer");
   },
 };
 
@@ -87,24 +86,23 @@ class Permalink extends PureComponent {
   constructor(props) {
     super(props);
     this.state = { revision: 0 };
-    this.onMoveEndRef = null;
     this.onPropertyChangeKeys = [];
   }
 
   componentDidMount() {
     const { map, layers, isLayerHidden, isBaseLayer } = this.props;
     if (map) {
-      this.moveEndRef = map.on('moveend', () => {
+      this.moveEndRef = map.on("moveend", () => {
         this.onMapMoved();
       });
     }
 
     if (layers) {
       // set layer visibility based on 'layers' parameter.
-      const urlParams = qs.parse(window.location.search);
+      const urlParams = new URLSearchParams(window.location.search);
 
-      if (urlParams.layers) {
-        const visibleLayers = urlParams.layers.split(',');
+      if (urlParams.get("layers")) {
+        const visibleLayers = urlParams.get("layers").split(",");
         getLayersAsFlatArray(layers).forEach((l) => {
           if (visibleLayers.includes(l.key)) {
             if (l.setVisible) {
@@ -132,7 +130,9 @@ class Permalink extends PureComponent {
 
       // Set baser layer visibility based on 'baseLayers' parameter.
       // Show the first of the list then hide the others
-      const visibleBaseLayer = (urlParams.baselayers || '').split(',')[0];
+      const visibleBaseLayer = (urlParams.get("baselayers") || "").split(
+        ",",
+      )[0];
       if (visibleBaseLayer) {
         getLayersAsFlatArray(layers)
           .filter(isBaseLayer)
@@ -160,7 +160,7 @@ class Permalink extends PureComponent {
 
     if (map !== prevProps.map) {
       unByKey(this.moveEndRef);
-      this.moveEndRef = map.on('moveend', () => {
+      this.moveEndRef = map.on("moveend", () => {
         return this.onMapMoved();
       });
     }
@@ -211,7 +211,7 @@ class Permalink extends PureComponent {
 
     unByKey(this.onPropertyChangeKeys);
     this.onPropertyChangeKeys = getLayersAsFlatArray(layers).map((layer) => {
-      return layer.on('change:visible', () => {
+      return layer.on("change:visible", () => {
         this.setState({ revision: revision + 1 });
       });
     });
@@ -280,8 +280,12 @@ class Permalink extends PureComponent {
 
   updateHistory() {
     const { params, history, replace } = this.props;
-    const oldParams = qs.parse(window.location.search);
-    const parameters = { ...oldParams, ...this.state, ...params };
+    const oldParams = new URLSearchParams(window.location.search);
+    const parameters = {
+      ...Object.fromEntries(oldParams.entries()),
+      ...this.state,
+      ...params,
+    };
 
     delete parameters.revision;
 
@@ -292,9 +296,11 @@ class Permalink extends PureComponent {
       }
     });
 
-    // encodeURI to encode spaces, accents, etc. but not characters like ;,/?:@&=+$-_.!~*'()
-    const qStr = encodeURI(qs.stringify(parameters, { encode: false }));
-    const search = qStr ? `?${qStr}` : '';
+    // We don't encode the , to leave the permalink lisible
+    const qStr = new URLSearchParams(parameters)
+      .toString()
+      .replace(/%2C/g, ",");
+    const search = qStr ? `?${qStr}` : "";
 
     if (
       (!qStr && window.location.search) ||
@@ -309,7 +315,7 @@ class Permalink extends PureComponent {
         window.history.replaceState(
           undefined,
           undefined,
-          `${search}${hash || ''}`,
+          `${search}${hash || ""}`,
         );
       }
     }

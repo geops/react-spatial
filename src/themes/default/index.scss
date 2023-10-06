@@ -1,9 +1,9 @@
 /**
 * This file load the default theme, for all the components.
 */
-@import './variables.scss';
-@import './mixins.scss';
-@import './components.scss';
+@import './variables';
+@import './mixins';
+@import './components';
 
 [role='button']:not([disabled]),
 button:not([disabled]),

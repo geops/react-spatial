@@ -1,21 +1,20 @@
-import 'jest-canvas-mock';
-import proj4 from 'proj4';
-import { register } from 'ol/proj/proj4';
-import React from 'react';
-import ResizeObserver from 'resize-observer-polyfill';
-import { Layer } from 'mobility-toolbox-js/ol';
-import MapEvent from 'ol/MapEvent';
-import OLLayer from 'ol/layer/Vector';
-import OLMap from 'ol/Map';
-import OLView from 'ol/View';
-import { render } from '@testing-library/react';
-import BasicMap from './BasicMap';
+import "jest-canvas-mock";
+import proj4 from "proj4";
+import { register } from "ol/proj/proj4";
+import React from "react";
+import { Layer } from "mobility-toolbox-js/ol";
+import MapEvent from "ol/MapEvent";
+import OLLayer from "ol/layer/Vector";
+import OLMap from "ol/Map";
+import OLView from "ol/View";
+import { render } from "@testing-library/react";
+import BasicMap from "./BasicMap";
 
 proj4.defs(
-  'EPSG:21781',
-  '+proj=somerc +lat_0=46.95240555555556 ' +
-    '+lon_0=7.439583333333333 +k_0=1 +x_0=600000 +y_0=200000 +ellps=bessel ' +
-    '+towgs84=674.4,15.1,405.3,0,0,0,0 +units=m +no_defs',
+  "EPSG:21781",
+  "+proj=somerc +lat_0=46.95240555555556 " +
+    "+lon_0=7.439583333333333 +k_0=1 +x_0=600000 +y_0=200000 +ellps=bessel " +
+    "+towgs84=674.4,15.1,405.3,0,0,0,0 +units=m +no_defs",
 );
 
 register(proj4);
@@ -23,36 +22,36 @@ register(proj4);
 const extent = [0, 0, 1000, 1000];
 const olLayers = [
   new Layer({
-    name: 'foo',
+    name: "foo",
     olLayer: new OLLayer({}),
     visible: true,
   }),
 ];
 
-describe('BasicMap', () => {
+describe("BasicMap", () => {
   let olMap;
   beforeEach(() => {
     const olView = new OLView();
     olMap = new OLMap({ view: olView });
   });
 
-  test('should be rendered', () => {
-    const setTarget = jest.spyOn(olMap, 'setTarget');
+  test("should be rendered", () => {
+    const setTarget = jest.spyOn(olMap, "setTarget");
     render(<BasicMap map={olMap} />);
     expect(setTarget).toHaveBeenCalled();
   });
 
-  test('should be rendered with touchAction to none', () => {
+  test("should be rendered with touchAction to none", () => {
     render(<BasicMap map={olMap} />);
-    expect(olMap.getViewport().style.touchAction).toBe('none');
-    expect(olMap.getViewport().style.msTouchAction).toBe('none');
-    expect(olMap.getViewport().getAttribute('touch-action')).toBe('none');
+    expect(olMap.getViewport().style.touchAction).toBe("none");
+    expect(olMap.getViewport().style.msTouchAction).toBe("none");
+    expect(olMap.getViewport().getAttribute("touch-action")).toBe("none");
   });
 
-  test('uses onMapMoved function', () => {
+  test("uses onMapMoved function", () => {
     const spy = jest.fn(() => {});
     const spy2 = jest.fn();
-    const evt = new MapEvent('moveend', olMap);
+    const evt = new MapEvent("moveend", olMap);
 
     // Test componentDidMount
     const { rerender } = render(<BasicMap map={olMap} onMapMoved={spy} />);
@@ -74,10 +73,10 @@ describe('BasicMap', () => {
     expect(spy2).toHaveBeenCalledTimes(1);
   });
 
-  test('uses onFeaturesClick function', () => {
+  test("uses onFeaturesClick function", () => {
     const spy = jest.fn();
     const spy2 = jest.fn();
-    const evt = new MapEvent('singleclick', olMap);
+    const evt = new MapEvent("singleclick", olMap);
 
     // Test componentDidMount
     const { rerender } = render(<BasicMap map={olMap} onFeaturesClick={spy} />);
@@ -99,10 +98,10 @@ describe('BasicMap', () => {
     expect(spy2).toHaveBeenCalledTimes(1);
   });
 
-  test('uses onFeaturesHover function', () => {
+  test("uses onFeaturesHover function", () => {
     const spy = jest.fn();
     const spy2 = jest.fn();
-    const evt = new MapEvent('pointermove', olMap);
+    const evt = new MapEvent("pointermove", olMap);
 
     // Test componentDidMount
     const { rerender } = render(
@@ -129,12 +128,12 @@ describe('BasicMap', () => {
     expect(spy2).toHaveBeenCalledTimes(1);
   });
 
-  test('should be rendered with a default map', () => {
+  test("should be rendered with a default map", () => {
     const { container } = render(<BasicMap />);
-    expect(!!container.querySelector('.ol-viewport')).toBe(true);
+    expect(!!container.querySelector(".ol-viewport")).toBe(true);
   });
 
-  test('should be rendered with layers and an extent', () => {
+  test("should be rendered with layers and an extent", () => {
     render(
       <BasicMap
         map={olMap}
@@ -143,7 +142,7 @@ describe('BasicMap', () => {
         viewOptions={{
           minZoom: 16,
           maxZoom: 22,
-          projection: 'EPSG:21781',
+          projection: "EPSG:21781",
         }}
       />,
     );
@@ -154,101 +153,76 @@ describe('BasicMap', () => {
     ]);
   });
 
-  test('center shoud be set', () => {
+  test("center shoud be set", () => {
     const { rerender } = render(<BasicMap map={olMap} />);
-    const setCenter = jest.spyOn(olMap.getView(), 'setCenter');
+    const setCenter = jest.spyOn(olMap.getView(), "setCenter");
     rerender(<BasicMap map={olMap} center={[0, 0]} />);
     expect(setCenter).toHaveBeenCalled();
   });
 
-  test('zoom shoud be set', () => {
+  test("zoom shoud be set", () => {
     const { rerender } = render(<BasicMap map={olMap} zoom={5} />);
     expect(olMap.getView().getZoom()).toBe(5);
     rerender(<BasicMap map={olMap} zoom={2} />);
     expect(olMap.getView().getZoom()).toBe(2);
   });
 
-  test('resolution shoud be set', () => {
+  test("resolution shoud be set", () => {
     const { rerender } = render(<BasicMap map={olMap} resolution={100} />);
     expect(olMap.getView().getResolution()).toBe(100);
     rerender(<BasicMap map={olMap} resolution={5} />);
     expect(olMap.getView().getResolution()).toBe(5);
   });
 
-  test('animation shoud be set', () => {
+  test("animation shoud be set", () => {
     const obj = {
       zoom: 4,
     };
     const { rerender } = render(<BasicMap map={olMap} />);
-    const spy = jest.spyOn(olMap.getView(), 'animate');
+    const spy = jest.spyOn(olMap.getView(), "animate");
     rerender(<BasicMap map={olMap} animationOptions={obj} />);
     expect(spy).toHaveBeenCalledWith(obj);
   });
 
-  test('layers shoud be updated', () => {
-    const addLayer = jest.spyOn(olMap, 'addLayer');
+  test("layers shoud be updated", () => {
+    const addLayer = jest.spyOn(olMap, "addLayer");
     const { rerender } = render(<BasicMap map={olMap} />);
-    const layer = new Layer({ name: 'test', olLayer: new OLLayer() });
+    const layer = new Layer({ name: "test", olLayer: new OLLayer() });
     rerender(<BasicMap map={olMap} layers={[layer]} />);
     expect(addLayer).toHaveBeenCalled();
   });
 
-  test('should be fitted if extent is updated', () => {
-    const fitExtent = jest.spyOn(OLView.prototype, 'fit');
+  test("should be fitted if extent is updated", () => {
+    const fitExtent = jest.spyOn(OLView.prototype, "fit");
     const { rerender } = render(<BasicMap map={olMap} />);
     rerender(<BasicMap map={olMap} extent={[1, 2, 3, 4]} />);
     expect(fitExtent).toHaveBeenCalled();
   });
 
-  test('should be zoomed if zoom is updated', () => {
-    const setZoom = jest.spyOn(OLView.prototype, 'setZoom');
+  test("should be zoomed if zoom is updated", () => {
+    const setZoom = jest.spyOn(OLView.prototype, "setZoom");
     const { rerender } = render(<BasicMap map={olMap} />);
     rerender(<BasicMap map={olMap} zoom={15} />);
     expect(setZoom).toHaveBeenCalledWith(15);
   });
 
-  test('should be observed by ResizeHandler', () => {
-    const spy = jest.spyOn(ResizeObserver.prototype, 'observe');
-    render(<BasicMap map={olMap} />);
-    expect(spy).toHaveBeenCalledWith(olMap.getTargetElement());
-    expect(spy).toHaveBeenCalledTimes(1);
-  });
-
-  test('size is updated when div is resized', () => {
-    const spy = jest.spyOn(olMap, 'updateSize');
-    render(<BasicMap map={olMap} />);
-    expect(spy).toHaveBeenCalledTimes(2);
-    // The mock class set the onResize property, we just have to run it to
-    // simulate a resize
-    ResizeObserver.onResize([
-      {
-        target: olMap.getTargetElement(),
-        contentRect: {
-          width: 20,
-          height: 20,
-        },
-      },
-    ]);
-    expect(spy).toHaveBeenCalledTimes(3);
-  });
-
-  describe('#setLayers()', () => {
-    test('init all layers and terminate al previous layer.', () => {
-      const layer0 = new Layer({ key: 'test1' });
-      const spyInit0 = jest.spyOn(layer0, 'attachToMap');
-      const spyTerminate0 = jest.spyOn(layer0, 'detachFromMap');
-      const layer1 = new Layer({ key: 'test1' });
-      const spyInit1 = jest.spyOn(layer1, 'attachToMap');
-      const spyTerminate1 = jest.spyOn(layer1, 'detachFromMap');
-      const layer2 = new Layer({ key: 'test2' });
-      const spyInit2 = jest.spyOn(layer2, 'attachToMap');
-      const spyTerminate2 = jest.spyOn(layer2, 'detachFromMap');
-      const layer3 = new Layer({ key: 'test3' });
-      const spyInit3 = jest.spyOn(layer3, 'attachToMap');
-      const spyTerminate3 = jest.spyOn(layer3, 'detachFromMap');
-      const layer4 = new Layer({ key: 'test4' });
-      const spyInit4 = jest.spyOn(layer4, 'attachToMap');
-      const spyTerminate4 = jest.spyOn(layer4, 'detachFromMap');
+  describe("#setLayers()", () => {
+    test("init all layers and terminate al previous layer.", () => {
+      const layer0 = new Layer({ key: "test1" });
+      const spyInit0 = jest.spyOn(layer0, "attachToMap");
+      const spyTerminate0 = jest.spyOn(layer0, "detachFromMap");
+      const layer1 = new Layer({ key: "test1" });
+      const spyInit1 = jest.spyOn(layer1, "attachToMap");
+      const spyTerminate1 = jest.spyOn(layer1, "detachFromMap");
+      const layer2 = new Layer({ key: "test2" });
+      const spyInit2 = jest.spyOn(layer2, "attachToMap");
+      const spyTerminate2 = jest.spyOn(layer2, "detachFromMap");
+      const layer3 = new Layer({ key: "test3" });
+      const spyInit3 = jest.spyOn(layer3, "attachToMap");
+      const spyTerminate3 = jest.spyOn(layer3, "detachFromMap");
+      const layer4 = new Layer({ key: "test4" });
+      const spyInit4 = jest.spyOn(layer4, "attachToMap");
+      const spyTerminate4 = jest.spyOn(layer4, "detachFromMap");
       const startLayers = [layer1, layer3];
       const { rerender } = render(
         <BasicMap map={olMap} layers={startLayers} />,

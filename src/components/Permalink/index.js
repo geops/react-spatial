@@ -1,1 +1,1 @@
-export { default } from './Permalink';
+export { default } from "./Permalink";

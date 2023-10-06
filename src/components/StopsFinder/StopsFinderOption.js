@@ -1,18 +1,18 @@
-import React, { lazy, Suspense } from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core';
+import React, { lazy, Suspense } from "react";
+import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/core";
 
-const ext = '_round-blue-01.svg';
+const ext = "_round-blue-01.svg";
 const iconForMot = {};
 [
-  'bus',
-  'ferry',
-  'gondola',
-  'tram',
-  'rail',
-  'funicular',
-  'cable_car',
-  'subway',
+  "bus",
+  "ferry",
+  "gondola",
+  "tram",
+  "rail",
+  "funicular",
+  "cable_car",
+  "subway",
 ].forEach((mot) => {
   iconForMot[mot] = lazy(() => {
     return import(`../../images/mots/${mot}${ext}`);
@@ -22,8 +22,8 @@ const iconForMot = {};
 const useStyles = makeStyles((theme) => {
   return {
     flex: {
-      display: 'flex',
-      alignItems: 'center',
+      display: "flex",
+      alignItems: "center",
     },
     icon: {
       marginRight: theme.spacing(2),
@@ -46,7 +46,7 @@ function StopsFinderOption({ option }) {
               </span>
             );
           }
-          return <></>;
+          return null;
         })}
         <span>{option.properties.name}</span>
       </div>

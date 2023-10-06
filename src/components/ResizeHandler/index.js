@@ -1,1 +1,1 @@
-export { default } from './ResizeHandler';
+export { default } from "./ResizeHandler";
