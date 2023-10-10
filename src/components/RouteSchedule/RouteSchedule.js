@@ -214,18 +214,22 @@ const defaultRenderStation = (props) => {
   );
 };
 
-const renderRouteIdentifier = ({ routeIdentifier, longName }) => {
+const defaultRenderRouteIdentifier = ({ routeIdentifier, longName }) => {
   if (routeIdentifier) {
     // first part of the id, without leading zeros.
     const id = parseInt(routeIdentifier.split(".")[0], 10);
-    if (!longName.includes(id)) {
+    if (!longName.includes(id) && !Number.isNaN(id)) {
       return ` (${id})`;
     }
   }
   return null;
 };
 
-const defaultRenderHeader = ({ lineInfos, renderHeaderButtons }) => {
+const defaultRenderHeader = ({
+  lineInfos,
+  renderHeaderButtons,
+  renderRouteIdentifier,
+}) => {
   const {
     type,
     vehicleType,
@@ -332,6 +336,11 @@ const propTypes = {
   renderCopyright: PropTypes.func,
 
   /**
+   * Render the route identifier in the header
+   */
+  renderRouteIdentifier: PropTypes.func,
+
+  /**
    * Render the status of the station image.
    */
   renderStationImg: PropTypes.func,
@@ -360,6 +369,7 @@ const defaultProps = {
   renderStationImg: defaultRenderStationImg,
   renderCopyright: defaultRenderCopyright,
   renderFooter: defaultRenderFooter,
+  renderRouteIdentifier: defaultRenderRouteIdentifier,
   renderHeaderButtons: () => {
     return null;
   },
