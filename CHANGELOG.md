@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0](https://github.com/geops/react-spatial/compare/v1.6.0...v1.7.0) (2023-10-10)
+
+
+### Features
+
+* add renderRouterIdentifier property ([1f71d98](https://github.com/geops/react-spatial/commit/1f71d98a9021b54ebceb468817a616c9a15f6f67))
+
 ## [1.6.0](https://github.com/geops/react-spatial/compare/v1.5.7...v1.6.0) (2023-10-06)
 
 
