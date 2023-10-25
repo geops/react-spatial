@@ -138,18 +138,7 @@ exports[`RouteSchedule matches snapshots. 1`] = `
     >
       <div
         className="rt-route-delay"
-      >
-        <span
-          className="rt-route-delay-arrival green"
-        >
-          +0
-        </span>
-        <span
-          className="rt-route-delay-departure green"
-        >
-          +0
-        </span>
-      </div>
+      />
       <div
         className="rt-route-times"
       >

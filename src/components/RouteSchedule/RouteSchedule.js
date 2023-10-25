@@ -155,7 +155,10 @@ function RouteStop({
       }}
     >
       <div className="rt-route-delay">
-        {typeof arrivalDelay === "undefined" || isFirstStation || cancelled ? (
+        {arrivalDelay === undefined ||
+        arrivalDelay === null ||
+        isFirstStation ||
+        cancelled ? (
           ""
         ) : (
           <span
@@ -166,7 +169,10 @@ function RouteStop({
             {`+${getDelayString(arrivalDelay)}`}
           </span>
         )}
-        {typeof departureDelay === "undefined" || isLastStation || cancelled ? (
+        {departureDelay === undefined ||
+        departureDelay === null ||
+        isLastStation ||
+        cancelled ? (
           ""
         ) : (
           <span

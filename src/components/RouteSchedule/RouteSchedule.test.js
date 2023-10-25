@@ -44,10 +44,10 @@ const lineInfos = {
       stationId: "4",
       stationName: "no stop",
       coordinates: [8.54119, 47.36646],
-      arrivalDelay: null, // +0
+      arrivalDelay: null, // no realtime
       arrivalTime: 0,
       aimedArrivalTime: 0,
-      departureDelay: null, // +2m
+      departureDelay: null, // no realtime
       departureTime: 0,
       aimedDepartureTime: 0,
     },
