@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.7.1](https://github.com/geops/react-spatial/compare/v1.7.0...v1.7.1) (2023-10-25)
+
+
+### Bug Fixes
+
+* hide delay in route schedule when the vehicle has no realtime ([8716ce7](https://github.com/geops/react-spatial/commit/8716ce74c8a988639a06202c8b371b647e8d03ed))
+
 ## [1.7.0](https://github.com/geops/react-spatial/compare/v1.6.0...v1.7.0) (2023-10-10)
 
 
