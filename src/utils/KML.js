@@ -6,8 +6,16 @@ import GeometryCollection from "ol/geom/GeometryCollection";
 import { Style, Text, Icon, Circle, Fill, Stroke } from "ol/style";
 import { asString } from "ol/color";
 import { parse } from "ol/xml";
+import VectorSource from "ol/source/Vector";
+import VectorLayer from "ol/layer/Vector";
 import { kmlStyle } from "./Styles";
 import getPolygonPattern from "./getPolygonPattern";
+
+// Comes from ol >= 6.7,
+// https://github.com/openlayers/openlayers/blob/main/src/ol/format/KML.js#L320
+const scaleForSize = (size) => {
+  return 32 / Math.min(size[0], size[1]);
+};
 
 const applyTextStyleForIcon = (olIcon, olText) => {
   const size = olIcon.getSize() || [48, 48];
@@ -57,7 +65,7 @@ const getLineIcon = (feature, icon, color, start = true) => {
 };
 
 // Clean the unneeded feature's style and properties created by the KML parser.
-const sanitizeFeature = (feature) => {
+const sanitizeFeature = (feature, fixGxwAndGxh) => {
   const geom = feature.getGeometry();
   let styles = feature.getStyleFunction();
 
@@ -184,7 +192,6 @@ const sanitizeFeature = (feature) => {
             }),
         );
       }
-
       if (image instanceof Icon) {
         applyTextStyleForIcon(image, text);
       }
@@ -195,6 +202,12 @@ const sanitizeFeature = (feature) => {
        * <heading> tag, which is not read as rotation value by the ol KML module)
        */
       image.setRotation(parseFloat(feature.get("iconRotation")) || 0);
+
+      // Fix scale when gx:h and gx:w are used, this is for Mapset KMLs
+      if (fixGxwAndGxh) {
+        const resizeScale = scaleForSize(image.getSize());
+        image.setScale(image.getScaleArray()[0] / resizeScale);
+      }
     }
 
     fill = undefined;
@@ -295,13 +308,20 @@ const sanitizeFeature = (feature) => {
  * Read a KML string.
  * @param {String} kmlString A string representing a KML file.
  * @param {<ol.Projection|String>} featureProjection The projection used by the map.
+ * @param {<boolean>} fixGxyAndGxh If the KML contains gx:w and gx:h, (ol >= 6.7), it will fix the bug introduced by https://github.com/openlayers/openlayers/pull/12695.
  */
-const readFeatures = (kmlString, featureProjection) => {
+const readFeatures = (kmlString, featureProjection, fixGxwAndGxh) => {
+  // Mapset used gx:w and gx:h to specify the width height of an icon,
+  // unfortunately since ol 6.7, the KML follows better the KML spec and GoogleEarth interpretation, see https://github.com/openlayers/openlayers/pull/12695.
+  // and gx:w are gx:h are simply ignored.
+  // So when fixGxwAndGxh is true we fix back the scale.
+  // This has to be fixed in Mapset removing the use of gx:w and gx:h and adapt the scale accordingly like the formula in ol.
+  const containsGxwAndGxh = /(gx:h|gx:w)/.test(kmlString);
   const features = new KML().readFeatures(kmlString, {
     featureProjection,
   });
   features.forEach((feature) => {
-    sanitizeFeature(feature);
+    sanitizeFeature(feature, containsGxwAndGxh && fixGxwAndGxh);
   });
   return features;
 };
@@ -310,8 +330,14 @@ const readFeatures = (kmlString, featureProjection) => {
  * Create a KML string.
  * @param {VectorLayer} layer A react-spatial VectorLayer.
  * @param {<ol.Projection|String>} featureProjection The current projection used by the features.
+ * @param {<boolean>} fixGxyAndGxh If the KML contains gx:w and gx:h, (ol >= 6.7), it will fix the bug introduced by https://github.com/openlayers/openlayers/pull/12695.
  */
-const writeFeatures = (layer, featureProjection, mapResolution) => {
+const writeFeatures = (
+  layer,
+  featureProjection,
+  mapResolution,
+  fixGxwAndGxh,
+) => {
   let featString;
   const { olLayer } = layer;
   const exportFeatures = [];
@@ -429,6 +455,14 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
       if (newStyle.image.getRotation()) {
         // We set the icon rotation as extended data
         clone.set("iconRotation", newStyle.image.getRotation());
+      }
+
+      // Fix scale when gx:h and gx:w are used, this is for Mapset KMLs
+      if (fixGxwAndGxh) {
+        const resizeScale = scaleForSize(newStyle.image.getSize());
+        newStyle.image.setScale(
+          newStyle.image.getScaleArray()[0] * resizeScale,
+        );
       }
 
       // Set map resolution to use for icon-to-map proportional scaling
@@ -585,6 +619,12 @@ const writeDocumentCamera = (kmlString, cameraAttributes) => {
 
   return new XMLSerializer().serializeToString(kmlDoc);
 };
+
+window.VectorLayer = VectorLayer;
+window.VectorSource = VectorSource;
+
+window.writeFeatures = writeFeatures;
+window.readFeatures = readFeatures;
 
 export default {
   readFeatures,

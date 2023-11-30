@@ -8,7 +8,7 @@ import KML from "./KML";
 const xmlns =
   'xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/kml/2.2 https://developers.google.com/kml/schema/kml22gx.xsd"';
 
-const expectWriteResult = (feats, str) => {
+const expectWriteResult = (feats, str, fixGx = false) => {
   expect(
     beautify(
       KML.writeFeatures(
@@ -21,6 +21,8 @@ const expectWriteResult = (feats, str) => {
           }),
         },
         get("EPSG:4326"),
+        undefined,
+        fixGx,
       ),
     ),
   ).toEqual(beautify(str));
@@ -276,6 +278,7 @@ describe("KML", () => {
       const feats = KML.readFeatures(str);
       const style = feats[0].getStyleFunction()(feats[0], 1);
       expect(style.getZIndex()).toBe(1);
+      expect(style.getImage().getScale()).toEqual(2);
       expect(style.getImage().getRotation()).toBe(1.5707963267948966);
       expect(feats[0].get("pictureOptions")).toEqual({
         resolution: 4,
@@ -285,6 +288,39 @@ describe("KML", () => {
       expect(feats[0].get("minZoom")).toEqual(15);
       expectWriteResult(feats, str);
     });
+  });
+
+  test("should adapt the scale to work with mapset kmls created using gx:w and gx:h, and revert effect of https://github.com/openlayers/openlayers/pull/12695.", () => {
+    const str = `
+    <kml ${xmlns}>
+      <Document>
+          <name>lala</name>
+          <Placemark>
+              <description></description>
+              <Style>
+                  <IconStyle>
+                      <scale>
+                        2
+                      </scale>
+                      <Icon>
+                          <href>https://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+                          <gx:w>64</gx:w>
+                          <gx:h>64</gx:h>
+                      </Icon>
+                      <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+                  </IconStyle>
+              </Style>
+              <Point>
+                  <coordinates>0,0,0</coordinates>
+              </Point>
+          </Placemark>
+      </Document>
+    </kml>
+    `;
+    const feats = KML.readFeatures(str, null, true);
+    const style = feats[0].getStyleFunction()(feats[0], 1);
+    expect(style.getImage().getScale()).toEqual(2);
+    expectWriteResult(feats, str, true);
   });
 
   describe("writeDocumentCamera()", () => {
