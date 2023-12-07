@@ -56,6 +56,13 @@ exports[`FeatureExportButton triggers onClick #createFeatureString() using KMLFo
         </Icon>
         </IconStyle>
       </Style>
+      <ExtendedData>
+        <Data name="iconScale">
+          <value>
+            1
+          </value>
+        </Data>
+      </ExtendedData>
       <Point>
         <coordinates>
           7.358136177061042,48.07903229472336

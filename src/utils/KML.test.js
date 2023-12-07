@@ -26,6 +26,7 @@ const expectWriteResult = (feats, str, fixGx = false) => {
       ),
     ),
   ).toEqual(beautify(str));
+  return str;
 };
 
 describe("KML", () => {
@@ -255,6 +256,9 @@ describe("KML", () => {
                     <Data name="iconRotation">
                       <value>1.5707963267948966</value>
                     </Data>
+                    <Data name="iconScale">
+                      <value>1</value>
+                    </Data>
                     <Data name="maxZoom">
                       <value>18.5</value>
                     </Data>
@@ -290,7 +294,7 @@ describe("KML", () => {
     });
   });
 
-  test("should adapt the scale to work with mapset kmls created using gx:w and gx:h, and revert effect of https://github.com/openlayers/openlayers/pull/12695.", () => {
+  test("should add iconScale to extended data when writing, to revert effect of https://github.com/openlayers/openlayers/pull/12695.", () => {
     const str = `
     <kml ${xmlns}>
       <Document>
@@ -317,10 +321,122 @@ describe("KML", () => {
       </Document>
     </kml>
     `;
-    const feats = KML.readFeatures(str, null, true);
-    const style = feats[0].getStyleFunction()(feats[0], 1);
+    const strCorrected = `
+    <kml ${xmlns}>
+      <Document>
+          <name>lala</name>
+          <Placemark>
+              <description></description>
+              <Style>
+                  <IconStyle>
+                      <scale>
+                        4
+                      </scale>
+                      <Icon>
+                          <href>https://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+                          <gx:w>64</gx:w>
+                          <gx:h>64</gx:h>
+                      </Icon>
+                      <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+                  </IconStyle>
+              </Style>
+              <ExtendedData>
+                <Data name="iconScale">
+                  <value>
+                    2
+                  </value>
+                </Data>
+              </ExtendedData>
+              <Point>
+                  <coordinates>0,0,0</coordinates>
+              </Point>
+          </Placemark>
+      </Document>
+    </kml>
+    `;
+    let feats = KML.readFeatures(str);
+    let style = feats[0].getStyleFunction()(feats[0], 1);
     expect(style.getImage().getScale()).toEqual(2);
-    expectWriteResult(feats, str, true);
+    const strKmlCorrected = expectWriteResult(feats, strCorrected);
+
+    // Next read/write should produce the same KML
+    feats = KML.readFeatures(strKmlCorrected);
+    style = feats[0].getStyleFunction()(feats[0], 1);
+    expect(style.getImage().getScale()).toEqual(2);
+    expectWriteResult(feats, strKmlCorrected);
+  });
+
+  describe("when using ol < 6.7", () => {
+    test("should set doNotRevert32pxScaling to true, to don't apply the 32px scale fix for KML without icon scale extended data", () => {
+      const str = `
+    <kml ${xmlns}>
+      <Document>
+          <name>lala</name>
+          <Placemark>
+              <description></description>
+              <Style>
+                  <IconStyle>
+                      <scale>
+                        2
+                      </scale>
+                      <Icon>
+                          <href>https://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+                          <gx:w>64</gx:w>
+                          <gx:h>64</gx:h>
+                      </Icon>
+                      <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+                  </IconStyle>
+              </Style>
+              <Point>
+                  <coordinates>0,0,0</coordinates>
+              </Point>
+          </Placemark>
+      </Document>
+    </kml>
+    `;
+      const strCorrected = `
+    <kml ${xmlns}>
+      <Document>
+          <name>lala</name>
+          <Placemark>
+              <description></description>
+              <Style>
+                  <IconStyle>
+                      <scale>
+                        4
+                      </scale>
+                      <Icon>
+                          <href>https://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+                          <gx:w>64</gx:w>
+                          <gx:h>64</gx:h>
+                      </Icon>
+                      <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+                  </IconStyle>
+              </Style>
+              <ExtendedData>
+                <Data name="iconScale">
+                  <value>
+                    2
+                  </value>
+                </Data>
+              </ExtendedData>
+              <Point>
+                  <coordinates>0,0,0</coordinates>
+              </Point>
+          </Placemark>
+      </Document>
+    </kml>`;
+      let feats = KML.readFeatures(str, null);
+      let style = feats[0].getStyleFunction()(feats[0], 1);
+      expect(style.getImage().getScale()).toEqual(2);
+      const strKmlCorrected = expectWriteResult(feats, strCorrected);
+
+      // Next read/write should produce the same KML
+      feats = KML.readFeatures(strKmlCorrected);
+      style = feats[0].getStyleFunction()(feats[0], 1);
+      expect(style.getImage().getScale()).toEqual(2);
+      expectWriteResult(feats, strKmlCorrected);
+    });
   });
 
   describe("writeDocumentCamera()", () => {
