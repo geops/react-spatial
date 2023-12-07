@@ -119,7 +119,7 @@
     "not android < 5"
   ],
   "engines": {
-    "node": "~20"
+    "node": "20.x"
   },
   "eslintConfig": {
     "env": {
