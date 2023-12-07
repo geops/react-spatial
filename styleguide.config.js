@@ -1,74 +1,74 @@
-const TerserPlugin = require('terser-webpack-plugin');
-const path = require('path');
-const { version } = require('./package.json');
+const TerserPlugin = require("terser-webpack-plugin");
+const path = require("path");
+const { version } = require("./package.json");
 
 module.exports = {
   version,
   template: {
-    favicon: 'images/favicon.png',
+    favicon: "images/favicon.png",
     head: {
       links: [
         {
-          rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css?family=Lato:400,700',
+          rel: "stylesheet",
+          href: "https://fonts.googleapis.com/css?family=Lato:400,700",
         },
       ],
     },
   },
-  assetsDir: 'src/',
-  styleguideDir: 'styleguide-build',
+  assetsDir: "src/",
+  styleguideDir: "styleguide-build",
   require: [
-    path.join(__dirname, 'src/themes/default/examples.scss'),
-    path.join(__dirname, 'src/styleguidist/styleguidist.css'),
-    'ol/ol.css',
+    path.join(__dirname, "src/themes/default/examples.scss"),
+    path.join(__dirname, "src/styleguidist/styleguidist.css"),
+    "ol/ol.css",
   ],
   moduleAliases: {
-    'react-spatial': path.resolve(__dirname, 'src'),
+    "react-spatial": path.resolve(__dirname, "src"),
   },
   sections: [
     {
-      name: '',
+      name: "",
 
-      content: 'README.md',
+      content: "README.md",
     },
     {
-      name: 'Maps',
+      name: "Maps",
       description:
-        'A collection of React components for spatial web development of map components.',
+        "A collection of React components for spatial web development of map components.",
       components: [
-        'src/components/BaseLayerSwitcher/[A-Z]*.js',
-        'src/components/BasicMap/[A-Z]*.js',
-        'src/components/CanvasSaveButton/[A-Z]*.js',
-        'src/components/Copyright/[A-Z]*.js',
-        'src/components/FeatureExportButton/[A-Z]*.js',
-        'src/components/FitExtent/[A-Z]*.js',
-        'src/components/Geolocation/[A-Z]*.js',
-        'src/components/LayerTree/[A-Z]*.js',
-        'src/components/MousePosition/[A-Z]*.js',
-        'src/components/NorthArrow/[A-Z]*.js',
-        'src/components/Permalink/[A-Z]*.js',
-        'src/components/Popup/[A-Z]*.js',
-        'src/components/Overlay/[A-Z]*.js',
-        'src/components/ScaleLine/[A-Z]*.js',
-        'src/components/Zoom/[A-Z]*.js',
+        "src/components/BaseLayerSwitcher/[A-Z]*.js",
+        "src/components/BasicMap/[A-Z]*.js",
+        "src/components/CanvasSaveButton/[A-Z]*.js",
+        "src/components/Copyright/[A-Z]*.js",
+        "src/components/FeatureExportButton/[A-Z]*.js",
+        "src/components/FitExtent/[A-Z]*.js",
+        "src/components/Geolocation/[A-Z]*.js",
+        "src/components/LayerTree/[A-Z]*.js",
+        "src/components/MousePosition/[A-Z]*.js",
+        "src/components/NorthArrow/[A-Z]*.js",
+        "src/components/Permalink/[A-Z]*.js",
+        "src/components/Popup/[A-Z]*.js",
+        "src/components/Overlay/[A-Z]*.js",
+        "src/components/ScaleLine/[A-Z]*.js",
+        "src/components/Zoom/[A-Z]*.js",
       ],
-      exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
-      usageMode: 'collapse', // 'hide' | 'collapse' | 'expand'
+      exampleMode: "expand", // 'hide' | 'collapse' | 'expand'
+      usageMode: "collapse", // 'hide' | 'collapse' | 'expand'
     },
     {
-      name: 'Realtime',
+      name: "Realtime",
       description:
-        'A collection of React components for spatial web development of realtime components.',
-      components: ['src/components/RouteSchedule/[A-Z]*.js'],
-      exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
-      usageMode: 'collapse', // 'hide' | 'collapse' | 'expand'
+        "A collection of React components for spatial web development of realtime components.",
+      components: ["src/components/RouteSchedule/[A-Z]*.js"],
+      exampleMode: "expand", // 'hide' | 'collapse' | 'expand'
+      usageMode: "collapse", // 'hide' | 'collapse' | 'expand'
     },
     {
-      name: 'Stops',
+      name: "Stops",
       description:
-        'A collection of React components for spatial web development of stops components.',
-      components: ['src/components/StopsFinder/StopsFinder.js'],
-      exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
+        "A collection of React components for spatial web development of stops components.",
+      components: ["src/components/StopsFinder/StopsFinder.js"],
+      exampleMode: "expand", // 'hide' | 'collapse' | 'expand'
     },
   ],
   webpackConfig: {
@@ -97,7 +97,7 @@ module.exports = {
           terserOptions: {
             // `esbuild` options
             // loader: '.js=jsx',
-            loader: 'jsx',
+            loader: "jsx",
           },
         }),
       ],
@@ -109,11 +109,11 @@ module.exports = {
         {
           // Match js, jsx, ts & tsx files
           test: /\.[jt]sx?$/,
-          loader: 'esbuild-loader',
+          loader: "esbuild-loader",
           options: {
             // JavaScript version to compile to
-            target: 'es2015',
-            loader: 'jsx',
+            target: "es2015",
+            loader: "jsx",
             minify: true,
             sourcemap: true,
           },
@@ -121,17 +121,17 @@ module.exports = {
         // Load css and scss files.
         {
           test: /\.s?css$/,
-          use: ['style-loader', 'css-loader', 'sass-loader'],
+          use: ["style-loader", "css-loader", "sass-loader"],
         },
         {
           test: /^((?!url).)*\.svg$/,
           exclude: [
-            path.resolve(__dirname, 'node_modules', '@geops', 'geops-ui'),
+            path.resolve(__dirname, "node_modules", "@geops", "geops-ui"),
           ],
           use: [
-            { loader: 'babel-loader' },
+            { loader: "babel-loader" },
             {
-              loader: 'react-svg-loader',
+              loader: "react-svg-loader",
               options: {
                 jsx: true, // true outputs JSX tags
               },
@@ -141,11 +141,11 @@ module.exports = {
         {
           test: /^((?!url).)*\.svg$/,
           include: [
-            path.resolve(__dirname, 'node_modules', '@geops', 'geops-ui'), // Load geops-ui SVGs using file-loader
+            path.resolve(__dirname, "node_modules", "@geops", "geops-ui"), // Load geops-ui SVGs using file-loader
           ],
           use: [
             {
-              loader: require.resolve('@svgr/webpack'),
+              loader: require.resolve("@svgr/webpack"),
               options: {
                 svgoConfig: {
                   plugins: [
@@ -157,7 +157,7 @@ module.exports = {
               },
             },
             {
-              loader: 'file-loader',
+              loader: "file-loader",
               options: {
                 jsx: true,
               },
@@ -166,13 +166,13 @@ module.exports = {
         },
         {
           test: /\.url\.svg$/,
-          loader: 'url-loader',
+          loader: "url-loader",
         },
         {
           test: /\.png$|.ico$/,
           use: [
             {
-              loader: 'url-loader',
+              loader: "url-loader",
             },
           ],
         },
@@ -181,11 +181,11 @@ module.exports = {
   },
   theme: {
     color: {
-      links: '#6987a1',
-      linkHover: '#76B833',
+      links: "#6987a1",
+      linkHover: "#76B833",
     },
     fontFamily: {
-      base: 'Lato',
+      base: "Lato",
     },
     fontSize: {
       base: 16,
@@ -201,16 +201,16 @@ module.exports = {
   },
   styles: {
     StyleGuide: {
-      '@global body': {
-        overflowY: 'hidden',
-        overflowX: 'hidden',
-        fontFamily: 'Arial',
+      "@global body": {
+        overflowY: "hidden",
+        overflowX: "hidden",
+        fontFamily: "Arial",
       },
     },
     Playground: {
       preview: {
-        fontSize: '18px',
-        marginBottom: '24px',
+        fontSize: "18px",
+        marginBottom: "24px",
       },
     },
     Heading: {
@@ -224,8 +224,8 @@ module.exports = {
     },
     Para: {
       para: {
-        lineHeight: '2.25rem',
-        fontSize: '1.125rem',
+        lineHeight: "2.25rem",
+        fontSize: "1.125rem",
       },
     },
     ComponentsList: {
@@ -233,19 +233,19 @@ module.exports = {
         fontSize: 16,
       },
       item: {
-        margin: '10px 0',
+        margin: "10px 0",
         fontSize: 18,
       },
     },
     Section: {
       root: {
-        marginBottom: '120px',
+        marginBottom: "120px",
       },
     },
   },
   showSidebar: true,
   styleguideComponents: {
-    ComponentsList: path.join(__dirname, 'src/styleguidist/ComponentsList'),
-    StyleGuideRenderer: path.join(__dirname, 'src/styleguidist/StyleGuide'),
+    ComponentsList: path.join(__dirname, "src/styleguidist/ComponentsList"),
+    StyleGuideRenderer: path.join(__dirname, "src/styleguidist/StyleGuide"),
   },
 };

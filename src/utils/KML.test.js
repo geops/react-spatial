@@ -8,7 +8,7 @@ import KML from "./KML";
 const xmlns =
   'xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/kml/2.2 https://developers.google.com/kml/schema/kml22gx.xsd"';
 
-const expectWriteResult = (feats, str) => {
+const expectWriteResult = (feats, str, fixGx = false) => {
   expect(
     beautify(
       KML.writeFeatures(
@@ -21,9 +21,12 @@ const expectWriteResult = (feats, str) => {
           }),
         },
         get("EPSG:4326"),
+        undefined,
+        fixGx,
       ),
     ),
   ).toEqual(beautify(str));
+  return str;
 };
 
 describe("KML", () => {
@@ -253,6 +256,9 @@ describe("KML", () => {
                     <Data name="iconRotation">
                       <value>1.5707963267948966</value>
                     </Data>
+                    <Data name="iconScale">
+                      <value>1</value>
+                    </Data>
                     <Data name="maxZoom">
                       <value>18.5</value>
                     </Data>
@@ -276,6 +282,7 @@ describe("KML", () => {
       const feats = KML.readFeatures(str);
       const style = feats[0].getStyleFunction()(feats[0], 1);
       expect(style.getZIndex()).toBe(1);
+      expect(style.getImage().getScale()).toEqual(2);
       expect(style.getImage().getRotation()).toBe(1.5707963267948966);
       expect(feats[0].get("pictureOptions")).toEqual({
         resolution: 4,
@@ -284,6 +291,151 @@ describe("KML", () => {
       expect(feats[0].get("maxZoom")).toEqual(18.5);
       expect(feats[0].get("minZoom")).toEqual(15);
       expectWriteResult(feats, str);
+    });
+  });
+
+  test("should add iconScale to extended data when writing, to revert effect of https://github.com/openlayers/openlayers/pull/12695.", () => {
+    const str = `
+    <kml ${xmlns}>
+      <Document>
+          <name>lala</name>
+          <Placemark>
+              <description></description>
+              <Style>
+                  <IconStyle>
+                      <scale>
+                        2
+                      </scale>
+                      <Icon>
+                          <href>https://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+                          <gx:w>64</gx:w>
+                          <gx:h>64</gx:h>
+                      </Icon>
+                      <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+                  </IconStyle>
+              </Style>
+              <Point>
+                  <coordinates>0,0,0</coordinates>
+              </Point>
+          </Placemark>
+      </Document>
+    </kml>
+    `;
+    const strCorrected = `
+    <kml ${xmlns}>
+      <Document>
+          <name>lala</name>
+          <Placemark>
+              <description></description>
+              <Style>
+                  <IconStyle>
+                      <scale>
+                        4
+                      </scale>
+                      <Icon>
+                          <href>https://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+                          <gx:w>64</gx:w>
+                          <gx:h>64</gx:h>
+                      </Icon>
+                      <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+                  </IconStyle>
+              </Style>
+              <ExtendedData>
+                <Data name="iconScale">
+                  <value>
+                    2
+                  </value>
+                </Data>
+              </ExtendedData>
+              <Point>
+                  <coordinates>0,0,0</coordinates>
+              </Point>
+          </Placemark>
+      </Document>
+    </kml>
+    `;
+    let feats = KML.readFeatures(str);
+    let style = feats[0].getStyleFunction()(feats[0], 1);
+    expect(style.getImage().getScale()).toEqual(2);
+    const strKmlCorrected = expectWriteResult(feats, strCorrected);
+
+    // Next read/write should produce the same KML
+    feats = KML.readFeatures(strKmlCorrected);
+    style = feats[0].getStyleFunction()(feats[0], 1);
+    expect(style.getImage().getScale()).toEqual(2);
+    expectWriteResult(feats, strKmlCorrected);
+  });
+
+  describe("when using ol < 6.7", () => {
+    test("should set doNotRevert32pxScaling to true, to don't apply the 32px scale fix for KML without icon scale extended data", () => {
+      const str = `
+    <kml ${xmlns}>
+      <Document>
+          <name>lala</name>
+          <Placemark>
+              <description></description>
+              <Style>
+                  <IconStyle>
+                      <scale>
+                        2
+                      </scale>
+                      <Icon>
+                          <href>https://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+                          <gx:w>64</gx:w>
+                          <gx:h>64</gx:h>
+                      </Icon>
+                      <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+                  </IconStyle>
+              </Style>
+              <Point>
+                  <coordinates>0,0,0</coordinates>
+              </Point>
+          </Placemark>
+      </Document>
+    </kml>
+    `;
+      const strCorrected = `
+    <kml ${xmlns}>
+      <Document>
+          <name>lala</name>
+          <Placemark>
+              <description></description>
+              <Style>
+                  <IconStyle>
+                      <scale>
+                        4
+                      </scale>
+                      <Icon>
+                          <href>https://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+                          <gx:w>64</gx:w>
+                          <gx:h>64</gx:h>
+                      </Icon>
+                      <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+                  </IconStyle>
+              </Style>
+              <ExtendedData>
+                <Data name="iconScale">
+                  <value>
+                    2
+                  </value>
+                </Data>
+              </ExtendedData>
+              <Point>
+                  <coordinates>0,0,0</coordinates>
+              </Point>
+          </Placemark>
+      </Document>
+    </kml>`;
+      let feats = KML.readFeatures(str, null);
+      let style = feats[0].getStyleFunction()(feats[0], 1);
+      expect(style.getImage().getScale()).toEqual(2);
+      const strKmlCorrected = expectWriteResult(feats, strCorrected);
+
+      // Next read/write should produce the same KML
+      feats = KML.readFeatures(strKmlCorrected);
+      style = feats[0].getStyleFunction()(feats[0], 1);
+      expect(style.getImage().getScale()).toEqual(2);
+      expectWriteResult(feats, strKmlCorrected);
     });
   });
 

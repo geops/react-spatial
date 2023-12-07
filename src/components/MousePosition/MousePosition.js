@@ -102,7 +102,7 @@ function MousePosition({
   useEffect(() => {
     const mousePosition = new OLMousePosition({
       target: ref.current,
-      undefinedHTML: "&nbsp;",
+      placeholder: "&nbsp;",
       className: "",
     });
     map.addControl(mousePosition);

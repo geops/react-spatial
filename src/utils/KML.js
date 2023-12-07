@@ -6,8 +6,16 @@ import GeometryCollection from "ol/geom/GeometryCollection";
 import { Style, Text, Icon, Circle, Fill, Stroke } from "ol/style";
 import { asString } from "ol/color";
 import { parse } from "ol/xml";
+import VectorSource from "ol/source/Vector";
+import VectorLayer from "ol/layer/Vector";
 import { kmlStyle } from "./Styles";
 import getPolygonPattern from "./getPolygonPattern";
+
+// Comes from ol >= 6.7,
+// https://github.com/openlayers/openlayers/blob/main/src/ol/format/KML.js#L320
+const scaleForSize = (size) => {
+  return 32 / Math.min(size[0], size[1]);
+};
 
 const applyTextStyleForIcon = (olIcon, olText) => {
   const size = olIcon.getSize() || [48, 48];
@@ -57,7 +65,7 @@ const getLineIcon = (feature, icon, color, start = true) => {
 };
 
 // Clean the unneeded feature's style and properties created by the KML parser.
-const sanitizeFeature = (feature) => {
+const sanitizeFeature = (feature, doNotRevert32pxScaling = false) => {
   const geom = feature.getGeometry();
   let styles = feature.getStyleFunction();
 
@@ -184,7 +192,6 @@ const sanitizeFeature = (feature) => {
             }),
         );
       }
-
       if (image instanceof Icon) {
         applyTextStyleForIcon(image, text);
       }
@@ -195,6 +202,15 @@ const sanitizeFeature = (feature) => {
        * <heading> tag, which is not read as rotation value by the ol KML module)
        */
       image.setRotation(parseFloat(feature.get("iconRotation")) || 0);
+
+      if (feature.get("iconScale")) {
+        image.setScale(parseFloat(feature.get("iconScale")) || 0);
+
+        // We fix the 32px scaling introduced by OL 6.7
+      } else if (!doNotRevert32pxScaling) {
+        const resizeScale = scaleForSize(image.getSize());
+        image.setScale(image.getScaleArray()[0] / resizeScale);
+      }
     }
 
     fill = undefined;
@@ -295,13 +311,23 @@ const sanitizeFeature = (feature) => {
  * Read a KML string.
  * @param {String} kmlString A string representing a KML file.
  * @param {<ol.Projection|String>} featureProjection The projection used by the map.
+ * @param {<boolean>} doNotRevert32pxScaling Set it to true if you use ol < 6.7 and last version of react-spatial, Fix the 32px scaling, introduced by (ol >= 6.7), see https://github.com/openlayers/openlayers/pull/12695.
  */
-const readFeatures = (kmlString, featureProjection) => {
+const readFeatures = (
+  kmlString,
+  featureProjection,
+  doNotRevert32pxScaling = false,
+) => {
+  // Since ol 6.7, the KML follows better the spec and GoogleEarth interpretation, see https://github.com/openlayers/openlayers/pull/12695.
+  // so the <scale> value is interpreted using an image size of 32px.
+  // So when revert32pxScaling is true we fix back the scale, to use only, if you use an OL < 6.7.
+  // Now the writeFeatures function use the iconScale extended data to set the image's scale.
+  // If the extended data is not found it will look at this boolean to define if we must revert the scale or not.
   const features = new KML().readFeatures(kmlString, {
     featureProjection,
   });
   features.forEach((feature) => {
-    sanitizeFeature(feature);
+    sanitizeFeature(feature, doNotRevert32pxScaling);
   });
   return features;
 };
@@ -310,6 +336,7 @@ const readFeatures = (kmlString, featureProjection) => {
  * Create a KML string.
  * @param {VectorLayer} layer A react-spatial VectorLayer.
  * @param {<ol.Projection|String>} featureProjection The current projection used by the features.
+ * @param {<boolean>} fixGxyAndGxh If the KML contains gx:w and gx:h, (ol >= 6.7), it will fix the bug introduced by https://github.com/openlayers/openlayers/pull/12695.
  */
 const writeFeatures = (layer, featureProjection, mapResolution) => {
   let featString;
@@ -429,6 +456,11 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
       if (newStyle.image.getRotation()) {
         // We set the icon rotation as extended data
         clone.set("iconRotation", newStyle.image.getRotation());
+      }
+
+      if (newStyle.image.getScale()) {
+        // We set the scale as extended metadata because the <scale> in the KML is related to a 32px img, since ol >= 6.10.
+        clone.set("iconScale", newStyle.image.getScale());
       }
 
       // Set map resolution to use for icon-to-map proportional scaling
@@ -585,6 +617,12 @@ const writeDocumentCamera = (kmlString, cameraAttributes) => {
 
   return new XMLSerializer().serializeToString(kmlDoc);
 };
+
+window.VectorLayer = VectorLayer;
+window.VectorSource = VectorSource;
+
+window.writeFeatures = writeFeatures;
+window.readFeatures = readFeatures;
 
 export default {
   readFeatures,
