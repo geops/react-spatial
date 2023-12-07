@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0](https://github.com/geops/react-spatial/compare/v1.7.1...v1.8.0) (2023-12-07)
+
+
+### Features
+
+* add iconScale extended metadata in KML ([#711](https://github.com/geops/react-spatial/issues/711)) ([1b8f2f8](https://github.com/geops/react-spatial/commit/1b8f2f81b6bf8a56d861b04f0c149c4ed25998c6))
+
 ### [1.7.1](https://github.com/geops/react-spatial/compare/v1.7.0...v1.7.1) (2023-10-25)
 
 
