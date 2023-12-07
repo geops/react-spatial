@@ -118,6 +118,9 @@
     "not ie <= 11",
     "not android < 5"
   ],
+  "engines": {
+    "node": "~20"
+  },
   "eslintConfig": {
     "env": {
       "node": true,
