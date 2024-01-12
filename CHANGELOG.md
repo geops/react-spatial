@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.8.1](https://github.com/geops/react-spatial/compare/v1.8.0...v1.8.1) (2024-01-12)
+
+
+### Bug Fixes
+
+* add renderStationName property ([0cdc7bd](https://github.com/geops/react-spatial/commit/0cdc7bd6ca638d62e0635d996c85cd5f9cb9cf8e))
+
 ## [1.8.0](https://github.com/geops/react-spatial/compare/v1.7.1...v1.8.0) (2023-12-07)
 
 
