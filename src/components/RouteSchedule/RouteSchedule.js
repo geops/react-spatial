@@ -98,11 +98,25 @@ const defaultRenderStationImg = (
   return <img src={src} alt="routeScheduleLine" className="rt-route-icon" />;
 };
 
+/**
+ * Returns an text.
+ * @param {Number} stations The stations list.
+ * @param {Number} index Index of the station in the list.
+ * @param {Boolean} cancelled If the station is cancelled
+ */
+const defaultRenderStationName = (stations, index, cancelled) => {
+  const { stationName } = stations[index];
+  return (
+    <div className={cancelled ? "rt-route-cancelled" : ""}>{stationName}</div>
+  );
+};
+
 function RouteStop({
   lineInfos,
   onStationClick,
   trackerLayer,
   renderStationImg,
+  renderStationName,
   stop,
   idx,
 }) {
@@ -110,7 +124,6 @@ function RouteStop({
     arrivalDelay,
     departureDelay,
     state,
-    stationName,
     aimedArrivalTime,
     aimedDepartureTime,
   } = stop;
@@ -201,7 +214,7 @@ function RouteStop({
         </span>
       </div>
       {renderStationImg(stations, idx, isStationPassed, isNotStation)}
-      <div className={cancelled ? "rt-route-cancelled" : ""}>{stationName}</div>
+      {renderStationName(stations, idx, cancelled)}
     </div>
   );
 }
@@ -357,6 +370,11 @@ const propTypes = {
   renderStation: PropTypes.func,
 
   /**
+   * Render a station name.
+   */
+  renderStationName: PropTypes.func,
+
+  /**
    * Function triggered on station's click event.
    */
   onStationClick: PropTypes.func,
@@ -373,6 +391,7 @@ const defaultProps = {
   renderHeader: defaultRenderHeader,
   renderStation: defaultRenderStation,
   renderStationImg: defaultRenderStationImg,
+  renderStationName: defaultRenderStationName,
   renderCopyright: defaultRenderCopyright,
   renderFooter: defaultRenderFooter,
   renderRouteIdentifier: defaultRenderRouteIdentifier,
