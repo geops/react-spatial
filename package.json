@@ -64,7 +64,7 @@
     "lint-staged": "15.2.0",
     "mapbox-gl": "1.13.1",
     "maplibre-gl": "3.6.2",
-    "mobility-toolbox-js": "2.3.7",
+    "mobility-toolbox-js": "2.3.8",
     "ol": "8.2.0",
     "postcss": "^8.4.33",
     "prettier": "3.2.4",

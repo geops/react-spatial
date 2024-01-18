@@ -9407,10 +9407,10 @@ mkdirp@~0.5.1:
   dependencies:
     minimist "^1.2.6"
 
-mobility-toolbox-js@2.3.7:
-  version "2.3.7"
-  resolved "https://registry.yarnpkg.com/mobility-toolbox-js/-/mobility-toolbox-js-2.3.7.tgz#681e8be86704a4e3f10986f4cf873095e4b7615b"
-  integrity sha512-hM+G6WSjHjE9NyDLFM7MIrhF4hJWgKlk2woKUDpbM5MoxqYQXSqiKY3cE63ZXSRp9Ixb/TGuI5pzEAj5jS+V+w==
+mobility-toolbox-js@2.3.8:
+  version "2.3.8"
+  resolved "https://registry.yarnpkg.com/mobility-toolbox-js/-/mobility-toolbox-js-2.3.8.tgz#0980a57c8e3f3e5ba922492627495fde45f55ba0"
+  integrity sha512-bxeg2SyfkbdVfQbvb+WNr+mOmnNcbLZHPgisqx87I3vNDi7OMGy5RoFlyAUxk876uDGjewmyKwP3m6Ud3uPHUg==
   dependencies:
     "@turf/helpers" "6.5.0"
     "@turf/transform-rotate" "6.5.0"
