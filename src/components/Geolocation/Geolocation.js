@@ -59,9 +59,15 @@ const propTypes = {
   noCenterAfterDrag: PropTypes.bool,
 
   /**
-   * If true, the map will constantly recenter to the current Position
+   * If true, the map will center once on the position then will constantly recenter to the current Position.
+   * If false, the map will center once on the position then will never recenter if the position changes.
    */
   alwaysRecenterToPosition: PropTypes.bool,
+
+  /**
+   * If true, the map will never center to the current position
+   */
+  neverCenterToPosition: PropTypes.bool,
 
   /**
    * Color (Number array with rgb values) or style function.
@@ -82,6 +88,7 @@ const defaultProps = {
   onDeactivate: () => {},
   noCenterAfterDrag: false,
   alwaysRecenterToPosition: true,
+  neverCenterToPosition: false,
   colorOrStyleFunc: [235, 0, 0],
 };
 
@@ -173,7 +180,8 @@ class Geolocation extends PureComponent {
   }
 
   update({ coords: { latitude, longitude } }) {
-    const { map, alwaysRecenterToPosition, onSuccess } = this.props;
+    const { map, alwaysRecenterToPosition, neverCenterToPosition, onSuccess } =
+      this.props;
 
     const position = transform(
       [longitude, latitude],
@@ -182,7 +190,7 @@ class Geolocation extends PureComponent {
     );
     this.point.setCoordinates(position);
 
-    if (this.isRecenteringToPosition) {
+    if (!neverCenterToPosition && this.isRecenteringToPosition) {
       map.getView().setCenter(position);
       if (!alwaysRecenterToPosition) {
         this.isRecenteringToPosition = false;
