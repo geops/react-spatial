@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.8.2](https://github.com/geops/react-spatial/compare/v1.8.1...v1.8.2) (2024-01-18)
+
+
+### Bug Fixes
+
+* add neverCenterToPosition property to geolocation component ([#713](https://github.com/geops/react-spatial/issues/713)) ([da1762f](https://github.com/geops/react-spatial/commit/da1762f3df5179d4012840c6ff485387b6adf86f))
+
 ### [1.8.1](https://github.com/geops/react-spatial/compare/v1.8.0...v1.8.1) (2024-01-12)
 
 
