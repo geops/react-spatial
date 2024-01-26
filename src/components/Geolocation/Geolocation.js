@@ -122,7 +122,7 @@ class Geolocation extends PureComponent {
     const geolocation = "geolocation" in navigator;
 
     if (!geolocation) {
-      onError();
+      onError(new Error("Geolocation not supported"));
     } else if (!active) {
       this.activate();
     } else {
@@ -130,11 +130,11 @@ class Geolocation extends PureComponent {
     }
   }
 
-  error() {
+  error(error) {
     const { onError } = this.props;
 
     this.deactivate();
-    onError();
+    onError(error);
   }
 
   deactivate() {
