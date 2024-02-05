@@ -1732,6 +1732,131 @@ exports[`LayerTree matches snapshots when no layers. 1`] = `
 />
 `;
 
+exports[`LayerTree matches snapshots when renderCheckbox is used. 1`] = `
+<div
+  className="rs-layer-tree"
+>
+  <div>
+    <div
+      className="rs-layer-tree-item rs-visible"
+      style={
+        {
+          "paddingLeft": "0px",
+        }
+      }
+    >
+      <div>
+        ✓
+      </div>
+      <div
+        aria-expanded={true}
+        aria-label="1 Hide sublayer"
+        className="rs-layer-tree-toggle"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+        title="1 Hide sublayer"
+      >
+        <div>
+          1
+        </div>
+        <div
+          className="rs-layer-tree-arrow rs-layer-tree-arrow-expanded"
+        />
+      </div>
+    </div>
+    <div>
+      <div
+        className="rs-layer-tree-item "
+        style={
+          {
+            "paddingLeft": "30px",
+          }
+        }
+      >
+        <div>
+          ✗
+        </div>
+        <div
+          aria-expanded={false}
+          aria-label="1-2 Show sublayer"
+          className="rs-layer-tree-toggle"
+          onClick={[Function]}
+          onKeyPress={[Function]}
+          role="button"
+          tabIndex={0}
+          title="1-2 Show sublayer"
+        >
+          <div>
+            1-2
+          </div>
+          <div
+            className="rs-layer-tree-arrow rs-layer-tree-arrow-collapsed"
+          />
+        </div>
+      </div>
+    </div>
+    <div>
+      <div
+        className="rs-layer-tree-item rs-visible"
+        style={
+          {
+            "paddingLeft": "30px",
+          }
+        }
+      >
+        <div>
+          ✓
+        </div>
+        <div
+          aria-expanded={false}
+          aria-label="1-1 Show sublayer"
+          className="rs-layer-tree-toggle"
+          onClick={[Function]}
+          onKeyPress={[Function]}
+          role="button"
+          tabIndex={0}
+          title="1-1 Show sublayer"
+        >
+          <div>
+            1-1
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div
+      className="rs-layer-tree-item rs-visible"
+      style={
+        {
+          "paddingLeft": "0px",
+        }
+      }
+    >
+      <div>
+        ✓
+      </div>
+      <div
+        aria-expanded={false}
+        aria-label="root Show sublayer"
+        className="rs-layer-tree-toggle"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        role="button"
+        tabIndex={0}
+        title="root Show sublayer"
+      >
+        <div>
+          root
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`LayerTree matches snapshots when renderItem is used. 1`] = `
 <div
   className="rs-layer-tree"
