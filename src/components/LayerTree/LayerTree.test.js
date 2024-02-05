@@ -88,6 +88,14 @@ describe("LayerTree", () => {
       });
     });
 
+    test("when renderCheckbox is used.", () => {
+      renderLayerTree(layers, {
+        renderCheckbox: (l) => {
+          return <div>{l.visible ? "✓" : "✗"}</div>;
+        },
+      });
+    });
+
     test("when classNames are used.", () => {
       renderLayerTree(layers, { className: "foo" });
     });

@@ -83,6 +83,11 @@ const propTypes = {
   renderLabel: PropTypes.func,
 
   /**
+   * Custom function to render the checkbox.
+   */
+  renderCheckbox: PropTypes.func,
+
+  /**
    * Object holding title for the layer tree's buttons.
    */
   titles: PropTypes.shape({
@@ -132,6 +137,7 @@ const defaultProps = {
   renderItemContent: null,
   renderBeforeItem: null,
   renderAfterItem: null,
+  renderCheckbox: null,
   renderLabel: (layer, layerComp) => {
     const { t } = layerComp.props;
     return t(layer.name);
@@ -298,7 +304,7 @@ class LayerTree extends Component {
   }
 
   renderInput(layer, inputProps) {
-    const { titles, isItemHidden } = this.props;
+    const { titles, isItemHidden, renderCheckbox } = this.props;
     let tabIndex = 0;
 
     if (
@@ -311,7 +317,9 @@ class LayerTree extends Component {
     }
 
     const inputType = layer.get("group") ? "radio" : "checkbox";
-    return (
+    return renderCheckbox ? (
+      renderCheckbox(layer, this, inputProps)
+    ) : (
       // eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/no-noninteractive-element-interactions
       <label
         className={`rs-layer-tree-input rs-layer-tree-input-${inputType} rs-${inputType}`}

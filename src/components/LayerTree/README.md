@@ -13,7 +13,15 @@ import BasicMap from 'react-spatial/components/BasicMap';
 const baseBright = new MapboxLayer({
   name: 'Base - Bright',
   group: 'baseLayer',
-  url: `https://maps.geops.io/styles/base_bright_v2/style.json?key=${apiKey}`,
+  url: `https://maps.geops.io/styles/travic_v2_generalized/style.json?key=${apiKey}`,
+});
+
+const stations = new MapboxStyleLayer({
+  name: 'Stations',
+  mapboxLayer: baseBright,
+  styleLayersFilter: (layer) => {
+    return layer.metadata && /mapset_stations/.test(layer.metadata['mapset.filter'])
+  }
 });
 
 const railLines = new MapboxStyleLayer({
@@ -32,31 +40,8 @@ const railLines = new MapboxStyleLayer({
   },
 });
 
-const passengerFrequencies = new MapboxStyleLayer({
-  name: 'Passenger frequencies',
-  mapboxLayer: baseBright,
-  styleLayer: {
-    id: 'passagierfrequenzen',
-    type: 'circle',
-    source: 'base',
-    'source-layer': 'osm_points',
-    filter: ['has', 'dwv'],
-    paint: {
-      'circle-radius': ['*', ['sqrt', ['/', ['get', 'dwv'], Math.PI]], 0.2],
-      'circle-color': 'rgb(254, 160, 0)',
-      'circle-stroke-width': 2,
-      'circle-stroke-color': 'rgb(254, 160, 0)',
-      'circle-opacity': [
-        'case',
-        ['boolean', ['feature-state', 'hover'], false],
-        1,
-        0.7,
-      ],
-    },
-  },
-});
 
-baseBright.children = [passengerFrequencies, railLines];
+baseBright.children = [railLines, stations];
 
 const baseDark = new MapboxLayer({
   name: 'Base - Dark',
