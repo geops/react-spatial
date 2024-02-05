@@ -10,7 +10,7 @@ import GeoJSONFormat from 'ol/format/GeoJSON';
 import LayerTree from 'react-spatial/components/LayerTree';
 import BasicMap from 'react-spatial/components/BasicMap';
 
-const baseBright = new MapboxLayer({
+const baseTravic = new MapboxLayer({
   name: 'Base - Bright',
   group: 'baseLayer',
   url: `https://maps.geops.io/styles/travic_v2_generalized/style.json?key=${apiKey}`,
@@ -18,7 +18,7 @@ const baseBright = new MapboxLayer({
 
 const stations = new MapboxStyleLayer({
   name: 'Stations',
-  mapboxLayer: baseBright,
+  mapboxLayer: baseTravic,
   styleLayersFilter: (layer) => {
     return layer.metadata && /mapset_stations/.test(layer.metadata['mapset.filter'])
   }
@@ -26,7 +26,7 @@ const stations = new MapboxStyleLayer({
 
 const railLines = new MapboxStyleLayer({
   name: 'Railways routes',
-  mapboxLayer: baseBright,
+  mapboxLayer: baseTravic,
   styleLayer: {
     id: 'rail',
     type: 'line',
@@ -41,7 +41,7 @@ const railLines = new MapboxStyleLayer({
 });
 
 
-baseBright.children = [railLines, stations];
+baseTravic.children = [railLines, stations];
 
 const baseDark = new MapboxLayer({
   name: 'Base - Dark',
@@ -50,16 +50,7 @@ const baseDark = new MapboxLayer({
   url: `https://maps.geops.io/styles/base_dark_v2/style.json?key=${apiKey}`,
 });
 
-const baseTravic = new MapboxLayer({
-  url: `https://maps.geops.io/styles/travic_v2/style.json?key=${apiKey}`,
-  group: 'baseLayer',
-  visible: false,
-  properties: {
-    hidden: true,
-  },
-});
-
-const layers = [baseDark, baseTravic, baseBright];
+const layers = [baseDark, baseTravic];
 
 <div className="rs-layer-tree-example">
   <BasicMap
