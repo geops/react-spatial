@@ -2,13 +2,10 @@
 
 [![npm](https://img.shields.io/npm/v/react-spatial.svg?style=flat-square)](https://www.npmjs.com/package/react-spatial)
 [![build](https://github.com/geops/react-spatial/workflows/main/badge.svg)](https://github.com/geops/react-spatial/actions?query=workflow%3Amain)
-[![Renovate](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 ![Vercel](https://vercelbadge.vercel.app/api/geops/react-spatial)
 
-This library provides React components to build web applications and to visualize real-time geographical information based on [OpenLayers](https://openlayers.org/) and [Mapbox GL](https://docs.mapbox.com/mapbox-gl-js/api/).
-
-This library uses the [mobility-toolbox-js](https://mobility-toolbox-js.geops.io/) library.
+This library provides React components to build web applications and to visualize real-time geographical information based on [OpenLayers](https://openlayers.org/) and [Malibre GL](https://maplibre.org/maplibre-gl-js/).
 
 Documentation and examples at https://react-spatial.geops.io.
 

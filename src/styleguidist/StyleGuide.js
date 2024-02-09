@@ -9,10 +9,12 @@ import {
   List,
   ListItem,
   Link,
-} from "@material-ui/core";
-import Open from "@material-ui/icons/ArrowDropDownTwoTone";
-import Close from "@material-ui/icons/ArrowDropUpTwoTone";
-import { ThemeProvider } from "@material-ui/core/styles";
+} from "@mui/material";
+import {
+  ArrowDropDownTwoTone as Open,
+  ArrowDropUpTwoTone as Close,
+} from "@mui/icons-material";
+import { ThemeProvider } from "@mui/material/styles";
 import Version from "react-styleguidist/lib/client/rsg-components/Version";
 import Styled from "react-styleguidist/lib/client/rsg-components/Styled";
 import docConfig from "../../doc/doc-config.json";
@@ -132,7 +134,9 @@ export function StyleGuideRenderer({
       <div className={classes.root}>
         <Header
           title={docConfig.appName}
-          tabs={[{ label: "Code", href: `${docConfig.githubRepo}` }]}
+          tabs={[
+            { label: "Code", href: `${docConfig.githubRepo}`, component: "a" },
+          ]}
         />
         <div className={classes.content}>
           <Hidden smUp>

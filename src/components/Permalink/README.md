@@ -7,8 +7,10 @@ import VectorSource from 'ol/source/Vector';
 import VectorLayer from 'ol/layer/Vector';
 import { Style, Circle, Stroke, Fill } from 'ol/style';
 import GeoJSONFormat from 'ol/format/GeoJSON';
+import { geopsTheme } from '@geops/geops-ui';
+import { ThemeProvider } from '@mui/material';
 import { Layer, MapboxLayer } from 'mobility-toolbox-js/ol';
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 import Permalink from 'react-spatial/components/Permalink';
 import BasicMap from 'react-spatial/components/BasicMap';
 import Map from 'ol/Map';
@@ -57,49 +59,51 @@ const baseLayers = [
 
 const layers = [...baseLayers, swissBoundries];
 
-<div className="rs-permalink-example">
-  <BasicMap center={[876887.69, 5928515.41]} map={map} layers={layers} tabIndex={0} zoom={5} />
-  <Permalink
-    map={map}
-    layers={layers}
-    params={{
-      mode: 'custom',
-    }}
-    isBaseLayer={l=>{
-      return baseLayers.includes(l);
-    }}
-    isLayerHidden={l => {
-        let hasParentHidden = false;
-        let { parent } = l;
-        while (!hasParentHidden && parent) {
-          hasParentHidden = parent.get('hideInLegend');
-          parent = parent.parent;
-        }        
-        return l.get('hideInLegend') || hasParentHidden;
-    }}
-  />
-  <div className="rs-permalink-example-btns">
-    <Button
-      onClick={() => {
-        swissBoundries.visible = !swissBoundries.visible;
+<ThemeProvider theme={geopsTheme}>
+  <div className="rs-permalink-example">
+    <BasicMap center={[876887.69, 5928515.41]} map={map} layers={layers} tabIndex={0} zoom={5} />
+    <Permalink
+      map={map}
+      layers={layers}
+      params={{
+        mode: 'custom',
       }}
-    >
-      Toggle Switzerland layer
-    </Button>
-    <Button
-      onClick={() => {
-      if (baseLayers[1].visible) {
-        baseLayers[0].visible = true;
-        baseLayers[1].visible = false;
-      } else {
-        baseLayers[0].visible = false;
-        baseLayers[1].visible = true;
-      }
-      map.updateSize();
-    }}
-    >
-      Change base layer
-    </Button>
+      isBaseLayer={l=>{
+        return baseLayers.includes(l);
+      }}
+      isLayerHidden={l => {
+          let hasParentHidden = false;
+          let { parent } = l;
+          while (!hasParentHidden && parent) {
+            hasParentHidden = parent.get('hideInLegend');
+            parent = parent.parent;
+          }        
+          return l.get('hideInLegend') || hasParentHidden;
+      }}
+    />
+    <div className="rs-permalink-example-btns">
+      <Button
+        onClick={() => {
+          swissBoundries.visible = !swissBoundries.visible;
+        }}
+      >
+        Toggle Switzerland layer
+      </Button>
+      <Button
+        onClick={() => {
+        if (baseLayers[1].visible) {
+          baseLayers[0].visible = true;
+          baseLayers[1].visible = false;
+        } else {
+          baseLayers[0].visible = false;
+          baseLayers[1].visible = true;
+        }
+        map.updateSize();
+      }}
+      >
+        Change base layer
+      </Button>
+    </div>
   </div>
-</div>;
+</ThemeProvider>
 ```

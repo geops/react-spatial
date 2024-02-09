@@ -1,6 +1,7 @@
-import React, { lazy, Suspense } from "react";
+/* eslint-disable react/jsx-props-no-spreading */
+import React, { Suspense, lazy } from "react";
 import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core";
+import { CircularProgress, styled } from "@mui/material";
 
 const ext = "_round-blue-01.svg";
 const iconForMot = {};
@@ -19,37 +20,29 @@ const iconForMot = {};
   });
 });
 
-const useStyles = makeStyles((theme) => {
-  return {
-    flex: {
-      display: "flex",
-      alignItems: "center",
-    },
-    icon: {
-      marginRight: theme.spacing(2),
-    },
-  };
-});
+const StyledFlex = styled("div")(() => ({
+  display: "flex",
+  alignItems: "center",
+  gap: 5,
+}));
 
-function StopsFinderOption({ option }) {
-  const classes = useStyles();
-
+function StopsFinderOption({ option, ...props }) {
   return (
-    <Suspense fallback={<div />}>
-      <div className={classes.flex}>
-        {Object.entries(option.properties.mot).map(([key, value]) => {
+    <Suspense fallback={<CircularProgress size={20} />}>
+      <StyledFlex {...props}>
+        {Object.entries(option.properties?.mot).map(([key, value]) => {
           if (value) {
             const MotIcon = iconForMot[key];
             return (
-              <span className={classes.icon} key={key}>
+              <StyledFlex key={key}>
                 <MotIcon />
-              </span>
+              </StyledFlex>
             );
           }
           return null;
         })}
         <span>{option.properties.name}</span>
-      </div>
+      </StyledFlex>
     </Suspense>
   );
 }

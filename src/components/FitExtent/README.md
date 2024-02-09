@@ -7,9 +7,9 @@ import { MapboxLayer } from 'mobility-toolbox-js/ol';
 import Tile from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import Map from 'ol/Map';
-import { geopsTheme, Header, Footer } from '@geops/geops-ui';
-import { ThemeProvider } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import { geopsTheme } from '@geops/geops-ui';
+import { ThemeProvider } from '@mui/material';
+import Button from '@mui/material/Button';
 import FitExtent from 'react-spatial/components/FitExtent';
 import BasicMap from 'react-spatial/components/BasicMap';
 

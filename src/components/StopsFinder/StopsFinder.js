@@ -1,26 +1,23 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useMemo, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Autocomplete } from "@material-ui/lab";
+import { Autocomplete, autocompleteClasses, styled } from "@mui/material";
 import { FaSearch } from "react-icons/fa";
-import TextField from "@material-ui/core/TextField";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import TextField from "@mui/material/TextField";
+import CircularProgress from "@mui/material/CircularProgress";
 import { StopFinderControl } from "mobility-toolbox-js/ol";
 import { Map } from "ol";
-import { makeStyles } from "@material-ui/core";
-import StopsFinderOptions from "./StopsFinderOption";
+import StopsFinderOption from "./StopsFinderOption";
 
-const useStyles = makeStyles(() => {
-  return {
-    popupIndicatorOpen: {
-      transform: "rotate(0)",
-    },
-  };
-});
+const StyledAutocomplete = styled(Autocomplete)(() => ({
+  [`&.${autocompleteClasses.popupIndicatorOpen}`]: {
+    transform: "rotate(0)",
+  },
+}));
 
 function StopsFinder({
   agencies,
   apiKey,
-  autocompleteProps,
   bbox,
   field,
   limit,
@@ -31,8 +28,9 @@ function StopsFinder({
   refLocation,
   renderAutocomplete,
   url,
+  textFieldProps,
+  ...props
 }) {
-  const classes = useStyles();
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [isLoading, setLoading] = useState(false);
@@ -112,14 +110,8 @@ function StopsFinder({
       setLoading,
     );
   }
-  const textFieldProps = {
-    ...((autocompleteProps || {}).textFieldProps || {}),
-  };
-  const autocProps = { ...autocompleteProps };
-  delete autocProps.textFieldProps;
-
   return (
-    <Autocomplete
+    <StyledAutocomplete
       fullWidth
       autoComplete
       autoHighlight
@@ -128,7 +120,7 @@ function StopsFinder({
         return option.properties.name;
       }}
       onChange={(evt, value, reason) => {
-        if (onSelect && reason === "select-option") {
+        if (onSelect && reason === "selectOption") {
           onSelect(value, evt);
         }
       }}
@@ -137,11 +129,8 @@ function StopsFinder({
         return (
           <TextField
             label="Search stops"
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            {...{
-              ...params,
-              ...textFieldProps,
-            }}
+            {...params}
+            {...textFieldProps}
             InputProps={{
               ...params.InputProps,
               endAdornment: (
@@ -154,12 +143,16 @@ function StopsFinder({
           />
         );
       }}
-      renderOption={(option) => {
-        return <StopsFinderOptions option={option} />;
+      renderOption={(liProps, option) => {
+        return (
+          <StopsFinderOption
+            key={option.properties?.name}
+            option={option}
+            {...liProps}
+          />
+        );
       }}
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...autocProps}
-      classes={{ ...classes, ...autocompleteProps.classes }}
+      {...props}
       inputValue={inputValue}
       open={isOpen}
       options={suggestions}
@@ -194,10 +187,9 @@ StopsFinder.propTypes = {
   apiKey: PropTypes.string,
 
   /**
-   * Properties apply to the default [MUI Autocomplete component](https://material-ui.com/api/autocomplete/).
-   * We add a custom properties textFieldProps for the default [MUI TextField component](https://material-ui.com/api/text-field/) used by the Autocomplete.
+   * Properties apply to the default [MUI TextField component](https://material-ui.com/api/text-field/) used by the Autocomplete.
    */
-  autocompleteProps: PropTypes.object,
+  textFieldProps: PropTypes.object,
 
   /**
    * minX,minY,maxX,maxY coordinates in WGS84 wherein the station should lie.
@@ -269,7 +261,7 @@ StopsFinder.propTypes = {
 StopsFinder.defaultProps = {
   agencies: null,
   apiKey: null,
-  autocompleteProps: {},
+  textFieldProps: {},
   bbox: null,
   field: null,
   limit: null,

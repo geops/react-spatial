@@ -8,9 +8,9 @@ import Tile from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import BasicMap from 'react-spatial/components/BasicMap';
 import RouteSchedule from 'react-spatial/components/RouteSchedule';
-import ToggleButton from '@material-ui/lab/ToggleButton';
+import { ToggleButton } from '@mui/material';
 import { FaFilter } from 'react-icons/fa';
-import GpsFixedIcon from '@material-ui/icons/GpsFixed';
+import { GpsFixed as GpsFixedIcon } from '@mui/icons-material';
 
 
 // The `apiKey` used here is for demonstration purposes only.

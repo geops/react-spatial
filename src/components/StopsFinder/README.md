@@ -9,6 +9,8 @@ import Tile from 'ol/layer/Tile';
 import { fromLonLat } from 'ol/proj';
 import OSM from 'ol/source/OSM';
 import BasicMap from 'react-spatial/components/BasicMap';
+import { ThemeProvider } from '@mui/material';
+import { geopsTheme} from '@geops/geops-ui';
 import StopsFinder from 'react-spatial/components/StopsFinder';
 
 const map = new Map({ controls: [] });
@@ -25,7 +27,7 @@ const layers = [
 // Please get your own api key at https://developer.geops.io/.
 const { apiKey } = window;
 
-<>
+<ThemeProvider theme={geopsTheme}>
   <BasicMap
     map={map}
     center={[951560, 6002550]}
@@ -38,13 +40,9 @@ const { apiKey } = window;
     map={map}
     apiKey={apiKey}
     onSelect={({ geometry }) => {
+      console.log(geometry);
       map.getView().setCenter(fromLonLat(geometry.coordinates));
     }}
-    autocompleteProps={{
-      textFieldProps: {
-        label: 'Search for stops',
-      },
-    }}
   />
-</>
+</ThemeProvider>
 ```

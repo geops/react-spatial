@@ -11,8 +11,8 @@ import Point from 'ol/geom/Point';
 import { Icon, Style } from 'ol/style';
 import GPX from 'ol/format/GPX';
 import { geopsTheme, Header, Footer } from '@geops/geops-ui';
-import { ThemeProvider } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import { ThemeProvider } from '@mui/material';
+import Button from '@mui/material/Button';
 import BasicMap from 'react-spatial/components/BasicMap';
 import FeatureExportButton from 'react-spatial/components/FeatureExportButton';
 
