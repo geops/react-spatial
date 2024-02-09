@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.9.1](https://github.com/geops/react-spatial/compare/v1.9.0...v1.9.1) (2024-02-09)
+
+
+### Bug Fixes
+
+* fix search icon css ([bd46106](https://github.com/geops/react-spatial/commit/bd461060100b4314a0f53f89c289d0f44e283397))
+
 ## [1.9.0](https://github.com/geops/react-spatial/compare/v1.8.2...v1.9.0) (2024-02-09)
 
 
