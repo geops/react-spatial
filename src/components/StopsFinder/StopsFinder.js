@@ -10,7 +10,7 @@ import { Map } from "ol";
 import StopsFinderOption from "./StopsFinderOption";
 
 const StyledAutocomplete = styled(Autocomplete)(() => ({
-  [`&.${autocompleteClasses.popupIndicatorOpen}`]: {
+  [`& .${autocompleteClasses.popupIndicatorOpen}`]: {
     transform: "rotate(0)",
   },
 }));
