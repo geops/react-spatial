@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0](https://github.com/geops/react-spatial/compare/v1.8.2...v1.9.0) (2024-02-09)
+
+
+### Features
+
+* update dependencies and mui@v5 ([f009da5](https://github.com/geops/react-spatial/commit/f009da502220cf6e1c1d904ca1b753e5b70503d9))
+
+
+### Bug Fixes
+
+* **LayerTree:** add LayerTree renderCheckbox prop ([#715](https://github.com/geops/react-spatial/issues/715)) ([a103897](https://github.com/geops/react-spatial/commit/a1038970a9ed236cc6bb0c6a06c0509093c41c28))
+* pass the error to the onError callback ([686bf99](https://github.com/geops/react-spatial/commit/686bf996af5120c2abc0a2ffdfd2892e48eff8eb))
+
 ### [1.8.2](https://github.com/geops/react-spatial/compare/v1.8.1...v1.8.2) (2024-01-18)
 
 
