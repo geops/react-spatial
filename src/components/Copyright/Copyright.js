@@ -34,25 +34,18 @@ const defaultProps = {
  * to render the layer copyrights.
  */
 function Copyright({ map, format, ...other }) {
-  const [copyrights, setCopyrights] = useState([]);
+  const [node, setNode] = useState(null);
 
-  const control = useMemo(
-    () => {
-      return new CopyrightControl({
-        target: document.createElement("div"),
-        element: document.createElement("div"),
-        render() {
-          // eslint-disable-next-line react/no-this-in-sfc
-          const newCopyrights = this.getCopyrights();
-          if (copyrights.toString() !== newCopyrights.toString()) {
-            setCopyrights(newCopyrights);
-          }
-        },
-      });
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
+  const control = useMemo(() => {
+    if (!node) {
+      return null;
+    }
+    return new CopyrightControl({
+      target: node,
+      element: document.createElement("div"),
+      format,
+    });
+  }, [node, format]);
 
   // Ensure the control is not associated to the wrong map
   useEffect(() => {
@@ -60,25 +53,18 @@ function Copyright({ map, format, ...other }) {
       return () => {};
     }
 
-    control.map = map;
+    map.addControl(control);
 
     return () => {
-      control.map = null;
+      map.removeControl(control);
     };
   }, [map, control]);
 
-  if (!control || !control.getCopyrights().length) {
-    return null;
-  }
-
   return (
     <div
+      ref={(nod) => setNode(nod)}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...other}
-      // eslint-disable-next-line react/no-danger
-      dangerouslySetInnerHTML={{
-        __html: format(copyrights) || "",
-      }}
     />
   );
 }

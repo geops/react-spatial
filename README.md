@@ -16,7 +16,7 @@ Documentation and examples at https://react-spatial.geops.io.
 Install the [react-spatial](https://www.npmjs.com/package/react-spatial) package:
 
 ```bash
-yarn add mobility-toolbox-js mapbox-gl mapblibre-gl ol react-spatial
+yarn add mapblibre-gl ol mobility-toolbox-js react-spatial
 ```
 
 Your build pipeline needs to support ES6 modules and SASS.

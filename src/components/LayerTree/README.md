@@ -1,5 +1,8 @@
 The following example demonstrates the use of LayerTree.
 
+This component uses the `group` property to define if the behavior will be a simple checkbox or a radio button.
+If a `group` is defined when the layer is set to visible, it will hide all other layers with the same group. Each group must be unique.
+
 ```jsx
 import React, { useEffect } from 'react';
 import { MaplibreLayer, MaplibreStyleLayer, Layer } from 'mobility-toolbox-js/ol';
@@ -13,31 +16,32 @@ import BasicMap from 'react-spatial/components/BasicMap';
 const baseTravic = new MaplibreLayer({
   name: 'Base - Bright',
   group: 'baseLayer',
+  visible: true,
   url: `https://maps.geops.io/styles/travic_v2_generalized/style.json?key=${apiKey}`,
 });
 
 const stations = new MaplibreStyleLayer({
   name: 'Stations',
-  mapboxLayer: baseTravic,
-  styleLayersFilter: (layer) => {
+  maplibreLayer: baseTravic,
+  layersFilter: (layer) => {
     return layer.metadata && /mapset_stations/.test(layer.metadata['mapset.filter'])
   }
 });
 
 const railLines = new MaplibreStyleLayer({
   name: 'Railways routes',
-  mapboxLayer: baseTravic,
-  styleLayer: {
+  maplibreLayer: baseTravic,
+  layers: [{
     id: 'rail',
     type: 'line',
     source: 'base',
     'source-layer': 'osm_edges',
-    filter: ['==', 'vehicle_type_prior', 'Zug'],
+    // filter: ['==', 'vehicle_type_prior', 'Zug'],
     paint: {
       'line-color': 'rgba(255, 0, 0, 1)',
       'line-width': 2,
     },
-  },
+  }],
 });
 
 

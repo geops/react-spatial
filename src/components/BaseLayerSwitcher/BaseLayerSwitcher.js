@@ -7,7 +7,7 @@ import Layer from "ol/layer/Layer";
 
 const propTypes = {
   /**
-   * An array of [mobility-toolbox-js layers](https://mobility-toolbox-js.geops.io/api/identifiers%20html#ol-layers).
+   * An array of OpenLayers layers
    */
   layers: PropTypes.arrayOf(PropTypes.instanceOf(Layer)).isRequired,
 

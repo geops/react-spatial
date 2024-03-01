@@ -21,8 +21,8 @@ const layers = [
     url: `https://maps.geops.io/styles/base_bright_v2/style.json?key=${window.apiKey}`,
   }),
   new Tile({
-    copyrights: '&copy; My custom copyright for OSM Contributors',
     source: new OSM({
+      attributions: '&copy; My custom copyright for OSM Contributors',
     }),
   }),
 ];

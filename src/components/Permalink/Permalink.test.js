@@ -3,7 +3,6 @@ import React from "react";
 import MapEvent from "ol/MapEvent";
 import OLMap from "ol/Map";
 import View from "ol/View";
-import { MaplibreLayer } from "mobility-toolbox-js/ol";
 import { act, render } from "@testing-library/react";
 import Layer from "ol/layer/Layer";
 import Permalink from "./Permalink";
@@ -37,13 +36,13 @@ describe("Permalink", () => {
         visible: false,
         hideInLegend: true,
       }),
-      new MaplibreLayer({
+      new Layer({
         name: "Base - Bright",
         key: "basebright.baselayer",
         group: "baseLayer",
         isBaseLayer: true,
       }),
-      new MaplibreLayer({
+      new Layer({
         name: "Base - Dark",
         key: "basedark.baselayer",
         visible: false,

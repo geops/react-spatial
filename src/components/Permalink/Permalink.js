@@ -2,8 +2,8 @@ import { PureComponent } from "react";
 import PropTypes from "prop-types";
 import OLMap from "ol/Map";
 import { unByKey } from "ol/Observable";
-import { getLayersAsFlatArray } from "mobility-toolbox-js/ol";
 import Layer from "ol/layer/Layer";
+import getLayersAsFlatArray from "../../utils/getLayersAsFlatArray";
 
 const propTypes = {
   /**

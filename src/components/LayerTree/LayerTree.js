@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { getLayersAsFlatArray } from "mobility-toolbox-js/ol";
 import { unByKey } from "ol/Observable";
 import Layer from "ol/layer/Layer";
+import getLayersAsFlatArray from "../../utils/getLayersAsFlatArray";
 
 const propTypes = {
   /**
@@ -162,6 +162,42 @@ const defaultProps = {
  */
 
 class LayerTree extends Component {
+  static getChildren = (layer) =>
+    layer?.children ||
+    layer?.get("children") ||
+    // ol.layer.group
+    layer?.getLayers?.().getArray() ||
+    [];
+
+  static getVisible = (layer) =>
+    layer.getVisible ? layer.getVisible() : layer.visible;
+
+  static setVisible = (layer, visible) => {
+    if (layer.setVisible) {
+      layer.setVisible(visible);
+      return;
+    }
+    // eslint-disable-next-line no-param-reassign
+    layer.visible = visible;
+  };
+
+  static listenGroups = (layers) => {
+    const flat = getLayersAsFlatArray(layers);
+    const keys = flat.map((layer) => {
+      return layer.on("change:visible", (e) => {
+        const { target } = e;
+        if (target.getVisible() && target.get("group")) {
+          flat.forEach((l) => {
+            if (l.get("group") === target.get("group") && l !== target) {
+              l.setVisible(false);
+            }
+          });
+        }
+      });
+    });
+    return keys;
+  };
+
   constructor(props) {
     super(props);
 
@@ -171,9 +207,9 @@ class LayerTree extends Component {
           layers.filter((l) => {
             return (
               !isItemHidden(l) &&
-              (l.children || [])
+              LayerTree.getChildren(l)
                 .filter((child) => {
-                  return child.visible;
+                  return LayerTree.getVisible(child);
                 })
                 .filter((c) => {
                   return !isItemHidden(c);
@@ -184,7 +220,7 @@ class LayerTree extends Component {
       : [];
 
     this.state = {
-      rootLayer: new Layer(),
+      rootLayer: new Layer({}),
       expandedLayers: initialExpandedLayers,
       revision: 0,
     };
@@ -212,11 +248,8 @@ class LayerTree extends Component {
   onInputClick(layer, toggle = false) {
     if (toggle) {
       this.onToggle(layer);
-    } else if (layer.setVisible) {
-      layer.setVisible(!layer.visible);
     } else {
-      // eslint-disable-next-line no-param-reassign
-      layer.visible = !layer.visible;
+      LayerTree.setVisible(layer, !LayerTree.getVisible(layer));
     }
   }
 
@@ -241,7 +274,7 @@ class LayerTree extends Component {
   getExpandedLayers(layers) {
     const { isItemHidden } = this.props;
     const children = layers.flatMap((l) => {
-      return l.children.filter((c) => {
+      return LayerTree.getChildren(l).filter((c) => {
         return !isItemHidden(c) && c.get("isAlwaysExpanded");
       });
     });
@@ -256,7 +289,7 @@ class LayerTree extends Component {
     const { layers, expandChildren } = this.props;
 
     // Update the root layer
-    let rootLayer = new Layer();
+    let rootLayer = new Layer({});
     if (Array.isArray(layers)) {
       if (layers.length === 1) {
         [rootLayer] = layers;
@@ -266,13 +299,68 @@ class LayerTree extends Component {
       rootLayer = layers;
     }
 
-    getLayersAsFlatArray(rootLayer).forEach((layer) => {
+    const flat = getLayersAsFlatArray(rootLayer);
+    flat.forEach((layer) => {
       this.olKeys.push(
         layer.on("propertychange", () => {
           const { revision } = this.state;
           this.setState({ revision: revision + 1 });
         }),
+
+        // Manage group visibility
+        layer.on("change:visible", (evt) => {
+          const { target } = evt;
+          if (target.getVisible() && target.get("group")) {
+            flat.forEach((l) => {
+              if (l.get("group") === target.get("group") && l !== target) {
+                l.setVisible(false);
+              }
+            });
+          }
+        }),
+
+        // Manage parent/children visibility
+        layer.on("change:visible", (evt) => {
+          const { target } = evt;
+          const parent = target.get("parent");
+          const children = LayerTree.getChildren(target);
+
+          if (target.getVisible()) {
+            // We make the parent visible
+            if (parent) {
+              parent.setVisible(true);
+            }
+
+            // If children doesn't contain any visible layers, we display all children.
+            if (children && !children.some((child) => child.getVisible())) {
+              children.forEach((child) => {
+                child.setVisible(true);
+              });
+            }
+          } else {
+            // We hide all the children
+            children.forEach((child) => {
+              child.setVisible(false);
+            });
+
+            // If the parent has no more visible child we also hide it.
+            if (
+              parent?.getVisible() &&
+              !parent?.get("children").find((child) => child.getVisible())
+            ) {
+              parent.setVisible(false);
+            }
+          }
+        }),
       );
+    });
+
+    // Set parent property.
+    flat.forEach((layer) => {
+      const children = LayerTree.getChildren(layer);
+      children.forEach((child) => {
+        child.set("parent", layer);
+      });
     });
 
     const state = { rootLayer };
@@ -281,7 +369,8 @@ class LayerTree extends Component {
         ? expandChildren(layers)
         : expandChildren
     ) {
-      state.expandedLayers = rootLayer.children.flatMap((l) => {
+      const children = LayerTree.getChildren(rootLayer);
+      state.expandedLayers = children.flatMap((l) => {
         return this.expandLayer(l);
       });
     }
@@ -291,8 +380,8 @@ class LayerTree extends Component {
 
   expandLayer(layer, expLayers = []) {
     const { isItemHidden } = this.props;
-    if (layer.visible && !isItemHidden(layer)) {
-      const children = layer.children
+    if (LayerTree.getVisible(layer) && !isItemHidden(layer)) {
+      const children = LayerTree.getChildren(layer)
         .filter((c) => {
           return !isItemHidden(c) && !c.get("isAlwaysExpanded");
         })
@@ -309,7 +398,7 @@ class LayerTree extends Component {
     let tabIndex = 0;
 
     if (
-      !(layer.children || []).filter((c) => {
+      !LayerTree.getChildren(layer).filter((c) => {
         return !isItemHidden(c);
       }).length
     ) {
@@ -325,8 +414,9 @@ class LayerTree extends Component {
       <label
         className={`rs-layer-tree-input rs-layer-tree-input-${inputType} rs-${inputType}`}
         tabIndex={tabIndex}
-        title={layer.visible ? titles.layerHide : titles.layerShow}
-        aria-label={layer.visible ? titles.layerHide : titles.layerShow}
+        title={
+          LayerTree.getVisible(layer) ? titles.layerHide : titles.layerShow
+        }
         onKeyPress={(e) => {
           if (e.which === 13) {
             this.onInputClick(layer);
@@ -336,7 +426,7 @@ class LayerTree extends Component {
         <input
           type={inputType}
           tabIndex={-1}
-          checked={layer.visible}
+          checked={LayerTree.getVisible(layer)}
           readOnly
           onClick={() => {
             return this.onInputClick(layer);
@@ -354,7 +444,7 @@ class LayerTree extends Component {
     const { expandedLayers } = this.state;
 
     if (
-      !(layer.children || []).filter((c) => {
+      !LayerTree.getChildren(layer).filter((c) => {
         return !isItemHidden(c);
       }).length ||
       layer.get("isAlwaysExpanded")
@@ -380,7 +470,7 @@ class LayerTree extends Component {
     const onInputClick = () => {
       this.onInputClick(
         layer,
-        (layer.children || []).filter((c) => {
+        LayerTree.getChildren(layer).filter((c) => {
           return !isItemHidden(c);
         }).length && !layer.get("isAlwaysExpanded"),
       );
@@ -431,7 +521,7 @@ class LayerTree extends Component {
 
     const children = expandedLayers.includes(layer)
       ? [
-          ...(layer.children || []).filter((c) => {
+          ...LayerTree.getChildren(layer).filter((c) => {
             return !isItemHidden(c);
           }),
         ]
@@ -444,7 +534,7 @@ class LayerTree extends Component {
     return (
       <div className={getParentClassName()} key={layer.key}>
         <div
-          className={`rs-layer-tree-item ${layer.visible ? "rs-visible" : ""}`}
+          className={`rs-layer-tree-item ${LayerTree.getVisible(layer) ? "rs-visible" : ""}`}
           style={{
             paddingLeft: `${padding * level}px`,
           }}
@@ -466,13 +556,13 @@ class LayerTree extends Component {
     const { isItemHidden } = this.props;
     const { rootLayer } = this.state;
 
-    if (!rootLayer?.children?.length) {
+    if (!LayerTree.getChildren(rootLayer).length) {
       return null;
     }
 
     return (
       <>
-        {rootLayer.children
+        {LayerTree.getChildren(rootLayer)
           .filter((l) => {
             return !isItemHidden(l);
           })
