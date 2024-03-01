@@ -340,7 +340,7 @@ const readFeatures = (
  */
 const writeFeatures = (layer, featureProjection, mapResolution) => {
   let featString;
-  const { olLayer } = layer;
+  const olLayer = layer.olLayer || layer;
   const exportFeatures = [];
 
   olLayer.getSource().forEachFeature((feature) => {

@@ -4,7 +4,7 @@ import { configure, mount } from "enzyme";
 import Adapter from "@cfaester/enzyme-adapter-react-18";
 import "jest-canvas-mock";
 import renderer from "react-test-renderer";
-import { Layer } from "mobility-toolbox-js/ol";
+import Layer from "ol/layer/Layer";
 import LayerTree from "./LayerTree";
 
 configure({ adapter: new Adapter() });
@@ -38,16 +38,12 @@ describe("LayerTree", () => {
           new Layer({
             name: "1-1",
             group: "radio",
-            properties: {
-              radioGroup: "radio",
-            },
+            radioGroup: "radio",
           }),
           new Layer({
             name: "1-2",
             group: "radio",
-            properties: {
-              radioGroup: "radio",
-            },
+            radioGroup: "radio",
             visible: false,
             children: [
               new Layer({
@@ -165,16 +161,12 @@ describe("LayerTree", () => {
             new Layer({
               name: "Expanded layer 1.1 (because of isAlwaysExpanded=true)",
               visible: true,
-              properties: {
-                isAlwaysExpanded: true,
-              },
+              isAlwaysExpanded: true,
               children: [
                 new Layer({
                   name: "Expanded layer 1.1.1 (because of isAlwaysExpanded=true)",
                   visible: true,
-                  properties: {
-                    isAlwaysExpanded: true,
-                  },
+                  isAlwaysExpanded: true,
                   children: [
                     new Layer({
                       name: "Visible layer 1.1.1.1 (as parent is expanded)",
@@ -185,9 +177,7 @@ describe("LayerTree", () => {
                 new Layer({
                   name: "Hidden layer 1.1.1 (because of hidden=true)",
                   visible: true,
-                  properties: {
-                    hideInLegend: true,
-                  },
+                  hideInLegend: true,
                   children: [
                     new Layer({
                       name: "Invisible layer 1.1.1.1 (as parent is hidden)",
@@ -200,9 +190,7 @@ describe("LayerTree", () => {
             new Layer({
               name: "Expanded layer 1.2 (because of isAlwaysExpanded=true)",
               visible: true,
-              properties: {
-                isAlwaysExpanded: true,
-              },
+              isAlwaysExpanded: true,
               children: [
                 new Layer({
                   name: "Visible layer 1.2.1 (as parent is expanded)",
@@ -229,9 +217,7 @@ describe("LayerTree", () => {
                 new Layer({
                   name: "Invisible layer 2.1.1 (as parent isAlwaysExpanded=false)",
                   visible: true,
-                  properties: {
-                    isAlwaysExpanded: true,
-                  },
+                  isAlwaysExpanded: true,
                   children: [
                     new Layer({
                       name: "Invisible layer 2.1.1.1 (as parent is not visible)",

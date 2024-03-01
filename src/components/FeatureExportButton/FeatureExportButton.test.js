@@ -3,7 +3,6 @@ import React from "react";
 import renderer from "react-test-renderer";
 import { configure, mount, shallow } from "enzyme";
 import Adapter from "@cfaester/enzyme-adapter-react-18";
-import { Layer } from "mobility-toolbox-js/ol";
 import GPX from "ol/format/GPX";
 import VectorSource from "ol/source/Vector";
 import Style from "ol/style/Style";
@@ -21,16 +20,14 @@ import FeatureExportButton from ".";
 
 configure({ adapter: new Adapter() });
 
-const layer = new Layer({
+const layer = new VectorLayer({
   name: "Sample layer",
-  olLayer: new VectorLayer({
-    source: new VectorSource({
-      features: [
-        new Feature({
-          geometry: new Point([819103.972418, 6120013.078324]),
-        }),
-      ],
-    }),
+  source: new VectorSource({
+    features: [
+      new Feature({
+        geometry: new Point([819103.972418, 6120013.078324]),
+      }),
+    ],
   }),
 });
 
@@ -80,12 +77,10 @@ describe("FeatureExportButton", () => {
         );
       }
 
-      return new Layer({
+      return new VectorLayer({
         name: "ExportLayer",
-        olLayer: new VectorLayer({
-          source: new VectorSource({
-            features: featsArray,
-          }),
+        source: new VectorSource({
+          features: featsArray,
         }),
       });
     };
@@ -143,7 +138,7 @@ describe("FeatureExportButton", () => {
           }),
         });
 
-        iconLayer.olLayer.getSource().forEachFeature((f) => {
+        iconLayer.getSource().forEachFeature((f) => {
           f.setStyle(iconStyle);
         });
 
@@ -190,7 +185,7 @@ describe("FeatureExportButton", () => {
         test("should export text style in kml.", () => {
           const textlayer = renderLayer(2);
 
-          textlayer.olLayer.getSource().forEachFeature((f) => {
+          textlayer.getSource().forEachFeature((f) => {
             f.setStyle(textStyle);
           });
           const exportString = FeatureExportButton.createFeatureString(
@@ -209,7 +204,7 @@ describe("FeatureExportButton", () => {
         test("should only export none-empty text style in kml.", () => {
           const textlayer = renderLayer(2);
 
-          textlayer.olLayer.getSource().forEachFeature((f) => {
+          textlayer.getSource().forEachFeature((f) => {
             f.setStyle(textStyle);
           });
           const exportString1 = FeatureExportButton.createFeatureString(
@@ -233,7 +228,7 @@ describe("FeatureExportButton", () => {
             }),
           });
           // Set empty string as name for first feature
-          textlayer.olLayer.getSource().getFeatures()[0].setStyle(newStyle);
+          textlayer.getSource().getFeatures()[0].setStyle(newStyle);
 
           const exportString2 = FeatureExportButton.createFeatureString(
             textlayer,
@@ -247,19 +242,17 @@ describe("FeatureExportButton", () => {
         });
 
         test("should not export 'Cirle geom' (kml unsupported).", () => {
-          const circleLayer = new Layer({
+          const circleLayer = new VectorLayer({
             name: "ExportLayer",
-            olLayer: new VectorLayer({
-              source: new VectorSource({
-                features: [
-                  new Feature({
-                    geometry: new Circle({
-                      center: [843119.531243, 6111943.000197],
-                      radius: 1000,
-                    }),
+            source: new VectorSource({
+              features: [
+                new Feature({
+                  geometry: new Circle({
+                    center: [843119.531243, 6111943.000197],
+                    radius: 1000,
                   }),
-                ],
-              }),
+                }),
+              ],
             }),
           });
 
@@ -273,7 +266,7 @@ describe("FeatureExportButton", () => {
             }),
           });
 
-          circleLayer.olLayer.getSource().forEachFeature((f) => {
+          circleLayer.getSource().forEachFeature((f) => {
             f.setStyle(circleStyle);
           });
           const exportString = FeatureExportButton.createFeatureString(
@@ -302,7 +295,7 @@ describe("FeatureExportButton", () => {
             }),
           });
 
-          extendedLayer.olLayer.getSource().forEachFeature((f) => {
+          extendedLayer.getSource().forEachFeature((f) => {
             f.setStyle(style);
           });
           const exportString = FeatureExportButton.createFeatureString(
@@ -338,7 +331,7 @@ describe("FeatureExportButton", () => {
             }),
           });
 
-          extendedLayer.olLayer.getSource().forEachFeature((f) => {
+          extendedLayer.getSource().forEachFeature((f) => {
             f.setStyle(style);
             f.set("foo", "bar");
           });
@@ -366,7 +359,7 @@ describe("FeatureExportButton", () => {
               [4, 5],
             ]),
           });
-          extendedLayer.olLayer.getSource().addFeatures([line]);
+          extendedLayer.getSource().addFeatures([line]);
 
           const style = [
             new Style({

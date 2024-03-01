@@ -88,10 +88,10 @@ function StopsFinder({
       return () => {};
     }
 
-    control.map = map;
+    map.addControl(control);
 
     return () => {
-      control.map = null;
+      map.removeControl(control);
     };
   }, [map, control]);
 

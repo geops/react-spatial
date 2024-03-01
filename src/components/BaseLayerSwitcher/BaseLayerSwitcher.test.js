@@ -1,6 +1,6 @@
 import React from "react";
-import { Layer } from "mobility-toolbox-js/ol";
 import { fireEvent, render } from "@testing-library/react";
+import Layer from "ol/layer/Layer";
 import BaseLayerSwitcher from "./BaseLayerSwitcher";
 
 describe("BaseLayerSwitcher", () => {

@@ -3,7 +3,6 @@ This demonstrates the use of the StopsFinder component.
 
 ```jsx
 import React from 'react';
-import { Layer } from 'mobility-toolbox-js/ol';
 import Map from 'ol/Map';
 import Tile from 'ol/layer/Tile';
 import { fromLonLat } from 'ol/proj';
@@ -16,10 +15,8 @@ import StopsFinder from 'react-spatial/components/StopsFinder';
 const map = new Map({ controls: [] });
 
 const layers = [
-  new Layer({
-    olLayer: new Tile({
-      source: new OSM(),
-    }),
+  new Tile({
+    source: new OSM(),
   }),
 ];
 

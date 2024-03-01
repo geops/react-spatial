@@ -8,7 +8,6 @@ import Tile from "ol/Tile";
 import TileLayer from "ol/layer/Tile";
 import TileSource from "ol/source/Tile";
 import { createXYZ } from "ol/tilegrid";
-import { Layer } from "mobility-toolbox-js/ol";
 import Copyright from "./Copyright";
 
 configure({ adapter: new Adapter() });
@@ -25,8 +24,9 @@ const tileLoadFunction = () => {
   return tile;
 };
 
-const getOLTileLayer = () => {
+const getOLTileLayer = (options = {}) => {
   const layer = new TileLayer({
+    ...options,
     source: new TileSource({
       projection: "EPSG:3857",
       tileGrid: createXYZ(),
@@ -37,10 +37,9 @@ const getOLTileLayer = () => {
 };
 
 const getLayer = (copyrights, visible = true) => {
-  return new Layer({
+  return getOLTileLayer({
     visible,
     copyrights,
-    olLayer: getOLTileLayer(),
   });
 };
 
@@ -59,12 +58,12 @@ describe("Copyright", () => {
         zoom: 0,
       }),
       layers: layers.map((layer) => {
-        return layer.olLayer;
+        return layer;
       }),
     });
     map.setSize([200, 200]);
     layers.forEach((layer) => {
-      layer.attachToMap(map);
+      map.addLayer(layer);
     });
     act(() => {
       map.renderSync();

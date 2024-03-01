@@ -12,14 +12,12 @@ const expectWriteResult = (feats, str, fixGx = false) => {
   expect(
     beautify(
       KML.writeFeatures(
-        {
+        new VectorLayer({
           name: "lala",
-          olLayer: new VectorLayer({
-            source: new VectorSource({
-              features: feats,
-            }),
+          source: new VectorSource({
+            features: feats,
           }),
-        },
+        }),
         get("EPSG:4326"),
         undefined,
         fixGx,

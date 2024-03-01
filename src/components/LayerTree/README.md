@@ -2,7 +2,7 @@ The following example demonstrates the use of LayerTree.
 
 ```jsx
 import React, { useEffect } from 'react';
-import { MapboxLayer, MapboxStyleLayer, Layer } from 'mobility-toolbox-js/ol';
+import { MaplibreLayer, MaplibreStyleLayer, Layer } from 'mobility-toolbox-js/ol';
 import { Style, Circle, Stroke, Fill } from 'ol/style';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
@@ -10,13 +10,13 @@ import GeoJSONFormat from 'ol/format/GeoJSON';
 import LayerTree from 'react-spatial/components/LayerTree';
 import BasicMap from 'react-spatial/components/BasicMap';
 
-const baseTravic = new MapboxLayer({
+const baseTravic = new MaplibreLayer({
   name: 'Base - Bright',
   group: 'baseLayer',
   url: `https://maps.geops.io/styles/travic_v2_generalized/style.json?key=${apiKey}`,
 });
 
-const stations = new MapboxStyleLayer({
+const stations = new MaplibreStyleLayer({
   name: 'Stations',
   mapboxLayer: baseTravic,
   styleLayersFilter: (layer) => {
@@ -24,7 +24,7 @@ const stations = new MapboxStyleLayer({
   }
 });
 
-const railLines = new MapboxStyleLayer({
+const railLines = new MaplibreStyleLayer({
   name: 'Railways routes',
   mapboxLayer: baseTravic,
   styleLayer: {
@@ -43,7 +43,7 @@ const railLines = new MapboxStyleLayer({
 
 baseTravic.children = [railLines, stations];
 
-const baseDark = new MapboxLayer({
+const baseDark = new MaplibreLayer({
   name: 'Base - Dark',
   group: 'baseLayer',
   visible: false,

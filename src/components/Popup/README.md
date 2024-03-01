@@ -3,7 +3,7 @@ The following example demonstrates the use of Popup.
 
 ```jsx
 import React, { useState, useMemo, useCallback } from 'react';
-import { Layer, MapboxLayer} from 'mobility-toolbox-js/ol';
+import { MaplibreLayer} from 'mobility-toolbox-js/ol';
 import VectorLayer from 'ol/layer/Vector';
 import { Map, Feature } from 'ol';
 import Point from 'ol/geom/Point';
@@ -18,29 +18,27 @@ import Popup from 'react-spatial/components/Popup';
 const map = new Map({ controls: [] });
 
 const layers = [
-  new MapboxLayer({
+  new MaplibreLayer({
     url: `https://maps.geops.io/styles/base_dark_v2/style.json?key=${apiKey}`,
   }),
-  new Layer({
-    olLayer: new VectorLayer({
-      source: new VectorSource({
-        features: [
-          new Feature({
-            geometry: new Point([874105.13, 6106172.77]),
-          }),
-          new Feature({
-            geometry: new Point([873105.13, 6106172.77]),
-          }),
-        ],
-      }),
-      style: new Style({
-        image: new Icon({
-          anchor: [0.5, 46],
-          anchorXUnits: 'fraction',
-          anchorYUnits: 'pixels',
-          src: 'https://openlayers.org/en/latest/examples/data/icon.png',
-          size: [32, 48]
+  new VectorLayer({
+    source: new VectorSource({
+      features: [
+        new Feature({
+          geometry: new Point([874105.13, 6106172.77]),
         }),
+        new Feature({
+          geometry: new Point([873105.13, 6106172.77]),
+        }),
+      ],
+    }),
+    style: new Style({
+      image: new Icon({
+        anchor: [0.5, 46],
+        anchorXUnits: 'fraction',
+        anchorYUnits: 'pixels',
+        src: 'https://openlayers.org/en/latest/examples/data/icon.png',
+        size: [32, 48]
       }),
     }),
   }),

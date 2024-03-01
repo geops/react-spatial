@@ -2,12 +2,12 @@ import "jest-canvas-mock";
 import proj4 from "proj4";
 import { register } from "ol/proj/proj4";
 import React from "react";
-import { Layer } from "mobility-toolbox-js/ol";
 import MapEvent from "ol/MapEvent";
 import OLLayer from "ol/layer/Vector";
 import OLMap from "ol/Map";
 import OLView from "ol/View";
 import { render } from "@testing-library/react";
+import Layer from "ol/layer/Layer";
 import BasicMap from "./BasicMap";
 
 proj4.defs(
@@ -21,9 +21,8 @@ register(proj4);
 
 const extent = [0, 0, 1000, 1000];
 const olLayers = [
-  new Layer({
+  new OLLayer({
     name: "foo",
-    olLayer: new OLLayer({}),
     visible: true,
   }),
 ];
@@ -187,7 +186,7 @@ describe("BasicMap", () => {
   test("layers shoud be updated", () => {
     const addLayer = jest.spyOn(olMap, "addLayer");
     const { rerender } = render(<BasicMap map={olMap} />);
-    const layer = new Layer({ name: "test", olLayer: new OLLayer() });
+    const layer = new OLLayer();
     rerender(<BasicMap map={olMap} layers={[layer]} />);
     expect(addLayer).toHaveBeenCalled();
   });

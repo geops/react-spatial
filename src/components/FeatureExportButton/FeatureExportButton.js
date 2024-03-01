@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import KMLFormat from "ol/format/KML";
-import { Layer } from "mobility-toolbox-js/ol";
+import Layer from "ol/layer/Layer";
 import KML from "../../utils/KML";
 
 const propTypes = {
@@ -49,7 +49,7 @@ class FeatureExportButton extends PureComponent {
     }
 
     // eslint-disable-next-line new-cap
-    return new format().writeFeatures(layer.olLayer.getSource().getFeatures(), {
+    return new format().writeFeatures(layer.getSource().getFeatures(), {
       featureProjection: projection,
     });
   }

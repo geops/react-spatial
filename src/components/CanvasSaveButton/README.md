@@ -6,7 +6,6 @@ import { TiImage } from 'react-icons/ti';
 import { geopsTheme } from '@geops/geops-ui';
 import { ThemeProvider } from '@mui/material';
 import Button from '@mui/material/Button';
-import { Layer } from 'mobility-toolbox-js/ol';
 import Tile from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import Map from 'ol/Map';
@@ -16,14 +15,13 @@ import BasicMap from 'react-spatial/components/BasicMap';
 import geopsLogo from 'react-spatial/images/geops_logo.png';
 import qrCode from 'react-spatial/images/geops_qr.png';
 
-const map = new Map({ controls: [] });
+const map = new Map();
 
 const layers = [
-  new Layer({
-    olLayer: new Tile({
-      source: new OSM(),
+  new Tile({
+    source: new OSM({
+      attributions: '© layer-copyright',
     }),
-    copyrights: '© layer-copyright',
   }),
 ];
 
@@ -41,7 +39,7 @@ const layers = [
       extraData={{
         copyright: {
           text: () => {
-            return layers[0].copyrights;
+            return layers[0].getSource().getAttributions()();
           },
           background: true,
         },

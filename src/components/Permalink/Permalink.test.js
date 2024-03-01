@@ -3,8 +3,9 @@ import React from "react";
 import MapEvent from "ol/MapEvent";
 import OLMap from "ol/Map";
 import View from "ol/View";
-import { Layer, MapboxLayer } from "mobility-toolbox-js/ol";
+import { MaplibreLayer } from "mobility-toolbox-js/ol";
 import { act, render } from "@testing-library/react";
+import Layer from "ol/layer/Layer";
 import Permalink from "./Permalink";
 
 const defaultIsLayerHidden = (l) => {
@@ -28,34 +29,26 @@ describe("Permalink", () => {
         name: "Ultimate layer",
         key: "ultimate.layer",
         visible: true,
-        properties: {
-          hideInLegend: true,
-        },
+        hideInLegend: true,
       }),
       new Layer({
         name: "Swiss boundaries",
         key: "swiss.boundaries",
         visible: false,
-        properties: {
-          hideInLegend: true,
-        },
+        hideInLegend: true,
       }),
-      new MapboxLayer({
+      new MaplibreLayer({
         name: "Base - Bright",
         key: "basebright.baselayer",
         group: "baseLayer",
-        properties: {
-          isBaseLayer: true,
-        },
+        isBaseLayer: true,
       }),
-      new MapboxLayer({
+      new MaplibreLayer({
         name: "Base - Dark",
         key: "basedark.baselayer",
         visible: false,
         group: "baseLayer",
-        properties: {
-          isBaseLayer: true,
-        },
+        isBaseLayer: true,
       }),
       new Layer({
         name: "Layer with children that are hidden",
@@ -66,17 +59,13 @@ describe("Permalink", () => {
             name: "Child 1 hidden",
             key: "child.hidden.1",
             visible: true,
-            properties: {
-              hideInLegend: true,
-            },
+            hideInLegend: true,
           }),
           new Layer({
             name: "Childr 2 hidden",
             key: "child.hidden.2",
             visible: false,
-            properties: {
-              hideInLegend: true,
-            },
+            hideInLegend: true,
           }),
         ],
       }),

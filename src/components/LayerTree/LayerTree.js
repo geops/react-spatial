@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Layer, getLayersAsFlatArray } from "mobility-toolbox-js/ol";
+import { getLayersAsFlatArray } from "mobility-toolbox-js/ol";
 import { unByKey } from "ol/Observable";
+import Layer from "ol/layer/Layer";
 
 const propTypes = {
   /**

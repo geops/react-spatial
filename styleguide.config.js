@@ -39,11 +39,11 @@ module.exports = {
         "src/components/BaseLayerSwitcher/[A-Z]*.js",
         "src/components/BasicMap/[A-Z]*.js",
         "src/components/CanvasSaveButton/[A-Z]*.js",
-        "src/components/Copyright/[A-Z]*.js",
+        // "src/components/Copyright/[A-Z]*.js",
         "src/components/FeatureExportButton/[A-Z]*.js",
         "src/components/FitExtent/[A-Z]*.js",
         "src/components/Geolocation/[A-Z]*.js",
-        "src/components/LayerTree/[A-Z]*.js",
+        // "src/components/LayerTree/[A-Z]*.js",
         "src/components/MousePosition/[A-Z]*.js",
         "src/components/NorthArrow/[A-Z]*.js",
         "src/components/Permalink/[A-Z]*.js",
@@ -63,13 +63,13 @@ module.exports = {
       exampleMode: "expand", // 'hide' | 'collapse' | 'expand'
       usageMode: "collapse", // 'hide' | 'collapse' | 'expand'
     },
-    {
-      name: "Stops",
-      description:
-        "A collection of React components for spatial web development of stops components.",
-      components: ["src/components/StopsFinder/StopsFinder.js"],
-      exampleMode: "expand", // 'hide' | 'collapse' | 'expand'
-    },
+    // {
+    //   name: "Stops",
+    //   description:
+    //     "A collection of React components for spatial web development of stops components.",
+    //   components: ["src/components/StopsFinder/StopsFinder.js"],
+    //   exampleMode: "expand", // 'hide' | 'collapse' | 'expand'
+    // },
   ],
   webpackConfig: {
     optimization: {
