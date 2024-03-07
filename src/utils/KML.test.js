@@ -31,6 +31,51 @@ const expectWriteResult = (feats, str, fixGx = false) => {
 
 describe("KML", () => {
   describe("readFeatures() and writeFeatures()", () => {
+    test("should kept the features creation order to make sure that features with same zIndex are drawn in the correct order.", () => {
+      // This test is there because when a vectorLayer use useSpatialIndex: true, the getFeatures() function returns features in a random order.
+      // So when the feature have the same zIndex the order could be broken (particularly for icons)
+      const str = `
+        <kml ${xmlns}>
+          <Document>
+            <name>lala</name>
+            <Placemark>
+              <name>foo</name>
+              <Point>
+                <coordinates>8.488315945955144,47.39972231582209,0</coordinates>
+              </Point>
+            </Placemark>
+            <Placemark>
+              <name>bar</name>
+              <Point>
+                <coordinates>8.49136346952955,47.401849541921905,0</coordinates>
+              </Point>
+            </Placemark>
+          </Document>
+        </kml>
+      `;
+      const feats = KML.readFeatures(str);
+      expect(feats.length).toBe(2);
+      expect(feats[0].get("name")).toBe("foo");
+      expect(feats[1].get("name")).toBe("bar");
+      const str2 = KML.writeFeatures(
+        {
+          name: "lala",
+          olLayer: new VectorLayer({
+            source: new VectorSource({
+              features: feats.reverse(), // We simulate the random order of getFeatures() from rbush
+            }),
+          }),
+        },
+        get("EPSG:4326"),
+        undefined,
+        false,
+      );
+      const feats2 = KML.readFeatures(str2);
+      expect(feats2.length).toBe(2);
+      expect(feats2[0].get("name")).toBe("foo");
+      expect(feats2[1].get("name")).toBe("bar");
+    });
+
     test("should read/write LineStyle and ExtendedData (linesDash, lineStartIcon and lineEndIcon).", () => {
       const str = `
         <kml ${xmlns}>
