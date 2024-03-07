@@ -18,12 +18,9 @@ exports[`BaseLayerSwitcher matches snapshots using default properties. 1`] = `
   >
     <div class="rs-base-layer-switcher-button"
          role="button"
-         title="bl1"
-         aria-label="bl1"
          tabindex="-1"
     >
       <div class="rs-base-layer-switcher-title rs-active">
-        bl1
       </div>
       <span class="rs-alt-text">
         Source not found
@@ -35,12 +32,9 @@ exports[`BaseLayerSwitcher matches snapshots using default properties. 1`] = `
   >
     <div class="rs-base-layer-switcher-button"
          role="button"
-         title="bl2"
-         aria-label="bl2"
          tabindex="-1"
     >
-      <div class="rs-base-layer-switcher-title">
-        bl2
+      <div class="rs-base-layer-switcher-title rs-active">
       </div>
       <span class="rs-alt-text">
         Source not found
@@ -52,12 +46,9 @@ exports[`BaseLayerSwitcher matches snapshots using default properties. 1`] = `
   >
     <div class="rs-base-layer-switcher-button"
          role="button"
-         title="bl3"
-         aria-label="bl3"
          tabindex="-1"
     >
-      <div class="rs-base-layer-switcher-title">
-        bl3
+      <div class="rs-base-layer-switcher-title rs-active">
       </div>
       <span class="rs-alt-text">
         Source not found

@@ -1,7 +1,7 @@
 The following example demonstrates the use of LayerTree.
 
 This component uses the `group` property to define if the behavior will be a simple checkbox or a radio button.
-If a `group` is defined when the layer is set to visible, it will hide all other layers with the same group. Each group must be unique.
+If a `group` is defined, when the layer is set to visible, it will hide all other layers with the same group. Each group must be unique.
 
 ```jsx
 import React, { useEffect } from 'react';

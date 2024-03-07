@@ -42,9 +42,6 @@ exports[`FeatureExportButton triggers onClick #createFeatureString() using KMLFo
      xsi:schemalocation="http://www.opengis.net/kml/2.2 https://developers.google.com/kml/schema/kml22gx.xsd"
 >
   <Document>
-    <name>
-      ExportLayer
-    </name>
     <Placemark>
       <Style>
         <IconStyle>
