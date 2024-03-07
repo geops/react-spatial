@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.9.2](https://github.com/geops/react-spatial/compare/v1.9.1...v1.9.2) (2024-03-07)
+
+
+### Bug Fixes
+
+* keep creation order of features ([50d16e9](https://github.com/geops/react-spatial/commit/50d16e91e5e852b151355b376be7a661ac4e25ca))
+
 ### [1.9.1](https://github.com/geops/react-spatial/compare/v1.9.0...v1.9.1) (2024-02-09)
 
 
