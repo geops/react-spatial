@@ -8,7 +8,8 @@ import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
-import { Icon, Style } from 'ol/style';
+import Circle from 'ol/geom/Circle';
+import { Icon, Style,Stroke,Fill,Circle as CircleStyle } from 'ol/style';
 import GPX from 'ol/format/GPX';
 import { geopsTheme, Header, Footer } from '@geops/geops-ui';
 import { ThemeProvider } from '@mui/material';
@@ -20,22 +21,40 @@ import FeatureExportButton from 'react-spatial/components/FeatureExportButton';
 const vectorLayer = new Layer({
   olLayer: new VectorLayer({
     style: new Style({
-      image: new Icon({
-        anchor: [0.5, 46],
-        anchorXUnits: 'fraction',
-        anchorYUnits: 'pixels',
-        src: 'https://openlayers.org/en/latest/examples/data/icon.png',
-        size: [32, 48]
-      })
+      image: new CircleStyle({
+        stroke: new Stroke({
+          color: '#3399CC',
+          width: 4,
+        }),
+        fill: new Fill({
+          color: '#3399CC',
+          width: 4,
+        }),
+      }),
+      // image: new Icon({
+      //   anchor: [0.5, 46],
+      //   anchorXUnits: 'fraction',
+      //   anchorYUnits: 'pixels',
+      //   src: 'https://openlayers.org/en/latest/examples/data/icon.png',
+      //   size: [32, 48]
+      // }),
+      stroke: new Stroke({
+        color: '#3399CC',
+        width: 4,
+      }),
+      fill: new Fill({
+        color: '#3399CC',
+        width: 4,
+      }),
     }),
     source: new VectorSource({
       features: [
         new Feature({
-          geometry: new Point([819103.972418, 6120013.078324]),
+          geometry: new Circle([819103.972418, 6120013.078324],10000),
         }),
-        new Feature({
-          geometry: new Point([873838.856313, 6106009.575876]),
-        }),
+        // new Feature({
+        //   geometry: new Point([819103.972418, 6120013.078324]),
+        // }),
       ],
     }),
   }),
