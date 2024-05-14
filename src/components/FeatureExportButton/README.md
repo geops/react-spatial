@@ -21,40 +21,19 @@ import FeatureExportButton from 'react-spatial/components/FeatureExportButton';
 const vectorLayer = new Layer({
   olLayer: new VectorLayer({
     style: new Style({
-      image: new CircleStyle({
-        stroke: new Stroke({
-          color: '#3399CC',
-          width: 4,
-        }),
-        fill: new Fill({
-          color: '#3399CC',
-          width: 4,
-        }),
-      }),
-      // image: new Icon({
-      //   anchor: [0.5, 46],
-      //   anchorXUnits: 'fraction',
-      //   anchorYUnits: 'pixels',
-      //   src: 'https://openlayers.org/en/latest/examples/data/icon.png',
-      //   size: [32, 48]
-      // }),
-      stroke: new Stroke({
-        color: '#3399CC',
-        width: 4,
-      }),
-      fill: new Fill({
-        color: '#3399CC',
-        width: 4,
+      image: new Icon({
+        anchor: [0.5, 46],
+        anchorXUnits: 'fraction',
+        anchorYUnits: 'pixels',
+        src: 'https://openlayers.org/en/latest/examples/data/icon.png',
+        size: [32, 48]
       }),
     }),
     source: new VectorSource({
       features: [
         new Feature({
-          geometry: new Circle([819103.972418, 6120013.078324],10000),
+          geometry: new Point([819103.972418, 6120013.078324]),
         }),
-        // new Feature({
-        //   geometry: new Point([819103.972418, 6120013.078324]),
-        // }),
       ],
     }),
   }),

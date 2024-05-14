@@ -343,7 +343,7 @@ describe("KML", () => {
       expectWriteResult(feats, str);
     });
 
-    test.only("should read/write Circle geometry as Polygon.", () => {
+    test("should read/write Circle geometry as Polygon.", () => {
       const str = `
         <kml ${xmlns}>
           <Document>
