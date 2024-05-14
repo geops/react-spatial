@@ -8,7 +8,8 @@ import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
-import { Icon, Style } from 'ol/style';
+import Circle from 'ol/geom/Circle';
+import { Icon, Style,Stroke,Fill,Circle as CircleStyle } from 'ol/style';
 import GPX from 'ol/format/GPX';
 import { geopsTheme, Header, Footer } from '@geops/geops-ui';
 import { ThemeProvider } from '@mui/material';
@@ -26,15 +27,12 @@ const vectorLayer = new Layer({
         anchorYUnits: 'pixels',
         src: 'https://openlayers.org/en/latest/examples/data/icon.png',
         size: [32, 48]
-      })
+      }),
     }),
     source: new VectorSource({
       features: [
         new Feature({
           geometry: new Point([819103.972418, 6120013.078324]),
-        }),
-        new Feature({
-          geometry: new Point([873838.856313, 6106009.575876]),
         }),
       ],
     }),

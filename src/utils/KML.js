@@ -6,8 +6,15 @@ import GeometryCollection from "ol/geom/GeometryCollection";
 import { Style, Text, Icon, Circle, Fill, Stroke } from "ol/style";
 import { asString } from "ol/color";
 import { parse } from "ol/xml";
+import { fromCircle } from "ol/geom/Polygon";
+import { transform, get } from "ol/proj";
+import CircleGeom from "ol/geom/Circle";
 import { kmlStyle } from "./Styles";
 import getPolygonPattern from "./getPolygonPattern";
+
+const CIRCLE_GEOMETRY_CENTER = "circleGeometryCenter";
+const CIRCLE_GEOMETRY_RADIUS = "circleGeometryRadius";
+const EPSG_4326 = get("EPSG:4326");
 
 // Comes from ol >= 6.7,
 // https://github.com/openlayers/openlayers/blob/main/src/ol/format/KML.js#L320
@@ -325,6 +332,24 @@ const readFeatures = (
     featureProjection,
   });
   features.forEach((feature) => {
+    // Transform back polygon to circle geometry
+    const {
+      [CIRCLE_GEOMETRY_CENTER]: circleGeometryCenter,
+      [CIRCLE_GEOMETRY_RADIUS]: circleGeometryRadius,
+    } = feature?.getProperties() || {};
+    if (circleGeometryCenter && circleGeometryRadius) {
+      const circle = new CircleGeom(
+        transform(
+          JSON.parse(circleGeometryCenter),
+          EPSG_4326,
+          featureProjection || EPSG_4326,
+        ),
+        parseFloat(circleGeometryRadius, 10),
+      );
+      circle.setProperties(feature.getGeometry().getProperties());
+      feature.setGeometry(circle);
+    }
+
     sanitizeFeature(feature, doNotRevert32pxScaling);
   });
   return features;
@@ -355,20 +380,34 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
       return 1;
     })
     .forEach((feature) => {
-      // We silently ignore Circle elements as they are
-      // not supported in kml.
-      if (feature.getGeometry().getType() === "Circle") {
-        return;
-      }
-
       const clone = feature.clone();
+      if (clone.getGeometry().getType() === "Circle") {
+        // We transform circle elements into polygons
+        // because circle not supported in KML spec and in ol KML parser
+        const circleGeom = feature.getGeometry();
+        clone.setGeometry(fromCircle(circleGeom, 100));
+        clone.set(
+          CIRCLE_GEOMETRY_CENTER,
+          JSON.stringify(
+            transform(circleGeom.getCenter(), featureProjection, EPSG_4326),
+          ),
+        );
+        clone.set(CIRCLE_GEOMETRY_RADIUS, circleGeom.getRadius());
+      }
       clone.setId(feature.getId());
-      clone.getGeometry().setProperties(feature.getGeometry().getProperties());
-      clone.getGeometry().transform(featureProjection, "EPSG:4326");
+      clone.getGeometry().transform(featureProjection, EPSG_4326);
 
       // We remove all ExtendedData not related to style.
       Object.keys(feature.getProperties()).forEach((key) => {
-        if (!/^(geometry|name|description)$/.test(key)) {
+        if (
+          ![
+            "geometry",
+            "name",
+            "description",
+            CIRCLE_GEOMETRY_CENTER,
+            CIRCLE_GEOMETRY_RADIUS,
+          ].includes(key)
+        ) {
           clone.unset(key, true);
         }
       });
