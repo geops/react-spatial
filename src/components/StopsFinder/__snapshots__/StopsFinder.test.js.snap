@@ -3,7 +3,7 @@
 exports[`StopsFinder matches snapshots. 1`] = `
 <div
   aria-owns={null}
-  className="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-1c8hkr0-MuiAutocomplete-root"
+  className="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-xs6u9c-MuiAutocomplete-root"
   onClick={[Function]}
   onKeyDown={[Function]}
   onMouseDown={[Function]}
@@ -46,7 +46,7 @@ exports[`StopsFinder matches snapshots. 1`] = `
         value=""
       />
       <div
-        className="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
+        className="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
       >
         <button
           aria-label="Open"
