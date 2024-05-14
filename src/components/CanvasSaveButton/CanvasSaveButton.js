@@ -557,7 +557,6 @@ class CanvasSaveButton extends PureComponent {
   }
 
   downloadCanvasImage(canvas) {
-    console.log("this.multilineCopyright", this.multilineCopyright);
     // Use blob for large images
     const promise = new Promise((resolve) => {
       const { format } = this.props;
