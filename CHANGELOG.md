@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.10.0](https://github.com/geops/react-spatial/compare/v1.9.2...v1.10.0) (2024-05-14)
+
+
+### Features
+
+* write circle geometry as polygon ([#716](https://github.com/geops/react-spatial/issues/716)) ([2a40f81](https://github.com/geops/react-spatial/commit/2a40f8180fd7ffb84439c17f0c63674b82fd05d4))
+
 ### [1.9.2](https://github.com/geops/react-spatial/compare/v1.9.1...v1.9.2) (2024-03-07)
 
 
