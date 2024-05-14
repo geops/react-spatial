@@ -125,6 +125,7 @@ const propTypes = {
         PropTypes.instanceOf(CanvasPatternType),
       ]),
       background: PropTypes.bool,
+      maxWidth: PropTypes.number,
     }),
   }),
 };
@@ -134,8 +135,8 @@ const defaultProps = {
   children: null,
   map: null,
   format: "image/png",
-  extent: null,
   extraData: null,
+  extent: null,
   coordinates: null,
   scale: 1,
   onSaveStart: (map) => {
@@ -208,6 +209,8 @@ class CanvasSaveButton extends PureComponent {
 
       // eslint-disable-next-line no-param-reassign
       destContext.font = destContext.font.replace(fontSize, fontSize - 1);
+
+      this.multilineCopyright = null;
 
       if (fontSize - 1 === minFontSize) {
         this.multilineCopyright = true;
@@ -527,9 +530,11 @@ class CanvasSaveButton extends PureComponent {
               extraData.copyright &&
               extraData.copyright.text
             ) {
-              const maxWidth = widestElement
-                ? destContext.canvas.width - widestElement - this.margin
-                : destContext.canvas.width;
+              const maxWidth =
+                extraData.copyright.maxWidth ||
+                (widestElement
+                  ? destContext.canvas.width - widestElement - this.margin
+                  : destContext.canvas.width);
               this.drawCopyright(destContext, destCanvas, maxWidth);
             }
             let qrCodePromise = Promise.resolve();
@@ -552,6 +557,7 @@ class CanvasSaveButton extends PureComponent {
   }
 
   downloadCanvasImage(canvas) {
+    console.log("this.multilineCopyright", this.multilineCopyright);
     // Use blob for large images
     const promise = new Promise((resolve) => {
       const { format } = this.props;
