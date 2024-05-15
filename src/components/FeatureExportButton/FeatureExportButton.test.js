@@ -10,7 +10,6 @@ import Icon from "ol/style/Icon";
 import Text from "ol/style/Text";
 import Fill from "ol/style/Fill";
 import Stroke from "ol/style/Stroke";
-import Circle from "ol/geom/Circle";
 import Point from "ol/geom/Point";
 import LineString from "ol/geom/LineString";
 import Feature from "ol/Feature";
@@ -239,42 +238,6 @@ describe("FeatureExportButton", () => {
           expect(
             exportString2.match(/<Placemark>(.*?)<\/Placemark>/g).length,
           ).toBe(1);
-        });
-
-        test("should not export 'Cirle geom' (kml unsupported).", () => {
-          const circleLayer = new VectorLayer({
-            name: "ExportLayer",
-            source: new VectorSource({
-              features: [
-                new Feature({
-                  geometry: new Circle({
-                    center: [843119.531243, 6111943.000197],
-                    radius: 1000,
-                  }),
-                }),
-              ],
-            }),
-          });
-
-          const circleStyle = new Style({
-            stroke: new Stroke({
-              color: "red",
-              width: 3,
-            }),
-            fill: new Fill({
-              color: "rgba(255, 0, 0, 0.1)",
-            }),
-          });
-
-          circleLayer.getSource().forEachFeature((f) => {
-            f.setStyle(circleStyle);
-          });
-          const exportString = FeatureExportButton.createFeatureString(
-            circleLayer,
-            FeatureExportButton.defaultProps.projection,
-            FeatureExportButton.defaultProps.format,
-          );
-          expect(exportString).toBe(undefined);
         });
 
         test("should export extended data.", () => {

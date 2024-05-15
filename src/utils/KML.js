@@ -1,15 +1,20 @@
 import KML from "ol/format/KML";
-import { Feature } from "ol";
+import { Feature, getUid } from "ol";
 import Point from "ol/geom/Point";
 import MultiPoint from "ol/geom/MultiPoint";
 import GeometryCollection from "ol/geom/GeometryCollection";
 import { Style, Text, Icon, Circle, Fill, Stroke } from "ol/style";
 import { asString } from "ol/color";
 import { parse } from "ol/xml";
-import VectorSource from "ol/source/Vector";
-import VectorLayer from "ol/layer/Vector";
+import { fromCircle } from "ol/geom/Polygon";
+import { transform, get } from "ol/proj";
+import CircleGeom from "ol/geom/Circle";
 import { kmlStyle } from "./Styles";
 import getPolygonPattern from "./getPolygonPattern";
+
+const CIRCLE_GEOMETRY_CENTER = "circleGeometryCenter";
+const CIRCLE_GEOMETRY_RADIUS = "circleGeometryRadius";
+const EPSG_4326 = get("EPSG:4326");
 
 // Comes from ol >= 6.7,
 // https://github.com/openlayers/openlayers/blob/main/src/ol/format/KML.js#L320
@@ -327,6 +332,24 @@ const readFeatures = (
     featureProjection,
   });
   features.forEach((feature) => {
+    // Transform back polygon to circle geometry
+    const {
+      [CIRCLE_GEOMETRY_CENTER]: circleGeometryCenter,
+      [CIRCLE_GEOMETRY_RADIUS]: circleGeometryRadius,
+    } = feature?.getProperties() || {};
+    if (circleGeometryCenter && circleGeometryRadius) {
+      const circle = new CircleGeom(
+        transform(
+          JSON.parse(circleGeometryCenter),
+          EPSG_4326,
+          featureProjection || EPSG_4326,
+        ),
+        parseFloat(circleGeometryRadius, 10),
+      );
+      circle.setProperties(feature.getGeometry().getProperties());
+      feature.setGeometry(circle);
+    }
+
     sanitizeFeature(feature, doNotRevert32pxScaling);
   });
   return features;
@@ -343,207 +366,234 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
   const olLayer = layer.olLayer || layer;
   const exportFeatures = [];
 
-  olLayer.getSource().forEachFeature((feature) => {
-    // We silently ignore Circle elements as they are
-    // not supported in kml.
-    if (feature.getGeometry().getType() === "Circle") {
-      return;
-    }
-
-    const clone = feature.clone();
-    clone.setId(feature.getId());
-    clone.getGeometry().setProperties(feature.getGeometry().getProperties());
-    clone.getGeometry().transform(featureProjection, "EPSG:4326");
-
-    // We remove all ExtendedData not related to style.
-    Object.keys(feature.getProperties()).forEach((key) => {
-      if (!/^(geometry|name|description)$/.test(key)) {
-        clone.unset(key, true);
+  [...olLayer.getSource().getFeatures()]
+    .sort((a, b) => {
+      // The order of features must be kept.
+      // We could use the useSpatialIndex = false property on the layer
+      // but we prefer to sort feature by ol uid because ol uid is an integer
+      // increased on each creation of a feature.
+      // So we will keep the order of creation made by the the KML parser.
+      // Ideally we should order by the zIndex of the style only.
+      if (getUid(a) <= getUid(b)) {
+        return -1;
       }
-    });
-
-    let styles;
-
-    if (feature.getStyleFunction()) {
-      styles = feature.getStyleFunction()(feature, mapResolution);
-    } else if (olLayer && olLayer.getStyleFunction()) {
-      styles = olLayer.getStyleFunction()(feature, mapResolution);
-    }
-
-    const mainStyle = styles[0] || styles;
-
-    const newStyle = {
-      fill: mainStyle.getFill(),
-      stroke: mainStyle.getStroke(),
-      text: mainStyle.getText(),
-      image: mainStyle.getImage(),
-      zIndex: mainStyle.getZIndex(),
-    };
-
-    if (newStyle.zIndex) {
-      clone.set("zIndex", newStyle.zIndex);
-    }
-
-    // If we see spaces at the beginning or at the end we add a empty
-    // white space at the beginning and at the end.
-    if (newStyle.text && /^\s|\s$/g.test(newStyle.text.getText())) {
-      newStyle.text.setText(`\u200B${newStyle.text.getText()}\u200B`);
-    }
-
-    // Set custom properties to be converted in extendedData in KML.
-    if (newStyle.text && newStyle.text.getRotation()) {
-      clone.set("textRotation", newStyle.text.getRotation());
-    }
-
-    if (newStyle.text && newStyle.text.getFont()) {
-      clone.set("textFont", newStyle.text.getFont());
-    }
-
-    if (newStyle.text && newStyle.text.getTextAlign()) {
-      clone.set("textAlign", newStyle.text.getTextAlign());
-    }
-
-    if (newStyle.text && newStyle.text.getOffsetX()) {
-      clone.set("textOffsetX", newStyle.text.getOffsetX());
-    }
-
-    if (newStyle.text && newStyle.text.getOffsetY()) {
-      clone.set("textOffsetY", newStyle.text.getOffsetY());
-    }
-
-    if (newStyle.text && newStyle.text.getStroke()) {
-      if (newStyle.text.getStroke().getColor()) {
+      return 1;
+    })
+    .forEach((feature) => {
+      const clone = feature.clone();
+      if (clone.getGeometry().getType() === "Circle") {
+        // We transform circle elements into polygons
+        // because circle not supported in KML spec and in ol KML parser
+        const circleGeom = feature.getGeometry();
+        clone.setGeometry(fromCircle(circleGeom, 100));
         clone.set(
-          "textStrokeColor",
-          asString(newStyle.text.getStroke().getColor()),
+          CIRCLE_GEOMETRY_CENTER,
+          JSON.stringify(
+            transform(circleGeom.getCenter(), featureProjection, EPSG_4326),
+          ),
         );
+        clone.set(CIRCLE_GEOMETRY_RADIUS, circleGeom.getRadius());
       }
+      clone.setId(feature.getId());
+      clone.getGeometry().transform(featureProjection, EPSG_4326);
 
-      if (newStyle.text.getStroke().getWidth()) {
-        clone.set("textStrokeWidth", newStyle.text.getStroke().getWidth());
-      }
-    }
-
-    if (newStyle.text && newStyle.text.getBackgroundFill()) {
-      clone.set(
-        "textBackgroundFillColor",
-        asString(newStyle.text.getBackgroundFill().getColor()),
-      );
-    }
-
-    if (newStyle.text && newStyle.text.getPadding()) {
-      clone.set("textPadding", newStyle.text.getPadding().join());
-    }
-
-    if (newStyle.stroke && newStyle.stroke.getLineDash()) {
-      clone.set("lineDash", newStyle.stroke.getLineDash().join(","));
-    }
-
-    if (newStyle.image instanceof Circle) {
-      newStyle.image = null;
-    }
-
-    if (newStyle.image) {
-      const imgSource = newStyle.image.getSrc();
-      if (!/(http(s?)):\/\//gi.test(imgSource)) {
-        // eslint-disable-next-line no-console
-        console.log(
-          "Local image source not supported for KML export." +
-            "Should use remote web server",
-        );
-      }
-
-      if (newStyle.image.getRotation()) {
-        // We set the icon rotation as extended data
-        clone.set("iconRotation", newStyle.image.getRotation());
-      }
-
-      if (newStyle.image.getScale()) {
-        // We set the scale as extended metadata because the <scale> in the KML is related to a 32px img, since ol >= 6.10.
-        clone.set("iconScale", newStyle.image.getScale());
-      }
-
-      // Set map resolution to use for icon-to-map proportional scaling
-      if (feature.get("pictureOptions")) {
-        clone.set(
-          "pictureOptions",
-          JSON.stringify(feature.get("pictureOptions")),
-        );
-      }
-    }
-
-    // In case a fill pattern should be applied (use fillPattern attribute to store pattern id, color etc)
-    if (feature.get("fillPattern")) {
-      clone.set("fillPattern", JSON.stringify(feature.get("fillPattern")));
-      newStyle.fill = null;
-    }
-
-    // maxZoom: maximum zoom level at which the feature is displayed
-    if (feature.get("maxZoom")) {
-      clone.set("maxZoom", parseFloat(feature.get("maxZoom"), 10));
-    }
-
-    // minZoom: minimum zoom level at which the feature is displayed
-    if (feature.get("minZoom")) {
-      clone.set("minZoom", parseFloat(feature.get("minZoom"), 10));
-    }
-
-    // If only text is displayed we must specify an
-    // image style with scale=0
-    if (newStyle.text && !newStyle.image) {
-      newStyle.image = new Icon({
-        src: "noimage",
-        scale: 0,
+      // We remove all ExtendedData not related to style.
+      Object.keys(feature.getProperties()).forEach((key) => {
+        if (
+          ![
+            "geometry",
+            "name",
+            "description",
+            CIRCLE_GEOMETRY_CENTER,
+            CIRCLE_GEOMETRY_RADIUS,
+          ].includes(key)
+        ) {
+          clone.unset(key, true);
+        }
       });
-    }
 
-    // In case we use line's icon .
-    const extraLineStyles = (Array.isArray(styles) && styles.slice(1)) || [];
-    extraLineStyles.forEach((extraLineStyle) => {
-      if (
-        extraLineStyle &&
-        extraLineStyle.getImage() instanceof Icon &&
-        extraLineStyle.getGeometry()
-      ) {
-        const coord = extraLineStyle.getGeometry()(feature).getCoordinates();
-        const startCoord = feature.getGeometry().getFirstCoordinate();
-        if (coord[0] === startCoord[0] && coord[1] === startCoord[1]) {
+      let styles;
+
+      if (feature.getStyleFunction()) {
+        styles = feature.getStyleFunction()(feature, mapResolution);
+      } else if (olLayer && olLayer.getStyleFunction()) {
+        styles = olLayer.getStyleFunction()(feature, mapResolution);
+      }
+
+      const mainStyle = styles[0] || styles;
+
+      const newStyle = {
+        fill: mainStyle.getFill(),
+        stroke: mainStyle.getStroke(),
+        text: mainStyle.getText(),
+        image: mainStyle.getImage(),
+        zIndex: mainStyle.getZIndex(),
+      };
+
+      if (newStyle.zIndex) {
+        clone.set("zIndex", newStyle.zIndex);
+      }
+
+      // If we see spaces at the beginning or at the end we add a empty
+      // white space at the beginning and at the end.
+      if (newStyle.text && /^\s|\s$/g.test(newStyle.text.getText())) {
+        newStyle.text.setText(`\u200B${newStyle.text.getText()}\u200B`);
+      }
+
+      // Set custom properties to be converted in extendedData in KML.
+      if (newStyle.text && newStyle.text.getRotation()) {
+        clone.set("textRotation", newStyle.text.getRotation());
+      }
+
+      if (newStyle.text && newStyle.text.getFont()) {
+        clone.set("textFont", newStyle.text.getFont());
+      }
+
+      if (newStyle.text && newStyle.text.getTextAlign()) {
+        clone.set("textAlign", newStyle.text.getTextAlign());
+      }
+
+      if (newStyle.text && newStyle.text.getOffsetX()) {
+        clone.set("textOffsetX", newStyle.text.getOffsetX());
+      }
+
+      if (newStyle.text && newStyle.text.getOffsetY()) {
+        clone.set("textOffsetY", newStyle.text.getOffsetY());
+      }
+
+      if (newStyle.text && newStyle.text.getStroke()) {
+        if (newStyle.text.getStroke().getColor()) {
           clone.set(
-            "lineStartIcon",
-            JSON.stringify({
-              url: extraLineStyle.getImage().getSrc(),
-              scale: extraLineStyle.getImage().getScale(),
-              size: extraLineStyle.getImage().getSize(),
-              zIndex: extraLineStyle.getZIndex(),
-            }),
+            "textStrokeColor",
+            asString(newStyle.text.getStroke().getColor()),
           );
-        } else {
+        }
+
+        if (newStyle.text.getStroke().getWidth()) {
+          clone.set("textStrokeWidth", newStyle.text.getStroke().getWidth());
+        }
+      }
+
+      if (newStyle.text && newStyle.text.getBackgroundFill()) {
+        clone.set(
+          "textBackgroundFillColor",
+          asString(newStyle.text.getBackgroundFill().getColor()),
+        );
+      }
+
+      if (newStyle.text && newStyle.text.getPadding()) {
+        clone.set("textPadding", newStyle.text.getPadding().join());
+      }
+
+      if (newStyle.stroke && newStyle.stroke.getLineDash()) {
+        clone.set("lineDash", newStyle.stroke.getLineDash().join(","));
+      }
+
+      if (newStyle.image instanceof Circle) {
+        newStyle.image = null;
+      }
+
+      if (newStyle.image) {
+        const imgSource = newStyle.image.getSrc();
+        if (!/(http(s?)):\/\//gi.test(imgSource)) {
+          // eslint-disable-next-line no-console
+          console.log(
+            "Local image source not supported for KML export." +
+              "Should use remote web server",
+          );
+        }
+
+        if (newStyle.image.getRotation()) {
+          // We set the icon rotation as extended data
+          clone.set("iconRotation", newStyle.image.getRotation());
+        }
+
+        if (newStyle.image.getScale()) {
+          // We set the scale as extended metadata because the <scale> in the KML is related to a 32px img, since ol >= 6.10.
+          clone.set("iconScale", newStyle.image.getScale());
+        }
+
+        // Set map resolution to use for icon-to-map proportional scaling
+        if (feature.get("pictureOptions")) {
           clone.set(
-            "lineEndIcon",
-            JSON.stringify({
-              url: extraLineStyle.getImage().getSrc(),
-              scale: extraLineStyle.getImage().getScale(),
-              size: extraLineStyle.getImage().getSize(),
-              zIndex: extraLineStyle.getZIndex(),
-            }),
+            "pictureOptions",
+            JSON.stringify(feature.get("pictureOptions")),
           );
         }
       }
+
+      // In case a fill pattern should be applied (use fillPattern attribute to store pattern id, color etc)
+      if (feature.get("fillPattern")) {
+        clone.set("fillPattern", JSON.stringify(feature.get("fillPattern")));
+        newStyle.fill = null;
+      }
+
+      // maxZoom: maximum zoom level at which the feature is displayed
+      if (feature.get("maxZoom")) {
+        clone.set("maxZoom", parseFloat(feature.get("maxZoom"), 10));
+      }
+
+      // minZoom: minimum zoom level at which the feature is displayed
+      if (feature.get("minZoom")) {
+        clone.set("minZoom", parseFloat(feature.get("minZoom"), 10));
+      }
+
+      // If only text is displayed we must specify an
+      // image style with scale=0
+      if (newStyle.text && !newStyle.image) {
+        newStyle.image = new Icon({
+          src: "noimage",
+          scale: 0,
+        });
+      }
+
+      // In case we use line's icon .
+      const extraLineStyles = (Array.isArray(styles) && styles.slice(1)) || [];
+      extraLineStyles.forEach((extraLineStyle) => {
+        if (
+          extraLineStyle &&
+          extraLineStyle.getImage() instanceof Icon &&
+          extraLineStyle.getGeometry()
+        ) {
+          const coord = extraLineStyle.getGeometry()(feature).getCoordinates();
+          const startCoord = feature.getGeometry().getFirstCoordinate();
+          if (coord[0] === startCoord[0] && coord[1] === startCoord[1]) {
+            clone.set(
+              "lineStartIcon",
+              JSON.stringify({
+                url: extraLineStyle.getImage().getSrc(),
+                scale: extraLineStyle.getImage().getScale(),
+                size: extraLineStyle.getImage().getSize(),
+                zIndex: extraLineStyle.getZIndex(),
+              }),
+            );
+          } else {
+            clone.set(
+              "lineEndIcon",
+              JSON.stringify({
+                url: extraLineStyle.getImage().getSrc(),
+                scale: extraLineStyle.getImage().getScale(),
+                size: extraLineStyle.getImage().getSize(),
+                zIndex: extraLineStyle.getZIndex(),
+              }),
+            );
+          }
+        }
+      });
+
+      const olStyle = new Style(newStyle);
+      clone.setStyle(olStyle);
+
+      if (
+        !(
+          clone.getGeometry() instanceof Point &&
+          olStyle.getText() &&
+          !olStyle.getText().getText()
+        )
+      ) {
+        exportFeatures.push(clone);
+      }
     });
-
-    const olStyle = new Style(newStyle);
-    clone.setStyle(olStyle);
-
-    if (
-      !(
-        clone.getGeometry() instanceof Point &&
-        olStyle.getText() &&
-        !olStyle.getText().getText()
-      )
-    ) {
-      exportFeatures.push(clone);
-    }
-  });
 
   if (exportFeatures.length > 0) {
     if (exportFeatures.length === 1) {
@@ -617,12 +667,6 @@ const writeDocumentCamera = (kmlString, cameraAttributes) => {
 
   return new XMLSerializer().serializeToString(kmlDoc);
 };
-
-window.VectorLayer = VectorLayer;
-window.VectorSource = VectorSource;
-
-window.writeFeatures = writeFeatures;
-window.readFeatures = readFeatures;
 
 export default {
   readFeatures,
