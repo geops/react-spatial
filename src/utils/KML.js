@@ -84,7 +84,11 @@ const sanitizeFeature = (feature, doNotRevert32pxScaling = false) => {
     feature.set("minZoom", parseFloat(feature.get("minZoom"), 10));
   }
 
-  // The use of clone is part of the scale fix line 156
+  // The use of clone is part of the scale fix for OL > 6.7
+  // If an IconStyle has no gx:w and gx:h defined, a scale factor is applied
+  // after the image is loaded. To avoided having the scale factor applied we
+  // clone the style and keep the scale as it is.
+  // Having gx:w and gx:h not defined should not happen, using the last version of the parser/reader.
   const tmpStyles = styles(feature);
   const style = (Array.isArray(tmpStyles) ? tmpStyles[0] : tmpStyles).clone();
 
@@ -211,8 +215,8 @@ const sanitizeFeature = (feature, doNotRevert32pxScaling = false) => {
       if (feature.get("iconScale")) {
         image.setScale(parseFloat(feature.get("iconScale")) || 0);
 
-        // We fix the 32px scaling introduced by OL 6.7
-      } else if (!doNotRevert32pxScaling) {
+        // We fix the 32px scaling introduced by OL 6.7 only if the image has a size defined.
+      } else if (!doNotRevert32pxScaling && image.getSize()) {
         const resizeScale = scaleForSize(image.getSize());
         image.setScale(image.getScaleArray()[0] / resizeScale);
       }
