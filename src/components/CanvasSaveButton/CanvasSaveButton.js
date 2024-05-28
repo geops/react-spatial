@@ -302,7 +302,7 @@ class CanvasSaveButton extends PureComponent {
     textMeasure.height =
       textMeasure.actualBoundingBoxAscent +
       textMeasure.actualBoundingBoxDescent;
-    let firstLineY = destCanvas.height / scale - this.padding;
+    let firstLineY = destCanvas.height / scale - 0;
     const secondLineY = firstLineY;
     const paddingBetweenLines = 3;
     const paddingBackground = paddingBetweenLines / 2;

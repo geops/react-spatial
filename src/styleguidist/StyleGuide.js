@@ -1,5 +1,5 @@
 /* eslint-disable import/no-unresolved */
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { geopsTheme, Header, Footer } from "@geops/geops-ui";
 import {
@@ -98,7 +98,7 @@ const styles = ({ mq }) => {
 export function StyleGuideRenderer({
   classes,
   children,
-  version,
+  version = null,
   toc,
   hasSidebar,
 }) {
@@ -106,7 +106,7 @@ export function StyleGuideRenderer({
   const [dropdownOpen, toggleDropdown] = useState(false);
   const [expanded, expandSection] = useState();
   const [selected, setSelected] = useState("Components");
-  const ref = useRef();
+  const [node, setNode] = useState();
   useEffect(() => {
     fetch("https://backend.developer.geops.io/publickey")
       .then((response) => {
@@ -121,6 +121,12 @@ export function StyleGuideRenderer({
         console.error("Request to get the apiKey failed");
       });
   }, []);
+
+  useEffect(() => {
+    if (!node) return;
+    const { hash } = window.location;
+    document.querySelector(hash)?.scrollIntoView();
+  }, [node]);
 
   if (!apiKey) {
     return null;
@@ -229,7 +235,7 @@ export function StyleGuideRenderer({
               </ClickAwayListener>
             </Collapse>
           </Hidden>
-          <div className={classes.scrollable} ref={ref}>
+          <div className={classes.scrollable} ref={(nodee) => setNode(nodee)}>
             <Hidden xsDown>
               <div className={classes.sidebar}>
                 <header className={classes.version}>
@@ -242,7 +248,7 @@ export function StyleGuideRenderer({
             <div className={classes.footerWrapper}>
               <Footer
                 onScrollToTop={() => {
-                  ref.current.scrollTo({
+                  node?.scrollTo({
                     top: 0,
                     left: 0,
                     behavior: "smooth",
@@ -266,13 +272,10 @@ export function StyleGuideRenderer({
   );
 }
 
-StyleGuideRenderer.defaultProps = {
-  version: null,
-};
-
 StyleGuideRenderer.propTypes = {
   classes: PropTypes.object.isRequired,
   children: PropTypes.node.isRequired,
+  // eslint-disable-next-line react/require-default-props
   version: PropTypes.string,
   toc: PropTypes.node.isRequired,
   hasSidebar: PropTypes.bool.isRequired,
