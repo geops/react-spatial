@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.10.2](https://github.com/geops/react-spatial/compare/v1.10.1...v1.10.2) (2024-05-28)
+
+
+### Bug Fixes
+
+* ignore scale fix if the icon has no size ([#721](https://github.com/geops/react-spatial/issues/721)) ([01d6be8](https://github.com/geops/react-spatial/commit/01d6be8ca2422e1198ee7b6fd540d22fdb314943))
+
 ### [1.10.1](https://github.com/geops/react-spatial/compare/v1.10.0...v1.10.1) (2024-05-14)
 
 
