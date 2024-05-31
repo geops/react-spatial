@@ -125,7 +125,9 @@ export function StyleGuideRenderer({
   useEffect(() => {
     if (!node) return;
     const { hash } = window.location;
-    document.querySelector(hash)?.scrollIntoView();
+    if (hash && hash !== "#") {
+      document.querySelector(hash)?.scrollIntoView();
+    }
   }, [node]);
 
   if (!apiKey) {

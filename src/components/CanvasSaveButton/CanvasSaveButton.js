@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import React, { PureComponent } from "react";
+import React, { useCallback } from "react";
 import PropTypes from "prop-types";
 import OLMap from "ol/Map";
 import { getTopLeft, getBottomRight } from "ol/extent";
@@ -36,6 +36,18 @@ const propTypes = {
 
   /** An  [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html). */
   map: PropTypes.instanceOf(OLMap),
+
+  /**
+   * Space (in pixels) between the border of the canvas and the elements.
+   * Default to 1% of the canvas width.
+   */
+  margin: PropTypes.number,
+
+  /**
+   * Space (in pixels) between elements.
+   * Default to 5px.
+   */
+  padding: PropTypes.number,
 
   /**
    * Extent for the export. If no extent is given, the whole map is exported.
@@ -126,23 +138,429 @@ const propTypes = {
       ]),
       background: PropTypes.bool,
       maxWidth: PropTypes.number,
+      paddingBottom: PropTypes.number,
+      paddingBackground: PropTypes.number,
     }),
   }),
 };
 
-const defaultProps = {
-  autoDownload: true,
-  children: null,
-  map: null,
-  format: "image/png",
-  extraData: null,
-  extent: null,
-  coordinates: null,
-  scale: 1,
-  onSaveStart: (map) => {
-    return Promise.resolve(map);
-  },
-  onSaveEnd: () => {},
+const getMargin = (destCanvas) => {
+  const newMargin = destCanvas.width / 100; // 1% of the canvas width
+  return newMargin;
+};
+
+const getDownloadImageName = (format) => {
+  const fileExt = format === "image/jpeg" ? "jpg" : "png";
+  return `${window.document.title.replace(/ /g, "_").toLowerCase()}.${fileExt}`;
+};
+
+let multilineCopyright = false;
+let copyrightY = 0;
+
+// Ensure the font size fita with the image width.
+const decreaseFontSize = (destContext, maxWidth, copyright, scale) => {
+  const minFontSize = 8;
+  let sizeMatch;
+  let fontSize;
+  do {
+    sizeMatch = destContext.font.match(/[0-9]+(?:\.[0-9]+)?(px)/i);
+    fontSize = parseInt(sizeMatch[0].replace(sizeMatch[1], ""), 10);
+
+    // eslint-disable-next-line no-param-reassign
+    destContext.font = destContext.font.replace(fontSize, fontSize - 1);
+
+    multilineCopyright = false;
+
+    if (fontSize - 1 === minFontSize) {
+      multilineCopyright = true;
+    }
+  } while (
+    fontSize - 1 > minFontSize &&
+    destContext.measureText(copyright).width * scale > maxWidth
+  );
+
+  return destContext.font;
+};
+
+// eslint-disable-next-line class-methods-use-this
+const drawTextBackground = (
+  destContext,
+  x,
+  y,
+  width,
+  height,
+  styleOptions = {},
+) => {
+  destContext.save();
+  // Dflt is a white background
+  destContext.fillStyle = "rgba(255,255,255,.8)";
+
+  // To simplify usability the user could pass a boolean to use only default values.
+  if (typeof styleOptions === "object") {
+    Object.entries(styleOptions).forEach(([key, value]) => {
+      destContext[key] = value;
+    });
+  }
+
+  /// draw background rect assuming height of font
+  destContext.fillRect(x, y, width, height);
+  destContext.restore();
+};
+
+const drawCopyright = (
+  destContext,
+  destCanvas,
+  maxWidth,
+  extraData,
+  scale,
+  margin,
+  padding,
+) => {
+  const { text, font, fillStyle, background } = extraData.copyright;
+  const { paddingBottom = padding, paddingBackground = 2 } =
+    extraData.copyright;
+
+  let copyright = typeof text === "function" ? text() : text?.trim();
+
+  if (Array.isArray(copyright)) {
+    copyright = copyright.join();
+  }
+
+  destContext.save();
+  destContext.scale(scale, scale);
+  destContext.font = font || "12px Arial";
+  destContext.font = decreaseFontSize(destContext, maxWidth, copyright, scale);
+  destContext.textBaseline = "bottom";
+  destContext.scale(scale, scale);
+  destContext.fillStyle = fillStyle || "black";
+
+  // We search if the display on 2 line is necessary
+  let firstLine = copyright;
+  let firstLineMetrics = destContext.measureText(firstLine);
+
+  // If the text is bigger than the max width we split it into 2 lines
+  if (multilineCopyright) {
+    const wordNumber = copyright.split(" ").length;
+    for (let i = 0; i < wordNumber; i += 1) {
+      // Stop removing word when fits within one line.
+      if (firstLineMetrics.width * scale < maxWidth) {
+        break;
+      }
+      firstLine = firstLine.substring(0, firstLine.lastIndexOf(" "));
+      firstLineMetrics = destContext.measureText(firstLine);
+    }
+  }
+
+  // Define second line if necessary
+  const secondLine = copyright.replace(firstLine, "").trim();
+
+  // At this point we the number of lines to display.
+  const lines = [firstLine, secondLine].filter((l) => !!l).reverse();
+
+  // We draw from bottom to top because textBaseline is 'bottom
+  let lineX = margin;
+  let lineY = destCanvas.height - paddingBottom; // we apply the margin only on the left side
+
+  lines.forEach((line) => {
+    const { width, fontBoundingBoxAscent, fontBoundingBoxDescent } =
+      destContext.measureText(line);
+    const height = fontBoundingBoxAscent + fontBoundingBoxDescent; // we include paddingBackground to have a bit of distance between lines
+    let lineTop = lineY - height;
+
+    if (background) {
+      const backgroundX = margin;
+      lineTop -= paddingBackground * 2;
+      drawTextBackground(
+        destContext,
+        backgroundX,
+        lineTop,
+        width + paddingBackground * 2,
+        height + paddingBackground * 2,
+        background,
+      );
+      lineX += paddingBackground;
+      lineY -= paddingBackground;
+    }
+
+    destContext.fillText(line, lineX, lineY);
+    lineY = lineTop;
+  });
+
+  copyrightY = lineY;
+  destContext.restore();
+};
+
+const drawElement = (
+  data,
+  destCanvas,
+  scale,
+  margin,
+  padding,
+  previousItemSize = [0, 0],
+  side = "right",
+) => {
+  const destContext = destCanvas.getContext("2d");
+  const { src, width, height, rotation } = data;
+
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.crossOrigin = "Anonymous";
+    img.src = src;
+    img.onload = () => {
+      destContext.save();
+      const elementWidth = (width || 80) * scale;
+      const elementHeight = (height || 80) * scale;
+      const left =
+        side === "left"
+          ? margin + elementWidth / 2
+          : destCanvas.width - margin - elementWidth / 2;
+      const top =
+        (side === "left" && copyrightY
+          ? copyrightY - padding
+          : destCanvas.height) -
+        margin -
+        elementHeight / 2 -
+        previousItemSize[1];
+
+      destContext.translate(left, top);
+
+      if (rotation) {
+        const angle = typeof rotation === "function" ? rotation() : rotation;
+        destContext.rotate(angle * (Math.PI / 180));
+      }
+
+      destContext.drawImage(
+        img,
+        -elementWidth / 2,
+        -elementHeight / 2,
+        elementWidth,
+        elementHeight,
+      );
+      destContext.restore();
+
+      // Return the pixels width of the arrow and the margin right,
+      // that must not be occupied by the copyright.
+      resolve([elementWidth + 2 * padding, elementHeight + 2 * padding]);
+    };
+
+    img.onerror = () => {
+      resolve();
+    };
+  });
+};
+
+const calculatePixelsToExport = (mapToExport, extent, coordinates) => {
+  let firstCoordinate;
+  let oppositeCoordinate;
+
+  if (extent) {
+    firstCoordinate = getTopLeft(extent);
+    oppositeCoordinate = getBottomRight(extent);
+  } else if (coordinates) {
+    // In case of coordinates coming from DragBox interaction:
+    //   firstCoordinate is the first coordinate drawn by the user.
+    //   oppositeCoordinate is the coordinate of the point dragged by the user.
+    [firstCoordinate, , oppositeCoordinate] = coordinates;
+  }
+
+  if (firstCoordinate && oppositeCoordinate) {
+    const firstPixel = mapToExport.getPixelFromCoordinate(firstCoordinate);
+    const oppositePixel =
+      mapToExport.getPixelFromCoordinate(oppositeCoordinate);
+    const pixelTopLeft = [
+      firstPixel[0] <= oppositePixel[0] ? firstPixel[0] : oppositePixel[0],
+      firstPixel[1] <= oppositePixel[1] ? firstPixel[1] : oppositePixel[1],
+    ];
+    const pixelBottomRight = [
+      firstPixel[0] > oppositePixel[0] ? firstPixel[0] : oppositePixel[0],
+      firstPixel[1] > oppositePixel[1] ? firstPixel[1] : oppositePixel[1],
+    ];
+
+    return {
+      x: pixelTopLeft[0],
+      y: pixelTopLeft[1],
+      w: pixelBottomRight[0] - pixelTopLeft[0],
+      h: pixelBottomRight[1] - pixelTopLeft[1],
+    };
+  }
+  return null;
+};
+
+const createCanvasImage = (
+  mapToExport,
+  extraData,
+  scale,
+  extent,
+  coordinates,
+  margin,
+  padding,
+) => {
+  return new Promise((resolve) => {
+    mapToExport.once("rendercomplete", () => {
+      // Find all layer canvases and add it to dest canvas.
+      const canvases = mapToExport
+        .getTargetElement()
+        .getElementsByTagName("canvas");
+
+      // Create the canvas to export with the good size.
+      let destCanvas;
+      let destContext;
+
+      // canvases is an HTMLCollection, we don't try to transform to array because some compilers like cra doesn't translate it right.
+      for (let i = 0; i < canvases.length; i += 1) {
+        const canvas = canvases[i];
+        if (!canvas.width || !canvas.height) {
+          // eslint-disable-next-line no-continue
+          continue;
+        }
+        const clip = calculatePixelsToExport(
+          mapToExport,
+          extent,
+          coordinates,
+        ) || {
+          x: 0,
+          y: 0,
+          w: canvas.width,
+          h: canvas.height,
+        };
+
+        if (!destCanvas) {
+          destCanvas = document.createElement("canvas");
+          destCanvas.width = clip.w;
+          destCanvas.height = clip.h;
+          destContext = destCanvas.getContext("2d");
+        }
+
+        // Draw canvas to the canvas to export.
+        destContext.drawImage(
+          canvas,
+          clip.x,
+          clip.y,
+          clip.w,
+          clip.h,
+          0,
+          0,
+          destCanvas.width,
+          destCanvas.height,
+        );
+      }
+
+      margin = margin || getMargin(destCanvas);
+
+      // Custom info
+      let logoPromise = Promise.resolve();
+      if (destContext && extraData && extraData.logo) {
+        logoPromise = drawElement(
+          extraData.logo,
+          destCanvas,
+          scale,
+          margin,
+          padding,
+        );
+      }
+
+      logoPromise.then((logoSize = [0, 0]) => {
+        // North arrow
+        let arrowPromise = Promise.resolve();
+        if (destContext && extraData && extraData.northArrow) {
+          arrowPromise = drawElement(
+            {
+              src: extraData.northArrow.circled
+                ? NorthArrowCircle
+                : NorthArrowSimple,
+              ...extraData.northArrow,
+            },
+            destCanvas,
+            scale,
+            margin,
+            padding,
+            logoSize,
+          );
+        }
+
+        // Copyright
+        arrowPromise.then((arrowSize = [0, 0]) => {
+          const widestElement = Math.max(logoSize[0], arrowSize[0]);
+          if (
+            destContext &&
+            extraData &&
+            extraData.copyright &&
+            extraData.copyright.text
+          ) {
+            const maxWidth =
+              extraData.copyright.maxWidth ||
+              (widestElement
+                ? destContext.canvas.width - widestElement - margin
+                : destContext.canvas.width);
+            drawCopyright(
+              destContext,
+              destCanvas,
+              maxWidth,
+              extraData,
+              scale,
+              margin,
+              padding,
+            );
+          }
+          let qrCodePromise = Promise.resolve();
+          if (destContext && extraData && extraData.qrCode) {
+            qrCodePromise = drawElement(
+              extraData.qrCode,
+              destCanvas,
+              scale,
+              margin,
+              padding,
+              undefined,
+              "left",
+            );
+          }
+          qrCodePromise.then(() => {
+            return resolve(destCanvas);
+          });
+        });
+      });
+    });
+    mapToExport.renderSync();
+  });
+};
+
+const downloadCanvasImage = (canvas, format) => {
+  // Use blob for large images
+  const promise = new Promise((resolve) => {
+    if (/msie (9|10)/gi.test(window.navigator.userAgent.toLowerCase())) {
+      // ie 9 and 10
+      const url = canvas.toDataURL(format);
+      const w = window.open("about:blank", "");
+      w.document.write(`<img src="${url}" alt="from canvas"/>`);
+      resolve(url);
+    }
+    if (window.navigator.msSaveBlob) {
+      // ie 11 and higher
+      let image;
+      try {
+        image = canvas.msToBlob();
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.log(e);
+      }
+      const blob = new Blob([image], {
+        type: format,
+      });
+      resolve(blob);
+      window.navigator.msSaveBlob(blob, getDownloadImageName(format));
+    } else {
+      canvas.toBlob((blob) => {
+        const link = document.createElement("a");
+        link.download = getDownloadImageName(format);
+        link.href = URL.createObjectURL(blob);
+        // append child to document for firefox to be able to download.
+        document.body.appendChild(link);
+        link.click();
+        resolve(blob);
+      }, format);
+    }
+  });
+  return promise;
 };
 
 /**
@@ -150,487 +568,92 @@ const defaultProps = {
  * an [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html)
  * canvas as an image.
  */
-class CanvasSaveButton extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.padding = 5;
-  }
-
-  static getMargin(destCanvas) {
-    const newMargin = destCanvas.width / 100; // 1% of the canvas width
-    return newMargin;
-  }
-
-  onClick(evt) {
-    const { map, onSaveStart, onSaveEnd, autoDownload } = this.props;
-    if (window.navigator.msSaveBlob) {
-      // ie only
-      evt.preventDefault();
-      evt.stopPropagation();
-    }
-    onSaveStart(map).then((mapToExport) => {
-      return this.createCanvasImage(mapToExport || map)
-        .then((canvas) => {
-          if (autoDownload) {
-            this.downloadCanvasImage(canvas).then((blob) => {
-              onSaveEnd(mapToExport, canvas, blob);
-            });
-          } else {
-            onSaveEnd(mapToExport, canvas);
-          }
-        })
-        .catch((err) => {
-          if (err) {
-            // eslint-disable-next-line no-console
-            console.error(err);
-          }
-          onSaveEnd(mapToExport, err);
-        });
-    });
-  }
-
-  getDownloadImageName() {
-    const { format } = this.props;
-    const fileExt = format === "image/jpeg" ? "jpg" : "png";
-    return (
-      `${window.document.title.replace(/ /g, "_").toLowerCase()}` +
-      `.${fileExt}`
-    );
-  }
-
-  // Ensure the font size fita with the image width.
-  decreaseFontSize(destContext, maxWidth, copyright, scale) {
-    const minFontSize = 8;
-    let sizeMatch;
-    let fontSize;
-    do {
-      sizeMatch = destContext.font.match(/[0-9]+(?:\.[0-9]+)?(px)/i);
-      fontSize = parseInt(sizeMatch[0].replace(sizeMatch[1], ""), 10);
-
-      // eslint-disable-next-line no-param-reassign
-      destContext.font = destContext.font.replace(fontSize, fontSize - 1);
-
-      this.multilineCopyright = null;
-
-      if (fontSize - 1 === minFontSize) {
-        this.multilineCopyright = true;
-      }
-    } while (
-      fontSize - 1 > minFontSize &&
-      destContext.measureText(copyright).width * scale > maxWidth
-    );
-
-    return destContext.font;
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  drawTextBackground(
-    destContext,
-    textMeasure,
-    textX,
-    textY,
-    padding,
-    styleOptions = {},
-  ) {
-    /// get width of text
-    const { width, height, actualBoundingBoxAscent } = textMeasure;
-    destContext.save();
-    // Dflt is a white background
-    destContext.fillStyle = "rgba(255,255,255,.8)";
-
-    // To simplify usability the user could pass a boolean to use only default values.
-    if (typeof styleOptions === "object") {
-      Object.entries(styleOptions).forEach(([key, value]) => {
-        destContext[key] = value;
-      });
-    }
-
-    /// draw background rect assuming height of font
-    destContext.fillRect(
-      textX - padding,
-      textY - actualBoundingBoxAscent - padding,
-      width + padding * 2,
-      height + padding * 2,
-    );
-    destContext.restore();
-  }
-
-  drawCopyright(destContext, destCanvas, maxWidth) {
-    const { extraData, scale } = this.props;
-    const { text, font, fillStyle, background } = extraData.copyright;
-    let copyright = typeof text === "function" ? text() : text;
-
-    if (Array.isArray(copyright)) {
-      copyright = copyright.join();
-    }
-
-    destContext.save();
-    destContext.scale(scale, scale);
-    destContext.font = font || "12px Arial";
-    destContext.font = this.decreaseFontSize(
-      destContext,
-      maxWidth - this.padding,
-      copyright,
-      scale,
-    );
-
-    destContext.scale(scale, scale);
-    destContext.fillStyle = fillStyle || "black";
-
-    // We search if the display on 2 line is necessary
-    let firstLine = copyright;
-    const wordNumber = copyright.split(" ").length;
-
-    // If the text is bigger than the max width we split it into 2 lines
-    if (this.multilineCopyright) {
-      for (let i = 0; i < wordNumber; i += 1) {
-        firstLine = firstLine.substring(0, firstLine.lastIndexOf(" "));
-        // Stop removing word when fits within one line.
-        if (
-          destContext.measureText(firstLine).width * scale <
-          maxWidth - this.padding
-        ) {
-          break;
-        }
-      }
-    }
-    const secondLine = copyright.replace(firstLine, "");
-
-    // Draw first line (line break isn't supported for fillText).
-    const textX = this.margin;
-    let textMeasure = destContext.measureText(firstLine);
-    textMeasure.height =
-      textMeasure.actualBoundingBoxAscent +
-      textMeasure.actualBoundingBoxDescent;
-    let firstLineY = destCanvas.height / scale - this.padding;
-    const secondLineY = firstLineY;
-    const paddingBetweenLines = 3;
-    const paddingBackground = paddingBetweenLines / 2;
-
-    if (secondLine) {
-      firstLineY -= textMeasure.height + paddingBetweenLines;
-    }
-    if (background) {
-      this.drawTextBackground(
-        destContext,
-        textMeasure,
-        textX,
-        firstLineY,
-        paddingBackground,
-        background,
-      );
-    }
-    destContext.fillText(firstLine, textX, firstLineY);
-
-    // Draw second line.
-    if (secondLine) {
-      textMeasure = destContext.measureText(secondLine);
-      textMeasure.height =
-        textMeasure.actualBoundingBoxAscent +
-        textMeasure.actualBoundingBoxDescent;
-      if (background) {
-        this.drawTextBackground(
-          destContext,
-          textMeasure,
-          textX,
-          secondLineY,
-          paddingBackground,
-          background,
-        );
-      }
-      destContext.fillText(secondLine, textX, secondLineY);
-    }
-
-    const firstLineMetrics = destContext.measureText(firstLine);
-    const secondLineMetrics = destContext.measureText(secondLine);
-    const heightFirstLine =
-      firstLineMetrics.actualBoundingBoxAscent +
-      firstLineMetrics.actualBoundingBoxDescent;
-    const heightSecondLine =
-      secondLineMetrics.actualBoundingBoxAscent +
-      secondLineMetrics.actualBoundingBoxDescent;
-    this.copyrightY =
-      destCanvas.height -
-      (heightFirstLine + paddingBetweenLines + heightSecondLine) / 2;
-    destContext.restore();
-  }
-
-  drawElement(data, destCanvas, previousItemSize = [0, 0], side = "right") {
-    const destContext = destCanvas.getContext("2d");
-    const { scale } = this.props;
-    const { src, width, height, rotation } = data;
-
-    return new Promise((resolve) => {
-      const img = new Image();
-      img.crossOrigin = "Anonymous";
-      img.src = src;
-      img.onload = () => {
-        destContext.save();
-        const elementWidth = (width || 80) * scale;
-        const elementHeight = (height || 80) * scale;
-        const left =
-          side === "left"
-            ? this.margin + elementWidth / 2
-            : destCanvas.width - this.margin - elementWidth / 2;
-        const top =
-          (side === "left" && this.copyrightY
-            ? this.copyrightY - 2 * this.padding
-            : destCanvas.height) -
-          this.margin -
-          elementHeight / 2 -
-          previousItemSize[1];
-
-        destContext.translate(left, top);
-
-        if (rotation) {
-          const angle = typeof rotation === "function" ? rotation() : rotation;
-          destContext.rotate(angle * (Math.PI / 180));
-        }
-
-        destContext.drawImage(
-          img,
-          -elementWidth / 2,
-          -elementHeight / 2,
-          elementWidth,
-          elementHeight,
-        );
-        destContext.restore();
-
-        // Return the pixels width of the arrow and the margin right,
-        // that must not be occupied by the copyright.
-        resolve([
-          elementWidth + 2 * this.padding,
-          elementHeight + 2 * this.padding,
-        ]);
-      };
-
-      img.onerror = () => {
-        resolve();
-      };
-    });
-  }
-
-  calculatePixelsToExport(mapToExport) {
-    const { extent, coordinates } = this.props;
-    let firstCoordinate;
-    let oppositeCoordinate;
-
-    if (extent) {
-      firstCoordinate = getTopLeft(extent);
-      oppositeCoordinate = getBottomRight(extent);
-    } else if (coordinates) {
-      // In case of coordinates coming from DragBox interaction:
-      //   firstCoordinate is the first coordinate drawn by the user.
-      //   oppositeCoordinate is the coordinate of the point dragged by the user.
-      [firstCoordinate, , oppositeCoordinate] = coordinates;
-    }
-
-    if (firstCoordinate && oppositeCoordinate) {
-      const firstPixel = mapToExport.getPixelFromCoordinate(firstCoordinate);
-      const oppositePixel =
-        mapToExport.getPixelFromCoordinate(oppositeCoordinate);
-      const pixelTopLeft = [
-        firstPixel[0] <= oppositePixel[0] ? firstPixel[0] : oppositePixel[0],
-        firstPixel[1] <= oppositePixel[1] ? firstPixel[1] : oppositePixel[1],
-      ];
-      const pixelBottomRight = [
-        firstPixel[0] > oppositePixel[0] ? firstPixel[0] : oppositePixel[0],
-        firstPixel[1] > oppositePixel[1] ? firstPixel[1] : oppositePixel[1],
-      ];
-
-      return {
-        x: pixelTopLeft[0],
-        y: pixelTopLeft[1],
-        w: pixelBottomRight[0] - pixelTopLeft[0],
-        h: pixelBottomRight[1] - pixelTopLeft[1],
-      };
-    }
-    return null;
-  }
-
-  createCanvasImage(mapToExport) {
-    const { extraData } = this.props;
-
-    return new Promise((resolve) => {
-      mapToExport.once("rendercomplete", () => {
-        // Find all layer canvases and add it to dest canvas.
-        const canvases = mapToExport
-          .getTargetElement()
-          .getElementsByTagName("canvas");
-
-        // Create the canvas to export with the good size.
-        let destCanvas;
-        let destContext;
-
-        // canvases is an HTMLCollection, we don't try to transform to array because some compilers like cra doesn't translate it right.
-        for (let i = 0; i < canvases.length; i += 1) {
-          const canvas = canvases[i];
-          if (!canvas.width || !canvas.height) {
-            // eslint-disable-next-line no-continue
-            continue;
-          }
-          const clip = this.calculatePixelsToExport(mapToExport) || {
-            x: 0,
-            y: 0,
-            w: canvas.width,
-            h: canvas.height,
-          };
-
-          if (!destCanvas) {
-            destCanvas = document.createElement("canvas");
-            destCanvas.width = clip.w;
-            destCanvas.height = clip.h;
-            destContext = destCanvas.getContext("2d");
-          }
-
-          // Draw canvas to the canvas to export.
-          destContext.drawImage(
-            canvas,
-            clip.x,
-            clip.y,
-            clip.w,
-            clip.h,
-            0,
-            0,
-            destCanvas.width,
-            destCanvas.height,
-          );
-        }
-
-        this.margin = CanvasSaveButton.getMargin(destCanvas);
-        this.padding = this.margin;
-
-        // Custom info
-        let logoPromise = Promise.resolve();
-        if (destContext && extraData && extraData.logo) {
-          logoPromise = this.drawElement(extraData.logo, destCanvas);
-        }
-
-        logoPromise.then((logoSize = [0, 0]) => {
-          // North arrow
-          let arrowPromise = Promise.resolve();
-          if (destContext && extraData && extraData.northArrow) {
-            arrowPromise = this.drawElement(
-              {
-                src: extraData.northArrow.circled
-                  ? NorthArrowCircle
-                  : NorthArrowSimple,
-                ...extraData.northArrow,
-              },
-              destCanvas,
-              logoSize,
-            );
-          }
-
-          // Copyright
-          arrowPromise.then((arrowSize = [0, 0]) => {
-            const widestElement = Math.max(logoSize[0], arrowSize[0]);
-            if (
-              destContext &&
-              extraData &&
-              extraData.copyright &&
-              extraData.copyright.text
-            ) {
-              const maxWidth =
-                extraData.copyright.maxWidth ||
-                (widestElement
-                  ? destContext.canvas.width - widestElement - this.margin
-                  : destContext.canvas.width);
-              this.drawCopyright(destContext, destCanvas, maxWidth);
-            }
-            let qrCodePromise = Promise.resolve();
-            if (destContext && extraData && extraData.qrCode) {
-              qrCodePromise = this.drawElement(
-                extraData.qrCode,
-                destCanvas,
-                undefined,
-                "left",
-              );
-            }
-            qrCodePromise.then(() => {
-              return resolve(destCanvas);
-            });
-          });
-        });
-      });
-      mapToExport.renderSync();
-    });
-  }
-
-  downloadCanvasImage(canvas) {
-    // Use blob for large images
-    const promise = new Promise((resolve) => {
-      const { format } = this.props;
-      if (/msie (9|10)/gi.test(window.navigator.userAgent.toLowerCase())) {
-        // ie 9 and 10
-        const url = canvas.toDataURL(format);
-        const w = window.open("about:blank", "");
-        w.document.write(`<img src="${url}" alt="from canvas"/>`);
-        resolve(url);
-      }
+function CanvasSaveButton({
+  margin = null,
+  padding = 5,
+  autoDownload = true,
+  children = null,
+  map = null,
+  format = "image/png",
+  extraData = null,
+  extent = null,
+  coordinates = null,
+  scale = 1,
+  onSaveStart = (mapp) => {
+    return Promise.resolve(mapp);
+  },
+  onSaveEnd = () => {},
+  ...props
+}) {
+  const onClick = useCallback(
+    (evt) => {
       if (window.navigator.msSaveBlob) {
-        // ie 11 and higher
-        let image;
-        try {
-          image = canvas.msToBlob();
-        } catch (e) {
-          // eslint-disable-next-line no-console
-          console.log(e);
-        }
-        const blob = new Blob([image], {
-          type: format,
-        });
-        resolve(blob);
-        window.navigator.msSaveBlob(blob, this.getDownloadImageName());
-      } else {
-        canvas.toBlob((blob) => {
-          const link = document.createElement("a");
-          link.download = this.getDownloadImageName();
-          link.href = URL.createObjectURL(blob);
-          // append child to document for firefox to be able to download.
-          document.body.appendChild(link);
-          link.click();
-          resolve(blob);
-        }, format);
+        // ie only
+        evt.preventDefault();
+        evt.stopPropagation();
       }
-    });
-    return promise;
-  }
+      multilineCopyright = false;
+      copyrightY = 0;
+      onSaveStart(map).then((mapToExport) => {
+        return createCanvasImage(
+          mapToExport || map,
+          extraData,
+          scale,
+          extent,
+          coordinates,
+          margin,
+          padding,
+        )
+          .then((canvas) => {
+            if (autoDownload) {
+              downloadCanvasImage(canvas, format).then((blob) => {
+                onSaveEnd(mapToExport, canvas, blob);
+              });
+            } else {
+              onSaveEnd(mapToExport, canvas);
+            }
+          })
+          .catch((err) => {
+            if (err) {
+              // eslint-disable-next-line no-console
+              console.error(err);
+            }
+            onSaveEnd(mapToExport, err);
+          });
+      });
+    },
+    [
+      autoDownload,
+      coordinates,
+      extent,
+      extraData,
+      format,
+      map,
+      margin,
+      onSaveEnd,
+      onSaveStart,
+      padding,
+      scale,
+    ],
+  );
 
-  render() {
-    const { children, ...other } = this.props;
-
-    delete other.onSaveStart;
-    delete other.onSaveEnd;
-    delete other.extraData;
-    delete other.extent;
-    delete other.format;
-    delete other.map;
-    delete other.coordinates;
-    delete other.autoDownload;
-    delete other.scale;
-
-    return (
-      <div
-        role="button"
-        className="rs-canvas-save-button"
-        tabIndex={0}
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        {...other}
-        onClick={(e) => {
-          return this.onClick(e);
-        }}
-        onKeyPress={(e) => {
-          return e.which === 13 && this.onClick(e);
-        }}
-      >
-        {children}
-      </div>
-    );
-  }
+  return (
+    <div
+      role="button"
+      className="rs-canvas-save-button"
+      tabIndex={0}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...props}
+      onClick={onClick}
+      onKeyPress={(evt) => {
+        return evt.which === 13 && onClick(evt);
+      }}
+    >
+      {children}
+    </div>
+  );
 }
 
 CanvasSaveButton.propTypes = propTypes;
-CanvasSaveButton.defaultProps = defaultProps;
 
 export default CanvasSaveButton;

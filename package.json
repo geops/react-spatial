@@ -157,7 +157,8 @@
       "no-restricted-exports": "Off",
       "react/forbid-prop-types": "Off",
       "prettier/prettier": "error",
-      "jsx-a11y/no-access-key": "Off"
+      "jsx-a11y/no-access-key": "Off",
+      "react/require-default-props": "Off"
     }
   },
   "jest": {
