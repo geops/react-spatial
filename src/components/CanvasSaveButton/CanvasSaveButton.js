@@ -583,7 +583,6 @@ function CanvasSaveButton({
     return Promise.resolve(mapp);
   },
   onSaveEnd = () => {},
-  ...props
 }) {
   const onClick = useCallback(
     (evt) => {
@@ -640,7 +639,7 @@ function CanvasSaveButton({
   return (
     <>
       {React.Children.map(children, (child) => {
-        return React.cloneElement(child, { ...props, onClick });
+        return React.cloneElement(child, { onClick });
       })}
     </>
   );

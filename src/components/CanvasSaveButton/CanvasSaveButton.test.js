@@ -66,7 +66,6 @@ describe("CanvasSaveButton", () => {
     const saveEnd = jest.fn();
     const wrapper = render(
       <CanvasSaveButton
-        className="ta-example"
         map={olMap}
         format={conf.saveFormat}
         onSaveStart={saveStart}
@@ -87,7 +86,7 @@ describe("CanvasSaveButton", () => {
           },
         }}
       >
-        <button>{conf.icon}</button>
+        <button className="ta-example">{conf.icon}</button>
       </CanvasSaveButton>,
     );
     const link = document.createElement("a");

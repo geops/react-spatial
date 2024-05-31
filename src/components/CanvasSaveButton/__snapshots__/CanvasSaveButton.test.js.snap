@@ -1,10 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CanvasSaveButton should match snapshot with a different attributes 1`] = `
-<button title="Karte als Bild speichern."
-        class="foo"
-        tabindex="1"
->
+<button>
   <svg stroke="currentColor"
        fill="currentColor"
        stroke-width="0"
