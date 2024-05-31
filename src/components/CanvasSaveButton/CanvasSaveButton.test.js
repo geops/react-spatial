@@ -1,3 +1,4 @@
+/* eslint-disable react/button-has-type */
 import "jest-canvas-mock";
 import React from "react";
 import Map from "ol/Map";
@@ -42,7 +43,7 @@ describe("CanvasSaveButton", () => {
   test("should match snapshot.", () => {
     const component = render(
       <CanvasSaveButton format={conf.saveFormat} map={olMap}>
-        {conf.icon}
+        <button>{conf.icon}</button>
       </CanvasSaveButton>,
     );
     expect(component.container.innerHTML).toMatchSnapshot();
@@ -52,7 +53,7 @@ describe("CanvasSaveButton", () => {
     const component = render(
       // eslint-disable-next-line jsx-a11y/tabindex-no-positive
       <CanvasSaveButton title={conf.title} className="foo" tabIndex="1">
-        {conf.icon}
+        <button>{conf.icon}</button>
       </CanvasSaveButton>,
     );
     expect(component.container.innerHTML).toMatchSnapshot();
@@ -86,7 +87,7 @@ describe("CanvasSaveButton", () => {
           },
         }}
       >
-        {conf.icon}
+        <button>{conf.icon}</button>
       </CanvasSaveButton>,
     );
     const link = document.createElement("a");

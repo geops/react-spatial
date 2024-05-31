@@ -638,19 +638,11 @@ function CanvasSaveButton({
   );
 
   return (
-    <div
-      role="button"
-      className="rs-canvas-save-button"
-      tabIndex={0}
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...props}
-      onClick={onClick}
-      onKeyPress={(evt) => {
-        return evt.which === 13 && onClick(evt);
-      }}
-    >
-      {children}
-    </div>
+    <>
+      {React.Children.map(children, (child) => {
+        return React.cloneElement(child, { ...props, onClick });
+      })}
+    </>
   );
 }
 
