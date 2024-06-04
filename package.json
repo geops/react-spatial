@@ -2,7 +2,7 @@
   "name": "react-spatial",
   "license": "MIT",
   "description": "Components to build React map apps.",
-  "version": "1.10.2",
+  "version": "1.11.0-beta.1",
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
@@ -157,7 +157,8 @@
       "no-restricted-exports": "Off",
       "react/forbid-prop-types": "Off",
       "prettier/prettier": "error",
-      "jsx-a11y/no-access-key": "Off"
+      "jsx-a11y/no-access-key": "Off",
+      "react/require-default-props": "Off"
     }
   },
   "jest": {
