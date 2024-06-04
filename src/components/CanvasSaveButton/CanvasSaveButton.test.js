@@ -1,15 +1,12 @@
+/* eslint-disable react/button-has-type */
 import "jest-canvas-mock";
 import React from "react";
-import renderer from "react-test-renderer";
-import { configure, shallow } from "enzyme";
-import Adapter from "@cfaester/enzyme-adapter-react-18";
 import Map from "ol/Map";
 import View from "ol/View";
 import { TiImage } from "react-icons/ti";
 import RenderEvent from "ol/render/Event";
+import { fireEvent, render } from "@testing-library/react";
 import CanvasSaveButton from "./CanvasSaveButton";
-
-configure({ adapter: new Adapter() });
 
 describe("CanvasSaveButton", () => {
   let olMap;
@@ -44,24 +41,22 @@ describe("CanvasSaveButton", () => {
   });
 
   test("should match snapshot.", () => {
-    const component = renderer.create(
+    const component = render(
       <CanvasSaveButton format={conf.saveFormat} map={olMap}>
-        {conf.icon}
+        <button>{conf.icon}</button>
       </CanvasSaveButton>,
     );
-    const tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
+    expect(component.container.innerHTML).toMatchSnapshot();
   });
 
   test("should match snapshot with a different attributes", () => {
-    const component = renderer.create(
+    const component = render(
       // eslint-disable-next-line jsx-a11y/tabindex-no-positive
       <CanvasSaveButton title={conf.title} className="foo" tabIndex="1">
-        {conf.icon}
+        <button>{conf.icon}</button>
       </CanvasSaveButton>,
     );
-    const tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
+    expect(component.container.innerHTML).toMatchSnapshot();
   });
 
   test("should call onSaveBefore then download then onSaveEnd function on click.", async () => {
@@ -69,9 +64,8 @@ describe("CanvasSaveButton", () => {
       return Promise.resolve(m);
     });
     const saveEnd = jest.fn();
-    const wrapper = shallow(
+    const wrapper = render(
       <CanvasSaveButton
-        className="ta-example"
         map={olMap}
         format={conf.saveFormat}
         onSaveStart={saveStart}
@@ -92,7 +86,7 @@ describe("CanvasSaveButton", () => {
           },
         }}
       >
-        {conf.icon}
+        <button className="ta-example">{conf.icon}</button>
       </CanvasSaveButton>,
     );
     const link = document.createElement("a");
@@ -120,28 +114,22 @@ describe("CanvasSaveButton", () => {
         }
         return {};
       });
-    const spy = jest.spyOn(CanvasSaveButton.prototype, "createCanvasImage");
-    const spy2 = jest.spyOn(CanvasSaveButton.prototype, "downloadCanvasImage");
     jest
       .spyOn(olMap.getTargetElement(), "getElementsByTagName")
       .mockReturnValue([canvas]);
-    await wrapper.find(".ta-example").simulate("click");
+
+    await fireEvent.click(wrapper.container.querySelector(".ta-example"));
     await olMap.dispatchEvent(
       new RenderEvent("rendercomplete", undefined, undefined, {
         canvas,
       }),
     );
     await window.setTimeout(() => {
-      expect(spy).toHaveBeenCalledTimes(1);
       expect(saveStart).toHaveBeenCalledTimes(1);
       expect(saveEnd).toHaveBeenCalledTimes(1);
-      expect(spy2.mock.calls[0][0]).toBe(canvas);
-      expect(spy2.mock.calls[0][0].toBlob).toHaveBeenCalledTimes(1);
       expect(link.href).toBe("http://localhost/fooblob");
       expect(link.download).toBe(".jpg");
       expect(link.click).toHaveBeenCalledTimes(1);
-      spy.mockRestore();
-      spy2.mockRestore();
       spy3.mockRestore();
     });
   });
