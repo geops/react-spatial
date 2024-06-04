@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.11.0](https://github.com/geops/react-spatial/compare/v1.10.2...v1.11.0) (2024-06-04)
+
+
+### Bug Fixes
+
+* **CanvasSaveButton:** only pass onClick property to its child ([#722](https://github.com/geops/react-spatial/issues/722)) ([71620fc](https://github.com/geops/react-spatial/commit/71620fcb18f7da8ef754a015cec7df6f5c3cc120))
+
 ### [1.10.2](https://github.com/geops/react-spatial/compare/v1.10.1...v1.10.2) (2024-05-28)
 
 
