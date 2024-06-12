@@ -46,21 +46,12 @@ const propTypes = {
    * @param {function} Translation function returning the translated string.
    */
   t: PropTypes.func,
-};
 
-const defaultProps = {
-  className: "rs-base-layer-switcher",
-  altText: "Source not found",
-  titles: {
-    button: "Base layers",
-    openSwitcher: "Open Baselayer-Switcher",
-    closeSwitcher: "Close Baselayer-Switcher",
-  },
-  closeButtonImage: <FaChevronLeft />,
-  layerImages: undefined,
-  t: (s) => {
-    return s;
-  },
+  /**
+   * onButtonClick callback function.
+   * @param {function} Callback function triggered when a switcher button is clicked. Function receives the event, the type of button clickd (string), and the layer (if available).
+   */
+  onButtonClick: PropTypes.func,
 };
 
 const getVisibleLayer = (layers) => {
@@ -90,6 +81,31 @@ const getImageStyle = (url) => {
     : null;
 };
 
+function CloseButton({ onClick, tabIndex, title, children }) {
+  return (
+    <div
+      className="rs-base-layer-switcher-close-btn"
+      role="button"
+      onClick={onClick}
+      onKeyPress={(e) => {
+        return e.which === 13 && onClick();
+      }}
+      tabIndex={tabIndex}
+      aria-label={title}
+      title={title}
+    >
+      {children}
+    </div>
+  );
+}
+
+CloseButton.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  tabIndex: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+};
+
 /**
  * The BaseLayerSwitcher component renders a button interface for switching the visible
  * [mobility-toolbox-js layer](https://mobility-toolbox-js.geops.io/api/identifiers%20html#ol-layers)
@@ -98,32 +114,25 @@ const getImageStyle = (url) => {
 
 function BaseLayerSwitcher({
   layers,
-  layerImages,
-  className,
-  altText,
-  titles,
-  closeButtonImage,
-  t,
+  layerImages = undefined,
+  className = "rs-base-layer-switcher",
+  altText = "Source not found",
+  titles = {
+    button: "Base layers",
+    openSwitcher: "Open Baselayer-Switcher",
+    closeSwitcher: "Close Baselayer-Switcher",
+  },
+  closeButtonImage = <FaChevronLeft />,
+  onButtonClick = undefined,
+  t = (s) => {
+    return s;
+  },
 }) {
   const [switcherOpen, setSwitcherOpen] = useState(false);
   const [isClosed, setIsClosed] = useState(true);
   const [currentLayer, setCurrentLayer] = useState(
     getVisibleLayer(layers) || layers[0],
   );
-
-  useEffect(() => {
-    // Update the layer selected when a visibility changes.
-    const olKeys = (layers || []).map((layer) => {
-      return layer.on("change:visible", (evt) => {
-        if (evt.target.visible && currentLayer !== evt.target) {
-          setCurrentLayer(evt.target);
-        }
-      });
-    });
-    return () => {
-      unByKey(olKeys);
-    };
-  }, [currentLayer, layers]);
 
   /* Images are loaded from props if provided, fallback from layer */
   const images = layerImages
@@ -137,12 +146,17 @@ function BaseLayerSwitcher({
   const openClass = switcherOpen ? " rs-open" : "";
   const hiddenStyle = switcherOpen && !isClosed ? "visible" : "hidden";
 
-  const handleSwitcherClick = () => {
+  const handleSwitcherClick = (evt) => {
+    const nextLayer = layers.find((layer) => {
+      return !layer.visible;
+    });
+    if (onButtonClick) {
+      const onButtonClickArgs =
+        layers.length === 2 ? [evt, "layer", nextLayer] : [evt, "open"];
+      onButtonClick(...onButtonClickArgs);
+    }
     if (layers.length === 2) {
       /* On only two layer options the opener becomes a layer toggle button */
-      const nextLayer = layers.find((layer) => {
-        return !layer.visible;
-      });
       if (currentLayer.setVisible) {
         currentLayer.setVisible(false);
       } else {
@@ -160,7 +174,10 @@ function BaseLayerSwitcher({
     return setSwitcherOpen(true) && setIsClosed(false);
   };
 
-  const onLayerSelect = (layer) => {
+  const onLayerSelect = (layer, evt) => {
+    if (onButtonClick) {
+      onButtonClick(evt, "layer", layer);
+    }
     if (!switcherOpen) {
       setSwitcherOpen(true);
       return;
@@ -214,29 +231,23 @@ function BaseLayerSwitcher({
     };
   }, [switcherOpen]);
 
+  useEffect(() => {
+    // Update the layer selected when a visibility changes.
+    const olKeys = (layers || []).map((layer) => {
+      return layer.on("change:visible", (evt) => {
+        if (evt.target.visible && currentLayer !== evt.target) {
+          setCurrentLayer(evt.target);
+        }
+      });
+    });
+    return () => {
+      unByKey(olKeys);
+    };
+  }, [currentLayer, layers]);
+
   if (!layers || layers.length < 2 || !currentLayer) {
     return null;
   }
-
-  const toggleBtn = (
-    <div className="rs-base-layer-switcher-btn-wrapper">
-      <div
-        className="rs-base-layer-switcher-close-btn"
-        role="button"
-        onClick={() => {
-          return setSwitcherOpen(false);
-        }}
-        onKeyPress={(e) => {
-          return e.which === 13 && setSwitcherOpen(false);
-        }}
-        tabIndex={switcherOpen ? "0" : "-1"}
-        aria-label={titles.closeSwitcher}
-        title={titles.closeSwitcher}
-      >
-        {closeButtonImage}
-      </div>
-    </div>
-  );
 
   return (
     <div className={`${className}${openClass}`}>
@@ -290,12 +301,12 @@ function BaseLayerSwitcher({
               role="button"
               title={t(layerName)}
               aria-label={t(layerName)}
-              onClick={() => {
-                return onLayerSelect(layer);
+              onClick={(evt) => {
+                return onLayerSelect(layer, evt);
               }}
-              onKeyPress={(e) => {
-                if (e.which === 13) {
-                  onLayerSelect(layer);
+              onKeyPress={(evt) => {
+                if (evt.which === 13) {
+                  onLayerSelect(layer, evt);
                 }
               }}
               style={imageStyle}
@@ -311,12 +322,22 @@ function BaseLayerSwitcher({
           </div>
         );
       })}
-      {toggleBtn}
+      <CloseButton
+        onClick={(evt) => {
+          if (onButtonClick) {
+            onButtonClick(evt, "close");
+          }
+          setSwitcherOpen(false);
+        }}
+        tabIndex={switcherOpen ? "0" : "-1"}
+        title={titles.closeSwitcher}
+      >
+        {closeButtonImage}
+      </CloseButton>
     </div>
   );
 }
 
 BaseLayerSwitcher.propTypes = propTypes;
-BaseLayerSwitcher.defaultProps = defaultProps;
 
 export default BaseLayerSwitcher;
