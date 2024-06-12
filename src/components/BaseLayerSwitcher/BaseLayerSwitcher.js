@@ -48,7 +48,7 @@ const propTypes = {
   t: PropTypes.func,
 
   /**
-   * onButtonClick callback function.
+   * Callback function on button click.
    * @param {function} Callback function triggered when a switcher button is clicked. Function receives the event, the type of button clickd (string), and the layer (if available).
    */
   onButtonClick: PropTypes.func,

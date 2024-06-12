@@ -45,17 +45,12 @@ const propTypes = {
    * Display a slider to zoom.
    */
   zoomSlider: PropTypes.bool,
-};
 
-const defaultProps = {
-  titles: {
-    zoomIn: "Zoom in",
-    zoomOut: "Zoom out",
-  },
-  zoomInChildren: <FaPlus focusable={false} />,
-  zoomOutChildren: <FaMinus focusable={false} />,
-  zoomSlider: false,
-  delta: 1,
+  /**
+   * Callback function on button click.
+   * @param {function} Callback function triggered when a zoom button is clicked. Function receives the event and the type of button clickd (string).
+   */
+  onButtonClick: PropTypes.func,
 };
 
 const updateZoom = (map, delta) => {
@@ -79,11 +74,15 @@ const updateZoom = (map, delta) => {
  */
 function Zoom({
   map,
-  titles,
-  zoomInChildren,
-  zoomOutChildren,
-  zoomSlider,
-  delta,
+  titles = {
+    zoomIn: "Zoom in",
+    zoomOut: "Zoom out",
+  },
+  zoomInChildren = <FaPlus focusable={false} />,
+  zoomOutChildren = <FaMinus focusable={false} />,
+  zoomSlider = false,
+  onButtonClick = undefined,
+  delta = 1,
   ...other
 }) {
   const ref = useRef();
@@ -91,20 +90,26 @@ function Zoom({
 
   const zoomIn = useCallback(
     (evt) => {
+      if (onButtonClick) {
+        onButtonClick(evt, "zoomIn");
+      }
       if (!evt.which || evt.which === 13) {
         updateZoom(map, delta);
       }
     },
-    [delta, map],
+    [delta, map, onButtonClick],
   );
 
   const zoomOut = useCallback(
     (evt) => {
+      if (onButtonClick) {
+        onButtonClick(evt, "zoomOut");
+      }
       if (!evt.which || evt.which === 13) {
         updateZoom(map, -delta);
       }
     },
-    [delta, map],
+    [delta, map, onButtonClick],
   );
 
   const zoomInDisabled = useMemo(() => {
@@ -175,6 +180,5 @@ function Zoom({
 }
 
 Zoom.propTypes = propTypes;
-Zoom.defaultProps = defaultProps;
 
 export default React.memo(Zoom);
