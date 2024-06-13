@@ -87,8 +87,8 @@ function Zoom({
   zoomInChildren = <FaPlus focusable={false} />,
   zoomOutChildren = <FaMinus focusable={false} />,
   zoomSlider = false,
-  onZoomInButtonClick = () => {},
-  onZoomOutButtonClick = () => {},
+  onZoomInButtonClick = null,
+  onZoomOutButtonClick = null,
   delta = 1,
   ...other
 }) {
@@ -97,7 +97,9 @@ function Zoom({
 
   const zoomIn = useCallback(
     (evt) => {
-      onZoomInButtonClick(evt);
+      if (onZoomInButtonClick) {
+        onZoomInButtonClick(evt);
+      }
       if (!evt.which || evt.which === 13) {
         updateZoom(map, delta);
       }
@@ -107,7 +109,9 @@ function Zoom({
 
   const zoomOut = useCallback(
     (evt) => {
-      onZoomOutButtonClick(evt);
+      if (onZoomOutButtonClick) {
+        onZoomOutButtonClick(evt);
+      }
       if (!evt.which || evt.which === 13) {
         updateZoom(map, -delta);
       }

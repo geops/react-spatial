@@ -135,12 +135,10 @@ function BaseLayerSwitcher({
     closeSwitcher: "Close Baselayer-Switcher",
   },
   closeButtonImage = <FaChevronLeft />,
-  onCloseButtonClick = () => {},
-  onLayerButtonClick = () => {},
-  onSwitcherButtonClick = () => {},
-  t = (s) => {
-    return s;
-  },
+  onCloseButtonClick = null,
+  onLayerButtonClick = null,
+  onSwitcherButtonClick = null,
+  t = (s) => s,
 }) {
   const [switcherOpen, setSwitcherOpen] = useState(false);
   const [isClosed, setIsClosed] = useState(true);
@@ -166,7 +164,9 @@ function BaseLayerSwitcher({
     });
     const onButtonClick =
       layers.length === 2 ? onLayerButtonClick : onSwitcherButtonClick;
-    onButtonClick(evt, nextLayer);
+    if (onButtonClick) {
+      onButtonClick(evt, nextLayer);
+    }
     if (layers.length === 2) {
       /* On only two layer options the opener becomes a layer toggle button */
       if (currentLayer.setVisible) {
@@ -187,7 +187,9 @@ function BaseLayerSwitcher({
   };
 
   const onLayerSelect = (layer, evt) => {
-    onLayerButtonClick(evt, layer);
+    if (onLayerButtonClick) {
+      onLayerButtonClick(evt, layer);
+    }
     if (!switcherOpen) {
       setSwitcherOpen(true);
       return;
@@ -334,7 +336,9 @@ function BaseLayerSwitcher({
       })}
       <CloseButton
         onClick={(evt) => {
-          onCloseButtonClick(evt);
+          if (onCloseButtonClick) {
+            onCloseButtonClick(evt);
+          }
           setSwitcherOpen(false);
         }}
         tabIndex={switcherOpen ? "0" : "-1"}
