@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.1](https://github.com/geops/react-spatial/compare/v1.11.0...v1.11.1) (2024-06-13)
+
+
+### Bug Fixes
+
+* **BaseLayerSwitcher:** add onClick callback function props to BaseLayerSwitcher and Zoom ([#723](https://github.com/geops/react-spatial/issues/723)) ([dacb6f5](https://github.com/geops/react-spatial/commit/dacb6f53b358b7df1371b608e4e06f57e4db6e9f))
+
 ## [1.11.0](https://github.com/geops/react-spatial/compare/v1.10.2...v1.11.0) (2024-06-04)
 
 
