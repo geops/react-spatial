@@ -45,17 +45,18 @@ const propTypes = {
    * Display a slider to zoom.
    */
   zoomSlider: PropTypes.bool,
-};
 
-const defaultProps = {
-  titles: {
-    zoomIn: "Zoom in",
-    zoomOut: "Zoom out",
-  },
-  zoomInChildren: <FaPlus focusable={false} />,
-  zoomOutChildren: <FaMinus focusable={false} />,
-  zoomSlider: false,
-  delta: 1,
+  /**
+   * Callback function on zoom-in button click.
+   * @param {function} Callback function triggered when zoom-in button is clicked. Takes the event as argument.
+   */
+  onZoomInButtonClick: PropTypes.func,
+
+  /**
+   * Callback function on zoom-out button click.
+   * @param {function} Callback function triggered when the zoom-out button is clicked. Takes the event as argument.
+   */
+  onZoomOutButtonClick: PropTypes.func,
 };
 
 const updateZoom = (map, delta) => {
@@ -79,11 +80,16 @@ const updateZoom = (map, delta) => {
  */
 function Zoom({
   map,
-  titles,
-  zoomInChildren,
-  zoomOutChildren,
-  zoomSlider,
-  delta,
+  titles = {
+    zoomIn: "Zoom in",
+    zoomOut: "Zoom out",
+  },
+  zoomInChildren = <FaPlus focusable={false} />,
+  zoomOutChildren = <FaMinus focusable={false} />,
+  zoomSlider = false,
+  onZoomInButtonClick = null,
+  onZoomOutButtonClick = null,
+  delta = 1,
   ...other
 }) {
   const ref = useRef();
@@ -91,20 +97,26 @@ function Zoom({
 
   const zoomIn = useCallback(
     (evt) => {
+      if (onZoomInButtonClick) {
+        onZoomInButtonClick(evt);
+      }
       if (!evt.which || evt.which === 13) {
         updateZoom(map, delta);
       }
     },
-    [delta, map],
+    [delta, map, onZoomInButtonClick],
   );
 
   const zoomOut = useCallback(
     (evt) => {
+      if (onZoomOutButtonClick) {
+        onZoomOutButtonClick(evt);
+      }
       if (!evt.which || evt.which === 13) {
         updateZoom(map, -delta);
       }
     },
-    [delta, map],
+    [delta, map, onZoomOutButtonClick],
   );
 
   const zoomInDisabled = useMemo(() => {
@@ -175,6 +187,5 @@ function Zoom({
 }
 
 Zoom.propTypes = propTypes;
-Zoom.defaultProps = defaultProps;
 
 export default React.memo(Zoom);
