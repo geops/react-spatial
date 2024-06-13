@@ -2,7 +2,7 @@
   "name": "react-spatial",
   "license": "MIT",
   "description": "Components to build React map apps.",
-  "version": "1.11.1-beta.1",
+  "version": "1.11.1-beta.2",
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
