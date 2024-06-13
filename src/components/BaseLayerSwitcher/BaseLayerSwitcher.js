@@ -48,10 +48,22 @@ const propTypes = {
   t: PropTypes.func,
 
   /**
-   * Callback function on button click.
-   * @param {function} Callback function triggered when a switcher button is clicked. Function receives the event, the type of button clickd (string), and the layer (if available).
+   * Callback function on close button click.
+   * @param {function} Callback function triggered when a switcher button is clicked. Takes the event as argument.
    */
-  onButtonClick: PropTypes.func,
+  onCloseButtonClick: PropTypes.func,
+
+  /**
+   * Callback function on layer button click.
+   * @param {function} Callback function triggered when a switcher button is clicked. Takes the event and the layer as arguments.
+   */
+  onLayerButtonClick: PropTypes.func,
+
+  /**
+   * Callback function on main switcher button click.
+   * @param {function} Callback function triggered when a switcher button is clicked. Takes the event as argument.
+   */
+  onSwitcherButtonClick: PropTypes.func,
 };
 
 const getVisibleLayer = (layers) => {
@@ -123,7 +135,9 @@ function BaseLayerSwitcher({
     closeSwitcher: "Close Baselayer-Switcher",
   },
   closeButtonImage = <FaChevronLeft />,
-  onButtonClick = undefined,
+  onCloseButtonClick = () => {},
+  onLayerButtonClick = () => {},
+  onSwitcherButtonClick = () => {},
   t = (s) => {
     return s;
   },
@@ -150,11 +164,9 @@ function BaseLayerSwitcher({
     const nextLayer = layers.find((layer) => {
       return !layer.visible;
     });
-    if (onButtonClick) {
-      const onButtonClickArgs =
-        layers.length === 2 ? [evt, "layer", nextLayer] : [evt, "open"];
-      onButtonClick(...onButtonClickArgs);
-    }
+    const onButtonClick =
+      layers.length === 2 ? onLayerButtonClick : onSwitcherButtonClick;
+    onButtonClick(evt, nextLayer);
     if (layers.length === 2) {
       /* On only two layer options the opener becomes a layer toggle button */
       if (currentLayer.setVisible) {
@@ -175,9 +187,7 @@ function BaseLayerSwitcher({
   };
 
   const onLayerSelect = (layer, evt) => {
-    if (onButtonClick) {
-      onButtonClick(evt, "layer", layer);
-    }
+    onLayerButtonClick(evt, layer);
     if (!switcherOpen) {
       setSwitcherOpen(true);
       return;
@@ -324,9 +334,7 @@ function BaseLayerSwitcher({
       })}
       <CloseButton
         onClick={(evt) => {
-          if (onButtonClick) {
-            onButtonClick(evt, "close");
-          }
+          onCloseButtonClick(evt);
           setSwitcherOpen(false);
         }}
         tabIndex={switcherOpen ? "0" : "-1"}
