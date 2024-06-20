@@ -93,8 +93,17 @@ const sanitizeFeature = (feature, doNotRevert32pxScaling = false) => {
   const style = (Array.isArray(tmpStyles) ? tmpStyles[0] : tmpStyles).clone();
 
   let stroke = style.getStroke();
-  if (stroke && feature.get("lineDash")) {
-    stroke.setLineDash(
+
+  if (feature.get("lineCap")) {
+    stroke?.setLineCap(feature.get("lineCap"));
+  }
+
+  if (feature.get("lineJoin")) {
+    stroke?.setLineJoin(feature.get("lineJoin"));
+  }
+
+  if (feature.get("lineDash")) {
+    stroke?.setLineDash(
       feature
         .get("lineDash")
         .split(",")
@@ -102,6 +111,14 @@ const sanitizeFeature = (feature, doNotRevert32pxScaling = false) => {
           return parseInt(l, 10);
         }),
     );
+  }
+
+  if (feature.get("lineDashOffset")) {
+    stroke?.setLineDashOffset(parseInt(feature.get("lineDashOffset"), 10));
+  }
+
+  if (feature.get("miterLimit")) {
+    stroke?.setMiterLimit(parseInt(feature.get("miterLimit"), 10));
   }
 
   // The canvas draws a stroke width=1 by default if width=0, so we
@@ -478,19 +495,35 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
         }
       }
 
-      if (newStyle.text && newStyle.text.getBackgroundFill()) {
+      if (newStyle.text?.getBackgroundFill()) {
         clone.set(
           "textBackgroundFillColor",
           asString(newStyle.text.getBackgroundFill().getColor()),
         );
       }
 
-      if (newStyle.text && newStyle.text.getPadding()) {
+      if (newStyle.text?.getPadding()) {
         clone.set("textPadding", newStyle.text.getPadding().join());
       }
 
-      if (newStyle.stroke && newStyle.stroke.getLineDash()) {
+      if (newStyle.stroke?.getLineCap()) {
+        clone.set("lineCap", newStyle.stroke.getLineCap());
+      }
+
+      if (newStyle.stroke?.getLineJoin()) {
+        clone.set("lineJoin", newStyle.stroke.getLineJoin());
+      }
+
+      if (newStyle.stroke?.getLineDash()) {
         clone.set("lineDash", newStyle.stroke.getLineDash().join(","));
+      }
+
+      if (newStyle.stroke?.getLineDashOffset()) {
+        clone.set("lineDashOffset", newStyle.stroke.getLineDashOffset());
+      }
+
+      if (newStyle.stroke?.getMiterLimit()) {
+        clone.set("miterLimit", newStyle.stroke.getMiterLimit());
       }
 
       if (newStyle.image instanceof Circle) {

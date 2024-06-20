@@ -94,9 +94,13 @@ describe("KML", () => {
                   </LineStyle>
                 </Style>
                 <ExtendedData>
+                  <Data name="lineCap"><value>butt</value></Data>
                   <Data name="lineDash"><value>40,40</value></Data>
+                  <Data name="lineDashOffset"><value>5</value></Data>
                   <Data name="lineEndIcon"><value>{"url":"fooarrowend.png","scale":0.35,"size":[36,58],"zIndex":1}</value></Data>
+                  <Data name="lineJoin"><value>square</value></Data>
                   <Data name="lineStartIcon"><value>{"url":"fooarrowstart.png","scale":0.35,"size":[36,58],"zIndex":1}</value></Data>
+                  <Data name="miterLimit"><value>14</value></Data>
                 </ExtendedData>
                 <LineString><coordinates>0,1,0 3,5,0 40,25,0</coordinates></LineString>
             </Placemark>
@@ -201,7 +205,10 @@ describe("KML", () => {
       const styleText = style.getText();
       expect(styleText.getText()).toBe("bar"); // spaces are trimmed.
       expect(styleText.getFont()).toEqual("bold 16px arial");
-      expect(styleText.getFill()).toEqual({ color_: [32, 52, 126, 1] });
+      expect(styleText.getFill()).toEqual({
+        color_: [32, 52, 126, 1],
+        patternImage_: null,
+      });
       expect(styleText.getStroke()).toEqual({
         color_: "rgba(100,255,255,0.2)",
         width_: 3,
@@ -216,6 +223,7 @@ describe("KML", () => {
       expect(styleText.getPadding()).toEqual([5, 6, 7, 8]);
       expect(styleText.getBackgroundFill()).toEqual({
         color_: "rgba(255,255,255,0.01)",
+        patternImage_: null,
       });
       expect(styleText.getTextAlign()).toEqual("right");
       expect(styleText.getOffsetX()).toEqual(-90);
