@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.2](https://github.com/geops/react-spatial/compare/v1.11.1...v1.11.2) (2024-06-20)
+
+
+### Bug Fixes
+
+* add all line style properties  to the KML reader/writer ([ec42caf](https://github.com/geops/react-spatial/commit/ec42caf7ac60e68ff789001a62a6a13fa3a88e12))
+
 ### [1.11.1](https://github.com/geops/react-spatial/compare/v1.11.0...v1.11.1) (2024-06-13)
 
 
