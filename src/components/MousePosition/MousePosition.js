@@ -83,9 +83,9 @@ const defaultProps = {
  */
 function MousePosition({
   map,
-  projections,
-  projectionValue,
-  onChange,
+  projections = defaultProps.projections,
+  projectionValue = defaultProps.projectionValue,
+  onChange = defaultProps.onChange,
   ...other
 }) {
   const [projection, setProjection] = useState(
@@ -170,6 +170,5 @@ function MousePosition({
 }
 
 MousePosition.propTypes = propTypes;
-MousePosition.defaultProps = defaultProps;
 
 export default React.memo(MousePosition);

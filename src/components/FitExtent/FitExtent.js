@@ -24,15 +24,17 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const defaultProps = {
-  className: "rs-fit-extent",
-};
-
 /**
  * The FitExtent component creates a button that updates the current extent of
  * an [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
  */
-function FitExtent({ map, extent, className, children, ...other }) {
+function FitExtent({
+  map,
+  extent,
+  className = "rs-fit-extent",
+  children,
+  ...other
+}) {
   const fit = (evt) => {
     if (evt.which && evt.which !== 13) {
       return;
@@ -57,6 +59,5 @@ function FitExtent({ map, extent, className, children, ...other }) {
 }
 
 FitExtent.propTypes = propTypes;
-FitExtent.defaultProps = defaultProps;
 
 export default FitExtent;

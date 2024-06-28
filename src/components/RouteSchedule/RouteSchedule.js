@@ -110,13 +110,14 @@ const defaultRenderStationName = (stations, index, cancelled) => {
     <div className={cancelled ? "rt-route-cancelled" : ""}>{stationName}</div>
   );
 };
+const emptyFunc = () => {};
 
 function RouteStop({
   lineInfos,
-  onStationClick,
+  onStationClick = emptyFunc,
   trackerLayer,
-  renderStationImg,
-  renderStationName,
+  renderStationImg = defaultRenderStationImg,
+  renderStationName = defaultRenderStationName,
   stop,
   idx,
 }) {
@@ -243,11 +244,14 @@ const defaultRenderRouteIdentifier = ({ routeIdentifier, longName }) => {
   }
   return null;
 };
+const defaultRenderHeaderButtons = () => {
+  return null;
+};
 
 const defaultRenderHeader = ({
   lineInfos,
-  renderHeaderButtons,
-  renderRouteIdentifier,
+  renderHeaderButtons = defaultRenderHeaderButtons,
+  renderRouteIdentifier = defaultRenderRouteIdentifier,
 }) => {
   const {
     type,
@@ -285,14 +289,6 @@ const defaultRenderHeader = ({
   );
 };
 
-const defaultRenderFooter = (props) => {
-  const { lineInfos, renderCopyright } = props;
-  if (!lineInfos.operator && !lineInfos.publisher) {
-    return null;
-  }
-  return <div className="rt-route-footer">{renderCopyright({ ...props })}</div>;
-};
-
 const defaultRenderLink = (text, url) => {
   return (
     <div className="rt-route-copyright-link">
@@ -321,6 +317,14 @@ const defaultRenderCopyright = ({ lineInfos }) => {
       {lineInfos.license && ")"}
     </span>
   );
+};
+
+const defaultRenderFooter = (props) => {
+  const { lineInfos, renderCopyright = defaultRenderCopyright } = props;
+  if (!lineInfos.operator && !lineInfos.publisher) {
+    return null;
+  }
+  return <div className="rt-route-footer">{renderCopyright({ ...props })}</div>;
 };
 
 const propTypes = {
@@ -385,28 +389,17 @@ const propTypes = {
   renderHeaderButtons: PropTypes.func,
 };
 
-const defaultProps = {
-  className: "rt-route-schedule",
-  lineInfos: null,
-  renderHeader: defaultRenderHeader,
-  renderStation: defaultRenderStation,
-  renderStationImg: defaultRenderStationImg,
-  renderStationName: defaultRenderStationName,
-  renderCopyright: defaultRenderCopyright,
-  renderFooter: defaultRenderFooter,
-  renderRouteIdentifier: defaultRenderRouteIdentifier,
-  renderHeaderButtons: () => {
-    return null;
-  },
-  onStationClick: () => {},
-};
-
 /**
  * RouteSchedule displays information, stops and punctuality about the clicked route.
  */
-function RouteSchedule(props) {
-  const { lineInfos, className, renderStation, renderHeader, renderFooter } =
-    props;
+function RouteSchedule({
+  className = "rt-route-schedule",
+  renderStation = defaultRenderStation,
+  renderHeader = defaultRenderHeader,
+  renderFooter = defaultRenderFooter,
+  ...props
+}) {
+  const { lineInfos } = props;
 
   if (!lineInfos) {
     return null;
@@ -426,6 +419,5 @@ function RouteSchedule(props) {
 }
 
 RouteSchedule.propTypes = propTypes;
-RouteSchedule.defaultProps = defaultProps;
 
 export default React.memo(RouteSchedule);

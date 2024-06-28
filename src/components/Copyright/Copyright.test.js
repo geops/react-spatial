@@ -1,17 +1,13 @@
 import "jest-canvas-mock";
 import React from "react";
-import { configure, mount } from "enzyme";
-import Adapter from "@cfaester/enzyme-adapter-react-18";
-import { act } from "react-dom/test-utils";
 import { Map, View } from "ol";
 import Tile from "ol/Tile";
 import TileLayer from "ol/layer/Tile";
 import TileSource from "ol/source/Tile";
 import { createXYZ } from "ol/tilegrid";
 import { Layer } from "mobility-toolbox-js/ol";
+import { act, render } from "@testing-library/react";
 import Copyright from "./Copyright";
-
-configure({ adapter: new Adapter() });
 
 const image = new Image();
 image.width = 256;
@@ -61,6 +57,7 @@ describe("Copyright", () => {
       layers: layers.map((layer) => {
         return layer.olLayer;
       }),
+      controls: [],
     });
     map.setSize([200, 200]);
     layers.forEach((layer) => {
@@ -80,32 +77,34 @@ describe("Copyright", () => {
   });
 
   test("is empty if no layers are visible", () => {
-    const component = mount(<Copyright map={map} />);
-    expect(component.html()).toBe(null);
+    const { container } = render(<Copyright map={map} />);
+    expect(container.innerHTML).toBe("");
   });
 
   test("displays one copyright", () => {
-    const wrapper = mount(<Copyright map={map} />);
+    const { container } = render(<Copyright map={map} />);
     act(() => {
       map.renderSync();
     });
-    wrapper.update();
-    expect(wrapper.text()).toBe("bar");
+    expect(container.textContent).toBe("bar");
   });
 
   test("displays 2 copyrights", () => {
-    const wrapper = mount(<Copyright map={map} />);
+    const { container } = render(<Copyright map={map} />);
     layers[0].visible = true;
     layers[1].visible = true;
     act(() => {
       map.renderSync();
     });
-    wrapper.update();
-    expect(wrapper.text()).toBe("bar | foo");
+    act(() => {
+      map.renderSync();
+    });
+
+    expect(container.textContent).toBe("bar | foo");
   });
 
   test("displays a copyright using a custom format", () => {
-    const wrapper = mount(
+    const { container } = render(
       <Copyright
         map={map}
         format={(copyrights) => {
@@ -117,18 +116,29 @@ describe("Copyright", () => {
     act(() => {
       map.renderSync();
     });
-    wrapper.update();
 
-    expect(wrapper.text()).toBe("Number of copyrights: 1");
+    expect(container.textContent).toBe("Number of copyrights: 1");
   });
 
   test("set a custom className", () => {
-    const wrapper = mount(<Copyright map={map} className="foo" />);
-    expect(wrapper.find(".foo").length).toBe(1);
+    const { container } = render(<Copyright map={map} className="foo" />);
+
+    act(() => {
+      map.renderSync();
+    });
+
+    expect(container.querySelectorAll(".foo").length).toBe(1);
   });
 
   test("set a custom attribute to the root element", () => {
-    const wrapper = mount(<Copyright map={map} foo="bar" />);
-    expect(wrapper.find("[foo]").length).toBe(1);
+    const { container } = render(
+      <Copyright map={map} className="lala" foo="bar" />,
+    );
+
+    act(() => {
+      map.renderSync();
+    });
+
+    expect(container.querySelectorAll("[foo]").length).toBe(1);
   });
 });

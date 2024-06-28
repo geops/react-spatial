@@ -10,12 +10,6 @@ jest.mock("resize-observer-polyfill");
 
 configure({ adapter: new Adapter() });
 
-class Div extends React.Component {
-  render() {
-    return <div />;
-  }
-}
-
 class BasicComponent extends React.Component {
   render() {
     const { onResize, stylePropHeight } = this.props;
@@ -57,32 +51,6 @@ class StrComponent extends React.Component {
       <span id="basic">
         <ResizeHandler observe="#basic" />
       </span>
-    );
-  }
-}
-
-class ThisComponent extends React.Component {
-  render() {
-    return (
-      <div>
-        <ResizeHandler observe={this} />
-      </div>
-    );
-  }
-}
-
-class RefComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.ref = React.createRef();
-  }
-
-  render() {
-    return (
-      <>
-        <Div ref={this.ref} />
-        <ResizeHandler observe={this.ref} />
-      </>
     );
   }
 }
@@ -158,13 +126,7 @@ class CallbackNodeComponent extends React.Component {
   }
 }
 
-const comps = [
-  ThisComponent,
-  RefComponent,
-  RefNodeComponent,
-  CallbackComponent,
-  CallbackNodeComponent,
-];
+const comps = [RefNodeComponent, CallbackComponent, CallbackNodeComponent];
 
 describe("ResizeHandler", () => {
   describe("when observe property is not set", () => {

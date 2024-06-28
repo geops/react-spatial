@@ -28,12 +28,6 @@ const propTypes = {
   children: PropTypes.node,
 };
 
-const defaultProps = {
-  rotationOffset: 0,
-  circled: false,
-  children: null,
-};
-
 const getRotation = (map, rotationOffset) => {
   return toDegrees(map.getView().getRotation()) + rotationOffset;
 };
@@ -42,7 +36,13 @@ const getRotation = (map, rotationOffset) => {
  * This NorthArrow component inserts an arrow pointing north into an
  * [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
  */
-function NorthArrow({ map, rotationOffset, circled, children, ...other }) {
+function NorthArrow({
+  map,
+  rotationOffset = 0,
+  circled = false,
+  children = null,
+  ...other
+}) {
   const [rotation, setRotation] = useState(rotationOffset);
 
   useEffect(() => {
@@ -70,6 +70,5 @@ function NorthArrow({ map, rotationOffset, circled, children, ...other }) {
 }
 
 NorthArrow.propTypes = propTypes;
-NorthArrow.defaultProps = defaultProps;
 
 export default React.memo(NorthArrow);

@@ -1,4 +1,3 @@
-import ReactDOM from "react-dom";
 import { PureComponent, Component } from "react";
 import PropTypes from "prop-types";
 import ResizeObserver from "resize-observer-polyfill";
@@ -147,17 +146,25 @@ class ResizeHandler extends PureComponent {
     if (typeof observe === "string" || observe instanceof String) {
       this.nodes = document.querySelectorAll(observe);
     } else if (observe instanceof Component) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        "observe attribute as a Component is deprecated: Please use React.createRef() or React.useRef() instead of a React component.",
+      );
       // eslint-disable-next-line react/no-find-dom-node
-      this.nodes.push(ReactDOM.findDOMNode(observe));
+      // this.nodes.push(ReactDOM.findDOMNode(observe));
     } else if (observe instanceof Element) {
       this.nodes.push(observe);
     } else if (observe.current instanceof Element) {
       // observe value created with React.createRef() on a html node.
       this.nodes.push(observe.current);
     } else if (observe.current instanceof Component) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        "observe attribute as a ref to Component is deprecated: Please use React.createRef() or React.useRef() instead of a React component.",
+      );
       // observe value created with React.createRef() on a React component.
       // eslint-disable-next-line react/no-find-dom-node
-      this.nodes.push(ReactDOM.findDOMNode(observe.current));
+      // this.nodes.push(ReactDOM.findDOMNode(observe.current));
     }
 
     if (this.nodes.length) {
