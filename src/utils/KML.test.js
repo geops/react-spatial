@@ -231,6 +231,49 @@ describe("KML", () => {
       expectWriteResult(feats, str);
     });
 
+    test("should read/write TextStyle with textArray as ExtendedData.", () => {
+      const str = `
+        <kml ${xmlns}>
+          <Document>
+            <name>lala</name>
+            <Placemark>
+              <name>   bar  </name>
+              <Style>
+                <IconStyle>
+                  <scale>0</scale>
+                </IconStyle>
+                <LabelStyle>
+                  <color>ff7e3420</color>
+                  <scale>2</scale>
+                </LabelStyle>
+              </Style>
+              <ExtendedData>
+                <Data name="textArray">
+                  <value>["foo","bar","\\n",""]</value>
+                </Data>
+                <Data name="textFont">
+                  <value>bold 16px arial</value>
+                </Data>
+              </ExtendedData>
+              <Point>
+                <coordinates>0,0,0</coordinates>
+              </Point>
+            </Placemark>
+          </Document>
+        </kml>
+      `;
+      const feats = KML.readFeatures(str);
+      const style = feats[0].getStyleFunction()(feats[0], 1);
+      expect(feats.length).toBe(1);
+      expect(style instanceof Style).toBe(true);
+
+      // Text
+      const styleText = style.getText();
+      expect(styleText.getText()).toEqual(["foo", "bar", "\n", ""]);
+      expect(styleText.getFont()).toEqual("bold 16px arial");
+      expectWriteResult(feats, str);
+    });
+
     test("should read and write lineDash and fillPattern style for polygon", () => {
       const str = `
         <kml ${xmlns}>

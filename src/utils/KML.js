@@ -179,6 +179,20 @@ const sanitizeFeature = (feature, doNotRevert32pxScaling = false) => {
         scale: style.getText().getScale(),
       });
 
+      if (feature.get("textArray")) {
+        try {
+          const textArray = JSON.parse(feature.get("textArray"));
+          text.setText(textArray);
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.error(
+            "Error parsing textArray",
+            feature.get("textArray"),
+            err,
+          );
+        }
+      }
+
       if (feature.get("textStrokeColor") && feature.get("textStrokeWidth")) {
         text.setStroke(
           new Stroke({
@@ -457,32 +471,47 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
 
       // If we see spaces at the beginning or at the end we add a empty
       // white space at the beginning and at the end.
-      if (newStyle.text && /^\s|\s$/g.test(newStyle.text.getText())) {
-        newStyle.text.setText(`\u200B${newStyle.text.getText()}\u200B`);
+      const text = newStyle.text?.getText();
+      if (text) {
+        let kmlText = text;
+
+        if (Array.isArray(text)) {
+          // text can be a string or an array of strings
+          clone.set("textArray", JSON.stringify(text));
+
+          // in the KML we just add the text without the bold or italic information
+          kmlText = text.map((t, idx) => {
+            return idx % 2 === 0 ? t : "";
+          });
+        }
+
+        if (/^\s|\s$/g.test(kmlText)) {
+          newStyle.text.setText(`\u200B${kmlText}\u200B`);
+        }
       }
 
       // Set custom properties to be converted in extendedData in KML.
-      if (newStyle.text && newStyle.text.getRotation()) {
+      if (newStyle.text?.getRotation()) {
         clone.set("textRotation", newStyle.text.getRotation());
       }
 
-      if (newStyle.text && newStyle.text.getFont()) {
+      if (newStyle.text?.getFont()) {
         clone.set("textFont", newStyle.text.getFont());
       }
 
-      if (newStyle.text && newStyle.text.getTextAlign()) {
+      if (newStyle.text?.getTextAlign()) {
         clone.set("textAlign", newStyle.text.getTextAlign());
       }
 
-      if (newStyle.text && newStyle.text.getOffsetX()) {
+      if (newStyle.text?.getOffsetX()) {
         clone.set("textOffsetX", newStyle.text.getOffsetX());
       }
 
-      if (newStyle.text && newStyle.text.getOffsetY()) {
+      if (newStyle.text?.getOffsetY()) {
         clone.set("textOffsetY", newStyle.text.getOffsetY());
       }
 
-      if (newStyle.text && newStyle.text.getStroke()) {
+      if (newStyle.text?.getStroke()) {
         if (newStyle.text.getStroke().getColor()) {
           clone.set(
             "textStrokeColor",
