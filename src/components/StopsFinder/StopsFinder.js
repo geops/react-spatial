@@ -15,6 +15,10 @@ const StyledAutocomplete = styled(Autocomplete)(() => ({
   },
 }));
 
+const defaultProps = {
+  textFieldProps: {},
+};
+
 function StopsFinder({
   agencies,
   apiKey,
@@ -28,7 +32,7 @@ function StopsFinder({
   refLocation,
   renderAutocomplete,
   url,
-  textFieldProps,
+  textFieldProps = defaultProps.textFieldProps,
   ...props
 }) {
   const [inputValue, setInputValue] = useState("");
@@ -256,21 +260,6 @@ StopsFinder.propTypes = {
    * Url of the geOps StopsFinder service.
    */
   url: PropTypes.string,
-};
-
-StopsFinder.defaultProps = {
-  agencies: null,
-  apiKey: null,
-  textFieldProps: {},
-  bbox: null,
-  field: null,
-  limit: null,
-  mots: null,
-  onSelect: null,
-  radius: null,
-  refLocation: null,
-  url: null,
-  renderAutocomplete: null,
 };
 
 export default StopsFinder;

@@ -243,9 +243,11 @@ describe("Permalink", () => {
     expect(layersParam).toBe("ultimate.layer,child.hidden.1");
 
     act(() => {
-      layers.find((l) => {
-        return l.name === "Swiss boundaries";
-      }).visible = true;
+      layers
+        .find((l) => {
+          return l.get("name") === "Swiss boundaries";
+        })
+        .setVisible(true);
     });
 
     layersParam = new URLSearchParams(window.location.search).get("layers");
@@ -262,9 +264,11 @@ describe("Permalink", () => {
     expect(baseLayers).toBe("basebright.baselayer,basedark.baselayer");
 
     act(() => {
-      layers.find((l) => {
-        return l.name === "Base - Dark";
-      }).visible = true;
+      layers
+        .find((l) => {
+          return l.get("name") === "Base - Dark";
+        })
+        .setVisible(true);
     });
 
     baseLayers = new URLSearchParams(window.location.search).get("baselayers");

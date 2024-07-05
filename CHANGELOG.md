@@ -2,6 +2,41 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.3](https://github.com/geops/react-spatial/compare/v1.11.2...v1.11.3) (2024-06-28)
+
+
+### Bug Fixes
+
+* manage text style as array ([2d34873](https://github.com/geops/react-spatial/commit/2d3487326d2030e8f42b6effcbcd057bca0da852))
+
+### [1.11.2](https://github.com/geops/react-spatial/compare/v1.11.1...v1.11.2) (2024-06-20)
+
+
+### Bug Fixes
+
+* add all line style properties  to the KML reader/writer ([ec42caf](https://github.com/geops/react-spatial/commit/ec42caf7ac60e68ff789001a62a6a13fa3a88e12))
+
+### [1.11.1](https://github.com/geops/react-spatial/compare/v1.11.0...v1.11.1) (2024-06-13)
+
+
+### Bug Fixes
+
+* **BaseLayerSwitcher:** add onClick callback function props to BaseLayerSwitcher and Zoom ([#723](https://github.com/geops/react-spatial/issues/723)) ([dacb6f5](https://github.com/geops/react-spatial/commit/dacb6f53b358b7df1371b608e4e06f57e4db6e9f))
+
+## [1.11.0](https://github.com/geops/react-spatial/compare/v1.10.2...v1.11.0) (2024-06-04)
+
+
+### Features
+
+* **CanvasSaveButton:** remove the html container element and only pass onClick property to its child ([#722](https://github.com/geops/react-spatial/issues/722)) ([71620fc](https://github.com/geops/react-spatial/commit/71620fcb18f7da8ef754a015cec7df6f5c3cc120))
+
+### [1.10.2](https://github.com/geops/react-spatial/compare/v1.10.1...v1.10.2) (2024-05-28)
+
+
+### Bug Fixes
+
+* ignore scale fix if the icon has no size ([#721](https://github.com/geops/react-spatial/issues/721)) ([01d6be8](https://github.com/geops/react-spatial/commit/01d6be8ca2422e1198ee7b6fd540d22fdb314943))
+
 ### [1.10.1](https://github.com/geops/react-spatial/compare/v1.10.0...v1.10.1) (2024-05-14)
 
 

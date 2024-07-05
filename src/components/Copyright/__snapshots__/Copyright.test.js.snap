@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Copyright is empty if no layers are visible 1`] = `
+<div class="rs-copyright">
+  <div>
+  </div>
+</div>
+`;

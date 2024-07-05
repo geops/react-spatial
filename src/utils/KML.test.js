@@ -61,14 +61,12 @@ describe("KML", () => {
       expect(feats[0].get("name")).toBe("foo");
       expect(feats[1].get("name")).toBe("bar");
       const str2 = KML.writeFeatures(
-        {
+        new VectorLayer({
           name: "lala",
-          olLayer: new VectorLayer({
-            source: new VectorSource({
-              features: feats.reverse(), // We simulate the random order of getFeatures() from rbush
-            }),
+          source: new VectorSource({
+            features: feats.reverse(), // We simulate the random order of getFeatures() from rbush
           }),
-        },
+        }),
         get("EPSG:4326"),
         undefined,
         false,
@@ -92,9 +90,13 @@ describe("KML", () => {
                   </LineStyle>
                 </Style>
                 <ExtendedData>
+                  <Data name="lineCap"><value>butt</value></Data>
                   <Data name="lineDash"><value>40,40</value></Data>
+                  <Data name="lineDashOffset"><value>5</value></Data>
                   <Data name="lineEndIcon"><value>{"url":"fooarrowend.png","scale":0.35,"size":[36,58],"zIndex":1}</value></Data>
+                  <Data name="lineJoin"><value>square</value></Data>
                   <Data name="lineStartIcon"><value>{"url":"fooarrowstart.png","scale":0.35,"size":[36,58],"zIndex":1}</value></Data>
+                  <Data name="miterLimit"><value>14</value></Data>
                 </ExtendedData>
                 <LineString><coordinates>0,1,0 3,5,0 40,25,0</coordinates></LineString>
             </Placemark>
@@ -199,7 +201,10 @@ describe("KML", () => {
       const styleText = style.getText();
       expect(styleText.getText()).toBe("bar"); // spaces are trimmed.
       expect(styleText.getFont()).toEqual("bold 16px arial");
-      expect(styleText.getFill()).toEqual({ color_: [32, 52, 126, 1] });
+      expect(styleText.getFill()).toEqual({
+        color_: [32, 52, 126, 1],
+        patternImage_: null,
+      });
       expect(styleText.getStroke()).toEqual({
         color_: "rgba(100,255,255,0.2)",
         width_: 3,
@@ -214,10 +219,54 @@ describe("KML", () => {
       expect(styleText.getPadding()).toEqual([5, 6, 7, 8]);
       expect(styleText.getBackgroundFill()).toEqual({
         color_: "rgba(255,255,255,0.01)",
+        patternImage_: null,
       });
       expect(styleText.getTextAlign()).toEqual("right");
       expect(styleText.getOffsetX()).toEqual(-90);
       expect(styleText.getOffsetY()).toEqual(30);
+      expectWriteResult(feats, str);
+    });
+
+    test("should read/write TextStyle with textArray as ExtendedData.", () => {
+      const str = `
+        <kml ${xmlns}>
+          <Document>
+            <name>lala</name>
+            <Placemark>
+              <name>   bar  </name>
+              <Style>
+                <IconStyle>
+                  <scale>0</scale>
+                </IconStyle>
+                <LabelStyle>
+                  <color>ff7e3420</color>
+                  <scale>2</scale>
+                </LabelStyle>
+              </Style>
+              <ExtendedData>
+                <Data name="textArray">
+                  <value>["foo","bar","\\n",""]</value>
+                </Data>
+                <Data name="textFont">
+                  <value>bold 16px arial</value>
+                </Data>
+              </ExtendedData>
+              <Point>
+                <coordinates>0,0,0</coordinates>
+              </Point>
+            </Placemark>
+          </Document>
+        </kml>
+      `;
+      const feats = KML.readFeatures(str);
+      const style = feats[0].getStyleFunction()(feats[0], 1);
+      expect(feats.length).toBe(1);
+      expect(style instanceof Style).toBe(true);
+
+      // Text
+      const styleText = style.getText();
+      expect(styleText.getText()).toEqual(["foo", "bar", "\n", ""]);
+      expect(styleText.getFont()).toEqual("bold 16px arial");
       expectWriteResult(feats, str);
     });
 
@@ -396,6 +445,72 @@ describe("KML", () => {
 
       expectWriteResult(feats, str, false, get("EPSG:3857"));
     });
+
+    test("should read/write IconStyle when no size defined", () => {
+      const str = `
+      <kml ${xmlns}>
+        <Document>
+            <name>lala</name>
+            <Placemark>
+                <description></description>
+                <Style>
+                    <IconStyle>
+                        <scale>
+                          0.166666667
+                        </scale>
+                        <Icon>
+                            <href>https://icon-generator.geops.io/pictogram?urlPrefix=https%3A%2F%2Feditor.mapset.ch%2Fstatic%2Fimages%2F&amp;columns=2&amp;color=%2C&amp;fontsize=%2C&amp;text=%2C&amp;fill=inc%3Ach%2F02_Gleis-2_g_fr_v1.png%2Cinc%3ASBB%2F03_Gleis-3_g_fr_v1.png&amp;iconMargin=26&amp;iconSize=144&amp;format=png&amp;border=%2C</href>
+                        </Icon>
+                        <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+                    </IconStyle>
+                </Style>
+                <Point>
+                    <coordinates>0,0,0</coordinates>
+                </Point>
+            </Placemark>
+        </Document>
+      </kml>
+      `;
+      const strCorrected = `
+      <kml ${xmlns}>
+        <Document>
+            <name>lala</name>
+            <Placemark>
+                <description></description>
+                <Style>
+                    <IconStyle>
+                        <scale>
+                        0.333333
+                        </scale>
+                        <Icon>
+                        <href>https://icon-generator.geops.io/pictogram?urlPrefix=https%3A%2F%2Feditor.mapset.ch%2Fstatic%2Fimages%2F&amp;columns=2&amp;color=%2C&amp;fontsize=%2C&amp;text=%2C&amp;fill=inc%3Ach%2F02_Gleis-2_g_fr_v1.png%2Cinc%3ASBB%2F03_Gleis-3_g_fr_v1.png&amp;iconMargin=26&amp;iconSize=144&amp;format=png&amp;border=%2C</href>
+                        </Icon>
+                    </IconStyle>
+                </Style>
+                <ExtendedData>
+                  <Data name="iconScale">
+                    <value>
+                    0.166666667
+                    </value>
+                  </Data>
+                </ExtendedData>
+                <Point>
+                    <coordinates>0,0,0</coordinates>
+                </Point>
+            </Placemark>
+        </Document>
+      </kml>`;
+      let feats = KML.readFeatures(str);
+      let style = feats[0].getStyleFunction()(feats[0], 1);
+      expect(style.getImage().getScale()).toEqual(0.166666667);
+      const strKmlCorrected = expectWriteResult(feats, strCorrected);
+
+      // Next read/write should produce the same KML
+      feats = KML.readFeatures(strKmlCorrected);
+      style = feats[0].getStyleFunction()(feats[0], 1);
+      expect(style.getImage().getScale()).toEqual(0.166666667);
+      expectWriteResult(feats, strKmlCorrected);
+    });
   });
 
   test("should add iconScale to extended data when writing, to revert effect of https://github.com/openlayers/openlayers/pull/12695.", () => {
@@ -507,7 +622,7 @@ describe("KML", () => {
               <Style>
                   <IconStyle>
                       <scale>
-                        4
+                        2
                       </scale>
                       <Icon>
                           <href>https://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
@@ -520,7 +635,7 @@ describe("KML", () => {
               <ExtendedData>
                 <Data name="iconScale">
                   <value>
-                    2
+                    1
                   </value>
                 </Data>
               </ExtendedData>
@@ -530,15 +645,15 @@ describe("KML", () => {
           </Placemark>
       </Document>
     </kml>`;
-      let feats = KML.readFeatures(str, null);
+      let feats = KML.readFeatures(str, null, true);
       let style = feats[0].getStyleFunction()(feats[0], 1);
-      expect(style.getImage().getScale()).toEqual(2);
+      expect(style.getImage().getScale()).toEqual(1);
       const strKmlCorrected = expectWriteResult(feats, strCorrected);
 
       // Next read/write should produce the same KML
       feats = KML.readFeatures(strKmlCorrected);
       style = feats[0].getStyleFunction()(feats[0], 1);
-      expect(style.getImage().getScale()).toEqual(2);
+      expect(style.getImage().getScale()).toEqual(1);
       expectWriteResult(feats, strKmlCorrected);
     });
   });

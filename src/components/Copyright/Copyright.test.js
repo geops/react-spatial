@@ -72,8 +72,8 @@ describe("Copyright", () => {
   });
 
   test("is empty if no layers are visible", () => {
-    const component = render(<Copyright map={map} />);
-    expect(component.innerHTML).toBe(undefined);
+    const { container } = render(<Copyright map={map} />);
+    expect(container.innerHTML).toMatchSnapshot();
   });
 
   test("displays one copyright", () => {
@@ -88,6 +88,9 @@ describe("Copyright", () => {
     const { container } = render(<Copyright map={map} />);
     layers[0].setVisible(true);
     layers[1].setVisible(true);
+    act(() => {
+      map.renderSync();
+    });
     act(() => {
       map.renderSync();
     });
@@ -113,11 +116,23 @@ describe("Copyright", () => {
 
   test("set a custom className", () => {
     const { container } = render(<Copyright map={map} className="foo" />);
+
+    act(() => {
+      map.renderSync();
+    });
+
     expect(container.querySelectorAll(".foo").length).toBe(1);
   });
 
   test("set a custom attribute to the root element", () => {
-    const { container } = render(<Copyright map={map} foso="bar" />);
-    expect(container.querySelectorAll("[foso]").length).toBe(1);
+    const { container } = render(
+      <Copyright map={map} className="lala" foo="bar" />,
+    );
+
+    act(() => {
+      map.renderSync();
+    });
+
+    expect(container.querySelectorAll("[foo]").length).toBe(1);
   });
 });

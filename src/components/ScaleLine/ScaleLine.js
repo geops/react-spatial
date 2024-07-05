@@ -25,7 +25,7 @@ const defaultProps = {
  * [ol/control/ScaleLine](https://openlayers.org/en/latest/apidoc/module-ol_control_ScaleLine-ScaleLine.html)
  * for an [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
  */
-function ScaleLine({ map, options, ...other }) {
+function ScaleLine({ map, options = defaultProps.options, ...other }) {
   const ref = useRef();
 
   useEffect(() => {
@@ -45,6 +45,5 @@ function ScaleLine({ map, options, ...other }) {
 }
 
 ScaleLine.propTypes = propTypes;
-ScaleLine.defaultProps = defaultProps;
 
 export default React.memo(ScaleLine);

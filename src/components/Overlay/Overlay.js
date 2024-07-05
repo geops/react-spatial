@@ -81,29 +81,19 @@ const defaultMobileSize = {
   minimalHeight: "25%",
 };
 
-const defaultProps = {
-  className: null,
-  children: null,
-  observe: null,
-  isMobileResizable: true,
-  mobileSize: defaultMobileSize,
-  thresholdWidthForMobile: 768,
-  onResizeStop: () => {},
-  onResizeStart: () => {},
-};
-
+const emptyFunc = () => {};
 /**
  * The Overlay component creates a resizable, swipable overlay <div\>
  */
 function Overlay({
-  observe,
-  className,
-  children,
-  isMobileResizable,
-  mobileSize,
-  onResizeStop,
-  onResizeStart,
-  thresholdWidthForMobile,
+  observe = null,
+  className = null,
+  children = null,
+  isMobileResizable = true,
+  mobileSize = defaultMobileSize,
+  onResizeStop = emptyFunc,
+  onResizeStart = emptyFunc,
+  thresholdWidthForMobile = 768,
 }) {
   const [isMobile, setIsMobile] = useState();
 
@@ -171,6 +161,5 @@ function Overlay({
 }
 
 Overlay.propTypes = propTypes;
-Overlay.defaultProps = defaultProps;
 
 export default Overlay;

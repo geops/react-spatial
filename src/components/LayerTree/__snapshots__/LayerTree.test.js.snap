@@ -30,15 +30,17 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       </label>
       <div
         aria-expanded={true}
-        aria-label="undefined Hide sublayer"
+        aria-label="1 Hide sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="undefined Hide sublayer"
+        title="1 Hide sublayer"
       >
-        <div />
+        <div>
+          1
+        </div>
         <div
           className="rs-layer-tree-arrow rs-layer-tree-arrow-expanded"
         />
@@ -70,15 +72,17 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         </label>
         <div
           aria-expanded={false}
-          aria-label="undefined Show sublayer"
+          aria-label="1-2 Show sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="undefined Show sublayer"
+          title="1-2 Show sublayer"
         >
-          <div />
+          <div>
+            1-2
+          </div>
           <div
             className="rs-layer-tree-arrow rs-layer-tree-arrow-collapsed"
           />
@@ -111,15 +115,17 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
         </label>
         <div
           aria-expanded={false}
-          aria-label="undefined Show sublayer"
+          aria-label="1-1 Show sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="undefined Show sublayer"
+          title="1-1 Show sublayer"
         >
-          <div />
+          <div>
+            1-1
+          </div>
         </div>
       </div>
     </div>
@@ -150,15 +156,17 @@ exports[`LayerTree matches snapshots using default properties. 1`] = `
       </label>
       <div
         aria-expanded={false}
-        aria-label="undefined Show sublayer"
+        aria-label="root Show sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="undefined Show sublayer"
+        title="root Show sublayer"
       >
-        <div />
+        <div>
+          root
+        </div>
       </div>
     </div>
   </div>
@@ -195,15 +203,17 @@ exports[`LayerTree matches snapshots when an item is hidden (different layer tre
       </label>
       <div
         aria-expanded={true}
-        aria-label="undefined Hide sublayer"
+        aria-label="1 Hide sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="undefined Hide sublayer"
+        title="1 Hide sublayer"
       >
-        <div />
+        <div>
+          1
+        </div>
         <div
           className="rs-layer-tree-arrow rs-layer-tree-arrow-expanded"
         />
@@ -235,15 +245,17 @@ exports[`LayerTree matches snapshots when an item is hidden (different layer tre
         </label>
         <div
           aria-expanded={false}
-          aria-label="undefined Show sublayer"
+          aria-label="1-2 Show sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="undefined Show sublayer"
+          title="1-2 Show sublayer"
         >
-          <div />
+          <div>
+            1-2
+          </div>
           <div
             className="rs-layer-tree-arrow rs-layer-tree-arrow-collapsed"
           />
@@ -276,15 +288,17 @@ exports[`LayerTree matches snapshots when an item is hidden (different layer tre
         </label>
         <div
           aria-expanded={false}
-          aria-label="undefined Show sublayer"
+          aria-label="1-1 Show sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="undefined Show sublayer"
+          title="1-1 Show sublayer"
         >
-          <div />
+          <div>
+            1-1
+          </div>
         </div>
       </div>
     </div>
@@ -315,15 +329,17 @@ exports[`LayerTree matches snapshots when an item is hidden (different layer tre
       </label>
       <div
         aria-expanded={false}
-        aria-label="undefined Show sublayer"
+        aria-label="root Show sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="undefined Show sublayer"
+        title="root Show sublayer"
       >
-        <div />
+        <div>
+          root
+        </div>
       </div>
     </div>
   </div>
@@ -344,7 +360,6 @@ exports[`LayerTree matches snapshots when an item is hidden. 1`] = `
       }
     >
       <label
-        aria-label="Hide layer"
         className="rs-layer-tree-input rs-layer-tree-input-checkbox rs-checkbox"
         onKeyPress={[Function]}
         tabIndex={-1}
@@ -408,15 +423,17 @@ exports[`LayerTree matches snapshots when an item use renderAfterItem. 1`] = `
       </label>
       <div
         aria-expanded={true}
-        aria-label="undefined Hide sublayer"
+        aria-label="1 Hide sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="undefined Hide sublayer"
+        title="1 Hide sublayer"
       >
-        <div />
+        <div>
+          1
+        </div>
         <div
           className="rs-layer-tree-arrow rs-layer-tree-arrow-expanded"
         />
@@ -448,15 +465,17 @@ exports[`LayerTree matches snapshots when an item use renderAfterItem. 1`] = `
         </label>
         <div
           aria-expanded={false}
-          aria-label="undefined Show sublayer"
+          aria-label="1-2 Show sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="undefined Show sublayer"
+          title="1-2 Show sublayer"
         >
-          <div />
+          <div>
+            1-2
+          </div>
           <div
             className="rs-layer-tree-arrow rs-layer-tree-arrow-collapsed"
           />
@@ -494,15 +513,17 @@ exports[`LayerTree matches snapshots when an item use renderAfterItem. 1`] = `
         </label>
         <div
           aria-expanded={false}
-          aria-label="undefined Show sublayer"
+          aria-label="1-1 Show sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="undefined Show sublayer"
+          title="1-1 Show sublayer"
         >
-          <div />
+          <div>
+            1-1
+          </div>
         </div>
       </div>
       <div>
@@ -543,15 +564,17 @@ exports[`LayerTree matches snapshots when an item use renderAfterItem. 1`] = `
       </label>
       <div
         aria-expanded={false}
-        aria-label="undefined Show sublayer"
+        aria-label="root Show sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="undefined Show sublayer"
+        title="root Show sublayer"
       >
-        <div />
+        <div>
+          root
+        </div>
       </div>
     </div>
     <div>
@@ -593,15 +616,17 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
       </label>
       <div
         aria-expanded={true}
-        aria-label="undefined Hide sublayer"
+        aria-label="1 Hide sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="undefined Hide sublayer"
+        title="1 Hide sublayer"
       >
-        <div />
+        <div>
+          1
+        </div>
         <div
           className="rs-layer-tree-arrow rs-layer-tree-arrow-expanded"
         />
@@ -638,15 +663,17 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
         </label>
         <div
           aria-expanded={false}
-          aria-label="undefined Show sublayer"
+          aria-label="1-2 Show sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="undefined Show sublayer"
+          title="1-2 Show sublayer"
         >
-          <div />
+          <div>
+            1-2
+          </div>
           <div
             className="rs-layer-tree-arrow rs-layer-tree-arrow-collapsed"
           />
@@ -684,15 +711,17 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
         </label>
         <div
           aria-expanded={false}
-          aria-label="undefined Show sublayer"
+          aria-label="1-1 Show sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="undefined Show sublayer"
+          title="1-1 Show sublayer"
         >
-          <div />
+          <div>
+            1-1
+          </div>
         </div>
       </div>
       <div>
@@ -728,15 +757,17 @@ exports[`LayerTree matches snapshots when an item use renderBeforeItem. 1`] = `
       </label>
       <div
         aria-expanded={false}
-        aria-label="undefined Show sublayer"
+        aria-label="root Show sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="undefined Show sublayer"
+        title="root Show sublayer"
       >
-        <div />
+        <div>
+          root
+        </div>
       </div>
     </div>
     <div>
@@ -778,15 +809,17 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       </label>
       <div
         aria-expanded={true}
-        aria-label="undefined Hide sublayer"
+        aria-label="1 Hide sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="undefined Hide sublayer"
+        title="1 Hide sublayer"
       >
-        <div />
+        <div>
+          1
+        </div>
         <div
           className="rs-layer-tree-arrow rs-layer-tree-arrow-expanded"
         />
@@ -818,15 +851,17 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         </label>
         <div
           aria-expanded={false}
-          aria-label="undefined Show sublayer"
+          aria-label="1-2 Show sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="undefined Show sublayer"
+          title="1-2 Show sublayer"
         >
-          <div />
+          <div>
+            1-2
+          </div>
           <div
             className="rs-layer-tree-arrow rs-layer-tree-arrow-collapsed"
           />
@@ -859,15 +894,17 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
         </label>
         <div
           aria-expanded={false}
-          aria-label="undefined Show sublayer"
+          aria-label="1-1 Show sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="undefined Show sublayer"
+          title="1-1 Show sublayer"
         >
-          <div />
+          <div>
+            1-1
+          </div>
         </div>
       </div>
     </div>
@@ -898,15 +935,17 @@ exports[`LayerTree matches snapshots when classNames are used. 1`] = `
       </label>
       <div
         aria-expanded={false}
-        aria-label="undefined Show sublayer"
+        aria-label="root Show sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="undefined Show sublayer"
+        title="root Show sublayer"
       >
-        <div />
+        <div>
+          root
+        </div>
       </div>
     </div>
   </div>
@@ -943,15 +982,17 @@ exports[`LayerTree matches snapshots when expandChildren is a function. 1`] = `
       </label>
       <div
         aria-expanded={true}
-        aria-label="undefined Hide sublayer"
+        aria-label="1 Hide sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="undefined Hide sublayer"
+        title="1 Hide sublayer"
       >
-        <div />
+        <div>
+          1
+        </div>
         <div
           className="rs-layer-tree-arrow rs-layer-tree-arrow-expanded"
         />
@@ -983,15 +1024,17 @@ exports[`LayerTree matches snapshots when expandChildren is a function. 1`] = `
         </label>
         <div
           aria-expanded={false}
-          aria-label="undefined Show sublayer"
+          aria-label="1-2 Show sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="undefined Show sublayer"
+          title="1-2 Show sublayer"
         >
-          <div />
+          <div>
+            1-2
+          </div>
           <div
             className="rs-layer-tree-arrow rs-layer-tree-arrow-collapsed"
           />
@@ -1024,15 +1067,17 @@ exports[`LayerTree matches snapshots when expandChildren is a function. 1`] = `
         </label>
         <div
           aria-expanded={false}
-          aria-label="undefined Show sublayer"
+          aria-label="1-1 Show sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="undefined Show sublayer"
+          title="1-1 Show sublayer"
         >
-          <div />
+          <div>
+            1-1
+          </div>
         </div>
       </div>
     </div>
@@ -1063,15 +1108,17 @@ exports[`LayerTree matches snapshots when expandChildren is a function. 1`] = `
       </label>
       <div
         aria-expanded={false}
-        aria-label="undefined Show sublayer"
+        aria-label="root Show sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="undefined Show sublayer"
+        title="root Show sublayer"
       >
-        <div />
+        <div>
+          root
+        </div>
       </div>
     </div>
   </div>
@@ -1108,15 +1155,17 @@ exports[`LayerTree matches snapshots when expandChildren is true. 1`] = `
       </label>
       <div
         aria-expanded={true}
-        aria-label="undefined Hide sublayer"
+        aria-label="1 Hide sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="undefined Hide sublayer"
+        title="1 Hide sublayer"
       >
-        <div />
+        <div>
+          1
+        </div>
         <div
           className="rs-layer-tree-arrow rs-layer-tree-arrow-expanded"
         />
@@ -1148,15 +1197,17 @@ exports[`LayerTree matches snapshots when expandChildren is true. 1`] = `
         </label>
         <div
           aria-expanded={false}
-          aria-label="undefined Show sublayer"
+          aria-label="1-2 Show sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="undefined Show sublayer"
+          title="1-2 Show sublayer"
         >
-          <div />
+          <div>
+            1-2
+          </div>
           <div
             className="rs-layer-tree-arrow rs-layer-tree-arrow-collapsed"
           />
@@ -1189,15 +1240,17 @@ exports[`LayerTree matches snapshots when expandChildren is true. 1`] = `
         </label>
         <div
           aria-expanded={true}
-          aria-label="undefined Hide sublayer"
+          aria-label="1-1 Hide sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="undefined Hide sublayer"
+          title="1-1 Hide sublayer"
         >
-          <div />
+          <div>
+            1-1
+          </div>
         </div>
       </div>
     </div>
@@ -1228,15 +1281,17 @@ exports[`LayerTree matches snapshots when expandChildren is true. 1`] = `
       </label>
       <div
         aria-expanded={true}
-        aria-label="undefined Hide sublayer"
+        aria-label="root Hide sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="undefined Hide sublayer"
+        title="root Hide sublayer"
       >
-        <div />
+        <div>
+          root
+        </div>
       </div>
     </div>
   </div>
@@ -1273,15 +1328,17 @@ exports[`LayerTree matches snapshots when items are always expanded 1`] = `
       </label>
       <div
         aria-expanded={true}
-        aria-label="undefined Hide sublayer"
+        aria-label="Expanded layer 2 (because of level 1) Hide sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="undefined Hide sublayer"
+        title="Expanded layer 2 (because of level 1) Hide sublayer"
       >
-        <div />
+        <div>
+          Expanded layer 2 (because of level 1)
+        </div>
         <div
           className="rs-layer-tree-arrow rs-layer-tree-arrow-expanded"
         />
@@ -1313,15 +1370,17 @@ exports[`LayerTree matches snapshots when items are always expanded 1`] = `
         </label>
         <div
           aria-expanded={false}
-          aria-label="undefined Show sublayer"
+          aria-label="Visible layer 2.2 (as parent is expanded) Show sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="undefined Show sublayer"
+          title="Visible layer 2.2 (as parent is expanded) Show sublayer"
         >
-          <div />
+          <div>
+            Visible layer 2.2 (as parent is expanded)
+          </div>
           <div
             className="rs-layer-tree-arrow rs-layer-tree-arrow-collapsed"
           />
@@ -1354,15 +1413,17 @@ exports[`LayerTree matches snapshots when items are always expanded 1`] = `
         </label>
         <div
           aria-expanded={false}
-          aria-label="undefined Show sublayer"
+          aria-label="Visible layer 2.1 (as parent is expanded) Show sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="undefined Show sublayer"
+          title="Visible layer 2.1 (as parent is expanded) Show sublayer"
         >
-          <div />
+          <div>
+            Visible layer 2.1 (as parent is expanded)
+          </div>
           <div
             className="rs-layer-tree-arrow rs-layer-tree-arrow-collapsed"
           />
@@ -1396,15 +1457,17 @@ exports[`LayerTree matches snapshots when items are always expanded 1`] = `
       </label>
       <div
         aria-expanded={true}
-        aria-label="undefined Hide sublayer"
+        aria-label="Expanded layer 1 (because of level 1) Hide sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="undefined Hide sublayer"
+        title="Expanded layer 1 (because of level 1) Hide sublayer"
       >
-        <div />
+        <div>
+          Expanded layer 1 (because of level 1)
+        </div>
         <div
           className="rs-layer-tree-arrow rs-layer-tree-arrow-expanded"
         />
@@ -1436,15 +1499,17 @@ exports[`LayerTree matches snapshots when items are always expanded 1`] = `
         </label>
         <div
           aria-expanded={true}
-          aria-label="undefined Hide sublayer"
+          aria-label="Expanded layer 1.2 (because of isAlwaysExpanded=true) Hide sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="undefined Hide sublayer"
+          title="Expanded layer 1.2 (because of isAlwaysExpanded=true) Hide sublayer"
         >
-          <div />
+          <div>
+            Expanded layer 1.2 (because of isAlwaysExpanded=true)
+          </div>
         </div>
       </div>
       <div>
@@ -1473,15 +1538,17 @@ exports[`LayerTree matches snapshots when items are always expanded 1`] = `
           </label>
           <div
             aria-expanded={false}
-            aria-label="undefined Show sublayer"
+            aria-label="Visible layer 1.2.1 (as parent is expanded) Show sublayer"
             className="rs-layer-tree-toggle"
             onClick={[Function]}
             onKeyPress={[Function]}
             role="button"
             tabIndex={0}
-            title="undefined Show sublayer"
+            title="Visible layer 1.2.1 (as parent is expanded) Show sublayer"
           >
-            <div />
+            <div>
+              Visible layer 1.2.1 (as parent is expanded)
+            </div>
             <div
               className="rs-layer-tree-arrow rs-layer-tree-arrow-collapsed"
             />
@@ -1515,15 +1582,17 @@ exports[`LayerTree matches snapshots when items are always expanded 1`] = `
         </label>
         <div
           aria-expanded={true}
-          aria-label="undefined Hide sublayer"
+          aria-label="Expanded layer 1.1 (because of isAlwaysExpanded=true) Hide sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="undefined Hide sublayer"
+          title="Expanded layer 1.1 (because of isAlwaysExpanded=true) Hide sublayer"
         >
-          <div />
+          <div>
+            Expanded layer 1.1 (because of isAlwaysExpanded=true)
+          </div>
         </div>
       </div>
       <div>
@@ -1552,15 +1621,17 @@ exports[`LayerTree matches snapshots when items are always expanded 1`] = `
           </label>
           <div
             aria-expanded={true}
-            aria-label="undefined Hide sublayer"
+            aria-label="Expanded layer 1.1.1 (because of isAlwaysExpanded=true) Hide sublayer"
             className="rs-layer-tree-toggle"
             onClick={[Function]}
             onKeyPress={[Function]}
             role="button"
             tabIndex={0}
-            title="undefined Hide sublayer"
+            title="Expanded layer 1.1.1 (because of isAlwaysExpanded=true) Hide sublayer"
           >
-            <div />
+            <div>
+              Expanded layer 1.1.1 (because of isAlwaysExpanded=true)
+            </div>
           </div>
         </div>
         <div>
@@ -1589,15 +1660,17 @@ exports[`LayerTree matches snapshots when items are always expanded 1`] = `
             </label>
             <div
               aria-expanded={false}
-              aria-label="undefined Show sublayer"
+              aria-label="Visible layer 1.1.1.1 (as parent is expanded) Show sublayer"
               className="rs-layer-tree-toggle"
               onClick={[Function]}
               onKeyPress={[Function]}
               role="button"
               tabIndex={0}
-              title="undefined Show sublayer"
+              title="Visible layer 1.1.1.1 (as parent is expanded) Show sublayer"
             >
-              <div />
+              <div>
+                Visible layer 1.1.1.1 (as parent is expanded)
+              </div>
             </div>
           </div>
         </div>
@@ -1631,15 +1704,17 @@ exports[`LayerTree matches snapshots when renderCheckbox is used. 1`] = `
       </div>
       <div
         aria-expanded={true}
-        aria-label="undefined Hide sublayer"
+        aria-label="1 Hide sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="undefined Hide sublayer"
+        title="1 Hide sublayer"
       >
-        <div />
+        <div>
+          1
+        </div>
         <div
           className="rs-layer-tree-arrow rs-layer-tree-arrow-expanded"
         />
@@ -1659,15 +1734,17 @@ exports[`LayerTree matches snapshots when renderCheckbox is used. 1`] = `
         </div>
         <div
           aria-expanded={false}
-          aria-label="undefined Show sublayer"
+          aria-label="1-2 Show sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="undefined Show sublayer"
+          title="1-2 Show sublayer"
         >
-          <div />
+          <div>
+            1-2
+          </div>
           <div
             className="rs-layer-tree-arrow rs-layer-tree-arrow-collapsed"
           />
@@ -1688,15 +1765,17 @@ exports[`LayerTree matches snapshots when renderCheckbox is used. 1`] = `
         </div>
         <div
           aria-expanded={false}
-          aria-label="undefined Show sublayer"
+          aria-label="1-1 Show sublayer"
           className="rs-layer-tree-toggle"
           onClick={[Function]}
           onKeyPress={[Function]}
           role="button"
           tabIndex={0}
-          title="undefined Show sublayer"
+          title="1-1 Show sublayer"
         >
-          <div />
+          <div>
+            1-1
+          </div>
         </div>
       </div>
     </div>
@@ -1715,15 +1794,17 @@ exports[`LayerTree matches snapshots when renderCheckbox is used. 1`] = `
       </div>
       <div
         aria-expanded={false}
-        aria-label="undefined Show sublayer"
+        aria-label="root Show sublayer"
         className="rs-layer-tree-toggle"
         onClick={[Function]}
         onKeyPress={[Function]}
         role="button"
         tabIndex={0}
-        title="undefined Show sublayer"
+        title="root Show sublayer"
       >
-        <div />
+        <div>
+          root
+        </div>
       </div>
     </div>
   </div>

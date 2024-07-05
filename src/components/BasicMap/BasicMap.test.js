@@ -7,7 +7,7 @@ import OLLayer from "ol/layer/Vector";
 import OLMap from "ol/Map";
 import OLView from "ol/View";
 import { render } from "@testing-library/react";
-import Layer from "ol/layer/Layer";
+import { Layer as OldMbtLayer } from "mobility-toolbox-js/ol";
 import BasicMap from "./BasicMap";
 
 proj4.defs(
@@ -207,22 +207,23 @@ describe("BasicMap", () => {
 
   describe("#setLayers()", () => {
     test("init all layers and terminate al previous layer.", () => {
-      const layer0 = new Layer({ key: "test1" });
+      const layer0 = new OldMbtLayer({ key: "test1" });
       const spyInit0 = jest.spyOn(layer0, "attachToMap");
       const spyTerminate0 = jest.spyOn(layer0, "detachFromMap");
-      const layer1 = new Layer({ key: "test1" });
+      const layer1 = new OldMbtLayer({ key: "test1" });
       const spyInit1 = jest.spyOn(layer1, "attachToMap");
       const spyTerminate1 = jest.spyOn(layer1, "detachFromMap");
-      const layer2 = new Layer({ key: "test2" });
+      const layer2 = new OldMbtLayer({ key: "test2" });
       const spyInit2 = jest.spyOn(layer2, "attachToMap");
       const spyTerminate2 = jest.spyOn(layer2, "detachFromMap");
-      const layer3 = new Layer({ key: "test3" });
+      const layer3 = new OldMbtLayer({ key: "test3" });
       const spyInit3 = jest.spyOn(layer3, "attachToMap");
       const spyTerminate3 = jest.spyOn(layer3, "detachFromMap");
-      const layer4 = new Layer({ key: "test4" });
+      const layer4 = new OldMbtLayer({ key: "test4" });
       const spyInit4 = jest.spyOn(layer4, "attachToMap");
       const spyTerminate4 = jest.spyOn(layer4, "detachFromMap");
       const startLayers = [layer1, layer3];
+
       const { rerender } = render(
         <BasicMap map={olMap} layers={startLayers} />,
       );
@@ -232,9 +233,9 @@ describe("BasicMap", () => {
       expect(spyInit3).toHaveBeenCalledTimes(1);
       expect(spyInit4).toHaveBeenCalledTimes(0);
       expect(spyTerminate0).toHaveBeenCalledTimes(0);
-      expect(spyTerminate1).toHaveBeenCalledTimes(1);
+      expect(spyTerminate1).toHaveBeenCalledTimes(0);
       expect(spyTerminate2).toHaveBeenCalledTimes(0);
-      expect(spyTerminate3).toHaveBeenCalledTimes(1);
+      expect(spyTerminate3).toHaveBeenCalledTimes(0);
       expect(spyTerminate4).toHaveBeenCalledTimes(0);
 
       const layers = [layer0, layer2, layer3, layer4];
@@ -244,11 +245,11 @@ describe("BasicMap", () => {
       expect(spyInit2).toHaveBeenCalledTimes(1);
       expect(spyInit3).toHaveBeenCalledTimes(2);
       expect(spyInit4).toHaveBeenCalledTimes(1);
-      expect(spyTerminate0).toHaveBeenCalledTimes(1);
-      expect(spyTerminate1).toHaveBeenCalledTimes(2);
-      expect(spyTerminate2).toHaveBeenCalledTimes(1);
-      expect(spyTerminate3).toHaveBeenCalledTimes(3);
-      expect(spyTerminate4).toHaveBeenCalledTimes(1);
+      expect(spyTerminate0).toHaveBeenCalledTimes(0);
+      expect(spyTerminate1).toHaveBeenCalledTimes(1);
+      expect(spyTerminate2).toHaveBeenCalledTimes(0);
+      expect(spyTerminate3).toHaveBeenCalledTimes(1);
+      expect(spyTerminate4).toHaveBeenCalledTimes(0);
     });
   });
 });

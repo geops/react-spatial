@@ -99,7 +99,7 @@ describe("LayerTree", () => {
     test("when an item is hidden.", () => {
       renderLayerTree(layers, {
         isItemHidden: (item) => {
-          return !!item.children.length;
+          return !!item.get("children")?.length;
         },
       });
     });
@@ -267,7 +267,7 @@ describe("LayerTree", () => {
     const expectCalled = () => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spy2).toHaveBeenCalledTimes(0);
-      expect(spy.mock.calls[0][0].name).toBe("foo");
+      expect(spy.mock.calls[0][0].get("name")).toBe("foo");
     };
 
     beforeEach(() => {

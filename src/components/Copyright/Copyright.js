@@ -33,7 +33,12 @@ const defaultProps = {
  * [mobility-toolbox-js CopyrightControl](https://mobility-toolbox-js.geops.io/api/class/src/mapbox/controls/CopyrightControl%20js~CopyrightControl%20html-offset-anchor)
  * to render the layer copyrights.
  */
-function Copyright({ map, format, ...other }) {
+function Copyright({
+  map,
+  className = defaultProps.className,
+  format = defaultProps.format,
+  ...other
+}) {
   const [node, setNode] = useState(null);
 
   const control = useMemo(() => {
@@ -63,6 +68,7 @@ function Copyright({ map, format, ...other }) {
   return (
     <div
       ref={(nod) => setNode(nod)}
+      className={className}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...other}
     />
@@ -70,6 +76,5 @@ function Copyright({ map, format, ...other }) {
 }
 
 Copyright.propTypes = propTypes;
-Copyright.defaultProps = defaultProps;
 
 export default React.memo(Copyright);

@@ -13,18 +13,15 @@ const propTypes = {
 };
 
 const defaultProps = {
-  classes: null,
   hashPath: [],
-  useRouterLinks: false,
-  useHashId: true,
 };
 
 function ComponentsList({
   classes,
   items,
   useRouterLinks = false,
-  useHashId,
-  hashPath,
+  useHashId = true,
+  hashPath = defaultProps.hashPath,
 }) {
   const mappedItems = items.map((item) => {
     return {
@@ -47,6 +44,5 @@ function ComponentsList({
 }
 
 ComponentsList.propTypes = propTypes;
-ComponentsList.defaultProps = defaultProps;
 
 export default ComponentsList;

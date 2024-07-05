@@ -141,7 +141,7 @@ const defaultProps = {
   renderCheckbox: null,
   renderLabel: (layer, layerComp) => {
     const { t } = layerComp.props;
-    return t(layer.name);
+    return t(layer.get("name"));
   },
   titles: {
     layerShow: "Show layer",
@@ -475,7 +475,7 @@ class LayerTree extends Component {
         }).length && !layer.get("isAlwaysExpanded"),
       );
     };
-    const title = `${t(layer.name)} ${
+    const title = `${t(layer.get("name"))} ${
       expandedLayers.includes(layer) ? titles.subLayerHide : titles.subLayerShow
     }`;
 

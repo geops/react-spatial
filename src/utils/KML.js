@@ -84,13 +84,26 @@ const sanitizeFeature = (feature, doNotRevert32pxScaling = false) => {
     feature.set("minZoom", parseFloat(feature.get("minZoom"), 10));
   }
 
-  // The use of clone is part of the scale fix line 156
+  // The use of clone is part of the scale fix for OL > 6.7
+  // If an IconStyle has no gx:w and gx:h defined, a scale factor is applied
+  // after the image is loaded. To avoided having the scale factor applied we
+  // clone the style and keep the scale as it is.
+  // Having gx:w and gx:h not defined should not happen, using the last version of the parser/reader.
   const tmpStyles = styles(feature);
   const style = (Array.isArray(tmpStyles) ? tmpStyles[0] : tmpStyles).clone();
 
   let stroke = style.getStroke();
-  if (stroke && feature.get("lineDash")) {
-    stroke.setLineDash(
+
+  if (feature.get("lineCap")) {
+    stroke?.setLineCap(feature.get("lineCap"));
+  }
+
+  if (feature.get("lineJoin")) {
+    stroke?.setLineJoin(feature.get("lineJoin"));
+  }
+
+  if (feature.get("lineDash")) {
+    stroke?.setLineDash(
       feature
         .get("lineDash")
         .split(",")
@@ -98,6 +111,14 @@ const sanitizeFeature = (feature, doNotRevert32pxScaling = false) => {
           return parseInt(l, 10);
         }),
     );
+  }
+
+  if (feature.get("lineDashOffset")) {
+    stroke?.setLineDashOffset(parseInt(feature.get("lineDashOffset"), 10));
+  }
+
+  if (feature.get("miterLimit")) {
+    stroke?.setMiterLimit(parseInt(feature.get("miterLimit"), 10));
   }
 
   // The canvas draws a stroke width=1 by default if width=0, so we
@@ -158,6 +179,20 @@ const sanitizeFeature = (feature, doNotRevert32pxScaling = false) => {
         scale: style.getText().getScale(),
       });
 
+      if (feature.get("textArray")) {
+        try {
+          const textArray = JSON.parse(feature.get("textArray"));
+          text.setText(textArray);
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.error(
+            "Error parsing textArray",
+            feature.get("textArray"),
+            err,
+          );
+        }
+      }
+
       if (feature.get("textStrokeColor") && feature.get("textStrokeWidth")) {
         text.setStroke(
           new Stroke({
@@ -211,8 +246,8 @@ const sanitizeFeature = (feature, doNotRevert32pxScaling = false) => {
       if (feature.get("iconScale")) {
         image.setScale(parseFloat(feature.get("iconScale")) || 0);
 
-        // We fix the 32px scaling introduced by OL 6.7
-      } else if (!doNotRevert32pxScaling) {
+        // We fix the 32px scaling introduced by OL 6.7 only if the image has a size defined.
+      } else if (!doNotRevert32pxScaling && image.getSize()) {
         const resizeScale = scaleForSize(image.getSize());
         image.setScale(image.getScaleArray()[0] / resizeScale);
       }
@@ -363,7 +398,7 @@ const readFeatures = (
  */
 const writeFeatures = (layer, featureProjection, mapResolution) => {
   let featString;
-  const olLayer = layer.olLayer || layer;
+  const olLayer = layer.olLayer || layer.get("olLayer") || layer;
   const exportFeatures = [];
 
   [...olLayer.getSource().getFeatures()]
@@ -436,32 +471,47 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
 
       // If we see spaces at the beginning or at the end we add a empty
       // white space at the beginning and at the end.
-      if (newStyle.text && /^\s|\s$/g.test(newStyle.text.getText())) {
-        newStyle.text.setText(`\u200B${newStyle.text.getText()}\u200B`);
+      const text = newStyle.text?.getText();
+      if (text) {
+        let kmlText = text;
+
+        if (Array.isArray(text)) {
+          // text can be a string or an array of strings
+          clone.set("textArray", JSON.stringify(text));
+
+          // in the KML we just add the text without the bold or italic information
+          kmlText = text.map((t, idx) => {
+            return idx % 2 === 0 ? t : "";
+          });
+        }
+
+        if (/^\s|\s$/g.test(kmlText)) {
+          newStyle.text.setText(`\u200B${kmlText}\u200B`);
+        }
       }
 
       // Set custom properties to be converted in extendedData in KML.
-      if (newStyle.text && newStyle.text.getRotation()) {
+      if (newStyle.text?.getRotation()) {
         clone.set("textRotation", newStyle.text.getRotation());
       }
 
-      if (newStyle.text && newStyle.text.getFont()) {
+      if (newStyle.text?.getFont()) {
         clone.set("textFont", newStyle.text.getFont());
       }
 
-      if (newStyle.text && newStyle.text.getTextAlign()) {
+      if (newStyle.text?.getTextAlign()) {
         clone.set("textAlign", newStyle.text.getTextAlign());
       }
 
-      if (newStyle.text && newStyle.text.getOffsetX()) {
+      if (newStyle.text?.getOffsetX()) {
         clone.set("textOffsetX", newStyle.text.getOffsetX());
       }
 
-      if (newStyle.text && newStyle.text.getOffsetY()) {
+      if (newStyle.text?.getOffsetY()) {
         clone.set("textOffsetY", newStyle.text.getOffsetY());
       }
 
-      if (newStyle.text && newStyle.text.getStroke()) {
+      if (newStyle.text?.getStroke()) {
         if (newStyle.text.getStroke().getColor()) {
           clone.set(
             "textStrokeColor",
@@ -474,19 +524,35 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
         }
       }
 
-      if (newStyle.text && newStyle.text.getBackgroundFill()) {
+      if (newStyle.text?.getBackgroundFill()) {
         clone.set(
           "textBackgroundFillColor",
           asString(newStyle.text.getBackgroundFill().getColor()),
         );
       }
 
-      if (newStyle.text && newStyle.text.getPadding()) {
+      if (newStyle.text?.getPadding()) {
         clone.set("textPadding", newStyle.text.getPadding().join());
       }
 
-      if (newStyle.stroke && newStyle.stroke.getLineDash()) {
+      if (newStyle.stroke?.getLineCap()) {
+        clone.set("lineCap", newStyle.stroke.getLineCap());
+      }
+
+      if (newStyle.stroke?.getLineJoin()) {
+        clone.set("lineJoin", newStyle.stroke.getLineJoin());
+      }
+
+      if (newStyle.stroke?.getLineDash()) {
         clone.set("lineDash", newStyle.stroke.getLineDash().join(","));
+      }
+
+      if (newStyle.stroke?.getLineDashOffset()) {
+        clone.set("lineDashOffset", newStyle.stroke.getLineDashOffset());
+      }
+
+      if (newStyle.stroke?.getMiterLimit()) {
+        clone.set("miterLimit", newStyle.stroke.getMiterLimit());
       }
 
       if (newStyle.image instanceof Circle) {
@@ -617,10 +683,10 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
     featString = featString.replace(/<Placemark\/>/g, "");
 
     // Add KML document name
-    if (layer.name) {
+    if (layer.get("name")) {
       featString = featString.replace(
         /<Document>/,
-        `<Document><name>${layer.name}</name>`,
+        `<Document><name>${layer.get("name")}</name>`,
       );
     }
   }
