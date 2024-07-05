@@ -118,6 +118,12 @@ CloseButton.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
+const defaultTitles = {
+  button: "Base layers",
+  openSwitcher: "Open Baselayer-Switcher",
+  closeSwitcher: "Close Baselayer-Switcher",
+};
+
 /**
  * The BaseLayerSwitcher component renders a button interface for switching the visible
  * when defined as base layer.
@@ -128,11 +134,7 @@ function BaseLayerSwitcher({
   layerImages = undefined,
   className = "rs-base-layer-switcher",
   altText = "Source not found",
-  titles = {
-    button: "Base layers",
-    openSwitcher: "Open Baselayer-Switcher",
-    closeSwitcher: "Close Baselayer-Switcher",
-  },
+  titles = defaultTitles,
   closeButtonImage = <FaChevronLeft />,
   onCloseButtonClick = null,
   onLayerButtonClick = null,
@@ -302,7 +304,9 @@ function BaseLayerSwitcher({
         const activeClass =
           layerName === currentLayer.get("name") ? " rs-active" : "";
         const imageStyle = getImageStyle(
-          layerImages ? layerImages[`${layer.key}`] : layer.get("previewImage"),
+          layerImages
+            ? layerImages[`${layer.get("key") || layer.key}`]
+            : layer.get("previewImage"),
         );
         return (
           <div

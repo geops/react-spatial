@@ -36,7 +36,7 @@ const defaultProps = {
 
 /**
  * The FeatureExportButton component creates a button that exports feature geometries
- * from aan [ol/layer/Vector](https://openlayers.org/en/latest/apidoc/module-ol_layer_Vector-VectorLayer.html)
+ * from an [ol/layer/Vector](https://openlayers.org/en/latest/apidoc/module-ol_layer_Vector-VectorLayer.html)
  * with a [ol/source/Vector](https://openlayers.org/en/latest/apidoc/module-ol_source_Vector.html) on click.<br>
  * The default export format is KML, which supports the features' style export.<br>
  * Other formats do not always support style export (See specific format specs).
