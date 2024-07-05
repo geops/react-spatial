@@ -9,7 +9,6 @@ import { Map, Feature } from 'ol';
 import Point from 'ol/geom/Point';
 import OSM from 'ol/source/OSM';
 import VectorSource from 'ol/source/Vector';
-import TileGrid from 'ol/tilegrid/TileGrid';
 import { getCenter } from 'ol/extent';
 import { Style, Circle, Fill, Icon } from 'ol/style';
 import BasicMap from 'react-spatial/components/BasicMap';
@@ -19,7 +18,9 @@ const map = new Map({ controls: [] });
 
 const layers = [
   new MaplibreLayer({
-    url: `https://maps.geops.io/styles/base_dark_v2/style.json?key=${apiKey}`,
+    mapLibreOptions: {
+      style: `https://maps.geops.io/styles/base_dark_v2/style.json?key=${apiKey}`,
+    },
   }),
   new VectorLayer({
     source: new VectorSource({

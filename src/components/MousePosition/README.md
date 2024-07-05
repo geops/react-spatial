@@ -14,7 +14,9 @@ const map = new Map({ controls: [] });
 
 const layers = [
   new MaplibreLayer({
-    url: `https://maps.geops.io/styles/travic_v2/style.json?key=${apiKey}`,
+    mapLibreOptions: {
+      style: `https://maps.geops.io/styles/travic_v2/style.json?key=${apiKey}`,
+    },
   }),
 ];
 

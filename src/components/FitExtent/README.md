@@ -4,8 +4,6 @@ The following example demonstrates the use of FitExtent.
 ```jsx
 import React from 'react';
 import { MaplibreLayer } from 'mobility-toolbox-js/ol';
-import Tile from 'ol/layer/Tile';
-import OSM from 'ol/source/OSM';
 import Map from 'ol/Map';
 import { geopsTheme } from '@geops/geops-ui';
 import { ThemeProvider } from '@mui/material';
@@ -19,7 +17,9 @@ const map = new Map({ controls: [] });
 
 const layers = [
   new MaplibreLayer({
-    url: `https://maps.geops.io/styles/travic_v2/style.json?key=${apiKey}`,
+    mapLibreOptions: {
+      style: `https://maps.geops.io/styles/travic_v2/style.json?key=${apiKey}`,
+    },
   }),
 ];
 

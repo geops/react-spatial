@@ -53,14 +53,18 @@ const swissBoundries = new VectorLayer({
 
 const baseLayers = [
   new MaplibreLayer({
-    url: `https://maps.geops.io/styles/base_bright_v2/style.json?key=${apiKey}`,
-    name: 'Base - Bright',
     key: 'basebright.baselayer',
+    name: 'Base - Bright',
+    mapLibreOptions: {
+      style: `https://maps.geops.io/styles/base_bright_v2/style.json?key=${apiKey}`,
+    },
   }),
   new MaplibreLayer({
-    url: `https://maps.geops.io/styles/base_dark_v2/style.json?key=${apiKey}`,
-    name: 'Base - Dark',
     key: 'basedark.baselayer',
+    name: 'Base - Dark',
+    mapLibreOptions: {
+      style: `https://maps.geops.io/styles/base_dark_v2/style.json?key=${apiKey}`,
+    },
     visible: false,
   }),
 ];
