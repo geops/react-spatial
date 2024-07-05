@@ -68,8 +68,16 @@ function RouteScheduleExample() {
     if (!map) {
       return ()=>{};
     }
+    const keyMove = map.on('pointermove', (evt) => {
+      const [feature] = map.getFeaturesAtPixel(evt.pixel, {
+        layerFilter: l => l === trackerLayer,
+        hitTolerance: 5
+      }) || [];
+      trackerLayer.highlight(feature);
+      map.getTargetElement().style.cursor = feature ? 'pointer' : '';
+    });
+
     const key = map.on('singleclick', (evt) => {
-      console.log('ici');
       const [feature] = map.getFeaturesAtPixel(evt.pixel, {
         layerFilter: l => l === trackerLayer,
         hitTolerance: 5
@@ -78,7 +86,7 @@ function RouteScheduleExample() {
       setFeature(feature);
     });
     return () => {
-      unByKey(key);
+      unByKey([keyMove,key]);
     }
   }, [trackerLayer.map]);
 
