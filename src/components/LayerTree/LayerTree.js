@@ -156,8 +156,7 @@ const defaultProps = {
 };
 
 /**
- * The LayerTree component renders an interface for toggling
- * [mobility-toolbox-js layers](https://mobility-toolbox-js.geops.io/api/identifiers%20html#ol-layers)
+ * The LayerTree component renders an interface for toggling layers visibility.
  * and their corresponding child layers.
  */
 

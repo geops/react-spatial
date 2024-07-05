@@ -35,7 +35,7 @@ const propTypes = {
     PropTypes.instanceOf(OLCollection),
   ]),
 
-  /** Array of [mobility-toolbox-js layers](https://mobility-toolbox-js.geops.io/api/identifiers%20html#ol-layers) to display. */
+  /** Array of Openlayers layers */
   layers: PropTypes.arrayOf(PropTypes.instanceOf(Layer)),
 
   /** An [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html). */

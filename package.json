@@ -6,6 +6,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@geoblocks/ol-maplibre-layer": "^1.0.0",
     "@geops/geops-ui": "0.3.2",
     "@mui/icons-material": "^5.15.20",
     "@mui/material": "^5.15.20",
