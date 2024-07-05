@@ -302,14 +302,14 @@ class BasicMap extends PureComponent {
       this.map.addLayer(layer);
     }
 
-    const layers = layer.children || layer.get("children") || [];
+    const layers = layer.get("children") || layer.children || [];
     for (let i = 0; i < layers.length; i += 1) {
       this.initLayer(layers[i]);
     }
   }
 
   terminateLayer(layer) {
-    const layers = layer.children || layer.get("children") || [];
+    const layers = layer.get("children") || layer.children || [];
     for (let i = 0; i < layers.length; i += 1) {
       this.terminateLayer(layers[i]);
     }

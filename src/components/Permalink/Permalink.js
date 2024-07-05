@@ -223,7 +223,7 @@ class Permalink extends PureComponent {
     if (layers.length) {
       layersParam = getLayersAsFlatArray(layers)
         .filter((l) => {
-          const children = l.children || l.get("children") || [];
+          const children = l.get("children") || l.children || [];
           const allChildrenHidden = children.every((child) => {
             return isLayerHidden(child);
           });

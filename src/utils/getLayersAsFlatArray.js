@@ -15,8 +15,8 @@ const getLayersAsFlatArray = (layersOrLayer = []) => {
 
     // Handle children property and ol.layer.Group
     const children =
-      layer.children ||
       layer.get("children") ||
+      layer.children ||
       layer.getLayers?.()?.getArray();
     flatLayers = flatLayers.concat(getLayersAsFlatArray(children || []));
   });

@@ -4,33 +4,27 @@ This component uses the `group` property to define if the behavior will be a sim
 If a `group` is defined, when the layer is set to visible, it will hide all other layers with the same group. Each group must be unique.
 
 ```jsx
-import React, { useEffect } from 'react';
-import { MaplibreLayer, MaplibreStyleLayer, Layer } from 'mobility-toolbox-js/ol';
-import { Style, Circle, Stroke, Fill } from 'ol/style';
-import VectorLayer from 'ol/layer/Vector';
-import VectorSource from 'ol/source/Vector';
-import GeoJSONFormat from 'ol/format/GeoJSON';
+import React  from 'react';
+import { MaplibreLayer, MaplibreStyleLayer } from 'mobility-toolbox-js/ol';
 import LayerTree from 'react-spatial/components/LayerTree';
 import BasicMap from 'react-spatial/components/BasicMap';
+import Group from 'ol/layer/Group';
 
 const baseTravic = new MaplibreLayer({
-  name: 'Base - Bright',
-  group: 'baseLayer',
-  visible: true,
-  url: `https://maps.geops.io/styles/travic_v2_generalized/style.json?key=${apiKey}`,
+  apiKey,
+  hidden: true,
+  style:'travic_v2_generalized',
 });
 
 const stations = new MaplibreStyleLayer({
-  name: 'Stations',
-  maplibreLayer: baseTravic,
   layersFilter: (layer) => {
     return layer.metadata && /mapset_stations/.test(layer.metadata['mapset.filter'])
-  }
+  },
+  maplibreLayer: baseTravic,
+  name: 'Stations',
 });
 
 const railLines = new MaplibreStyleLayer({
-  name: 'Railways routes',
-  maplibreLayer: baseTravic,
   layers: [{
     id: 'rail',
     type: 'line',
@@ -42,19 +36,28 @@ const railLines = new MaplibreStyleLayer({
       'line-width': 2,
     },
   }],
+  maplibreLayer: baseTravic,
+  name: 'Railways routes',
 });
 
 
-baseTravic.children = [railLines, stations];
+const group = new Group({
+  children: [ baseTravic, stations, railLines],
+  group: 'group',
+  name: 'Travic group',
+  visible: true,
+});
+
 
 const baseDark = new MaplibreLayer({
-  name: 'Base - Dark',
-  group: 'baseLayer',
+  apiKey,
+  group: 'group',
+  name: 'Base Dark V2', 
+  style:'base_dark_v2',
   visible: false,
-  url: `https://maps.geops.io/styles/base_dark_v2/style.json?key=${apiKey}`,
 });
 
-const layers = [baseDark, baseTravic];
+const layers = [baseDark, group];
 
 <div className="rs-layer-tree-example">
   <BasicMap

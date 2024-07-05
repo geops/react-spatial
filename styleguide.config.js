@@ -24,22 +24,6 @@ module.exports = {
   ],
   moduleAliases: {
     "react-spatial": path.resolve(__dirname, "src"),
-    // "@geoblocks/ol-maplibre-layer": path.resolve(
-    //   __dirname,
-    //   "node_modules/@geoblocks/ol-maplibre-layer/lib/index.js",
-    // ),
-    // "./getMapLibreAttributions": path.resolve(
-    //   __dirname,
-    //   "node_modules/@geoblocks/ol-maplibre-layer/lib/getMapLibreAttributions.js",
-    // ),
-    // "./MapLibreLayer": path.resolve(
-    //   __dirname,
-    //   "node_modules/@geoblocks/ol-maplibre-layer/lib/MapLibreLayer.js",
-    // ),
-    // "./MapLibreLayerRenderer": path.resolve(
-    //   __dirname,
-    //   "node_modules/@geoblocks/ol-maplibre-layer/lib/MapLibreLayerRenderer.js",
-    // ),
   },
   sections: [
     {

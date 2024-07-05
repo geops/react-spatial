@@ -6,7 +6,6 @@
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
-    "@geoblocks/ol-maplibre-layer": "^1.0.0",
     "@geops/geops-ui": "0.3.2",
     "@mui/icons-material": "^5.15.20",
     "@mui/material": "^5.15.20",
@@ -15,10 +14,9 @@
     "resize-observer-polyfill": "1.5.1"
   },
   "peerDependencies": {
-    "mapbox-gl": "^1",
-    "maplibre-gl": "^2",
-    "mobility-toolbox-js": "^2",
-    "ol": "^8",
+    "maplibre-gl": "^4",
+    "mobility-toolbox-js": "^3",
+    "ol": "^9",
     "react": "^18",
     "react-dom": "^18"
   },
@@ -65,9 +63,8 @@
     "jest-transformer-svg": "^2.0.2",
     "jsts": "2.11.3",
     "lint-staged": "15.2.7",
-    "mapbox-gl": "1.13.1",
     "maplibre-gl": "4.4.1",
-    "mobility-toolbox-js": "3.0.0-beta.20",
+    "mobility-toolbox-js": "3.0.0-beta.21",
     "ol": "9.2.4",
     "postcss": "^8.4.38",
     "prettier": "3.3.2",

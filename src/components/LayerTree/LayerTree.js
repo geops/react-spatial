@@ -162,8 +162,8 @@ const defaultProps = {
 
 class LayerTree extends Component {
   static getChildren = (layer) =>
-    layer?.children ||
     layer?.get("children") ||
+    layer?.children ||
     // ol.layer.group
     layer?.getLayers?.().getArray() ||
     [];
