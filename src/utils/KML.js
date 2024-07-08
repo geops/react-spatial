@@ -469,9 +469,8 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
         clone.set("zIndex", newStyle.zIndex);
       }
 
-      // If we see spaces at the beginning or at the end we add a empty
-      // white space at the beginning and at the end.
       const text = newStyle.text?.getText();
+
       if (text) {
         let kmlText = text;
 
@@ -480,13 +479,22 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
           clone.set("textArray", JSON.stringify(text));
 
           // in the KML we just add the text without the bold or italic information
-          kmlText = text.map((t, idx) => {
-            return idx % 2 === 0 ? t : "";
-          });
+          kmlText = text
+            .map((t, idx) => {
+              return idx % 2 === 0 ? t : "";
+            })
+            .join("");
         }
 
-        if (/^\s|\s$/g.test(kmlText)) {
-          newStyle.text.setText(`\u200B${kmlText}\u200B`);
+        // We add the current text as features's name so it will be added as Placemark's name in the kml
+        if (kmlText) {
+          // If we see spaces at the beginning or at the end we add a empty
+          // white space at the beginning and at the end.
+          if (/^\s|\s$/g.test(kmlText)) {
+            clone.set("name", `\u200B${kmlText}\u200B`);
+          } else {
+            clone.set("name", kmlText);
+          }
         }
       }
 
