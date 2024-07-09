@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.4](https://github.com/geops/react-spatial/compare/v1.11.3...v1.11.4) (2024-07-08)
+
+
+### Bug Fixes
+
+* better management of textArray and whitespaces in kml placemark name ([a97707d](https://github.com/geops/react-spatial/commit/a97707d422bc154f36d0d4bc5fef7667ed07c2c7))
+
 ### [1.11.3](https://github.com/geops/react-spatial/compare/v1.11.2...v1.11.3) (2024-06-28)
 
 
