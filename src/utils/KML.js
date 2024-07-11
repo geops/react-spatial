@@ -164,9 +164,30 @@ const sanitizeFeature = (feature, doNotRevert32pxScaling = false) => {
         feature.set("name", name);
       }
 
+      // For backward compatibility we translate the bold and italic textFont property to a textArray prop
+      const font = feature.get("textFont") || "normal 16px Helvetica";
+
+      // Since we use rich text in mapset editor we use a text array instead,
+      // it's only necessary when there is new lines in the text
+      // Manage new lines
+      if (/\n/.test(name)) {
+        const array = [];
+        const split = name.split("\n");
+        split.forEach((txt, idx) => {
+          array.push(txt || "\u200B", txt ? font : "");
+
+          if (idx < split.length - 1) {
+            array.push("\n", "");
+          }
+        });
+        name = array;
+      } else {
+        name = [name, font];
+      }
+
       text = new Text({
-        font: feature.get("textFont") || "normal 16px Helvetica",
-        text: feature.get("name"),
+        font: font.replace(/bold/g, "normal"), // We manage bold in textArray
+        text: name,
         fill: style.getText().getFill(),
         // rotation unsupported by KML, taken instead from custom field.
         rotation: feature.get("textRotation") || 0,
@@ -483,14 +504,16 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
             .map((t, idx) => {
               return idx % 2 === 0 ? t : "";
             })
-            .join("");
+
+            .join("")
+            .replaceAll("\u200B", "");
         }
 
         // We add the current text as features's name so it will be added as Placemark's name in the kml
         if (kmlText) {
           // If we see spaces at the beginning or at the end we add a empty
           // white space at the beginning and at the end.
-          if (/^\s|\s$/g.test(kmlText)) {
+          if (/^(\s|\n)|(\n|\s)$/g.test(kmlText)) {
             clone.set("name", `\u200B${kmlText}\u200B`);
           } else {
             clone.set("name", kmlText);

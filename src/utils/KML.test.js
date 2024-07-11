@@ -164,11 +164,16 @@ describe("KML", () => {
                 <Data name="textAlign">
                   <value>right</value>
                 </Data>
+                <Data name="textArray">
+                  <value>
+                      ["bar","normal 16px arial"]
+                  </value>
+                </Data>
                 <Data name="textBackgroundFillColor">
                   <value>rgba(255,255,255,0.01)</value>
                 </Data>
                 <Data name="textFont">
-                  <value>bold 16px arial</value>
+                  <value>normal 16px arial</value>
                 </Data>
                 <Data name="textOffsetX">
                   <value>-90</value>
@@ -203,8 +208,8 @@ describe("KML", () => {
 
       // Text
       const styleText = style.getText();
-      expect(styleText.getText()).toBe("bar");
-      expect(styleText.getFont()).toEqual("bold 16px arial");
+      expect(styleText.getText()).toEqual(["bar", "normal 16px arial"]);
+      expect(styleText.getFont()).toEqual("normal 16px arial");
       expect(styleText.getFill()).toEqual({
         color_: [32, 52, 126, 1],
         patternImage_: null,
@@ -248,8 +253,13 @@ describe("KML", () => {
                 </LabelStyle>
               </Style>
               <ExtendedData>
+                <Data name="textArray">
+                    <value>
+                        ["   bar  ","normal 16px arial"]
+                    </value>
+                </Data>
                 <Data name="textFont">
-                  <value>bold 16px arial</value>
+                  <value>normal 16px arial</value>
                 </Data>
               </ExtendedData>
               <Point>
@@ -266,7 +276,7 @@ describe("KML", () => {
 
       // Text
       const styleText = style.getText();
-      expect(styleText.getText()).toBe("   bar  "); // Avoid trim spaces using unicode \u200B
+      expect(styleText.getText()).toEqual(["   bar  ", "normal 16px arial"]); // Avoid trim spaces using unicode \u200B
       expectWriteResult(feats, str);
     });
 
@@ -291,7 +301,7 @@ describe("KML", () => {
                   <value>["\\n","","   ","","foo","bold 16px arial","   ","","\\n",""]</value>
                 </Data>
                 <Data name="textFont">
-                  <value>bold 16px arial</value>
+                  <value>normal 16px arial</value>
                 </Data>
               </ExtendedData>
               <Point>
@@ -323,8 +333,177 @@ describe("KML", () => {
         "\n",
         "",
       ]);
-      expect(styleText.getFont()).toEqual("bold 16px arial");
+      expect(styleText.getFont()).toEqual("normal 16px arial");
       expectWriteResult(feats, str);
+    });
+
+    test("should read/rewrite old TextStyle as textArray as ExtendedData.", () => {
+      const str = `
+        <kml ${xmlns}>
+          <Document>
+            <name>lala</name>
+            <Placemark>
+              <name>\u200B   bar  \u200B</name>
+              <Style>
+                <IconStyle>
+                  <scale>0</scale>
+                </IconStyle>
+                <LabelStyle>
+                  <color>ff7e3420</color>
+                  <scale>2</scale>
+                </LabelStyle>
+              </Style>
+              <ExtendedData>
+                <Data name="textFont">
+                  <value>normal 16px arial</value>
+                </Data>
+              </ExtendedData>
+              <Point>
+                <coordinates>0,0,0</coordinates>
+              </Point>
+            </Placemark>
+          </Document>
+        </kml>
+      `;
+      const feats = KML.readFeatures(str);
+      const style = feats[0].getStyleFunction()(feats[0], 1);
+      expect(feats.length).toBe(1);
+      expect(style instanceof Style).toBe(true);
+
+      // Text
+      const styleText = style.getText();
+
+      // Make sure it is an array, the toEqual on nextline is not working properly because the array is converted to a string for comparaison.
+      expect(Array.isArray(styleText.getText())).toBe(true);
+      expect(styleText.getText()).toEqual(["   bar  ", "normal 16px arial"]);
+      expect(styleText.getFont()).toEqual("normal 16px arial");
+
+      const strAfter = `
+      <kml ${xmlns}>
+        <Document>
+          <name>lala</name>
+          <Placemark>
+            <name>\u200B   bar  \u200B</name>
+            <Style>
+              <IconStyle>
+                <scale>0</scale>
+              </IconStyle>
+              <LabelStyle>
+                <color>ff7e3420</color>
+                <scale>2</scale>
+              </LabelStyle>
+            </Style>
+            <ExtendedData>
+              <Data name="textArray">
+                  <value>
+                      ["   bar  ","normal 16px arial"]
+                  </value>
+              </Data>
+              <Data name="textFont">
+                <value>normal 16px arial</value>
+              </Data>
+            </ExtendedData>
+            <Point>
+              <coordinates>0,0,0</coordinates>
+            </Point>
+          </Placemark>
+        </Document>
+      </kml>
+    `;
+      expectWriteResult(feats, strAfter);
+    });
+
+    test("should read/write old bold TextStyle as textArray as ExtendedData.", () => {
+      const str = `
+        <kml ${xmlns}>
+          <Document>
+            <name>lala</name>
+            <Placemark>
+              <name>\u200B\n   foo  \n\n  \n\u200B</name>
+              <Style>
+                <IconStyle>
+                  <scale>0</scale>
+                </IconStyle>
+                <LabelStyle>
+                  <color>ff7e3420</color>
+                  <scale>2</scale>
+                </LabelStyle>
+              </Style>
+              <ExtendedData>
+                <Data name="textFont">
+                  <value>bold 16px arial</value>
+                </Data>
+              </ExtendedData>
+              <Point>
+                <coordinates>0,0,0</coordinates>
+              </Point>
+            </Placemark>
+          </Document>
+        </kml>
+      `;
+      const feats = KML.readFeatures(str);
+      const style = feats[0].getStyleFunction()(feats[0], 1);
+      expect(feats.length).toBe(1);
+      expect(style instanceof Style).toBe(true);
+
+      // Text
+      const styleText = style.getText();
+
+      // Make sure it is an array, the toEqual on nextline is not working properly because the array is converted to a string for comparaison.
+      expect(Array.isArray(styleText.getText())).toBe(true);
+      expect(styleText.getText()).toEqual([
+        "\u200B",
+        "",
+        "\n",
+        "",
+        "   foo  ",
+        "bold 16px arial",
+        "\n",
+        "",
+        "\u200B",
+        "",
+        "\n",
+        "",
+        "  ",
+        "bold 16px arial",
+        "\n",
+        "",
+        "\u200B",
+        "",
+      ]);
+      expect(styleText.getFont()).toEqual("normal 16px arial");
+
+      const strAfter = `
+        <kml ${xmlns}>
+          <Document>
+            <name>lala</name>
+            <Placemark>
+              <name>\u200B\n   foo  \n\n  \n\u200B</name>
+              <Style>
+                <IconStyle>
+                  <scale>0</scale>
+                </IconStyle>
+                <LabelStyle>
+                  <color>ff7e3420</color>
+                  <scale>2</scale>
+                </LabelStyle>
+              </Style>
+              <ExtendedData>
+                <Data name="textArray">
+                  <value>["\u200B","","\\n","","   foo  ","bold 16px arial","\\n","","\u200B","","\\n","","  ","bold 16px arial","\\n","","\u200B",""]</value>
+                </Data>
+                <Data name="textFont">
+                  <value>normal 16px arial</value>
+                </Data>
+              </ExtendedData>
+              <Point>
+                <coordinates>0,0,0</coordinates>
+              </Point>
+            </Placemark>
+          </Document>
+        </kml>
+      `;
+      expectWriteResult(feats, strAfter);
     });
 
     test("should read and write lineDash and fillPattern style for polygon", () => {
