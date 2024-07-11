@@ -419,7 +419,7 @@ describe("KML", () => {
           <Document>
             <name>lala</name>
             <Placemark>
-              <name>\u200B\n   foo   \n\u200B</name>
+              <name>\u200B\n   foo  \n\n  \n\u200B</name>
               <Style>
                 <IconStyle>
                   <scale>0</scale>
@@ -456,9 +456,15 @@ describe("KML", () => {
         "",
         "\n",
         "",
+        "   foo  ",
+        "bold 16px arial",
+        "\n",
+        "",
         "\u200B",
         "",
-        "   foo   ",
+        "\n",
+        "",
+        "  ",
         "bold 16px arial",
         "\n",
         "",
@@ -472,7 +478,7 @@ describe("KML", () => {
           <Document>
             <name>lala</name>
             <Placemark>
-              <name>\u200B\n\u200B   foo   \n\u200B</name>
+              <name>\u200B\n   foo  \n\n  \n\u200B</name>
               <Style>
                 <IconStyle>
                   <scale>0</scale>
@@ -484,7 +490,7 @@ describe("KML", () => {
               </Style>
               <ExtendedData>
                 <Data name="textArray">
-                  <value>["\u200B","","\\n","","\u200B","","   foo   ","bold 16px arial","\\n","","\u200B",""]</value>
+                  <value>["\u200B","","\\n","","   foo  ","bold 16px arial","\\n","","\u200B","","\\n","","  ","bold 16px arial","\\n","","\u200B",""]</value>
                 </Data>
                 <Data name="textFont">
                   <value>normal 16px arial</value>
