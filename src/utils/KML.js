@@ -174,8 +174,11 @@ const sanitizeFeature = (feature, doNotRevert32pxScaling = false) => {
         if (/\n/.test(name)) {
           const array = [];
           const split = name.split("\n");
-          split.forEach((n) => {
+          split.forEach((n, idx) => {
             if (n === "") {
+              if (idx === 0) {
+                array.push("", "");
+              }
               array.push("\n", "");
             } else {
               array.push(n, font);

@@ -366,6 +366,8 @@ describe("KML", () => {
       // Make sure it is an array, the toEqual on nextline is not working properly because the array is converted to a string for comparaison.
       expect(Array.isArray(styleText.getText())).toBe(true);
       expect(styleText.getText()).toEqual([
+        "",
+        "",
         "\n",
         "",
         "   foo   ",
@@ -392,7 +394,7 @@ describe("KML", () => {
               </Style>
               <ExtendedData>
                 <Data name="textArray">
-                  <value>["\\n","","   foo   ","bold 16px arial","\\n",""]</value>
+                  <value>["","","\\n","","   foo   ","bold 16px arial","\\n",""]</value>
                 </Data>
                 <Data name="textFont">
                   <value>normal 16px arial</value>
