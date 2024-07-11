@@ -366,13 +366,17 @@ describe("KML", () => {
       // Make sure it is an array, the toEqual on nextline is not working properly because the array is converted to a string for comparaison.
       expect(Array.isArray(styleText.getText())).toBe(true);
       expect(styleText.getText()).toEqual([
-        "",
+        "\u200B",
         "",
         "\n",
+        "",
+        "\u200B",
         "",
         "   foo   ",
         "bold 16px arial",
         "\n",
+        "",
+        "\u200B",
         "",
       ]);
       expect(styleText.getFont()).toEqual("normal 16px arial");
@@ -382,7 +386,7 @@ describe("KML", () => {
           <Document>
             <name>lala</name>
             <Placemark>
-              <name>\u200B\n   foo   \n\u200B</name>
+              <name>\u200B\n\u200B   foo   \n\u200B</name>
               <Style>
                 <IconStyle>
                   <scale>0</scale>
@@ -394,7 +398,7 @@ describe("KML", () => {
               </Style>
               <ExtendedData>
                 <Data name="textArray">
-                  <value>["","","\\n","","   foo   ","bold 16px arial","\\n",""]</value>
+                  <value>["\u200B","","\\n","","\u200B","","   foo   ","bold 16px arial","\\n","","\u200B",""]</value>
                 </Data>
                 <Data name="textFont">
                   <value>normal 16px arial</value>

@@ -165,35 +165,34 @@ const sanitizeFeature = (feature, doNotRevert32pxScaling = false) => {
       }
 
       // For backward compatibility we translate the bold and italic textFont property to a textArray prop
-      let font = feature.get("textFont") || "normal 16px Helvetica";
+      const font = feature.get("textFont") || "normal 16px Helvetica";
 
-      // Since we use rich text in mapset editor we must remove the bold and italic
-      // and use a text array instead
-      if (/(bold)/g.test(font)) {
-        // Manage new lines
-        if (/\n/.test(name)) {
-          const array = [];
-          const split = name.split("\n");
-          split.forEach((n, idx) => {
-            if (n === "") {
-              if (idx === 0) {
-                array.push("", "");
-              }
-              array.push("\n", "");
-            } else {
-              array.push(n, font);
+      // Since we use rich text in mapset editor we use a text array instead,
+      // it's only necessary when there is ne wlines in the text
+      // Manage new lines
+      if (/\n/.test(name)) {
+        const array = [];
+        const split = name.split("\n");
+        split.forEach((n, idx) => {
+          if (n) {
+            array.push(n, n ? font : "");
+          } else {
+            if (idx === 0) {
+              array.push("\u200B", "");
             }
-          });
-          name = array;
-          console.log(name);
-        } else {
-          name = [name, font];
-        }
-        font = font.replace(/bold/g, "normal");
+            array.push("\n", "");
+            // if (idx === split.length - 1) {
+            array.push("\u200B", "");
+            // }
+          }
+        });
+        name = array;
+      } else {
+        name = [name, font];
       }
 
       text = new Text({
-        font,
+        font: font.replace(/bold/g, "normal"), // We mange bold in textArray
         text: name,
         fill: style.getText().getFill(),
         // rotation unsupported by KML, taken instead from custom field.
