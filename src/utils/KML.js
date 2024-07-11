@@ -186,7 +186,7 @@ const sanitizeFeature = (feature, doNotRevert32pxScaling = false) => {
       }
 
       text = new Text({
-        font: font.replace(/bold/g, "normal"), // We mange bold in textArray
+        font: font.replace(/bold/g, "normal"), // We manage bold in textArray
         text: name,
         fill: style.getText().getFill(),
         // rotation unsupported by KML, taken instead from custom field.
