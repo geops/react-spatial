@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.5](https://github.com/geops/react-spatial/compare/v1.11.4...v1.11.5) (2024-07-11)
+
+
+### Bug Fixes
+
+* fix text style kml parsing as richt text ([#727](https://github.com/geops/react-spatial/issues/727)) ([e5bc676](https://github.com/geops/react-spatial/commit/e5bc67640c72a58ebab569685266e25c48853ad9))
+
 ### [1.11.4](https://github.com/geops/react-spatial/compare/v1.11.3...v1.11.4) (2024-07-08)
 
 
