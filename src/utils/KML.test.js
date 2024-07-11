@@ -327,6 +327,87 @@ describe("KML", () => {
       expectWriteResult(feats, str);
     });
 
+    test.only("should read/write old bold TextStyle as textArray as ExtendedData.", () => {
+      const str = `
+        <kml ${xmlns}>
+          <Document>
+            <name>lala</name>
+            <Placemark>
+              <name>\u200B\n   foo   \n\u200B</name>
+              <Style>
+                <IconStyle>
+                  <scale>0</scale>
+                </IconStyle>
+                <LabelStyle>
+                  <color>ff7e3420</color>
+                  <scale>2</scale>
+                </LabelStyle>
+              </Style>
+              <ExtendedData>
+                <Data name="textFont">
+                  <value>bold 16px arial</value>
+                </Data>
+              </ExtendedData>
+              <Point>
+                <coordinates>0,0,0</coordinates>
+              </Point>
+            </Placemark>
+          </Document>
+        </kml>
+      `;
+      const feats = KML.readFeatures(str);
+      const style = feats[0].getStyleFunction()(feats[0], 1);
+      expect(feats.length).toBe(1);
+      expect(style instanceof Style).toBe(true);
+
+      // Text
+      const styleText = style.getText();
+
+      // Make sure it is an array, the toEqual on nextline is not working properly because the array is converted to a string for comparaison.
+      expect(Array.isArray(styleText.getText())).toBe(true);
+      expect(styleText.getText()).toEqual([
+        "\n",
+        "",
+        "   foo   ",
+        "bold 16px arial",
+        "\n",
+        "",
+      ]);
+      expect(styleText.getFont()).toEqual("normal 16px arial");
+
+      const strAfter = `
+        <kml ${xmlns}>
+          <Document>
+            <name>lala</name>
+            <Placemark>
+              <name>\u200B\n   foo   \n\u200B</name>
+              <Style>
+                <IconStyle>
+                  <scale>0</scale>
+                </IconStyle>
+                <LabelStyle>
+                  <color>ff7e3420</color>
+                  <scale>2</scale>
+                </LabelStyle>
+              </Style>
+              <ExtendedData>
+                <Data name="textArray">
+                  <value>["\\n","","   foo   ","bold 16px arial","\\n",""]</value>
+                </Data>
+                <Data name="textFont">
+                  <value>normal 16px arial</value>
+                </Data>
+              </ExtendedData>
+              <Point>
+                <coordinates>0,0,0</coordinates>
+              </Point>
+            </Placemark>
+          </Document>
+        </kml>
+      `;
+      expectWriteResult(feats, strAfter);
+    });
+
     test("should read and write lineDash and fillPattern style for polygon", () => {
       const str = `
         <kml ${xmlns}>

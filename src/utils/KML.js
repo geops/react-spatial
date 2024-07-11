@@ -164,9 +164,34 @@ const sanitizeFeature = (feature, doNotRevert32pxScaling = false) => {
         feature.set("name", name);
       }
 
+      // For backward compatibility we translate the bold and italic textFont property to a textArray prop
+      let font = feature.get("textFont") || "normal 16px Helvetica";
+
+      // Since we use rich text in mapset editor we must remove the bold and italic
+      // and use a text array instead
+      if (/(bold)/g.test(font)) {
+        // Manage new lines
+        if (/\n/.test(name)) {
+          const array = [];
+          const split = name.split("\n");
+          split.forEach((n) => {
+            if (n === "") {
+              array.push("\n", "");
+            } else {
+              array.push(n, font);
+            }
+          });
+          name = array;
+          console.log(name);
+        } else {
+          name = [name, font];
+        }
+        font = font.replace(/bold/g, "normal");
+      }
+
       text = new Text({
-        font: feature.get("textFont") || "normal 16px Helvetica",
-        text: feature.get("name"),
+        font,
+        text: name,
         fill: style.getText().getFill(),
         // rotation unsupported by KML, taken instead from custom field.
         rotation: feature.get("textRotation") || 0,
