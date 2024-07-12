@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.6](https://github.com/geops/react-spatial/compare/v1.11.5...v1.11.6) (2024-07-12)
+
+
+### Bug Fixes
+
+* add a property to set the download file name ([afab6f9](https://github.com/geops/react-spatial/commit/afab6f98db454e01dde351cedb5864984fd81504))
+
 ### [1.11.5](https://github.com/geops/react-spatial/compare/v1.11.4...v1.11.5) (2024-07-11)
 
 
