@@ -142,6 +142,11 @@ const propTypes = {
       paddingBackground: PropTypes.number,
     }),
   }),
+
+  /**
+   * Return the file name of the image to download.
+   */
+  getDownloadImageName: PropTypes.func,
 };
 
 const getMargin = (destCanvas) => {
@@ -149,7 +154,7 @@ const getMargin = (destCanvas) => {
   return newMargin;
 };
 
-const getDownloadImageName = (format) => {
+const getDefaultDownloadImageName = (format) => {
   const fileExt = format === "image/jpeg" ? "jpg" : "png";
   return `${window.document.title.replace(/ /g, "_").toLowerCase()}.${fileExt}`;
 };
@@ -524,7 +529,7 @@ const createCanvasImage = (
   });
 };
 
-const downloadCanvasImage = (canvas, format) => {
+const downloadCanvasImage = (canvas, format, getDownloadImageName) => {
   // Use blob for large images
   const promise = new Promise((resolve) => {
     if (/msie (9|10)/gi.test(window.navigator.userAgent.toLowerCase())) {
@@ -579,6 +584,7 @@ function CanvasSaveButton({
   extent = null,
   coordinates = null,
   scale = 1,
+  getDownloadImageName = getDefaultDownloadImageName,
   onSaveStart = (mapp) => {
     return Promise.resolve(mapp);
   },
@@ -605,9 +611,11 @@ function CanvasSaveButton({
         )
           .then((canvas) => {
             if (autoDownload) {
-              downloadCanvasImage(canvas, format).then((blob) => {
-                onSaveEnd(mapToExport, canvas, blob);
-              });
+              downloadCanvasImage(canvas, format, getDownloadImageName).then(
+                (blob) => {
+                  onSaveEnd(mapToExport, canvas, blob);
+                },
+              );
             } else {
               onSaveEnd(mapToExport, canvas);
             }
@@ -633,6 +641,7 @@ function CanvasSaveButton({
       onSaveStart,
       padding,
       scale,
+      getDownloadImageName,
     ],
   );
 
