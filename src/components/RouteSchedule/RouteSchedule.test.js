@@ -110,4 +110,5 @@ describe("RouteSchedule", () => {
   // to test: no departure delay on last station
   // to test: no departure date on last station
   // to test: font bold on first and last station
+  // to test: custom getDelayString prop
 });

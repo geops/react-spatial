@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { geopsTheme, Header, Footer } from "@geops/geops-ui";
 import {
-  Hidden,
+  Paper,
   ClickAwayListener,
   Collapse,
   List,
@@ -147,7 +147,7 @@ export function StyleGuideRenderer({
           ]}
         />
         <div className={classes.content}>
-          <Hidden smUp>
+          <Paper sx={{ display: { xs: "block", sm: "none" } }}>
             <div
               role="button"
               type="button"
@@ -236,16 +236,16 @@ export function StyleGuideRenderer({
                 </List>
               </ClickAwayListener>
             </Collapse>
-          </Hidden>
+          </Paper>
           <div className={classes.scrollable} ref={(nodee) => setNode(nodee)}>
-            <Hidden xsDown>
+            <Paper sx={{ display: { xs: "none", sm: "block" } }}>
               <div className={classes.sidebar}>
                 <header className={classes.version}>
                   {version && <Version>{version}</Version>}
                 </header>
                 {hasSidebar ? toc : null}
               </div>
-            </Hidden>
+            </Paper>
             <main className={classes.main}>{children}</main>
             <div className={classes.footerWrapper}>
               <Footer
