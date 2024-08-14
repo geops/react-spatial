@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.12.0](https://github.com/geops/react-spatial/compare/v1.11.6...v1.12.0) (2024-08-14)
+
+
+### Features
+
+* **RouteSchedule:** add getDelayString prop for custom delay string ([#728](https://github.com/geops/react-spatial/issues/728)) ([f16b419](https://github.com/geops/react-spatial/commit/f16b4190fbda03fee6db3ecbb68ad6da82f25698))
+
 ### [1.11.6](https://github.com/geops/react-spatial/compare/v1.11.5...v1.11.6) (2024-07-12)
 
 
