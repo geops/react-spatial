@@ -6,7 +6,10 @@ import {
   RealtimeLayer as TrackerLayer,
   realtimeConfig,
 } from "mobility-toolbox-js/ol";
-import { getHoursAndMinutes, getDelayString } from "../../utils/timeUtils";
+import {
+  getHoursAndMinutes,
+  getDelayString as defaultGetDelayString,
+} from "../../utils/timeUtils";
 import ReactTransitPropTypes from "../../propTypes";
 import firstStation from "../../images/RouteSchedule/firstStation.png";
 import station from "../../images/RouteSchedule/station.png";
@@ -118,6 +121,7 @@ function RouteStop({
   trackerLayer,
   renderStationImg = defaultRenderStationImg,
   renderStationName = defaultRenderStationName,
+  getDelayString = defaultGetDelayString,
   stop,
   idx,
 }) {
@@ -387,6 +391,11 @@ const propTypes = {
    * Function to render header buttons.
    */
   renderHeaderButtons: PropTypes.func,
+
+  /**
+   * Function to get the delay string for stations.
+   */
+  getDelayString: PropTypes.func,
 };
 
 /**
