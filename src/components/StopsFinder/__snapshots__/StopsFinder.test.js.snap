@@ -3,16 +3,16 @@
 exports[`StopsFinder matches snapshots. 1`] = `
 <div
   aria-owns={null}
-  className="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-16x9654-MuiAutocomplete-root"
+  className="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon  css-16x9654-MuiAutocomplete-root"
   onClick={[Function]}
   onKeyDown={[Function]}
   onMouseDown={[Function]}
 >
   <div
-    className="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
+    className="MuiFormControl-root MuiFormControl-fullWidth  MuiTextField-root  css-y4n9bg-MuiFormControl-root-MuiTextField-root"
   >
     <label
-      className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
+      className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined  MuiFormLabel-colorPrimary  MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined  css-1q964xs-MuiFormLabel-root-MuiInputLabel-root"
       data-shrink={false}
       htmlFor=":r0:"
       id=":r0:-label"
@@ -20,7 +20,7 @@ exports[`StopsFinder matches snapshots. 1`] = `
       Search stops
     </label>
     <div
-      className="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-154xyx0-MuiInputBase-root-MuiOutlinedInput-root"
+      className="MuiInputBase-root MuiOutlinedInput-root  MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd  MuiAutocomplete-inputRoot  css-1wgn40h-MuiInputBase-root-MuiOutlinedInput-root"
       onClick={[Function]}
     >
       <input
@@ -31,7 +31,7 @@ exports[`StopsFinder matches snapshots. 1`] = `
         autoCapitalize="none"
         autoComplete="off"
         autoFocus={false}
-        className="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
+        className="MuiInputBase-input MuiOutlinedInput-input  MuiInputBase-inputAdornedEnd  MuiAutocomplete-input MuiAutocomplete-inputFocused  css-lc42l8-MuiInputBase-input-MuiOutlinedInput-input"
         id=":r0:"
         onAnimationStart={[Function]}
         onBlur={[Function]}
@@ -46,11 +46,11 @@ exports[`StopsFinder matches snapshots. 1`] = `
         value=""
       />
       <div
-        className="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
+        className="MuiAutocomplete-endAdornment  css-p1olib-MuiAutocomplete-endAdornment"
       >
         <button
           aria-label="Open"
-          className="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
+          className="MuiButtonBase-root  MuiIconButton-root MuiIconButton-sizeMedium  MuiAutocomplete-popupIndicator  css-2anpn7-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
           disabled={false}
           onBlur={[Function]}
           onClick={[Function]}
@@ -92,10 +92,10 @@ exports[`StopsFinder matches snapshots. 1`] = `
       </div>
       <fieldset
         aria-hidden={true}
-        className="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+        className="MuiOutlinedInput-notchedOutline  css-1d3z3hw-MuiOutlinedInput-notchedOutline"
       >
         <legend
-          className="css-yjsfm1"
+          className="css-1pbc52w"
         >
           <span>
             Search stops
