@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.12.1](https://github.com/geops/react-spatial/compare/v1.12.0...v1.12.1) (2024-08-29)
+
+
+### Bug Fixes
+
+* add eslint perfectionist ([a3dc061](https://github.com/geops/react-spatial/commit/a3dc061275d773b0d4127e5ffaebf69f72d64e21))
+* add more options to define the delay output ([fc2185c](https://github.com/geops/react-spatial/commit/fc2185cea472f9f61191e0a93095f460edfb8235))
+* update dependencies ([f1348df](https://github.com/geops/react-spatial/commit/f1348df0a84b50c9bed56e88bc15ede22a6725f6))
+
 ## [1.12.0](https://github.com/geops/react-spatial/compare/v1.11.6...v1.12.0) (2024-08-14)
 
 
