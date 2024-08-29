@@ -34,19 +34,19 @@ export const getDelayString = (delayInMs) => {
   const s = Math.floor(((timeInMs % 3600000) % 60000) / 1000);
 
   if (s === 0 && h === 0 && m === 0) {
-    return "0";
+    return "+0";
   }
   if (s === 0 && h === 0) {
-    return `${m}m`;
+    return `+${m}m`;
   }
   if (s === 0) {
-    return `${h}h${m}m`;
+    return `+${h}h${m}m`;
   }
   if (m === 0 && h === 0) {
-    return `${s}s`;
+    return `+${s}s`;
   }
   if (h === 0) {
-    return `${m}m${s}s`;
+    return `+${m}m${s}s`;
   }
-  return `${h}h${m}m${s}s`;
+  return `+${h}h${m}m${s}s`;
 };

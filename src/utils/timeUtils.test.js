@@ -25,6 +25,6 @@ describe("timeUtils", () => {
   });
 
   test("getDelayString should be correct.", () => {
-    expect(getDelayString(123456)).toBe("2m3s");
+    expect(getDelayString(123456)).toBe("+2m3s");
   });
 });

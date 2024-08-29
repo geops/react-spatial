@@ -23,21 +23,21 @@ const { getBgColor } = realtimeConfig;
  * Returns a color class to display the delay.
  * @param {Number} time Delay time in milliseconds.
  */
-const getDelayColor = (time) => {
+const defaultGetDelayColor = (time) => {
   const secs = Math.round(((time / 1800 / 2) * 3600) / 1000);
   if (secs >= 3600) {
-    return "dark-red";
+    return "rgb(237 0 76)";
   }
   if (secs >= 500) {
-    return "middle-red";
+    return "rgb(232 0 0)";
   }
   if (secs >= 300) {
-    return "light-red";
+    return "rgb(255 74 0)";
   }
   if (secs >= 180) {
-    return "orange";
+    return "rgb(247 191 0)";
   }
-  return "green";
+  return "rgb(0 160 12)";
 };
 
 /**
@@ -114,13 +114,33 @@ const defaultRenderStationName = (stations, index, cancelled) => {
     <div className={cancelled ? "rt-route-cancelled" : ""}>{stationName}</div>
   );
 };
+
+/**
+ * Render a delay string.
+ * @param {Number} delay  The delay in ms to display.
+ * @param {Boolean} stop The current stop object.
+ * @param {Function} getDelayString Function to get string to display.
+ * @param {Function} getColor Define the css color to use.
+ *
+ */
+const defaultRenderDelay = (delay, stop, getDelayString, getDelayColor) => {
+  return (
+    <span style={{ color: getDelayColor?.(delay, stop) || "inherit" }}>
+      {`${getDelayString?.(delay, stop) || ""}`}
+    </span>
+  );
+};
+
 const emptyFunc = () => {};
 
 function RouteStop({
+  getDelayColor = defaultGetDelayColor,
   getDelayString = defaultGetDelayString,
   idx,
   lineInfos,
   onStationClick = emptyFunc,
+  renderArrivalDelay = defaultRenderDelay,
+  renderDepartureDelay = defaultRenderDelay,
   renderStationImg = defaultRenderStationImg,
   renderStationName = defaultRenderStationName,
   stop,
@@ -177,31 +197,25 @@ function RouteStop({
         {arrivalDelay === undefined ||
         arrivalDelay === null ||
         isFirstStation ||
-        cancelled ? (
-          ""
-        ) : (
-          <span
-            className={`rt-route-delay-arrival${` ${getDelayColor(
+        cancelled
+          ? ""
+          : renderArrivalDelay(
               arrivalDelay,
-            )}`}`}
-          >
-            {`+${getDelayString(arrivalDelay)}`}
-          </span>
-        )}
+              stop,
+              getDelayString,
+              getDelayColor,
+            )}
         {departureDelay === undefined ||
         departureDelay === null ||
         isLastStation ||
-        cancelled ? (
-          ""
-        ) : (
-          <span
-            className={`rt-route-delay-departure${` ${getDelayColor(
+        cancelled
+          ? ""
+          : renderDepartureDelay(
               departureDelay,
-            )}`}`}
-          >
-            {`+${getDelayString(departureDelay)}`}
-          </span>
-        )}
+              stop,
+              getDelayString,
+              getDelayColor,
+            )}
       </div>
       <div className="rt-route-times">
         <span
@@ -339,6 +353,11 @@ const propTypes = {
   className: PropTypes.string,
 
   /**
+   * Function to get the delay color.
+   */
+  getDelayColor: PropTypes.func,
+
+  /**
    * Function to get the delay string for stations.
    */
   getDelayString: PropTypes.func,
@@ -354,9 +373,19 @@ const propTypes = {
   onStationClick: PropTypes.func,
 
   /**
+   * Render delay for arrival.
+   */
+  renderArrivalDelay: PropTypes.func,
+
+  /**
    * Render Copyright of the route scheduler.
    */
   renderCopyright: PropTypes.func,
+
+  /**
+   * Render delay for departure.
+   */
+  renderDepartureDelay: PropTypes.func,
 
   /**
    * Render Footer of the route scheduler.
