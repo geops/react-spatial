@@ -1,13 +1,13 @@
-import React, { useMemo, useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { Map } from "ol";
 import { CopyrightControl } from "mobility-toolbox-js/ol";
+import { Map } from "ol";
+import PropTypes from "prop-types";
+import React, { useEffect, useMemo, useState } from "react";
 
 const propTypes = {
   /**
-   * A map.
+   * CSS class of th root element
    */
-  map: PropTypes.instanceOf(Map).isRequired,
+  className: PropTypes.string,
 
   /**
    * Format function. Called with an array of copyrights from visible layers
@@ -16,16 +16,16 @@ const propTypes = {
   format: PropTypes.func,
 
   /**
-   * CSS class of th root element
+   * A map.
    */
-  className: PropTypes.string,
+  map: PropTypes.instanceOf(Map).isRequired,
 };
 
 const defaultProps = {
+  className: "rs-copyright",
   format: (copyrights) => {
     return copyrights.join(" | ");
   },
-  className: "rs-copyright",
 };
 
 /**
@@ -34,9 +34,9 @@ const defaultProps = {
  * to render the layer copyrights.
  */
 function Copyright({
-  map,
   className = defaultProps.className,
   format = defaultProps.format,
+  map,
   ...other
 }) {
   const [copyrights, setCopyrights] = useState([]);
@@ -44,7 +44,6 @@ function Copyright({
   const control = useMemo(
     () => {
       return new CopyrightControl({
-        target: document.createElement("div"),
         element: document.createElement("div"),
         render() {
           // eslint-disable-next-line react/no-this-in-sfc
@@ -53,6 +52,7 @@ function Copyright({
             setCopyrights(newCopyrights);
           }
         },
+        target: document.createElement("div"),
       });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps

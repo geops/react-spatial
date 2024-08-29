@@ -1,17 +1,18 @@
 /* eslint-disable no-param-reassign */
-import React, { useCallback } from "react";
-import PropTypes from "prop-types";
+import { getBottomRight, getTopLeft } from "ol/extent";
 import OLMap from "ol/Map";
-import { getTopLeft, getBottomRight } from "ol/extent";
+import PropTypes from "prop-types";
+import React, { useCallback } from "react";
+
 import NorthArrowSimple from "../../images/northArrow.url.svg";
 import NorthArrowCircle from "../../images/northArrowCircle.url.svg";
 
 const extraDataImgPropType = PropTypes.shape({
-  src: PropTypes.string,
-  width: PropTypes.number,
+  circled: PropTypes.bool,
   height: PropTypes.number,
   rotation: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-  circled: PropTypes.bool,
+  src: PropTypes.string,
+  width: PropTypes.number,
 });
 
 // support server-side rendering where `Element` will not be defined
@@ -30,31 +31,6 @@ const propTypes = {
   children: PropTypes.node,
 
   /**
-   * Output format of the image.
-   */
-  format: PropTypes.oneOf(["image/jpeg", "image/png"]),
-
-  /** An  [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html). */
-  map: PropTypes.instanceOf(OLMap),
-
-  /**
-   * Space (in pixels) between the border of the canvas and the elements.
-   * Default to 1% of the canvas width.
-   */
-  margin: PropTypes.number,
-
-  /**
-   * Space (in pixels) between elements.
-   * Default to 5px.
-   */
-  padding: PropTypes.number,
-
-  /**
-   * Extent for the export. If no extent is given, the whole map is exported.
-   */
-  extent: PropTypes.arrayOf(PropTypes.number),
-
-  /**
    * Array of 4 [ol/Coordinate](https://openlayers.org/en/latest/apidoc/module-ol_coordinate.html#~Coordinate).
    * If no coordinates and no extent are given, the whole map is exported.
    * This property must be used to export rotated map.
@@ -64,23 +40,9 @@ const propTypes = {
   coordinates: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
 
   /**
-   * Scale the map for better quality. Possible values: 1, 2 or 3.
-   * WARNING: The tiled layer with a WMTS or XYZ source must provides an url
-   * for each scale in the config file.
+   * Extent for the export. If no extent is given, the whole map is exported.
    */
-  scale: PropTypes.number,
-
-  /**
-   * Function called before the dowload process begins.
-   */
-  onSaveStart: PropTypes.func,
-
-  /**
-   * Function called after the dowload process ends.
-   *
-   * @param {object} error Error message the process fails.
-   */
-  onSaveEnd: PropTypes.func,
+  extent: PropTypes.arrayOf(PropTypes.number),
 
   /**
    * Extra data, such as copyright, north arrow configuration.
@@ -126,27 +88,66 @@ const propTypes = {
     }
    */
   extraData: PropTypes.shape({
-    logo: extraDataImgPropType,
-    northArrow: extraDataImgPropType,
-    qrCode: extraDataImgPropType,
     copyright: PropTypes.shape({
-      text: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-      font: PropTypes.string,
+      background: PropTypes.bool,
       fillStyle: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.instanceOf(CanvasPatternType),
       ]),
-      background: PropTypes.bool,
+      font: PropTypes.string,
       maxWidth: PropTypes.number,
-      paddingBottom: PropTypes.number,
       paddingBackground: PropTypes.number,
+      paddingBottom: PropTypes.number,
+      text: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     }),
+    logo: extraDataImgPropType,
+    northArrow: extraDataImgPropType,
+    qrCode: extraDataImgPropType,
   }),
+
+  /**
+   * Output format of the image.
+   */
+  format: PropTypes.oneOf(["image/jpeg", "image/png"]),
 
   /**
    * Return the file name of the image to download.
    */
   getDownloadImageName: PropTypes.func,
+
+  /** An  [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html). */
+  map: PropTypes.instanceOf(OLMap),
+
+  /**
+   * Space (in pixels) between the border of the canvas and the elements.
+   * Default to 1% of the canvas width.
+   */
+  margin: PropTypes.number,
+
+  /**
+   * Function called after the dowload process ends.
+   *
+   * @param {object} error Error message the process fails.
+   */
+  onSaveEnd: PropTypes.func,
+
+  /**
+   * Function called before the dowload process begins.
+   */
+  onSaveStart: PropTypes.func,
+
+  /**
+   * Space (in pixels) between elements.
+   * Default to 5px.
+   */
+  padding: PropTypes.number,
+
+  /**
+   * Scale the map for better quality. Possible values: 1, 2 or 3.
+   * WARNING: The tiled layer with a WMTS or XYZ source must provides an url
+   * for each scale in the config file.
+   */
+  scale: PropTypes.number,
 };
 
 const getMargin = (destCanvas) => {
@@ -221,8 +222,8 @@ const drawCopyright = (
   margin,
   padding,
 ) => {
-  const { text, font, fillStyle, background } = extraData.copyright;
-  const { paddingBottom = padding, paddingBackground = 2 } =
+  const { background, fillStyle, font, text } = extraData.copyright;
+  const { paddingBackground = 2, paddingBottom = padding } =
     extraData.copyright;
 
   let copyright = typeof text === "function" ? text() : text?.trim();
@@ -267,7 +268,7 @@ const drawCopyright = (
   let lineY = destCanvas.height - paddingBottom; // we apply the margin only on the left side
 
   lines.forEach((line) => {
-    const { width, fontBoundingBoxAscent, fontBoundingBoxDescent } =
+    const { fontBoundingBoxAscent, fontBoundingBoxDescent, width } =
       destContext.measureText(line);
     const height = fontBoundingBoxAscent + fontBoundingBoxDescent; // we include paddingBackground to have a bit of distance between lines
     let lineTop = lineY - height;
@@ -305,7 +306,7 @@ const drawElement = (
   side = "right",
 ) => {
   const destContext = destCanvas.getContext("2d");
-  const { src, width, height, rotation } = data;
+  const { height, rotation, src, width } = data;
 
   return new Promise((resolve) => {
     const img = new Image();
@@ -382,10 +383,10 @@ const calculatePixelsToExport = (mapToExport, extent, coordinates) => {
     ];
 
     return {
+      h: pixelBottomRight[1] - pixelTopLeft[1],
+      w: pixelBottomRight[0] - pixelTopLeft[0],
       x: pixelTopLeft[0],
       y: pixelTopLeft[1],
-      w: pixelBottomRight[0] - pixelTopLeft[0],
-      h: pixelBottomRight[1] - pixelTopLeft[1],
     };
   }
   return null;
@@ -423,10 +424,10 @@ const createCanvasImage = (
           extent,
           coordinates,
         ) || {
+          h: canvas.height,
+          w: canvas.width,
           x: 0,
           y: 0,
-          w: canvas.width,
-          h: canvas.height,
         };
 
         if (!destCanvas) {
@@ -574,21 +575,21 @@ const downloadCanvasImage = (canvas, format, getDownloadImageName) => {
  * canvas as an image.
  */
 function CanvasSaveButton({
-  margin = null,
-  padding = 5,
   autoDownload = true,
   children = null,
-  map = null,
-  format = "image/png",
-  extraData = null,
-  extent = null,
   coordinates = null,
-  scale = 1,
+  extent = null,
+  extraData = null,
+  format = "image/png",
   getDownloadImageName = getDefaultDownloadImageName,
+  map = null,
+  margin = null,
+  onSaveEnd = () => {},
   onSaveStart = (mapp) => {
     return Promise.resolve(mapp);
   },
-  onSaveEnd = () => {},
+  padding = 5,
+  scale = 1,
 }) {
   const onClick = useCallback(
     (evt) => {

@@ -1,20 +1,20 @@
+import Adapter from "@cfaester/enzyme-adapter-react-18";
+import { configure, mount, shallow } from "enzyme";
 import "jest-canvas-mock";
+import { Layer } from "mobility-toolbox-js/ol";
+import Feature from "ol/Feature";
+import GPX from "ol/format/GPX";
+import LineString from "ol/geom/LineString";
+import Point from "ol/geom/Point";
+import VectorLayer from "ol/layer/Vector";
+import VectorSource from "ol/source/Vector";
+import Fill from "ol/style/Fill";
+import Icon from "ol/style/Icon";
+import Stroke from "ol/style/Stroke";
+import Style from "ol/style/Style";
+import Text from "ol/style/Text";
 import React from "react";
 import renderer from "react-test-renderer";
-import { configure, mount, shallow } from "enzyme";
-import Adapter from "@cfaester/enzyme-adapter-react-18";
-import { Layer } from "mobility-toolbox-js/ol";
-import GPX from "ol/format/GPX";
-import VectorSource from "ol/source/Vector";
-import Style from "ol/style/Style";
-import Icon from "ol/style/Icon";
-import Text from "ol/style/Text";
-import Fill from "ol/style/Fill";
-import Stroke from "ol/style/Stroke";
-import Point from "ol/geom/Point";
-import LineString from "ol/geom/LineString";
-import Feature from "ol/Feature";
-import VectorLayer from "ol/layer/Vector";
 
 import FeatureExportButton from ".";
 
@@ -44,11 +44,11 @@ describe("FeatureExportButton", () => {
     test("should match snapshot with cutom attributes.", () => {
       const component = renderer.create(
         <FeatureExportButton
-          layer={layer}
           className="foo"
-          title="bar"
+          layer={layer}
           // eslint-disable-next-line jsx-a11y/tabindex-no-positive
           tabIndex={2}
+          title="bar"
         />,
       );
       const tree = component.toJSON();
@@ -93,12 +93,12 @@ describe("FeatureExportButton", () => {
 
     const textStyle = new Style({
       text: new Text({
-        text: "text name",
         font: "normal 16px Helvetica",
         stroke: new Stroke({
           color: [255, 255, 255, 1],
           width: 3,
         }),
+        text: "text name",
       }),
     });
 
@@ -113,8 +113,8 @@ describe("FeatureExportButton", () => {
       const wrapper = mount(
         <FeatureExportButton
           format={GPX}
-          projection="EPSG:4326"
           layer={iconLayer}
+          projection="EPSG:4326"
         />,
       );
       const spy = jest.spyOn(FeatureExportButton, "exportFeatures");
@@ -223,12 +223,12 @@ describe("FeatureExportButton", () => {
 
           const newStyle = new Style({
             text: new Text({
-              text: "",
               font: "normal 16px Helvetica",
               stroke: new Stroke({
                 color: [255, 255, 255, 1],
                 width: 3,
               }),
+              text: "",
             }),
           });
           // Set empty string as name for first feature
@@ -254,12 +254,12 @@ describe("FeatureExportButton", () => {
               lineDash: [40, 40],
             }),
             text: new Text({
-              text: "text name",
-              font: "normal 18px Arial",
-              rotation: 0.5,
               backgroundFill: new Fill({
                 color: "rgba(255,255,255,0.01)",
               }),
+              font: "normal 18px Arial",
+              rotation: 0.5,
+              text: "text name",
             }),
           });
 
@@ -290,12 +290,12 @@ describe("FeatureExportButton", () => {
               lineDash: [40, 40],
             }),
             text: new Text({
-              text: "text name",
-              font: "normal 18px Arial",
-              rotation: 0.5,
               backgroundFill: new Fill({
                 color: "rgba(255,255,255,0.01)",
               }),
+              font: "normal 18px Arial",
+              rotation: 0.5,
+              text: "text name",
             }),
           });
 
@@ -363,9 +363,9 @@ describe("FeatureExportButton", () => {
           const expectedStyle =
             '<ExtendedData><Data name="lineDash"><value>40,40</value></Data>' +
             '<Data name="lineEndIcon">' +
-            '<value>{"url":"fooarrowend.png","scale":1,"size":null}</value></Data>' +
+            '<value>{"scale":1,"size":null,"url":"fooarrowend.png"}</value></Data>' +
             '<Data name="lineStartIcon">' +
-            '<value>{"url":"fooarrowstart.png","scale":1,"size":null}</value></Data>' +
+            '<value>{"scale":1,"size":null,"url":"fooarrowstart.png"}</value></Data>' +
             "</ExtendedData>";
 
           expect(

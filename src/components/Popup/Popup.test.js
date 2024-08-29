@@ -1,14 +1,14 @@
-import React from "react";
-import renderer from "react-test-renderer";
-import { configure, mount, shallow } from "enzyme";
 import Adapter from "@cfaester/enzyme-adapter-react-18";
+import { configure, mount, shallow } from "enzyme";
 import "jest-canvas-mock";
-
+import Feature from "ol/Feature";
+import Line from "ol/geom/LineString";
+import Point from "ol/geom/Point";
 import OLMap from "ol/Map";
 import View from "ol/View";
-import Feature from "ol/Feature";
-import Point from "ol/geom/Point";
-import Line from "ol/geom/LineString";
+import React from "react";
+import renderer from "react-test-renderer";
+
 import Popup from "./Popup";
 
 let map;
@@ -44,7 +44,7 @@ describe("Popup", () => {
 
     test("with default values.", () => {
       const component = renderer.create(
-        <Popup map={map} feature={feat}>
+        <Popup feature={feat} map={map}>
           <div id="foo" />
         </Popup>,
       );
@@ -55,8 +55,8 @@ describe("Popup", () => {
     test("without close button.", () => {
       const component = renderer.create(
         <Popup
-          map={map}
           feature={feat}
+          map={map}
           renderCloseButton={() => {
             return null;
           }}
@@ -71,8 +71,8 @@ describe("Popup", () => {
     test("without header.", () => {
       const component = renderer.create(
         <Popup
-          map={map}
           feature={feat}
+          map={map}
           renderHeader={() => {
             return null;
           }}
@@ -86,7 +86,7 @@ describe("Popup", () => {
 
     test("with tabIndex defined.", () => {
       const component = renderer.create(
-        <Popup map={map} feature={feat} tabIndex="0">
+        <Popup feature={feat} map={map} tabIndex="0">
           <div id="bar" />
         </Popup>,
       );
@@ -103,7 +103,7 @@ describe("Popup", () => {
       const spy = jest.fn(() => {});
 
       const component = mount(
-        <Popup map={map} feature={feat} onCloseClick={spy}>
+        <Popup feature={feat} map={map} onCloseClick={spy}>
           <div id="gux" />
         </Popup>,
       );
@@ -117,7 +117,7 @@ describe("Popup", () => {
 
     test(`should trigger default onCloseClick function on ${evt[0]} event without errors.`, () => {
       const component = mount(
-        <Popup map={map} feature={feat}>
+        <Popup feature={feat} map={map}>
           <div id="gux" />
         </Popup>,
       );
@@ -160,7 +160,7 @@ describe("Popup", () => {
         return [10010, 100200];
       });
       const component = mount(
-        <Popup map={map} feature={feat}>
+        <Popup feature={feat} map={map}>
           <div id="gux" />
         </Popup>,
       );
@@ -181,7 +181,7 @@ describe("Popup", () => {
         return [10, 200];
       });
       const component = shallow(
-        <Popup map={map} feature={feat}>
+        <Popup feature={feat} map={map}>
           <div id="gux" />
         </Popup>,
       );
@@ -236,7 +236,7 @@ describe("Popup", () => {
       });
       const spy = jest.spyOn(map.getView(), "animate");
       mount(
-        <Popup map={map} feature={feat} panIntoView>
+        <Popup feature={feat} map={map} panIntoView>
           <div id="gux" />
         </Popup>,
       );
@@ -254,10 +254,10 @@ describe("Popup", () => {
       const spy = jest.spyOn(map.getView(), "animate");
       mount(
         <Popup
-          map={map}
           feature={feat}
+          map={map}
           panIntoView
-          panRect={{ top: 0, left: 0, bottom: -10, right: 0 }}
+          panRect={{ bottom: -10, left: 0, right: 0, top: 0 }}
         >
           <div id="gux" />
         </Popup>,
@@ -276,10 +276,10 @@ describe("Popup", () => {
       const spy = jest.spyOn(map.getView(), "animate");
       mount(
         <Popup
-          map={map}
           feature={feat}
+          map={map}
           panIntoView
-          panRect={{ top: 0, left: 0, bottom: 0, right: 0 }}
+          panRect={{ bottom: 0, left: 0, right: 0, top: 0 }}
         >
           <div id="gux" />
         </Popup>,
@@ -293,7 +293,7 @@ describe("Popup", () => {
       return [10, 200];
     });
     const component = shallow(
-      <Popup map={map} feature={featLine}>
+      <Popup feature={featLine} map={map}>
         <div id="gux" />
       </Popup>,
     );

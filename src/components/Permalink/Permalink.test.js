@@ -1,10 +1,11 @@
-import "jest-canvas-mock";
-import React from "react";
-import MapEvent from "ol/MapEvent";
-import OLMap from "ol/Map";
-import View from "ol/View";
-import { Layer, MapboxLayer } from "mobility-toolbox-js/ol";
 import { act, render } from "@testing-library/react";
+import "jest-canvas-mock";
+import { Layer, MapboxLayer } from "mobility-toolbox-js/ol";
+import OLMap from "ol/Map";
+import MapEvent from "ol/MapEvent";
+import View from "ol/View";
+import React from "react";
+
 import Permalink from "./Permalink";
 
 const defaultIsLayerHidden = (l) => {
@@ -25,60 +26,60 @@ describe("Permalink", () => {
     window.history.pushState({}, undefined, "/");
     layers = [
       new Layer({
-        name: "Ultimate layer",
         key: "ultimate.layer",
-        visible: true,
+        name: "Ultimate layer",
         properties: {
           hideInLegend: true,
         },
+        visible: true,
       }),
       new Layer({
-        name: "Swiss boundaries",
         key: "swiss.boundaries",
-        visible: false,
+        name: "Swiss boundaries",
         properties: {
           hideInLegend: true,
         },
-      }),
-      new MapboxLayer({
-        name: "Base - Bright",
-        key: "basebright.baselayer",
-        group: "baseLayer",
-        properties: {
-          isBaseLayer: true,
-        },
-      }),
-      new MapboxLayer({
-        name: "Base - Dark",
-        key: "basedark.baselayer",
         visible: false,
+      }),
+      new MapboxLayer({
         group: "baseLayer",
+        key: "basebright.baselayer",
+        name: "Base - Bright",
         properties: {
           isBaseLayer: true,
         },
+      }),
+      new MapboxLayer({
+        group: "baseLayer",
+        key: "basedark.baselayer",
+        name: "Base - Dark",
+        properties: {
+          isBaseLayer: true,
+        },
+        visible: false,
       }),
       new Layer({
-        name: "Layer with children that are hidden",
-        key: "children.hidden.layer",
-        visible: true,
         children: [
           new Layer({
-            name: "Child 1 hidden",
             key: "child.hidden.1",
-            visible: true,
+            name: "Child 1 hidden",
             properties: {
               hideInLegend: true,
             },
+            visible: true,
           }),
           new Layer({
-            name: "Childr 2 hidden",
             key: "child.hidden.2",
-            visible: false,
+            name: "Childr 2 hidden",
             properties: {
               hideInLegend: true,
             },
+            visible: false,
           }),
         ],
+        key: "children.hidden.layer",
+        name: "Layer with children that are hidden",
+        visible: true,
       }),
     ];
   });
@@ -97,18 +98,18 @@ describe("Permalink", () => {
     };
 
     const { rerender } = render(
-      <Permalink params={params} history={history} />,
+      <Permalink history={history} params={params} />,
     );
 
     act(() => {
       rerender(
         <Permalink
+          history={history}
           params={{
             x: 1001,
             y: 1002,
             z: 7,
           }}
-          history={history}
         />,
       );
     });
@@ -145,15 +146,15 @@ describe("Permalink", () => {
     expect(window.location.search).toEqual("");
     render(<Permalink layers={layers} />);
     const search =
-      "?layers=ultimate.layer,child.hidden.1&baselayers=basebright.baselayer,basedark.baselayer";
+      "?baselayers=basebright.baselayer,basedark.baselayer&layers=ultimate.layer,child.hidden.1";
     expect(window.location.search).toEqual(search);
   });
 
   test("should initialize Permalink with isLayerHidden.", () => {
     expect(window.location.search).toEqual("");
-    render(<Permalink layers={layers} isLayerHidden={defaultIsLayerHidden} />);
+    render(<Permalink isLayerHidden={defaultIsLayerHidden} layers={layers} />);
     const search =
-      "?layers=children.hidden.layer&baselayers=basebright.baselayer,basedark.baselayer";
+      "?baselayers=basebright.baselayer,basedark.baselayer&layers=children.hidden.layer";
     expect(window.location.search).toEqual(search);
   });
 
@@ -220,7 +221,7 @@ describe("Permalink", () => {
         zoom: 5,
       }),
     });
-    render(<Permalink map={olMap} coordinateDecimals={4} />);
+    render(<Permalink coordinateDecimals={4} map={olMap} />);
     act(() => {
       olMap.dispatchEvent(new MapEvent("moveend", olMap));
     });
@@ -237,8 +238,8 @@ describe("Permalink", () => {
       <Permalink
         layers={[
           new Layer({
-            name: "foo",
             key: "foo.layer",
+            name: "foo",
           }),
         ]}
       />,

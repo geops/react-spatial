@@ -1,13 +1,14 @@
-import React from "react";
-import { Layer } from "mobility-toolbox-js/ol";
 import { fireEvent, render } from "@testing-library/react";
+import { Layer } from "mobility-toolbox-js/ol";
+import React from "react";
+
 import BaseLayerSwitcher from "./BaseLayerSwitcher";
 
 describe("BaseLayerSwitcher", () => {
   let layers;
   const layerImages = {
-    layerFoo: "foo",
     layerBar: "bar",
+    layerFoo: "foo",
     layerFoobar: "foobar",
   };
 
@@ -30,20 +31,20 @@ describe("BaseLayerSwitcher", () => {
   describe("matches snapshots", () => {
     test("using default properties.", () => {
       const { container } = render(
-        <BaseLayerSwitcher layers={layers} layerImages={layerImages} />,
+        <BaseLayerSwitcher layerImages={layerImages} layers={layers} />,
       );
       expect(container.innerHTML).toMatchSnapshot();
     });
   });
 
   test("the correct baselayer is visible on mount", () => {
-    render(<BaseLayerSwitcher layers={layers} layerImages={layerImages} />);
+    render(<BaseLayerSwitcher layerImages={layerImages} layers={layers} />);
     expect(layers[0].visible).toBe(true);
   });
 
   test("removes open class and switches layer on click", async () => {
     const { container } = render(
-      <BaseLayerSwitcher layers={layers} layerImages={layerImages} />,
+      <BaseLayerSwitcher layerImages={layerImages} layers={layers} />,
     );
     await fireEvent.click(container.querySelector(".rs-opener"));
     await fireEvent.click(

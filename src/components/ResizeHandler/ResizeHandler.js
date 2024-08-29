@@ -1,8 +1,16 @@
-import { PureComponent, Component } from "react";
 import PropTypes from "prop-types";
+import { Component, PureComponent } from "react";
 import ResizeObserver from "resize-observer-polyfill";
 
 const propTypes = {
+  // This property is used to re-apply the classes, for example when the className of the observed node changes.
+  forceUpdate: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.bool,
+  ]),
+  maxHeightBrkpts: PropTypes.objectOf(PropTypes.number),
+  maxWidthBrkpts: PropTypes.objectOf(PropTypes.number),
   observe: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.node,
@@ -10,22 +18,15 @@ const propTypes = {
     PropTypes.shape({ current: PropTypes.node }),
     PropTypes.shape({ current: PropTypes.instanceOf(Component) }),
   ]),
-  maxHeightBrkpts: PropTypes.objectOf(PropTypes.number),
-  maxWidthBrkpts: PropTypes.objectOf(PropTypes.number),
-  stylePropHeight: PropTypes.string,
   onResize: PropTypes.func,
 
-  // This property is used to re-apply the classes, for example when the className of the observed node changes.
-  forceUpdate: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.bool,
-  ]),
+  stylePropHeight: PropTypes.string,
 };
 
 // Same as bootstrap
 const defaultProps = {
-  observe: null,
+  forceUpdate: null,
+  /* eslint-disable perfectionist/sort-objects */
   maxHeightBrkpts: {
     xs: 576,
     s: 768,
@@ -40,14 +41,23 @@ const defaultProps = {
     l: 1200,
     xl: Infinity,
   },
-  stylePropHeight: null,
+  /* eslint-enable perfectionist/sort-objects */
+  observe: null,
   onResize: null,
-  forceUpdate: null,
+  stylePropHeight: null,
 };
 /**
  * This component adds css class to an element depending on his size.
  */
 class ResizeHandler extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.observer = new ResizeObserver((entries) => {
+      return this.onResize(entries);
+    });
+    this.nodes = [];
+  }
+
   static applyBreakpoints(entry, breakpoints, size, direction) {
     let found = false;
     let screenSize;
@@ -63,20 +73,12 @@ class ResizeHandler extends PureComponent {
     return screenSize;
   }
 
-  constructor(props) {
-    super(props);
-    this.observer = new ResizeObserver((entries) => {
-      return this.onResize(entries);
-    });
-    this.nodes = [];
-  }
-
   componentDidMount() {
     this.observe();
   }
 
   componentDidUpdate(prevProps) {
-    const { observe, forceUpdate } = this.props;
+    const { forceUpdate, observe } = this.props;
 
     if (
       observe !== prevProps.observe ||
@@ -90,8 +92,47 @@ class ResizeHandler extends PureComponent {
     this.observer.disconnect();
   }
 
+  observe() {
+    this.observer.disconnect();
+    const { observe } = this.props;
+
+    if (!observe) {
+      return;
+    }
+
+    if (typeof observe === "string" || observe instanceof String) {
+      this.nodes = document.querySelectorAll(observe);
+    } else if (observe instanceof Component) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        "observe attribute as a Component is deprecated: Please use React.createRef() or React.useRef() instead of a React component.",
+      );
+      // eslint-disable-next-line react/no-find-dom-node
+      // this.nodes.push(ReactDOM.findDOMNode(observe));
+    } else if (observe instanceof Element) {
+      this.nodes.push(observe);
+    } else if (observe.current instanceof Element) {
+      // observe value created with React.createRef() on a html node.
+      this.nodes.push(observe.current);
+    } else if (observe.current instanceof Component) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        "observe attribute as a ref to Component is deprecated: Please use React.createRef() or React.useRef() instead of a React component.",
+      );
+      // observe value created with React.createRef() on a React component.
+      // eslint-disable-next-line react/no-find-dom-node
+      // this.nodes.push(ReactDOM.findDOMNode(observe.current));
+    }
+
+    if (this.nodes.length) {
+      this.nodes.forEach((node) => {
+        return this.observer.observe(node);
+      });
+    }
+  }
+
   onResize(entries) {
-    const { maxHeightBrkpts, maxWidthBrkpts, stylePropHeight, onResize } =
+    const { maxHeightBrkpts, maxWidthBrkpts, onResize, stylePropHeight } =
       this.props;
 
     if (stylePropHeight) {
@@ -132,45 +173,6 @@ class ResizeHandler extends PureComponent {
 
     if (onResize) {
       onResize(entries, newScreenWidth, newScreenHeight);
-    }
-  }
-
-  observe() {
-    this.observer.disconnect();
-    const { observe } = this.props;
-
-    if (!observe) {
-      return;
-    }
-
-    if (typeof observe === "string" || observe instanceof String) {
-      this.nodes = document.querySelectorAll(observe);
-    } else if (observe instanceof Component) {
-      // eslint-disable-next-line no-console
-      console.warn(
-        "observe attribute as a Component is deprecated: Please use React.createRef() or React.useRef() instead of a React component.",
-      );
-      // eslint-disable-next-line react/no-find-dom-node
-      // this.nodes.push(ReactDOM.findDOMNode(observe));
-    } else if (observe instanceof Element) {
-      this.nodes.push(observe);
-    } else if (observe.current instanceof Element) {
-      // observe value created with React.createRef() on a html node.
-      this.nodes.push(observe.current);
-    } else if (observe.current instanceof Component) {
-      // eslint-disable-next-line no-console
-      console.warn(
-        "observe attribute as a ref to Component is deprecated: Please use React.createRef() or React.useRef() instead of a React component.",
-      );
-      // observe value created with React.createRef() on a React component.
-      // eslint-disable-next-line react/no-find-dom-node
-      // this.nodes.push(ReactDOM.findDOMNode(observe.current));
-    }
-
-    if (this.nodes.length) {
-      this.nodes.forEach((node) => {
-        return this.observer.observe(node);
-      });
     }
   }
 

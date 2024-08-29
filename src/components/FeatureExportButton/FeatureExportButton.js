@@ -1,7 +1,8 @@
-import React, { PureComponent } from "react";
-import PropTypes from "prop-types";
-import KMLFormat from "ol/format/KML";
 import { Layer } from "mobility-toolbox-js/ol";
+import KMLFormat from "ol/format/KML";
+import PropTypes from "prop-types";
+import React, { PureComponent } from "react";
+
 import KML from "../../utils/KML";
 
 const propTypes = {
@@ -87,12 +88,12 @@ class FeatureExportButton extends PureComponent {
   }
 
   render() {
-    const { children, layer, projection, format, ...other } = this.props;
+    const { children, format, layer, projection, ...other } = this.props;
 
     return (
       <div
-        role="button"
         className="rs-feature-export-button"
+        role="button"
         tabIndex={0}
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...other}

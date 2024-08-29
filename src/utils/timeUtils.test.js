@@ -1,4 +1,4 @@
-import { getHoursAndMinutes, getDelayString } from "./timeUtils";
+import { getDelayString, getHoursAndMinutes } from "./timeUtils";
 
 const RealDate = Date;
 describe("timeUtils", () => {

@@ -1,10 +1,15 @@
-import { PureComponent } from "react";
-import PropTypes from "prop-types";
+import { getLayersAsFlatArray, Layer } from "mobility-toolbox-js/ol";
 import OLMap from "ol/Map";
 import { unByKey } from "ol/Observable";
-import { Layer, getLayersAsFlatArray } from "mobility-toolbox-js/ol";
+import PropTypes from "prop-types";
+import { PureComponent } from "react";
 
 const propTypes = {
+  /**
+   * Maximum number of decimals allowed for coordinates.
+   */
+  coordinateDecimals: PropTypes.number,
+
   /**
    * Either 'react-router' history object:
    * https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/api/history.md<br>
@@ -14,6 +19,24 @@ const propTypes = {
   history: PropTypes.shape({
     replace: PropTypes.func,
   }),
+
+  /**
+   * Determine if the layer appears in the baselayers permalink parameter or not.
+   *
+   * @param {object} item The item to hide or not.
+   *
+   * @return {bool} true if the item is not displayed in the baselayers permalink parameter
+   */
+  isBaseLayer: PropTypes.func,
+
+  /**
+   * Determine if the layer is hidden in the permalink or not.
+   *
+   * @param {object} item The item to hide or not.
+   *
+   * @return {bool} true if the item is not displayed in the permalink
+   */
+  isLayerHidden: PropTypes.func,
 
   /**
    * Layers provider.
@@ -31,29 +54,6 @@ const propTypes = {
   params: PropTypes.object,
 
   /**
-   * Maximum number of decimals allowed for coordinates.
-   */
-  coordinateDecimals: PropTypes.number,
-
-  /**
-   * Determine if the layer is hidden in the permalink or not.
-   *
-   * @param {object} item The item to hide or not.
-   *
-   * @return {bool} true if the item is not displayed in the permalink
-   */
-  isLayerHidden: PropTypes.func,
-
-  /**
-   * Determine if the layer appears in the baselayers permalink parameter or not.
-   *
-   * @param {object} item The item to hide or not.
-   *
-   * @return {bool} true if the item is not displayed in the baselayers permalink parameter
-   */
-  isBaseLayer: PropTypes.func,
-
-  /**
    * Custom function to be called when the permalink is updated.
    * This property has priority over the history parameter and window.history.replaceState calls.
    */
@@ -61,18 +61,18 @@ const propTypes = {
 };
 
 const defaultProps = {
-  history: null,
-  replace: null,
-  layers: [],
-  map: null,
-  params: {},
   coordinateDecimals: 2,
-  isLayerHidden: () => {
-    return false;
-  },
+  history: null,
   isBaseLayer: (layer) => {
     return layer.get("isBaseLayer");
   },
+  isLayerHidden: () => {
+    return false;
+  },
+  layers: [],
+  map: null,
+  params: {},
+  replace: null,
 };
 
 /**
@@ -90,7 +90,7 @@ class Permalink extends PureComponent {
   }
 
   componentDidMount() {
-    const { map, layers, isLayerHidden, isBaseLayer } = this.props;
+    const { isBaseLayer, isLayerHidden, layers, map } = this.props;
     if (map) {
       this.moveEndRef = map.on("moveend", () => {
         this.onMapMoved();
@@ -151,7 +151,7 @@ class Permalink extends PureComponent {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { map, layers } = this.props;
+    const { layers, map } = this.props;
     const { revision } = this.state;
 
     if (layers !== prevProps.layers || revision !== prevState.revision) {
@@ -200,13 +200,60 @@ class Permalink extends PureComponent {
     });
   }
 
+  render() {
+    return null;
+  }
+
   roundCoord(val) {
     const { coordinateDecimals } = this.props;
     return parseFloat(val.toFixed(coordinateDecimals));
   }
 
+  updateHistory() {
+    const { history, params, replace } = this.props;
+    const oldParams = new URLSearchParams(window.location.search);
+    const parameters = {
+      ...Object.fromEntries(oldParams.entries()),
+      ...this.state,
+      ...params,
+    };
+
+    delete parameters.revision;
+
+    // Remove parameters that are undefined or null
+    Object.entries(parameters).forEach(([key, value]) => {
+      if (value === undefined || value === null) {
+        delete parameters[key];
+      }
+    });
+
+    // We don't encode the , to leave the permalink lisible
+    const qStr = new URLSearchParams(parameters)
+      .toString()
+      .replace(/%2C/g, ",");
+    const search = qStr ? `?${qStr}` : "";
+
+    if (
+      (!qStr && window.location.search) ||
+      (qStr && search !== window.location.search)
+    ) {
+      if (replace) {
+        replace({ parameters, search });
+      } else if (history) {
+        history.replace({ search });
+      } else {
+        const { hash } = window.location;
+        window.history.replaceState(
+          undefined,
+          undefined,
+          `${search}${hash || ""}`,
+        );
+      }
+    }
+  }
+
   updateLayers() {
-    const { layers, isLayerHidden, isBaseLayer } = this.props;
+    const { isBaseLayer, isLayerHidden, layers } = this.props;
     const { revision } = this.state;
 
     unByKey(this.onPropertyChangeKeys);
@@ -273,56 +320,9 @@ class Permalink extends PureComponent {
 
     // Only add parameters if there is actually some layers added.
     this.setState({
-      layers: layersParam,
       baselayers: baseLayersParam,
+      layers: layersParam,
     });
-  }
-
-  updateHistory() {
-    const { params, history, replace } = this.props;
-    const oldParams = new URLSearchParams(window.location.search);
-    const parameters = {
-      ...Object.fromEntries(oldParams.entries()),
-      ...this.state,
-      ...params,
-    };
-
-    delete parameters.revision;
-
-    // Remove parameters that are undefined or null
-    Object.entries(parameters).forEach(([key, value]) => {
-      if (value === undefined || value === null) {
-        delete parameters[key];
-      }
-    });
-
-    // We don't encode the , to leave the permalink lisible
-    const qStr = new URLSearchParams(parameters)
-      .toString()
-      .replace(/%2C/g, ",");
-    const search = qStr ? `?${qStr}` : "";
-
-    if (
-      (!qStr && window.location.search) ||
-      (qStr && search !== window.location.search)
-    ) {
-      if (replace) {
-        replace({ parameters, search });
-      } else if (history) {
-        history.replace({ search });
-      } else {
-        const { hash } = window.location;
-        window.history.replaceState(
-          undefined,
-          undefined,
-          `${search}${hash || ""}`,
-        );
-      }
-    }
-  }
-
-  render() {
-    return null;
   }
 }
 

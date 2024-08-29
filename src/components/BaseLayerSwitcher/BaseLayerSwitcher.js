@@ -1,15 +1,25 @@
 /* eslint-disable jsx-a11y/interactive-supports-focus */
-import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import { FaChevronLeft } from "react-icons/fa";
 import { Layer } from "mobility-toolbox-js/ol";
 import { unByKey } from "ol/Observable";
+import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
+import { FaChevronLeft } from "react-icons/fa";
 
 const propTypes = {
   /**
-   * An array of [mobility-toolbox-js layers](https://mobility-toolbox-js.geops.io/api/identifiers%20html#ol-layers).
+   * Alternative text rendered if layer images can't be loaded
    */
-  layers: PropTypes.arrayOf(PropTypes.instanceOf(Layer)).isRequired,
+  altText: PropTypes.string,
+
+  /**
+   * CSS class to apply on the container.
+   */
+  className: PropTypes.string,
+
+  /**
+   * Image (node) rendered in the switcher close button.
+   */
+  closeButtonImage: PropTypes.node,
 
   /**
    * Object containing relative paths to the base layer images. Object
@@ -18,34 +28,9 @@ const propTypes = {
   layerImages: PropTypes.objectOf(PropTypes.string),
 
   /**
-   * CSS class to apply on the container.
+   * An array of [mobility-toolbox-js layers](https://mobility-toolbox-js.geops.io/api/identifiers%20html#ol-layers).
    */
-  className: PropTypes.string,
-
-  /**
-   * Alternative text rendered if layer images can't be loaded
-   */
-  altText: PropTypes.string,
-
-  /**
-   * Button titles.
-   */
-  titles: PropTypes.shape({
-    button: PropTypes.string,
-    openSwitcher: PropTypes.string,
-    closeSwitcher: PropTypes.string,
-  }),
-
-  /**
-   * Image (node) rendered in the switcher close button.
-   */
-  closeButtonImage: PropTypes.node,
-
-  /**
-   * Translation function.
-   * @param {function} Translation function returning the translated string.
-   */
-  t: PropTypes.func,
+  layers: PropTypes.arrayOf(PropTypes.instanceOf(Layer)).isRequired,
 
   /**
    * Callback function on close button click.
@@ -64,6 +49,21 @@ const propTypes = {
    * @param {function} Callback function triggered when a switcher button is clicked. Takes the event as argument.
    */
   onSwitcherButtonClick: PropTypes.func,
+
+  /**
+   * Translation function.
+   * @param {function} Translation function returning the translated string.
+   */
+  t: PropTypes.func,
+
+  /**
+   * Button titles.
+   */
+  titles: PropTypes.shape({
+    button: PropTypes.string,
+    closeSwitcher: PropTypes.string,
+    openSwitcher: PropTypes.string,
+  }),
 };
 
 const getVisibleLayer = (layers) => {
@@ -86,24 +86,24 @@ const getImageStyle = (url) => {
   return url
     ? {
         backgroundImage: `url(${url})`,
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
       }
     : null;
 };
 
-function CloseButton({ onClick, tabIndex, title, children }) {
+function CloseButton({ children, onClick, tabIndex, title }) {
   return (
     <div
+      aria-label={title}
       className="rs-base-layer-switcher-close-btn"
-      role="button"
       onClick={onClick}
       onKeyPress={(e) => {
         return e.which === 13 && onClick();
       }}
+      role="button"
       tabIndex={tabIndex}
-      aria-label={title}
       title={title}
     >
       {children}
@@ -112,10 +112,10 @@ function CloseButton({ onClick, tabIndex, title, children }) {
 }
 
 CloseButton.propTypes = {
+  children: PropTypes.node.isRequired,
   onClick: PropTypes.func.isRequired,
   tabIndex: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
 };
 
 /**
@@ -125,20 +125,20 @@ CloseButton.propTypes = {
  */
 
 function BaseLayerSwitcher({
-  layers,
-  layerImages = undefined,
-  className = "rs-base-layer-switcher",
   altText = "Source not found",
-  titles = {
-    button: "Base layers",
-    openSwitcher: "Open Baselayer-Switcher",
-    closeSwitcher: "Close Baselayer-Switcher",
-  },
+  className = "rs-base-layer-switcher",
   closeButtonImage = <FaChevronLeft />,
+  layerImages = undefined,
+  layers,
   onCloseButtonClick = null,
   onLayerButtonClick = null,
   onSwitcherButtonClick = null,
   t = (s) => s,
+  titles = {
+    button: "Base layers",
+    closeSwitcher: "Close Baselayer-Switcher",
+    openSwitcher: "Open Baselayer-Switcher",
+  },
 }) {
   const [switcherOpen, setSwitcherOpen] = useState(false);
   const [isClosed, setIsClosed] = useState(true);
@@ -264,18 +264,18 @@ function BaseLayerSwitcher({
   return (
     <div className={`${className}${openClass}`}>
       <div
-        className={`rs-base-layer-switcher-button rs-opener${openClass}`}
-        role="button"
-        title={titles.openSwitcher}
         aria-label={titles.openSwitcher}
+        className={`rs-base-layer-switcher-button rs-opener${openClass}`}
         onClick={handleSwitcherClick}
         onKeyPress={(e) => {
           if (e.which === 13) {
             handleSwitcherClick();
           }
         }}
+        role="button"
         style={getImageStyle(nextImage)}
         tabIndex="0"
+        title={titles.openSwitcher}
       >
         <div className="rs-base-layer-switcher-title">
           {layers.length !== 2
@@ -299,8 +299,8 @@ function BaseLayerSwitcher({
         );
         return (
           <div
-            key={layer.key}
             className="rs-base-layer-switcher-btn-wrapper"
+            key={layer.key}
             style={{
               /* stylelint-disable-next-line value-keyword-case */
               overflow: hiddenStyle,
@@ -309,10 +309,8 @@ function BaseLayerSwitcher({
             }}
           >
             <div
-              className={`rs-base-layer-switcher-button${openClass}`}
-              role="button"
-              title={t(layerName)}
               aria-label={t(layerName)}
+              className={`rs-base-layer-switcher-button${openClass}`}
               onClick={(evt) => {
                 return onLayerSelect(layer, evt);
               }}
@@ -321,8 +319,10 @@ function BaseLayerSwitcher({
                   onLayerSelect(layer, evt);
                 }
               }}
+              role="button"
               style={imageStyle}
               tabIndex={switcherOpen ? "0" : "-1"}
+              title={t(layerName)}
             >
               <div className={`rs-base-layer-switcher-title${activeClass}`}>
                 {t(layerName)}

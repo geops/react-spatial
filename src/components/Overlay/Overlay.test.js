@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { act } from "react-dom/test-utils";
-import { configure, mount } from "enzyme";
-import renderer from "react-test-renderer";
 import Adapter from "@cfaester/enzyme-adapter-react-18";
-import ResizeObserver from "resize-observer-polyfill";
+import { configure, mount } from "enzyme";
+import PropTypes from "prop-types";
 import { Resizable } from "re-resizable";
+import React, { useState } from "react";
+import { act } from "react-dom/test-utils";
+import renderer from "react-test-renderer";
+import ResizeObserver from "resize-observer-polyfill";
+
 import Overlay from "./Overlay";
 
 jest.mock("resize-observer-polyfill");
@@ -22,23 +23,23 @@ const defaultProps = {
   thresholdWidthForMobile: undefined,
 };
 
-function BasicComponent({ thresholdWidthForMobile, isMobileResizable }) {
+function BasicComponent({ isMobileResizable, thresholdWidthForMobile }) {
   const [ref, setRef] = useState(null);
 
   return (
     <>
       <div
+        className="observer"
         ref={(node) => {
           if (node !== ref) {
             setRef(node);
           }
         }}
-        className="observer"
       />
       <Overlay
+        isMobileResizable={isMobileResizable}
         observe={ref}
         thresholdWidthForMobile={thresholdWidthForMobile}
-        isMobileResizable={isMobileResizable}
       >
         Test content
       </Overlay>
@@ -64,11 +65,11 @@ describe("Overlay", () => {
       // simulate a resize
       ResizeObserver.onResize([
         {
-          target,
           contentRect: {
-            width: 200,
             height: 200,
+            width: 200,
           },
+          target,
         },
       ]);
     });
@@ -87,11 +88,11 @@ describe("Overlay", () => {
     act(() => {
       ResizeObserver.onResize([
         {
-          target,
           contentRect: {
-            width: 1200,
             height: 200,
+            width: 1200,
           },
+          target,
         },
       ]);
     });
@@ -109,11 +110,11 @@ describe("Overlay", () => {
     act(() => {
       ResizeObserver.onResize([
         {
-          target,
           contentRect: {
-            width: 200,
             height: 200,
+            width: 200,
           },
+          target,
         },
       ]);
     });
@@ -132,11 +133,11 @@ describe("Overlay", () => {
     act(() => {
       ResizeObserver.onResize([
         {
-          target,
           contentRect: {
-            width: 200,
             height: 200,
+            width: 200,
           },
+          target,
         },
       ]);
     });

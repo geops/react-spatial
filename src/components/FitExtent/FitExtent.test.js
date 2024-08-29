@@ -1,9 +1,10 @@
+import Adapter from "@cfaester/enzyme-adapter-react-18";
+import { configure, shallow } from "enzyme";
+import OLMap from "ol/Map";
+import OLView from "ol/View";
 import React from "react";
 import renderer from "react-test-renderer";
-import { configure, shallow } from "enzyme";
-import Adapter from "@cfaester/enzyme-adapter-react-18";
-import OLView from "ol/View";
-import OLMap from "ol/Map";
+
 import FitExtent from "./FitExtent";
 
 configure({ adapter: new Adapter() });
@@ -13,7 +14,7 @@ const extent = [1, 2, 3, 4];
 test("Button should match snapshot.", () => {
   const map = new OLMap({});
   const component = renderer.create(
-    <FitExtent map={map} extent={extent}>
+    <FitExtent extent={extent} map={map}>
       FitExtent
     </FitExtent>,
   );
@@ -22,9 +23,9 @@ test("Button should match snapshot.", () => {
 });
 
 test("Should fit the extent.", () => {
-  const map = new OLMap({ view: new OLView({ zoom: 7, center: [0, 0] }) });
+  const map = new OLMap({ view: new OLView({ center: [0, 0], zoom: 7 }) });
   const wrapper = shallow(
-    <FitExtent map={map} extent={extent} className="fit-ext">
+    <FitExtent className="fit-ext" extent={extent} map={map}>
       FitExtent
     </FitExtent>,
   );
@@ -35,9 +36,9 @@ test("Should fit the extent.", () => {
 });
 
 test("Should fit the extent on return.", () => {
-  const map = new OLMap({ view: new OLView({ zoom: 7, center: [0, 0] }) });
+  const map = new OLMap({ view: new OLView({ center: [0, 0], zoom: 7 }) });
   const wrapper = shallow(
-    <FitExtent map={map} extent={extent} className="fit-ext">
+    <FitExtent className="fit-ext" extent={extent} map={map}>
       FitExtent
     </FitExtent>,
   );

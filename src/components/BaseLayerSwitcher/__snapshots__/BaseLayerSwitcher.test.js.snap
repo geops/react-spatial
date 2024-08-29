@@ -2,12 +2,12 @@
 
 exports[`BaseLayerSwitcher matches snapshots using default properties. 1`] = `
 <div class="rs-base-layer-switcher">
-  <div class="rs-base-layer-switcher-button rs-opener"
+  <div aria-label="Open Baselayer-Switcher"
+       class="rs-base-layer-switcher-button rs-opener"
        role="button"
-       title="Open Baselayer-Switcher"
-       aria-label="Open Baselayer-Switcher"
-       style="background-image: url(bar); background-size: cover; background-repeat: no-repeat; background-position: center;"
+       style="background-image: url(foo); background-position: center; background-repeat: no-repeat; background-size: cover;"
        tabindex="0"
+       title="Open Baselayer-Switcher"
   >
     <div class="rs-base-layer-switcher-title">
       Base layers
@@ -16,11 +16,11 @@ exports[`BaseLayerSwitcher matches snapshots using default properties. 1`] = `
   <div class="rs-base-layer-switcher-btn-wrapper"
        style="overflow: hidden; z-index: 3;"
   >
-    <div class="rs-base-layer-switcher-button"
+    <div aria-label="bl1"
+         class="rs-base-layer-switcher-button"
          role="button"
-         title="bl1"
-         aria-label="bl1"
          tabindex="-1"
+         title="bl1"
     >
       <div class="rs-base-layer-switcher-title rs-active">
         bl1
@@ -33,11 +33,11 @@ exports[`BaseLayerSwitcher matches snapshots using default properties. 1`] = `
   <div class="rs-base-layer-switcher-btn-wrapper"
        style="overflow: hidden; z-index: 2;"
   >
-    <div class="rs-base-layer-switcher-button"
+    <div aria-label="bl2"
+         class="rs-base-layer-switcher-button"
          role="button"
-         title="bl2"
-         aria-label="bl2"
          tabindex="-1"
+         title="bl2"
     >
       <div class="rs-base-layer-switcher-title">
         bl2
@@ -50,11 +50,11 @@ exports[`BaseLayerSwitcher matches snapshots using default properties. 1`] = `
   <div class="rs-base-layer-switcher-btn-wrapper"
        style="overflow: hidden; z-index: 1;"
   >
-    <div class="rs-base-layer-switcher-button"
+    <div aria-label="bl3"
+         class="rs-base-layer-switcher-button"
          role="button"
-         title="bl3"
-         aria-label="bl3"
          tabindex="-1"
+         title="bl3"
     >
       <div class="rs-base-layer-switcher-title">
         bl3
@@ -64,10 +64,10 @@ exports[`BaseLayerSwitcher matches snapshots using default properties. 1`] = `
       </span>
     </div>
   </div>
-  <div class="rs-base-layer-switcher-close-btn"
+  <div aria-label="Close Baselayer-Switcher"
+       class="rs-base-layer-switcher-close-btn"
        role="button"
        tabindex="-1"
-       aria-label="Close Baselayer-Switcher"
        title="Close Baselayer-Switcher"
   >
     <svg stroke="currentColor"

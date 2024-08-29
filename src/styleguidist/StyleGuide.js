@@ -1,90 +1,47 @@
 /* eslint-disable import/no-unresolved */
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { geopsTheme, Header, Footer } from "@geops/geops-ui";
+import { Footer, geopsTheme, Header } from "@geops/geops-ui";
 import {
-  Paper,
+  ArrowDropUpTwoTone as Close,
+  ArrowDropDownTwoTone as Open,
+} from "@mui/icons-material";
+import {
   ClickAwayListener,
   Collapse,
+  Link,
   List,
   ListItem,
-  Link,
+  Paper,
 } from "@mui/material";
-import {
-  ArrowDropDownTwoTone as Open,
-  ArrowDropUpTwoTone as Close,
-} from "@mui/icons-material";
 import { ThemeProvider } from "@mui/material/styles";
-import Version from "react-styleguidist/lib/client/rsg-components/Version";
+import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
 import Styled from "react-styleguidist/lib/client/rsg-components/Styled";
+import Version from "react-styleguidist/lib/client/rsg-components/Version";
+
 import docConfig from "../../doc/doc-config.json";
 
 const styles = ({ mq }) => {
   return {
-    root: {
-      backgroundColor: "white",
-
-      "& .MuiAutocomplete-root": {
-        margin: "20px 0",
-        width: 300,
-      },
-    },
-    version: {
-      padding: "10px 0 0 10px",
-    },
     content: {
-      top: 68,
       bottom: 0,
       height: "calc(100vh - 60px)",
       position: "fixed",
+      top: 68,
       width: "100%",
       zIndex: 0,
     },
-    scrollable: {
-      overflowY: "scroll",
-      height: "calc(100vh - 68px)",
-      [mq.small]: {
-        top: 40,
-        position: "absolute",
-        width: "100%",
-        height: "calc(100vh - 108px)",
-      },
-    },
-    main: {
-      margin: "auto",
-      width: "calc(100vw - 30px)",
-      maxWidth: 1000,
-      padding: [[15, 30]],
-      paddingLeft: 230,
-      paddingTop: 55,
-      [mq.small]: {
-        padding: 5,
-      },
-      display: "block",
-    },
-    sidebar: {
-      backgroundColor: "#EFEFEF",
-      border: "#e8e8e8 solid",
-      borderWidth: "0 1px 0 0",
-      position: "fixed",
-      top: 68,
-      left: 0,
-      bottom: 0,
-      width: "200px",
-      overflow: "auto",
-    },
     dropdown: {
-      display: "flex",
       alignItems: "center",
+      backgroundColor: "#efefef",
+      borderBottom: "1px solid #6987a1",
+      color: "#6987a1",
+      display: "flex",
+      height: 40,
       justifyContent: "space-between",
       padding: "0 10px 0",
       position: "fixed",
-      backgroundColor: "#efefef",
-      height: 40,
       width: "100%",
       zIndex: 99999,
-      color: "#6987a1",
-      borderBottom: "1px solid #6987a1",
     },
     footerWrapper: {
       marginLeft: 200,
@@ -92,15 +49,59 @@ const styles = ({ mq }) => {
         marginLeft: 0,
       },
     },
+    main: {
+      display: "block",
+      margin: "auto",
+      maxWidth: 1000,
+      [mq.small]: {
+        padding: 5,
+      },
+      padding: [[15, 30]],
+      paddingLeft: 230,
+      paddingTop: 55,
+      width: "calc(100vw - 30px)",
+    },
+    root: {
+      "& .MuiAutocomplete-root": {
+        margin: "20px 0",
+        width: 300,
+      },
+
+      backgroundColor: "white",
+    },
+    scrollable: {
+      height: "calc(100vh - 68px)",
+      [mq.small]: {
+        height: "calc(100vh - 108px)",
+        position: "absolute",
+        top: 40,
+        width: "100%",
+      },
+      overflowY: "scroll",
+    },
+    sidebar: {
+      backgroundColor: "#EFEFEF",
+      border: "#e8e8e8 solid",
+      borderWidth: "0 1px 0 0",
+      bottom: 0,
+      left: 0,
+      overflow: "auto",
+      position: "fixed",
+      top: 68,
+      width: "200px",
+    },
+    version: {
+      padding: "10px 0 0 10px",
+    },
   };
 };
 
 export function StyleGuideRenderer({
-  classes,
   children,
-  version = null,
-  toc,
+  classes,
   hasSidebar,
+  toc,
+  version = null,
 }) {
   const [apiKey, setApiKey] = useState();
   const [dropdownOpen, toggleDropdown] = useState(false);
@@ -141,16 +142,14 @@ export function StyleGuideRenderer({
     <ThemeProvider theme={geopsTheme}>
       <div className={classes.root}>
         <Header
-          title={docConfig.appName}
           tabs={[
-            { label: "Code", href: `${docConfig.githubRepo}`, component: "a" },
+            { component: "a", href: `${docConfig.githubRepo}`, label: "Code" },
           ]}
+          title={docConfig.appName}
         />
         <div className={classes.content}>
-          <Paper sx={{ display: { xs: "block", sm: "none" } }}>
+          <Paper sx={{ display: { sm: "none", xs: "block" } }}>
             <div
-              role="button"
-              type="button"
               className={classes.dropdown}
               onClick={() => {
                 return toggleDropdown(!dropdownOpen);
@@ -160,7 +159,9 @@ export function StyleGuideRenderer({
                   toggleDropdown(!dropdownOpen);
                 }
               }}
+              role="button"
               tabIndex={0}
+              type="button"
             >
               {selected}
               {dropdownOpen ? <Close /> : <Open />}
@@ -175,55 +176,55 @@ export function StyleGuideRenderer({
                   component="div"
                   disablePadding
                   style={{
-                    width: "100%",
-                    overflow: "auto",
-                    maxHeight: "calc(100vh - 150px)",
-                    top: 40,
                     backgroundColor: "white",
                     boxShadow: "0 10px 15px #35353520",
+                    maxHeight: "calc(100vh - 150px)",
+                    overflow: "auto",
+                    top: 40,
+                    width: "100%",
                     zIndex: 99999,
                   }}
                 >
                   {toc.props.sections.slice(1).map((section) => {
                     return [
                       <ListItem
-                        key={section.name}
                         button
+                        key={section.name}
                         onClick={() => {
                           return expanded === section.name
                             ? expandSection()
                             : expandSection(section.name);
                         }}
                         style={{
-                          fontWeight: "bold",
-                          color: "#6987a1",
                           borderTop: "1px solid #e8e8e8",
+                          color: "#6987a1",
+                          fontWeight: "bold",
                         }}
                       >
                         {section.name}
                       </ListItem>,
                       <Collapse
-                        key={`${section.name}-components`}
                         in={expanded === section.name}
+                        key={`${section.name}-components`}
                         timeout="auto"
                         unmountOnExit
                       >
                         {section.components.map((component) => {
                           return (
                             <ListItem
-                              key={component.name}
                               button
-                              style={{ paddingLeft: 32 }}
+                              key={component.name}
                               onClick={() => {
                                 setSelected(component.name);
                                 toggleDropdown(false);
                               }}
-                              tabIndex={-1}
                               selected={selected === component.name}
+                              style={{ paddingLeft: 32 }}
+                              tabIndex={-1}
                             >
                               <Link
-                                style={{ display: "block", width: "100%" }}
                                 href={`#${component.name.toLowerCase()}`}
+                                style={{ display: "block", width: "100%" }}
                               >
                                 {component.name}
                               </Link>
@@ -238,7 +239,7 @@ export function StyleGuideRenderer({
             </Collapse>
           </Paper>
           <div className={classes.scrollable} ref={(nodee) => setNode(nodee)}>
-            <Paper sx={{ display: { xs: "none", sm: "block" } }}>
+            <Paper sx={{ display: { sm: "block", xs: "none" } }}>
               <div className={classes.sidebar}>
                 <header className={classes.version}>
                   {version && <Version>{version}</Version>}
@@ -251,9 +252,9 @@ export function StyleGuideRenderer({
               <Footer
                 onScrollToTop={() => {
                   node?.scrollTo({
-                    top: 0,
-                    left: 0,
                     behavior: "smooth",
+                    left: 0,
+                    top: 0,
                   });
                 }}
               />
@@ -263,8 +264,8 @@ export function StyleGuideRenderer({
         <div id="promo">
           <a
             href={docConfig.githubRepo}
-            target="_blank"
             rel="noopener noreferrer"
+            target="_blank"
           >
             <div id="promo-text">Fork me on GitHub</div>
           </a>
@@ -275,12 +276,12 @@ export function StyleGuideRenderer({
 }
 
 StyleGuideRenderer.propTypes = {
-  classes: PropTypes.object.isRequired,
   children: PropTypes.node.isRequired,
+  classes: PropTypes.object.isRequired,
+  hasSidebar: PropTypes.bool.isRequired,
+  toc: PropTypes.node.isRequired,
   // eslint-disable-next-line react/require-default-props
   version: PropTypes.string,
-  toc: PropTypes.node.isRequired,
-  hasSidebar: PropTypes.bool.isRequired,
 };
 
 export default Styled(styles)(StyleGuideRenderer);

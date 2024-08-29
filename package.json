@@ -45,6 +45,7 @@
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-import": "2.29.1",
     "eslint-plugin-jsx-a11y": "^6.9.0",
+    "eslint-plugin-perfectionist": "^3.3.0",
     "eslint-plugin-prettier": "5.2.1",
     "eslint-plugin-react": "7.35.0",
     "eslint-plugin-react-hooks": "4.6.2",
@@ -130,12 +131,14 @@
     "extends": [
       "airbnb",
       "airbnb/hooks",
+      "plugin:perfectionist/recommended-alphabetical-legacy",
       "prettier"
     ],
     "parserOptions": {
       "ecmaVersion": "latest"
     },
     "plugins": [
+      "perfectionist",
       "prettier"
     ],
     "rules": {
@@ -146,6 +149,7 @@
           "devDependencies": true
         }
       ],
+      "react/sort-comp": "off",
       "react/jsx-filename-extension": [
         1,
         {

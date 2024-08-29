@@ -1,12 +1,13 @@
+import { act, render } from "@testing-library/react";
 import "jest-canvas-mock";
-import React from "react";
+import { Layer } from "mobility-toolbox-js/ol";
 import { Map, View } from "ol";
-import Tile from "ol/Tile";
 import TileLayer from "ol/layer/Tile";
 import TileSource from "ol/source/Tile";
+import Tile from "ol/Tile";
 import { createXYZ } from "ol/tilegrid";
-import { Layer } from "mobility-toolbox-js/ol";
-import { act, render } from "@testing-library/react";
+import React from "react";
+
 import Copyright from "./Copyright";
 
 const image = new Image();
@@ -34,9 +35,9 @@ const getOLTileLayer = () => {
 
 const getLayer = (copyrights, visible = true) => {
   return new Layer({
-    visible,
     copyrights,
     olLayer: getOLTileLayer(),
+    visible,
   });
 };
 
@@ -49,15 +50,15 @@ describe("Copyright", () => {
     document.body.appendChild(target);
     layers = [getLayer("bar"), getLayer("foo", false)];
     map = new Map({
+      controls: [],
+      layers: layers.map((layer) => {
+        return layer.olLayer;
+      }),
       target,
       view: new View({
         center: [0, 0],
         zoom: 0,
       }),
-      layers: layers.map((layer) => {
-        return layer.olLayer;
-      }),
-      controls: [],
     });
     map.setSize([200, 200]);
     layers.forEach((layer) => {
@@ -106,10 +107,10 @@ describe("Copyright", () => {
   test("displays a copyright using a custom format", () => {
     const { container } = render(
       <Copyright
-        map={map}
         format={(copyrights) => {
           return `Number of copyrights: ${copyrights.length}`;
         }}
+        map={map}
       />,
     );
 
@@ -121,7 +122,7 @@ describe("Copyright", () => {
   });
 
   test("set a custom className", () => {
-    const { container } = render(<Copyright map={map} className="foo" />);
+    const { container } = render(<Copyright className="foo" map={map} />);
 
     act(() => {
       map.renderSync();
@@ -132,7 +133,7 @@ describe("Copyright", () => {
 
   test("set a custom attribute to the root element", () => {
     const { container } = render(
-      <Copyright map={map} className="lala" foo="bar" />,
+      <Copyright className="lala" foo="bar" map={map} />,
     );
 
     act(() => {
