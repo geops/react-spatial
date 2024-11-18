@@ -1,6 +1,7 @@
+import { Map } from "ol";
 import React from "react";
 import renderer from "react-test-renderer";
-import { Map } from "ol";
+
 import StopsFinder from ".";
 
 describe("StopsFinder", () => {

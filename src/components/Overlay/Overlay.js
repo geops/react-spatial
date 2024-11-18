@@ -1,29 +1,19 @@
-import React, { Component, useState } from "react";
 import PropTypes from "prop-types";
 import { Resizable } from "re-resizable";
+import React, { Component, useState } from "react";
+
 import ResizeHandler from "../ResizeHandler";
 
 const propTypes = {
-  /**
-   * CSS class added to container.
-   */
-  className: PropTypes.string,
-
   /**
    * Children content of the overlay.
    */
   children: PropTypes.node,
 
   /**
-   * Observed element to define screen size.
+   * CSS class added to container.
    */
-  observe: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.node,
-    PropTypes.instanceOf(Component),
-    PropTypes.shape({ current: PropTypes.node }),
-    PropTypes.shape({ current: PropTypes.instanceOf(Component) }),
-  ]),
+  className: PropTypes.string,
 
   /**
    * Deactivate the ability to resize the overlay on mobile.
@@ -38,12 +28,12 @@ const propTypes = {
    * /!\ This prop is only used if isMobile (observer width < 768px).
    */
   mobileSize: PropTypes.shape({
-    minimalHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    maximalHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     defaultSize: PropTypes.shape({
       height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
       width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     }),
+    maximalHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    minimalHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     size: PropTypes.shape({
       height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
       width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -51,10 +41,22 @@ const propTypes = {
   }),
 
   /**
-   * Minimal width to consider the observed as mobile.
-   * Default is 768px.
+   * Observed element to define screen size.
    */
-  thresholdWidthForMobile: PropTypes.number,
+  observe: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node,
+    PropTypes.instanceOf(Component),
+    PropTypes.shape({ current: PropTypes.node }),
+    PropTypes.shape({ current: PropTypes.instanceOf(Component) }),
+  ]),
+
+  /**
+   * Callback when start resizing
+   * Pass following prop to re-resizable component
+   * (https://github.com/bokuweb/re-resizable)
+   */
+  onResizeStart: PropTypes.func,
 
   /**
    * Callback when stop resizing
@@ -64,21 +66,20 @@ const propTypes = {
   onResizeStop: PropTypes.func,
 
   /**
-   * Callback when start resizing
-   * Pass following prop to re-resizable component
-   * (https://github.com/bokuweb/re-resizable)
+   * Minimal width to consider the observed as mobile.
+   * Default is 768px.
    */
-  onResizeStart: PropTypes.func,
+  thresholdWidthForMobile: PropTypes.number,
 };
 
 const defaultMobileSize = {
   defaultSize: {
-    width: "100%",
     height: "25%",
+    width: "100%",
   },
-  size: undefined,
   maximalHeight: "100%",
   minimalHeight: "25%",
+  size: undefined,
 };
 
 const emptyFunc = () => {};
@@ -86,13 +87,13 @@ const emptyFunc = () => {};
  * The Overlay component creates a resizable, swipable overlay <div\>
  */
 function Overlay({
-  observe = null,
-  className = null,
   children = null,
+  className = null,
   isMobileResizable = true,
   mobileSize = defaultMobileSize,
-  onResizeStop = emptyFunc,
+  observe = null,
   onResizeStart = emptyFunc,
+  onResizeStop = emptyFunc,
   thresholdWidthForMobile = 768,
 }) {
   const [isMobile, setIsMobile] = useState();
@@ -114,40 +115,40 @@ function Overlay({
       {observe ? <ResizeHandler observe={observe} onResize={onResize} /> : null}
       {isMobile ? (
         <Resizable
-          style={{
-            position: "absolute",
-          }}
+          className={`tm-overlay-mobile${className ? ` ${className}` : ""}`}
+          defaultSize={mobileSize && resizableMobileSize.defaultSize}
           enable={{
-            top: isMobileResizable,
-            right: false,
             bottom: false,
-            left: false,
-            topRight: false,
-            bottomRight: false,
             bottomLeft: false,
+            bottomRight: false,
+            left: false,
+            right: false,
+            top: isMobileResizable,
             topLeft: false,
+            topRight: false,
           }}
-          maxHeight={mobileSize && resizableMobileSize.maximalHeight}
-          minHeight={mobileSize && resizableMobileSize.minimalHeight}
           handleComponent={{
             top: <div className="tm-overlay-handler">&mdash;</div>,
           }}
-          onResizeStart={onResizeStart}
-          onResizeStop={onResizeStop}
           handleStyles={{
             top: {
-              top: "-20px",
-              height: "20px",
-              padding: "20px 0",
-              width: "100%",
-              display: "flex",
               alignItems: "center",
+              display: "flex",
+              height: "20px",
               justifyContent: "center",
+              padding: "20px 0",
+              top: "-20px",
+              width: "100%",
             },
           }}
+          maxHeight={mobileSize && resizableMobileSize.maximalHeight}
+          minHeight={mobileSize && resizableMobileSize.minimalHeight}
+          onResizeStart={onResizeStart}
+          onResizeStop={onResizeStop}
           size={resizableMobileSize.size}
-          defaultSize={mobileSize && resizableMobileSize.defaultSize}
-          className={`tm-overlay-mobile${className ? ` ${className}` : ""}`}
+          style={{
+            position: "absolute",
+          }}
         >
           <div className="tm-overlay-mobile-content">{children}</div>
         </Resizable>

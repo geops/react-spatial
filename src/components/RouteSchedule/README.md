@@ -31,7 +31,7 @@ let updateInterval;
 
 
 const getVehicleCoord = (routeIdentifier) => {
-  const [trajectory] = trackerLayer.getVehicle((traj) => {
+  const [trajectory] = trackerLayer.getVehicles((traj) => {
     return traj.properties.route_identifier === routeIdentifier;
   });
   return trajectory && trajectory.properties.coordinate;

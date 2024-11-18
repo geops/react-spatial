@@ -1,13 +1,14 @@
-import "jest-canvas-mock";
-import React from "react";
-import renderer from "react-test-renderer";
-import { act } from "react-dom/test-utils";
-import { configure, mount } from "enzyme";
 import Adapter from "@cfaester/enzyme-adapter-react-18";
-import MapEvent from "ol/MapEvent";
+import { configure, mount } from "enzyme";
+import "jest-canvas-mock";
 import OLMap from "ol/Map";
+import MapEvent from "ol/MapEvent";
 import OLView from "ol/View";
+import React from "react";
+import { act } from "react-dom/test-utils";
 import { TiImage } from "react-icons/ti";
+import renderer from "react-test-renderer";
+
 import NorthArrow from "./NorthArrow";
 
 configure({ adapter: new Adapter() });
@@ -33,7 +34,7 @@ describe("NorthArrow", () => {
     let component;
     renderer.act(() => {
       component = renderer.create(
-        <NorthArrow map={olMap} className="test-class" tabIndex={0} />,
+        <NorthArrow className="test-class" map={olMap} tabIndex={0} />,
       );
     });
     const tree = component.toJSON();

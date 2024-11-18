@@ -1,12 +1,12 @@
 /**
 * This file load the css of components.
 */
-@import '../../components/BaseLayerSwitcher/BaseLayerSwitcher';
-@import '../../components/Geolocation/Geolocation';
-@import '../../components/LayerTree/LayerTree';
-@import '../../components/NorthArrow/NorthArrow';
-@import '../../components/Popup/Popup';
-@import '../../components/ScaleLine/ScaleLine';
-@import '../../components/Zoom/Zoom';
-@import '../../components/RouteSchedule/RouteSchedule';
-@import '../../components/Overlay/Overlay';
+@use '../../components/BaseLayerSwitcher/BaseLayerSwitcher';
+@use '../../components/Geolocation/Geolocation';
+@use '../../components/LayerTree/LayerTree';
+@use '../../components/NorthArrow/NorthArrow';
+@use '../../components/Popup/Popup';
+@use '../../components/ScaleLine/ScaleLine';
+@use '../../components/Zoom/Zoom';
+@use '../../components/RouteSchedule/RouteSchedule';
+@use '../../components/Overlay/Overlay';

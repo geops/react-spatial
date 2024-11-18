@@ -1,13 +1,13 @@
-import React, { useMemo, useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { Map } from "ol";
 import { CopyrightControl } from "mobility-toolbox-js/ol";
+import { Map } from "ol";
+import PropTypes from "prop-types";
+import React, { useEffect, useMemo, useState } from "react";
 
 const propTypes = {
   /**
-   * A map.
+   * CSS class of th root element
    */
-  map: PropTypes.instanceOf(Map).isRequired,
+  className: PropTypes.string,
 
   /**
    * Format function. Called with an array of copyrights from visible layers
@@ -16,16 +16,16 @@ const propTypes = {
   format: PropTypes.func,
 
   /**
-   * CSS class of th root element
+   * A map.
    */
-  className: PropTypes.string,
+  map: PropTypes.instanceOf(Map).isRequired,
 };
 
 const defaultProps = {
+  className: "rs-copyright",
   format: (copyrights) => {
     return copyrights.join(" | ");
   },
-  className: "rs-copyright",
 };
 
 /**
@@ -34,9 +34,9 @@ const defaultProps = {
  * to render the layer copyrights.
  */
 function Copyright({
-  map,
   className = defaultProps.className,
   format = defaultProps.format,
+  map,
   ...other
 }) {
   const [node, setNode] = useState(null);
@@ -46,9 +46,9 @@ function Copyright({
       return null;
     }
     return new CopyrightControl({
-      target: node,
       element: document.createElement("div"),
       format,
+      target: node,
     });
   }, [node, format]);
 
@@ -67,8 +67,8 @@ function Copyright({
 
   return (
     <div
-      ref={(nod) => setNode(nod)}
       className={className}
+      ref={(nod) => setNode(nod)}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...other}
     />

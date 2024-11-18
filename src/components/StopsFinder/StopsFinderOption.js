@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { Suspense, lazy } from "react";
-import PropTypes from "prop-types";
 import { CircularProgress, styled } from "@mui/material";
+import PropTypes from "prop-types";
+import React, { lazy, Suspense } from "react";
 
 const ext = "_round-blue-01.svg";
 const iconForMot = {};
@@ -21,8 +21,8 @@ const iconForMot = {};
 });
 
 const StyledFlex = styled("div")(() => ({
-  display: "flex",
   alignItems: "center",
+  display: "flex",
   gap: 5,
 }));
 

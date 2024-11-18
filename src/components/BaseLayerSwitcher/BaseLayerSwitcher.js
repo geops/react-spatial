@@ -1,15 +1,30 @@
-/* eslint-disable jsx-a11y/interactive-supports-focus */
-import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import { FaChevronLeft } from "react-icons/fa";
-import { unByKey } from "ol/Observable";
 import Layer from "ol/layer/Layer";
+import { unByKey } from "ol/Observable";
+import PropTypes from "prop-types";
+/* eslint-disable jsx-a11y/interactive-supports-focus */
+import React, { useEffect, useState } from "react";
+import { FaChevronLeft } from "react-icons/fa";
 
 const propTypes = {
   /**
-   * An array of OpenLayers layers
+   * CSS class to apply on the container.
    */
-  layers: PropTypes.arrayOf(PropTypes.instanceOf(Layer)).isRequired,
+  className: PropTypes.string,
+
+  /**
+   * Image (node) rendered in the switcher close button.
+   */
+  closeButtonImage: PropTypes.node,
+
+  /**
+   * Function that returns the alternative text if the layer's image is not found.
+   */
+  getAltText: PropTypes.func,
+
+  /**
+   * Function that returns the label to display att the bootm of the layer's image and as title attribute.
+   */
+  getLayerLabel: PropTypes.func,
 
   /**
    * Object containing relative paths to the base layer images. Object
@@ -18,34 +33,9 @@ const propTypes = {
   layerImages: PropTypes.objectOf(PropTypes.string),
 
   /**
-   * CSS class to apply on the container.
+   * An array of [mobility-toolbox-js layers](https://mobility-toolbox-js.geops.io/api/identifiers%20html#ol-layers).
    */
-  className: PropTypes.string,
-
-  /**
-   * Alternative text rendered if layer images can't be loaded
-   */
-  altText: PropTypes.string,
-
-  /**
-   * Button titles.
-   */
-  titles: PropTypes.shape({
-    button: PropTypes.string,
-    openSwitcher: PropTypes.string,
-    closeSwitcher: PropTypes.string,
-  }),
-
-  /**
-   * Image (node) rendered in the switcher close button.
-   */
-  closeButtonImage: PropTypes.node,
-
-  /**
-   * Translation function.
-   * @param {function} Translation function returning the translated string.
-   */
-  t: PropTypes.func,
+  layers: PropTypes.arrayOf(PropTypes.instanceOf(Layer)).isRequired,
 
   /**
    * Callback function on close button click.
@@ -64,6 +54,15 @@ const propTypes = {
    * @param {function} Callback function triggered when a switcher button is clicked. Takes the event as argument.
    */
   onSwitcherButtonClick: PropTypes.func,
+
+  /**
+   * Button titles.
+   */
+  titles: PropTypes.shape({
+    button: PropTypes.string,
+    closeSwitcher: PropTypes.string,
+    openSwitcher: PropTypes.string,
+  }),
 };
 
 const getVisibleLayer = (layers) => {
@@ -86,24 +85,24 @@ const getImageStyle = (url) => {
   return url
     ? {
         backgroundImage: `url(${url})`,
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
       }
     : null;
 };
 
-function CloseButton({ onClick, tabIndex, title, children }) {
+function CloseButton({ children, onClick, tabIndex, title }) {
   return (
     <div
+      aria-label={title}
       className="rs-base-layer-switcher-close-btn"
-      role="button"
       onClick={onClick}
       onKeyPress={(e) => {
         return e.which === 13 && onClick();
       }}
+      role="button"
       tabIndex={tabIndex}
-      aria-label={title}
       title={title}
     >
       {children}
@@ -112,16 +111,24 @@ function CloseButton({ onClick, tabIndex, title, children }) {
 }
 
 CloseButton.propTypes = {
+  children: PropTypes.node.isRequired,
   onClick: PropTypes.func.isRequired,
   tabIndex: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
 };
 
 const defaultTitles = {
   button: "Base layers",
-  openSwitcher: "Open Baselayer-Switcher",
   closeSwitcher: "Close Baselayer-Switcher",
+  openSwitcher: "Open Baselayer-Switcher",
+};
+
+const getDefaultLabel = (layer) => {
+  return layer?.get("name") || "";
+};
+
+const getDefaultAltText = () => {
+  return "Source not found";
 };
 
 /**
@@ -130,16 +137,16 @@ const defaultTitles = {
  */
 
 function BaseLayerSwitcher({
-  layers,
-  layerImages = undefined,
   className = "rs-base-layer-switcher",
-  altText = "Source not found",
-  titles = defaultTitles,
   closeButtonImage = <FaChevronLeft />,
-  onCloseButtonClick = null,
-  onLayerButtonClick = null,
-  onSwitcherButtonClick = null,
-  t = (s) => s,
+  getAltText = getDefaultAltText,
+  getLayerLabel = getDefaultLabel,
+  layerImages,
+  layers,
+  onCloseButtonClick,
+  onLayerButtonClick,
+  onSwitcherButtonClick,
+  titles = defaultTitles,
 }) {
   const [switcherOpen, setSwitcherOpen] = useState(false);
   const [isClosed, setIsClosed] = useState(true);
@@ -265,42 +272,39 @@ function BaseLayerSwitcher({
     return null;
   }
 
+  const firstNonVisibleLayer = layers.find((layer) => {
+    return !(layer.getVisible ? layer.getVisible() : layer.visible);
+  });
+
   return (
     <div className={`${className}${openClass}`}>
       <div
-        className={`rs-base-layer-switcher-button rs-opener${openClass}`}
-        role="button"
-        title={titles.openSwitcher}
         aria-label={titles.openSwitcher}
+        className={`rs-base-layer-switcher-button rs-opener${openClass}`}
         onClick={handleSwitcherClick}
         onKeyPress={(e) => {
           if (e.which === 13) {
             handleSwitcherClick();
           }
         }}
+        role="button"
         style={getImageStyle(nextImage)}
         tabIndex="0"
+        title={titles.openSwitcher}
       >
         <div className="rs-base-layer-switcher-title">
           {layers.length !== 2
             ? titles.button
-            : layers.find((layer) => {
-                return !(layer.getVisible ? layer.getVisible() : layer.visible);
-              }) &&
-              t(
-                layers
-                  .find((layer) => {
-                    return !(layer.getVisible
-                      ? layer.getVisible()
-                      : layer.visible);
-                  })
-                  .get("name"),
-              )}
+            : firstNonVisibleLayer && getLayerLabel(firstNonVisibleLayer)}
         </div>
-        {nextImage ? null : <span className="rs-alt-text">{t(altText)}</span>}
+        {nextImage ? null : (
+          <span className="rs-alt-text">
+            {getAltText(firstNonVisibleLayer)}
+          </span>
+        )}
       </div>
       {layers.map((layer, idx) => {
-        const layerName = layer.get("name");
+        const layerName = getLayerLabel(layer);
         const activeClass =
           layerName === currentLayer.get("name") ? " rs-active" : "";
         const imageStyle = getImageStyle(
@@ -310,8 +314,8 @@ function BaseLayerSwitcher({
         );
         return (
           <div
-            key={layer.key}
             className="rs-base-layer-switcher-btn-wrapper"
+            key={layer.key}
             style={{
               /* stylelint-disable-next-line value-keyword-case */
               overflow: hiddenStyle,
@@ -320,10 +324,8 @@ function BaseLayerSwitcher({
             }}
           >
             <div
+              aria-label={layerName}
               className={`rs-base-layer-switcher-button${openClass}`}
-              role="button"
-              title={t(layerName)}
-              aria-label={t(layerName)}
               onClick={(evt) => {
                 return onLayerSelect(layer, evt);
               }}
@@ -332,14 +334,16 @@ function BaseLayerSwitcher({
                   onLayerSelect(layer, evt);
                 }
               }}
+              role="button"
               style={imageStyle}
               tabIndex={switcherOpen ? "0" : "-1"}
+              title={layerName}
             >
               <div className={`rs-base-layer-switcher-title${activeClass}`}>
-                {t(layerName)}
+                {layerName}
               </div>
               {imageStyle ? null : (
-                <span className="rs-alt-text">{t(altText)}</span>
+                <span className="rs-alt-text">{getAltText(layer)}</span>
               )}
             </div>
           </div>

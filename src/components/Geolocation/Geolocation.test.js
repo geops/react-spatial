@@ -1,12 +1,12 @@
-import React from "react";
-import renderer from "react-test-renderer";
-import { configure, mount, shallow } from "enzyme";
 import Adapter from "@cfaester/enzyme-adapter-react-18";
-
+import { configure, mount, shallow } from "enzyme";
 import "jest-canvas-mock";
 import Map from "ol/Map";
-import View from "ol/View";
 import MapEvent from "ol/MapEvent";
+import View from "ol/View";
+import React from "react";
+import renderer from "react-test-renderer";
+
 import Geolocation from "./Geolocation";
 
 configure({ adapter: new Adapter() });
@@ -20,9 +20,9 @@ const mockGeolocation = () => {
     watchPosition: (onSuccess) => {
       onSuccess({
         coords: {
+          accuracy: 55,
           latitude: 47.9913611,
           longitude: 7.84868,
-          accuracy: 55,
         },
         timestamp: 1552660077044,
       });
@@ -41,13 +41,13 @@ const restoreGeolocation = () => {
 };
 
 class CallbackHandler {
-  static onError() {}
-
-  static onSuccess() {}
-
   static onActivate() {}
 
   static onDeactivate() {}
+
+  static onError() {}
+
+  static onSuccess() {}
 }
 
 describe("Geolocation", () => {
@@ -100,7 +100,7 @@ describe("Geolocation", () => {
 
     test("with class name", () => {
       const component = renderer.create(
-        <Geolocation map={map} className="my-class-name" />,
+        <Geolocation className="my-class-name" map={map} />,
       );
       const tree = component.toJSON();
       expect(tree).toMatchSnapshot();
@@ -172,14 +172,14 @@ describe("Geolocation", () => {
     const wrapper = mount(
       <Geolocation
         map={map}
-        onSuccess={() => {
-          return CallbackHandler.onSuccess();
-        }}
         onActivate={() => {
           return CallbackHandler.onActivate();
         }}
         onDeactivate={() => {
           return CallbackHandler.onDeactivate();
+        }}
+        onSuccess={() => {
+          return CallbackHandler.onSuccess();
         }}
       />,
     );
@@ -254,7 +254,7 @@ describe("Geolocation", () => {
     const styleFunc = jest.fn();
 
     const component = shallow(
-      <Geolocation map={map} colorOrStyleFunc={styleFunc} />,
+      <Geolocation colorOrStyleFunc={styleFunc} map={map} />,
     );
     const instance = component.instance();
     instance.toggle();

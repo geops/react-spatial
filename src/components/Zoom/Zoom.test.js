@@ -1,9 +1,10 @@
-import React from "react";
 import { fireEvent, render } from "@testing-library/react";
-import { act } from "react-dom/test-utils";
+import OLMap from "ol/Map";
 import MapEvent from "ol/MapEvent";
 import OLView from "ol/View";
-import OLMap from "ol/Map";
+import React from "react";
+import { act } from "react-dom/test-utils";
+
 import Zoom from "./Zoom";
 
 describe("Zoom", () => {
@@ -16,7 +17,7 @@ describe("Zoom", () => {
   test("should match snapshot with custom attributes", () => {
     const map = new OLMap({});
     const { container } = render(
-      <Zoom map={map} className="foo" tabIndex={-1} title="bar" />,
+      <Zoom className="foo" map={map} tabIndex={-1} title="bar" />,
     );
     expect(container.innerHTML).toMatchSnapshot();
   });
@@ -40,7 +41,7 @@ describe("Zoom", () => {
 
     test(`should zoom in on ${evt[0]} (delta: 0.3).`, async () => {
       const map = new OLMap({ view: new OLView({ zoom: 5 }) });
-      const { container } = render(<Zoom map={map} delta={0.3} />);
+      const { container } = render(<Zoom delta={0.3} map={map} />);
       await fireEvent.click(container.querySelector(".rs-zoom-in"));
       expect(map.getView().getZoom()).toBe(5.3);
     });
@@ -54,7 +55,7 @@ describe("Zoom", () => {
 
     test(`should zoom out on ${evt[0]} (delta: 0.3).`, async () => {
       const map = new OLMap({ view: new OLView({ zoom: 5 }) });
-      const { container } = render(<Zoom map={map} delta={0.3} />);
+      const { container } = render(<Zoom delta={0.3} map={map} />);
       await fireEvent.click(container.querySelector(".rs-zoom-out"));
       expect(map.getView().getZoom()).toBe(4.7);
     });
@@ -76,7 +77,7 @@ describe("Zoom", () => {
       view: new OLView({ maxZoom: 20, zoom: 20 }),
     });
     const spy = jest.spyOn(map.getView(), "setZoom");
-    const { rerender, container } = render(<Zoom map={map} />);
+    const { container, rerender } = render(<Zoom map={map} />);
     act(() => {
       map.dispatchEvent(new MapEvent("moveend", map));
     });
@@ -91,7 +92,7 @@ describe("Zoom", () => {
       view: new OLView({ minZoom: 2, zoom: 2 }),
     });
     const spy = jest.spyOn(map.getView(), "setZoom");
-    const { rerender, container } = render(<Zoom map={map} />);
+    const { container, rerender } = render(<Zoom map={map} />);
     act(() => {
       map.dispatchEvent(new MapEvent("moveend", map));
     });
@@ -107,7 +108,7 @@ test("should disable zoom-out button when reaching min zoom.", async () => {
     view: new OLView({ minZoom: 2, zoom: 3 }),
   });
   const spy = jest.spyOn(map.getView(), "setZoom");
-  const { rerender, container } = render(<Zoom map={map} />);
+  const { container, rerender } = render(<Zoom map={map} />);
   await fireEvent.click(container.querySelector(".rs-zoom-out"));
   expect(spy).toHaveBeenCalledTimes(1);
   act(() => {

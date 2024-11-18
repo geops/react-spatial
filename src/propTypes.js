@@ -8,19 +8,16 @@ const STATE_STOP_CANCELLED = "STOP_CANCELLED";
 const STATE_JOURNEY_CANCELLED = "JOURNEY_CANCELLED";
 
 const station = PropTypes.shape({
-  arrivalDelay: PropTypes.number, // time in milliseconds.
   aimedArrivalTime: PropTypes.number, // time in milliseconds.
+  aimedDepartureTime: PropTypes.number, // time in milliseconds.
+  arrivalDelay: PropTypes.number, // time in milliseconds.
   arrivalTime: PropTypes.number, // time in milliseconds with the delay included.
   cancelled: PropTypes.bool,
   coordinates: PropTypes.arrayOf(PropTypes.number),
-  aimedDepartureTime: PropTypes.number, // time in milliseconds.
   departureDelay: PropTypes.number, // time in milliseconds.
   departureTime: PropTypes.number, // time in milliseconds with the delay included
   noDropOff: PropTypes.bool,
   noPickUp: PropTypes.bool,
-  stationId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  stationName: PropTypes.string,
-  wheelchairAccessible: PropTypes.bool,
   state: PropTypes.oneOf([
     null,
     STATE_BOARDING,
@@ -30,6 +27,9 @@ const station = PropTypes.shape({
     STATE_STOP_CANCELLED,
     STATE_JOURNEY_CANCELLED,
   ]),
+  stationId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  stationName: PropTypes.string,
+  wheelchairAccessible: PropTypes.bool,
 });
 
 const lineInfos = PropTypes.shape({
@@ -59,7 +59,7 @@ const lineInfos = PropTypes.shape({
 
 export default {
   lineInfos,
-  station,
   STATE_BOARDING,
   STATE_LEAVING,
+  station,
 };

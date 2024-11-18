@@ -1,11 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
+import Adapter from "@cfaester/enzyme-adapter-react-18";
+import { configure, mount } from "enzyme";
+import "jest-canvas-mock";
+import OLMousePosition from "ol/control/MousePosition";
+import OLMap from "ol/Map";
 import React from "react";
 import renderer from "react-test-renderer";
-import { configure, mount } from "enzyme";
-import Adapter from "@cfaester/enzyme-adapter-react-18";
-import "jest-canvas-mock";
-import OLMap from "ol/Map";
-import OLMousePosition from "ol/control/MousePosition";
+
 import MousePosition from "./MousePosition";
 
 configure({ adapter: new Adapter() });
@@ -54,9 +55,9 @@ describe("MousePosition", () => {
         map={map}
         projections={[
           {
+            format: fn,
             label: "EPSG:4326",
             value: "EPSG:4326",
-            format: fn,
           },
         ]}
       />,
@@ -90,9 +91,9 @@ describe("MousePosition", () => {
         onChange={onChange}
         projections={[
           {
+            format: jest.fn(),
             label: "EPSG:4326",
             value: "EPSG:4326",
-            format: jest.fn(),
           },
         ]}
       />,
@@ -108,14 +109,14 @@ describe("MousePosition", () => {
     const spy = jest.spyOn(map, "addControl");
     const projs = [
       {
+        format: jest.fn(),
         label: "EPSG:4326",
         value: "EPSG:4326",
-        format: jest.fn(),
       },
       {
+        format: jest.fn(),
         label: "EPSG:3857",
         value: "EPSG:3857",
-        format: jest.fn(),
       },
     ];
     const wrapper = mount(<MousePosition map={map} projections={projs} />);

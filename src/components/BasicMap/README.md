@@ -8,9 +8,7 @@ import { MaplibreLayer } from 'mobility-toolbox-js/ol';
 
 const layers = [
   new MaplibreLayer({
-    mapLibreOptions:{
-      style:`https://maps.geops.io/styles/travic_v2/style.json?key=${apiKey}`,
-    },
+    apiKey: apiKey,
   })
 ];
 

@@ -1,9 +1,10 @@
 /* eslint-disable max-classes-per-file */
+import Adapter from "@cfaester/enzyme-adapter-react-18";
+import { configure, mount, shallow } from "enzyme";
 /* eslint-disable  react/no-multi-comp,react/prefer-stateless-function,react/prop-types */
 import React from "react";
-import { configure, mount, shallow } from "enzyme";
-import Adapter from "@cfaester/enzyme-adapter-react-18";
 import ResizeObserver from "resize-observer-polyfill";
+
 import ResizeHandler from "./ResizeHandler";
 
 jest.mock("resize-observer-polyfill");
@@ -30,7 +31,7 @@ class BasicComponent3 extends React.Component {
     return (
       <div id="basic">
         <ResizeHandler
-          observe={this}
+          /* eslint-disable perfectionist/sort-objects */
           maxHeightBrkpts={{
             niedrig: 150,
             hoch: Infinity,
@@ -39,6 +40,8 @@ class BasicComponent3 extends React.Component {
             schmal: 150,
             breit: Infinity,
           }}
+          /* eslint-enable perfectionist/sort-objects */
+          observe={this}
         />
       </div>
     );
@@ -185,52 +188,52 @@ describe("ResizeHandler", () => {
       // simulate a resize
       ResizeObserver.onResize([
         {
-          target: basic,
           contentRect: {
-            width: 200,
             height: 200,
+            width: 200,
           },
+          target: basic,
         },
       ]);
       expect(basic.className).toBe("rs-w-xs rs-h-xs");
 
       ResizeObserver.onResize([
         {
-          target: basic,
           contentRect: {
-            width: 577,
             height: 577,
+            width: 577,
           },
+          target: basic,
         },
       ]);
       expect(basic.className).toBe("rs-w-s rs-h-s");
       ResizeObserver.onResize([
         {
-          target: basic,
           contentRect: {
-            width: 769,
             height: 769,
+            width: 769,
           },
+          target: basic,
         },
       ]);
       expect(basic.className).toBe("rs-w-m rs-h-m");
       ResizeObserver.onResize([
         {
-          target: basic,
           contentRect: {
-            width: 993,
             height: 993,
+            width: 993,
           },
+          target: basic,
         },
       ]);
       expect(basic.className).toBe("rs-w-l rs-h-l");
       ResizeObserver.onResize([
         {
-          target: basic,
           contentRect: {
-            width: 1201,
             height: 1201,
+            width: 1201,
           },
+          target: basic,
         },
       ]);
       expect(basic.className).toBe("rs-w-xl rs-h-xl");
@@ -244,22 +247,22 @@ describe("ResizeHandler", () => {
       // simulate a resize
       ResizeObserver.onResize([
         {
-          target: basic,
           contentRect: {
-            width: 100,
             height: 100,
+            width: 100,
           },
+          target: basic,
         },
       ]);
       expect(basic.className).toBe("rs-w-schmal rs-h-niedrig");
 
       ResizeObserver.onResize([
         {
-          target: basic,
           contentRect: {
-            width: 1000,
             height: 1000,
+            width: 1000,
           },
+          target: basic,
         },
       ]);
       expect(basic.className).toBe("rs-w-breit rs-h-hoch");
@@ -274,11 +277,11 @@ describe("ResizeHandler", () => {
       // simulate a resize
       ResizeObserver.onResize([
         {
-          target: basic,
           contentRect: {
-            width: 100,
             height: 100,
+            width: 100,
           },
+          target: basic,
         },
       ]);
       expect(fn).toHaveBeenCalledTimes(1);
@@ -293,11 +296,11 @@ describe("ResizeHandler", () => {
       // simulate a resize
       ResizeObserver.onResize([
         {
-          target: basic,
           contentRect: {
-            width: 100,
             height: 100,
+            width: 100,
           },
+          target: basic,
         },
       ]);
       expect(spy).toHaveBeenCalledWith("foo", "7.68px");

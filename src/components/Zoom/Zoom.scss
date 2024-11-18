@@ -1,3 +1,5 @@
+@use "../../themes/default/variables";
+
 .rs-zooms-bar {
   position: absolute;
   top: 0;
@@ -10,8 +12,8 @@
   .rs-zoom-in,
   .rs-zoom-out {
     cursor: pointer;
-    height: $btn-size-base;
-    width: $btn-size-base;
+    height: variables.$btn-size-base;
+    width: variables.$btn-size-base;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -34,7 +36,7 @@
       left: 0;
       user-select: none;
       background-color: rgb(255 255 255 / 40%);
-      border: 1px solid $brand-secondary;
+      border: 1px solid variables.$brand-secondary;
       border-radius: 3px;
       outline: none;
       overflow: hidden;
@@ -46,7 +48,7 @@
         user-select: none;
         position: relative;
         display: block;
-        background: $brand-secondary;
+        background: variables.$brand-secondary;
         outline: none;
         overflow: hidden;
         cursor: pointer;

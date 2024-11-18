@@ -1,13 +1,14 @@
+import { render } from "@testing-library/react";
 import "jest-canvas-mock";
-import proj4 from "proj4";
-import { register } from "ol/proj/proj4";
-import React from "react";
-import MapEvent from "ol/MapEvent";
+import { Layer as OldMbtLayer } from "mobility-toolbox-js/ol";
 import OLLayer from "ol/layer/Vector";
 import OLMap from "ol/Map";
+import MapEvent from "ol/MapEvent";
+import { register } from "ol/proj/proj4";
 import OLView from "ol/View";
-import { render } from "@testing-library/react";
-import { Layer as OldMbtLayer } from "mobility-toolbox-js/ol";
+import proj4 from "proj4";
+import React from "react";
+
 import BasicMap from "./BasicMap";
 
 proj4.defs(
@@ -135,12 +136,12 @@ describe("BasicMap", () => {
   test("should be rendered with layers and an extent", () => {
     render(
       <BasicMap
-        map={olMap}
-        layers={olLayers}
         extent={extent}
+        layers={olLayers}
+        map={olMap}
         viewOptions={{
-          minZoom: 16,
           maxZoom: 22,
+          minZoom: 16,
           projection: "EPSG:21781",
         }}
       />,
@@ -155,7 +156,7 @@ describe("BasicMap", () => {
   test("center shoud be set", () => {
     const { rerender } = render(<BasicMap map={olMap} />);
     const setCenter = jest.spyOn(olMap.getView(), "setCenter");
-    rerender(<BasicMap map={olMap} center={[0, 0]} />);
+    rerender(<BasicMap center={[0, 0]} map={olMap} />);
     expect(setCenter).toHaveBeenCalled();
   });
 
@@ -179,7 +180,7 @@ describe("BasicMap", () => {
     };
     const { rerender } = render(<BasicMap map={olMap} />);
     const spy = jest.spyOn(olMap.getView(), "animate");
-    rerender(<BasicMap map={olMap} animationOptions={obj} />);
+    rerender(<BasicMap animationOptions={obj} map={olMap} />);
     expect(spy).toHaveBeenCalledWith(obj);
   });
 
@@ -187,14 +188,14 @@ describe("BasicMap", () => {
     const addLayer = jest.spyOn(olMap, "addLayer");
     const { rerender } = render(<BasicMap map={olMap} />);
     const layer = new OLLayer();
-    rerender(<BasicMap map={olMap} layers={[layer]} />);
+    rerender(<BasicMap layers={[layer]} map={olMap} />);
     expect(addLayer).toHaveBeenCalled();
   });
 
   test("should be fitted if extent is updated", () => {
     const fitExtent = jest.spyOn(OLView.prototype, "fit");
     const { rerender } = render(<BasicMap map={olMap} />);
-    rerender(<BasicMap map={olMap} extent={[1, 2, 3, 4]} />);
+    rerender(<BasicMap extent={[1, 2, 3, 4]} map={olMap} />);
     expect(fitExtent).toHaveBeenCalled();
   });
 
@@ -225,7 +226,7 @@ describe("BasicMap", () => {
       const startLayers = [layer1, layer3];
 
       const { rerender } = render(
-        <BasicMap map={olMap} layers={startLayers} />,
+        <BasicMap layers={startLayers} map={olMap} />,
       );
       expect(spyInit0).toHaveBeenCalledTimes(0);
       expect(spyInit1).toHaveBeenCalledTimes(1);
@@ -239,7 +240,7 @@ describe("BasicMap", () => {
       expect(spyTerminate4).toHaveBeenCalledTimes(0);
 
       const layers = [layer0, layer2, layer3, layer4];
-      rerender(<BasicMap map={olMap} layers={layers} />);
+      rerender(<BasicMap layers={layers} map={olMap} />);
       expect(spyInit0).toHaveBeenCalledTimes(1);
       expect(spyInit1).toHaveBeenCalledTimes(1);
       expect(spyInit2).toHaveBeenCalledTimes(1);

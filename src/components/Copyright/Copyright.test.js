@@ -1,11 +1,12 @@
 import "jest-canvas-mock";
-import React from "react";
+import { act, render } from "@testing-library/react";
 import { Map, View } from "ol";
-import { render, act } from "@testing-library/react";
-import Tile from "ol/Tile";
 import TileLayer from "ol/layer/Tile";
 import TileSource from "ol/source/Tile";
+import Tile from "ol/Tile";
 import { createXYZ } from "ol/tilegrid";
+import React from "react";
+
 import Copyright from "./Copyright";
 
 const image = new Image();
@@ -34,8 +35,8 @@ const getOLTileLayer = (options = {}) => {
 
 const getLayer = (copyrights, visible = true) => {
   return getOLTileLayer({
-    visible,
     copyrights,
+    visible,
   });
 };
 
@@ -100,10 +101,10 @@ describe("Copyright", () => {
   test("displays a copyright using a custom format", () => {
     const { container } = render(
       <Copyright
-        map={map}
         format={(copyrights) => {
           return `Number of copyrights: ${copyrights.length}`;
         }}
+        map={map}
       />,
     );
 
@@ -115,7 +116,7 @@ describe("Copyright", () => {
   });
 
   test("set a custom className", () => {
-    const { container } = render(<Copyright map={map} className="foo" />);
+    const { container } = render(<Copyright className="foo" map={map} />);
 
     act(() => {
       map.renderSync();
@@ -126,7 +127,7 @@ describe("Copyright", () => {
 
   test("set a custom attribute to the root element", () => {
     const { container } = render(
-      <Copyright map={map} className="lala" foo="bar" />,
+      <Copyright className="lala" foo="bar" map={map} />,
     );
 
     act(() => {

@@ -1,12 +1,17 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useMemo, useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import { Autocomplete, autocompleteClasses, styled } from "@mui/material";
-import { FaSearch } from "react-icons/fa";
-import TextField from "@mui/material/TextField";
+import {
+  Autocomplete,
+  autocompleteClasses,
+  styled,
+  TextField,
+} from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import { StopsAPI } from "mobility-toolbox-js/ol";
 import { Map } from "ol";
+import PropTypes from "prop-types";
+import React, { useEffect, useMemo, useState } from "react";
+import { FaSearch } from "react-icons/fa";
+
 import StopsFinderOption from "./StopsFinderOption";
 
 const StyledAutocomplete = styled(Autocomplete)(() => ({
@@ -31,8 +36,8 @@ function StopsFinder({
   radius,
   refLocation,
   renderAutocomplete,
-  url,
   textFieldProps = defaultProps.textFieldProps,
+  url,
   ...props
 }) {
   const [inputValue, setInputValue] = useState("");
@@ -57,12 +62,12 @@ function StopsFinder({
     const abortController = new AbortController();
     setLoading(true);
     const apiParams = {
-      q: inputValue,
-      prefAgencies: agencies && agencies.toString(),
       bbox: bbox && bbox.toString(),
       field: field && field.toString(),
       limit,
       mots: mots && mots.toString(),
+      prefAgencies: agencies && agencies.toString(),
+      q: inputValue,
       radius,
       ref_location: refLocation && refLocation.toString(),
     };
@@ -107,10 +112,9 @@ function StopsFinder({
   }
   return (
     <StyledAutocomplete
-      fullWidth
       autoComplete
       autoHighlight
-      selectOnFocus
+      fullWidth
       getOptionLabel={(option) => {
         return option.properties.name;
       }}
@@ -147,20 +151,21 @@ function StopsFinder({
           />
         );
       }}
+      selectOnFocus
       {...props}
       inputValue={inputValue}
-      open={isOpen}
-      options={suggestions}
       loading={isLoading}
-      onOpen={() => {
-        setOpen(true);
-      }}
       onClose={() => {
         setOpen(false);
       }}
       onInputChange={(evt, val) => {
         setInputValue(val);
       }}
+      onOpen={() => {
+        setOpen(true);
+      }}
+      open={isOpen}
+      options={suggestions}
     />
   );
 }
@@ -180,11 +185,6 @@ StopsFinder.propTypes = {
    * geOps api key to access the StopsFinder service.
    */
   apiKey: PropTypes.string,
-
-  /**
-   * Properties apply to the default [MUI TextField component](https://material-ui.com/api/text-field/) used by the Autocomplete.
-   */
-  textFieldProps: PropTypes.object,
 
   /**
    * minX,minY,maxX,maxY coordinates in WGS84 wherein the station should lie.
@@ -246,6 +246,11 @@ StopsFinder.propTypes = {
    * Function to render a different autocomplete input than the default one.
    */
   renderAutocomplete: PropTypes.func,
+
+  /**
+   * Properties apply to the default [MUI TextField component](https://material-ui.com/api/text-field/) used by the Autocomplete.
+   */
+  textFieldProps: PropTypes.object,
 
   /**
    * Url of the geOps StopsFinder service.

@@ -1,17 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
 import OLMap from "ol/Map";
+import PropTypes from "prop-types";
+import React from "react";
 
 const propTypes = {
   /**
-   * An [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
+   * Button content.
    */
-  map: PropTypes.instanceOf(OLMap).isRequired,
-
-  /**
-   * The extent to be zoomed.
-   */
-  extent: PropTypes.arrayOf(PropTypes.number).isRequired,
+  children: PropTypes.node.isRequired,
 
   /**
    * CSS class  for the fitExtent button.
@@ -19,9 +14,14 @@ const propTypes = {
   className: PropTypes.string,
 
   /**
-   * Button content.
+   * The extent to be zoomed.
    */
-  children: PropTypes.node.isRequired,
+  extent: PropTypes.arrayOf(PropTypes.number).isRequired,
+
+  /**
+   * An [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
+   */
+  map: PropTypes.instanceOf(OLMap).isRequired,
 };
 
 /**
@@ -29,10 +29,10 @@ const propTypes = {
  * an [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
  */
 function FitExtent({
-  map,
-  extent,
-  className = "rs-fit-extent",
   children,
+  className = "rs-fit-extent",
+  extent,
+  map,
   ...other
 }) {
   const fit = (evt) => {
@@ -46,10 +46,10 @@ function FitExtent({
   return (
     <div
       className={className}
-      role="button"
-      tabIndex="0"
       onClick={fit}
       onKeyPress={fit}
+      role="button"
+      tabIndex="0"
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...other}
     >

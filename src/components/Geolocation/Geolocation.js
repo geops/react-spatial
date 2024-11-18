@@ -1,27 +1,24 @@
-import React, { PureComponent } from "react";
-import PropTypes from "prop-types";
-
-import OLMap from "ol/Map";
-import { transform } from "ol/proj";
-import Point from "ol/geom/Point";
 import Feature from "ol/Feature";
+import Point from "ol/geom/Point";
+import VectorLayer from "ol/layer/Vector";
+import OLMap from "ol/Map";
 import { unByKey } from "ol/Observable";
-
-import Style from "ol/style/Style";
+import { transform } from "ol/proj";
+import VectorSource from "ol/source/Vector";
 import Circle from "ol/style/Circle";
 import Fill from "ol/style/Fill";
 import Stroke from "ol/style/Stroke";
-
-import VectorLayer from "ol/layer/Vector";
-import VectorSource from "ol/source/Vector";
-
+import Style from "ol/style/Style";
+import PropTypes from "prop-types";
+import React, { PureComponent } from "react";
 import { FaRegDotCircle } from "react-icons/fa";
 
 const propTypes = {
   /**
-   * CSS class of the button.
+   * If true, the map will center once on the position then will constantly recenter to the current Position.
+   * If false, the map will center once on the position then will never recenter if the position changes.
    */
-  className: PropTypes.string,
+  alwaysRecenterToPosition: PropTypes.bool,
 
   /**
    *  Children content of the Geolocation button.
@@ -29,19 +26,33 @@ const propTypes = {
   children: PropTypes.node,
 
   /**
+   * CSS class of the button.
+   */
+  className: PropTypes.string,
+
+  /**
+   * Color (Number array with rgb values) or style function.
+   * If a color is given, the style is animated.
+   */
+  colorOrStyleFunc: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.number),
+    PropTypes.func,
+  ]),
+
+  /**
    * An [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
    */
   map: PropTypes.instanceOf(OLMap).isRequired,
 
   /**
-   * Function triggered when geolocating is not successful.
+   * If true, the map will never center to the current position
    */
-  onError: PropTypes.func,
+  neverCenterToPosition: PropTypes.bool,
 
   /**
-   * Function triggered after successful geoLocation calls. Takes the ol/map, the current lat/lon coordinate and the component instance as arguments.
+   * If true, the map is not centered after it has been dragged once.
    */
-  onSuccess: PropTypes.func,
+  noCenterAfterDrag: PropTypes.bool,
 
   /**
    * Function triggered after the geolocation is activated. Takes the ol/map and the component instance as arguments.
@@ -54,42 +65,27 @@ const propTypes = {
   onDeactivate: PropTypes.func,
 
   /**
-   * If true, the map is not centered after it has been dragged once.
+   * Function triggered when geolocating is not successful.
    */
-  noCenterAfterDrag: PropTypes.bool,
+  onError: PropTypes.func,
 
   /**
-   * If true, the map will center once on the position then will constantly recenter to the current Position.
-   * If false, the map will center once on the position then will never recenter if the position changes.
+   * Function triggered after successful geoLocation calls. Takes the ol/map, the current lat/lon coordinate and the component instance as arguments.
    */
-  alwaysRecenterToPosition: PropTypes.bool,
-
-  /**
-   * If true, the map will never center to the current position
-   */
-  neverCenterToPosition: PropTypes.bool,
-
-  /**
-   * Color (Number array with rgb values) or style function.
-   * If a color is given, the style is animated.
-   */
-  colorOrStyleFunc: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.number),
-    PropTypes.func,
-  ]),
+  onSuccess: PropTypes.func,
 };
 
 const defaultProps = {
-  className: "rs-geolocation",
+  alwaysRecenterToPosition: true,
   children: <FaRegDotCircle focusable={false} />,
-  onError: () => {},
-  onSuccess: () => {},
+  className: "rs-geolocation",
+  colorOrStyleFunc: [235, 0, 0],
+  neverCenterToPosition: false,
+  noCenterAfterDrag: false,
   onActivate: () => {},
   onDeactivate: () => {},
-  noCenterAfterDrag: false,
-  alwaysRecenterToPosition: true,
-  neverCenterToPosition: false,
-  colorOrStyleFunc: [235, 0, 0],
+  onError: () => {},
+  onSuccess: () => {},
 };
 
 /**
@@ -110,47 +106,6 @@ class Geolocation extends PureComponent {
       active: false,
     };
     this.point = undefined;
-  }
-
-  componentWillUnmount() {
-    this.deactivate();
-  }
-
-  toggle() {
-    const { active } = this.state;
-    const { onError } = this.props;
-    const geolocation = "geolocation" in navigator;
-
-    if (!geolocation) {
-      onError(new Error("Geolocation not supported"));
-    } else if (!active) {
-      this.activate();
-    } else {
-      this.deactivate();
-    }
-  }
-
-  error(error) {
-    const { onError } = this.props;
-
-    this.deactivate();
-    onError(error);
-  }
-
-  deactivate() {
-    const { map, onDeactivate } = this.props;
-    window.clearInterval(this.interval);
-    this.layer.setMap(null);
-    navigator.geolocation.clearWatch(this.watch);
-
-    this.setState({
-      active: false,
-    });
-
-    this.isRecenteringToPosition = true;
-    this.point = undefined;
-    onDeactivate(map, this);
-    unByKey(this.dragListener);
   }
 
   activate() {
@@ -179,25 +134,31 @@ class Geolocation extends PureComponent {
     onActivate(map, this);
   }
 
-  update({ coords: { latitude, longitude } }) {
-    const { map, alwaysRecenterToPosition, neverCenterToPosition, onSuccess } =
-      this.props;
+  componentWillUnmount() {
+    this.deactivate();
+  }
 
-    const position = transform(
-      [longitude, latitude],
-      "EPSG:4326",
-      this.projection,
-    );
-    this.point.setCoordinates(position);
+  deactivate() {
+    const { map, onDeactivate } = this.props;
+    window.clearInterval(this.interval);
+    this.layer.setMap(null);
+    navigator.geolocation.clearWatch(this.watch);
 
-    if (!neverCenterToPosition && this.isRecenteringToPosition) {
-      map.getView().setCenter(position);
-      if (!alwaysRecenterToPosition) {
-        this.isRecenteringToPosition = false;
-      }
-    }
+    this.setState({
+      active: false,
+    });
 
-    onSuccess(map, [latitude, longitude], this);
+    this.isRecenteringToPosition = true;
+    this.point = undefined;
+    onDeactivate(map, this);
+    unByKey(this.dragListener);
+  }
+
+  error(error) {
+    const { onError } = this.props;
+
+    this.deactivate();
+    onError(error);
   }
 
   highlight() {
@@ -227,15 +188,15 @@ class Geolocation extends PureComponent {
       feature.setStyle(() => {
         const circleStyle = new Style({
           image: new Circle({
-            radius: 20,
-            rotation,
             fill: new Fill({
               color: "rgba(255, 255, 255, 0.01)",
             }),
+            radius: 20,
+            rotation,
             stroke: new Stroke({
+              color: `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${opacity})`,
               lineDash: [30, 10],
               width: 6,
-              color: `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${opacity})`,
             }),
           }),
         });
@@ -245,10 +206,10 @@ class Geolocation extends PureComponent {
         return [
           new Style({
             image: new Circle({
-              radius: 10,
               fill: new Fill({
                 color: `rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.5)`,
               }),
+              radius: 10,
             }),
           }),
           circleStyle,
@@ -272,8 +233,6 @@ class Geolocation extends PureComponent {
 
     return (
       <div
-        role="button"
-        tabIndex="0"
         className={`${className} ${active ? "rs-active" : ""}`}
         onClick={() => {
           return this.toggle();
@@ -281,12 +240,49 @@ class Geolocation extends PureComponent {
         onKeyPress={(e) => {
           return e.which === 13 && this.toggle();
         }}
+        role="button"
+        tabIndex="0"
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...other}
       >
         {children}
       </div>
     );
+  }
+
+  toggle() {
+    const { active } = this.state;
+    const { onError } = this.props;
+    const geolocation = "geolocation" in navigator;
+
+    if (!geolocation) {
+      onError(new Error("Geolocation not supported"));
+    } else if (!active) {
+      this.activate();
+    } else {
+      this.deactivate();
+    }
+  }
+
+  update({ coords: { latitude, longitude } }) {
+    const { alwaysRecenterToPosition, map, neverCenterToPosition, onSuccess } =
+      this.props;
+
+    const position = transform(
+      [longitude, latitude],
+      "EPSG:4326",
+      this.projection,
+    );
+    this.point.setCoordinates(position);
+
+    if (!neverCenterToPosition && this.isRecenteringToPosition) {
+      map.getView().setCenter(position);
+      if (!alwaysRecenterToPosition) {
+        this.isRecenteringToPosition = false;
+      }
+    }
+
+    onSuccess(map, [latitude, longitude], this);
   }
 }
 

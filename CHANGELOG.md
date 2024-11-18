@@ -2,6 +2,43 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.12.2](https://github.com/geops/react-spatial/compare/v1.12.1...v1.12.2) (2024-11-18)
+
+
+### Bug Fixes
+
+* update dependencies ([2fc4941](https://github.com/geops/react-spatial/commit/2fc49412406537049a6ea5401786ab85730444a0))
+
+### [1.12.1](https://github.com/geops/react-spatial/compare/v1.12.0...v1.12.1) (2024-08-29)
+
+
+### Bug Fixes
+
+* add eslint perfectionist ([a3dc061](https://github.com/geops/react-spatial/commit/a3dc061275d773b0d4127e5ffaebf69f72d64e21))
+* add more options to define the delay output ([fc2185c](https://github.com/geops/react-spatial/commit/fc2185cea472f9f61191e0a93095f460edfb8235))
+* update dependencies ([f1348df](https://github.com/geops/react-spatial/commit/f1348df0a84b50c9bed56e88bc15ede22a6725f6))
+
+## [1.12.0](https://github.com/geops/react-spatial/compare/v1.11.6...v1.12.0) (2024-08-14)
+
+
+### Features
+
+* **RouteSchedule:** add getDelayString prop for custom delay string ([#728](https://github.com/geops/react-spatial/issues/728)) ([f16b419](https://github.com/geops/react-spatial/commit/f16b4190fbda03fee6db3ecbb68ad6da82f25698))
+
+### [1.11.6](https://github.com/geops/react-spatial/compare/v1.11.5...v1.11.6) (2024-07-12)
+
+
+### Bug Fixes
+
+* add a property to set the download file name ([afab6f9](https://github.com/geops/react-spatial/commit/afab6f98db454e01dde351cedb5864984fd81504))
+
+### [1.11.5](https://github.com/geops/react-spatial/compare/v1.11.4...v1.11.5) (2024-07-11)
+
+
+### Bug Fixes
+
+* fix text style kml parsing as richt text ([#727](https://github.com/geops/react-spatial/issues/727)) ([e5bc676](https://github.com/geops/react-spatial/commit/e5bc67640c72a58ebab569685266e25c48853ad9))
+
 ### [1.11.4](https://github.com/geops/react-spatial/compare/v1.11.3...v1.11.4) (2024-07-08)
 
 

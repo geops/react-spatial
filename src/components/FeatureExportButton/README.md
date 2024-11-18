@@ -38,9 +38,7 @@ const vectorLayer = new VectorLayer({
 
 const layers = [
   new MaplibreLayer({
-    mapLibreOptions:{
-      style:`https://maps.geops.io/styles/travic_v2/style.json?key=${apiKey}`,
-    },
+    apiKey: apiKey,
   }),
   vectorLayer,
 ];

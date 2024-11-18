@@ -1,16 +1,17 @@
-import KML from "ol/format/KML";
 import { Feature, getUid } from "ol";
-import Point from "ol/geom/Point";
-import MultiPoint from "ol/geom/MultiPoint";
-import GeometryCollection from "ol/geom/GeometryCollection";
-import { Style, Text, Icon, Circle, Fill, Stroke } from "ol/style";
 import { asString } from "ol/color";
-import { parse } from "ol/xml";
-import { fromCircle } from "ol/geom/Polygon";
-import { transform, get } from "ol/proj";
+import KML from "ol/format/KML";
 import CircleGeom from "ol/geom/Circle";
-import { kmlStyle } from "./Styles";
+import GeometryCollection from "ol/geom/GeometryCollection";
+import MultiPoint from "ol/geom/MultiPoint";
+import Point from "ol/geom/Point";
+import { fromCircle } from "ol/geom/Polygon";
+import { get, transform } from "ol/proj";
+import { Circle, Fill, Icon, Stroke, Style, Text } from "ol/style";
+import { parse } from "ol/xml";
+
 import getPolygonPattern from "./getPolygonPattern";
+import { kmlStyle } from "./Styles";
 
 const CIRCLE_GEOMETRY_CENTER = "circleGeometryCenter";
 const CIRCLE_GEOMETRY_RADIUS = "circleGeometryRadius";
@@ -58,12 +59,12 @@ const getLineIcon = (feature, icon, color, start = true) => {
       return new Point(getVertexCoord(ge, start));
     },
     image: new Icon({
-      src: icon.url,
       color,
-      rotation: -rotation,
       rotateWithView: true,
+      rotation: -rotation,
       scale: icon.scale,
       size: icon.size, // ie 11
+      src: icon.url,
     }),
     zIndex: icon.zIndex,
   });
@@ -151,8 +152,8 @@ const sanitizeFeature = (feature, doNotRevert32pxScaling = false) => {
       if (image && image.getScale() === 0) {
         // transparentCircle is used to allow selection
         image = new Circle({
-          radius: 1,
           fill: new Fill({ color: [0, 0, 0, 0] }),
+          radius: 1,
           stroke: new Stroke({ color: [0, 0, 0, 0] }),
         });
       }
@@ -164,19 +165,40 @@ const sanitizeFeature = (feature, doNotRevert32pxScaling = false) => {
         feature.set("name", name);
       }
 
+      // For backward compatibility we translate the bold and italic textFont property to a textArray prop
+      const font = feature.get("textFont") || "normal 16px Helvetica";
+
+      // Since we use rich text in mapset editor we use a text array instead,
+      // it's only necessary when there is new lines in the text
+      // Manage new lines
+      if (/\n/.test(name)) {
+        const array = [];
+        const split = name.split("\n");
+        split.forEach((txt, idx) => {
+          array.push(txt || "\u200B", txt ? font : "");
+
+          if (idx < split.length - 1) {
+            array.push("\n", "");
+          }
+        });
+        name = array;
+      } else {
+        name = [name, font];
+      }
+
       text = new Text({
-        font: feature.get("textFont") || "normal 16px Helvetica",
-        text: feature.get("name"),
         fill: style.getText().getFill(),
+        font: font.replace(/bold/g, "normal"), // We manage bold in textArray
         // rotation unsupported by KML, taken instead from custom field.
         rotation: feature.get("textRotation") || 0,
+        // stroke: style.getText().getStroke(),
+        scale: style.getText().getScale(),
         // since ol 6.3.1 : https://github.com/openlayers/openlayers/pull/10613/files#diff-1883da8b57e690db7ea0c35ce53c880aR925
         // a default textstroke is added to mimic google earth.
         // it was not the case before, the stroke was always null. So to keep
         // the same behavior we don't copy the stroke style.
         // TODO : maybe we should use this functionnality in the futur.
-        // stroke: style.getText().getStroke(),
-        scale: style.getText().getScale(),
+        text: name,
       });
 
       if (feature.get("textArray")) {
@@ -280,8 +302,8 @@ const sanitizeFeature = (feature, doNotRevert32pxScaling = false) => {
 
       return new Style({
         fill,
-        stroke,
         image,
+        stroke,
         text,
         zIndex: style.getZIndex(),
       });
@@ -299,8 +321,8 @@ const sanitizeFeature = (feature, doNotRevert32pxScaling = false) => {
     styles = [
       new Style({
         fill: style.getFill(),
-        stroke,
         image: null,
+        stroke,
         text: null,
         zIndex: style.getZIndex(),
       }),
@@ -436,11 +458,11 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
       Object.keys(feature.getProperties()).forEach((key) => {
         if (
           ![
-            "geometry",
-            "name",
-            "description",
             CIRCLE_GEOMETRY_CENTER,
             CIRCLE_GEOMETRY_RADIUS,
+            "description",
+            "geometry",
+            "name",
           ].includes(key)
         ) {
           clone.unset(key, true);
@@ -459,9 +481,9 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
 
       const newStyle = {
         fill: mainStyle.getFill(),
+        image: mainStyle.getImage(),
         stroke: mainStyle.getStroke(),
         text: mainStyle.getText(),
-        image: mainStyle.getImage(),
         zIndex: mainStyle.getZIndex(),
       };
 
@@ -483,14 +505,16 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
             .map((t, idx) => {
               return idx % 2 === 0 ? t : "";
             })
-            .join("");
+
+            .join("")
+            .replaceAll("\u200B", "");
         }
 
         // We add the current text as features's name so it will be added as Placemark's name in the kml
         if (kmlText) {
           // If we see spaces at the beginning or at the end we add a empty
           // white space at the beginning and at the end.
-          if (/^\s|\s$/g.test(kmlText)) {
+          if (/^(\s|\n)|(\n|\s)$/g.test(kmlText)) {
             clone.set("name", `\u200B${kmlText}\u200B`);
           } else {
             clone.set("name", kmlText);
@@ -616,8 +640,8 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
       // image style with scale=0
       if (newStyle.text && !newStyle.image) {
         newStyle.image = new Icon({
-          src: "noimage",
           scale: 0,
+          src: "noimage",
         });
       }
 
@@ -635,9 +659,9 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
             clone.set(
               "lineStartIcon",
               JSON.stringify({
-                url: extraLineStyle.getImage().getSrc(),
                 scale: extraLineStyle.getImage().getScale(),
                 size: extraLineStyle.getImage().getSize(),
+                url: extraLineStyle.getImage().getSrc(),
                 zIndex: extraLineStyle.getZIndex(),
               }),
             );
@@ -645,9 +669,9 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
             clone.set(
               "lineEndIcon",
               JSON.stringify({
-                url: extraLineStyle.getImage().getSrc(),
                 scale: extraLineStyle.getImage().getScale(),
                 size: extraLineStyle.getImage().getSize(),
+                url: extraLineStyle.getImage().getSrc(),
                 zIndex: extraLineStyle.getZIndex(),
               }),
             );
@@ -676,8 +700,8 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
     }
 
     featString = new KML({
-      extractStyles: true,
       defaultStyle: [kmlStyle],
+      extractStyles: true,
     }).writeFeatures(exportFeatures);
 
     // Remove no image hack
@@ -744,7 +768,7 @@ const writeDocumentCamera = (kmlString, cameraAttributes) => {
 
 export default {
   readFeatures,
-  writeFeatures,
-  writeDocumentCamera,
   removeDocumentCamera,
+  writeDocumentCamera,
+  writeFeatures,
 };

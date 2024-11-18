@@ -1,7 +1,7 @@
-import React, { useRef, useEffect } from "react";
-import PropTypes from "prop-types";
 import OLScaleLine from "ol/control/ScaleLine";
 import OLMap from "ol/Map";
+import PropTypes from "prop-types";
+import React, { useEffect, useRef } from "react";
 
 const propTypes = {
   /**

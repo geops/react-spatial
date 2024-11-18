@@ -15,19 +15,17 @@ import basebrightImage from 'react-spatial/images/baselayer/baselayer.basebright
 const center = [1149722.7037660484, 6618091.313553318];
 const map = new Map({ controls: [] });
 const travicLayer = new MaplibreLayer({
+  apiKey: apiKey,
   key: 'travic.baselayer',
-  mapLibreOptions:{
-    style:`https://maps.geops.io/styles/travic_v2/style.json?key=${apiKey}`,
-  },
   name: 'Travic',
+  style:"travic_v2",
 });
 
 const basebrightLayer = new MaplibreLayer({
+  apiKey: apiKey,
   key: 'basebright.baselayer',
-  mapLibreOptions:{
-    style:`https://maps.geops.io/styles/base_bright_v2/style.json?key=${apiKey}`,
-  },
   name: 'Base - Bright',
+  style: "base_bright_v2",
   visible: false,
 });
 
