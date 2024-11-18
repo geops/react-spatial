@@ -1,32 +1,34 @@
 /**
 * This file is loaded by the styleguide and provide additionnal css for all examples.
 */
-@import './index';
-@import '../../components/BaseLayerSwitcher/BaseLayerSwitcher.md';
-@import '../../components/BasicMap/BasicMap.md';
-@import '../../components/CanvasSaveButton/CanvasSaveButton.md';
-@import '../../components/FeatureExportButton/FeatureExportButton.md';
-@import '../../components/FitExtent/FitExtent.md';
-@import '../../components/Geolocation/Geolocation.md';
-@import '../../components/LayerTree/LayerTree.md';
-@import '../../components/MousePosition/MousePosition.md';
-@import '../../components/Permalink/Permalink.md';
-@import '../../components/Popup/Popup.md';
-@import '../../components/Zoom/Zoom.md';
-@import '../../components/RouteSchedule/RouteSchedule.md';
-@import '../../components/Copyright/Copyright.md';
-@import '../../components/Overlay/Overlay.md';
+@use 'index';
+@use 'variables';
+@use 'mixins';
+@use '../../components/BaseLayerSwitcher/BaseLayerSwitcher.md';
+@use '../../components/BasicMap/BasicMap.md';
+@use '../../components/CanvasSaveButton/CanvasSaveButton.md';
+@use '../../components/FeatureExportButton/FeatureExportButton.md';
+@use '../../components/FitExtent/FitExtent.md';
+@use '../../components/Geolocation/Geolocation.md';
+@use '../../components/LayerTree/LayerTree.md';
+@use '../../components/MousePosition/MousePosition.md';
+@use '../../components/Permalink/Permalink.md';
+@use '../../components/Popup/Popup.md';
+@use '../../components/Zoom/Zoom.md';
+@use '../../components/RouteSchedule/RouteSchedule.md';
+@use '../../components/Copyright/Copyright.md';
+@use '../../components/Overlay/Overlay.md';
 
 $link-color: #000;
 $link-color-hover: #000;
 
 /* Load 'a' mixin */
-@include a;
+@include mixins.a();
 
 a {
   font-size: 11px;
 }
 
 body {
-  font-family: $font-family;
+  font-family: variables.$font-family;
 }

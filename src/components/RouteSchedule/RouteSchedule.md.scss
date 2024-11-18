@@ -1,5 +1,7 @@
+@use "../../themes/default/variables";
+
 .rt-route-schedule-example {
-  font-family: $font-family;
+  font-family: variables.$font-family;
   position: relative;
   display: flex;
 

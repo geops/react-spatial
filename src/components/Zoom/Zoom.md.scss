@@ -1,3 +1,5 @@
+@use '../../themes/default/variables';
+
 .rs-zoom-example {
   position: relative;
 
@@ -12,7 +14,7 @@
 
   .rs-zoom-in,
   .rs-zoom-out {
-    background: $btn-secondary-color;
+    background: variables.$btn-secondary-color;
     border-radius: 50%;
     color: white;
   }

@@ -1,10 +1,12 @@
+@use "../../themes/default/variables";
+
 .rs-popup {
   position: absolute;
 
   .rs-popup-container {
     position: absolute;
     background-color: white;
-    filter: drop-shadow($box-shadow);
+    filter: drop-shadow(variables.$box-shadow);
     bottom: 12px;
     left: -50px;
     min-width: 220px;

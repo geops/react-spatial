@@ -1,3 +1,5 @@
+@use "../../themes/default/variables";
+
 .rs-layer-tree {
   width: 100%;
   overflow-y: auto;
@@ -111,7 +113,7 @@
       top: 1px;
       width: 5px;
       height: 10px;
-      border: solid $brand-primary;
+      border: solid variables.$brand-primary;
       border-width: 0 1px 1px 0;
       transform: rotate(45deg);
     }
@@ -123,7 +125,7 @@
       width: 12px;
       height: 12px;
       border-radius: 50%;
-      background: $brand-primary;
+      background: variables.$brand-primary;
     }
 
     label input:checked ~ span::after {

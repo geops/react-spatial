@@ -1,3 +1,5 @@
+@use "variables";
+
 /**
 * This file defines mixins.
 */
@@ -7,16 +9,16 @@
 */
 @mixin a() {
   a {
-    color: $link-color;
-    text-decoration: $link-decoration;
+    color: variables.$link-color;
+    text-decoration: variables.$link-decoration;
 
     &:hover {
-      color: $link-color-hover;
-      text-decoration: $link-decoration-hover;
+      color: variables.$link-color-hover;
+      text-decoration: variables.$link-decoration-hover;
     }
 
     &:active {
-      color: $link-color-active;
+      color: variables.$link-color-active;
     }
 
     &.rs-selected {
