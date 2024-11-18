@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.12.2](https://github.com/geops/react-spatial/compare/v1.12.1...v1.12.2) (2024-11-18)
+
+
+### Bug Fixes
+
+* update dependencies ([2fc4941](https://github.com/geops/react-spatial/commit/2fc49412406537049a6ea5401786ab85730444a0))
+
 ### [1.12.1](https://github.com/geops/react-spatial/compare/v1.12.0...v1.12.1) (2024-08-29)
 
 
