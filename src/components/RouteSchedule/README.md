@@ -82,7 +82,6 @@ function RouteScheduleExample() {
         layerFilter: l => l === trackerLayer,
         hitTolerance: 5
       }) || [];
-      console.log(feature);
       setFeature(feature);
     });
     return () => {
@@ -90,9 +89,6 @@ function RouteScheduleExample() {
     }
   }, [trackerLayer.map]);
 
-  useEffect(()=> {
-    trackerLayer.map.updateSize();
-  }, [lineInfos]);
 
   return (
     <div className="rt-route-schedule-example">

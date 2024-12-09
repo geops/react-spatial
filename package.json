@@ -6,7 +6,7 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
-    "@geops/geops-ui": "0.3.4",
+    "@geops/geops-ui": "0.3.5",
     "@mui/icons-material": "^6.1.10",
     "@mui/material": "^6.1.10",
     "re-resizable": "6.10.1",
@@ -119,87 +119,5 @@
     "not op_mini all",
     "not ie <= 11",
     "not android < 5"
-  ],
-  "eslintConfig": {
-    "env": {
-      "node": true,
-      "browser": true,
-      "es6": true,
-      "jest": true
-    },
-    "extends": [
-      "airbnb",
-      "airbnb/hooks",
-      "plugin:perfectionist/recommended-alphabetical-legacy",
-      "prettier"
-    ],
-    "parserOptions": {
-      "ecmaVersion": "latest"
-    },
-    "plugins": [
-      "perfectionist",
-      "prettier"
-    ],
-    "rules": {
-      "arrow-body-style": "off",
-      "import/no-extraneous-dependencies": [
-        "error",
-        {
-          "devDependencies": true
-        }
-      ],
-      "react/sort-comp": "off",
-      "react/jsx-filename-extension": [
-        1,
-        {
-          "extensions": [
-            ".js",
-            ".jsx"
-          ]
-        }
-      ],
-      "no-restricted-exports": "Off",
-      "react/forbid-prop-types": "Off",
-      "prettier/prettier": "error",
-      "jsx-a11y/no-access-key": "Off",
-      "react/require-default-props": "Off"
-    }
-  },
-  "jest": {
-    "testEnvironment": "jsdom",
-    "transform": {
-      ".+\\.js$": "babel-jest",
-      ".+\\.svg$": "jest-transformer-svg"
-    },
-    "transformIgnorePatterns": [],
-    "testMatch": [
-      "<rootDir>/src/**/?(*.)+(spec|test).[jt]s?(x)"
-    ],
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|webp|scss)$": "identity-obj-proxy",
-      "@geoblocks/ol-maplibre-layer": "<rootDir>/node_modules/@geoblocks/ol-maplibre-layer/lib/index.js"
-    },
-    "snapshotSerializers": [
-      "jest-serializer-html"
-    ],
-    "testPathIgnorePatterns": [
-      "<rootDir>/(build|coverage|public|doc|packages)"
-    ],
-    "setupFilesAfterEnv": [
-      "<rootDir>/src/setupTests.js"
-    ]
-  },
-  "lint-staged": {
-    "(src|__mocks__)/**/*.js": [
-      "eslint --fix",
-      "prettier --write",
-      "yarn test --bail --findRelatedTests"
-    ],
-    "package.json": [
-      "fixpack"
-    ],
-    "src/**/*.{css,scss}": [
-      "stylelint --fix"
-    ]
-  }
+  ]
 }

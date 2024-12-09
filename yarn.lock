@@ -2435,10 +2435,10 @@
   resolved "https://registry.yarnpkg.com/@geoblocks/ol-maplibre-layer/-/ol-maplibre-layer-1.0.2.tgz#12ea1f99a6da8efc128a82f367cd1b406b786937"
   integrity sha512-A08lboUJYuUKCLBTlzy18kq8ZGnIFCPN9gblEZi0nlHNVxJsg9Irw5G3KW5ZvxhdLWreEP/l1Q0YorCpnsfilA==
 
-"@geops/geops-ui@0.3.4":
-  version "0.3.4"
-  resolved "https://registry.yarnpkg.com/@geops/geops-ui/-/geops-ui-0.3.4.tgz#9afc06e42b79bf40896e06bfa3e11f902f40606a"
-  integrity sha512-KhquOzYWkzsEaXRBmARKZ1+Z935qdlHapdirGRSYIrxFTwBCiPjLC7Ap8cbNq+L5anzH7Lq4RSS7m6bqU1iSjw==
+"@geops/geops-ui@0.3.5":
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/@geops/geops-ui/-/geops-ui-0.3.5.tgz#80c9f23663bb713412aff96934369d087497685e"
+  integrity sha512-u+ORoPAkSCasPm7Y8vMr6Um747G3/2MWLW2RYbdVbjmE8XsSUbJSkNr17omhJzldsYfx/WlneKtLkVuKv/iryg==
   dependencies:
     prop-types "^15.7.2"
 

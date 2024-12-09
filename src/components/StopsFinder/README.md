@@ -37,7 +37,6 @@ const { apiKey } = window;
     map={map}
     apiKey={apiKey}
     onSelect={({ geometry }) => {
-      console.log(geometry);
       map.getView().setCenter(fromLonLat(geometry.coordinates));
     }}
   />

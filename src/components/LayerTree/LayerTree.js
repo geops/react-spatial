@@ -162,6 +162,36 @@ const defaultProps = {
  */
 
 class LayerTree extends Component {
+  constructor(props) {
+    super(props);
+
+    const { isItemHidden, layers } = this.props;
+    const initialExpandedLayers = layers
+      ? this.getExpandedLayers(
+          layers.filter((l) => {
+            return (
+              !isItemHidden(l) &&
+              LayerTree.getChildren(l)
+                .filter((child) => {
+                  return LayerTree.getVisible(child);
+                })
+                .filter((c) => {
+                  return !isItemHidden(c);
+                }).length
+            );
+          }),
+        )
+      : [];
+
+    this.state = {
+      expandedLayers: initialExpandedLayers,
+      revision: 0,
+      rootLayer: new Layer({}),
+    };
+    // this.updateLayers = this.updateLayers.bind(this);
+    this.olKeys = [];
+  }
+
   static getChildren = (layer) =>
     layer?.get("children") ||
     layer?.children ||
@@ -197,36 +227,6 @@ class LayerTree extends Component {
     // eslint-disable-next-line no-param-reassign
     layer.visible = visible;
   };
-
-  constructor(props) {
-    super(props);
-
-    const { isItemHidden, layers } = this.props;
-    const initialExpandedLayers = layers
-      ? this.getExpandedLayers(
-          layers.filter((l) => {
-            return (
-              !isItemHidden(l) &&
-              LayerTree.getChildren(l)
-                .filter((child) => {
-                  return LayerTree.getVisible(child);
-                })
-                .filter((c) => {
-                  return !isItemHidden(c);
-                }).length
-            );
-          }),
-        )
-      : [];
-
-    this.state = {
-      expandedLayers: initialExpandedLayers,
-      revision: 0,
-      rootLayer: new Layer({}),
-    };
-    // this.updateLayers = this.updateLayers.bind(this);
-    this.olKeys = [];
-  }
 
   componentDidMount() {
     this.updateLayers();

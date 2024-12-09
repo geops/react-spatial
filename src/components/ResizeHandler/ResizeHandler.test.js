@@ -48,17 +48,35 @@ class BasicComponent3 extends React.Component {
   }
 }
 
-class StrComponent extends React.Component {
+class CallbackComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      ref: null,
+    };
+  }
+
   render() {
+    const { ref } = this.state;
     return (
-      <span id="basic">
-        <ResizeHandler observe="#basic" />
-      </span>
+      <>
+        <div
+          ref={(node) => {
+            if (node && !ref) {
+              this.setState({
+                ref: node,
+              });
+            }
+          }}
+        />
+        <ResizeHandler observe={ref} />
+      </>
     );
   }
 }
 
-class CallbackComponent extends React.Component {
+// eslint-disable-next-line  react/prefer-stateless-function
+class CallbackNodeComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -101,30 +119,12 @@ class RefNodeComponent extends React.Component {
   }
 }
 
-// eslint-disable-next-line  react/prefer-stateless-function
-class CallbackNodeComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      ref: null,
-    };
-  }
-
+class StrComponent extends React.Component {
   render() {
-    const { ref } = this.state;
     return (
-      <>
-        <div
-          ref={(node) => {
-            if (node && !ref) {
-              this.setState({
-                ref: node,
-              });
-            }
-          }}
-        />
-        <ResizeHandler observe={ref} />
-      </>
+      <span id="basic">
+        <ResizeHandler observe="#basic" />
+      </span>
     );
   }
 }
