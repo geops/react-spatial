@@ -21,21 +21,21 @@ module.exports = {
     },
     {
       components: [
-        // "src/components/BaseLayerSwitcher/[A-Z]*.js",
+        "src/components/BaseLayerSwitcher/[A-Z]*.js",
         "src/components/BasicMap/[A-Z]*.js",
-        // "src/components/CanvasSaveButton/[A-Z]*.js",
-        // "src/components/Copyright/[A-Z]*.js",
-        // "src/components/FeatureExportButton/[A-Z]*.js",
-        // "src/components/FitExtent/[A-Z]*.js",
-        // "src/components/Geolocation/[A-Z]*.js",
+        "src/components/CanvasSaveButton/[A-Z]*.js",
+        "src/components/Copyright/[A-Z]*.js",
+        "src/components/FeatureExportButton/[A-Z]*.js",
+        "src/components/FitExtent/[A-Z]*.js",
+        "src/components/Geolocation/[A-Z]*.js",
         "src/components/LayerTree/[A-Z]*.js",
-        // "src/components/MousePosition/[A-Z]*.js",
-        // "src/components/NorthArrow/[A-Z]*.js",
-        // "src/components/Permalink/[A-Z]*.js",
-        // "src/components/Popup/[A-Z]*.js",
-        // "src/components/Overlay/[A-Z]*.js",
-        // "src/components/ScaleLine/[A-Z]*.js",
-        // "src/components/Zoom/[A-Z]*.js",
+        "src/components/MousePosition/[A-Z]*.js",
+        "src/components/NorthArrow/[A-Z]*.js",
+        "src/components/Permalink/[A-Z]*.js",
+        "src/components/Popup/[A-Z]*.js",
+        "src/components/Overlay/[A-Z]*.js",
+        "src/components/ScaleLine/[A-Z]*.js",
+        "src/components/Zoom/[A-Z]*.js",
       ],
       description:
         "A collection of React components for spatial web development of map components.",
@@ -43,21 +43,21 @@ module.exports = {
       name: "Maps",
       usageMode: "collapse", // 'hide' | 'collapse' | 'expand'
     },
-    // {
-    //   components: ["src/components/RouteSchedule/[A-Z]*.js"],
-    //   description:
-    //     "A collection of React components for spatial web development of realtime components.",
-    //   exampleMode: "expand", // 'hide' | 'collapse' | 'expand'
-    //   name: "Realtime",
-    //   usageMode: "collapse", // 'hide' | 'collapse' | 'expand'
-    // },
-    // {
-    //   components: ["src/components/StopsFinder/StopsFinder.js"],
-    //   description:
-    //     "A collection of React components for spatial web development of stops components.",
-    //   exampleMode: "expand", // 'hide' | 'collapse' | 'expand'
-    //   name: "Stops",
-    // },
+    {
+      components: ["src/components/RouteSchedule/[A-Z]*.js"],
+      description:
+        "A collection of React components for spatial web development of realtime components.",
+      exampleMode: "expand", // 'hide' | 'collapse' | 'expand'
+      name: "Realtime",
+      usageMode: "collapse", // 'hide' | 'collapse' | 'expand'
+    },
+    {
+      components: ["src/components/StopsFinder/StopsFinder.js"],
+      description:
+        "A collection of React components for spatial web development of stops components.",
+      exampleMode: "expand", // 'hide' | 'collapse' | 'expand'
+      name: "Stops",
+    },
   ],
   showSidebar: true,
   styleguideComponents: {

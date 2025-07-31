@@ -10162,10 +10162,10 @@ mkdirp@~0.5.1:
   dependencies:
     minimist "^1.2.6"
 
-mobility-toolbox-js@3.3.0-beta.34:
-  version "3.3.0-beta.34"
-  resolved "https://registry.yarnpkg.com/mobility-toolbox-js/-/mobility-toolbox-js-3.3.0-beta.34.tgz#7ebc62c9a306ea3ea77de18f247caa656472fd3b"
-  integrity sha512-kOF8a+Mcknm4hBpOvAu+D28HCDAN9eQ2H+4UfBCR0Bc49UxlfvTlvPe5a//4H9gM18kfCIVIQDe9VGRGtgmGSA==
+mobility-toolbox-js@3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/mobility-toolbox-js/-/mobility-toolbox-js-3.3.1.tgz#d2a56580255105f3119b63d88557dfe8547c59b2"
+  integrity sha512-t18Gwg5NMiB7QJDn94yNEQWWxi1EzLxNL6bihuE44SfY/iwUPJZe7s+E3HzPqcmM8CE0YNNHqlbPqnPcIaA9lw==
   dependencies:
     "@geoblocks/ol-maplibre-layer" "^1.0.3"
     "@turf/helpers" "7.2.0"
