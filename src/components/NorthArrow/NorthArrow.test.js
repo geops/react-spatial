@@ -1,10 +1,9 @@
-import { render } from "@testing-library/react";
+import { act, render } from "@testing-library/react";
 import "jest-canvas-mock";
 import OLMap from "ol/Map";
 import MapEvent from "ol/MapEvent";
 import OLView from "ol/View";
 import React from "react";
-import { act } from "react-dom/test-utils";
 import { TiImage } from "react-icons/ti";
 
 import NorthArrow from "./NorthArrow";

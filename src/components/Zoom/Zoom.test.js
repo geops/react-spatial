@@ -1,9 +1,8 @@
-import { fireEvent, render } from "@testing-library/react";
+import { act, fireEvent, render } from "@testing-library/react";
 import OLMap from "ol/Map";
 import MapEvent from "ol/MapEvent";
 import OLView from "ol/View";
 import React from "react";
-import { act } from "react-dom/test-utils";
 
 import Zoom from "./Zoom";
 
