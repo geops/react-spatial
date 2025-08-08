@@ -1,6 +1,5 @@
-import Adapter from "@cfaester/enzyme-adapter-react-18";
-import { configure, mount, shallow } from "enzyme";
 import "jest-canvas-mock";
+import { fireEvent, render } from "@testing-library/react";
 import Feature from "ol/Feature";
 import GPX from "ol/format/GPX";
 import LineString from "ol/geom/LineString";
@@ -13,11 +12,8 @@ import Stroke from "ol/style/Stroke";
 import Style from "ol/style/Style";
 import Text from "ol/style/Text";
 import React from "react";
-import renderer from "react-test-renderer";
 
 import FeatureExportButton from ".";
-
-configure({ adapter: new Adapter() });
 
 const layer = new VectorLayer({
   name: "Sample layer",
@@ -33,13 +29,12 @@ const layer = new VectorLayer({
 describe("FeatureExportButton", () => {
   describe("should match snapshot", () => {
     test("with default attributes.", () => {
-      const component = renderer.create(<FeatureExportButton layer={layer} />);
-      const tree = component.toJSON();
-      expect(tree).toMatchSnapshot();
+      const { container } = render(<FeatureExportButton layer={layer} />);
+      expect(container.innerHTML).toMatchSnapshot();
     });
 
     test("should match snapshot with cutom attributes.", () => {
-      const component = renderer.create(
+      const { container } = render(
         <FeatureExportButton
           className="foo"
           layer={layer}
@@ -48,18 +43,16 @@ describe("FeatureExportButton", () => {
           title="bar"
         />,
       );
-      const tree = component.toJSON();
-      expect(tree).toMatchSnapshot();
+      expect(container.innerHTML).toMatchSnapshot();
     });
 
     test("should match snapshot with children passed.", () => {
-      const component = renderer.create(
+      const { container } = render(
         <FeatureExportButton layer={layer}>
           <div>Foo</div>
         </FeatureExportButton>,
       );
-      const tree = component.toJSON();
-      expect(tree).toMatchSnapshot();
+      expect(container.innerHTML).toMatchSnapshot();
     });
   });
 
@@ -98,14 +91,14 @@ describe("FeatureExportButton", () => {
     });
 
     test("should be trigger click function.", () => {
-      const wrapper = shallow(<FeatureExportButton layer={iconLayer} />);
+      const { container } = render(<FeatureExportButton layer={iconLayer} />);
       const spy = jest.spyOn(FeatureExportButton, "exportFeatures");
-      wrapper.find(".rs-feature-export-button").simulate("click");
+      fireEvent.click(container.querySelector(".rs-feature-export-button"));
       expect(spy).toHaveBeenCalledTimes(1);
     });
 
     test("should use attributes for parsing", () => {
-      const wrapper = mount(
+      const { container } = render(
         <FeatureExportButton
           format={GPX}
           layer={iconLayer}
@@ -113,7 +106,7 @@ describe("FeatureExportButton", () => {
         />,
       );
       const spy = jest.spyOn(FeatureExportButton, "exportFeatures");
-      wrapper.find(".rs-feature-export-button").simulate("click");
+      fireEvent.click(container.querySelector(".rs-feature-export-button"));
       expect(spy).toHaveBeenCalledWith(iconLayer, "EPSG:4326", GPX);
     });
 
