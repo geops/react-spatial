@@ -1,3 +1,4 @@
+/* eslint-disable no-irregular-whitespace */
 import VectorLayer from "ol/layer/Vector";
 import { get } from "ol/proj";
 import VectorSource from "ol/source/Vector";
@@ -239,7 +240,7 @@ describe("KML", () => {
           <Document>
             <name>lala</name>
             <Placemark>
-              <name>\u200B   bar  \u200B</name>
+              <name><![CDATA[\u200B   bar  \u200B]]></name>
               <Style>
                 <IconStyle>
                   <scale>0</scale>
@@ -252,7 +253,7 @@ describe("KML", () => {
               <ExtendedData>
                 <Data name="textArray">
                     <value>
-                        ["   bar  ","normal 16px arial"]
+                        <![CDATA[["   bar  ","normal 16px arial"]]]>
                     </value>
                 </Data>
                 <Data name="textFont">
@@ -283,7 +284,7 @@ describe("KML", () => {
           <Document>
             <name>lala</name>
             <Placemark>
-              <name>\u200B\n   foo   \n\u200B</name>
+              <name><![CDATA[\u200B\n   foo   \n\u200B]]></name>
               <Style>
                 <IconStyle>
                   <scale>0</scale>
@@ -295,7 +296,7 @@ describe("KML", () => {
               </Style>
               <ExtendedData>
                 <Data name="textArray">
-                  <value>["\\n","","   ","","foo","bold 16px arial","   ","","\\n",""]</value>
+                  <value><![CDATA[["\\n","","   ","","foo","bold 16px arial","   ","","\\n",""]]]></value>
                 </Data>
                 <Data name="textFont">
                   <value>normal 16px arial</value>
@@ -340,7 +341,7 @@ describe("KML", () => {
           <Document>
             <name>lala</name>
             <Placemark>
-              <name>\u200B   bar  \u200B</name>
+              <name><![CDATA[\u200B   bar  \u200B]]></name>
               <Style>
                 <IconStyle>
                   <scale>0</scale>
@@ -380,7 +381,7 @@ describe("KML", () => {
         <Document>
           <name>lala</name>
           <Placemark>
-            <name>\u200B   bar  \u200B</name>
+            <name><![CDATA[\u200B   bar  \u200B]]></name>
             <Style>
               <IconStyle>
                 <scale>0</scale>
@@ -393,7 +394,7 @@ describe("KML", () => {
             <ExtendedData>
               <Data name="textArray">
                   <value>
-                      ["   bar  ","normal 16px arial"]
+                      <![CDATA[["   bar  ","normal 16px arial"]]]>
                   </value>
               </Data>
               <Data name="textFont">
@@ -475,7 +476,7 @@ describe("KML", () => {
           <Document>
             <name>lala</name>
             <Placemark>
-              <name>\u200B\n   foo  \n\n  \n\u200B</name>
+              <name><![CDATA[\u200B\n   foo  \n\n  \n\u200B]]></name>
               <Style>
                 <IconStyle>
                   <scale>0</scale>
@@ -487,7 +488,9 @@ describe("KML", () => {
               </Style>
               <ExtendedData>
                 <Data name="textArray">
-                  <value>["\u200B","","\\n","","   foo  ","bold 16px arial","\\n","","\u200B","","\\n","","  ","bold 16px arial","\\n","","\u200B",""]</value>
+                  <value>
+                    <![CDATA[["​","","\\n","","   foo  ","bold 16px arial","\\n","","​","","\\n","","  ","bold 16px arial","\\n","","​",""]]]>
+                  </value>
                 </Data>
                 <Data name="textFont">
                   <value>normal 16px arial</value>
@@ -692,7 +695,7 @@ describe("KML", () => {
                           0.166666667
                         </scale>
                         <Icon>
-                            <href>https://icon-generator.geops.io/pictogram?urlPrefix=https%3A%2F%2Feditor.mapset.ch%2Fstatic%2Fimages%2F&amp;columns=2&amp;color=%2C&amp;fontsize=%2C&amp;text=%2C&amp;fill=inc%3Ach%2F02_Gleis-2_g_fr_v1.png%2Cinc%3ASBB%2F03_Gleis-3_g_fr_v1.png&amp;iconMargin=26&amp;iconSize=144&amp;format=png&amp;border=%2C</href>
+                            <href><![CDATA[https://icon-generator.geops.io/pictogram?urlPrefix=https%3A%2F%2Feditor.mapset.ch%2Fstatic%2Fimages%2F&columns=2&color=%2C&fontsize=%2C&text=%2C&fill=inc%3Ach%2F02_Gleis-2_g_fr_v1.png%2Cinc%3ASBB%2F03_Gleis-3_g_fr_v1.png&iconMargin=26&iconSize=144&format=png&border=%2C]]></href>
                         </Icon>
                         <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
                     </IconStyle>
@@ -716,7 +719,7 @@ describe("KML", () => {
                         0.333333
                         </scale>
                         <Icon>
-                        <href>https://icon-generator.geops.io/pictogram?urlPrefix=https%3A%2F%2Feditor.mapset.ch%2Fstatic%2Fimages%2F&amp;columns=2&amp;color=%2C&amp;fontsize=%2C&amp;text=%2C&amp;fill=inc%3Ach%2F02_Gleis-2_g_fr_v1.png%2Cinc%3ASBB%2F03_Gleis-3_g_fr_v1.png&amp;iconMargin=26&amp;iconSize=144&amp;format=png&amp;border=%2C</href>
+                        <href><![CDATA[https://icon-generator.geops.io/pictogram?urlPrefix=https%3A%2F%2Feditor.mapset.ch%2Fstatic%2Fimages%2F&columns=2&color=%2C&fontsize=%2C&text=%2C&fill=inc%3Ach%2F02_Gleis-2_g_fr_v1.png%2Cinc%3ASBB%2F03_Gleis-3_g_fr_v1.png&iconMargin=26&iconSize=144&format=png&border=%2C]]></href>
                         </Icon>
                     </IconStyle>
                 </Style>
