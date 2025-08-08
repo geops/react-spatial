@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`RouteSchedule matches snapshots. 1`] = `
 <div class="rt-route-schedule">
@@ -28,7 +28,7 @@ exports[`RouteSchedule matches snapshots. 1`] = `
          tabindex="0"
     >
       <div class="rt-route-delay">
-        <span>
+        <span style="color: rgb(0, 160, 12);">
           +1m
         </span>
       </div>
@@ -53,10 +53,10 @@ exports[`RouteSchedule matches snapshots. 1`] = `
          tabindex="0"
     >
       <div class="rt-route-delay">
-        <span>
+        <span style="color: rgb(0, 160, 12);">
           +0
         </span>
-        <span>
+        <span style="color: rgb(0, 160, 12);">
           +2m
         </span>
       </div>
@@ -101,7 +101,7 @@ exports[`RouteSchedule matches snapshots. 1`] = `
          tabindex="0"
     >
       <div class="rt-route-delay">
-        <span>
+        <span style="color: rgb(247, 191, 0);">
           +4m
         </span>
       </div>
