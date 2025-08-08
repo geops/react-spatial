@@ -1,6 +1,6 @@
+import { render } from "@testing-library/react";
 import { Map } from "ol";
 import React from "react";
-import renderer from "react-test-renderer";
 
 import StopsFinder from ".";
 
@@ -12,7 +12,7 @@ describe("StopsFinder", () => {
   });
 
   test("matches snapshots.", () => {
-    const component = renderer.create(<StopsFinder map={map} />);
-    expect(component.toJSON()).toMatchSnapshot();
+    const { container } = render(<StopsFinder map={map} />);
+    expect(container.innerHTML).toMatchSnapshot();
   });
 });

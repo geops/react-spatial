@@ -1,7 +1,7 @@
+import { render } from "@testing-library/react";
 import "jest-date-mock";
 import { RealtimeLayer as TrackerLayer } from "mobility-toolbox-js/ol";
 import React from "react";
-import renderer from "react-test-renderer";
 
 import RouteSchedule from ".";
 
@@ -88,7 +88,7 @@ describe("RouteSchedule", () => {
 
   test("matches snapshots.", () => {
     const trackerLayer = new TrackerLayer({});
-    const component = renderer.create(
+    const { container } = render(
       <RouteSchedule
         lineInfos={lineInfos}
         renderHeaderButtons={() => {
@@ -98,8 +98,7 @@ describe("RouteSchedule", () => {
         trackerLayer={trackerLayer}
       />,
     );
-    const tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
+    expect(container.innerHTML).toMatchSnapshot();
   });
 
   // to test: on station click
