@@ -1,17 +1,11 @@
-import Adapter from "@cfaester/enzyme-adapter-react-18";
-import { configure, mount } from "enzyme";
+import { render } from "@testing-library/react";
 import PropTypes from "prop-types";
-import { Resizable } from "re-resizable";
-import React, { useState } from "react";
-import { act } from "react-dom/test-utils";
-import renderer from "react-test-renderer";
+import React, { act, useState } from "react";
 import ResizeObserver from "resize-observer-polyfill";
 
 import Overlay from "./Overlay";
 
 jest.mock("resize-observer-polyfill");
-
-configure({ adapter: new Adapter() });
 
 const propTypes = {
   isMobileResizable: PropTypes.bool,
@@ -51,14 +45,13 @@ BasicComponent.defaultProps = defaultProps;
 
 describe("Overlay", () => {
   test("should match snapshot.", () => {
-    const component = renderer.create(<Overlay>Test content</Overlay>);
-    const tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
+    const { container } = render(<Overlay>Test content</Overlay>);
+    expect(container.innerHTML).toMatchSnapshot();
   });
 
   test("should react on observe resize.", () => {
-    const wrapper = mount(<BasicComponent />);
-    const target = wrapper.find(".observer").getDOMNode();
+    const { container } = render(<BasicComponent />);
+    const target = container.querySelector(".observer");
 
     act(() => {
       // The mock class set the onResize property, we just have to run it to
@@ -73,17 +66,16 @@ describe("Overlay", () => {
         },
       ]);
     });
-    wrapper.update();
 
-    expect(wrapper.find(".tm-overlay").length > 0).toBe(false);
-    expect(wrapper.find(".tm-overlay-mobile").length > 0).toBe(true);
+    expect(container.querySelector(".tm-overlay")).toBe(null);
+    expect(container.querySelector(".tm-overlay-mobile")).not.toBe(null);
   });
 
   test("should force mobile overlay display on big screen.", () => {
-    const wrapper = mount(
+    const { container } = render(
       <BasicComponent thresholdWidthForMobile={Infinity} />,
     );
-    const target = wrapper.find(".observer").getDOMNode();
+    const target = container.querySelector(".observer");
 
     act(() => {
       ResizeObserver.onResize([
@@ -96,15 +88,14 @@ describe("Overlay", () => {
         },
       ]);
     });
-    wrapper.update();
 
-    expect(wrapper.find(".tm-overlay").length > 0).toBe(false);
-    expect(wrapper.find(".tm-overlay-mobile").length > 0).toBe(true);
+    expect(container.querySelector(".tm-overlay")).toBe(null);
+    expect(container.querySelector(".tm-overlay-mobile")).not.toBe(null);
   });
 
   test("should allow resizing with top handler on mobile.", () => {
-    const wrapper = mount(<BasicComponent />);
-    const target = wrapper.find(".observer").getDOMNode();
+    const { container } = render(<BasicComponent />);
+    const target = container.querySelector(".observer");
 
     // Force resize to make it mobile.
     act(() => {
@@ -118,16 +109,14 @@ describe("Overlay", () => {
         },
       ]);
     });
-    wrapper.update();
 
-    const resizableProps = wrapper.find(Resizable).props();
-
-    expect(resizableProps.enable.top).toBe(true);
+    expect(container.querySelector(".tm-overlay-mobile")).not.toBe(null);
+    expect(container.querySelector(".tm-overlay-handler")).not.toBe(null);
   });
 
   test("should not allow resizing with top handler on mobile.", () => {
-    const wrapper = mount(<BasicComponent isMobileResizable={false} />);
-    const target = wrapper.find(".observer").getDOMNode();
+    const { container } = render(<BasicComponent isMobileResizable={false} />);
+    const target = container.querySelector(".observer");
 
     // Force resize to make it mobile.
     act(() => {
@@ -141,10 +130,7 @@ describe("Overlay", () => {
         },
       ]);
     });
-    wrapper.update();
-
-    const resizableProps = wrapper.find(Resizable).props();
-
-    expect(resizableProps.enable.top).toBe(false);
+    expect(container.querySelector(".tm-overlay-mobile")).not.toBe(null);
+    expect(container.querySelector(".tm-overlay-handler")).toBe(null);
   });
 });
