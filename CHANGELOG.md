@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/geops/react-spatial/compare/v1.12.2...v2.0.0) (2025-08-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* use mobility-toolbox-js v3 and maplibre-gl (#729)
+
+### Features
+
+* use mobility-toolbox-js v3 and maplibre-gl ([#729](https://github.com/geops/react-spatial/issues/729)) ([b3c1650](https://github.com/geops/react-spatial/commit/b3c1650099d6974bbdff3a99b60ebceaafa7c298))
+
 ### [1.12.2](https://github.com/geops/react-spatial/compare/v1.12.1...v1.12.2) (2024-11-18)
 
 
