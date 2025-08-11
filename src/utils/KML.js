@@ -420,7 +420,7 @@ const readFeatures = (
  */
 const writeFeatures = (layer, featureProjection, mapResolution) => {
   let featString;
-  const { olLayer } = layer;
+  const olLayer = layer.olLayer || layer.get("olLayer") || layer;
   const exportFeatures = [];
 
   [...olLayer.getSource().getFeatures()]
@@ -715,10 +715,10 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
     featString = featString.replace(/<Placemark\/>/g, "");
 
     // Add KML document name
-    if (layer.name) {
+    if (layer.get("name")) {
       featString = featString.replace(
         /<Document>/,
-        `<Document><name>${layer.name}</name>`,
+        `<Document><name>${layer.get("name")}</name>`,
       );
     }
   }

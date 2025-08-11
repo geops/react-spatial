@@ -1,40 +1,25 @@
-const TerserPlugin = require("terser-webpack-plugin");
 const path = require("path");
+const TerserPlugin = require("terser-webpack-plugin");
+
 const { version } = require("./package.json");
 
 module.exports = {
-  version,
-  template: {
-    favicon: "images/favicon.png",
-    head: {
-      links: [
-        {
-          rel: "stylesheet",
-          href: "https://fonts.googleapis.com/css?family=Lato:400,700",
-        },
-      ],
-    },
-  },
   assetsDir: "src/",
-  styleguideDir: "styleguide-build",
+  moduleAliases: {
+    "react-spatial": path.resolve(__dirname, "src"),
+  },
   require: [
     path.join(__dirname, "src/themes/default/examples.scss"),
     path.join(__dirname, "src/styleguidist/styleguidist.css"),
     "ol/ol.css",
   ],
-  moduleAliases: {
-    "react-spatial": path.resolve(__dirname, "src"),
-  },
   sections: [
     {
-      name: "",
-
       content: "README.md",
+
+      name: "",
     },
     {
-      name: "Maps",
-      description:
-        "A collection of React components for spatial web development of map components.",
       components: [
         "src/components/BaseLayerSwitcher/[A-Z]*.js",
         "src/components/BasicMap/[A-Z]*.js",
@@ -52,26 +37,193 @@ module.exports = {
         "src/components/ScaleLine/[A-Z]*.js",
         "src/components/Zoom/[A-Z]*.js",
       ],
+      description:
+        "A collection of React components for spatial web development of map components.",
       exampleMode: "expand", // 'hide' | 'collapse' | 'expand'
+      name: "Maps",
       usageMode: "collapse", // 'hide' | 'collapse' | 'expand'
     },
     {
-      name: "Realtime",
+      components: ["src/components/RouteSchedule/[A-Z]*.js"],
       description:
         "A collection of React components for spatial web development of realtime components.",
-      components: ["src/components/RouteSchedule/[A-Z]*.js"],
       exampleMode: "expand", // 'hide' | 'collapse' | 'expand'
+      name: "Realtime",
       usageMode: "collapse", // 'hide' | 'collapse' | 'expand'
     },
     {
-      name: "Stops",
+      components: ["src/components/StopsFinder/StopsFinder.js"],
       description:
         "A collection of React components for spatial web development of stops components.",
-      components: ["src/components/StopsFinder/StopsFinder.js"],
       exampleMode: "expand", // 'hide' | 'collapse' | 'expand'
+      name: "Stops",
     },
   ],
+  showSidebar: true,
+  styleguideComponents: {
+    ComponentsList: path.join(__dirname, "src/styleguidist/ComponentsList"),
+    StyleGuideRenderer: path.join(__dirname, "src/styleguidist/StyleGuide"),
+  },
+  styleguideDir: "styleguide-build",
+  styles: {
+    ComponentsList: {
+      isChild: {
+        fontSize: 16,
+      },
+      item: {
+        fontSize: 18,
+        margin: "10px 0",
+      },
+    },
+    Heading: {
+      heading: {
+        fontWeight: 900,
+        marginTop: 50,
+      },
+      heading1: {
+        marginTop: 0,
+      },
+    },
+    Para: {
+      para: {
+        fontSize: "1.125rem",
+        lineHeight: "2.25rem",
+      },
+    },
+    Playground: {
+      preview: {
+        fontSize: "18px",
+        marginBottom: "24px",
+      },
+    },
+    Section: {
+      root: {
+        marginBottom: "120px",
+      },
+    },
+    StyleGuide: {
+      "@global body": {
+        fontFamily: "Arial",
+        overflowX: "hidden",
+        overflowY: "hidden",
+      },
+    },
+  },
+  template: {
+    favicon: "images/favicon.png",
+    head: {
+      links: [
+        {
+          href: "https://fonts.googleapis.com/css?family=Lato:400,700",
+          rel: "stylesheet",
+        },
+      ],
+    },
+  },
+  theme: {
+    color: {
+      linkHover: "#76B833",
+      links: "#6987a1",
+    },
+    fontFamily: {
+      base: "Lato",
+    },
+    fontSize: {
+      base: 16,
+      h1: 48,
+      h2: 36,
+      h3: 24,
+      h4: 18,
+      h5: 16,
+      h6: 16,
+      small: 14,
+      text: 17,
+    },
+  },
+  version,
   webpackConfig: {
+    module: {
+      rules: [
+        // Babel loader, will use your project’s .babelrc
+        // Transpile js
+        {
+          loader: "esbuild-loader",
+          options: {
+            loader: "jsx",
+            minify: true,
+            sourcemap: true,
+            // JavaScript version to compile to
+            target: "es2015",
+          },
+          // Match js, jsx, ts & tsx files
+          test: /\.[jt]sx?$/,
+        },
+        {
+          resolve: {
+            fullySpecified: false,
+          },
+          test: /\.m?js$/,
+        },
+        // Load css and scss files.
+        {
+          test: /\.s?css$/,
+          use: ["style-loader", "css-loader", "sass-loader"],
+        },
+        {
+          exclude: [
+            path.resolve(__dirname, "node_modules", "@geops", "geops-ui"),
+          ],
+          test: /^((?!url).)*\.svg$/,
+          use: [
+            { loader: "babel-loader" },
+            {
+              loader: "react-svg-loader",
+              options: {
+                jsx: true, // true outputs JSX tags
+              },
+            },
+          ],
+        },
+        {
+          include: [
+            path.resolve(__dirname, "node_modules", "@geops", "geops-ui"), // Load geops-ui SVGs using file-loader
+          ],
+          test: /^((?!url).)*\.svg$/,
+          use: [
+            {
+              loader: require.resolve("@svgr/webpack"),
+              options: {
+                svgoConfig: {
+                  plugins: [
+                    {
+                      removeViewBox: false,
+                    },
+                  ],
+                },
+              },
+            },
+            {
+              loader: "file-loader",
+              options: {
+                jsx: true,
+              },
+            },
+          ],
+        },
+        {
+          loader: "url-loader",
+          test: /\.url\.svg$/,
+        },
+        {
+          test: /\.png$|.ico$/,
+          use: [
+            {
+              loader: "url-loader",
+            },
+          ],
+        },
+      ],
+    },
     optimization: {
       minimize: false, // Terser minification is broken since webpack 5
       minimizer: [
@@ -102,150 +254,5 @@ module.exports = {
         }),
       ],
     },
-    module: {
-      rules: [
-        // Babel loader, will use your project’s .babelrc
-        // Transpile js
-        {
-          // Match js, jsx, ts & tsx files
-          test: /\.[jt]sx?$/,
-          loader: "esbuild-loader",
-          options: {
-            // JavaScript version to compile to
-            target: "es2015",
-            loader: "jsx",
-            minify: true,
-            sourcemap: true,
-          },
-        },
-        // Load css and scss files.
-        {
-          test: /\.s?css$/,
-          use: ["style-loader", "css-loader", "sass-loader"],
-        },
-        {
-          test: /^((?!url).)*\.svg$/,
-          exclude: [
-            path.resolve(__dirname, "node_modules", "@geops", "geops-ui"),
-          ],
-          use: [
-            { loader: "babel-loader" },
-            {
-              loader: "react-svg-loader",
-              options: {
-                jsx: true, // true outputs JSX tags
-              },
-            },
-          ],
-        },
-        {
-          test: /^((?!url).)*\.svg$/,
-          include: [
-            path.resolve(__dirname, "node_modules", "@geops", "geops-ui"), // Load geops-ui SVGs using file-loader
-          ],
-          use: [
-            {
-              loader: require.resolve("@svgr/webpack"),
-              options: {
-                svgoConfig: {
-                  plugins: [
-                    {
-                      removeViewBox: false,
-                    },
-                  ],
-                },
-              },
-            },
-            {
-              loader: "file-loader",
-              options: {
-                jsx: true,
-              },
-            },
-          ],
-        },
-        {
-          test: /\.url\.svg$/,
-          loader: "url-loader",
-        },
-        {
-          test: /\.png$|.ico$/,
-          use: [
-            {
-              loader: "url-loader",
-            },
-          ],
-        },
-      ],
-    },
-  },
-  theme: {
-    color: {
-      links: "#6987a1",
-      linkHover: "#76B833",
-    },
-    fontFamily: {
-      base: "Lato",
-    },
-    fontSize: {
-      base: 16,
-      text: 17,
-      small: 14,
-      h1: 48,
-      h2: 36,
-      h3: 24,
-      h4: 18,
-      h5: 16,
-      h6: 16,
-    },
-  },
-  styles: {
-    StyleGuide: {
-      "@global body": {
-        overflowY: "hidden",
-        overflowX: "hidden",
-        fontFamily: "Arial",
-      },
-    },
-    Playground: {
-      preview: {
-        fontSize: "18px",
-        marginBottom: "24px",
-      },
-    },
-    Heading: {
-      heading: {
-        fontWeight: 900,
-        marginTop: 50,
-      },
-      heading1: {
-        marginTop: 0,
-      },
-    },
-    Para: {
-      para: {
-        lineHeight: "2.25rem",
-        fontSize: "1.125rem",
-      },
-    },
-    ComponentsList: {
-      isChild: {
-        fontSize: 16,
-      },
-      item: {
-        margin: "10px 0",
-        fontSize: 18,
-      },
-    },
-    Section: {
-      root: {
-        marginBottom: "120px",
-      },
-    },
-  },
-  showSidebar: true,
-  styleguideComponents: {
-    ComponentsList: path.join(__dirname, "src/styleguidist/ComponentsList"),
-    StyleGuideRenderer: path.join(__dirname, "src/styleguidist/StyleGuide"),
   },
 };

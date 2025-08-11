@@ -1,15 +1,13 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable max-classes-per-file */
-import Adapter from "@cfaester/enzyme-adapter-react-18";
-import { configure, mount, shallow } from "enzyme";
-/* eslint-disable  react/no-multi-comp,react/prefer-stateless-function,react/prop-types */
+/* eslint-disable react/prefer-stateless-function */
+import { render } from "@testing-library/react";
 import React from "react";
 import ResizeObserver from "resize-observer-polyfill";
 
 import ResizeHandler from "./ResizeHandler";
 
 jest.mock("resize-observer-polyfill");
-
-configure({ adapter: new Adapter() });
 
 class BasicComponent extends React.Component {
   render() {
@@ -48,17 +46,35 @@ class BasicComponent3 extends React.Component {
   }
 }
 
-class StrComponent extends React.Component {
+class CallbackComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      ref: null,
+    };
+  }
+
   render() {
+    const { ref } = this.state;
     return (
-      <span id="basic">
-        <ResizeHandler observe="#basic" />
-      </span>
+      <>
+        <div
+          ref={(node) => {
+            if (node && !ref) {
+              this.setState({
+                ref: node,
+              });
+            }
+          }}
+        />
+        <ResizeHandler observe={ref} />
+      </>
     );
   }
 }
 
-class CallbackComponent extends React.Component {
+// eslint-disable-next-line  react/prefer-stateless-function
+class CallbackNodeComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -101,30 +117,12 @@ class RefNodeComponent extends React.Component {
   }
 }
 
-// eslint-disable-next-line  react/prefer-stateless-function
-class CallbackNodeComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      ref: null,
-    };
-  }
-
+class StrComponent extends React.Component {
   render() {
-    const { ref } = this.state;
     return (
-      <>
-        <div
-          ref={(node) => {
-            if (node && !ref) {
-              this.setState({
-                ref: node,
-              });
-            }
-          }}
-        />
-        <ResizeHandler observe={ref} />
-      </>
+      <span id="basic">
+        <ResizeHandler observe="#basic" />
+      </span>
     );
   }
 }
@@ -135,28 +133,28 @@ describe("ResizeHandler", () => {
   describe("when observe property is not set", () => {
     test("doesn't observe", () => {
       const spy = jest.spyOn(ResizeObserver.prototype, "observe");
-      shallow(<ResizeHandler />);
+      render(<ResizeHandler />);
       expect(spy).not.toHaveBeenCalled();
       spy.mockRestore();
     });
 
     test("disconnect on unmount", () => {
-      const wrapper = shallow(<ResizeHandler />);
-      const spy = jest.spyOn(wrapper.instance().observer, "disconnect");
-      wrapper.unmount();
+      const { unmount } = render(<ResizeHandler />);
+      const spy = jest.spyOn(ResizeObserver.prototype, "disconnect");
+      unmount();
       expect(spy).toHaveBeenCalledTimes(1);
     });
   });
 
   describe("when observe property is set", () => {
-    test("try t get  an html node from a string on (un)mount", () => {
+    test("try to get  an html node from a string on (un)mount", () => {
       const div = document.createElement("div");
       document.querySelectorAll = jest.fn().mockImplementation(() => {
         return [div];
       });
       const spy = jest.spyOn(ResizeObserver.prototype, "observe");
       const spy2 = jest.spyOn(ResizeObserver.prototype, "disconnect");
-      mount(<StrComponent />);
+      render(<StrComponent />);
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spy.mock.calls[0][0]).toBe(div);
       expect(spy2.mock.calls.length >= 1).toBe(true);
@@ -169,20 +167,20 @@ describe("ResizeHandler", () => {
       test(`(un)observes an html node from ${Comp.name} on (un)mount`, () => {
         const spy = jest.spyOn(ResizeObserver.prototype, "observe");
         const spy2 = jest.spyOn(ResizeObserver.prototype, "disconnect");
-        const wrapper = mount(<Comp />);
+        const { unmount } = render(<Comp />);
         expect(spy).toHaveBeenCalledTimes(1);
         expect(spy.mock.calls[0][0]).toBeInstanceOf(Element);
         expect(spy2.mock.calls.length >= 1).toBe(true);
         ResizeObserver.prototype.observe.mockRestore();
         spy.mockRestore();
         spy2.mockRestore();
-        wrapper.unmount();
+        unmount();
       });
     });
 
     test("set the default css class on resize ", () => {
-      const wrapper = mount(<BasicComponent />);
-      const basic = wrapper.getDOMNode();
+      const { container } = render(<BasicComponent />);
+      const basic = container.firstChild;
 
       // The mock class set the onResize property, we just have to run it to
       // simulate a resize
@@ -240,8 +238,8 @@ describe("ResizeHandler", () => {
     });
 
     test("uses user defined breakpoints", () => {
-      const wrapper = mount(<BasicComponent3 />);
-      const basic = wrapper.getDOMNode();
+      const { container } = render(<BasicComponent3 />);
+      const basic = container.firstChild;
 
       // The mock class set the onResize property, we just have to run it to
       // simulate a resize
@@ -270,8 +268,8 @@ describe("ResizeHandler", () => {
 
     test("calls onResize property", () => {
       const fn = jest.fn();
-      const wrapper = mount(<BasicComponent onResize={fn} />);
-      const basic = wrapper.getDOMNode();
+      const { container } = render(<BasicComponent onResize={fn} />);
+      const basic = container.firstChild;
 
       // The mock class set the onResize property, we just have to run it to
       // simulate a resize
@@ -289,8 +287,8 @@ describe("ResizeHandler", () => {
 
     test("set a style property on resize", () => {
       const spy = jest.spyOn(document.documentElement.style, "setProperty");
-      const wrapper = mount(<BasicComponent stylePropHeight="foo" />);
-      const basic = wrapper.getDOMNode();
+      const { container } = render(<BasicComponent stylePropHeight="foo" />);
+      const basic = container.firstChild;
 
       // The mock class set the onResize property, we just have to run it to
       // simulate a resize

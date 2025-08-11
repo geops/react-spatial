@@ -1,6 +1,5 @@
-import { act, render } from "@testing-library/react";
 import "jest-canvas-mock";
-import { Layer } from "mobility-toolbox-js/ol";
+import { act, render } from "@testing-library/react";
 import { Map, View } from "ol";
 import TileLayer from "ol/layer/Tile";
 import TileSource from "ol/source/Tile";
@@ -22,8 +21,9 @@ const tileLoadFunction = () => {
   return tile;
 };
 
-const getOLTileLayer = () => {
+const getOLTileLayer = (options = {}) => {
   const layer = new TileLayer({
+    ...options,
     source: new TileSource({
       projection: "EPSG:3857",
       tileGrid: createXYZ(),
@@ -34,9 +34,8 @@ const getOLTileLayer = () => {
 };
 
 const getLayer = (copyrights, visible = true) => {
-  return new Layer({
+  return getOLTileLayer({
     copyrights,
-    olLayer: getOLTileLayer(),
     visible,
   });
 };
@@ -50,10 +49,6 @@ describe("Copyright", () => {
     document.body.appendChild(target);
     layers = [getLayer("bar"), getLayer("foo", false)];
     map = new Map({
-      controls: [],
-      layers: layers.map((layer) => {
-        return layer.olLayer;
-      }),
       target,
       view: new View({
         center: [0, 0],
@@ -62,7 +57,7 @@ describe("Copyright", () => {
     });
     map.setSize([200, 200]);
     layers.forEach((layer) => {
-      layer.attachToMap(map);
+      map.addLayer(layer);
     });
     act(() => {
       map.renderSync();
@@ -71,7 +66,7 @@ describe("Copyright", () => {
 
   afterEach(() => {
     layers.forEach((layer) => {
-      layer.detachFromMap(map);
+      map.removeLayer(layer);
     });
     map.setTarget(null);
     map = null;
@@ -79,7 +74,7 @@ describe("Copyright", () => {
 
   test("is empty if no layers are visible", () => {
     const { container } = render(<Copyright map={map} />);
-    expect(container.innerHTML).toBe("");
+    expect(container.innerHTML).toMatchSnapshot();
   });
 
   test("displays one copyright", () => {
@@ -92,15 +87,14 @@ describe("Copyright", () => {
 
   test("displays 2 copyrights", () => {
     const { container } = render(<Copyright map={map} />);
-    layers[0].visible = true;
-    layers[1].visible = true;
+    layers[0].setVisible(true);
+    layers[1].setVisible(true);
     act(() => {
       map.renderSync();
     });
     act(() => {
       map.renderSync();
     });
-
     expect(container.textContent).toBe("bar | foo");
   });
 

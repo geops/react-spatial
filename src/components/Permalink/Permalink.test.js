@@ -1,6 +1,6 @@
-import { act, render } from "@testing-library/react";
 import "jest-canvas-mock";
-import { Layer, MapboxLayer } from "mobility-toolbox-js/ol";
+import { act, render } from "@testing-library/react";
+import Layer from "ol/layer/Layer";
 import OLMap from "ol/Map";
 import MapEvent from "ol/MapEvent";
 import View from "ol/View";
@@ -26,54 +26,42 @@ describe("Permalink", () => {
     window.history.pushState({}, undefined, "/");
     layers = [
       new Layer({
+        hideInLegend: true,
         key: "ultimate.layer",
         name: "Ultimate layer",
-        properties: {
-          hideInLegend: true,
-        },
         visible: true,
       }),
       new Layer({
+        hideInLegend: true,
         key: "swiss.boundaries",
         name: "Swiss boundaries",
-        properties: {
-          hideInLegend: true,
-        },
         visible: false,
       }),
-      new MapboxLayer({
+      new Layer({
         group: "baseLayer",
+        isBaseLayer: true,
         key: "basebright.baselayer",
         name: "Base - Bright",
-        properties: {
-          isBaseLayer: true,
-        },
       }),
-      new MapboxLayer({
+      new Layer({
         group: "baseLayer",
+        isBaseLayer: true,
         key: "basedark.baselayer",
         name: "Base - Dark",
-        properties: {
-          isBaseLayer: true,
-        },
         visible: false,
       }),
       new Layer({
         children: [
           new Layer({
+            hideInLegend: true,
             key: "child.hidden.1",
             name: "Child 1 hidden",
-            properties: {
-              hideInLegend: true,
-            },
             visible: true,
           }),
           new Layer({
+            hideInLegend: true,
             key: "child.hidden.2",
             name: "Childr 2 hidden",
-            properties: {
-              hideInLegend: true,
-            },
             visible: false,
           }),
         ],
@@ -256,9 +244,11 @@ describe("Permalink", () => {
     expect(layersParam).toBe("ultimate.layer,child.hidden.1");
 
     act(() => {
-      layers.find((l) => {
-        return l.name === "Swiss boundaries";
-      }).visible = true;
+      layers
+        .find((l) => {
+          return l.get("name") === "Swiss boundaries";
+        })
+        .setVisible(true);
     });
 
     layersParam = new URLSearchParams(window.location.search).get("layers");
@@ -275,9 +265,11 @@ describe("Permalink", () => {
     expect(baseLayers).toBe("basebright.baselayer,basedark.baselayer");
 
     act(() => {
-      layers.find((l) => {
-        return l.name === "Base - Dark";
-      }).visible = true;
+      layers
+        .find((l) => {
+          return l.get("name") === "Base - Dark";
+        })
+        .setVisible(true);
     });
 
     baseLayers = new URLSearchParams(window.location.search).get("baselayers");

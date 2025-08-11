@@ -1,248 +1,143 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`RouteSchedule matches snapshots. 1`] = `
-<div
-  className="rt-route-schedule"
->
-  <div
-    className="rt-route-header"
-  >
-    <span
-      className="rt-route-icon"
-      style={
-        {
-          "backgroundColor": "#ffb400",
-          "color": "black",
-        }
-      }
+<div class="rt-route-schedule">
+  <div class="rt-route-header">
+    <span class="rt-route-icon"
+          style="background-color: rgb(255, 180, 0); color: black;"
     >
       3
     </span>
-    <div
-      className="rt-route-title"
-    >
-      <span
-        className="rt-route-name"
-      >
+    <div class="rt-route-title">
+      <span class="rt-route-name">
         Station name
       </span>
       <span>
-        T 3
-         (3634)
+        T 3 (3634)
       </span>
     </div>
-    <div
-      className="rt-route-buttons"
-    >
+    <div class="rt-route-buttons">
       <div>
         Button
       </div>
     </div>
   </div>
-  <div
-    className="rt-route-body"
-  >
-    <div
-      className="rt-route-station"
-      onClick={[Function]}
-      onKeyPress={[Function]}
-      role="button"
-      tabIndex={0}
+  <div class="rt-route-body">
+    <div class="rt-route-station"
+         role="button"
+         tabindex="0"
     >
-      <div
-        className="rt-route-delay"
-      >
-        <span
-          style={
-            {
-              "color": "rgb(0 160 12)",
-            }
-          }
-        >
+      <div class="rt-route-delay">
+        <span style="color: rgb(0, 160, 12);">
           +1m
         </span>
       </div>
-      <div
-        className="rt-route-times"
-      >
-        <span
-          className="rt-route-time-arrival "
-        >
+      <div class="rt-route-times">
+        <span class="rt-route-time-arrival ">
           09:01
         </span>
-        <span
-          className="rt-route-time-departure "
-        >
+        <span class="rt-route-time-departure ">
           09:01
         </span>
       </div>
-      <img
-        alt="routeScheduleLine"
-        className="rt-route-icon"
-        src="src"
-      />
-      <div
-        className=""
+      <img alt="routeScheduleLine"
+           class="rt-route-icon"
+           src="src"
       >
+      <div class>
         first stop
       </div>
     </div>
-    <div
-      className="rt-route-station"
-      onClick={[Function]}
-      onKeyPress={[Function]}
-      role="button"
-      tabIndex={0}
+    <div class="rt-route-station"
+         role="button"
+         tabindex="0"
     >
-      <div
-        className="rt-route-delay"
-      >
-        <span
-          style={
-            {
-              "color": "rgb(0 160 12)",
-            }
-          }
-        >
+      <div class="rt-route-delay">
+        <span style="color: rgb(0, 160, 12);">
           +0
         </span>
-        <span
-          style={
-            {
-              "color": "rgb(0 160 12)",
-            }
-          }
-        >
+        <span style="color: rgb(0, 160, 12);">
           +2m
         </span>
       </div>
-      <div
-        className="rt-route-times"
-      >
-        <span
-          className="rt-route-time-arrival "
-        >
+      <div class="rt-route-times">
+        <span class="rt-route-time-arrival ">
           09:01
         </span>
-        <span
-          className="rt-route-time-departure "
-        >
+        <span class="rt-route-time-departure ">
           09:01
         </span>
       </div>
-      <img
-        alt="routeScheduleLine"
-        className="rt-route-icon"
-        src="src"
-      />
-      <div
-        className=""
+      <img alt="routeScheduleLine"
+           class="rt-route-icon"
+           src="src"
       >
+      <div class>
         second stop
       </div>
     </div>
-    <div
-      className="rt-route-station rt-no-stop"
-      onClick={[Function]}
-      onKeyPress={[Function]}
-      role="button"
-      tabIndex={0}
+    <div class="rt-route-station rt-no-stop"
+         role="button"
+         tabindex="0"
     >
-      <div
-        className="rt-route-delay"
-      />
-      <div
-        className="rt-route-times"
-      >
-        <span
-          className="rt-route-time-arrival "
-        />
-        <span
-          className="rt-route-time-departure "
-        />
+      <div class="rt-route-delay">
       </div>
-      <img
-        alt="routeScheduleLine"
-        className="rt-route-icon"
-        src="src"
-      />
-      <div
-        className=""
+      <div class="rt-route-times">
+        <span class="rt-route-time-arrival ">
+        </span>
+        <span class="rt-route-time-departure ">
+        </span>
+      </div>
+      <img alt="routeScheduleLine"
+           class="rt-route-icon"
+           src="src"
       >
+      <div class>
         no stop
       </div>
     </div>
-    <div
-      className="rt-route-station"
-      onClick={[Function]}
-      onKeyPress={[Function]}
-      role="button"
-      tabIndex={0}
+    <div class="rt-route-station"
+         role="button"
+         tabindex="0"
     >
-      <div
-        className="rt-route-delay"
-      >
-        <span
-          style={
-            {
-              "color": "rgb(247 191 0)",
-            }
-          }
-        >
+      <div class="rt-route-delay">
+        <span style="color: rgb(247, 191, 0);">
           +4m
         </span>
       </div>
-      <div
-        className="rt-route-times"
-      >
-        <span
-          className="rt-route-time-arrival "
-        >
+      <div class="rt-route-times">
+        <span class="rt-route-time-arrival ">
           09:01
         </span>
-        <span
-          className="rt-route-time-departure "
-        />
+        <span class="rt-route-time-departure ">
+        </span>
       </div>
-      <img
-        alt="routeScheduleLine"
-        className="rt-route-icon"
-        src="src"
-      />
-      <div
-        className=""
+      <img alt="routeScheduleLine"
+           class="rt-route-icon"
+           src="src"
       >
+      <div class>
         third stop
       </div>
     </div>
   </div>
-  <div
-    className="rt-route-footer"
-  >
-    <span
-      className="rt-route-copyright"
-    >
-      <div
-        className="rt-route-copyright-link"
-      >
-        <a
-          href="foo.ch"
-          rel="noreferrer"
-          target="_blank"
+  <div class="rt-route-footer">
+    <span class="rt-route-copyright">
+      <div class="rt-route-copyright-link">
+        <a href="foo.ch"
+           rel="noreferrer"
+           target="_blank"
         >
           foo
         </a>
       </div>
       <span>
-         - 
+        &nbsp;-&nbsp;
       </span>
-      <div
-        className="rt-route-copyright-link"
-      >
-        <a
-          href="bar.ch"
-          rel="noreferrer"
-          target="_blank"
+      <div class="rt-route-copyright-link">
+        <a href="bar.ch"
+           rel="noreferrer"
+           target="_blank"
         >
           bar
         </a>

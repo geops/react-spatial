@@ -1,5 +1,5 @@
 import { fireEvent, render } from "@testing-library/react";
-import { Layer } from "mobility-toolbox-js/ol";
+import Layer from "ol/layer/Layer";
 import React from "react";
 
 import BaseLayerSwitcher from "./BaseLayerSwitcher";
@@ -39,7 +39,7 @@ describe("BaseLayerSwitcher", () => {
 
   test("the correct baselayer is visible on mount", () => {
     render(<BaseLayerSwitcher layerImages={layerImages} layers={layers} />);
-    expect(layers[0].visible).toBe(true);
+    expect(layers[0].getVisible()).toBe(true);
   });
 
   test("removes open class and switches layer on click", async () => {
@@ -50,7 +50,7 @@ describe("BaseLayerSwitcher", () => {
     await fireEvent.click(
       container.querySelectorAll(".rs-base-layer-switcher-button")[3],
     );
-    expect(layers[2].visible).toBe(true);
+    expect(layers[2].getVisible()).toBe(true);
     expect(!!container.querySelector(".rs-base-layer-switcher rs-open")).toBe(
       false,
     );
@@ -60,9 +60,9 @@ describe("BaseLayerSwitcher", () => {
     const { container } = render(
       <BaseLayerSwitcher layers={layers.slice(0, 2)} />,
     );
-    expect(layers[0].visible).toBe(true);
+    expect(layers[0].getVisible()).toBe(true);
     await fireEvent.click(container.querySelector(".rs-opener"));
-    expect(layers[1].visible).toBe(true);
+    expect(layers[1].getVisible()).toBe(true);
     expect(!!container.querySelector(".rs-base-layer-switcher rs-open")).toBe(
       false,
     );

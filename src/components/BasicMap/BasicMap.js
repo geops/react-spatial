@@ -1,8 +1,8 @@
-import { Layer } from "mobility-toolbox-js/ol";
 import OLCollection from "ol/Collection";
 import { equals } from "ol/extent";
 import { defaults as defaultInteractions } from "ol/interaction";
 import Interaction from "ol/interaction/Interaction";
+import Layer from "ol/layer/Layer";
 import OLMap from "ol/Map";
 import { unByKey } from "ol/Observable";
 import View from "ol/View";
@@ -48,7 +48,7 @@ const propTypes = {
     PropTypes.instanceOf(OLCollection),
   ]),
 
-  /** Array of [mobility-toolbox-js layers](https://mobility-toolbox-js.geops.io/api/identifiers%20html#ol-layers) to display. */
+  /** Array of Openlayers layers */
   layers: PropTypes.arrayOf(PropTypes.instanceOf(Layer)),
 
   /** An [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html). */
@@ -285,22 +285,11 @@ class BasicMap extends PureComponent {
   }
 
   initLayer(layer) {
-    if (layer.attachToMap) {
-      layer.attachToMap(this.map);
+    if (!this.map?.getLayers()?.getArray()?.includes(layer)) {
+      this.map.addLayer(layer);
     }
 
-    if (layer.init) {
-      layer.init(this.map);
-    }
-
-    if (
-      layer.olLayer &&
-      this.map.getLayers() &&
-      !this.map.getLayers().getArray().includes(layer.olLayer)
-    ) {
-      this.map.addLayer(layer.olLayer);
-    }
-    const layers = layer.children || [];
+    const layers = layer.get("children") || layer.children || [];
     for (let i = 0; i < layers.length; i += 1) {
       this.initLayer(layers[i]);
     }
@@ -378,25 +367,13 @@ class BasicMap extends PureComponent {
   }
 
   terminateLayer(layer) {
-    const layers = layer.children || [];
+    const layers = layer.get("children") || layer.children || [];
     for (let i = 0; i < layers.length; i += 1) {
       this.terminateLayer(layers[i]);
     }
 
-    if (
-      layer.olLayer &&
-      this.map.getLayers() &&
-      this.map.getLayers().getArray().includes(layer.olLayer)
-    ) {
-      this.map.removeLayer(layer.olLayer);
-    }
-
-    if (layer.terminate) {
-      layer.terminate(this.map);
-    }
-
-    if (layer.detachFromMap) {
-      layer.detachFromMap(this.map);
+    if (this.map?.getLayers()?.getArray()?.includes(layer)) {
+      this.map.removeLayer(layer);
     }
   }
 }

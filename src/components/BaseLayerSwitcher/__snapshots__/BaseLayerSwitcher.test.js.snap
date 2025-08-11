@@ -1,11 +1,11 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`BaseLayerSwitcher matches snapshots using default properties. 1`] = `
 <div class="rs-base-layer-switcher">
   <div aria-label="Open Baselayer-Switcher"
        class="rs-base-layer-switcher-button rs-opener"
        role="button"
-       style="background-image: url(foo); background-position: center; background-repeat: no-repeat; background-size: cover;"
+       style="background-image: url(&quot;foo&quot;); background-position: center; background-repeat: no-repeat; background-size: cover;"
        tabindex="0"
        title="Open Baselayer-Switcher"
   >

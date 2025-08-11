@@ -1,8 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { Autocomplete, autocompleteClasses, styled } from "@mui/material";
+import {
+  Autocomplete,
+  autocompleteClasses,
+  styled,
+  TextField,
+} from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-import TextField from "@mui/material/TextField";
-import { StopFinderControl } from "mobility-toolbox-js/ol";
+import { StopsAPI } from "mobility-toolbox-js/ol";
 import { Map } from "ol";
 import PropTypes from "prop-types";
 import React, { useEffect, useMemo, useState } from "react";
@@ -41,17 +45,12 @@ function StopsFinder({
   const [isLoading, setLoading] = useState(false);
   const [isOpen, setOpen] = useState(false);
 
-  const control = useMemo(() => {
-    return new StopFinderControl({
-      apiKey,
-      element: document.createElement("div"),
-      render(newSuggestions = { features: [] }) {
-        setSuggestions(newSuggestions.features);
-        setLoading(false);
-      },
-      target: document.createElement("div"),
-      url,
-    });
+  const api = useMemo(() => {
+    const options = { apiKey };
+    if (url) {
+      options.url = url;
+    }
+    return new StopsAPI(options);
   }, [apiKey, url]);
 
   useEffect(() => {
@@ -62,23 +61,36 @@ function StopsFinder({
     }
     const abortController = new AbortController();
     setLoading(true);
-    control.apiParams = {
+    const apiParams = {
       bbox: bbox && bbox.toString(),
       field: field && field.toString(),
       limit,
       mots: mots && mots.toString(),
       prefAgencies: agencies && agencies.toString(),
+      q: inputValue,
       radius,
       ref_location: refLocation && refLocation.toString(),
     };
-    control.search(inputValue, abortController);
+    api
+      .search(apiParams, abortController)
+      .then((featureCollection) => {
+        setSuggestions(featureCollection?.features || []);
+        setLoading(false);
+      })
+      .catch((error) => {
+        // different from AbortError
+        if (error.code !== 20) {
+          // eslint-disable-next-line no-console
+          console.error(error);
+        }
+      });
     return () => {
       abortController.abort();
     };
   }, [
     agencies,
     bbox,
-    control,
+    api,
     field,
     inputValue,
     limit,
@@ -86,23 +98,6 @@ function StopsFinder({
     radius,
     refLocation,
   ]);
-
-  // Ensure the control is not associated to the wrong map
-  useEffect(() => {
-    if (!control) {
-      return () => {};
-    }
-
-    control.map = map;
-
-    return () => {
-      control.map = null;
-    };
-  }, [map, control]);
-
-  if (!control) {
-    return null;
-  }
 
   if (renderAutocomplete) {
     return renderAutocomplete(
@@ -263,4 +258,4 @@ StopsFinder.propTypes = {
   url: PropTypes.string,
 };
 
-export default StopsFinder;
+export default React.memo(StopsFinder);

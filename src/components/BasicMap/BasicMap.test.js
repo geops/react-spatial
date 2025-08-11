@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import "jest-canvas-mock";
-import { Layer } from "mobility-toolbox-js/ol";
+import { Layer as OldMbtLayer } from "mobility-toolbox-js/ol";
 import OLLayer from "ol/layer/Vector";
 import OLMap from "ol/Map";
 import MapEvent from "ol/MapEvent";
@@ -22,9 +22,8 @@ register(proj4);
 
 const extent = [0, 0, 1000, 1000];
 const olLayers = [
-  new Layer({
+  new OLLayer({
     name: "foo",
-    olLayer: new OLLayer({}),
     visible: true,
   }),
 ];
@@ -188,7 +187,7 @@ describe("BasicMap", () => {
   test("layers shoud be updated", () => {
     const addLayer = jest.spyOn(olMap, "addLayer");
     const { rerender } = render(<BasicMap map={olMap} />);
-    const layer = new Layer({ name: "test", olLayer: new OLLayer() });
+    const layer = new OLLayer();
     rerender(<BasicMap layers={[layer]} map={olMap} />);
     expect(addLayer).toHaveBeenCalled();
   });
@@ -209,48 +208,26 @@ describe("BasicMap", () => {
 
   describe("#setLayers()", () => {
     test("init all layers and terminate al previous layer.", () => {
-      const layer0 = new Layer({ key: "test1" });
-      const spyInit0 = jest.spyOn(layer0, "attachToMap");
-      const spyTerminate0 = jest.spyOn(layer0, "detachFromMap");
-      const layer1 = new Layer({ key: "test1" });
-      const spyInit1 = jest.spyOn(layer1, "attachToMap");
-      const spyTerminate1 = jest.spyOn(layer1, "detachFromMap");
-      const layer2 = new Layer({ key: "test2" });
-      const spyInit2 = jest.spyOn(layer2, "attachToMap");
-      const spyTerminate2 = jest.spyOn(layer2, "detachFromMap");
-      const layer3 = new Layer({ key: "test3" });
-      const spyInit3 = jest.spyOn(layer3, "attachToMap");
-      const spyTerminate3 = jest.spyOn(layer3, "detachFromMap");
-      const layer4 = new Layer({ key: "test4" });
-      const spyInit4 = jest.spyOn(layer4, "attachToMap");
-      const spyTerminate4 = jest.spyOn(layer4, "detachFromMap");
+      const layer0 = new OldMbtLayer({ key: "test1" });
+      const spyInit = jest.spyOn(olMap, "addLayer");
+      const spyTerminate = jest.spyOn(olMap, "removeLayer");
+      const layer1 = new OldMbtLayer({ key: "test1" });
+      const layer2 = new OldMbtLayer({ key: "test2" });
+      const layer3 = new OldMbtLayer({ key: "test3" });
+      const layer4 = new OldMbtLayer({ key: "test4" });
       const startLayers = [layer1, layer3];
+
       const { rerender } = render(
         <BasicMap layers={startLayers} map={olMap} />,
       );
-      expect(spyInit0).toHaveBeenCalledTimes(0);
-      expect(spyInit1).toHaveBeenCalledTimes(1);
-      expect(spyInit2).toHaveBeenCalledTimes(0);
-      expect(spyInit3).toHaveBeenCalledTimes(1);
-      expect(spyInit4).toHaveBeenCalledTimes(0);
-      expect(spyTerminate0).toHaveBeenCalledTimes(0);
-      expect(spyTerminate1).toHaveBeenCalledTimes(1);
-      expect(spyTerminate2).toHaveBeenCalledTimes(0);
-      expect(spyTerminate3).toHaveBeenCalledTimes(1);
-      expect(spyTerminate4).toHaveBeenCalledTimes(0);
+      expect(spyInit).toHaveBeenCalledTimes(2);
+      expect(spyTerminate).toHaveBeenCalledTimes(0);
 
       const layers = [layer0, layer2, layer3, layer4];
       rerender(<BasicMap layers={layers} map={olMap} />);
-      expect(spyInit0).toHaveBeenCalledTimes(1);
-      expect(spyInit1).toHaveBeenCalledTimes(1);
-      expect(spyInit2).toHaveBeenCalledTimes(1);
-      expect(spyInit3).toHaveBeenCalledTimes(2);
-      expect(spyInit4).toHaveBeenCalledTimes(1);
-      expect(spyTerminate0).toHaveBeenCalledTimes(1);
-      expect(spyTerminate1).toHaveBeenCalledTimes(2);
-      expect(spyTerminate2).toHaveBeenCalledTimes(1);
-      expect(spyTerminate3).toHaveBeenCalledTimes(3);
-      expect(spyTerminate4).toHaveBeenCalledTimes(1);
+
+      expect(spyInit).toHaveBeenCalledTimes(2 + 4);
+      expect(spyTerminate).toHaveBeenCalledTimes(2);
     });
   });
 });

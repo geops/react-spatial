@@ -1,25 +1,20 @@
-/* eslint-disable react/jsx-props-no-spreading */
-import Adapter from "@cfaester/enzyme-adapter-react-18";
-import { configure, mount } from "enzyme";
+import { fireEvent, render } from "@testing-library/react";
 import "jest-canvas-mock";
-import { Layer } from "mobility-toolbox-js/ol";
+import Layer from "ol/layer/Layer";
+/* eslint-disable react/jsx-props-no-spreading */
 import React from "react";
-import renderer from "react-test-renderer";
 
 import LayerTree from "./LayerTree";
 
-configure({ adapter: new Adapter() });
-
 const mountLayerTree = (layers) => {
-  return mount(<LayerTree layers={layers} />);
+  return render(<LayerTree layers={layers} />);
 };
 
 const renderLayerTree = (layers, props) => {
-  const component = renderer.create(
+  const { container } = render(
     <LayerTree layers={layers} {...(props || {})} />,
   );
-  const tree = component.toJSON();
-  expect(tree).toMatchSnapshot();
+  expect(container.innerHTML).toMatchSnapshot();
 };
 
 const classItem = ".rs-layer-tree-item";
@@ -38,9 +33,7 @@ describe("LayerTree", () => {
           new Layer({
             group: "radio",
             name: "1-1",
-            properties: {
-              radioGroup: "radio",
-            },
+            radioGroup: "radio",
           }),
           new Layer({
             children: [
@@ -62,6 +55,7 @@ describe("LayerTree", () => {
             properties: {
               radioGroup: "radio",
             },
+            radioGroup: "radio",
             visible: false,
           }),
         ],
@@ -75,9 +69,8 @@ describe("LayerTree", () => {
     });
 
     test("when no layers.", () => {
-      const component = renderer.create(<LayerTree layers={[]} />);
-      const tree = component.toJSON();
-      expect(tree).toMatchSnapshot();
+      const { container } = render(<LayerTree layers={[]} />);
+      expect(container.innerHTML).toMatchSnapshot();
     });
 
     test("when renderItem is used.", () => {
@@ -104,7 +97,7 @@ describe("LayerTree", () => {
     test("when an item is hidden.", () => {
       renderLayerTree(layers, {
         isItemHidden: (item) => {
-          return !!item.children.length;
+          return !!item.get("children")?.length;
         },
       });
     });
@@ -170,6 +163,7 @@ describe("LayerTree", () => {
                       visible: true,
                     }),
                   ],
+                  isAlwaysExpanded: true,
                   name: "Expanded layer 1.1.1 (because of isAlwaysExpanded=true)",
                   properties: {
                     isAlwaysExpanded: true,
@@ -183,6 +177,7 @@ describe("LayerTree", () => {
                       visible: true,
                     }),
                   ],
+                  hideInLegend: true,
                   name: "Hidden layer 1.1.1 (because of hidden=true)",
                   properties: {
                     hideInLegend: true,
@@ -190,10 +185,8 @@ describe("LayerTree", () => {
                   visible: true,
                 }),
               ],
+              isAlwaysExpanded: true,
               name: "Expanded layer 1.1 (because of isAlwaysExpanded=true)",
-              properties: {
-                isAlwaysExpanded: true,
-              },
               visible: true,
             }),
             new Layer({
@@ -209,6 +202,7 @@ describe("LayerTree", () => {
                   visible: true,
                 }),
               ],
+              isAlwaysExpanded: true,
               name: "Expanded layer 1.2 (because of isAlwaysExpanded=true)",
               properties: {
                 isAlwaysExpanded: true,
@@ -230,6 +224,7 @@ describe("LayerTree", () => {
                       visible: true,
                     }),
                   ],
+                  isAlwaysExpanded: true,
                   name: "Invisible layer 2.1.1 (as parent isAlwaysExpanded=false)",
                   properties: {
                     isAlwaysExpanded: true,
@@ -282,7 +277,7 @@ describe("LayerTree", () => {
     const expectCalled = () => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spy2).toHaveBeenCalledTimes(0);
-      expect(spy.mock.calls[0][0].name).toBe("foo");
+      expect(spy.mock.calls[0][0].get("name")).toBe("foo");
     };
 
     beforeEach(() => {
@@ -297,17 +292,19 @@ describe("LayerTree", () => {
     });
 
     test("when we press enter with keyboard on the label element.", () => {
-      wrapper.find("label").at(0).simulate("keypress", { which: 13 });
+      fireEvent.click(wrapper.container.querySelector("label"), {
+        which: 13,
+      });
       expectCalled();
     });
 
     test("when we click on input.", () => {
-      wrapper.find("input").at(0).simulate("click");
+      fireEvent.click(wrapper.container.querySelector("input"));
       expectCalled();
     });
 
     test("when we click on toggle button (label+arrow) of an item without children.", () => {
-      wrapper.find(classItem).first().childAt(1).simulate("click");
+      fireEvent.click(wrapper.container.querySelector(classItem).firstChild);
       expectCalled();
     });
   });
@@ -339,7 +336,7 @@ describe("LayerTree", () => {
     });
 
     test("when we click on toggle button (label+arrow) of an item with children", () => {
-      wrapper.find(toggleItem).first().simulate("click");
+      fireEvent.click(wrapper.container.querySelector(toggleItem));
       expectCalled();
     });
   });

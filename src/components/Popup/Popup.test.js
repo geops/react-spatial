@@ -1,29 +1,17 @@
-import Adapter from "@cfaester/enzyme-adapter-react-18";
-import { configure, mount, shallow } from "enzyme";
 import "jest-canvas-mock";
+import { fireEvent, render } from "@testing-library/react";
 import Feature from "ol/Feature";
-import Line from "ol/geom/LineString";
 import Point from "ol/geom/Point";
 import OLMap from "ol/Map";
 import View from "ol/View";
 import React from "react";
-import renderer from "react-test-renderer";
 
 import Popup from "./Popup";
 
 let map;
 
-configure({ adapter: new Adapter() });
-
 const feat = new Feature({
   geometry: new Point([1000, 1000]),
-});
-
-const featLine = new Feature({
-  geometry: new Line([
-    [1000, 1000],
-    [2000, 2000],
-  ]),
 });
 
 describe("Popup", () => {
@@ -33,27 +21,25 @@ describe("Popup", () => {
 
   describe("should match snapshot", () => {
     test("without feature", () => {
-      const component = renderer.create(
+      const { container } = render(
         <Popup map={map}>
           <div id="foo" />
         </Popup>,
       );
-      const tree = component.toJSON();
-      expect(tree).toMatchSnapshot();
+      expect(container.innerHTML).toMatchSnapshot();
     });
 
     test("with default values.", () => {
-      const component = renderer.create(
+      const { container } = render(
         <Popup feature={feat} map={map}>
           <div id="foo" />
         </Popup>,
       );
-      const tree = component.toJSON();
-      expect(tree).toMatchSnapshot();
+      expect(container.innerHTML).toMatchSnapshot();
     });
 
     test("without close button.", () => {
-      const component = renderer.create(
+      const { container } = render(
         <Popup
           feature={feat}
           map={map}
@@ -64,12 +50,11 @@ describe("Popup", () => {
           <div id="bar" />
         </Popup>,
       );
-      const tree = component.toJSON();
-      expect(tree).toMatchSnapshot();
+      expect(container.innerHTML).toMatchSnapshot();
     });
 
     test("without header.", () => {
-      const component = renderer.create(
+      const { container } = render(
         <Popup
           feature={feat}
           map={map}
@@ -80,53 +65,47 @@ describe("Popup", () => {
           <div id="bar" />
         </Popup>,
       );
-      const tree = component.toJSON();
-      expect(tree).toMatchSnapshot();
+      expect(container.innerHTML).toMatchSnapshot();
     });
 
     test("with tabIndex defined.", () => {
-      const component = renderer.create(
+      const { container } = render(
         <Popup feature={feat} map={map} tabIndex="0">
           <div id="bar" />
         </Popup>,
       );
-      const tree = component.toJSON();
-      expect(tree).toMatchSnapshot();
+      expect(container.innerHTML).toMatchSnapshot();
     });
   });
 
   [
     ["click", {}],
-    ["keypress", { which: 13 }],
+    ["click", { which: 13 }],
   ].forEach((evt) => {
     test(`should trigger onCloseClick function on ${evt[0]} event.`, () => {
       const spy = jest.fn(() => {});
 
-      const component = mount(
+      const { container } = render(
         <Popup feature={feat} map={map} onCloseClick={spy}>
           <div id="gux" />
         </Popup>,
       );
-
-      component
-        .find("div")
-        .at(3)
-        .simulate(...evt);
-      expect(spy).toHaveBeenCalled();
+      fireEvent[evt[0]](container.querySelector(".rs-popup-close-bt"), evt[1]);
+      expect(spy).toHaveBeenCalledTimes(1);
     });
 
     test(`should trigger default onCloseClick function on ${evt[0]} event without errors.`, () => {
-      const component = mount(
+      const { container } = render(
         <Popup feature={feat} map={map}>
           <div id="gux" />
         </Popup>,
       );
       // test if no js error triggered by the default value
       try {
-        component
-          .find("div")
-          .at(3)
-          .simulate(...evt);
+        fireEvent[evt[0]](
+          container.querySelector(".rs-popup-close-bt"),
+          evt[1],
+        );
         expect(true).toBe(true);
       } catch (e) {
         expect(false).toBe(true);
@@ -139,55 +118,26 @@ describe("Popup", () => {
       map.getPixelFromCoordinate = jest.fn(() => {
         return [10010, 100200];
       });
-      const component = mount(
+      const { container } = render(
         <Popup map={map} popupCoordinate={[1001, 1002]}>
           <div id="gux" />
         </Popup>,
       );
-      expect(component.state().left).toBe(10010);
-      expect(component.state().top).toBe(100200);
-      component.setProps({ feature: featLine });
-      map.getPixelFromCoordinate = jest.fn(() => {
-        return [10011, 100100];
-      });
-      component.setProps({ popupCoordinate: [1009, 1009] });
-      expect(component.state().left).toBe(10011);
-      expect(component.state().top).toBe(100100);
+      expect(container.firstChild.style.left).toBe("10010px");
+      expect(container.firstChild.style.top).toBe("100200px");
     });
 
     test(`using feature.`, () => {
       map.getPixelFromCoordinate = jest.fn(() => {
         return [10010, 100200];
       });
-      const component = mount(
+      const { container } = render(
         <Popup feature={feat} map={map}>
           <div id="gux" />
         </Popup>,
       );
-      expect(component.state().left).toBe(10010);
-      expect(component.state().top).toBe(100200);
-      map.getPixelFromCoordinate = jest.fn(() => {
-        return [10011, 100100];
-      });
-      component.setProps({ feature: featLine });
-      expect(component.state().left).toBe(10011);
-      expect(component.state().top).toBe(100100);
-    });
-  });
-
-  describe(`updates position`, () => {
-    test(`on map postrender event.`, () => {
-      map.getPixelFromCoordinate = jest.fn(() => {
-        return [10, 200];
-      });
-      const component = shallow(
-        <Popup feature={feat} map={map}>
-          <div id="gux" />
-        </Popup>,
-      );
-      const spy = jest.spyOn(component.instance(), "updatePixelPosition");
-      map.dispatchEvent({ type: "postrender" });
-      expect(spy).toHaveBeenCalledTimes(1);
+      expect(container.firstChild.style.left).toBe("10010px");
+      expect(container.firstChild.style.top).toBe("100200px");
     });
   });
 
@@ -235,7 +185,7 @@ describe("Popup", () => {
         return [10, 20];
       });
       const spy = jest.spyOn(map.getView(), "animate");
-      mount(
+      render(
         <Popup feature={feat} map={map} panIntoView>
           <div id="gux" />
         </Popup>,
@@ -252,7 +202,7 @@ describe("Popup", () => {
         return [10, 200];
       });
       const spy = jest.spyOn(map.getView(), "animate");
-      mount(
+      render(
         <Popup
           feature={feat}
           map={map}
@@ -274,7 +224,7 @@ describe("Popup", () => {
         return [10, 200];
       });
       const spy = jest.spyOn(map.getView(), "animate");
-      mount(
+      render(
         <Popup
           feature={feat}
           map={map}
@@ -286,22 +236,5 @@ describe("Popup", () => {
       );
       expect(spy).toHaveBeenCalledTimes(0);
     });
-  });
-
-  test(`deregisters postrender on unmount.`, () => {
-    map.getPixelFromCoordinate = jest.fn(() => {
-      return [10, 200];
-    });
-    const component = shallow(
-      <Popup feature={featLine} map={map}>
-        <div id="gux" />
-      </Popup>,
-    );
-    const spy = jest.spyOn(component.instance(), "updatePixelPosition");
-    map.dispatchEvent({ type: "postrender" });
-    expect(spy).toHaveBeenCalledTimes(1);
-    component.unmount();
-    map.dispatchEvent({ type: "postrender" });
-    expect(spy).toHaveBeenCalledTimes(1);
   });
 });

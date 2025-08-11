@@ -1,8 +1,10 @@
-import { getLayersAsFlatArray, Layer } from "mobility-toolbox-js/ol";
+import Layer from "ol/layer/Layer";
 import OLMap from "ol/Map";
 import { unByKey } from "ol/Observable";
 import PropTypes from "prop-types";
 import { PureComponent } from "react";
+
+import getLayersAsFlatArray from "../../utils/getLayersAsFlatArray";
 
 const propTypes = {
   /**
@@ -104,7 +106,7 @@ class Permalink extends PureComponent {
       if (urlParams.get("layers")) {
         const visibleLayers = urlParams.get("layers").split(",");
         getLayersAsFlatArray(layers).forEach((l) => {
-          if (visibleLayers.includes(l.key)) {
+          if (visibleLayers.includes(l.key || l.get("key"))) {
             if (l.setVisible) {
               l.setVisible(true);
             } else {
@@ -114,8 +116,8 @@ class Permalink extends PureComponent {
           } else if (
             !isBaseLayer(l) &&
             !isLayerHidden(l) &&
-            !l.children.some((ll) => {
-              return ll.visible;
+            !(l.children || l.get("children")).some((ll) => {
+              return ll.getVisible ? ll.getVisible() : ll.visible;
             })
           ) {
             if (l.setVisible) {
@@ -137,7 +139,8 @@ class Permalink extends PureComponent {
         getLayersAsFlatArray(layers)
           .filter(isBaseLayer)
           .forEach((baseLayer) => {
-            const visible = baseLayer.key === visibleBaseLayer;
+            const key = baseLayer.key || baseLayer.get("key");
+            const visible = key === visibleBaseLayer;
             if (baseLayer.setVisible) {
               baseLayer.setVisible(visible);
             } else {
@@ -268,22 +271,23 @@ class Permalink extends PureComponent {
     if (layers.length) {
       layersParam = getLayersAsFlatArray(layers)
         .filter((l) => {
-          const children = l.children || [];
+          const children = l.get("children") || l.children || [];
           const allChildrenHidden = children.every((child) => {
             return isLayerHidden(child);
           });
           const hasVisibleChildren = children.some((child) => {
-            return child.visible;
+            return child.getVisible ? child.getVisible() : child.visible;
           });
+          const isVisible = l.getVisible ? l.getVisible() : l.visible;
           return (
             !isBaseLayer(l) &&
             !isLayerHidden(l) &&
-            l.visible &&
+            isVisible &&
             (!hasVisibleChildren || allChildrenHidden)
           );
         })
         .map((l) => {
-          return l.key;
+          return l.key || l.get("key");
         })
         .join();
     }
@@ -295,25 +299,27 @@ class Permalink extends PureComponent {
       // First baselayers in order of visibility, top layer is first
       const visibleBaseLayers = (
         baseLayers.filter((l) => {
-          return l.visible;
+          return l.getVisible ? l.getVisible() : l.visible;
         }) || []
       ).reverse();
       const nonVisibleBaseLayers =
         baseLayers.filter((l) => {
-          return !l.visible;
+          return !(l.getVisible ? l.getVisible() : l.visible);
         }) || [];
       baseLayersParam = [...visibleBaseLayers, ...nonVisibleBaseLayers]
         .sort((a, b) => {
-          if (a.visible === b.visible) {
+          const aVisible = a.getVisible ? a.getVisible() : a.visible;
+          const bVisible = b.getVisible ? b.getVisible() : b.visible;
+          if (aVisible === bVisible) {
             return 0;
           }
-          if (a.visible && !b.visible) {
+          if (aVisible && !bVisible) {
             return -1;
           }
           return 1;
         })
         .map((l) => {
-          return l.key;
+          return l.key || l.get("key");
         })
         .join();
     }

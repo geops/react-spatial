@@ -1,16 +1,11 @@
-/* eslint-disable jsx-a11y/interactive-supports-focus */
-import { Layer } from "mobility-toolbox-js/ol";
+import Layer from "ol/layer/Layer";
 import { unByKey } from "ol/Observable";
 import PropTypes from "prop-types";
+/* eslint-disable jsx-a11y/interactive-supports-focus */
 import React, { useEffect, useState } from "react";
 import { FaChevronLeft } from "react-icons/fa";
 
 const propTypes = {
-  /**
-   * Alternative text rendered if layer images can't be loaded
-   */
-  altText: PropTypes.string,
-
   /**
    * CSS class to apply on the container.
    */
@@ -20,6 +15,16 @@ const propTypes = {
    * Image (node) rendered in the switcher close button.
    */
   closeButtonImage: PropTypes.node,
+
+  /**
+   * Function that returns the alternative text if the layer's image is not found.
+   */
+  getAltText: PropTypes.func,
+
+  /**
+   * Function that returns the label to display att the bootm of the layer's image and as title attribute.
+   */
+  getLayerLabel: PropTypes.func,
 
   /**
    * Object containing relative paths to the base layer images. Object
@@ -51,12 +56,6 @@ const propTypes = {
   onSwitcherButtonClick: PropTypes.func,
 
   /**
-   * Translation function.
-   * @param {function} Translation function returning the translated string.
-   */
-  t: PropTypes.func,
-
-  /**
    * Button titles.
    */
   titles: PropTypes.shape({
@@ -68,7 +67,7 @@ const propTypes = {
 
 const getVisibleLayer = (layers) => {
   return layers.find((layer) => {
-    return layer.visible;
+    return layer.getVisible ? layer.getVisible() : layer.visible;
   });
 };
 
@@ -118,27 +117,36 @@ CloseButton.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
+const defaultTitles = {
+  button: "Base layers",
+  closeSwitcher: "Close Baselayer-Switcher",
+  openSwitcher: "Open Baselayer-Switcher",
+};
+
+const getDefaultLabel = (layer) => {
+  return layer?.get("name") || "";
+};
+
+const getDefaultAltText = () => {
+  return "Source not found";
+};
+
 /**
  * The BaseLayerSwitcher component renders a button interface for switching the visible
- * [mobility-toolbox-js layer](https://mobility-toolbox-js.geops.io/api/identifiers%20html#ol-layers)
  * when defined as base layer.
  */
 
 function BaseLayerSwitcher({
-  altText = "Source not found",
   className = "rs-base-layer-switcher",
   closeButtonImage = <FaChevronLeft />,
-  layerImages = undefined,
+  getAltText = getDefaultAltText,
+  getLayerLabel = getDefaultLabel,
+  layerImages,
   layers,
-  onCloseButtonClick = null,
-  onLayerButtonClick = null,
-  onSwitcherButtonClick = null,
-  t = (s) => s,
-  titles = {
-    button: "Base layers",
-    closeSwitcher: "Close Baselayer-Switcher",
-    openSwitcher: "Open Baselayer-Switcher",
-  },
+  onCloseButtonClick,
+  onLayerButtonClick,
+  onSwitcherButtonClick,
+  titles = defaultTitles,
 }) {
   const [switcherOpen, setSwitcherOpen] = useState(false);
   const [isClosed, setIsClosed] = useState(true);
@@ -160,7 +168,7 @@ function BaseLayerSwitcher({
 
   const handleSwitcherClick = (evt) => {
     const nextLayer = layers.find((layer) => {
-      return !layer.visible;
+      return !(layer.getVisible ? layer.getVisible() : layer.visible);
     });
     const onButtonClick =
       layers.length === 2 ? onLayerButtonClick : onSwitcherButtonClick;
@@ -247,7 +255,10 @@ function BaseLayerSwitcher({
     // Update the layer selected when a visibility changes.
     const olKeys = (layers || []).map((layer) => {
       return layer.on("change:visible", (evt) => {
-        if (evt.target.visible && currentLayer !== evt.target) {
+        const vis = evt.target.getVisible
+          ? evt.target.getVisible()
+          : evt.target.visible;
+        if (vis && currentLayer !== evt.target) {
           setCurrentLayer(evt.target);
         }
       });
@@ -260,6 +271,10 @@ function BaseLayerSwitcher({
   if (!layers || layers.length < 2 || !currentLayer) {
     return null;
   }
+
+  const firstNonVisibleLayer = layers.find((layer) => {
+    return !(layer.getVisible ? layer.getVisible() : layer.visible);
+  });
 
   return (
     <div className={`${className}${openClass}`}>
@@ -280,22 +295,22 @@ function BaseLayerSwitcher({
         <div className="rs-base-layer-switcher-title">
           {layers.length !== 2
             ? titles.button
-            : layers.find((layer) => {
-                return !layer.visible;
-              }) &&
-              t(
-                layers.find((layer) => {
-                  return !layer.visible;
-                }).name,
-              )}
+            : firstNonVisibleLayer && getLayerLabel(firstNonVisibleLayer)}
         </div>
-        {nextImage ? null : <span className="rs-alt-text">{t(altText)}</span>}
+        {nextImage ? null : (
+          <span className="rs-alt-text">
+            {getAltText(firstNonVisibleLayer)}
+          </span>
+        )}
       </div>
       {layers.map((layer, idx) => {
-        const layerName = layer.name;
-        const activeClass = layerName === currentLayer.name ? " rs-active" : "";
+        const layerName = getLayerLabel(layer);
+        const activeClass =
+          layerName === currentLayer.get("name") ? " rs-active" : "";
         const imageStyle = getImageStyle(
-          layerImages ? layerImages[`${layer.key}`] : layer.get("previewImage"),
+          layerImages
+            ? layerImages[`${layer.get("key") || layer.key}`]
+            : layer.get("previewImage"),
         );
         return (
           <div
@@ -309,7 +324,7 @@ function BaseLayerSwitcher({
             }}
           >
             <div
-              aria-label={t(layerName)}
+              aria-label={layerName}
               className={`rs-base-layer-switcher-button${openClass}`}
               onClick={(evt) => {
                 return onLayerSelect(layer, evt);
@@ -322,13 +337,13 @@ function BaseLayerSwitcher({
               role="button"
               style={imageStyle}
               tabIndex={switcherOpen ? "0" : "-1"}
-              title={t(layerName)}
+              title={layerName}
             >
               <div className={`rs-base-layer-switcher-title${activeClass}`}>
-                {t(layerName)}
+                {layerName}
               </div>
               {imageStyle ? null : (
-                <span className="rs-alt-text">{t(altText)}</span>
+                <span className="rs-alt-text">{getAltText(layer)}</span>
               )}
             </div>
           </div>

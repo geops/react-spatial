@@ -5,7 +5,7 @@
 @use "sass:math";
 
 /*  Color */
-$brand-primary: #eb0000;
+$brand-primary: #000;
 $brand-secondary: #003d85;
 $gray-base: #000;
 $gray-lighter: color.adjust($gray-base, $lightness: 93.5%);
