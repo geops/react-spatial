@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.1](https://github.com/geops/react-spatial/compare/v2.0.0...v2.0.1) (2025-10-14)
+
+
+### Bug Fixes
+
+* make sure a time is always set ([3462f28](https://github.com/geops/react-spatial/commit/3462f285f3d0958d1371c32581244b78b3fa07ed))
+
 ## [2.0.0](https://github.com/geops/react-spatial/compare/v1.12.2...v2.0.0) (2025-08-11)
 
 
