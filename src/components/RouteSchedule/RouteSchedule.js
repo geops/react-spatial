@@ -162,14 +162,15 @@ function RouteStop({
 
   useEffect(() => {
     let timeout = null;
+    const time = trackerLayer.time || trackerLayer.engine?.time || Date.now();
 
-    const isStopPassed = isPassed(stop, trackerLayer.time, stations, idx);
+    const isStopPassed = isPassed(stop, time, stations, idx);
     setIsStationPassed(isStopPassed);
 
     // We have to refresh the stop when the state it's time_based
     if (stop.state === "TIME_BASED" && !isStopPassed) {
       timeout = setInterval(() => {
-        setIsStationPassed(isPassed(stop, trackerLayer.time, stations, idx));
+        setIsStationPassed(isPassed(stop, time, stations, idx));
       }, 20000);
     }
     return () => {
