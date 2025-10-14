@@ -2412,6 +2412,13 @@
   resolved "https://registry.yarnpkg.com/@geoblocks/ol-maplibre-layer/-/ol-maplibre-layer-1.0.3.tgz#996345296b0b2d1b8ad06b78424caa5b69296b6f"
   integrity sha512-NKr7iqIezw5XWKy6Dw32mYdo3tcNXIOb+wI/nguhiqKxntFvvpiQAsv38lM9xpTkqlDRd1JKLfAHaqtc7jy4Ug==
 
+"@geops/geops-ui@0.3.6":
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/@geops/geops-ui/-/geops-ui-0.3.6.tgz#f5e3f661d0db24f279a5ef51c62b3410b98647a7"
+  integrity sha512-xj6U73NoXxfyne9yE13zxP5COfp3V9g/JL/LIB/NJkatWsrqzsCfWJoqwKyw7M4gZ/gPTxuzf7Az2epWyzxVJQ==
+  dependencies:
+    prop-types "^15.7.2"
+
 "@geops/geops-ui@0.3.6-beta.0":
   version "0.3.6-beta.0"
   resolved "https://registry.yarnpkg.com/@geops/geops-ui/-/geops-ui-0.3.6-beta.0.tgz#45b29b765b1257078a9228c27c694d37951a1384"
@@ -10165,17 +10172,18 @@ mkdirp@~0.5.1:
   dependencies:
     minimist "^1.2.6"
 
-mobility-toolbox-js@3.3.3:
-  version "3.3.3"
-  resolved "https://registry.yarnpkg.com/mobility-toolbox-js/-/mobility-toolbox-js-3.3.3.tgz#4f54fb97a6858cc1adcd69f1c6346a5884463ec7"
-  integrity sha512-VNRVNzvM2HQe3tB2Zroz3VUY65hM1hCAQeMYov3ZWMJpWun+Z6l6Sj7H4tEA7extuF9+MLeLZp7FUUlD+pzrEw==
+mobility-toolbox-js@3.4.4:
+  version "3.4.4"
+  resolved "https://registry.yarnpkg.com/mobility-toolbox-js/-/mobility-toolbox-js-3.4.4.tgz#a8466e97e56fc4e4eb4d430778e296390ea7a80c"
+  integrity sha512-KPjdgAnEpNt1nATTlj03rzTuvsPOg/rzCmyStG3HK+nuIUbu2g7n895yqC8LpbAOcrFbzDvRVJimUruXeZsmHQ==
   dependencies:
     "@geoblocks/ol-maplibre-layer" "^1.0.3"
+    "@geops/geops-ui" "0.3.6"
     "@turf/helpers" "7.2.0"
     "@turf/transform-rotate" "7.2.0"
     lodash.debounce "4.0.8"
     lodash.throttle "4.1.1"
-    uuid "11.1.0"
+    uuid "13.0.0"
 
 modify-values@^1.0.0:
   version "1.0.1"
@@ -13721,10 +13729,10 @@ utils-merge@1.0.1:
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   integrity sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==
 
-uuid@11.1.0:
-  version "11.1.0"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-11.1.0.tgz#9549028be1753bb934fc96e2bca09bb4105ae912"
-  integrity sha512-0/A9rDy9P7cJ+8w1c9WD9V//9Wj15Ce2MPz8Ri6032usz+NfePxx5AcN3bN+r6ZL6jEo066/yNYB3tn4pQEx+A==
+uuid@13.0.0:
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-13.0.0.tgz#263dc341b19b4d755eb8fe36b78d95a6b65707e8"
+  integrity sha512-XQegIaBTVUjSHliKqcnFqYypAd4S+WCYt5NIeRs6w/UAry7z8Y9j5ZwRRL4kzq9U3sD6v+85er9FvkEaBpji2w==
 
 uuid@^8.3.2:
   version "8.3.2"
