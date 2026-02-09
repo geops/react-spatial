@@ -1,4 +1,4 @@
-import { Fill, Stroke, Circle, Style, Text } from "ol/style";
+import { Circle, Fill, Stroke, Style, Text } from "ol/style";
 
 // Default style for Ol
 const fill = new Fill({
@@ -9,12 +9,12 @@ const stroke = new Stroke({
   width: 1.25,
 });
 const dfltOlStyle = new Style({
+  fill,
   image: new Circle({
     fill,
-    stroke,
     radius: 5,
+    stroke,
   }),
-  fill,
   stroke,
 });
 
@@ -27,17 +27,17 @@ const kmlStroke = new Stroke({
   width: 1.5,
 });
 const kmlcircle = new Circle({
-  radius: 7,
   fill: kmlFill,
+  radius: 7,
   stroke: kmlStroke,
 });
 const kmlStyle = new Style({
   fill: kmlFill,
-  stroke: kmlStroke,
   image: kmlcircle,
+  stroke: kmlStroke,
   text: new Text({
-    font: "normal 16px Helvetica",
     fill: kmlFill,
+    font: "normal 16px Helvetica",
     stroke: new Stroke({
       color: [255, 255, 255, 1],
       width: 3,

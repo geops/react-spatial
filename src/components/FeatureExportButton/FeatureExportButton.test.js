@@ -1,68 +1,58 @@
 import "jest-canvas-mock";
-import React from "react";
-import renderer from "react-test-renderer";
-import { configure, mount, shallow } from "enzyme";
-import Adapter from "@cfaester/enzyme-adapter-react-18";
-import { Layer } from "mobility-toolbox-js/ol";
-import GPX from "ol/format/GPX";
-import VectorSource from "ol/source/Vector";
-import Style from "ol/style/Style";
-import Icon from "ol/style/Icon";
-import Text from "ol/style/Text";
-import Fill from "ol/style/Fill";
-import Stroke from "ol/style/Stroke";
-import Point from "ol/geom/Point";
-import LineString from "ol/geom/LineString";
+import { fireEvent, render } from "@testing-library/react";
 import Feature from "ol/Feature";
+import GPX from "ol/format/GPX";
+import LineString from "ol/geom/LineString";
+import Point from "ol/geom/Point";
 import VectorLayer from "ol/layer/Vector";
+import VectorSource from "ol/source/Vector";
+import Fill from "ol/style/Fill";
+import Icon from "ol/style/Icon";
+import Stroke from "ol/style/Stroke";
+import Style from "ol/style/Style";
+import Text from "ol/style/Text";
+import React from "react";
 
 import FeatureExportButton from ".";
 
-configure({ adapter: new Adapter() });
-
-const layer = new Layer({
+const layer = new VectorLayer({
   name: "Sample layer",
-  olLayer: new VectorLayer({
-    source: new VectorSource({
-      features: [
-        new Feature({
-          geometry: new Point([819103.972418, 6120013.078324]),
-        }),
-      ],
-    }),
+  source: new VectorSource({
+    features: [
+      new Feature({
+        geometry: new Point([819103.972418, 6120013.078324]),
+      }),
+    ],
   }),
 });
 
 describe("FeatureExportButton", () => {
   describe("should match snapshot", () => {
     test("with default attributes.", () => {
-      const component = renderer.create(<FeatureExportButton layer={layer} />);
-      const tree = component.toJSON();
-      expect(tree).toMatchSnapshot();
+      const { container } = render(<FeatureExportButton layer={layer} />);
+      expect(container.innerHTML).toMatchSnapshot();
     });
 
     test("should match snapshot with cutom attributes.", () => {
-      const component = renderer.create(
+      const { container } = render(
         <FeatureExportButton
-          layer={layer}
           className="foo"
-          title="bar"
+          layer={layer}
           // eslint-disable-next-line jsx-a11y/tabindex-no-positive
           tabIndex={2}
+          title="bar"
         />,
       );
-      const tree = component.toJSON();
-      expect(tree).toMatchSnapshot();
+      expect(container.innerHTML).toMatchSnapshot();
     });
 
     test("should match snapshot with children passed.", () => {
-      const component = renderer.create(
+      const { container } = render(
         <FeatureExportButton layer={layer}>
           <div>Foo</div>
         </FeatureExportButton>,
       );
-      const tree = component.toJSON();
-      expect(tree).toMatchSnapshot();
+      expect(container.innerHTML).toMatchSnapshot();
     });
   });
 
@@ -79,12 +69,10 @@ describe("FeatureExportButton", () => {
         );
       }
 
-      return new Layer({
+      return new VectorLayer({
         name: "ExportLayer",
-        olLayer: new VectorLayer({
-          source: new VectorSource({
-            features: featsArray,
-          }),
+        source: new VectorSource({
+          features: featsArray,
         }),
       });
     };
@@ -93,32 +81,32 @@ describe("FeatureExportButton", () => {
 
     const textStyle = new Style({
       text: new Text({
-        text: "text name",
         font: "normal 16px Helvetica",
         stroke: new Stroke({
           color: [255, 255, 255, 1],
           width: 3,
         }),
+        text: "text name",
       }),
     });
 
     test("should be trigger click function.", () => {
-      const wrapper = shallow(<FeatureExportButton layer={iconLayer} />);
+      const { container } = render(<FeatureExportButton layer={iconLayer} />);
       const spy = jest.spyOn(FeatureExportButton, "exportFeatures");
-      wrapper.find(".rs-feature-export-button").simulate("click");
+      fireEvent.click(container.querySelector(".rs-feature-export-button"));
       expect(spy).toHaveBeenCalledTimes(1);
     });
 
     test("should use attributes for parsing", () => {
-      const wrapper = mount(
+      const { container } = render(
         <FeatureExportButton
           format={GPX}
-          projection="EPSG:4326"
           layer={iconLayer}
+          projection="EPSG:4326"
         />,
       );
       const spy = jest.spyOn(FeatureExportButton, "exportFeatures");
-      wrapper.find(".rs-feature-export-button").simulate("click");
+      fireEvent.click(container.querySelector(".rs-feature-export-button"));
       expect(spy).toHaveBeenCalledWith(iconLayer, "EPSG:4326", GPX);
     });
 
@@ -142,7 +130,7 @@ describe("FeatureExportButton", () => {
           }),
         });
 
-        iconLayer.olLayer.getSource().forEachFeature((f) => {
+        iconLayer.getSource().forEachFeature((f) => {
           f.setStyle(iconStyle);
         });
 
@@ -189,7 +177,7 @@ describe("FeatureExportButton", () => {
         test("should export text style in kml.", () => {
           const textlayer = renderLayer(2);
 
-          textlayer.olLayer.getSource().forEachFeature((f) => {
+          textlayer.getSource().forEachFeature((f) => {
             f.setStyle(textStyle);
           });
           const exportString = FeatureExportButton.createFeatureString(
@@ -208,7 +196,7 @@ describe("FeatureExportButton", () => {
         test("should only export none-empty text style in kml.", () => {
           const textlayer = renderLayer(2);
 
-          textlayer.olLayer.getSource().forEachFeature((f) => {
+          textlayer.getSource().forEachFeature((f) => {
             f.setStyle(textStyle);
           });
           const exportString1 = FeatureExportButton.createFeatureString(
@@ -223,16 +211,16 @@ describe("FeatureExportButton", () => {
 
           const newStyle = new Style({
             text: new Text({
-              text: "",
               font: "normal 16px Helvetica",
               stroke: new Stroke({
                 color: [255, 255, 255, 1],
                 width: 3,
               }),
+              text: "",
             }),
           });
           // Set empty string as name for first feature
-          textlayer.olLayer.getSource().getFeatures()[0].setStyle(newStyle);
+          textlayer.getSource().getFeatures()[0].setStyle(newStyle);
 
           const exportString2 = FeatureExportButton.createFeatureString(
             textlayer,
@@ -254,16 +242,16 @@ describe("FeatureExportButton", () => {
               lineDash: [40, 40],
             }),
             text: new Text({
-              text: "text name",
-              font: "normal 18px Arial",
-              rotation: 0.5,
               backgroundFill: new Fill({
                 color: "rgba(255,255,255,0.01)",
               }),
+              font: "normal 18px Arial",
+              rotation: 0.5,
+              text: "text name",
             }),
           });
 
-          extendedLayer.olLayer.getSource().forEachFeature((f) => {
+          extendedLayer.getSource().forEachFeature((f) => {
             f.setStyle(style);
           });
           const exportString = FeatureExportButton.createFeatureString(
@@ -290,16 +278,16 @@ describe("FeatureExportButton", () => {
               lineDash: [40, 40],
             }),
             text: new Text({
-              text: "text name",
-              font: "normal 18px Arial",
-              rotation: 0.5,
               backgroundFill: new Fill({
                 color: "rgba(255,255,255,0.01)",
               }),
+              font: "normal 18px Arial",
+              rotation: 0.5,
+              text: "text name",
             }),
           });
 
-          extendedLayer.olLayer.getSource().forEachFeature((f) => {
+          extendedLayer.getSource().forEachFeature((f) => {
             f.setStyle(style);
             f.set("foo", "bar");
           });
@@ -327,7 +315,7 @@ describe("FeatureExportButton", () => {
               [4, 5],
             ]),
           });
-          extendedLayer.olLayer.getSource().addFeatures([line]);
+          extendedLayer.getSource().addFeatures([line]);
 
           const style = [
             new Style({
@@ -363,9 +351,9 @@ describe("FeatureExportButton", () => {
           const expectedStyle =
             '<ExtendedData><Data name="lineDash"><value>40,40</value></Data>' +
             '<Data name="lineEndIcon">' +
-            '<value>{"url":"fooarrowend.png","scale":1,"size":null}</value></Data>' +
+            '<value>{"scale":1,"size":null,"url":"fooarrowend.png"}</value></Data>' +
             '<Data name="lineStartIcon">' +
-            '<value>{"url":"fooarrowstart.png","scale":1,"size":null}</value></Data>' +
+            '<value>{"scale":1,"size":null,"url":"fooarrowstart.png"}</value></Data>' +
             "</ExtendedData>";
 
           expect(

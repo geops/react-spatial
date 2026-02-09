@@ -1,12 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`FeatureExportButton should match snapshot should match snapshot with children passed. 1`] = `
-<div
-  className="rs-feature-export-button"
-  onClick={[Function]}
-  onKeyPress={[Function]}
-  role="button"
-  tabIndex={0}
+<div class="rs-feature-export-button"
+     role="button"
+     tabindex="0"
 >
   <div>
     Foo
@@ -15,24 +12,20 @@ exports[`FeatureExportButton should match snapshot should match snapshot with ch
 `;
 
 exports[`FeatureExportButton should match snapshot should match snapshot with cutom attributes. 1`] = `
-<div
-  className="foo"
-  onClick={[Function]}
-  onKeyPress={[Function]}
-  role="button"
-  tabIndex={2}
-  title="bar"
-/>
+<div class="foo"
+     role="button"
+     tabindex="2"
+     title="bar"
+>
+</div>
 `;
 
 exports[`FeatureExportButton should match snapshot with default attributes. 1`] = `
-<div
-  className="rs-feature-export-button"
-  onClick={[Function]}
-  onKeyPress={[Function]}
-  role="button"
-  tabIndex={0}
-/>
+<div class="rs-feature-export-button"
+     role="button"
+     tabindex="0"
+>
+</div>
 `;
 
 exports[`FeatureExportButton triggers onClick #createFeatureString() using KMLFormat should export kml by default. 1`] = `

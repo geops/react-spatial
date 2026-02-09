@@ -1,10 +1,17 @@
-import { PureComponent } from "react";
-import PropTypes from "prop-types";
+import Layer from "ol/layer/Layer";
 import OLMap from "ol/Map";
 import { unByKey } from "ol/Observable";
-import { Layer, getLayersAsFlatArray } from "mobility-toolbox-js/ol";
+import PropTypes from "prop-types";
+import { PureComponent } from "react";
+
+import getLayersAsFlatArray from "../../utils/getLayersAsFlatArray";
 
 const propTypes = {
+  /**
+   * Maximum number of decimals allowed for coordinates.
+   */
+  coordinateDecimals: PropTypes.number,
+
   /**
    * Either 'react-router' history object:
    * https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/api/history.md<br>
@@ -14,6 +21,24 @@ const propTypes = {
   history: PropTypes.shape({
     replace: PropTypes.func,
   }),
+
+  /**
+   * Determine if the layer appears in the baselayers permalink parameter or not.
+   *
+   * @param {object} item The item to hide or not.
+   *
+   * @return {bool} true if the item is not displayed in the baselayers permalink parameter
+   */
+  isBaseLayer: PropTypes.func,
+
+  /**
+   * Determine if the layer is hidden in the permalink or not.
+   *
+   * @param {object} item The item to hide or not.
+   *
+   * @return {bool} true if the item is not displayed in the permalink
+   */
+  isLayerHidden: PropTypes.func,
 
   /**
    * Layers provider.
@@ -31,29 +56,6 @@ const propTypes = {
   params: PropTypes.object,
 
   /**
-   * Maximum number of decimals allowed for coordinates.
-   */
-  coordinateDecimals: PropTypes.number,
-
-  /**
-   * Determine if the layer is hidden in the permalink or not.
-   *
-   * @param {object} item The item to hide or not.
-   *
-   * @return {bool} true if the item is not displayed in the permalink
-   */
-  isLayerHidden: PropTypes.func,
-
-  /**
-   * Determine if the layer appears in the baselayers permalink parameter or not.
-   *
-   * @param {object} item The item to hide or not.
-   *
-   * @return {bool} true if the item is not displayed in the baselayers permalink parameter
-   */
-  isBaseLayer: PropTypes.func,
-
-  /**
    * Custom function to be called when the permalink is updated.
    * This property has priority over the history parameter and window.history.replaceState calls.
    */
@@ -61,18 +63,18 @@ const propTypes = {
 };
 
 const defaultProps = {
-  history: null,
-  replace: null,
-  layers: [],
-  map: null,
-  params: {},
   coordinateDecimals: 2,
-  isLayerHidden: () => {
-    return false;
-  },
+  history: null,
   isBaseLayer: (layer) => {
     return layer.get("isBaseLayer");
   },
+  isLayerHidden: () => {
+    return false;
+  },
+  layers: [],
+  map: null,
+  params: {},
+  replace: null,
 };
 
 /**
@@ -90,7 +92,7 @@ class Permalink extends PureComponent {
   }
 
   componentDidMount() {
-    const { map, layers, isLayerHidden, isBaseLayer } = this.props;
+    const { isBaseLayer, isLayerHidden, layers, map } = this.props;
     if (map) {
       this.moveEndRef = map.on("moveend", () => {
         this.onMapMoved();
@@ -104,7 +106,7 @@ class Permalink extends PureComponent {
       if (urlParams.get("layers")) {
         const visibleLayers = urlParams.get("layers").split(",");
         getLayersAsFlatArray(layers).forEach((l) => {
-          if (visibleLayers.includes(l.key)) {
+          if (visibleLayers.includes(l.key || l.get("key"))) {
             if (l.setVisible) {
               l.setVisible(true);
             } else {
@@ -114,8 +116,8 @@ class Permalink extends PureComponent {
           } else if (
             !isBaseLayer(l) &&
             !isLayerHidden(l) &&
-            !l.children.some((ll) => {
-              return ll.visible;
+            !(l.children || l.get("children")).some((ll) => {
+              return ll.getVisible ? ll.getVisible() : ll.visible;
             })
           ) {
             if (l.setVisible) {
@@ -137,7 +139,8 @@ class Permalink extends PureComponent {
         getLayersAsFlatArray(layers)
           .filter(isBaseLayer)
           .forEach((baseLayer) => {
-            const visible = baseLayer.key === visibleBaseLayer;
+            const key = baseLayer.key || baseLayer.get("key");
+            const visible = key === visibleBaseLayer;
             if (baseLayer.setVisible) {
               baseLayer.setVisible(visible);
             } else {
@@ -151,7 +154,7 @@ class Permalink extends PureComponent {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { map, layers } = this.props;
+    const { layers, map } = this.props;
     const { revision } = this.state;
 
     if (layers !== prevProps.layers || revision !== prevState.revision) {
@@ -200,86 +203,17 @@ class Permalink extends PureComponent {
     });
   }
 
+  render() {
+    return null;
+  }
+
   roundCoord(val) {
     const { coordinateDecimals } = this.props;
     return parseFloat(val.toFixed(coordinateDecimals));
   }
 
-  updateLayers() {
-    const { layers, isLayerHidden, isBaseLayer } = this.props;
-    const { revision } = this.state;
-
-    unByKey(this.onPropertyChangeKeys);
-    this.onPropertyChangeKeys = getLayersAsFlatArray(layers).map((layer) => {
-      return layer.on("change:visible", () => {
-        this.setState({ revision: revision + 1 });
-      });
-    });
-
-    // layers param
-    let layersParam;
-    if (layers.length) {
-      layersParam = getLayersAsFlatArray(layers)
-        .filter((l) => {
-          const children = l.children || [];
-          const allChildrenHidden = children.every((child) => {
-            return isLayerHidden(child);
-          });
-          const hasVisibleChildren = children.some((child) => {
-            return child.visible;
-          });
-          return (
-            !isBaseLayer(l) &&
-            !isLayerHidden(l) &&
-            l.visible &&
-            (!hasVisibleChildren || allChildrenHidden)
-          );
-        })
-        .map((l) => {
-          return l.key;
-        })
-        .join();
-    }
-
-    // baselayers param
-    let baseLayersParam;
-    const baseLayers = getLayersAsFlatArray(layers).filter(isBaseLayer);
-    if (baseLayers.length) {
-      // First baselayers in order of visibility, top layer is first
-      const visibleBaseLayers = (
-        baseLayers.filter((l) => {
-          return l.visible;
-        }) || []
-      ).reverse();
-      const nonVisibleBaseLayers =
-        baseLayers.filter((l) => {
-          return !l.visible;
-        }) || [];
-      baseLayersParam = [...visibleBaseLayers, ...nonVisibleBaseLayers]
-        .sort((a, b) => {
-          if (a.visible === b.visible) {
-            return 0;
-          }
-          if (a.visible && !b.visible) {
-            return -1;
-          }
-          return 1;
-        })
-        .map((l) => {
-          return l.key;
-        })
-        .join();
-    }
-
-    // Only add parameters if there is actually some layers added.
-    this.setState({
-      layers: layersParam,
-      baselayers: baseLayersParam,
-    });
-  }
-
   updateHistory() {
-    const { params, history, replace } = this.props;
+    const { history, params, replace } = this.props;
     const oldParams = new URLSearchParams(window.location.search);
     const parameters = {
       ...Object.fromEntries(oldParams.entries()),
@@ -321,8 +255,80 @@ class Permalink extends PureComponent {
     }
   }
 
-  render() {
-    return null;
+  updateLayers() {
+    const { isBaseLayer, isLayerHidden, layers } = this.props;
+    const { revision } = this.state;
+
+    unByKey(this.onPropertyChangeKeys);
+    this.onPropertyChangeKeys = getLayersAsFlatArray(layers).map((layer) => {
+      return layer.on("change:visible", () => {
+        this.setState({ revision: revision + 1 });
+      });
+    });
+
+    // layers param
+    let layersParam;
+    if (layers.length) {
+      layersParam = getLayersAsFlatArray(layers)
+        .filter((l) => {
+          const children = l.get("children") || l.children || [];
+          const allChildrenHidden = children.every((child) => {
+            return isLayerHidden(child);
+          });
+          const hasVisibleChildren = children.some((child) => {
+            return child.getVisible ? child.getVisible() : child.visible;
+          });
+          const isVisible = l.getVisible ? l.getVisible() : l.visible;
+          return (
+            !isBaseLayer(l) &&
+            !isLayerHidden(l) &&
+            isVisible &&
+            (!hasVisibleChildren || allChildrenHidden)
+          );
+        })
+        .map((l) => {
+          return l.key || l.get("key");
+        })
+        .join();
+    }
+
+    // baselayers param
+    let baseLayersParam;
+    const baseLayers = getLayersAsFlatArray(layers).filter(isBaseLayer);
+    if (baseLayers.length) {
+      // First baselayers in order of visibility, top layer is first
+      const visibleBaseLayers = (
+        baseLayers.filter((l) => {
+          return l.getVisible ? l.getVisible() : l.visible;
+        }) || []
+      ).reverse();
+      const nonVisibleBaseLayers =
+        baseLayers.filter((l) => {
+          return !(l.getVisible ? l.getVisible() : l.visible);
+        }) || [];
+      baseLayersParam = [...visibleBaseLayers, ...nonVisibleBaseLayers]
+        .sort((a, b) => {
+          const aVisible = a.getVisible ? a.getVisible() : a.visible;
+          const bVisible = b.getVisible ? b.getVisible() : b.visible;
+          if (aVisible === bVisible) {
+            return 0;
+          }
+          if (aVisible && !bVisible) {
+            return -1;
+          }
+          return 1;
+        })
+        .map((l) => {
+          return l.key || l.get("key");
+        })
+        .join();
+    }
+
+    // Only add parameters if there is actually some layers added.
+    this.setState({
+      baselayers: baseLayersParam,
+      layers: layersParam,
+    });
   }
 }
 
