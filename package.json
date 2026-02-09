@@ -2,7 +2,7 @@
   "name": "react-spatial",
   "license": "MIT",
   "description": "Components to build React map apps.",
-  "version": "2.0.1",
+  "version": "2.0.2-beta.0",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
@@ -16,7 +16,7 @@
   },
   "peerDependencies": {
     "maplibre-gl": "^4",
-    "mobility-toolbox-js": "^3",
+    "mobility-toolbox-js": "^3.6",
     "ol": "^10",
     "react": "^18",
     "react-dom": "^18"
@@ -64,8 +64,8 @@
     "jest-transformer-svg": "^2.1.0",
     "jsts": "2.12.1",
     "lint-staged": "16.1.5",
-    "maplibre-gl": "5.6.2",
-    "mobility-toolbox-js": "3.4.4",
+    "maplibre-gl": "5.16.0",
+    "mobility-toolbox-js": "3.6.4",
     "ol": "10.6.1",
     "postcss": "^8.5.6",
     "prettier": "3.6.2",
@@ -121,5 +121,6 @@
     "not op_mini all",
     "not ie <= 11",
     "not android < 5"
-  ]
+  ],
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

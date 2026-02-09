@@ -21,12 +21,7 @@ proj4.defs(
 register(proj4);
 
 const extent = [0, 0, 1000, 1000];
-const olLayers = [
-  new OLLayer({
-    name: "foo",
-    visible: true,
-  }),
-];
+const olLayers = [new OLLayer({ name: "foo", visible: true })];
 
 describe("BasicMap", () => {
   let olMap;
@@ -106,9 +101,7 @@ describe("BasicMap", () => {
     // Test componentDidMount
     const { rerender } = render(
       <BasicMap map={olMap} onFeaturesHover={spy} />,
-      {
-        lifecycleExperimental: true,
-      },
+      { lifecycleExperimental: true },
     );
     olMap.dispatchEvent(evt);
     expect(spy).toHaveBeenCalledTimes(1);
@@ -139,11 +132,7 @@ describe("BasicMap", () => {
         extent={extent}
         layers={olLayers}
         map={olMap}
-        viewOptions={{
-          maxZoom: 22,
-          minZoom: 16,
-          projection: "EPSG:21781",
-        }}
+        viewOptions={{ maxZoom: 22, minZoom: 16, projection: "EPSG:21781" }}
       />,
     );
     expect(olMap.getLayers().getLength()).toBe(1);
@@ -175,9 +164,7 @@ describe("BasicMap", () => {
   });
 
   test("animation shoud be set", () => {
-    const obj = {
-      zoom: 4,
-    };
+    const obj = { zoom: 4 };
     const { rerender } = render(<BasicMap map={olMap} />);
     const spy = jest.spyOn(olMap.getView(), "animate");
     rerender(<BasicMap animationOptions={obj} map={olMap} />);
