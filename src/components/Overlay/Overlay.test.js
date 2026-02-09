@@ -57,13 +57,7 @@ describe("Overlay", () => {
       // The mock class set the onResize property, we just have to run it to
       // simulate a resize
       ResizeObserver.onResize([
-        {
-          contentRect: {
-            height: 200,
-            width: 200,
-          },
-          target,
-        },
+        { contentRect: { height: 10, width: 200 }, target },
       ]);
     });
 
@@ -79,13 +73,7 @@ describe("Overlay", () => {
 
     act(() => {
       ResizeObserver.onResize([
-        {
-          contentRect: {
-            height: 200,
-            width: 1200,
-          },
-          target,
-        },
+        { contentRect: { height: 200, width: 1200 }, target },
       ]);
     });
 
@@ -100,13 +88,7 @@ describe("Overlay", () => {
     // Force resize to make it mobile.
     act(() => {
       ResizeObserver.onResize([
-        {
-          contentRect: {
-            height: 200,
-            width: 200,
-          },
-          target,
-        },
+        { contentRect: { height: 200, width: 200 }, target },
       ]);
     });
 
@@ -121,13 +103,7 @@ describe("Overlay", () => {
     // Force resize to make it mobile.
     act(() => {
       ResizeObserver.onResize([
-        {
-          contentRect: {
-            height: 200,
-            width: 200,
-          },
-          target,
-        },
+        { contentRect: { height: 200, width: 200 }, target },
       ]);
     });
     expect(container.querySelector(".tm-overlay-mobile")).not.toBe(null);
