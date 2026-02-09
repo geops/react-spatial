@@ -3,6 +3,7 @@ import ResizeObserver from "resize-observer-polyfill";
 // eslint-disable-next-line perfectionist/sort-imports
 const util = require("util");
 
+// make jest happy
 if (!global.TextDecoder) {
   global.TextDecoder = util.TextDecoder;
 }
