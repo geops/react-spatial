@@ -1,6 +1,16 @@
 
 The following example demonstrates the use of Permalink.
 
+The Peramlink component add the following parameters to the url:
+
+- `x`,`y`,`z`: The center and zoom of the map.
+- `layers`: The visible layers of the map.
+- `baselayers`: List of all base layers of the map. The first one is currently visible.
+
+`layers` and `baselayers` uses by default the `key` property of the layers. This key must be unique.
+
+Which layers appears in `baselayers` or `layers` are defined by the `isBaseLayer` attribute of the component.
+
 ```jsx
 import React from 'react';
 import VectorSource from 'ol/source/Vector';
@@ -9,7 +19,7 @@ import { Style, Circle, Stroke, Fill } from 'ol/style';
 import GeoJSONFormat from 'ol/format/GeoJSON';
 import { geopsTheme } from '@geops/geops-ui';
 import { ThemeProvider } from '@mui/material';
-import { Layer, MapboxLayer } from 'mobility-toolbox-js/ol';
+import { MaplibreLayer } from 'mobility-toolbox-js/ol';
 import Button from '@mui/material/Button';
 import Permalink from 'react-spatial/components/Permalink';
 import BasicMap from 'react-spatial/components/BasicMap';
@@ -17,42 +27,42 @@ import Map from 'ol/Map';
 
 const map = new Map({ controls: [] });
 
-const swissBoundries = new Layer({
+const swissBoundries = new VectorLayer({
   name: 'Swiss boundaries',
   key: 'swiss.boundaries',
   visible: true,
-  olLayer: new VectorLayer({
-    source: new VectorSource({
-      url: 'https://raw.githubusercontent.com/openlayers/openlayers/' +
-            '3c64018b3754cf605ea19cbbe4c8813304da2539/examples/data/geojson/' +
-            'switzerland.geojson',
-      format: new GeoJSONFormat(),
+  source: new VectorSource({
+    url: 'https://raw.githubusercontent.com/openlayers/openlayers/' +
+          '3c64018b3754cf605ea19cbbe4c8813304da2539/examples/data/geojson/' +
+          'switzerland.geojson',
+    format: new GeoJSONFormat(),
+  }),
+  style: new Style({
+    image: new Circle({
+      radius: 5,
+      fill: new Fill({
+        color: '#ff0000',
+      }),
     }),
-    style: new Style({
-      image: new Circle({
-        radius: 5,
-        fill: new Fill({
-          color: '#ff0000',
-        }),
-      }),
-      stroke: new Stroke({
-          color: '#ffcc33',
-          width: 2,
-        }),
-      }),
-    })
+    stroke: new Stroke({
+      color: '#ffcc33',
+      width: 2,
+    }),
+  }),
 });
 
 const baseLayers = [
-  new MapboxLayer({
-    url: `https://maps.geops.io/styles/base_bright_v2/style.json?key=${apiKey}`,
-    name: 'Base - Bright',
+  new MaplibreLayer({
+    apiKey: apiKey,
     key: 'basebright.baselayer',
+    name: 'Base - Bright',
+    style: 'base_bright_v2',
   }),
-  new MapboxLayer({
-    url: `https://maps.geops.io/styles/base_dark_v2/style.json?key=${apiKey}`,
-    name: 'Base - Dark',
+  new MaplibreLayer({
+    apiKey: apiKey,
     key: 'basedark.baselayer',
+    name: 'Base - Dark',
+    style: 'base_dark_v2',
     visible: false,
   }),
 ];
@@ -84,19 +94,19 @@ const layers = [...baseLayers, swissBoundries];
     <div className="rs-permalink-example-btns">
       <Button
         onClick={() => {
-          swissBoundries.visible = !swissBoundries.visible;
+          swissBoundries.setVisible(!swissBoundries.getVisible());
         }}
       >
         Toggle Switzerland layer
       </Button>
       <Button
         onClick={() => {
-        if (baseLayers[1].visible) {
-          baseLayers[0].visible = true;
-          baseLayers[1].visible = false;
+        if (baseLayers[1].getVisible()) {
+          baseLayers[0].setVisible(true);
+          baseLayers[1].setVisible(false);
         } else {
-          baseLayers[0].visible = false;
-          baseLayers[1].visible = true;
+          baseLayers[0].setVisible(false);
+          baseLayers[1].setVisible(true);
         }
         map.updateSize();
       }}

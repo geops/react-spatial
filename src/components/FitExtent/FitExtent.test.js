@@ -1,48 +1,45 @@
-import React from "react";
-import renderer from "react-test-renderer";
-import { configure, shallow } from "enzyme";
-import Adapter from "@cfaester/enzyme-adapter-react-18";
-import OLView from "ol/View";
+import { fireEvent, render } from "@testing-library/react";
 import OLMap from "ol/Map";
-import FitExtent from "./FitExtent";
+import OLView from "ol/View";
+import React from "react";
 
-configure({ adapter: new Adapter() });
+import FitExtent from "./FitExtent";
 
 const extent = [1, 2, 3, 4];
 
 test("Button should match snapshot.", () => {
   const map = new OLMap({});
-  const component = renderer.create(
-    <FitExtent map={map} extent={extent}>
+  const { container } = render(
+    <FitExtent extent={extent} map={map}>
       FitExtent
     </FitExtent>,
   );
-  const tree = component.toJSON();
-  expect(tree).toMatchSnapshot();
+  expect(container.innerHTML).toMatchSnapshot();
 });
 
 test("Should fit the extent.", () => {
-  const map = new OLMap({ view: new OLView({ zoom: 7, center: [0, 0] }) });
-  const wrapper = shallow(
-    <FitExtent map={map} extent={extent} className="fit-ext">
+  const map = new OLMap({ view: new OLView({ center: [0, 0], zoom: 7 }) });
+  const { container } = render(
+    <FitExtent className="fit-ext" extent={extent} map={map}>
       FitExtent
     </FitExtent>,
   );
-  wrapper.find(".fit-ext").first().simulate("click", {});
+  fireEvent.click(container.querySelector(".fit-ext"));
   const calculatedExtent = map.getView().calculateExtent(map.getSize());
 
   expect(calculatedExtent).toStrictEqual([1, 2, 3, 4]);
 });
 
 test("Should fit the extent on return.", () => {
-  const map = new OLMap({ view: new OLView({ zoom: 7, center: [0, 0] }) });
-  const wrapper = shallow(
-    <FitExtent map={map} extent={extent} className="fit-ext">
+  const map = new OLMap({ view: new OLView({ center: [0, 0], zoom: 7 }) });
+  const { container } = render(
+    <FitExtent className="fit-ext" extent={extent} map={map}>
       FitExtent
     </FitExtent>,
   );
-  wrapper.find(".fit-ext").first().simulate("click", { which: 13 });
+  fireEvent.click(container.querySelector(".fit-ext"), {
+    which: 13,
+  });
   const calculatedExtent = map.getView().calculateExtent(map.getSize());
-
   expect(calculatedExtent).toStrictEqual([1, 2, 3, 4]);
 });

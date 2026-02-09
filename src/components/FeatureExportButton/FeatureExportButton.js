@@ -1,7 +1,8 @@
-import React, { PureComponent } from "react";
-import PropTypes from "prop-types";
 import KMLFormat from "ol/format/KML";
-import { Layer } from "mobility-toolbox-js/ol";
+import Layer from "ol/layer/Layer";
+import PropTypes from "prop-types";
+import React, { PureComponent } from "react";
+
 import KML from "../../utils/KML";
 
 const propTypes = {
@@ -17,7 +18,7 @@ const propTypes = {
   format: PropTypes.func,
 
   /**
-   * An existing [mobility-toolbox-js Layer](https://mobility-toolbox-js.geops.io/api/identifiers%20html#ol-layers),
+   * A layer extending an [ol/layer/Layer](https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer.html),
    * using a valid [ol/source/Vector](https://openlayers.org/en/latest/apidoc/module-ol_source_Vector.html)
    */
   layer: PropTypes.instanceOf(Layer).isRequired,
@@ -36,8 +37,7 @@ const defaultProps = {
 
 /**
  * The FeatureExportButton component creates a button that exports feature geometries
- * from a [[mobility-toolbox-js Layer](https://mobility-toolbox-js.geops.io/api/identifiers%20html#ol-layers)]
- * containing an [ol/layer/Vector](https://openlayers.org/en/latest/apidoc/module-ol_layer_Vector-VectorLayer.html)
+ * from an [ol/layer/Vector](https://openlayers.org/en/latest/apidoc/module-ol_layer_Vector-VectorLayer.html)
  * with a [ol/source/Vector](https://openlayers.org/en/latest/apidoc/module-ol_source_Vector.html) on click.<br>
  * The default export format is KML, which supports the features' style export.<br>
  * Other formats do not always support style export (See specific format specs).
@@ -49,7 +49,7 @@ class FeatureExportButton extends PureComponent {
     }
 
     // eslint-disable-next-line new-cap
-    return new format().writeFeatures(layer.olLayer.getSource().getFeatures(), {
+    return new format().writeFeatures(layer.getSource().getFeatures(), {
       featureProjection: projection,
     });
   }
@@ -87,12 +87,12 @@ class FeatureExportButton extends PureComponent {
   }
 
   render() {
-    const { children, layer, projection, format, ...other } = this.props;
+    const { children, format, layer, projection, ...other } = this.props;
 
     return (
       <div
-        role="button"
         className="rs-feature-export-button"
+        role="button"
         tabIndex={0}
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...other}

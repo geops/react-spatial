@@ -3,16 +3,16 @@ The following example demonstrates the use of BasicMap.
 
 ```jsx
 import React from 'react';
-import { MapboxLayer } from 'mobility-toolbox-js/ol';
-import Tile from 'ol/layer/Tile';
-import OSM from 'ol/source/OSM';
 import BasicMap from 'react-spatial/components/BasicMap';
+import { MaplibreLayer } from 'mobility-toolbox-js/ol';
+import {Map, View} from 'ol';
 
 const layers = [
-  new MapboxLayer({
-    url: `https://maps.geops.io/styles/travic_v2/style.json?key=${apiKey}`,
+  new MaplibreLayer({
+    apiKey: apiKey,
   })
 ];
+const map = new Map({view: new View({center: [0, 0], zoom: 2})});
 
-<BasicMap layers={layers} tabIndex={0} />;
+<BasicMap layers={layers} map={map} center={[810000, 5900000]} zoom={5.5} tabIndex={0} />;
 ```

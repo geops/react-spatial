@@ -1,7 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ScaleLine matches snapshot 1`] = `
-<div
-  className="rs-scale-line"
-/>
+<div class="rs-scale-line">
+  <div style="pointer-events: none;"
+       class="ol-scale-line ol-unselectable"
+  >
+    <div class="ol-scale-line-inner">
+    </div>
+  </div>
+</div>
 `;
