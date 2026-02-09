@@ -1,13 +1,14 @@
+import { render } from "@testing-library/react";
 import "jest-canvas-mock";
-import React from "react";
 import OLMap from "ol/Map";
 import OLView from "ol/View";
-import { render } from "@testing-library/react";
+import React from "react";
+
 import ScaleLine from "./ScaleLine";
 
 describe("ScaleLine", () => {
   test("matches snapshot", () => {
-    const map = new OLMap({ view: new OLView({ zoom: 7, center: [0, 0] }) });
+    const map = new OLMap({ view: new OLView({ center: [0, 0], zoom: 7 }) });
     const component = render(<ScaleLine map={map} />);
     expect(component.container.innerHTML).toMatchSnapshot();
   });

@@ -5,9 +5,9 @@
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 ![Vercel](https://vercelbadge.vercel.app/api/geops/react-spatial)
 
-This library provides React components to build web applications and to visualize real-time geographical information based on [OpenLayers](https://openlayers.org/) and [Malibre GL](https://maplibre.org/maplibre-gl-js/).
+This library provides React components to build web applications and to visualize real-time geographical information based on [OpenLayers](https://openlayers.org/) and [MapLibre GL JS](https://maplibre.org/maplibre-gl-js/).
 
-This library uses the [mobility-toolbox-js](https://mobility-toolbox-js.geops.io/) library.
+This library uses the [mobility-toolbox-js](https://mobility-toolbox-js.geops.io/) library for some components.
 
 Documentation and examples at https://react-spatial.geops.io.
 
@@ -16,7 +16,7 @@ Documentation and examples at https://react-spatial.geops.io.
 Install the [react-spatial](https://www.npmjs.com/package/react-spatial) package:
 
 ```bash
-yarn add mobility-toolbox-js mapbox-gl mapblibre-gl ol react-spatial
+yarn add maplibre-gl ol mobility-toolbox-js react-spatial
 ```
 
 Your build pipeline needs to support ES6 modules and SASS.

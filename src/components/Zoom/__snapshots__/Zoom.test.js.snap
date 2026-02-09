@@ -5,10 +5,10 @@ exports[`Zoom should match snapshot with custom attributes 1`] = `
      tabindex="-1"
      title="bar"
 >
-  <button type="button"
+  <button class="rs-zoom-in"
           tabindex="0"
-          class="rs-zoom-in"
           title="Zoom in"
+          type="button"
   >
     <svg stroke="currentColor"
          fill="currentColor"
@@ -23,10 +23,10 @@ exports[`Zoom should match snapshot with custom attributes 1`] = `
       </path>
     </svg>
   </button>
-  <button type="button"
+  <button class="rs-zoom-out"
           tabindex="0"
-          class="rs-zoom-out"
           title="Zoom out"
+          type="button"
   >
     <svg stroke="currentColor"
          fill="currentColor"
@@ -46,10 +46,10 @@ exports[`Zoom should match snapshot with custom attributes 1`] = `
 
 exports[`Zoom should match snapshot with zoom slider 1`] = `
 <div class="rs-zooms-bar">
-  <button type="button"
+  <button class="rs-zoom-in"
           tabindex="0"
-          class="rs-zoom-in"
           title="Zoom in"
+          type="button"
   >
     <svg stroke="currentColor"
          fill="currentColor"
@@ -75,10 +75,10 @@ exports[`Zoom should match snapshot with zoom slider 1`] = `
       </button>
     </div>
   </div>
-  <button type="button"
+  <button class="rs-zoom-out"
           tabindex="0"
-          class="rs-zoom-out"
           title="Zoom out"
+          type="button"
   >
     <svg stroke="currentColor"
          fill="currentColor"
@@ -98,10 +98,10 @@ exports[`Zoom should match snapshot with zoom slider 1`] = `
 
 exports[`Zoom should match snapshot. 1`] = `
 <div class="rs-zooms-bar">
-  <button type="button"
+  <button class="rs-zoom-in"
           tabindex="0"
-          class="rs-zoom-in"
           title="Zoom in"
+          type="button"
   >
     <svg stroke="currentColor"
          fill="currentColor"
@@ -116,10 +116,10 @@ exports[`Zoom should match snapshot. 1`] = `
       </path>
     </svg>
   </button>
-  <button type="button"
+  <button class="rs-zoom-out"
           tabindex="0"
-          class="rs-zoom-out"
           title="Zoom out"
+          type="button"
   >
     <svg stroke="currentColor"
          fill="currentColor"

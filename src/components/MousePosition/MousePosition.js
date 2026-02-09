@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
-import PropTypes from "prop-types";
-import OLMap from "ol/Map";
-import { createStringXY } from "ol/coordinate";
 import OLMousePosition from "ol/control/MousePosition";
+import { createStringXY } from "ol/coordinate";
+import OLMap from "ol/Map";
+import PropTypes from "prop-types";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 const propTypes = {
   /**
@@ -11,10 +11,22 @@ const propTypes = {
   map: PropTypes.instanceOf(OLMap).isRequired,
 
   /**
+   * Function triggered on projection's change event.
+   * @param {Event} event The change event object.
+   * @param {Object} projection The selected projection object.
+   */
+  onChange: PropTypes.func,
+
+  /**
    * List of projections to display.
    */
   projections: PropTypes.arrayOf(
     PropTypes.shape({
+      /**
+       * A function following the  [CoordinateFormat](https://openlayers.org/en/latest/apidoc/module-ol_coordinate.html#~CoordinateFormat).
+       */
+      format: PropTypes.func,
+
       /**
        * The label to display in the select box.
        */
@@ -25,11 +37,6 @@ const propTypes = {
        * See [doc](https://openlayers.org/en/latest/apidoc/module-ol_control_MousePosition.html).
        */
       value: PropTypes.string.isRequired,
-
-      /**
-       * A function following the  [CoordinateFormat](https://openlayers.org/en/latest/apidoc/module-ol_coordinate.html#~CoordinateFormat).
-       */
-      format: PropTypes.func,
     }),
   ),
 
@@ -37,6 +44,11 @@ const propTypes = {
    * The initially selected projection
    */
   projectionValue: PropTypes.shape({
+    /**
+     * A function following the  [CoordinateFormat](https://openlayers.org/en/latest/apidoc/module-ol_coordinate.html#~CoordinateFormat).
+     */
+    format: PropTypes.func,
+
     /**
      * The label to display in the select box.
      */
@@ -47,19 +59,7 @@ const propTypes = {
      * See [doc](https://openlayers.org/en/latest/apidoc/module-ol_control_MousePosition.html).
      */
     value: PropTypes.string.isRequired,
-
-    /**
-     * A function following the  [CoordinateFormat](https://openlayers.org/en/latest/apidoc/module-ol_coordinate.html#~CoordinateFormat).
-     */
-    format: PropTypes.func,
   }),
-
-  /**
-   * Function triggered on projection's change event.
-   * @param {Event} event The change event object.
-   * @param {Object} projection The selected projection object.
-   */
-  onChange: PropTypes.func,
 };
 
 const defaultProps = {
@@ -83,9 +83,9 @@ const defaultProps = {
  */
 function MousePosition({
   map,
+  onChange = defaultProps.onChange,
   projections = defaultProps.projections,
   projectionValue = defaultProps.projectionValue,
-  onChange = defaultProps.onChange,
   ...other
 }) {
   const [projection, setProjection] = useState(
@@ -101,9 +101,9 @@ function MousePosition({
 
   useEffect(() => {
     const mousePosition = new OLMousePosition({
-      target: ref.current,
-      placeholder: "&nbsp;",
       className: "",
+      placeholder: "&nbsp;",
+      target: ref.current,
     });
     map.addControl(mousePosition);
     setControl(mousePosition);
@@ -153,8 +153,8 @@ function MousePosition({
     <div className="rs-mouse-position" {...other}>
       <select
         className="rs-select"
-        value={projection.value}
         onChange={onChangeCb}
+        value={projection.value}
       >
         {projections.map((option) => {
           return (
@@ -164,7 +164,7 @@ function MousePosition({
           );
         })}
       </select>
-      <span ref={ref} className="rs-coordinates" />
+      <span className="rs-coordinates" ref={ref} />
     </div>
   );
 }
