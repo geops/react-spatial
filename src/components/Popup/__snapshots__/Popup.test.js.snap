@@ -1,179 +1,114 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Popup should match snapshot with default values. 1`] = `
-<div
-  className="rs-popup"
-  style={
-    {
-      "left": 0,
-      "top": 0,
-    }
-  }
+<div class="rs-popup"
+     style="left: 0px; top: 0px;"
 >
-  <div
-    className="rs-popup-container"
-    tabIndex=""
+  <div class="rs-popup-container"
+       tabindex
   >
-    <div
-      className="rs-popup-header"
-    >
-      <div
-        aria-label="Close"
-        className="rs-popup-close-bt"
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-        title="Close"
+    <div class="rs-popup-header">
+      <div aria-label="Close"
+           class="rs-popup-close-bt"
+           role="button"
+           tabindex="0"
+           title="Close"
       >
-        <svg
-          fill="currentColor"
-          focusable={false}
-          height="1em"
-          stroke="currentColor"
-          strokeWidth="0"
-          style={
-            {
-              "color": undefined,
-            }
-          }
-          viewBox="0 0 24 24"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
+        <svg stroke="currentColor"
+             fill="currentColor"
+             stroke-width="0"
+             viewbox="0 0 24 24"
+             focusable="false"
+             height="1em"
+             width="1em"
+             xmlns="http://www.w3.org/2000/svg"
         >
-          <path
-            d="M0 0h24v24H0z"
-            fill="none"
-          />
-          <path
-            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-          />
+          <path fill="none"
+                d="M0 0h24v24H0z"
+          >
+          </path>
+          <path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z">
+          </path>
         </svg>
       </div>
     </div>
-    <div
-      className="rs-popup-body"
-    >
-      <div
-        id="foo"
-      />
+    <div class="rs-popup-body">
+      <div id="foo">
+      </div>
     </div>
   </div>
 </div>
 `;
 
 exports[`Popup should match snapshot with tabIndex defined. 1`] = `
-<div
-  className="rs-popup"
-  style={
-    {
-      "left": 0,
-      "top": 0,
-    }
-  }
+<div class="rs-popup"
+     style="left: 0px; top: 0px;"
 >
-  <div
-    className="rs-popup-container"
-    tabIndex="0"
+  <div class="rs-popup-container"
+       tabindex="0"
   >
-    <div
-      className="rs-popup-header"
-    >
-      <div
-        aria-label="Close"
-        className="rs-popup-close-bt"
-        onClick={[Function]}
-        onKeyPress={[Function]}
-        role="button"
-        tabIndex={0}
-        title="Close"
+    <div class="rs-popup-header">
+      <div aria-label="Close"
+           class="rs-popup-close-bt"
+           role="button"
+           tabindex="0"
+           title="Close"
       >
-        <svg
-          fill="currentColor"
-          focusable={false}
-          height="1em"
-          stroke="currentColor"
-          strokeWidth="0"
-          style={
-            {
-              "color": undefined,
-            }
-          }
-          viewBox="0 0 24 24"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
+        <svg stroke="currentColor"
+             fill="currentColor"
+             stroke-width="0"
+             viewbox="0 0 24 24"
+             focusable="false"
+             height="1em"
+             width="1em"
+             xmlns="http://www.w3.org/2000/svg"
         >
-          <path
-            d="M0 0h24v24H0z"
-            fill="none"
-          />
-          <path
-            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-          />
+          <path fill="none"
+                d="M0 0h24v24H0z"
+          >
+          </path>
+          <path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z">
+          </path>
         </svg>
       </div>
     </div>
-    <div
-      className="rs-popup-body"
-    >
-      <div
-        id="bar"
-      />
+    <div class="rs-popup-body">
+      <div id="bar">
+      </div>
     </div>
   </div>
 </div>
 `;
 
 exports[`Popup should match snapshot without close button. 1`] = `
-<div
-  className="rs-popup"
-  style={
-    {
-      "left": 0,
-      "top": 0,
-    }
-  }
+<div class="rs-popup"
+     style="left: 0px; top: 0px;"
 >
-  <div
-    className="rs-popup-container"
-    tabIndex=""
+  <div class="rs-popup-container"
+       tabindex
   >
-    <div
-      className="rs-popup-header"
-    />
-    <div
-      className="rs-popup-body"
-    >
-      <div
-        id="bar"
-      />
+    <div class="rs-popup-header">
+    </div>
+    <div class="rs-popup-body">
+      <div id="bar">
+      </div>
     </div>
   </div>
 </div>
 `;
 
-exports[`Popup should match snapshot without feature 1`] = `null`;
+exports[`Popup should match snapshot without feature 1`] = `""`;
 
 exports[`Popup should match snapshot without header. 1`] = `
-<div
-  className="rs-popup"
-  style={
-    {
-      "left": 0,
-      "top": 0,
-    }
-  }
+<div class="rs-popup"
+     style="left: 0px; top: 0px;"
 >
-  <div
-    className="rs-popup-container"
-    tabIndex=""
+  <div class="rs-popup-container"
+       tabindex
   >
-    <div
-      className="rs-popup-body"
-    >
-      <div
-        id="bar"
-      />
+    <div class="rs-popup-body">
+      <div id="bar">
+      </div>
     </div>
   </div>
 </div>
