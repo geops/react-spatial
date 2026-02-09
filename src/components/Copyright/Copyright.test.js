@@ -1,17 +1,13 @@
 import "jest-canvas-mock";
-import React from "react";
-import { configure, mount } from "enzyme";
-import Adapter from "@cfaester/enzyme-adapter-react-18";
-import { act } from "react-dom/test-utils";
+import { act, render } from "@testing-library/react";
 import { Map, View } from "ol";
-import Tile from "ol/Tile";
 import TileLayer from "ol/layer/Tile";
 import TileSource from "ol/source/Tile";
+import Tile from "ol/Tile";
 import { createXYZ } from "ol/tilegrid";
-import { Layer } from "mobility-toolbox-js/ol";
-import Copyright from "./Copyright";
+import React from "react";
 
-configure({ adapter: new Adapter() });
+import Copyright from "./Copyright";
 
 const image = new Image();
 image.width = 256;
@@ -25,8 +21,9 @@ const tileLoadFunction = () => {
   return tile;
 };
 
-const getOLTileLayer = () => {
+const getOLTileLayer = (options = {}) => {
   const layer = new TileLayer({
+    ...options,
     source: new TileSource({
       projection: "EPSG:3857",
       tileGrid: createXYZ(),
@@ -37,10 +34,9 @@ const getOLTileLayer = () => {
 };
 
 const getLayer = (copyrights, visible = true) => {
-  return new Layer({
-    visible,
+  return getOLTileLayer({
     copyrights,
-    olLayer: getOLTileLayer(),
+    visible,
   });
 };
 
@@ -58,13 +54,10 @@ describe("Copyright", () => {
         center: [0, 0],
         zoom: 0,
       }),
-      layers: layers.map((layer) => {
-        return layer.olLayer;
-      }),
     });
     map.setSize([200, 200]);
     layers.forEach((layer) => {
-      layer.attachToMap(map);
+      map.addLayer(layer);
     });
     act(() => {
       map.renderSync();
@@ -73,62 +66,74 @@ describe("Copyright", () => {
 
   afterEach(() => {
     layers.forEach((layer) => {
-      layer.detachFromMap(map);
+      map.removeLayer(layer);
     });
     map.setTarget(null);
     map = null;
   });
 
   test("is empty if no layers are visible", () => {
-    const component = mount(<Copyright map={map} />);
-    expect(component.html()).toBe(null);
+    const { container } = render(<Copyright map={map} />);
+    expect(container.innerHTML).toMatchSnapshot();
   });
 
   test("displays one copyright", () => {
-    const wrapper = mount(<Copyright map={map} />);
+    const { container } = render(<Copyright map={map} />);
     act(() => {
       map.renderSync();
     });
-    wrapper.update();
-    expect(wrapper.text()).toBe("bar");
+    expect(container.textContent).toBe("bar");
   });
 
   test("displays 2 copyrights", () => {
-    const wrapper = mount(<Copyright map={map} />);
-    layers[0].visible = true;
-    layers[1].visible = true;
+    const { container } = render(<Copyright map={map} />);
+    layers[0].setVisible(true);
+    layers[1].setVisible(true);
     act(() => {
       map.renderSync();
     });
-    wrapper.update();
-    expect(wrapper.text()).toBe("bar | foo");
+    act(() => {
+      map.renderSync();
+    });
+    expect(container.textContent).toBe("bar | foo");
   });
 
   test("displays a copyright using a custom format", () => {
-    const wrapper = mount(
+    const { container } = render(
       <Copyright
-        map={map}
         format={(copyrights) => {
           return `Number of copyrights: ${copyrights.length}`;
         }}
+        map={map}
       />,
     );
 
     act(() => {
       map.renderSync();
     });
-    wrapper.update();
 
-    expect(wrapper.text()).toBe("Number of copyrights: 1");
+    expect(container.textContent).toBe("Number of copyrights: 1");
   });
 
   test("set a custom className", () => {
-    const wrapper = mount(<Copyright map={map} className="foo" />);
-    expect(wrapper.find(".foo").length).toBe(1);
+    const { container } = render(<Copyright className="foo" map={map} />);
+
+    act(() => {
+      map.renderSync();
+    });
+
+    expect(container.querySelectorAll(".foo").length).toBe(1);
   });
 
   test("set a custom attribute to the root element", () => {
-    const wrapper = mount(<Copyright map={map} foo="bar" />);
-    expect(wrapper.find("[foo]").length).toBe(1);
+    const { container } = render(
+      <Copyright className="lala" foo="bar" map={map} />,
+    );
+
+    act(() => {
+      map.renderSync();
+    });
+
+    expect(container.querySelectorAll("[foo]").length).toBe(1);
   });
 });

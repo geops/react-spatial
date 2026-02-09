@@ -1,27 +1,39 @@
-import React, {
-  useEffect,
-  useRef,
-  useCallback,
-  useState,
-  useMemo,
-} from "react";
-import PropTypes from "prop-types";
-import { FaPlus, FaMinus } from "react-icons/fa";
 import { ZoomSlider } from "ol/control";
-import OLMap from "ol/Map";
 import { easeOut } from "ol/easing";
+import OLMap from "ol/Map";
 import { unByKey } from "ol/Observable";
+import PropTypes from "prop-types";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { FaMinus, FaPlus } from "react-icons/fa";
 
 const propTypes = {
+  /**
+   * The zoom delta applied on each click.
+   */
+  delta: PropTypes.number,
+
   /**
    * An [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
    */
   map: PropTypes.instanceOf(OLMap).isRequired,
 
   /**
-   * The zoom delta applied on each click.
+   * Callback function on zoom-in button click.
+   * @param {function} Callback function triggered when zoom-in button is clicked. Takes the event as argument.
    */
-  delta: PropTypes.number,
+  onZoomInButtonClick: PropTypes.func,
+
+  /**
+   * Callback function on zoom-out button click.
+   * @param {function} Callback function triggered when the zoom-out button is clicked. Takes the event as argument.
+   */
+  onZoomOutButtonClick: PropTypes.func,
 
   /**
    * Titles HTML attribtues for button.
@@ -45,18 +57,6 @@ const propTypes = {
    * Display a slider to zoom.
    */
   zoomSlider: PropTypes.bool,
-
-  /**
-   * Callback function on zoom-in button click.
-   * @param {function} Callback function triggered when zoom-in button is clicked. Takes the event as argument.
-   */
-  onZoomInButtonClick: PropTypes.func,
-
-  /**
-   * Callback function on zoom-out button click.
-   * @param {function} Callback function triggered when the zoom-out button is clicked. Takes the event as argument.
-   */
-  onZoomOutButtonClick: PropTypes.func,
 };
 
 const updateZoom = (map, delta) => {
@@ -68,9 +68,9 @@ const updateZoom = (map, delta) => {
     view.cancelAnimations();
   }
   view.animate({
-    zoom: constrainedZoom,
     duration: 250,
     easing: easeOut,
+    zoom: constrainedZoom,
   });
 };
 
@@ -79,7 +79,10 @@ const updateZoom = (map, delta) => {
  * and an optional [ol/ZoomSlider](https://openlayers.org/en/latest/apidoc/module-ol_control_ZoomSlider-ZoomSlider.html).
  */
 function Zoom({
+  delta = 1,
   map,
+  onZoomInButtonClick = null,
+  onZoomOutButtonClick = null,
   titles = {
     zoomIn: "Zoom in",
     zoomOut: "Zoom out",
@@ -87,9 +90,6 @@ function Zoom({
   zoomInChildren = <FaPlus focusable={false} />,
   zoomOutChildren = <FaMinus focusable={false} />,
   zoomSlider = false,
-  onZoomInButtonClick = null,
-  onZoomOutButtonClick = null,
-  delta = 1,
   ...other
 }) {
   const ref = useRef();
@@ -160,25 +160,25 @@ function Zoom({
     // eslint-disable-next-line react/jsx-props-no-spreading
     <div className="rs-zooms-bar" {...other}>
       <button
-        type="button"
-        tabIndex={0}
         className="rs-zoom-in"
-        title={titles.zoomIn}
+        disabled={zoomInDisabled}
         onClick={zoomIn}
         onKeyPress={zoomIn}
-        disabled={zoomInDisabled}
+        tabIndex={0}
+        title={titles.zoomIn}
+        type="button"
       >
         {zoomInChildren}
       </button>
       {zoomSlider ? <div className="rs-zoomslider-wrapper" ref={ref} /> : null}
       <button
-        type="button"
-        tabIndex={0}
         className="rs-zoom-out"
-        title={titles.zoomOut}
+        disabled={zoomOutDisabled}
         onClick={zoomOut}
         onKeyPress={zoomOut}
-        disabled={zoomOutDisabled}
+        tabIndex={0}
+        title={titles.zoomOut}
+        type="button"
       >
         {zoomOutChildren}
       </button>

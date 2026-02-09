@@ -1,30 +1,27 @@
-import React from "react";
 import PropTypes from "prop-types";
+import React from "react";
 // Import default implementation from react-styleguidist using the full path
 import ComponentsListRenderer from "react-styleguidist/lib/client/rsg-components/ComponentsList/ComponentsListRenderer";
 import getUrl from "react-styleguidist/lib/client/utils/getUrl";
 
 const propTypes = {
-  items: PropTypes.array.isRequired,
   classes: PropTypes.object,
   hashPath: PropTypes.array,
-  useRouterLinks: PropTypes.bool,
+  items: PropTypes.array.isRequired,
   useHashId: PropTypes.bool,
+  useRouterLinks: PropTypes.bool,
 };
 
 const defaultProps = {
-  classes: null,
   hashPath: [],
-  useRouterLinks: false,
-  useHashId: true,
 };
 
 function ComponentsList({
   classes,
+  hashPath = defaultProps.hashPath,
   items,
+  useHashId = true,
   useRouterLinks = false,
-  useHashId,
-  hashPath,
 }) {
   const mappedItems = items.map((item) => {
     return {
@@ -33,11 +30,11 @@ function ComponentsList({
         ? item.href
         : // Conflict with Permalink Component: Remove the first '/' to avoid page reload on click
           getUrl({
-            name: item.name,
-            slug: item.slug,
             anchor: !useRouterLinks,
             hashPath: useRouterLinks ? hashPath : false,
             id: useRouterLinks ? useHashId : false,
+            name: item.name,
+            slug: item.slug,
           })
             .replace(/^\/index.html+/g, "")
             .replace(/^\/+/g, ""),
@@ -47,6 +44,5 @@ function ComponentsList({
 }
 
 ComponentsList.propTypes = propTypes;
-ComponentsList.defaultProps = defaultProps;
 
 export default ComponentsList;

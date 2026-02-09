@@ -1,20 +1,21 @@
 /* eslint-disable react/button-has-type */
-import "jest-canvas-mock";
-import React from "react";
-import Map from "ol/Map";
-import View from "ol/View";
-import { TiImage } from "react-icons/ti";
-import RenderEvent from "ol/render/Event";
 import { fireEvent, render } from "@testing-library/react";
+import "jest-canvas-mock";
+import Map from "ol/Map";
+import RenderEvent from "ol/render/Event";
+import View from "ol/View";
+import React from "react";
+import { TiImage } from "react-icons/ti";
+
 import CanvasSaveButton from "./CanvasSaveButton";
 
 describe("CanvasSaveButton", () => {
   let olMap;
   const conf = {
-    title: "Karte als Bild speichern.",
-    icon: <TiImage focusable={false} />,
     className: "ta-example",
+    icon: <TiImage focusable={false} />,
     saveFormat: "image/jpeg",
+    title: "Karte als Bild speichern.",
   };
 
   beforeEach(() => {
@@ -23,8 +24,8 @@ describe("CanvasSaveButton", () => {
     target.style.width = "100px";
     target.style.height = "100px";
     olMap = new Map({
-      target,
       controls: [],
+      target,
       view: new View({
         center: [0, 0],
         zoom: 0,
@@ -52,7 +53,7 @@ describe("CanvasSaveButton", () => {
   test("should match snapshot with a different attributes", () => {
     const component = render(
       // eslint-disable-next-line jsx-a11y/tabindex-no-positive
-      <CanvasSaveButton title={conf.title} className="foo" tabIndex="1">
+      <CanvasSaveButton className="foo" tabIndex="1" title={conf.title}>
         <button>{conf.icon}</button>
       </CanvasSaveButton>,
     );
@@ -66,10 +67,6 @@ describe("CanvasSaveButton", () => {
     const saveEnd = jest.fn();
     const wrapper = render(
       <CanvasSaveButton
-        map={olMap}
-        format={conf.saveFormat}
-        onSaveStart={saveStart}
-        onSaveEnd={saveEnd}
         extraData={{
           copyright: {
             text: () => {
@@ -85,6 +82,10 @@ describe("CanvasSaveButton", () => {
             },
           },
         }}
+        format={conf.saveFormat}
+        map={olMap}
+        onSaveEnd={saveEnd}
+        onSaveStart={saveStart}
       >
         <button className="ta-example">{conf.icon}</button>
       </CanvasSaveButton>,
