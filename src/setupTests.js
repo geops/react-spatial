@@ -1,7 +1,6 @@
 import ResizeObserver from "resize-observer-polyfill";
 import util from "util";
 
-// make jest happy
 if (!global.TextDecoder) {
   global.TextDecoder = util.TextDecoder;
 }
