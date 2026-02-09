@@ -1,76 +1,54 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MousePosition matches snapshots using default values. 1`] = `
-<div
-  className="rs-mouse-position"
->
-  <select
-    className="rs-select"
-    onChange={[Function]}
-    value="EPSG:4326"
-  >
-    <option
-      value="EPSG:4326"
-    >
+<div class="rs-mouse-position">
+  <select class="rs-select">
+    <option value="EPSG:4326">
       EPSG:4326
     </option>
-    <option
-      value="EPSG:3857"
-    >
+    <option value="EPSG:3857">
       EPSG:3857
     </option>
   </select>
-  <span
-    className="rs-coordinates"
-  />
+  <span class="rs-coordinates">
+    <div class>
+      &nbsp;
+    </div>
+  </span>
 </div>
 `;
 
 exports[`MousePosition matches snapshots using multiple projections. 1`] = `
-<div
-  className="rs-mouse-position"
->
-  <select
-    className="rs-select"
-    onChange={[Function]}
-    value="foo"
-  >
-    <option
-      value="foo"
-    >
+<div class="rs-mouse-position">
+  <select class="rs-select">
+    <option value="foo">
       foo
     </option>
-    <option
-      value="bar"
-    >
+    <option value="bar">
       bar
     </option>
   </select>
-  <span
-    className="rs-coordinates"
-  />
+  <span class="rs-coordinates">
+    <div class>
+      &nbsp;
+    </div>
+  </span>
 </div>
 `;
 
-exports[`MousePosition matches snapshots using no projections. 1`] = `null`;
+exports[`MousePosition matches snapshots using no projections. 1`] = `""`;
 
 exports[`MousePosition matches snapshots using only one projection 1`] = `
-<div
-  className="rs-mouse-position"
->
-  <select
-    className="rs-select"
-    onChange={[Function]}
-    value="foo"
-  >
-    <option
-      value="foo"
-    >
+<div class="rs-mouse-position">
+  <select class="rs-select">
+    <option value="foo">
       foo
     </option>
   </select>
-  <span
-    className="rs-coordinates"
-  />
+  <span class="rs-coordinates">
+    <div class>
+      &nbsp;
+    </div>
+  </span>
 </div>
 `;

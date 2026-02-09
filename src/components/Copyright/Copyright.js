@@ -1,13 +1,13 @@
-import React, { useMemo, useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { Map } from "ol";
 import { CopyrightControl } from "mobility-toolbox-js/ol";
+import { Map } from "ol";
+import PropTypes from "prop-types";
+import React, { useEffect, useMemo, useState } from "react";
 
 const propTypes = {
   /**
-   * A map.
+   * CSS class of th root element
    */
-  map: PropTypes.instanceOf(Map).isRequired,
+  className: PropTypes.string,
 
   /**
    * Format function. Called with an array of copyrights from visible layers
@@ -16,16 +16,16 @@ const propTypes = {
   format: PropTypes.func,
 
   /**
-   * CSS class of th root element
+   * A map.
    */
-  className: PropTypes.string,
+  map: PropTypes.instanceOf(Map).isRequired,
 };
 
 const defaultProps = {
+  className: "rs-copyright",
   format: (copyrights) => {
     return copyrights.join(" | ");
   },
-  className: "rs-copyright",
 };
 
 /**
@@ -33,26 +33,24 @@ const defaultProps = {
  * [mobility-toolbox-js CopyrightControl](https://mobility-toolbox-js.geops.io/api/class/src/mapbox/controls/CopyrightControl%20js~CopyrightControl%20html-offset-anchor)
  * to render the layer copyrights.
  */
-function Copyright({ map, format, ...other }) {
-  const [copyrights, setCopyrights] = useState([]);
+function Copyright({
+  className = defaultProps.className,
+  format = defaultProps.format,
+  map,
+  ...other
+}) {
+  const [node, setNode] = useState(null);
 
-  const control = useMemo(
-    () => {
-      return new CopyrightControl({
-        target: document.createElement("div"),
-        element: document.createElement("div"),
-        render() {
-          // eslint-disable-next-line react/no-this-in-sfc
-          const newCopyrights = this.getCopyrights();
-          if (copyrights.toString() !== newCopyrights.toString()) {
-            setCopyrights(newCopyrights);
-          }
-        },
-      });
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
+  const control = useMemo(() => {
+    if (!node) {
+      return null;
+    }
+    return new CopyrightControl({
+      element: document.createElement("div"),
+      format,
+      target: node,
+    });
+  }, [node, format]);
 
   // Ensure the control is not associated to the wrong map
   useEffect(() => {
@@ -60,30 +58,23 @@ function Copyright({ map, format, ...other }) {
       return () => {};
     }
 
-    control.map = map;
+    map.addControl(control);
 
     return () => {
-      control.map = null;
+      map.removeControl(control);
     };
   }, [map, control]);
 
-  if (!control || !control.getCopyrights().length) {
-    return null;
-  }
-
   return (
     <div
+      className={className}
+      ref={(nod) => setNode(nod)}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...other}
-      // eslint-disable-next-line react/no-danger
-      dangerouslySetInnerHTML={{
-        __html: format(copyrights) || "",
-      }}
     />
   );
 }
 
 Copyright.propTypes = propTypes;
-Copyright.defaultProps = defaultProps;
 
 export default React.memo(Copyright);

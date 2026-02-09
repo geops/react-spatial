@@ -3,9 +3,10 @@ The following example demonstrates the use of RouteSchedule.
 
 ```jsx
 import React, { useState, useEffect } from 'react';
-import { Layer, RealtimeLayer } from 'mobility-toolbox-js/ol';
+import { RealtimeLayer } from 'mobility-toolbox-js/ol';
 import Tile from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
+import { unByKey } from 'ol/Observable';
 import BasicMap from 'react-spatial/components/BasicMap';
 import RouteSchedule from 'react-spatial/components/RouteSchedule';
 import { ToggleButton } from '@mui/material';
@@ -16,15 +17,12 @@ import { GpsFixed as GpsFixedIcon } from '@mui/icons-material';
 // The `apiKey` used here is for demonstration purposes only.
 // Please get your own api key at https://developer.geops.io/.
 const trackerLayer = new RealtimeLayer({
-  url: 'wss://api.geops.io/tracker-ws/v1/ws',
   apiKey: window.apiKey,
 });
 
 const layers = [
-  new Layer({
-    olLayer: new Tile({
-      source: new OSM(),
-    }),
+  new Tile({
+    source: new OSM(),
   }),
   trackerLayer,
 ];
@@ -33,7 +31,7 @@ let updateInterval;
 
 
 const getVehicleCoord = (routeIdentifier) => {
-  const [trajectory] = trackerLayer.getVehicle((traj) => {
+  const [trajectory] = trackerLayer.getVehicles((traj) => {
     return traj.properties.route_identifier === routeIdentifier;
   });
   return trajectory && trajectory.properties.coordinate;
@@ -66,14 +64,31 @@ function RouteScheduleExample() {
   }, [feature]);
 
   useEffect(()=> {
-    trackerLayer.onClick(([feature])=> {
+    const map = trackerLayer.map;
+    if (!map) {
+      return ()=>{};
+    }
+    const keyMove = map.on('pointermove', (evt) => {
+      const [feature] = map.getFeaturesAtPixel(evt.pixel, {
+        layerFilter: l => l === trackerLayer,
+        hitTolerance: 5
+      }) || [];
+      trackerLayer.highlight(feature);
+      map.getTargetElement().style.cursor = feature ? 'pointer' : '';
+    });
+
+    const key = map.on('singleclick', (evt) => {
+      const [feature] = map.getFeaturesAtPixel(evt.pixel, {
+        layerFilter: l => l === trackerLayer,
+        hitTolerance: 5
+      }) || [];
       setFeature(feature);
     });
-  }, []);
+    return () => {
+      unByKey([keyMove,key]);
+    }
+  }, [trackerLayer.map]);
 
-  useEffect(()=> {
-    trackerLayer.map.updateSize();
-  }, [lineInfos]);
 
   return (
     <div className="rt-route-schedule-example">

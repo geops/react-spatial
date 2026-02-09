@@ -1,23 +1,28 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { Layer, getLayersAsFlatArray } from "mobility-toolbox-js/ol";
+import Layer from "ol/layer/Layer";
 import { unByKey } from "ol/Observable";
+import { getUid } from "ol/util";
+import PropTypes from "prop-types";
+import React, { Component } from "react";
+
+import getLayersAsFlatArray from "../../utils/getLayersAsFlatArray";
 
 const propTypes = {
-  /**
-   * Layers provider.
-   */
-  layers: PropTypes.arrayOf(PropTypes.instanceOf(Layer)),
-
   /**
    * CSS class to apply on the container.
    */
   className: PropTypes.string,
 
   /**
-   * Padding left to apply on each level.
+   * Boolean determining whether children collapse/expand when their parent is toggled
+   * @param {...(boolean|function)} expandChildren Boolean or function returning a boolean.
+   * @return {boolean} True or false
    */
-  padding: PropTypes.number,
+  expandChildren: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
+
+  /**
+   * Determine the className used by the div containing the parent and its children.
+   */
+  getParentClassName: PropTypes.func,
 
   /**
    * Determine if the item is hidden in the tree or not.
@@ -29,9 +34,37 @@ const propTypes = {
   isItemHidden: PropTypes.func,
 
   /**
-   * Determine the className used by the div containing the parent and its children.
+   * Layers provider.
    */
-  getParentClassName: PropTypes.func,
+  layers: PropTypes.arrayOf(PropTypes.instanceOf(Layer)),
+
+  /**
+   * Padding left to apply on each level.
+   */
+  padding: PropTypes.number,
+
+  /**
+   * Custom function to render custom content after the list of children of an item.
+   *
+   * @param {object} item The item to render.
+   *
+   * @return {node} A jsx node.
+   */
+  renderAfterItem: PropTypes.func,
+
+  /**
+   * Custom function to render custom content before the list of children of an item.
+   *
+   * @param {object} item The item to render.
+   *
+   * @return {node} A jsx node.
+   */
+  renderBeforeItem: PropTypes.func,
+
+  /**
+   * Custom function to render the checkbox.
+   */
+  renderCheckbox: PropTypes.func,
 
   /**
    * Custom function to render an item in the tree.
@@ -55,24 +88,6 @@ const propTypes = {
   renderItemContent: PropTypes.func,
 
   /**
-   * Custom function to render custom content before the list of children of an item.
-   *
-   * @param {object} item The item to render.
-   *
-   * @return {node} A jsx node.
-   */
-  renderBeforeItem: PropTypes.func,
-
-  /**
-   * Custom function to render custom content after the list of children of an item.
-   *
-   * @param {object} item The item to render.
-   *
-   * @return {node} A jsx node.
-   */
-  renderAfterItem: PropTypes.func,
-
-  /**
    * Custom function to render the label.
    *
    * @param {string} item The label to render.
@@ -83,80 +98,66 @@ const propTypes = {
   renderLabel: PropTypes.func,
 
   /**
-   * Custom function to render the checkbox.
+   * Translation function.
+   * @param {function} Translation function returning the translated string.
    */
-  renderCheckbox: PropTypes.func,
+  t: PropTypes.func,
 
   /**
    * Object holding title for the layer tree's buttons.
    */
   titles: PropTypes.shape({
     /**
-     * aria-label on checkbox to show layer.
-     */
-    layerShow: PropTypes.string,
-    /**
      * aria-label on checkbox to hide layer.
      */
     layerHide: PropTypes.string,
     /**
-     * title on button to show sublayers.
+     * aria-label on checkbox to show layer.
      */
-    subLayerShow: PropTypes.string,
+    layerShow: PropTypes.string,
     /**
      * title on button to show sublayers.
      */
     subLayerHide: PropTypes.string,
+    /**
+     * title on button to show sublayers.
+     */
+    subLayerShow: PropTypes.string,
   }),
-
-  /**
-   * Boolean determining whether children collapse/expand when their parent is toggled
-   * @param {...(boolean|function)} expandChildren Boolean or function returning a boolean.
-   * @return {boolean} True or false
-   */
-  expandChildren: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
-
-  /**
-   * Translation function.
-   * @param {function} Translation function returning the translated string.
-   */
-  t: PropTypes.func,
 };
 
 const defaultProps = {
-  layers: [],
   className: "rs-layer-tree",
-  padding: 30,
-  isItemHidden: () => {
-    return false;
-  },
+  expandChildren: false,
   getParentClassName: () => {
     return undefined;
   },
+  isItemHidden: () => {
+    return false;
+  },
+  layers: [],
+  padding: 30,
+  renderAfterItem: null,
+  renderBeforeItem: null,
+  renderCheckbox: null,
   renderItem: null,
   renderItemContent: null,
-  renderBeforeItem: null,
-  renderAfterItem: null,
-  renderCheckbox: null,
-  renderLabel: (layer, layerComp) => {
-    const { t } = layerComp.props;
-    return t(layer.name);
-  },
-  titles: {
-    layerShow: "Show layer",
-    layerHide: "Hide layer",
-    subLayerShow: "Show sublayer",
-    subLayerHide: "Hide sublayer",
+  renderLabel: (layer) => {
+    return layer?.get("name") || "";
   },
   t: (s) => {
     return s;
   },
-  expandChildren: false,
+  titles: {
+    layerHide: "Hide layer",
+    layerShow: "Show layer",
+    subLayerHide: "Hide sublayer",
+    subLayerShow: "Show sublayer",
+  },
 };
 
 /**
- * The LayerTree component renders an interface for toggling
- * [mobility-toolbox-js layers](https://mobility-toolbox-js.geops.io/api/identifiers%20html#ol-layers)
+ * The LayerTree component renders an interface for toggling layers visibility.
  * and their corresponding child layers.
  */
 
@@ -164,15 +165,15 @@ class LayerTree extends Component {
   constructor(props) {
     super(props);
 
-    const { layers, isItemHidden } = this.props;
+    const { isItemHidden, layers } = this.props;
     const initialExpandedLayers = layers
       ? this.getExpandedLayers(
           layers.filter((l) => {
             return (
               !isItemHidden(l) &&
-              (l.children || [])
+              LayerTree.getChildren(l)
                 .filter((child) => {
-                  return child.visible;
+                  return LayerTree.getVisible(child);
                 })
                 .filter((c) => {
                   return !isItemHidden(c);
@@ -183,13 +184,49 @@ class LayerTree extends Component {
       : [];
 
     this.state = {
-      rootLayer: new Layer(),
       expandedLayers: initialExpandedLayers,
       revision: 0,
+      rootLayer: new Layer({}),
     };
     // this.updateLayers = this.updateLayers.bind(this);
     this.olKeys = [];
   }
+
+  static getChildren = (layer) =>
+    layer?.get("children") ||
+    layer?.children ||
+    // ol.layer.group
+    layer?.getLayers?.().getArray() ||
+    [];
+
+  static getVisible = (layer) =>
+    layer.getVisible ? layer.getVisible() : layer.visible;
+
+  static listenGroups = (layers) => {
+    const flat = getLayersAsFlatArray(layers);
+    const keys = flat.map((layer) => {
+      return layer.on("change:visible", (e) => {
+        const { target } = e;
+        if (target.getVisible() && target.get("group")) {
+          flat.forEach((l) => {
+            if (l.get("group") === target.get("group") && l !== target) {
+              l.setVisible(false);
+            }
+          });
+        }
+      });
+    });
+    return keys;
+  };
+
+  static setVisible = (layer, visible) => {
+    if (layer.setVisible) {
+      layer.setVisible(visible);
+      return;
+    }
+    // eslint-disable-next-line no-param-reassign
+    layer.visible = visible;
+  };
 
   componentDidMount() {
     this.updateLayers();
@@ -208,14 +245,47 @@ class LayerTree extends Component {
     this.olKeys = [];
   }
 
+  expandLayer(layer, expLayers = []) {
+    const { isItemHidden } = this.props;
+    if (LayerTree.getVisible(layer) && !isItemHidden(layer)) {
+      const children = LayerTree.getChildren(layer)
+        .filter((c) => {
+          return !isItemHidden(c) && !c.get("isAlwaysExpanded");
+        })
+        .flatMap((c) => {
+          return this.expandLayer(c, expLayers);
+        });
+      return [...expLayers, ...children, layer];
+    }
+    return expLayers;
+  }
+
+  /**
+   * Get the always expanded ancestors (isAlwaysExpanded=true) of the given layers
+   * together with the (given) initially expanded layers
+   *
+   * @param  {Layer} layers Initially expanded layers
+   * @return {Array.<Layer>} Initially expanded layers and all its always expanded ancestors
+   */
+  getExpandedLayers(layers) {
+    const { isItemHidden } = this.props;
+    const children = layers.flatMap((l) => {
+      return LayerTree.getChildren(l).filter((c) => {
+        return !isItemHidden(c) && c.get("isAlwaysExpanded");
+      });
+    });
+
+    if (!children.length) {
+      return layers;
+    }
+    return [...layers, this.getExpandedLayers(children)].flat();
+  }
+
   onInputClick(layer, toggle = false) {
     if (toggle) {
       this.onToggle(layer);
-    } else if (layer.setVisible) {
-      layer.setVisible(!layer.visible);
     } else {
-      // eslint-disable-next-line no-param-reassign
-      layer.visible = !layer.visible;
+      LayerTree.setVisible(layer, !LayerTree.getVisible(layer));
     }
   }
 
@@ -230,122 +300,9 @@ class LayerTree extends Component {
     this.setState({ expandedLayers });
   }
 
-  /**
-   * Get the always expanded ancestors (isAlwaysExpanded=true) of the given layers
-   * together with the (given) initially expanded layers
-   *
-   * @param  {Layer} layers Initially expanded layers
-   * @return {Array.<Layer>} Initially expanded layers and all its always expanded ancestors
-   */
-  getExpandedLayers(layers) {
-    const { isItemHidden } = this.props;
-    const children = layers.flatMap((l) => {
-      return l.children.filter((c) => {
-        return !isItemHidden(c) && c.get("isAlwaysExpanded");
-      });
-    });
-
-    if (!children.length) {
-      return layers;
-    }
-    return [...layers, this.getExpandedLayers(children)].flat();
-  }
-
-  updateLayers() {
-    const { layers, expandChildren } = this.props;
-
-    // Update the root layer
-    let rootLayer = new Layer();
-    if (Array.isArray(layers)) {
-      if (layers.length === 1) {
-        [rootLayer] = layers;
-      }
-      rootLayer = new Layer({ children: layers });
-    } else {
-      rootLayer = layers;
-    }
-
-    getLayersAsFlatArray(rootLayer).forEach((layer) => {
-      this.olKeys.push(
-        layer.on("propertychange", () => {
-          const { revision } = this.state;
-          this.setState({ revision: revision + 1 });
-        }),
-      );
-    });
-
-    const state = { rootLayer };
-    if (
-      typeof expandChildren === "function"
-        ? expandChildren(layers)
-        : expandChildren
-    ) {
-      state.expandedLayers = rootLayer.children.flatMap((l) => {
-        return this.expandLayer(l);
-      });
-    }
-
-    this.setState(state);
-  }
-
-  expandLayer(layer, expLayers = []) {
-    const { isItemHidden } = this.props;
-    if (layer.visible && !isItemHidden(layer)) {
-      const children = layer.children
-        .filter((c) => {
-          return !isItemHidden(c) && !c.get("isAlwaysExpanded");
-        })
-        .flatMap((c) => {
-          return this.expandLayer(c, expLayers);
-        });
-      return [...expLayers, ...children, layer];
-    }
-    return expLayers;
-  }
-
-  renderInput(layer, inputProps) {
-    const { titles, isItemHidden, renderCheckbox } = this.props;
-    let tabIndex = 0;
-
-    if (
-      !(layer.children || []).filter((c) => {
-        return !isItemHidden(c);
-      }).length
-    ) {
-      // We forbid focus on keypress event for first level layers and layers without children.
-      tabIndex = -1;
-    }
-
-    const inputType = layer.get("group") ? "radio" : "checkbox";
-    return renderCheckbox ? (
-      renderCheckbox(layer, this, inputProps)
-    ) : (
-      // eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/no-noninteractive-element-interactions
-      <label
-        className={`rs-layer-tree-input rs-layer-tree-input-${inputType} rs-${inputType}`}
-        tabIndex={tabIndex}
-        title={layer.visible ? titles.layerHide : titles.layerShow}
-        aria-label={layer.visible ? titles.layerHide : titles.layerShow}
-        onKeyPress={(e) => {
-          if (e.which === 13) {
-            this.onInputClick(layer);
-          }
-        }}
-      >
-        <input
-          type={inputType}
-          tabIndex={-1}
-          checked={layer.visible}
-          readOnly
-          onClick={() => {
-            return this.onInputClick(layer);
-          }}
-          // eslint-disable-next-line react/jsx-props-no-spreading
-          {...inputProps}
-        />
-        <span />
-      </label>
-    );
+  render() {
+    const { className } = this.props;
+    return <div className={className}>{this.renderTree()}</div>;
   }
 
   renderArrow(layer) {
@@ -353,7 +310,7 @@ class LayerTree extends Component {
     const { expandedLayers } = this.state;
 
     if (
-      !(layer.children || []).filter((c) => {
+      !LayerTree.getChildren(layer).filter((c) => {
         return !isItemHidden(c);
       }).length ||
       layer.get("isAlwaysExpanded")
@@ -370,49 +327,49 @@ class LayerTree extends Component {
     );
   }
 
-  // Render a button which expands/collapse the layer if there is children
-  // or simulate a click on the input otherwise.
-  renderToggleButton(layer, toggleProps) {
-    const { t, titles, isItemHidden, renderLabel } = this.props;
-    const { expandedLayers } = this.state;
+  renderInput(layer, inputProps) {
+    const { isItemHidden, renderCheckbox, titles } = this.props;
+    let tabIndex = 0;
 
-    const onInputClick = () => {
-      this.onInputClick(
-        layer,
-        (layer.children || []).filter((c) => {
-          return !isItemHidden(c);
-        }).length && !layer.get("isAlwaysExpanded"),
-      );
-    };
-    const title = `${t(layer.name)} ${
-      expandedLayers.includes(layer) ? titles.subLayerHide : titles.subLayerShow
-    }`;
+    if (
+      !LayerTree.getChildren(layer).filter((c) => {
+        return !isItemHidden(c);
+      }).length
+    ) {
+      // We forbid focus on keypress event for first level layers and layers without children.
+      tabIndex = -1;
+    }
 
-    return (
-      <div
-        role="button"
-        tabIndex={0}
-        className="rs-layer-tree-toggle"
-        title={title}
-        aria-expanded={expandedLayers.includes(layer)}
-        aria-label={title}
-        onClick={onInputClick}
-        onKeyPress={onInputClick}
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        {...toggleProps}
+    const inputType = layer.get("group") ? "radio" : "checkbox";
+    return renderCheckbox ? (
+      renderCheckbox(layer, this, inputProps)
+    ) : (
+      // eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/no-noninteractive-element-interactions
+      <label
+        className={`rs-layer-tree-input rs-layer-tree-input-${inputType} rs-${inputType}`}
+        onKeyPress={(e) => {
+          if (e.which === 13) {
+            this.onInputClick(layer);
+          }
+        }}
+        tabIndex={tabIndex}
+        title={
+          LayerTree.getVisible(layer) ? titles.layerHide : titles.layerShow
+        }
       >
-        <div>{renderLabel(layer, this)}</div>
-        {this.renderArrow(layer)}
-      </div>
-    );
-  }
-
-  renderItemContent(layer, inputProps = {}, toggleProps = {}) {
-    return (
-      <>
-        {this.renderInput(layer, inputProps)}
-        {this.renderToggleButton(layer, toggleProps)}
-      </>
+        <input
+          checked={LayerTree.getVisible(layer)}
+          onClick={() => {
+            return this.onInputClick(layer);
+          }}
+          readOnly
+          tabIndex={-1}
+          type={inputType}
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          {...inputProps}
+        />
+        <span />
+      </label>
     );
   }
 
@@ -420,17 +377,17 @@ class LayerTree extends Component {
     const { isItemHidden } = this.props;
     const { expandedLayers } = this.state;
     const {
+      getParentClassName,
+      padding,
+      renderAfterItem,
+      renderBeforeItem,
       renderItem,
       renderItemContent,
-      renderBeforeItem,
-      renderAfterItem,
-      padding,
-      getParentClassName,
     } = this.props;
 
     const children = expandedLayers.includes(layer)
       ? [
-          ...(layer.children || []).filter((c) => {
+          ...LayerTree.getChildren(layer).filter((c) => {
             return !isItemHidden(c);
           }),
         ]
@@ -441,9 +398,14 @@ class LayerTree extends Component {
     }
 
     return (
-      <div className={getParentClassName()} key={layer.key}>
+      <div
+        className={getParentClassName()}
+        key={
+          layer.key || layer.get("key") || layer.get("name") || getUid(layer)
+        }
+      >
         <div
-          className={`rs-layer-tree-item ${layer.visible ? "rs-visible" : ""}`}
+          className={`rs-layer-tree-item ${LayerTree.getVisible(layer) ? "rs-visible" : ""}`}
           style={{
             paddingLeft: `${padding * level}px`,
           }}
@@ -461,17 +423,63 @@ class LayerTree extends Component {
     );
   }
 
+  renderItemContent(layer, inputProps = {}, toggleProps = {}) {
+    return (
+      <>
+        {this.renderInput(layer, inputProps)}
+        {this.renderToggleButton(layer, toggleProps)}
+      </>
+    );
+  }
+
+  // Render a button which expands/collapse the layer if there is children
+  // or simulate a click on the input otherwise.
+  renderToggleButton(layer, toggleProps) {
+    const { isItemHidden, renderLabel, titles } = this.props;
+    const { expandedLayers } = this.state;
+
+    const onInputClick = () => {
+      this.onInputClick(
+        layer,
+        LayerTree.getChildren(layer).filter((c) => {
+          return !isItemHidden(c);
+        }).length && !layer.get("isAlwaysExpanded"),
+      );
+    };
+    const title = `${renderLabel(layer, this)} ${
+      expandedLayers.includes(layer) ? titles.subLayerHide : titles.subLayerShow
+    }`;
+
+    return (
+      <div
+        aria-expanded={expandedLayers.includes(layer)}
+        aria-label={title}
+        className="rs-layer-tree-toggle"
+        onClick={onInputClick}
+        onKeyPress={onInputClick}
+        role="button"
+        tabIndex={0}
+        title={title}
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...toggleProps}
+      >
+        <div>{renderLabel(layer, this)}</div>
+        {this.renderArrow(layer)}
+      </div>
+    );
+  }
+
   renderTree() {
     const { isItemHidden } = this.props;
     const { rootLayer } = this.state;
 
-    if (!rootLayer?.children?.length) {
+    if (!LayerTree.getChildren(rootLayer).length) {
       return null;
     }
 
     return (
       <>
-        {rootLayer.children
+        {LayerTree.getChildren(rootLayer)
           .filter((l) => {
             return !isItemHidden(l);
           })
@@ -483,9 +491,97 @@ class LayerTree extends Component {
     );
   }
 
-  render() {
-    const { className } = this.props;
-    return <div className={className}>{this.renderTree()}</div>;
+  updateLayers() {
+    const { expandChildren, layers } = this.props;
+
+    // Update the root layer
+    let rootLayer = new Layer({});
+    if (Array.isArray(layers)) {
+      if (layers.length === 1) {
+        [rootLayer] = layers;
+      }
+      rootLayer = new Layer({ children: layers });
+    } else {
+      rootLayer = layers;
+    }
+
+    const flat = getLayersAsFlatArray(rootLayer);
+    flat.forEach((layer) => {
+      this.olKeys.push(
+        layer.on("propertychange", () => {
+          const { revision } = this.state;
+          this.setState({ revision: revision + 1 });
+        }),
+
+        // Manage group visibility
+        layer.on("change:visible", (evt) => {
+          const { target } = evt;
+          if (target.getVisible() && target.get("group")) {
+            flat.forEach((l) => {
+              if (l.get("group") === target.get("group") && l !== target) {
+                l.setVisible(false);
+              }
+            });
+          }
+        }),
+
+        // Manage parent/children visibility
+        layer.on("change:visible", (evt) => {
+          const { target } = evt;
+          const parent = target.get("parent");
+          const children = LayerTree.getChildren(target);
+
+          if (target.getVisible()) {
+            // We make the parent visible
+            if (parent) {
+              parent.setVisible(true);
+            }
+
+            // If children doesn't contain any visible layers, we display all children.
+            if (children && !children.some((child) => child.getVisible())) {
+              children.forEach((child) => {
+                child.setVisible(true);
+              });
+            }
+          } else {
+            // We hide all the children
+            children.forEach((child) => {
+              child.setVisible(false);
+            });
+
+            // If the parent has no more visible child we also hide it.
+            if (
+              parent?.getVisible() &&
+              !parent?.get("children").find((child) => child.getVisible())
+            ) {
+              parent.setVisible(false);
+            }
+          }
+        }),
+      );
+    });
+
+    // Set parent property.
+    flat.forEach((layer) => {
+      const children = LayerTree.getChildren(layer);
+      children.forEach((child) => {
+        child.set("parent", layer);
+      });
+    });
+
+    const state = { rootLayer };
+    if (
+      typeof expandChildren === "function"
+        ? expandChildren(layers)
+        : expandChildren
+    ) {
+      const children = LayerTree.getChildren(rootLayer);
+      state.expandedLayers = children.flatMap((l) => {
+        return this.expandLayer(l);
+      });
+    }
+
+    this.setState(state);
   }
 }
 
