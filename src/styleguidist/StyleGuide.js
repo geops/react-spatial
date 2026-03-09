@@ -96,6 +96,8 @@ const styles = ({ mq }) => {
   };
 };
 
+window.apiKey = "5cc87b12d7c5370001c1d6554840ecb89d2743d2b0aad0588b8ba7eb";
+
 export function StyleGuideRenderer({
   children,
   classes,
@@ -103,25 +105,10 @@ export function StyleGuideRenderer({
   toc,
   version = null,
 }) {
-  const [apiKey, setApiKey] = useState();
   const [dropdownOpen, toggleDropdown] = useState(false);
   const [expanded, expandSection] = useState();
   const [selected, setSelected] = useState("Components");
   const [node, setNode] = useState();
-  useEffect(() => {
-    fetch("https://backend.developer.geops.io/publickey")
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setApiKey(data.key);
-      })
-      .catch(() => {
-        setApiKey("error");
-        // eslint-disable-next-line no-console
-        console.error("Request to get the apiKey failed");
-      });
-  }, []);
 
   useEffect(() => {
     if (!node) return;
@@ -130,13 +117,6 @@ export function StyleGuideRenderer({
       document.querySelector(hash)?.scrollIntoView();
     }
   }, [node]);
-
-  if (!apiKey) {
-    return null;
-  }
-
-  // Makes apiKey accessible for all components.
-  window.apiKey = apiKey;
 
   return (
     <ThemeProvider theme={geopsTheme}>
