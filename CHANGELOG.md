@@ -2,17 +2,6 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [2.1.6](https://github.com/geops/react-spatial/compare/v2.1.5...v2.1.6) (2026-03-10)
-
-### [2.1.5](https://github.com/geops/react-spatial/compare/v2.1.4...v2.1.5) (2026-03-10)
-
-### [2.1.4](https://github.com/geops/react-spatial/compare/v2.1.3...v2.1.4) (2026-03-10)
-
-### [2.1.3](https://github.com/geops/react-spatial/compare/v2.1.2...v2.1.3) (2026-03-10)
-
-### [2.1.2](https://github.com/geops/react-spatial/compare/v2.1.1...v2.1.2) (2026-03-10)
-
-### [2.1.1](https://github.com/geops/react-spatial/compare/v2.1.0...v2.1.1) (2026-03-10)
 
 ## [2.1.0](https://github.com/geops/react-spatial/compare/v2.0.3...v2.1.0) (2026-03-10)
 
