@@ -2,19 +2,6 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-
-## [2.1.0](https://github.com/geops/react-spatial/compare/v2.0.3...v2.1.0) (2026-03-10)
-
-
-### Features
-
-* use react 19 ([5ba9d88](https://github.com/geops/react-spatial/commit/5ba9d88f3d83813873cbcd4b5a2f563bcb03ff38))
-
-
-### Bug Fixes
-
-* **StyleGuide:** remove deprecated public API key fetch, hardcode api key ([911bbff](https://github.com/geops/react-spatial/commit/911bbff9cfd15e15e97b193ed17dd973011932ee))
-
 ### [2.0.3](https://github.com/geops/react-spatial/compare/v2.0.2...v2.0.3) (2026-02-26)
 
 
