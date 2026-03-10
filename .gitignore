@@ -7,3 +7,4 @@ styleguide
 coverage
 doc/build
 styleguide-build
+pnpm-workspace.yaml

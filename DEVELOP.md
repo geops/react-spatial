@@ -16,13 +16,13 @@ Documentation and examples are available [here](https://react-spatial.geops.de/)
 Build the doc:
 
 ```bash
-yarn doc
+pnpm doc
 ```
 
 Run the doc on [`locahost:6060`](http://locahost:6060/):
 
 ```bash
-yarn start
+pnpm start
 ```
 
 ## Tests
@@ -32,7 +32,7 @@ We are using [jest]([https://react-styleguidist.js.org/](https://jestjs.io/docs/
 Run the tests in watch mode:
 
 ```bash
-yarn test --watch
+pnpm test --watch
 ```
 
 ## Coverage
@@ -40,7 +40,7 @@ yarn test --watch
 Run coverage:
 
 ```bash
-yarn coverage
+pnpm coverage
 ```
 
 Then open the file `coverage/lcov-report/index.html` in your browser.

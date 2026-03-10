@@ -85,25 +85,25 @@
     "xml-beautifier": "0.5.0"
   },
   "scripts": {
-    "build": "yarn esbuild && find build -type f -name '*.test.*' -delete && rm -rf build/styleguidist && cp package.json README.md LICENSE build && cp -rf src/images build && cp -rf src/themes build",
-    "coverage": "yarn test --coverage --coverageDirectory=coverage",
+    "build": "pnpm esbuild && find build -type f -name '*.test.*' -delete && rm -rf build/styleguidist && cp package.json README.md LICENSE build && cp -rf src/images build && cp -rf src/themes build",
+    "coverage": "pnpm test --coverage --coverageDirectory=coverage",
     "cp": "generact --root src/components",
     "doc": "styleguidist build",
     "esbuild": "esbuild src/*.js src/**/*.js src/**/**/*.js --target=chrome100 --outdir=build/ --loader:.js=jsx --sourcemap=external",
     "format": "prettier --write 'src/**/*.js' && eslint 'src/**/*.js' --fix && stylelint 'src/**/*.css' 'src/**/*.scss' --fix",
-    "link2": "cmdToAdd=$(node ./scripts/read-pkg-json.js add) && $cmdToAdd && yarn build && cmdToRemove=$(node ./scripts/read-pkg-json.js remove) && $cmdToRemove && cd build && yarn link",
+    "link2": "cmdToAdd=$(node ./scripts/read-pkg-json.js add) && $cmdToAdd && pnpm build && cmdToRemove=$(node ./scripts/read-pkg-json.js remove) && $cmdToRemove && cd build && pnpm link",
     "lint": "eslint 'src/**/*.js' && stylelint 'src/**/*.css' 'src/**/*.scss'",
     "postbuild": "cp package.json build/ && cd src && find .  -name '*.scss' | cpio -pdm ../build",
     "prebuild": "rm -rf build/",
     "prepare": "is-ci || husky",
-    "publish:beta": "yarn release -- --prerelease beta --skip.changelog && yarn run build && HUSKY=0 yarn publish build/ --tag beta && git push origin HEAD && git push --tags",
-    "publish:beta:dryrun": "yarn release -- --prerelease beta --dry-run --skip.changelog",
-    "publish:public": "yarn release && yarn build && HUSKY=0 yarn publish build/ && git push origin HEAD && git push --tags",
-    "publish:public:dryrun": "yarn release --dry-run",
+    "publish:beta": "pnpm release -- --prerelease beta --skip.changelog && pnpm run build && HUSKY=0 pnpm publish build/ --tag beta && git push origin HEAD && git push --tags",
+    "publish:beta:dryrun": "pnpm release -- --prerelease beta --dry-run --skip.changelog",
+    "publish:public": "pnpm release && pnpm build && HUSKY=0 pnpm publish build/ && git push origin HEAD && git push --tags",
+    "publish:public:dryrun": "pnpm release --dry-run",
     "release": "standard-version",
     "start": "styleguidist server",
     "test": "jest",
-    "up": "yarn upgrade-interactive --latest"
+    "updeps": "pnpm up -i --latest"
   },
   "browserslist": [
     ">0.2%",
@@ -111,5 +111,6 @@
     "not op_mini all",
     "not ie <= 11",
     "not android < 5"
-  ]
+  ],
+  "packageManager": "pnpm@10.32.0+sha512.9b2634bb3fed5601c33633f2d92593f506270a3963b8c51d2b2d6a828da615ce4e9deebef9614ccebbc13ac8d3c0f9c9ccceb583c69c8578436fa477dbb20d70"
 }

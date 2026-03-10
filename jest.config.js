@@ -1,7 +1,5 @@
 module.exports = {
   moduleNameMapper: {
-    "@geoblocks/ol-maplibre-layer":
-      "<rootDir>/node_modules/@geoblocks/ol-maplibre-layer/lib/index.js",
     "\\.(jpg|jpeg|png|gif|webp|scss)$": "identity-obj-proxy",
   },
   setupFilesAfterEnv: ["<rootDir>/src/setupTests.js"],
