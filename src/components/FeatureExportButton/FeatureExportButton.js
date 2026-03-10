@@ -3,8 +3,6 @@ import Layer from "ol/layer/Layer";
 import PropTypes from "prop-types";
 import React, { PureComponent } from "react";
 
-import KML from "../../utils/KML";
-
 const propTypes = {
   /**
    *  Children content of the Feature export button.
@@ -44,10 +42,6 @@ const defaultProps = {
  */
 class FeatureExportButton extends PureComponent {
   static createFeatureString(layer, projection, format) {
-    if (format === KMLFormat) {
-      return KML.writeFeatures(layer, projection);
-    }
-
     return new format().writeFeatures(layer.getSource().getFeatures(), {
       featureProjection: projection,
     });
