@@ -220,6 +220,220 @@ importers:
         specifier: 0.5.0
         version: 0.5.0
 
+  build:
+    dependencies:
+      '@emotion/react':
+        specifier: ^11.14.0
+        version: 11.14.0(@types/react@18.3.28)(react@19.2.4)
+      '@emotion/styled':
+        specifier: ^11.14.1
+        version: 11.14.1(@emotion/react@11.14.0(@types/react@18.3.28)(react@19.2.4))(@types/react@18.3.28)(react@19.2.4)
+      '@geops/geops-ui':
+        specifier: 1.0.1-beta.3
+        version: 1.0.1-beta.3(@emotion/react@11.14.0(@types/react@18.3.28)(react@19.2.4))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@18.3.28)(react@19.2.4))(@types/react@18.3.28)(react@19.2.4))(@mui/icons-material@7.3.9(@mui/material@7.3.9(@emotion/react@11.14.0(@types/react@18.3.28)(react@19.2.4))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@18.3.28)(react@19.2.4))(@types/react@18.3.28)(react@19.2.4))(@types/react@18.3.28)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(@types/react@18.3.28)(react@19.2.4))(@mui/material@7.3.9(@emotion/react@11.14.0(@types/react@18.3.28)(react@19.2.4))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@18.3.28)(react@19.2.4))(@types/react@18.3.28)(react@19.2.4))(@types/react@18.3.28)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typeface-lato@1.1.13)
+      '@mui/icons-material':
+        specifier: ^7.3.9
+        version: 7.3.9(@mui/material@7.3.9(@emotion/react@11.14.0(@types/react@18.3.28)(react@19.2.4))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@18.3.28)(react@19.2.4))(@types/react@18.3.28)(react@19.2.4))(@types/react@18.3.28)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(@types/react@18.3.28)(react@19.2.4)
+      '@mui/material':
+        specifier: ^7.3.9
+        version: 7.3.9(@emotion/react@11.14.0(@types/react@18.3.28)(react@19.2.4))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@18.3.28)(react@19.2.4))(@types/react@18.3.28)(react@19.2.4))(@types/react@18.3.28)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      re-resizable:
+        specifier: 6.11.2
+        version: 6.11.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      react-icons:
+        specifier: 5.6.0
+        version: 5.6.0(react@19.2.4)
+      resize-observer-polyfill:
+        specifier: 1.5.1
+        version: 1.5.1
+    devDependencies:
+      '@babel/preset-env':
+        specifier: 7.29.0
+        version: 7.29.0(@babel/core@7.29.0)
+      '@babel/preset-react':
+        specifier: 7.28.5
+        version: 7.28.5(@babel/core@7.29.0)
+      '@commitlint/cli':
+        specifier: 20.4.3
+        version: 20.4.3(@types/node@25.4.0)(typescript@5.9.3)
+      '@commitlint/config-conventional':
+        specifier: 20.4.3
+        version: 20.4.3
+      '@geops/eslint-config-react':
+        specifier: ^1.6.0
+        version: 1.6.0(@types/eslint@9.6.1)(eslint@9.39.4(jiti@2.6.1))(prettier@3.8.1)(typescript@5.9.3)
+      '@svgr/plugin-jsx':
+        specifier: ^8.1.0
+        version: 8.1.0(@svgr/core@8.1.0(typescript@5.9.3))
+      '@svgr/webpack':
+        specifier: 8.1.0
+        version: 8.1.0(typescript@5.9.3)
+      '@testing-library/dom':
+        specifier: ^10.4.1
+        version: 10.4.1
+      '@testing-library/jest-dom':
+        specifier: 6.9.1
+        version: 6.9.1
+      '@testing-library/react':
+        specifier: 16.3.2
+        version: 16.3.2(@testing-library/dom@10.4.1)(@types/react@18.3.28)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@testing-library/user-event':
+        specifier: 14.6.1
+        version: 14.6.1(@testing-library/dom@10.4.1)
+      babel-jest:
+        specifier: 30.3.0
+        version: 30.3.0(@babel/core@7.29.0)
+      babel-loader:
+        specifier: 10.1.1
+        version: 10.1.1(@babel/core@7.29.0)(webpack@5.105.4(esbuild@0.27.3))
+      canvas:
+        specifier: 3.2.1
+        version: 3.2.1
+      css-loader:
+        specifier: 7.1.4
+        version: 7.1.4(webpack@5.105.4(esbuild@0.27.3))
+      enzyme:
+        specifier: 3.11.0
+        version: 3.11.0
+      esbuild:
+        specifier: ^0.27.3
+        version: 0.27.3
+      esbuild-loader:
+        specifier: ^4.4.2
+        version: 4.4.2(webpack@5.105.4(esbuild@0.27.3))
+      eslint:
+        specifier: '9'
+        version: 9.39.4(jiti@2.6.1)
+      file-loader:
+        specifier: 6.2.0
+        version: 6.2.0(webpack@5.105.4(esbuild@0.27.3))
+      fixpack:
+        specifier: 4.0.0
+        version: 4.0.0
+      generact:
+        specifier: 0.4.0
+        version: 0.4.0
+      husky:
+        specifier: 9.1.7
+        version: 9.1.7
+      identity-obj-proxy:
+        specifier: ^3.0.0
+        version: 3.0.0
+      is-ci:
+        specifier: 4.1.0
+        version: 4.1.0
+      jest:
+        specifier: 30.3.0
+        version: 30.3.0(@types/node@25.4.0)(babel-plugin-macros@3.1.0)
+      jest-canvas-mock:
+        specifier: 2.5.2
+        version: 2.5.2
+      jest-date-mock:
+        specifier: 1.0.10
+        version: 1.0.10
+      jest-environment-jsdom:
+        specifier: ^30.3.0
+        version: 30.3.0(canvas@3.2.1)
+      jest-fetch-mock:
+        specifier: 3.0.3
+        version: 3.0.3
+      jest-serializer-html:
+        specifier: 7.1.0
+        version: 7.1.0
+      jest-transform-file:
+        specifier: 1.1.1
+        version: 1.1.1
+      jest-transformer-svg:
+        specifier: ^2.1.0
+        version: 2.1.0(jest@30.3.0(@types/node@25.4.0)(babel-plugin-macros@3.1.0))(react@19.2.4)
+      jsts:
+        specifier: 2.12.1
+        version: 2.12.1
+      lint-staged:
+        specifier: 16.3.3
+        version: 16.3.3
+      maplibre-gl:
+        specifier: 5.19.0
+        version: 5.19.0
+      mobility-toolbox-js:
+        specifier: 3.6.11
+        version: 3.6.11(maplibre-gl@5.19.0)(ol@10.8.0)
+      ol:
+        specifier: 10.8.0
+        version: 10.8.0
+      postcss:
+        specifier: ^8.5.8
+        version: 8.5.8
+      prettier:
+        specifier: 3.8.1
+        version: 3.8.1
+      proj4:
+        specifier: 2.20.4
+        version: 2.20.4
+      prop-types:
+        specifier: 15.8.1
+        version: 15.8.1
+      react:
+        specifier: 19.2.4
+        version: 19.2.4
+      react-dom:
+        specifier: 19.2.4
+        version: 19.2.4(react@19.2.4)
+      react-styleguidist:
+        specifier: 13.1.4
+        version: 13.1.4(esbuild@0.27.3)(eslint@9.39.4(jiti@2.6.1))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3)(webpack@5.105.4(esbuild@0.27.3))
+      react-svg-loader:
+        specifier: 3.0.3
+        version: 3.0.3
+      sass:
+        specifier: 1.97.3
+        version: 1.97.3
+      sass-loader:
+        specifier: 16.0.7
+        version: 16.0.7(sass@1.97.3)(webpack@5.105.4(esbuild@0.27.3))
+      sass-migrator:
+        specifier: ^2.5.7
+        version: 2.5.7
+      standard-version:
+        specifier: 9.5.0
+        version: 9.5.0
+      stream-array:
+        specifier: 1.1.2
+        version: 1.1.2
+      style-loader:
+        specifier: 4.0.0
+        version: 4.0.0(webpack@5.105.4(esbuild@0.27.3))
+      stylelint:
+        specifier: 17.4.0
+        version: 17.4.0(typescript@5.9.3)
+      stylelint-config-recommended-scss:
+        specifier: 17.0.0
+        version: 17.0.0(postcss@8.5.8)(stylelint@17.4.0(typescript@5.9.3))
+      stylelint-config-standard:
+        specifier: 40.0.0
+        version: 40.0.0(stylelint@17.4.0(typescript@5.9.3))
+      stylelint-scss:
+        specifier: 7.0.0
+        version: 7.0.0(stylelint@17.4.0(typescript@5.9.3))
+      terser-webpack-plugin:
+        specifier: ^5.3.17
+        version: 5.4.0(esbuild@0.27.3)(webpack@5.105.4(esbuild@0.27.3))
+      typescript:
+        specifier: '5'
+        version: 5.9.3
+      url-loader:
+        specifier: 4.1.1
+        version: 4.1.1(file-loader@6.2.0(webpack@5.105.4(esbuild@0.27.3)))(webpack@5.105.4(esbuild@0.27.3))
+      vinyl-fs:
+        specifier: 4.0.2
+        version: 4.0.2
+      webpack:
+        specifier: ^5.105.4
+        version: 5.105.4(esbuild@0.27.3)
+      xml-beautifier:
+        specifier: 0.5.0
+        version: 0.5.0
+
 packages:
 
   '@adobe/css-tools@4.4.4':
