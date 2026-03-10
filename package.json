@@ -2,7 +2,7 @@
   "name": "react-spatial",
   "license": "MIT",
   "description": "Components to build React map apps.",
-  "version": "2.0.1",
+  "version": "2.0.3",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
@@ -15,7 +15,7 @@
   },
   "peerDependencies": {
     "maplibre-gl": "^4",
-    "mobility-toolbox-js": "^3",
+    "mobility-toolbox-js": "^3.6",
     "ol": "^10",
     "react": "^19",
     "react-dom": "^19"

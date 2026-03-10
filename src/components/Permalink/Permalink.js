@@ -115,7 +115,7 @@ class Permalink extends PureComponent {
           } else if (
             !isBaseLayer(l) &&
             !isLayerHidden(l) &&
-            !(l.children || l.get("children")).some((ll) => {
+            !(l.children || l.get("children"))?.some((ll) => {
               return ll.getVisible ? ll.getVisible() : ll.visible;
             })
           ) {

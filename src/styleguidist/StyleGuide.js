@@ -107,6 +107,7 @@ export function StyleGuideRenderer({
   const [expanded, expandSection] = useState();
   const [selected, setSelected] = useState("Components");
   const [node, setNode] = useState();
+
   useEffect(() => {
     fetch("https://backend.developer.geops.io/publickey")
       .then((response) => {
