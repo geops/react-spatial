@@ -110,7 +110,6 @@ class Permalink extends PureComponent {
             if (l.setVisible) {
               l.setVisible(true);
             } else {
-              // eslint-disable-next-line no-param-reassign
               l.visible = true;
             }
           } else if (
@@ -123,7 +122,6 @@ class Permalink extends PureComponent {
             if (l.setVisible) {
               l.setVisible(false);
             } else {
-              // eslint-disable-next-line no-param-reassign
               l.visible = false;
             }
           }
@@ -144,7 +142,6 @@ class Permalink extends PureComponent {
             if (baseLayer.setVisible) {
               baseLayer.setVisible(visible);
             } else {
-              // eslint-disable-next-line no-param-reassign
               baseLayer.visible = visible;
             }
           });

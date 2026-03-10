@@ -157,7 +157,6 @@ function Zoom({
   }, [map, zoomSlider]);
 
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
     <div className="rs-zooms-bar" {...other}>
       <button
         className="rs-zoom-in"

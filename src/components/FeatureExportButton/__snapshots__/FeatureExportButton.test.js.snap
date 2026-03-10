@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`FeatureExportButton should match snapshot should match snapshot with children passed. 1`] = `
 <div class="rs-feature-export-button"

@@ -124,7 +124,7 @@ const sanitizeFeature = (feature, doNotRevert32pxScaling = false) => {
 
   // The canvas draws a stroke width=1 by default if width=0, so we
   // remove the stroke style in that case.
-  if (stroke && stroke.getWidth() === 0) {
+  if (stroke?.getWidth() === 0) {
     stroke = undefined;
   }
 
@@ -149,7 +149,7 @@ const sanitizeFeature = (feature, doNotRevert32pxScaling = false) => {
       style.getText() &&
       style.getText().getScale() !== 0
     ) {
-      if (image && image.getScale() === 0) {
+      if (image?.getScale() === 0) {
         // transparentCircle is used to allow selection
         image = new Circle({
           fill: new Fill({ color: [0, 0, 0, 0] }),
@@ -473,7 +473,7 @@ const writeFeatures = (layer, featureProjection, mapResolution) => {
 
       if (feature.getStyleFunction()) {
         styles = feature.getStyleFunction()(feature, mapResolution);
-      } else if (olLayer && olLayer.getStyleFunction()) {
+      } else if (olLayer?.getStyleFunction()) {
         styles = olLayer.getStyleFunction()(feature, mapResolution);
       }
 

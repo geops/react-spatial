@@ -1,6 +1,4 @@
-/* eslint-disable react/button-has-type */
 import { fireEvent, render } from "@testing-library/react";
-import "jest-canvas-mock";
 import Map from "ol/Map";
 import RenderEvent from "ol/render/Event";
 import View from "ol/View";
@@ -8,6 +6,8 @@ import React from "react";
 import { TiImage } from "react-icons/ti";
 
 import CanvasSaveButton from "./CanvasSaveButton";
+
+import "jest-canvas-mock";
 
 describe("CanvasSaveButton", () => {
   let olMap;
@@ -119,13 +119,13 @@ describe("CanvasSaveButton", () => {
       .spyOn(olMap.getTargetElement(), "getElementsByTagName")
       .mockReturnValue([canvas]);
 
-    await fireEvent.click(wrapper.container.querySelector(".ta-example"));
+    fireEvent.click(wrapper.container.querySelector(".ta-example"));
     await olMap.dispatchEvent(
       new RenderEvent("rendercomplete", undefined, undefined, {
         canvas,
       }),
     );
-    await window.setTimeout(() => {
+    window.setTimeout(() => {
       expect(saveStart).toHaveBeenCalledTimes(1);
       expect(saveEnd).toHaveBeenCalledTimes(1);
       expect(link.href).toBe("http://localhost/fooblob");

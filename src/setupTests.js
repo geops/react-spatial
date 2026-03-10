@@ -1,4 +1,16 @@
+import { TextDecoder, TextEncoder } from "util";
+
 import ResizeObserver from "resize-observer-polyfill";
+
+Object.defineProperty(global, "TextEncoder", {
+  value: TextEncoder,
+  writable: true,
+});
+
+Object.defineProperty(global, "TextDecoder", {
+  value: TextDecoder,
+  writable: true,
+});
 
 global.URL.createObjectURL = jest.fn(() => {
   return "fooblob";

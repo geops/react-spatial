@@ -48,7 +48,6 @@ class FeatureExportButton extends PureComponent {
       return KML.writeFeatures(layer, projection);
     }
 
-    // eslint-disable-next-line new-cap
     return new format().writeFeatures(layer.getSource().getFeatures(), {
       featureProjection: projection,
     });
@@ -94,7 +93,6 @@ class FeatureExportButton extends PureComponent {
         className="rs-feature-export-button"
         role="button"
         tabIndex={0}
-        // eslint-disable-next-line react/jsx-props-no-spreading
         {...other}
         onClick={() => {
           return FeatureExportButton.exportFeatures(layer, projection, format);

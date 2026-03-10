@@ -1,5 +1,4 @@
 import { render } from "@testing-library/react";
-import "jest-canvas-mock";
 import { Layer as OldMbtLayer } from "mobility-toolbox-js/ol";
 import OLLayer from "ol/layer/Vector";
 import OLMap from "ol/Map";
@@ -10,6 +9,8 @@ import proj4 from "proj4";
 import React from "react";
 
 import BasicMap from "./BasicMap";
+
+import "jest-canvas-mock";
 
 proj4.defs(
   "EPSG:21781",

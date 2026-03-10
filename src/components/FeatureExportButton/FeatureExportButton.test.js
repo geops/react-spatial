@@ -1,4 +1,3 @@
-import "jest-canvas-mock";
 import { fireEvent, render } from "@testing-library/react";
 import Feature from "ol/Feature";
 import GPX from "ol/format/GPX";
@@ -12,6 +11,8 @@ import Stroke from "ol/style/Stroke";
 import Style from "ol/style/Style";
 import Text from "ol/style/Text";
 import React from "react";
+
+import "jest-canvas-mock";
 
 import FeatureExportButton from ".";
 

@@ -1,10 +1,10 @@
 import { fireEvent, render } from "@testing-library/react";
-import "jest-canvas-mock";
 import Layer from "ol/layer/Layer";
-/* eslint-disable react/jsx-props-no-spreading */
 import React from "react";
 
 import LayerTree from "./LayerTree";
+
+import "jest-canvas-mock";
 
 const mountLayerTree = (layers) => {
   return render(<LayerTree layers={layers} />);

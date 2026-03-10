@@ -107,7 +107,7 @@ class ResizeHandler extends PureComponent {
       console.warn(
         "observe attribute as a Component is deprecated: Please use React.createRef() or React.useRef() instead of a React component.",
       );
-      // eslint-disable-next-line react/no-find-dom-node
+
       // this.nodes.push(ReactDOM.findDOMNode(observe));
     } else if (observe instanceof Element) {
       this.nodes.push(observe);
@@ -120,7 +120,7 @@ class ResizeHandler extends PureComponent {
         "observe attribute as a ref to Component is deprecated: Please use React.createRef() or React.useRef() instead of a React component.",
       );
       // observe value created with React.createRef() on a React component.
-      // eslint-disable-next-line react/no-find-dom-node
+
       // this.nodes.push(ReactDOM.findDOMNode(observe.current));
     }
 

@@ -1,4 +1,5 @@
-import "jest-canvas-mock";
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-base-to-string */
 import { fireEvent, render } from "@testing-library/react";
 import Feature from "ol/Feature";
 import Point from "ol/geom/Point";
@@ -7,6 +8,8 @@ import View from "ol/View";
 import React from "react";
 
 import Popup from "./Popup";
+
+import "jest-canvas-mock";
 
 let map;
 
@@ -166,7 +169,7 @@ describe("Popup", () => {
     afterEach(() => {
       const target = map.getTarget();
       map.setTarget(null);
-      if (target && target.parentNode) {
+      if (target?.parentNode) {
         target.parentNode.removeChild(target);
       }
       map.dispose();

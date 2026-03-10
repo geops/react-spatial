@@ -10,8 +10,8 @@ module.exports = {
   testMatch: ["<rootDir>/src/**/?(*.)+(spec|test).[jt]s?(x)"],
   testPathIgnorePatterns: ["<rootDir>/(build|coverage|public|doc|packages)"],
   transform: {
-    ".+\\.js$": "babel-jest",
     ".+\\.svg$": "jest-transformer-svg",
+    "^.+\\.(js|jsx|ts|tsx)$": "babel-jest",
   },
   transformIgnorePatterns: [],
 };

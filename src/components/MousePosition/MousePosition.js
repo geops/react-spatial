@@ -144,12 +144,11 @@ function MousePosition({
     [onChange, projections],
   );
 
-  if (!projection || !projections || !projections.length) {
+  if (!projection || !projections?.length) {
     return null;
   }
 
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
     <div className="rs-mouse-position" {...other}>
       <select
         className="rs-select"
