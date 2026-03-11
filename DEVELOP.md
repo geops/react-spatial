@@ -27,8 +27,6 @@ pnpm start
 
 ## Tests
 
-We are using [jest]([https://react-styleguidist.js.org/](https://jestjs.io/docs/en/getting-started.html)) and [enzyme]([https://github.com/airbnb/enzyme](https://airbnb.io/enzyme/)).
-
 Run the tests in watch mode:
 
 ```bash
@@ -45,29 +43,22 @@ pnpm coverage
 
 Then open the file `coverage/lcov-report/index.html` in your browser.
 
-## Publish on [npmjs.com](https://www.npmjs.com/package/react-spatial)
+## Publish new version
+
+We use `standard-version` to manage versioning and changelog generation.
 
 Run publish:
 
 ```bash
-publish:public
+pnpm publish:public
 ```
-You need to enter the new version number in the command line.
-Then the new version must be published on [npmjs.com](https://www.npmjs.com/package/react-spatial).
 
-## Publish a development version on [npmjs.com](https://www.npmjs.com/package/react-spatial)
-
-This version WILL NOT be displayed to other in [npmjs.com](https://www.npmjs.com/package/react-spatial).
-
-Run publish:
+or for a beta version on beta channel:
 
 ```bash
-publish:beta
+pnpm publish:beta
 ```
 
-You need to enter the new version number in the command line.
-Append `-beta.0` to the current version or increase the beta number.
-Then the new version must be published on [npmjs.com](https://www.npmjs.com/package/react-spatial) with the tag beta.
 
 ## How to use SVG
 
