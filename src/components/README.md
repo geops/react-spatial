@@ -35,7 +35,7 @@ Some rules must be followed:
 ## Create a new component from another
 
 ```bash
-yarn cp
+pnpm cp
 ```
 
 then follow the guide.

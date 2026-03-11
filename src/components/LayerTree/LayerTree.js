@@ -192,15 +192,19 @@ class LayerTree extends Component {
     this.olKeys = [];
   }
 
-  static getChildren = (layer) =>
-    layer?.get("children") ||
-    layer?.children ||
-    // ol.layer.group
-    layer?.getLayers?.().getArray() ||
-    [];
+  static getChildren = (layer) => {
+    return (
+      layer?.get("children") ||
+      layer?.children ||
+      // ol.layer.group
+      layer?.getLayers?.().getArray() ||
+      []
+    );
+  };
 
-  static getVisible = (layer) =>
-    layer.getVisible ? layer.getVisible() : layer.visible;
+  static getVisible = (layer) => {
+    return layer.getVisible ? layer.getVisible() : layer.visible;
+  };
 
   static listenGroups = (layers) => {
     const flat = getLayersAsFlatArray(layers);
@@ -224,7 +228,7 @@ class LayerTree extends Component {
       layer.setVisible(visible);
       return;
     }
-    // eslint-disable-next-line no-param-reassign
+
     layer.visible = visible;
   };
 
@@ -344,7 +348,7 @@ class LayerTree extends Component {
     return renderCheckbox ? (
       renderCheckbox(layer, this, inputProps)
     ) : (
-      // eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/no-noninteractive-element-interactions
+      // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
       <label
         className={`rs-layer-tree-input rs-layer-tree-input-${inputType} rs-${inputType}`}
         onKeyPress={(e) => {
@@ -365,7 +369,6 @@ class LayerTree extends Component {
           readOnly
           tabIndex={-1}
           type={inputType}
-          // eslint-disable-next-line react/jsx-props-no-spreading
           {...inputProps}
         />
         <span />
@@ -414,11 +417,11 @@ class LayerTree extends Component {
             ? renderItemContent(layer, this)
             : this.renderItemContent(layer)}
         </div>
-        {renderBeforeItem && renderBeforeItem(layer, level, this)}
+        {renderBeforeItem?.(layer, level, this)}
         {[...children].reverse().map((child) => {
           return this.renderItem(child, level + 1);
         })}
-        {renderAfterItem && renderAfterItem(layer, level, this)}
+        {renderAfterItem?.(layer, level, this)}
       </div>
     );
   }
@@ -460,7 +463,6 @@ class LayerTree extends Component {
         role="button"
         tabIndex={0}
         title={title}
-        // eslint-disable-next-line react/jsx-props-no-spreading
         {...toggleProps}
       >
         <div>{renderLabel(layer, this)}</div>
@@ -538,7 +540,12 @@ class LayerTree extends Component {
             }
 
             // If children doesn't contain any visible layers, we display all children.
-            if (children && !children.some((child) => child.getVisible())) {
+            if (
+              children &&
+              !children.some((child) => {
+                return child.getVisible();
+              })
+            ) {
               children.forEach((child) => {
                 child.setVisible(true);
               });
@@ -552,7 +559,9 @@ class LayerTree extends Component {
             // If the parent has no more visible child we also hide it.
             if (
               parent?.getVisible() &&
-              !parent?.get("children").find((child) => child.getVisible())
+              !parent?.get("children").find((child) => {
+                return child.getVisible();
+              })
             ) {
               parent.setVisible(false);
             }

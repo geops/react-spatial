@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-base-to-string */
 import { act, fireEvent, render } from "@testing-library/react";
 import OLMap from "ol/Map";
 import MapEvent from "ol/MapEvent";
@@ -31,31 +33,31 @@ describe("Zoom", () => {
     ["click", {}],
     ["keypress", { which: 13 }],
   ].forEach((evt) => {
-    test(`should zoom in on ${evt[0]}.`, async () => {
+    test(`should zoom in on ${evt[0]}.`, () => {
       const map = new OLMap({ view: new OLView({ zoom: 5 }) });
       const { container } = render(<Zoom map={map} />);
-      await fireEvent.click(container.querySelector(".rs-zoom-in"));
+      fireEvent.click(container.querySelector(".rs-zoom-in"));
       expect(map.getView().getZoom()).toBe(6);
     });
 
-    test(`should zoom in on ${evt[0]} (delta: 0.3).`, async () => {
+    test(`should zoom in on ${evt[0]} (delta: 0.3).`, () => {
       const map = new OLMap({ view: new OLView({ zoom: 5 }) });
       const { container } = render(<Zoom delta={0.3} map={map} />);
-      await fireEvent.click(container.querySelector(".rs-zoom-in"));
+      fireEvent.click(container.querySelector(".rs-zoom-in"));
       expect(map.getView().getZoom()).toBe(5.3);
     });
 
-    test(`should zoom out on ${evt[0]}.`, async () => {
+    test(`should zoom out on ${evt[0]}.`, () => {
       const map = new OLMap({ view: new OLView({ zoom: 5 }) });
       const { container } = render(<Zoom map={map} />);
-      await fireEvent.click(container.querySelector(".rs-zoom-out"));
+      fireEvent.click(container.querySelector(".rs-zoom-out"));
       expect(map.getView().getZoom()).toBe(4);
     });
 
-    test(`should zoom out on ${evt[0]} (delta: 0.3).`, async () => {
+    test(`should zoom out on ${evt[0]} (delta: 0.3).`, () => {
       const map = new OLMap({ view: new OLView({ zoom: 5 }) });
       const { container } = render(<Zoom delta={0.3} map={map} />);
-      await fireEvent.click(container.querySelector(".rs-zoom-out"));
+      fireEvent.click(container.querySelector(".rs-zoom-out"));
       expect(map.getView().getZoom()).toBe(4.7);
     });
   });
@@ -71,7 +73,7 @@ describe("Zoom", () => {
     expect(spy.mock.calls[0][0]).toBe(spy2.mock.calls[0][0]);
   });
 
-  test("should disable zoom-in button on mount with max zoom..", async () => {
+  test("should disable zoom-in button on mount with max zoom..", () => {
     const map = new OLMap({
       view: new OLView({ maxZoom: 20, zoom: 20 }),
     });
@@ -82,11 +84,11 @@ describe("Zoom", () => {
     });
     rerender(<Zoom map={map} />);
     expect(container.querySelector(".rs-zoom-in").disabled).toEqual(true);
-    await fireEvent.click(container.querySelector(".rs-zoom-in"));
+    fireEvent.click(container.querySelector(".rs-zoom-in"));
     expect(spy).toHaveBeenCalledTimes(0);
   });
 
-  test("should disable zoom-out button on mount with min zoom.", async () => {
+  test("should disable zoom-out button on mount with min zoom.", () => {
     const map = new OLMap({
       view: new OLView({ minZoom: 2, zoom: 2 }),
     });
@@ -97,18 +99,19 @@ describe("Zoom", () => {
     });
     rerender(<Zoom map={map} />);
     expect(container.querySelector(".rs-zoom-out").disabled).toEqual(true);
-    await fireEvent.click(container.querySelector(".rs-zoom-out"));
+    fireEvent.click(container.querySelector(".rs-zoom-out"));
     expect(spy).toHaveBeenCalledTimes(0);
   });
 });
 
-test("should disable zoom-out button when reaching min zoom.", async () => {
+// eslint-disable-next-line mocha/no-global-tests
+test("should disable zoom-out button when reaching min zoom.", () => {
   const map = new OLMap({
     view: new OLView({ minZoom: 2, zoom: 3 }),
   });
   const spy = jest.spyOn(map.getView(), "setZoom");
   const { container, rerender } = render(<Zoom map={map} />);
-  await fireEvent.click(container.querySelector(".rs-zoom-out"));
+  fireEvent.click(container.querySelector(".rs-zoom-out"));
   expect(spy).toHaveBeenCalledTimes(1);
   act(() => {
     map.dispatchEvent(new MapEvent("moveend", map));
@@ -117,7 +120,8 @@ test("should disable zoom-out button when reaching min zoom.", async () => {
   expect(container.querySelector(".rs-zoom-out").disabled).toEqual(true);
 });
 
-test("should trigger callback functions.", async () => {
+// eslint-disable-next-line mocha/no-global-tests
+test("should trigger callback functions.", () => {
   const map = new OLMap({
     view: new OLView({ minZoom: 2, zoom: 3 }),
   });
@@ -130,9 +134,9 @@ test("should trigger callback functions.", async () => {
       onZoomOutButtonClick={zoomOut}
     />,
   );
-  await fireEvent.click(container.querySelector(".rs-zoom-out"));
+  fireEvent.click(container.querySelector(".rs-zoom-out"));
   expect(zoomOut).toHaveBeenCalledTimes(1);
-  await fireEvent.click(container.querySelector(".rs-zoom-in"));
-  await fireEvent.click(container.querySelector(".rs-zoom-in"));
+  fireEvent.click(container.querySelector(".rs-zoom-in"));
+  fireEvent.click(container.querySelector(".rs-zoom-in"));
   expect(zoomIn).toHaveBeenCalledTimes(2);
 });

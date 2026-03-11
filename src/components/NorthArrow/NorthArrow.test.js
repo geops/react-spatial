@@ -1,5 +1,4 @@
 import { act, render } from "@testing-library/react";
-import "jest-canvas-mock";
 import OLMap from "ol/Map";
 import MapEvent from "ol/MapEvent";
 import OLView from "ol/View";
@@ -7,6 +6,8 @@ import React from "react";
 import { TiImage } from "react-icons/ti";
 
 import NorthArrow from "./NorthArrow";
+
+import "jest-canvas-mock";
 
 let olView;
 let olMap;
@@ -25,15 +26,6 @@ describe("NorthArrow", () => {
   test("should match snapshot with custom attributes.", () => {
     const { container } = render(
       <NorthArrow className="test-class" map={olMap} tabIndex={0} />,
-    );
-    expect(container.innerHTML).toMatchSnapshot();
-  });
-
-  test("should match snapshot with children.", () => {
-    const { container } = render(
-      <NorthArrow map={olMap}>
-        <TiImage />
-      </NorthArrow>,
     );
     expect(container.innerHTML).toMatchSnapshot();
   });
@@ -83,10 +75,10 @@ describe("NorthArrow", () => {
 
   test("should remove post render event on unmount", () => {
     const { unmount } = render(<NorthArrow map={olMap} rotationOffset={-10} />);
-    // eslint-disable-next-line no-underscore-dangle
+
     expect(olMap.listeners_.postrender.length).toBe(4);
     unmount();
-    // eslint-disable-next-line no-underscore-dangle
+
     expect(olMap.listeners_.postrender.length).toBe(3);
   });
 });

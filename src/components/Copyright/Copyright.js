@@ -68,8 +68,9 @@ function Copyright({
   return (
     <div
       className={className}
-      ref={(nod) => setNode(nod)}
-      // eslint-disable-next-line react/jsx-props-no-spreading
+      ref={(nod) => {
+        return setNode(nod);
+      }}
       {...other}
     />
   );

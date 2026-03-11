@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import {
   Autocomplete,
   autocompleteClasses,
@@ -14,11 +13,13 @@ import { FaSearch } from "react-icons/fa";
 
 import StopsFinderOption from "./StopsFinderOption";
 
-const StyledAutocomplete = styled(Autocomplete)(() => ({
-  [`& .${autocompleteClasses.popupIndicatorOpen}`]: {
-    transform: "rotate(0)",
-  },
-}));
+const StyledAutocomplete = styled(Autocomplete)(() => {
+  return {
+    [`& .${autocompleteClasses.popupIndicatorOpen}`]: {
+      transform: "rotate(0)",
+    },
+  };
+});
 
 const defaultProps = {
   textFieldProps: {},
@@ -62,14 +63,14 @@ function StopsFinder({
     const abortController = new AbortController();
     setLoading(true);
     const apiParams = {
-      bbox: bbox && bbox.toString(),
-      field: field && field.toString(),
+      bbox: bbox?.toString(),
+      field: field?.toString(),
       limit,
-      mots: mots && mots.toString(),
-      prefAgencies: agencies && agencies.toString(),
+      mots: mots?.toString(),
+      prefAgencies: agencies?.toString(),
       q: inputValue,
       radius,
-      ref_location: refLocation && refLocation.toString(),
+      ref_location: refLocation?.toString(),
     };
     api
       .search(apiParams, abortController)

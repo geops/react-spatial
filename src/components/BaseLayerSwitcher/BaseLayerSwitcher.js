@@ -1,7 +1,6 @@
 import Layer from "ol/layer/Layer";
 import { unByKey } from "ol/Observable";
 import PropTypes from "prop-types";
-/* eslint-disable jsx-a11y/interactive-supports-focus */
 import React, { useEffect, useState } from "react";
 import { FaChevronLeft } from "react-icons/fa";
 
@@ -190,7 +189,7 @@ function BaseLayerSwitcher({
       }
       return;
     }
-    // eslint-disable-next-line consistent-return
+
     return setSwitcherOpen(true) && setIsClosed(false);
   };
 
@@ -206,7 +205,6 @@ function BaseLayerSwitcher({
     if (layer.setVisible) {
       layer.setVisible(true);
     } else {
-      // eslint-disable-next-line no-param-reassign
       layer.visible = true;
     }
     layers
@@ -217,7 +215,6 @@ function BaseLayerSwitcher({
         if (l.setVisible) {
           l.setVisible(false);
         } else {
-          // eslint-disable-next-line no-param-reassign
           l.visible = false;
         }
       });

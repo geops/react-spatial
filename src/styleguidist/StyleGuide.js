@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import { Footer, geopsTheme, Header } from "@geops/geops-ui";
 import {
   ArrowDropUpTwoTone as Close,
@@ -125,7 +124,9 @@ export function StyleGuideRenderer({
   }, []);
 
   useEffect(() => {
-    if (!node) return;
+    if (!node) {
+      return;
+    }
     const { hash } = window.location;
     if (hash && hash !== "#") {
       document.querySelector(hash)?.scrollIntoView();
@@ -239,7 +240,12 @@ export function StyleGuideRenderer({
               </ClickAwayListener>
             </Collapse>
           </Paper>
-          <div className={classes.scrollable} ref={(nodee) => setNode(nodee)}>
+          <div
+            className={classes.scrollable}
+            ref={(nodee) => {
+              return setNode(nodee);
+            }}
+          >
             <Paper sx={{ display: { sm: "block", xs: "none" } }}>
               <div className={classes.sidebar}>
                 <header className={classes.version}>
@@ -281,7 +287,7 @@ StyleGuideRenderer.propTypes = {
   classes: PropTypes.object.isRequired,
   hasSidebar: PropTypes.bool.isRequired,
   toc: PropTypes.node.isRequired,
-  // eslint-disable-next-line react/require-default-props
+
   version: PropTypes.string,
 };
 

@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`FeatureExportButton should match snapshot should match snapshot with children passed. 1`] = `
 <div class="rs-feature-export-button"
@@ -26,42 +26,4 @@ exports[`FeatureExportButton should match snapshot with default attributes. 1`] 
      tabindex="0"
 >
 </div>
-`;
-
-exports[`FeatureExportButton triggers onClick #createFeatureString() using KMLFormat should export kml by default. 1`] = `
-<kml xmlns="http://www.opengis.net/kml/2.2"
-     xmlns:gx="http://www.google.com/kml/ext/2.2"
-     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-     xsi:schemalocation="http://www.opengis.net/kml/2.2 https://developers.google.com/kml/schema/kml22gx.xsd"
->
-  <Document>
-    <name>
-      ExportLayer
-    </name>
-    <Placemark>
-      <Style>
-        <IconStyle>
-        <scale>2
-        </scale>
-        <Icon>
-        <href>https://openlayers.org/en/latest/examples/data/icon.png
-        </href>
-        </Icon>
-        </IconStyle>
-      </Style>
-      <ExtendedData>
-        <Data name="iconScale">
-          <value>
-            1
-          </value>
-        </Data>
-      </ExtendedData>
-      <Point>
-        <coordinates>
-          7.358136177061042,48.07903229472336
-        </coordinates>
-      </Point>
-    </Placemark>
-  </Document>
-</kml>
 `;

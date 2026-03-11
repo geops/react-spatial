@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { CircularProgress, styled } from "@mui/material";
 import PropTypes from "prop-types";
 import React, { lazy, Suspense } from "react";
@@ -20,11 +19,13 @@ const iconForMot = {};
   });
 });
 
-const StyledFlex = styled("div")(() => ({
-  alignItems: "center",
-  display: "flex",
-  gap: 5,
-}));
+const StyledFlex = styled("div")(() => {
+  return {
+    alignItems: "center",
+    display: "flex",
+    gap: 5,
+  };
+});
 
 function StopsFinderOption({ option, ...props }) {
   return (
