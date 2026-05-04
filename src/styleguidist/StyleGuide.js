@@ -243,7 +243,7 @@ export function StyleGuideRenderer({
           <div
             className={classes.scrollable}
             ref={(nodee) => {
-              return setNode(nodee);
+              setNode(nodee);
             }}
           >
             <Paper sx={{ display: { sm: "block", xs: "none" } }}>

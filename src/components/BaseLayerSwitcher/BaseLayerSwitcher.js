@@ -190,7 +190,8 @@ function BaseLayerSwitcher({
       return;
     }
 
-    return setSwitcherOpen(true) && setIsClosed(false);
+    setSwitcherOpen(true);
+    setIsClosed(false);
   };
 
   const onLayerSelect = (layer, evt) => {

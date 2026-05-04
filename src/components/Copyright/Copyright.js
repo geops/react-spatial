@@ -69,7 +69,7 @@ function Copyright({
     <div
       className={className}
       ref={(nod) => {
-        return setNode(nod);
+        setNode(nod);
       }}
       {...other}
     />
