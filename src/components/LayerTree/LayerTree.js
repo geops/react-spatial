@@ -449,9 +449,13 @@ class LayerTree extends Component {
         }).length && !layer.get("isAlwaysExpanded"),
       );
     };
-    const title = `${renderLabel(layer, this)} ${
+    let title = `${renderLabel(layer, this)} ${
       expandedLayers.includes(layer) ? titles.subLayerHide : titles.subLayerShow
     }`;
+
+    if (typeof title !== "string") {
+      title = undefined;
+    }
 
     return (
       <div
