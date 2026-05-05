@@ -554,6 +554,11 @@ class LayerTree extends Component {
                 child.setVisible(true);
               });
             }
+
+            // We make the maplibre layer visible
+            if (target.maplibreLayer?.getVisible() === false) {
+              target.get("maplibreLayer").setVisible(true);
+            }
           } else {
             // We hide all the children
             children.forEach((child) => {
