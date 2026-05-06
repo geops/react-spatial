@@ -117,7 +117,7 @@ export interface CanvasSaveButtonProps {
    *
    * @param {object} error Error message the process fails.
    */
-  onSaveEnd?: (...args: any[]) => void;
+  onSaveEnd?: (...args: unknown[]) => void;
   /**
    * Function called before the dowload process begins.
    */
@@ -186,7 +186,7 @@ const drawTextBackground = (
   y: number,
   width: number,
   height: number,
-  styleOptions: any = {},
+  styleOptions: unknown = {},
 ) => {
   destContext.save();
   // Dflt is a white background
@@ -292,7 +292,12 @@ const drawCopyright = (
 };
 
 const drawElement = (
-  data: any,
+  data: {
+    height?: number;
+    rotation?: (() => number) | number;
+    src?: string;
+    width?: number;
+  },
   destCanvas: HTMLCanvasElement,
   scale: number,
   margin: number,
@@ -540,11 +545,17 @@ const downloadCanvasImage = (
       w.document.write(`<img src="${url}" alt="from canvas"/>`);
       resolve(url);
     }
-    if ((window.navigator as any).msSaveBlob) {
+    if (
+      (
+        window.navigator as unknown as {
+          msSaveBlob?: (blob: Blob, filename: string) => void;
+        }
+      ).msSaveBlob
+    ) {
       // ie 11 and higher
       let image;
       try {
-        image = (canvas as any).msToBlob();
+        image = (canvas as unknown as { msToBlob: () => Blob }).msToBlob();
       } catch (e) {
         // eslint-disable-next-line no-console
         console.log(e);
@@ -553,7 +564,11 @@ const downloadCanvasImage = (
         type: format,
       });
       resolve(blob);
-      (window.navigator as any).msSaveBlob(blob, getDownloadImageName(format));
+      (
+        window.navigator as unknown as {
+          msSaveBlob?: (blob: Blob, filename: string) => void;
+        }
+      ).msSaveBlob(blob, getDownloadImageName(format));
     } else {
       canvas.toBlob((blob) => {
         const link = document.createElement("a");
@@ -591,9 +606,15 @@ function CanvasSaveButton({
   padding = 5,
   scale = 1,
 }: CanvasSaveButtonProps) {
-  const onClick = useCallback(
+  const onClick = useCallback<React.MouseEventHandler<HTMLButtonElement>>(
     (evt) => {
-      if ((window.navigator as any).msSaveBlob) {
+      if (
+        (
+          window.navigator as unknown as {
+            msSaveBlob?: (blob: Blob, filename: string) => void;
+          }
+        ).msSaveBlob
+      ) {
         // ie only
         evt.preventDefault();
         evt.stopPropagation();
@@ -610,7 +631,7 @@ function CanvasSaveButton({
           margin,
           padding,
         )
-          .then((canvas: any) => {
+          .then((canvas: unknown) => {
             if (autoDownload) {
               downloadCanvasImage(canvas, format, getDownloadImageName).then(
                 (blob) => {
@@ -649,9 +670,14 @@ function CanvasSaveButton({
   return (
     <>
       {React.Children.map(children, (child) => {
-        return React.cloneElement(child as React.ReactElement<any>, {
-          onClick,
-        });
+        return React.cloneElement(
+          child as React.ReactElement<{
+            onClick: React.MouseEventHandler<HTMLButtonElement>;
+          }>,
+          {
+            onClick,
+          },
+        );
       })}
     </>
   );

@@ -21,7 +21,7 @@ export interface Projection {
 }
 
 export interface MousePositionProps {
-  [key: string]: any;
+  [key: string]: unknown;
   /**
    * An [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
    */

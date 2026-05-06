@@ -48,7 +48,7 @@ export interface LayerTreeProps {
    *
    * @return {bool} true if the item is not displayed in the tree
    */
-  isItemHidden?: (item: any) => boolean;
+  isItemHidden?: (item: unknown) => boolean;
   /**
    * Layers provider.
    */
@@ -65,7 +65,7 @@ export interface LayerTreeProps {
    * @return {node} A jsx node.
    */
   renderAfterItem?: (
-    layer: any,
+    layer: unknown,
     level: number,
     comp: LayerTree,
   ) => React.ReactNode;
@@ -77,7 +77,7 @@ export interface LayerTreeProps {
    * @return {node} A jsx node.
    */
   renderBeforeItem?: (
-    layer: any,
+    layer: unknown,
     level: number,
     comp: LayerTree,
   ) => React.ReactNode;
@@ -85,9 +85,9 @@ export interface LayerTreeProps {
    * Custom function to render the checkbox.
    */
   renderCheckbox?: (
-    layer: any,
+    layer: unknown,
     comp: LayerTree,
-    inputProps?: any,
+    inputProps?: unknown,
   ) => React.ReactNode;
   /**
    * Custom function to render an item in the tree.
@@ -97,9 +97,9 @@ export interface LayerTreeProps {
    * @return {node} A jsx node.
    */
   renderItem?: (
-    layer: any,
-    onInputClick: any,
-    onToggle: any,
+    layer: unknown,
+    onInputClick: unknown,
+    onToggle: unknown,
   ) => React.ReactNode;
   /**
    * Custom function to render only the content of an item in the tree.
@@ -111,7 +111,7 @@ export interface LayerTreeProps {
    *
    * @return {node} A jsx node.
    */
-  renderItemContent?: (layer: any, comp: LayerTree) => React.ReactNode;
+  renderItemContent?: (layer: unknown, comp: LayerTree) => React.ReactNode;
   /**
    * Custom function to render the label.
    *
@@ -120,7 +120,7 @@ export interface LayerTreeProps {
    *
    * @return {node} A jsx node.
    */
-  renderLabel?: (layer: any, comp?: LayerTree) => React.ReactNode;
+  renderLabel?: (layer: unknown, comp?: LayerTree) => React.ReactNode;
   /**
    * Translation function.
    * @param {function} Translation function returning the translated string.
@@ -135,7 +135,7 @@ export interface LayerTreeProps {
 interface LayerTreeState {
   expandedLayers: Layer[];
   revision: number;
-  rootLayer: any;
+  rootLayer: unknown;
 }
 
 const defaultProps: Partial<LayerTreeProps> = {
@@ -154,7 +154,7 @@ const defaultProps: Partial<LayerTreeProps> = {
   renderCheckbox: null,
   renderItem: null,
   renderItemContent: null,
-  renderLabel: (layer: any) => {
+  renderLabel: (layer: unknown) => {
     return layer?.get("name") || "";
   },
   t: (s: string) => {
@@ -174,7 +174,7 @@ const defaultProps: Partial<LayerTreeProps> = {
  */
 
 class LayerTree extends Component<LayerTreeProps, LayerTreeState> {
-  olKeys: any[];
+  olKeys: unknown[];
 
   constructor(props: LayerTreeProps) {
     super(props);
@@ -206,7 +206,7 @@ class LayerTree extends Component<LayerTreeProps, LayerTreeState> {
     this.olKeys = [];
   }
 
-  static getChildren = (layer: any) => {
+  static getChildren = (layer: unknown) => {
     return (
       layer?.get("children") ||
       layer?.children ||
@@ -216,11 +216,11 @@ class LayerTree extends Component<LayerTreeProps, LayerTreeState> {
     );
   };
 
-  static getVisible = (layer: any) => {
+  static getVisible = (layer: unknown) => {
     return layer.getVisible ? layer.getVisible() : layer.visible;
   };
 
-  static listenGroups = (layers: any[]) => {
+  static listenGroups = (layers: unknown[]) => {
     const flat = getLayersAsFlatArray(layers);
     const keys = flat.map((layer) => {
       return layer.on("change:visible", (e) => {
@@ -237,7 +237,7 @@ class LayerTree extends Component<LayerTreeProps, LayerTreeState> {
     return keys;
   };
 
-  static setVisible = (layer: any, visible: boolean) => {
+  static setVisible = (layer: unknown, visible: boolean) => {
     if (layer.setVisible) {
       layer.setVisible(visible);
       return;
@@ -263,7 +263,7 @@ class LayerTree extends Component<LayerTreeProps, LayerTreeState> {
     this.olKeys = [];
   }
 
-  expandLayer(layer: any, expLayers: any[] = []) {
+  expandLayer(layer: unknown, expLayers: unknown[] = []) {
     const { isItemHidden } = this.props;
     if (LayerTree.getVisible(layer) && !isItemHidden(layer)) {
       const children = LayerTree.getChildren(layer)
@@ -285,7 +285,7 @@ class LayerTree extends Component<LayerTreeProps, LayerTreeState> {
    * @param  {Layer} layers Initially expanded layers
    * @return {Array.<Layer>} Initially expanded layers and all its always expanded ancestors
    */
-  getExpandedLayers(layers: any[]) {
+  getExpandedLayers(layers: unknown[]) {
     const { isItemHidden } = this.props;
     const children = layers.flatMap((l) => {
       return LayerTree.getChildren(l).filter((c) => {
@@ -299,7 +299,7 @@ class LayerTree extends Component<LayerTreeProps, LayerTreeState> {
     return [...layers, this.getExpandedLayers(children)].flat();
   }
 
-  onInputClick(layer: any, toggle = false) {
+  onInputClick(layer: unknown, toggle = false) {
     if (toggle) {
       this.onToggle(layer);
     } else {
@@ -307,7 +307,7 @@ class LayerTree extends Component<LayerTreeProps, LayerTreeState> {
     }
   }
 
-  onToggle(layer: any) {
+  onToggle(layer: unknown) {
     const { expandedLayers } = this.state;
     const pos = expandedLayers.indexOf(layer);
     if (pos > -1) {
@@ -323,7 +323,7 @@ class LayerTree extends Component<LayerTreeProps, LayerTreeState> {
     return <div className={className}>{this.renderTree()}</div>;
   }
 
-  renderArrow(layer: any) {
+  renderArrow(layer: unknown) {
     const { isItemHidden } = this.props;
     const { expandedLayers } = this.state;
 
@@ -345,7 +345,7 @@ class LayerTree extends Component<LayerTreeProps, LayerTreeState> {
     );
   }
 
-  renderInput(layer: any, inputProps?: any) {
+  renderInput(layer: unknown, inputProps?: unknown) {
     const { isItemHidden, renderCheckbox, titles } = this.props;
     let tabIndex = 0;
 
@@ -390,7 +390,7 @@ class LayerTree extends Component<LayerTreeProps, LayerTreeState> {
     );
   }
 
-  renderItem(layer: any, level: number) {
+  renderItem(layer: unknown, level: number) {
     const { isItemHidden } = this.props;
     const { expandedLayers } = this.state;
     const {
@@ -440,7 +440,7 @@ class LayerTree extends Component<LayerTreeProps, LayerTreeState> {
     );
   }
 
-  renderItemContent(layer: any, inputProps: any = {}, toggleProps: any = {}) {
+  renderItemContent(layer: unknown, inputProps: unknown = {}, toggleProps: unknown = {}) {
     return (
       <>
         {this.renderInput(layer, inputProps)}
@@ -451,7 +451,7 @@ class LayerTree extends Component<LayerTreeProps, LayerTreeState> {
 
   // Render a button which expands/collapse the layer if there is children
   // or simulate a click on the input otherwise.
-  renderToggleButton(layer: any, toggleProps?: any) {
+  renderToggleButton(layer: unknown, toggleProps?: unknown) {
     const { isItemHidden, renderLabel, titles } = this.props;
     const { expandedLayers } = this.state;
 

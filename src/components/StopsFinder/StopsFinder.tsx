@@ -12,8 +12,10 @@ import { FaSearch } from "react-icons/fa";
 
 import StopsFinderOption from "./StopsFinderOption";
 
+import type { TextFieldProps } from "@mui/material";
+
 export interface StopsFinderProps {
-  [key: string]: any;
+  [key: string]: unknown;
   /**
    * Array or a comma separated list of agencies which should be available.
    * Order of these agencies chooses which agency will be preferred.
@@ -46,7 +48,7 @@ export interface StopsFinderProps {
   /**
    * Function called when a suggestion is selected.
    */
-  onSelect?: (value: any, evt: any) => void;
+  onSelect?: (value: unknown, evt: unknown) => void;
   /**
    * Radius around refLocation in meters that is most relevant.
    * Used as granularity for location rank.
@@ -60,11 +62,11 @@ export interface StopsFinderProps {
   /**
    * Function to render a different autocomplete input than the default one.
    */
-  renderAutocomplete?: (...args: any[]) => React.ReactNode;
+  renderAutocomplete?: (...args: unknown[]) => React.ReactNode;
   /**
    * Properties apply to the default [MUI TextField component](https://material-ui.com/api/text-field/) used by the Autocomplete.
    */
-  textFieldProps?: Record<string, any>;
+  textFieldProps?: TextFieldProps;
   /**
    * Url of the geOps StopsFinder service.
    */
@@ -101,12 +103,12 @@ function StopsFinder({
   ...props
 }: StopsFinderProps) {
   const [inputValue, setInputValue] = useState("");
-  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [suggestions, setSuggestions] = useState<unknown[]>([]);
   const [isLoading, setLoading] = useState(false);
   const [isOpen, setOpen] = useState(false);
 
   const api = useMemo(() => {
-    const options: any = { apiKey };
+    const options: unknown = { apiKey };
     if (url) {
       options.url = url;
     }
@@ -121,7 +123,7 @@ function StopsFinder({
     }
     const abortController = new AbortController();
     setLoading(true);
-    const apiParams: any = {
+    const apiParams: unknown = {
       bbox: bbox?.toString(),
       field: field?.toString(),
       limit,
@@ -171,20 +173,20 @@ function StopsFinder({
     );
   }
   return (
-    <StyledAutocomplete
+    <StyledAutocomplete<{ properties: { name: string } }>
       autoComplete
       autoHighlight
       fullWidth
-      getOptionLabel={(option: any) => {
+      getOptionLabel={(option) => {
         return option.properties.name;
       }}
-      onChange={(evt: any, value: any, reason: string) => {
+      onChange={(evt, value, reason) => {
         if (onSelect && reason === "selectOption") {
           onSelect(value, evt);
         }
       }}
       popupIcon={<FaSearch focusable={false} size={15} />}
-      renderInput={(params: any) => {
+      renderInput={(params) => {
         return (
           <TextField
             label="Search stops"
@@ -205,7 +207,7 @@ function StopsFinder({
           />
         );
       }}
-      renderOption={(liProps: any, option: any) => {
+      renderOption={(liProps, option) => {
         return (
           <StopsFinderOption
             key={option.properties?.name}
@@ -221,7 +223,7 @@ function StopsFinder({
       onClose={() => {
         setOpen(false);
       }}
-      onInputChange={(evt: any, val: string) => {
+      onInputChange={(evt: unknown, val: string) => {
         setInputValue(val);
       }}
       onOpen={() => {

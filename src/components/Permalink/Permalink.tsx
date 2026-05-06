@@ -18,7 +18,7 @@ export interface PermalinkProps {
    * https://developer.mozilla.org/en-US/docs/Web/API/History
    */
   history?: {
-    replace: (arg: any) => void;
+    replace: (arg: unknown) => void;
   };
   /**
    * Determine if the layer appears in the baselayers permalink parameter or not.
@@ -27,7 +27,7 @@ export interface PermalinkProps {
    *
    * @return {bool} true if the item is not displayed in the baselayers permalink parameter
    */
-  isBaseLayer?: (layer: any) => boolean;
+  isBaseLayer?: (layer: unknown) => boolean;
   /**
    * Determine if the layer is hidden in the permalink or not.
    *
@@ -35,7 +35,7 @@ export interface PermalinkProps {
    *
    * @return {bool} true if the item is not displayed in the permalink
    */
-  isLayerHidden?: (layer: any) => boolean;
+  isLayerHidden?: (layer: unknown) => boolean;
   /**
    * Layers provider.
    */
@@ -56,7 +56,7 @@ export interface PermalinkProps {
 }
 
 interface PermalinkState {
-  [key: string]: any;
+  [key: string]: unknown;
   baselayers?: string;
   layers?: string;
   revision: number;
@@ -68,7 +68,7 @@ interface PermalinkState {
 const defaultProps: Partial<PermalinkProps> = {
   coordinateDecimals: 2,
   history: null,
-  isBaseLayer: (layer: any) => {
+  isBaseLayer: (layer: unknown) => {
     return layer.get("isBaseLayer");
   },
   isLayerHidden: () => {
@@ -88,8 +88,8 @@ const defaultProps: Partial<PermalinkProps> = {
  * be added using __params__.
  */
 class Permalink extends PureComponent<PermalinkProps, PermalinkState> {
-  moveEndRef: any;
-  onPropertyChangeKeys: any[];
+  moveEndRef: unknown;
+  onPropertyChangeKeys: unknown[];
 
   constructor(props: PermalinkProps) {
     super(props);
@@ -188,7 +188,7 @@ class Permalink extends PureComponent<PermalinkProps, PermalinkState> {
     const { map } = this.props;
     const mapView = map.getView();
     const center = mapView.getCenter();
-    const params: any = {};
+    const params: unknown = {};
 
     if (
       center !== undefined &&

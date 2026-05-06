@@ -43,19 +43,19 @@ export interface OverlayProps {
   /**
    * Observed element to define screen size.
    */
-  observe?: Component | React.ReactNode | React.RefObject<any> | string;
+  observe?: Component | React.ReactNode | React.RefObject<unknown> | string;
   /**
    * Callback when start resizing
    * Pass following prop to re-resizable component
    * (https://github.com/bokuweb/re-resizable)
    */
-  onResizeStart?: (...args: any[]) => void;
+  onResizeStart?: (...args: unknown[]) => void;
   /**
    * Callback when stop resizing
    * Pass following prop to re-resizable component
    * (https://github.com/bokuweb/re-resizable)
    */
-  onResizeStop?: (...args: any[]) => void;
+  onResizeStop?: (...args: unknown[]) => void;
   /**
    * Minimal width to consider the observed as mobile.
    * Default is 768px.
@@ -89,7 +89,7 @@ function Overlay({
 }: OverlayProps) {
   const [isMobile, setIsMobile] = useState<boolean>();
 
-  const onResize = (entries: any[]) => {
+  const onResize = (entries: unknown[]) => {
     for (let i = 0; i < entries.length; i += 1) {
       const { width } = entries[i].contentRect;
       setIsMobile(width <= thresholdWidthForMobile);

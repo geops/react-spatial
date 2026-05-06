@@ -2,7 +2,7 @@ import type OLMap from "ol/Map";
 import type React from "react";
 
 export interface FitExtentProps {
-  [key: string]: any;
+  [key: string]: unknown;
   /**
    * Button content.
    */
@@ -32,7 +32,7 @@ function FitExtent({
   map,
   ...other
 }: FitExtentProps) {
-  const fit = (evt: any) => {
+  const fit = (evt: unknown) => {
     if (evt.which && evt.which !== 13) {
       return;
     }

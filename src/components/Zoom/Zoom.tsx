@@ -18,7 +18,7 @@ export interface ZoomTitles {
 }
 
 export interface ZoomProps {
-  [key: string]: any;
+  [key: string]: unknown;
   /**
    * The zoom delta applied on each click.
    */
@@ -31,12 +31,12 @@ export interface ZoomProps {
    * Callback function on zoom-in button click.
    * @param {function} Callback function triggered when zoom-in button is clicked. Takes the event as argument.
    */
-  onZoomInButtonClick?: (evt: any) => void;
+  onZoomInButtonClick?: (evt: unknown) => void;
   /**
    * Callback function on zoom-out button click.
    * @param {function} Callback function triggered when the zoom-out button is clicked. Takes the event as argument.
    */
-  onZoomOutButtonClick?: (evt: any) => void;
+  onZoomOutButtonClick?: (evt: unknown) => void;
   /**
    * Titles HTML attribtues for button.
    */

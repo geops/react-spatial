@@ -6,79 +6,12 @@ import View from "ol/View";
 import { PureComponent } from "react";
 
 import type OLCollection from "ol/Collection";
+import type { EventsKey } from "ol/events";
 import type Interaction from "ol/interaction/Interaction";
 import type Layer from "ol/layer/Layer";
+import type { FitOptions } from "ol/View";
+import type { CSSProperties } from "react";
 import type React from "react";
-
-export interface BasicMapProps {
-  /** Map animation options */
-  animationOptions?: {
-    center?: number[];
-    resolution?: number;
-    zoom?: number;
-  };
-  /** HTML aria-label. */
-  ariaLabel?: string;
-  /** Center of the [ol/View](https://openlayers.org/en/latest/apidoc/module-ol_View-View.html). */
-  center?: number[];
-  /** Class name of the map container */
-  className?: string;
-  /** Map extent */
-  extent?: number[];
-  /**
-   * Optional options to pass on feature click. Passed to ol's 'getFeaturesAtPixel' method.
-   * https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html#getFeaturesAtPixel
-   */
-  featuresClickOptions?: {
-    checkWrapped?: boolean;
-    hitTolerance?: number;
-    layerFilter?: (...args: any[]) => any;
-  };
-  /** Openlayers [fit options](https://openlayers.org/en/latest/apidoc/module-ol_View-View.html#fit) when extent is updated */
-  fitOptions?: Record<string, any>;
-  /** Array of [ol/interaction](https://openlayers.org/en/latest/apidoc/module-ol_interaction_Interaction-Interaction.html). */
-  interactions?: Interaction[] | OLCollection<Interaction>;
-  /** Array of Openlayers layers */
-  layers?: Layer[];
-  /** An [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html). */
-  map?: OLMap;
-  /**
-   * Callback when a [ol/Feature](https://openlayers.org/en/latest/apidoc/module-ol_Feature-Feature.html) is clicked.
-   * @param {OLFeature[]} features An array of [ol/Feature](https://openlayers.org/en/latest/apidoc/module-ol_Feature-Feature.html).
-   * @param {ol.MapBrowserEvent} event The singleclick [ol/MapBrowserEvent](https://openlayers.org/en/latest/apidoc/module-ol_MapBrowserEvent-MapBrowserEvent.html#event:singleclick).
-   */
-  onFeaturesClick?: (features: any[], evt: any) => void;
-  /**
-   * Callback when a [ol/Feature](https://openlayers.org/en/latest/apidoc/module-ol_Feature-Feature.html) is hovered.
-   * @param {OLFeature[]} features An array of [ol/Feature](https://openlayers.org/en/latest/apidoc/module-ol_Feature-Feature.html).
-   * @param {ol.MapBrowserEvent} event The pointermove [ol/MapBrowserEvent](https://openlayers.org/en/latest/apidoc/module-ol_MapBrowserEvent-MapBrowserEvent.html#event:pointermove).
-   */
-  onFeaturesHover?: (features: any[], evt: any) => void;
-  /**
-   * Callback when the map was moved.
-   * @param {ol.MapEvent} event The movend [ol/MapEvent](https://openlayers.org/en/latest/apidoc/module-ol_MapBrowserEvent-MapBrowserEvent.html#event:moveend).
-   */
-  onMapMoved?: (evt: any) => void;
-  /** Map resolution */
-  resolution?: number;
-  /** The style of the map. */
-  style?: React.CSSProperties;
-  /** The tabIndex of the map. */
-  tabIndex?: number;
-  /** [ol/View](https://openlayers.org/en/latest/apidoc/module-ol_View-View.html) constructor options */
-  viewOptions?: {
-    extent?: number[];
-    maxZoom?: number;
-    minZoom?: number;
-    projection?: string;
-  };
-  /** Map zoom level */
-  zoom?: number;
-}
-
-interface BasicMapState {
-  node: HTMLDivElement | null;
-}
 
 const defaultProps: Partial<BasicMapProps> = {
   animationOptions: undefined,
@@ -112,6 +45,76 @@ const defaultProps: Partial<BasicMapProps> = {
   zoom: 1,
 };
 
+export interface BasicMapProps {
+  /** Map animation options */
+  animationOptions?: {
+    center?: number[];
+    resolution?: number;
+    zoom?: number;
+  };
+  /** HTML aria-label. */
+  ariaLabel?: string;
+  /** Center of the [ol/View](https://openlayers.org/en/latest/apidoc/module-ol_View-View.html). */
+  center?: number[];
+  /** Class name of the map container */
+  className?: string;
+  /** Map extent */
+  extent?: number[];
+  /**
+   * Optional options to pass on feature click. Passed to ol's 'getFeaturesAtPixel' method.
+   * https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html#getFeaturesAtPixel
+   */
+  featuresClickOptions?: {
+    checkWrapped?: boolean;
+    hitTolerance?: number;
+    layerFilter?: (item: Layer) => boolean;
+  };
+  /** Openlayers [fit options](https://openlayers.org/en/latest/apidoc/module-ol_View-View.html#fit) when extent is updated */
+  fitOptions?: FitOptions;
+  /** Array of [ol/interaction](https://openlayers.org/en/latest/apidoc/module-ol_interaction_Interaction-Interaction.html). */
+  interactions?: Interaction[] | OLCollection<Interaction>;
+  /** Array of Openlayers layers */
+  layers?: Layer[];
+  /** An [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html). */
+  map?: OLMap;
+  /**
+   * Callback when a [ol/Feature](https://openlayers.org/en/latest/apidoc/module-ol_Feature-Feature.html) is clicked.
+   * @param {OLFeature[]} features An array of [ol/Feature](https://openlayers.org/en/latest/apidoc/module-ol_Feature-Feature.html).
+   * @param {ol.MapBrowserEvent} event The singleclick [ol/MapBrowserEvent](https://openlayers.org/en/latest/apidoc/module-ol_MapBrowserEvent-MapBrowserEvent.html#event:singleclick).
+   */
+  onFeaturesClick?: (features: unknown[], evt: unknown) => void;
+  /**
+   * Callback when a [ol/Feature](https://openlayers.org/en/latest/apidoc/module-ol_Feature-Feature.html) is hovered.
+   * @param {OLFeature[]} features An array of [ol/Feature](https://openlayers.org/en/latest/apidoc/module-ol_Feature-Feature.html).
+   * @param {ol.MapBrowserEvent} event The pointermove [ol/MapBrowserEvent](https://openlayers.org/en/latest/apidoc/module-ol_MapBrowserEvent-MapBrowserEvent.html#event:pointermove).
+   */
+  onFeaturesHover?: (features: unknown[], evt: unknown) => void;
+  /**
+   * Callback when the map was moved.
+   * @param {ol.MapEvent} event The movend [ol/MapEvent](https://openlayers.org/en/latest/apidoc/module-ol_MapBrowserEvent-MapBrowserEvent.html#event:moveend).
+   */
+  onMapMoved?: (evt: unknown) => void;
+  /** Map resolution */
+  resolution?: number;
+  /** The style of the map. */
+  style?: React.CSSProperties;
+  /** The tabIndex of the map. */
+  tabIndex?: number;
+  /** [ol/View](https://openlayers.org/en/latest/apidoc/module-ol_View-View.html) constructor options */
+  viewOptions?: {
+    extent?: number[];
+    maxZoom?: number;
+    minZoom?: number;
+    projection?: string;
+  };
+  /** Map zoom level */
+  zoom?: number;
+}
+
+interface BasicMapState {
+  node: HTMLDivElement | null;
+}
+
 /**
  * The BasicMap component renders an [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
  *
@@ -125,12 +128,12 @@ const defaultProps: Partial<BasicMapProps> = {
  */
 class BasicMap extends PureComponent<BasicMapProps, BasicMapState> {
   map: OLMap;
-  moveEndRef: any;
-  pointerMoveRef: any;
-  singleClickRef: any;
+  moveEndRef: EventsKey | null;
+  pointerMoveRef: EventsKey | null;
+  singleClickRef: EventsKey | null;
 
   constructor(props: BasicMapProps) {
-    super(props);
+    super({ ...defaultProps, ...props });
     const { interactions, map } = this.props;
 
     this.map =
@@ -169,7 +172,7 @@ class BasicMap extends PureComponent<BasicMapProps, BasicMapState> {
     // // https://github.com/openlayers/openlayers/pull/10187/files
     const viewPort = this.map.getViewport();
     viewPort.style.touchAction = "none";
-    (viewPort.style as any).msTouchAction = "none";
+    (viewPort.style as CSSProperties).msTouchAction = "none";
     viewPort.setAttribute("touch-action", "none");
 
     // Fit only work if the map has a size.
@@ -274,12 +277,15 @@ class BasicMap extends PureComponent<BasicMapProps, BasicMapState> {
     unByKey([this.moveEndRef, this.singleClickRef, this.pointerMoveRef]);
   }
 
-  initLayer(layer: any) {
+  initLayer(layer: Layer) {
     if (!this.map?.getLayers()?.getArray()?.includes(layer)) {
       this.map.addLayer(layer);
     }
 
-    const layers = layer.get("children") || layer.children || [];
+    const layers =
+      layer.get("children") ||
+      (layer as unknown as { children: Layer[] }).children ||
+      [];
     for (let i = 0; i < layers.length; i += 1) {
       this.initLayer(layers[i]);
     }
@@ -356,8 +362,11 @@ class BasicMap extends PureComponent<BasicMapProps, BasicMapState> {
     this.setState({ node });
   }
 
-  terminateLayer(layer: any) {
-    const layers = layer.get("children") || layer.children || [];
+  terminateLayer(layer: Layer) {
+    const layers =
+      layer.get("children") ||
+      (layer as unknown as { children: Layer[] }).children ||
+      [];
     for (let i = 0; i < layers.length; i += 1) {
       this.terminateLayer(layers[i]);
     }
@@ -367,7 +376,5 @@ class BasicMap extends PureComponent<BasicMapProps, BasicMapState> {
     }
   }
 }
-
-(BasicMap as any).defaultProps = defaultProps;
 
 export default BasicMap;

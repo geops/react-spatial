@@ -66,7 +66,9 @@ export interface BaseLayerSwitcherProps {
 
 const getVisibleLayer = (layers: Layer[]) => {
   return layers.find((layer) => {
-    return layer.getVisible ? layer.getVisible() : (layer as any).visible;
+    return layer.getVisible
+      ? layer.getVisible()
+      : (layer as unknown as { visible: boolean }).visible;
   });
 };
 
@@ -169,9 +171,13 @@ function BaseLayerSwitcher({
   const openClass = switcherOpen ? " rs-open" : "";
   const hiddenStyle = switcherOpen && !isClosed ? "visible" : "hidden";
 
-  const handleSwitcherClick = (evt?: any) => {
+  const handleSwitcherClick = (
+    evt?: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ) => {
     const nextLayer = layers.find((layer) => {
-      return !(layer.getVisible ? layer.getVisible() : (layer as any).visible);
+      return !(layer.getVisible
+        ? layer.getVisible()
+        : (layer as unknown as { visible: boolean }).visible);
     });
     const onButtonClick =
       layers.length === 2 ? onLayerButtonClick : onSwitcherButtonClick;
@@ -183,13 +189,13 @@ function BaseLayerSwitcher({
       if (currentLayer.setVisible) {
         currentLayer.setVisible(false);
       } else {
-        (currentLayer as any).visible = false;
+        (currentLayer as unknown as { visible: boolean }).visible = false;
       }
       setCurrentLayer(nextLayer);
       if (nextLayer.setVisible) {
         nextLayer.setVisible(true);
       } else {
-        (nextLayer as any).visible = true;
+        (nextLayer as unknown as { visible: boolean }).visible = true;
       }
       return;
     }
@@ -198,7 +204,12 @@ function BaseLayerSwitcher({
     setIsClosed(false);
   };
 
-  const onLayerSelect = (layer: Layer, evt: any) => {
+  const onLayerSelect = (
+    layer: Layer,
+    evt:
+      | React.KeyboardEvent<HTMLDivElement>
+      | React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ) => {
     if (onLayerButtonClick) {
       onLayerButtonClick(evt, layer);
     }
@@ -210,7 +221,7 @@ function BaseLayerSwitcher({
     if (layer.setVisible) {
       layer.setVisible(true);
     } else {
-      (layer as any).visible = true;
+      (layer as unknown as { visible: boolean }).visible = true;
     }
     layers
       .filter((l) => {
@@ -220,7 +231,7 @@ function BaseLayerSwitcher({
         if (l.setVisible) {
           l.setVisible(false);
         } else {
-          (l as any).visible = false;
+          (l as unknown as { visible: boolean }).visible = false;
         }
       });
     setSwitcherOpen(false);
@@ -275,7 +286,9 @@ function BaseLayerSwitcher({
   }
 
   const firstNonVisibleLayer = layers.find((layer) => {
-    return !(layer.getVisible ? layer.getVisible() : (layer as any).visible);
+    return !(layer.getVisible
+      ? layer.getVisible()
+      : (layer as unknown as { visible: boolean }).visible);
   });
 
   return (
@@ -311,13 +324,15 @@ function BaseLayerSwitcher({
           layerName === currentLayer.get("name") ? " rs-active" : "";
         const imageStyle = getImageStyle(
           layerImages
-            ? layerImages[`${layer.get("key") || (layer as any).key}`]
+            ? layerImages[
+                `${layer.get("key") || (layer as unknown as { key: string }).key}`
+              ]
             : layer.get("previewImage"),
         );
         return (
           <div
             className="rs-base-layer-switcher-btn-wrapper"
-            key={(layer as any).key}
+            key={(layer as unknown as { key: string }).key}
             style={{
               /* stylelint-disable-next-line value-keyword-case */
               overflow: hiddenStyle,

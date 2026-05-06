@@ -12,10 +12,11 @@ import { PureComponent } from "react";
 import { FaRegDotCircle } from "react-icons/fa";
 
 import type OLMap from "ol/Map";
+import type { StyleFunction } from "ol/style/Style";
 import type React from "react";
 
 export interface GeolocationProps {
-  [key: string]: any;
+  [key: string]: unknown;
   /**
    * If true, the map will center once on the position then will constantly recenter to the current Position.
    * If false, the map will center once on the position then will never recenter if the position changes.
@@ -33,7 +34,7 @@ export interface GeolocationProps {
    * Color (Number array with rgb values) or style function.
    * If a color is given, the style is animated.
    */
-  colorOrStyleFunc?: ((...args: any[]) => any) | number[];
+  colorOrStyleFunc?: number[] | StyleFunction;
   /**
    * An [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
    */
@@ -49,19 +50,19 @@ export interface GeolocationProps {
   /**
    * Function triggered after the geolocation is activated. Takes the ol/map and the component instance as arguments.
    */
-  onActivate?: (map: OLMap, instance: any) => void;
+  onActivate?: (map: OLMap, instance: unknown) => void;
   /**
    * Function triggered after the geolocation is deactivated. Takes the ol/map and the component instance as arguments..
    */
-  onDeactivate?: (map: OLMap, instance: any) => void;
+  onDeactivate?: (map: OLMap, instance: unknown) => void;
   /**
    * Function triggered when geolocating is not successful.
    */
-  onError?: (error: any) => void;
+  onError?: (error: unknown) => void;
   /**
    * Function triggered after successful geoLocation calls. Takes the ol/map, the current lat/lon coordinate and the component instance as arguments.
    */
-  onSuccess?: (map: OLMap, coords: number[], instance: any) => void;
+  onSuccess?: (map: OLMap, coords: number[], instance: unknown) => void;
 }
 
 interface GeolocationState {
@@ -86,8 +87,8 @@ const defaultProps = {
  * [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
  */
 class Geolocation extends PureComponent<GeolocationProps, GeolocationState> {
-  dragListener: any;
-  interval: any;
+  dragListener: unknown;
+  interval: unknown;
   isRecenteringToPosition: boolean;
   layer: VectorLayer<VectorSource>;
   point: Point | undefined;
@@ -95,7 +96,7 @@ class Geolocation extends PureComponent<GeolocationProps, GeolocationState> {
   watch: number;
 
   constructor(props: GeolocationProps) {
-    super(props);
+    super({ ...defaultProps, ...props });
 
     this.layer = new VectorLayer({
       source: new VectorSource(),
@@ -155,7 +156,7 @@ class Geolocation extends PureComponent<GeolocationProps, GeolocationState> {
     unByKey(this.dragListener);
   }
 
-  error(error: any) {
+  error(error: unknown) {
     const { onError } = this.props;
 
     this.deactivate();
@@ -228,7 +229,7 @@ class Geolocation extends PureComponent<GeolocationProps, GeolocationState> {
     const { children, className } = this.props;
     // Remove component props from other HTML props.
     const other = Object.entries(this.props).reduce(
-      (props: any, [key, value]) => {
+      (props: unknown, [key, value]) => {
         return key in defaultProps || key === "map"
           ? props
           : { ...props, [key]: value };
@@ -290,7 +291,5 @@ class Geolocation extends PureComponent<GeolocationProps, GeolocationState> {
     onSuccess(map, [latitude, longitude], this);
   }
 }
-
-(Geolocation as any).defaultProps = defaultProps;
 
 export default Geolocation;

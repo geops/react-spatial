@@ -100,7 +100,7 @@ const defaultProps = {
  * on click.
  */
 class Popup extends PureComponent<PopupProps, PopupState> {
-  postrenderKey: any;
+  postrenderKey: unknown;
 
   constructor(props: PopupProps) {
     super(props);

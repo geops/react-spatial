@@ -5,7 +5,7 @@ import type Layer from "ol/layer/Layer";
 import type React from "react";
 
 export interface FeatureExportButtonProps {
-  [key: string]: any;
+  [key: string]: unknown;
   /**
    *  Children content of the Feature export button.
    */
@@ -14,7 +14,7 @@ export interface FeatureExportButtonProps {
    * Format to export features (function).
    * Supported formats: https://openlayers.org/en/latest/apidoc/module-ol_format_Feature-FeatureFormat.html
    */
-  format?: any;
+  format?: unknown;
   /**
    * A layer extending an [ol/layer/Layer](https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer.html),
    * using a valid [ol/source/Vector](https://openlayers.org/en/latest/apidoc/module-ol_source_Vector.html)
@@ -40,13 +40,13 @@ const defaultProps = {
  * Other formats do not always support style export (See specific format specs).
  */
 class FeatureExportButton extends PureComponent<FeatureExportButtonProps> {
-  static createFeatureString(layer: any, projection: string, format: any) {
+  static createFeatureString(layer: unknown, projection: string, format: unknown) {
     return new format().writeFeatures(layer.getSource().getFeatures(), {
       featureProjection: projection,
     });
   }
 
-  static exportFeatures(layer: any, projection: string, format: any) {
+  static exportFeatures(layer: unknown, projection: string, format: unknown) {
     const now = new Date()
       .toJSON()
       .slice(0, 20)

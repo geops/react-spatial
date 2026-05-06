@@ -8,7 +8,7 @@ import NorthArrowCircle from "../../images/northArrowCircle.svg";
 import type OLMap from "ol/Map";
 
 export interface NorthArrowProps {
-  [key: string]: any;
+  [key: string]: unknown;
   /**
    *  Children content of the north arrow.
    */

@@ -9,9 +9,29 @@ module.exports = {
   moduleAliases: {
     "react-spatial": path.resolve(__dirname, "src"),
   },
-  propsParser: require("react-docgen-typescript").withCustomConfig(
-    "./tsconfig.json",
-  ).parse,
+  propsParser: (filePath) => {
+    const docs = require("react-docgen-typescript")
+      .withCustomConfig("./tsconfig.json")
+      .parse(filePath);
+    docs.forEach((doc) => {
+      Object.values(doc.props).forEach((prop) => {
+        if (prop.defaultValue) {
+          const val = String(prop.defaultValue.value).trim();
+          if (
+            val === "" ||
+            val === "null" ||
+            val === "undefined" ||
+            val.includes("=>") ||
+            val.startsWith("function") ||
+            /^[A-Z][a-zA-Z]/.test(val)
+          ) {
+            prop.defaultValue = null;
+          }
+        }
+      });
+    });
+    return docs;
+  },
   require: [
     path.join(__dirname, "src/themes/default/examples.scss"),
     path.join(__dirname, "src/styleguidist/styleguidist.css"),
@@ -25,21 +45,21 @@ module.exports = {
     },
     {
       components: [
-        "src/components/BaseLayerSwitcher/[A-Z]*.js",
-        "src/components/BasicMap/[A-Z]*.js",
-        "src/components/CanvasSaveButton/[A-Z]*.js",
-        "src/components/Copyright/[A-Z]*.js",
-        "src/components/FeatureExportButton/[A-Z]*.js",
-        "src/components/FitExtent/[A-Z]*.js",
-        "src/components/Geolocation/[A-Z]*.js",
-        "src/components/LayerTree/[A-Z]*.js",
-        "src/components/MousePosition/[A-Z]*.js",
-        "src/components/NorthArrow/[A-Z]*.js",
-        "src/components/Permalink/[A-Z]*.js",
-        "src/components/Popup/[A-Z]*.js",
-        "src/components/Overlay/[A-Z]*.js",
-        "src/components/ScaleLine/[A-Z]*.js",
-        "src/components/Zoom/[A-Z]*.js",
+        "src/components/BaseLayerSwitcher/[A-Z]*.tsx",
+        "src/components/BasicMap/[A-Z]*.tsx",
+        "src/components/CanvasSaveButton/[A-Z]*.tsx",
+        "src/components/Copyright/[A-Z]*.tsx",
+        "src/components/FeatureExportButton/[A-Z]*.tsx",
+        "src/components/FitExtent/[A-Z]*.tsx",
+        "src/components/Geolocation/[A-Z]*.tsx",
+        "src/components/LayerTree/[A-Z]*.tsx",
+        "src/components/MousePosition/[A-Z]*.tsx",
+        "src/components/NorthArrow/[A-Z]*.tsx",
+        "src/components/Permalink/[A-Z]*.tsx",
+        "src/components/Popup/[A-Z]*.tsx",
+        "src/components/Overlay/[A-Z]*.tsx",
+        "src/components/ScaleLine/[A-Z]*.tsx",
+        "src/components/Zoom/[A-Z]*.tsx",
       ],
       description:
         "A collection of React components for spatial web development of map components.",
@@ -48,7 +68,7 @@ module.exports = {
       usageMode: "collapse", // 'hide' | 'collapse' | 'expand'
     },
     {
-      components: ["src/components/RouteSchedule/[A-Z]*.js"],
+      components: ["src/components/RouteSchedule/[A-Z]*.tsx"],
       description:
         "A collection of React components for spatial web development of realtime components.",
       exampleMode: "expand", // 'hide' | 'collapse' | 'expand'
@@ -56,7 +76,7 @@ module.exports = {
       usageMode: "collapse", // 'hide' | 'collapse' | 'expand'
     },
     {
-      components: ["src/components/StopsFinder/StopsFinder.js"],
+      components: ["src/components/StopsFinder/StopsFinder.tsx"],
       description:
         "A collection of React components for spatial web development of stops components.",
       exampleMode: "expand", // 'hide' | 'collapse' | 'expand'
@@ -67,6 +87,7 @@ module.exports = {
   styleguideComponents: {
     ComponentsList: path.join(__dirname, "src/styleguidist/ComponentsList"),
     StyleGuideRenderer: path.join(__dirname, "src/styleguidist/StyleGuide"),
+    TypeRenderer: path.join(__dirname, "src/styleguidist/TypeRenderer"),
   },
   styleguideDir: "styleguide-build",
   styles: {
@@ -153,7 +174,7 @@ module.exports = {
         {
           loader: "esbuild-loader",
           options: {
-            loader: "jsx",
+            loader: "tsx",
             minify: true,
             sourcemap: true,
             // JavaScript version to compile to
@@ -257,6 +278,9 @@ module.exports = {
           },
         }),
       ],
+    },
+    resolve: {
+      extensions: [".tsx", ".ts", ".jsx", ".js"],
     },
     watchOptions: {
       ignored: [

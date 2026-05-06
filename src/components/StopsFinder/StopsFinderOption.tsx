@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from "react";
 
 const ext = "_round-blue-01.svg";
-const iconForMot: Record<string, React.LazyExoticComponent<any>> = {};
+const iconForMot: Record<string, React.LazyExoticComponent<unknown>> = {};
 [
   "bus",
   "ferry",
@@ -18,14 +18,17 @@ const iconForMot: Record<string, React.LazyExoticComponent<any>> = {};
 });
 
 export interface StopsFinderOptionProps {
-  [key: string]: any;
   loadingComp?: React.ReactElement;
-  option: any;
+  option: { properties: { mot: Record<string, string>; name: string } };
 }
 
-function StopsFinderOption({ option, ...props }: StopsFinderOptionProps) {
+function StopsFinderOption({
+  loadingComp,
+  option,
+  ...props
+}: StopsFinderOptionProps) {
   return (
-    <Suspense fallback={option.loadingComp}>
+    <Suspense fallback={loadingComp}>
       <div
         style={{
           alignItems: "center",
@@ -35,10 +38,10 @@ function StopsFinderOption({ option, ...props }: StopsFinderOptionProps) {
         {...props}
       >
         {Object.entries(option.properties?.mot)
-          .filter(([, value]: [string, any]) => {
+          .filter(([, value]) => {
             return !!value;
           })
-          .map(([key]: [string, any]) => {
+          .map(([key]) => {
             const MotIcon = iconForMot[key];
             return <MotIcon key={key} />;
           })}

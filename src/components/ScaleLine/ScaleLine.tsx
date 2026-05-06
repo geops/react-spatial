@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from "react";
 import type OLMap from "ol/Map";
 
 export interface ScaleLineProps {
-  [key: string]: any;
+  [key: string]: unknown;
   /**
    * ol/map.
    */

@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import type { Map } from "ol";
 
 export interface CopyrightProps {
-  [key: string]: any;
+  [key: string]: unknown;
   /**
    * CSS class of th root element
    */

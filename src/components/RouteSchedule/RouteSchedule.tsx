@@ -39,7 +39,7 @@ const defaultGetDelayColor = (time: number) => {
  * Returns true if the train doesn't stop to the station.
  * @param {Object} stop Station information.
  */
-const isNotStop = (stop: any) => {
+const isNotStop = (stop: ) => {
   return !stop.arrivalTime && !stop.departureTime;
 };
 
@@ -50,7 +50,12 @@ const isNotStop = (stop: any) => {
  * @param {Array<Object>} stops the list of all stops of the train.
  * @param {idx} idx The index of the stop object in the stops array.
  */
-const isPassed = (stop: any, time: number, stops: any[], idx: number) => {
+const isPassed = (
+  stop: unknown,
+  time: number,
+  stops: unknown[],
+  idx: number,
+) => {
   // If the train doesn't stop to the stop object, we test if the stop just before has been passed or not.
   // if yes the current stop is considered as passed.
   if (isNotStop(stop)) {
@@ -80,7 +85,7 @@ const isPassed = (stop: any, time: number, stops: any[], idx: number) => {
  * @param {Boolean} isNotStation If the train doesn't stop to this station.
  */
 const defaultRenderStationImg = (
-  stations: any[],
+  stations: unknown[],
   index: number,
   isStationPassed: boolean,
   isNotStation: boolean,
@@ -104,7 +109,7 @@ const defaultRenderStationImg = (
  * @param {Boolean} cancelled If the station is cancelled
  */
 const defaultRenderStationName = (
-  stations: any[],
+  stations: unknown[],
   index: number,
   cancelled: boolean,
 ) => {
@@ -124,9 +129,9 @@ const defaultRenderStationName = (
  */
 const defaultRenderDelay = (
   delay: number,
-  stop: any,
-  getDelayString: any,
-  getDelayColor: any,
+  stop: unknown,
+  getDelayString: (delay: number, stop: unknown) => string,
+  getDelayColor: (delay: number, stop: unknown) => string,
 ) => {
   return (
     <span style={{ color: getDelayColor?.(delay, stop) || "inherit" }}>
@@ -137,6 +142,35 @@ const defaultRenderDelay = (
 
 const emptyFunc = () => {};
 
+export interface RouteStopProps {
+  getDelayColor?: (time: number) => string;
+  getDelayString?: (delay: number, stop?: unknown) => string;
+  idx: number;
+  lineInfos: unknown;
+  onStationClick?: (
+    stop: unknown,
+    evt: React.MouseEvent<HTMLDivElement>,
+  ) => void;
+  renderArrivalDelay?: (...args: unknown[]) => React.ReactNode;
+  renderDepartureDelay?: (...args: unknown[]) => React.ReactNode;
+  renderStationImg?: (
+    stations: unknown[],
+    idx: number,
+    isPassed: boolean,
+    isNotStation: boolean,
+  ) => React.ReactNode;
+  renderStationName?: (
+    stations: unknown[],
+    idx: number,
+    cancelled: boolean,
+  ) => React.ReactNode;
+  stop: unknown;
+  trackerLayer: TrackerLayer;
+}
+
+/**
+ * RouteStop displays information about a station of the route.
+ */
 function RouteStop({
   getDelayColor = defaultGetDelayColor,
   getDelayString = defaultGetDelayString,
@@ -149,7 +183,7 @@ function RouteStop({
   renderStationName = defaultRenderStationName,
   stop,
   trackerLayer,
-}: any) {
+}: RouteStopProps) {
   const {
     aimedArrivalTime,
     aimedDepartureTime,
@@ -244,7 +278,7 @@ function RouteStop({
   );
 }
 
-const defaultRenderStation = (props: any) => {
+const defaultRenderStation = (props: unknown) => {
   const { arrivalTime, departureTime, stationId, stationName } = props.stop;
 
   return (
@@ -257,7 +291,10 @@ const defaultRenderStation = (props: any) => {
   );
 };
 
-const defaultRenderRouteIdentifier = ({ longName, routeIdentifier }: any) => {
+const defaultRenderRouteIdentifier = ({
+  longName,
+  routeIdentifier,
+}: unknown) => {
   if (routeIdentifier) {
     // first part of the id, without leading zeros.
     const id = parseInt(routeIdentifier.split(".")[0], 10);
@@ -275,7 +312,7 @@ const defaultRenderHeader = ({
   lineInfos,
   renderHeaderButtons = defaultRenderHeaderButtons,
   renderRouteIdentifier = defaultRenderRouteIdentifier,
-}: any) => {
+}: unknown) => {
   const {
     destination,
     longName,
@@ -326,7 +363,7 @@ const defaultRenderLink = (text: string, url?: string) => {
   );
 };
 
-const defaultRenderCopyright = ({ lineInfos }: any) => {
+const defaultRenderCopyright = ({ lineInfos }: unknown) => {
   return (
     <span className="rt-route-copyright">
       {lineInfos.operator &&
@@ -342,7 +379,7 @@ const defaultRenderCopyright = ({ lineInfos }: any) => {
   );
 };
 
-const defaultRenderFooter = (props: any) => {
+const defaultRenderFooter = (props: unknown) => {
   const { lineInfos, renderCopyright = defaultRenderCopyright } = props;
   if (!lineInfos.operator && !lineInfos.publisher) {
     return null;
@@ -351,7 +388,7 @@ const defaultRenderFooter = (props: any) => {
 };
 
 export interface RouteScheduleProps {
-  [key: string]: any;
+  [key: string]: unknown;
   /**
    * CSS class of the route schedule wrapper.
    */
@@ -363,52 +400,52 @@ export interface RouteScheduleProps {
   /**
    * Function to get the delay string for stations.
    */
-  getDelayString?: (delay: number, stop?: any) => string;
+  getDelayString?: (delay: number, stop?: unknown) => string;
   /**
    * Trajectory stations informations.
    */
-  lineInfos?: any;
+  lineInfos?: unknown;
   /**
    * Function triggered on station's click event.
    */
-  onStationClick?: (stop: any, evt: any) => void;
+  onStationClick?: (stop: unknown, evt: unknown) => void;
   /**
    * Render delay for arrival.
    */
-  renderArrivalDelay?: (...args: any[]) => React.ReactNode;
+  renderArrivalDelay?: (...args: unknown[]) => React.ReactNode;
   /**
    * Render Copyright of the route scheduler.
    */
-  renderCopyright?: (props: any) => React.ReactNode;
+  renderCopyright?: (props: unknown) => React.ReactNode;
   /**
    * Render delay for departure.
    */
-  renderDepartureDelay?: (...args: any[]) => React.ReactNode;
+  renderDepartureDelay?: (...args: unknown[]) => React.ReactNode;
   /**
    * Render Footer of the route scheduler.
    */
-  renderFooter?: (props: any) => React.ReactNode;
+  renderFooter?: (props: unknown) => React.ReactNode;
   /**
    * Render Header of the route scheduler.
    */
-  renderHeader?: (props: any) => React.ReactNode;
+  renderHeader?: (props: unknown) => React.ReactNode;
   /**
    * Function to render header buttons.
    */
-  renderHeaderButtons?: (routeIdentifier: any) => React.ReactNode;
+  renderHeaderButtons?: (routeIdentifier: unknown) => React.ReactNode;
   /**
    * Render the route identifier in the header
    */
-  renderRouteIdentifier?: (lineInfos: any) => React.ReactNode;
+  renderRouteIdentifier?: (lineInfos: unknown) => React.ReactNode;
   /**
    * Render a station.
    */
-  renderStation?: (props: any) => React.ReactNode;
+  renderStation?: (props: unknown) => React.ReactNode;
   /**
    * Render the status of the station image.
    */
   renderStationImg?: (
-    stations: any[],
+    stations: unknown[],
     idx: number,
     isPassed: boolean,
     isNotStation: boolean,
@@ -417,7 +454,7 @@ export interface RouteScheduleProps {
    * Render a station name.
    */
   renderStationName?: (
-    stations: any[],
+    stations: unknown[],
     idx: number,
     cancelled: boolean,
   ) => React.ReactNode;
