@@ -39,7 +39,7 @@ const defaultGetDelayColor = (time: number) => {
  * Returns true if the train doesn't stop to the station.
  * @param {Object} stop Station information.
  */
-const isNotStop = (stop: ) => {
+const isNotStop = (stop) => {
   return !stop.arrivalTime && !stop.departureTime;
 };
 
