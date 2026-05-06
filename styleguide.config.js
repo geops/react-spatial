@@ -87,7 +87,6 @@ module.exports = {
   styleguideComponents: {
     ComponentsList: path.join(__dirname, "src/styleguidist/ComponentsList"),
     StyleGuideRenderer: path.join(__dirname, "src/styleguidist/StyleGuide"),
-    TypeRenderer: path.join(__dirname, "src/styleguidist/TypeRenderer"),
   },
   styleguideDir: "styleguide-build",
   styles: {
