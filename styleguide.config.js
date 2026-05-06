@@ -9,6 +9,9 @@ module.exports = {
   moduleAliases: {
     "react-spatial": path.resolve(__dirname, "src"),
   },
+  propsParser: require("react-docgen-typescript").withCustomConfig(
+    "./tsconfig.json",
+  ).parse,
   require: [
     path.join(__dirname, "src/themes/default/examples.scss"),
     path.join(__dirname, "src/styleguidist/styleguidist.css"),

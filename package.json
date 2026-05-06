@@ -23,6 +23,7 @@
   "devDependencies": {
     "@babel/preset-env": "7.29.5",
     "@babel/preset-react": "7.28.5",
+    "@babel/preset-typescript": "^7.28.5",
     "@commitlint/cli": "20.5.3",
     "@commitlint/config-conventional": "20.5.3",
     "@geops/eslint-config-react": "^1.6.0",
@@ -32,6 +33,9 @@
     "@testing-library/jest-dom": "6.9.1",
     "@testing-library/react": "16.3.2",
     "@testing-library/user-event": "14.6.1",
+    "@types/jest": "^30.0.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
     "babel-jest": "30.3.0",
     "babel-loader": "10.1.1",
     "canvas": "3.2.3",
@@ -62,6 +66,7 @@
     "proj4": "2.20.8",
     "prop-types": "15.8.1",
     "react": "19.2.5",
+    "react-docgen-typescript": "^2.4.0",
     "react-dom": "19.2.5",
     "react-styleguidist": "13.1.4",
     "react-svg-loader": "3.0.3",
@@ -79,11 +84,11 @@
     "webpack": "^5.106.2"
   },
   "scripts": {
-    "build": "pnpm esbuild && find build -type f -name '*.test.*' -delete && rm -rf build/styleguidist && cp package.json README.md LICENSE build && cp -rf src/images build && cp -rf src/themes build",
+    "build": "pnpm esbuild && rm -rf build/styleguidist && cp package.json README.md LICENSE build && cp -rf src/images build && cp -rf src/themes build",
     "coverage": "pnpm test --coverage --coverageDirectory=coverage",
     "cp": "generact --root src/components",
     "doc": "styleguidist build",
-    "esbuild": "esbuild src/*.js src/**/*.js src/**/**/*.js --target=chrome100 --outdir=build/ --loader:.js=jsx --sourcemap=external",
+    "esbuild": "pnpm typecheck && esbuild $(find src -type f \\( -name '*.js' -o -name '*.ts' -o -name '*.tsx' \\) ! -name '*.test.*') --target=chrome100 --outdir=build/ --loader:.js=jsx --loader:.ts=ts --loader:.tsx=tsx --sourcemap=external",
     "format": "prettier --write 'src/**/*.js' && eslint 'src/**/*.js' --fix && stylelint 'src/**/*.css' 'src/**/*.scss' --fix",
     "link2": "cmdToAdd=$(node ./scripts/read-pkg-json.js add) && $cmdToAdd && pnpm build && cmdToRemove=$(node ./scripts/read-pkg-json.js remove) && $cmdToRemove && cd build && pnpm link",
     "lint": "eslint 'src/**/*.js' && stylelint 'src/**/*.css' 'src/**/*.scss'",
@@ -97,6 +102,7 @@
     "release": "standard-version",
     "start": "styleguidist server",
     "test": "jest",
+    "typecheck": "tsc --noEmit",
     "updeps": "pnpm up -i --latest"
   },
   "browserslist": [

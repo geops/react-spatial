@@ -1,0 +1,184 @@
+import { ZoomSlider } from "ol/control";
+import { easeOut } from "ol/easing";
+import { unByKey } from "ol/Observable";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { FaMinus, FaPlus } from "react-icons/fa";
+
+import type OLMap from "ol/Map";
+
+export interface ZoomTitles {
+  zoomIn?: string;
+  zoomOut?: string;
+}
+
+export interface ZoomProps {
+  [key: string]: any;
+  /**
+   * The zoom delta applied on each click.
+   */
+  delta?: number;
+  /**
+   * An [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
+   */
+  map: OLMap;
+  /**
+   * Callback function on zoom-in button click.
+   * @param {function} Callback function triggered when zoom-in button is clicked. Takes the event as argument.
+   */
+  onZoomInButtonClick?: (evt: any) => void;
+  /**
+   * Callback function on zoom-out button click.
+   * @param {function} Callback function triggered when the zoom-out button is clicked. Takes the event as argument.
+   */
+  onZoomOutButtonClick?: (evt: any) => void;
+  /**
+   * Titles HTML attribtues for button.
+   */
+  titles?: ZoomTitles;
+  /**
+   * Children content of the zoom in button.
+   */
+  zoomInChildren?: React.ReactNode;
+  /**
+   * Children content of the zoom out button.
+   */
+  zoomOutChildren?: React.ReactNode;
+  /**
+   * Display a slider to zoom.
+   */
+  zoomSlider?: boolean;
+}
+
+const updateZoom = (map: OLMap, delta: number) => {
+  const view = map.getView();
+  const currentZoom = view.getZoom();
+  const newZoom = currentZoom + delta;
+  const constrainedZoom = view.getConstrainedZoom(newZoom);
+  if (view.getAnimating()) {
+    view.cancelAnimations();
+  }
+  view.animate({
+    duration: 250,
+    easing: easeOut,
+    zoom: constrainedZoom,
+  });
+};
+
+/**
+ * The Zoom component creates a zoom wrapper containing zoom-in and zoom-out buttons
+ * and an optional [ol/ZoomSlider](https://openlayers.org/en/latest/apidoc/module-ol_control_ZoomSlider-ZoomSlider.html).
+ */
+function Zoom({
+  delta = 1,
+  map,
+  onZoomInButtonClick = null,
+  onZoomOutButtonClick = null,
+  titles = {
+    zoomIn: "Zoom in",
+    zoomOut: "Zoom out",
+  },
+  zoomInChildren = <FaPlus focusable={false} />,
+  zoomOutChildren = <FaMinus focusable={false} />,
+  zoomSlider = false,
+  ...other
+}: ZoomProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [currentZoom, setZoom] = useState<number | undefined>();
+
+  const zoomIn = useCallback(
+    (evt) => {
+      if (onZoomInButtonClick) {
+        onZoomInButtonClick(evt);
+      }
+      if (!evt.which || evt.which === 13) {
+        updateZoom(map, delta);
+      }
+    },
+    [delta, map, onZoomInButtonClick],
+  );
+
+  const zoomOut = useCallback(
+    (evt) => {
+      if (onZoomOutButtonClick) {
+        onZoomOutButtonClick(evt);
+      }
+      if (!evt.which || evt.which === 13) {
+        updateZoom(map, -delta);
+      }
+    },
+    [delta, map, onZoomOutButtonClick],
+  );
+
+  const zoomInDisabled = useMemo(() => {
+    return (
+      currentZoom >=
+      map.getView().getConstrainedZoom(map.getView().getMaxZoom())
+    );
+  }, [currentZoom, map]);
+
+  const zoomOutDisabled = useMemo(() => {
+    return (
+      currentZoom <=
+      map.getView().getConstrainedZoom(map.getView().getMinZoom())
+    );
+  }, [currentZoom, map]);
+
+  useEffect(() => {
+    // Trigger zoom update to disable zooms on max and min
+    const listenerKey = map.on("moveend", () => {
+      setZoom(map.getView().getZoom());
+    });
+
+    let control;
+    if (zoomSlider && ref.current) {
+      control = new ZoomSlider();
+      // We don't want to navigate to the zoom slider using TAB navigation.
+      control.element.firstElementChild.tabIndex = -1;
+      // Set the zoom slider in the custom control wrapper.
+      control.setTarget(ref.current);
+      map.addControl(control);
+    }
+    return () => {
+      unByKey(listenerKey);
+      if (control) {
+        map.removeControl(control);
+      }
+    };
+  }, [map, zoomSlider]);
+
+  return (
+    <div className="rs-zooms-bar" {...other}>
+      <button
+        className="rs-zoom-in"
+        disabled={zoomInDisabled}
+        onClick={zoomIn}
+        onKeyPress={zoomIn}
+        tabIndex={0}
+        title={titles.zoomIn}
+        type="button"
+      >
+        {zoomInChildren}
+      </button>
+      {zoomSlider ? <div className="rs-zoomslider-wrapper" ref={ref} /> : null}
+      <button
+        className="rs-zoom-out"
+        disabled={zoomOutDisabled}
+        onClick={zoomOut}
+        onKeyPress={zoomOut}
+        tabIndex={0}
+        title={titles.zoomOut}
+        type="button"
+      >
+        {zoomOutChildren}
+      </button>
+    </div>
+  );
+}
+
+export default React.memo(Zoom);

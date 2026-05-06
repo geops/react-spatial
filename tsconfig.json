@@ -7,7 +7,9 @@
     "**/*.js"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "styleguide-build",
+    "build",
   ],
   "compilerOptions": {
     "target": "ES2017",
@@ -23,9 +25,9 @@
     "incremental": true,
     "module": "esnext",
     "esModuleInterop": true,
-    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "types": ["jest", "@testing-library/jest-dom"]
   }
 }
