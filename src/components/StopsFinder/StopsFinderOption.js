@@ -1,4 +1,3 @@
-import { CircularProgress, styled } from "@mui/material";
 import PropTypes from "prop-types";
 import React, { lazy, Suspense } from "react";
 
@@ -19,36 +18,33 @@ const iconForMot = {};
   });
 });
 
-const StyledFlex = styled("div")(() => {
-  return {
-    alignItems: "center",
-    display: "flex",
-    gap: 5,
-  };
-});
-
 function StopsFinderOption({ option, ...props }) {
   return (
-    <Suspense fallback={<CircularProgress size={20} />}>
-      <StyledFlex {...props}>
-        {Object.entries(option.properties?.mot).map(([key, value]) => {
-          if (value) {
+    <Suspense fallback={option.loadingComp}>
+      <div
+        style={{
+          alignItems: "center",
+          display: "flex",
+          gap: 10,
+        }}
+        {...props}
+      >
+        {Object.entries(option.properties?.mot)
+          .filter(([, value]) => {
+            return !!value;
+          })
+          .map(([key]) => {
             const MotIcon = iconForMot[key];
-            return (
-              <StyledFlex key={key}>
-                <MotIcon />
-              </StyledFlex>
-            );
-          }
-          return null;
-        })}
+            return <MotIcon key={key} />;
+          })}
         <span>{option.properties.name}</span>
-      </StyledFlex>
+      </div>
     </Suspense>
   );
 }
 
 StopsFinderOption.propTypes = {
+  loadingComp: PropTypes.element,
   option: PropTypes.object.isRequired,
 };
 

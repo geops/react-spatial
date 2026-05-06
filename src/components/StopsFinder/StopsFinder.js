@@ -22,6 +22,7 @@ const StyledAutocomplete = styled(Autocomplete)(() => {
 });
 
 const defaultProps = {
+  loadingComp: <CircularProgress size={20} />,
   textFieldProps: {},
 };
 
@@ -31,6 +32,7 @@ function StopsFinder({
   bbox,
   field,
   limit,
+  loadingComp = defaultProps.loadingComp,
   map,
   mots,
   onSelect,
@@ -131,14 +133,17 @@ function StopsFinder({
             label="Search stops"
             {...params}
             {...textFieldProps}
-            InputProps={{
-              ...params.InputProps,
-              endAdornment: (
-                <>
-                  {isLoading && <CircularProgress size={20} />}
-                  {params.InputProps.endAdornment}
-                </>
-              ),
+            slotProps={{
+              ...params.slotProps,
+              input: {
+                ...params.slotProps.input,
+                endAdornment: (
+                  <>
+                    {isLoading && loadingComp}
+                    {params.slotProps.input.endAdornment}
+                  </>
+                ),
+              },
             }}
           />
         );
@@ -147,6 +152,7 @@ function StopsFinder({
         return (
           <StopsFinderOption
             key={option.properties?.name}
+            loadingComp={loadingComp}
             option={option}
             {...liProps}
           />
@@ -208,6 +214,11 @@ StopsFinder.propTypes = {
    * Control how many matches will be returned.
    */
   limit: PropTypes.number,
+
+  /**
+   * Component used for loading state in the options list. By default, a MUI CircularProgress is used.
+   */
+  loadingComp: PropTypes.element,
 
   /**
    * A map.
