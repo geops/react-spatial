@@ -22,6 +22,7 @@ const StyledAutocomplete = styled(Autocomplete)(() => {
 });
 
 const defaultProps = {
+  loadingComp: <CircularProgress size={20} />,
   textFieldProps: {},
 };
 
@@ -31,7 +32,7 @@ function StopsFinder({
   bbox,
   field,
   limit,
-  map,
+  loadingComp = defaultProps.loadingComp,
   mots,
   onSelect,
   radius,
@@ -131,14 +132,17 @@ function StopsFinder({
             label="Search stops"
             {...params}
             {...textFieldProps}
-            InputProps={{
-              ...params.InputProps,
-              endAdornment: (
-                <>
-                  {isLoading && <CircularProgress size={20} />}
-                  {params.InputProps.endAdornment}
-                </>
-              ),
+            slotProps={{
+              ...params.slotProps,
+              input: {
+                ...params.slotProps.input,
+                endAdornment: (
+                  <>
+                    {isLoading && loadingComp}
+                    {params.slotProps.input.endAdornment}
+                  </>
+                ),
+              },
             }}
           />
         );
@@ -147,6 +151,7 @@ function StopsFinder({
         return (
           <StopsFinderOption
             key={option.properties?.name}
+            loadingComp={loadingComp}
             option={option}
             {...liProps}
           />
@@ -155,7 +160,6 @@ function StopsFinder({
       selectOnFocus
       {...props}
       inputValue={inputValue}
-      loading={isLoading}
       onClose={() => {
         setOpen(false);
       }}
@@ -210,12 +214,12 @@ StopsFinder.propTypes = {
   limit: PropTypes.number,
 
   /**
-   * A map.
+   * Component used for loading state in the options list. By default, a MUI CircularProgress is used.
    */
-  map: PropTypes.instanceOf(Map).isRequired,
+  loadingComp: PropTypes.element,
 
   /**
-   * Array or a comma separated list of mode of transpaorts which should be available.
+   * Array or a comma separated list of mode of transports which should be available.
    * Available values : bus, ferry, gondola, tram, rail, funicular, cable_car, subway
    */
   mots: PropTypes.oneOfType([
