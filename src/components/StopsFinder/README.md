@@ -34,7 +34,6 @@ const { apiKey } = window;
   />
 
   <StopsFinder
-    map={map}
     apiKey={apiKey}
     onSelect={({ geometry }) => {
       map.getView().setCenter(fromLonLat(geometry.coordinates));

@@ -1,7 +1,8 @@
 import { render } from "@testing-library/react";
-import "jest-date-mock";
 import { RealtimeLayer as TrackerLayer } from "mobility-toolbox-js/ol";
 import React from "react";
+
+import "jest-date-mock";
 
 import RouteSchedule from ".";
 

@@ -1,4 +1,3 @@
-import "jest-canvas-mock";
 import { act, render } from "@testing-library/react";
 import Layer from "ol/layer/Layer";
 import OLMap from "ol/Map";
@@ -7,6 +6,8 @@ import View from "ol/View";
 import React from "react";
 
 import Permalink from "./Permalink";
+
+import "jest-canvas-mock";
 
 const defaultIsLayerHidden = (l) => {
   let isParentHidden = false;

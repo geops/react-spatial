@@ -1,4 +1,3 @@
-import "jest-canvas-mock";
 import { act, render } from "@testing-library/react";
 import { Map, View } from "ol";
 import TileLayer from "ol/layer/Tile";
@@ -8,6 +7,8 @@ import { createXYZ } from "ol/tilegrid";
 import React from "react";
 
 import Copyright from "./Copyright";
+
+import "jest-canvas-mock";
 
 const image = new Image();
 image.width = 256;

@@ -1,10 +1,11 @@
-import "jest-canvas-mock";
 import { fireEvent, render } from "@testing-library/react";
 import Map from "ol/Map";
 import View from "ol/View";
 import React from "react";
 
 import Geolocation from "./Geolocation";
+
+import "jest-canvas-mock";
 
 class CallbackHandler {
   static onActivate() {}
@@ -43,7 +44,7 @@ describe("Geolocation", () => {
   afterEach(() => {
     const target = map.getTarget();
     map.setTarget(null);
-    if (target && target.parentNode) {
+    if (target?.parentNode) {
       target.parentNode.removeChild(target);
     }
     map.dispose();

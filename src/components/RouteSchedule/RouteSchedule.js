@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unused-prop-types */
 import {
   realtimeConfig,
   RealtimeLayer as TrackerLayer,
@@ -242,13 +241,12 @@ function RouteStop({
 
 const defaultRenderStation = (props) => {
   const { arrivalTime, departureTime, stationId, stationName } = props.stop;
-  // eslint-disable-next-line react/jsx-props-no-spreading
+
   return (
     <RouteStop
       // Train line can go in circle so begin and end have the same id,
       // using the time in the key should fix the issue.
       key={(stationId || stationName) + arrivalTime + departureTime}
-      // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}
     />
   );

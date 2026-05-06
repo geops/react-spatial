@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable max-classes-per-file */
-/* eslint-disable react/prefer-stateless-function */
+
 import { render } from "@testing-library/react";
 import React from "react";
 import ResizeObserver from "resize-observer-polyfill";
@@ -73,7 +72,6 @@ class CallbackComponent extends React.Component {
   }
 }
 
-// eslint-disable-next-line  react/prefer-stateless-function
 class CallbackNodeComponent extends React.Component {
   constructor(props) {
     super(props);

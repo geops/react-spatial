@@ -40,7 +40,6 @@ function ScaleLine({ map, options = defaultProps.options, ...other }) {
     };
   }, [map, options]);
 
-  // eslint-disable-next-line react/jsx-props-no-spreading
   return <div className="rs-scale-line" ref={ref} {...other} />;
 }
 
