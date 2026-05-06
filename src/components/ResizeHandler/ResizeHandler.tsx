@@ -8,7 +8,7 @@ export interface ResizeHandlerProps {
   maxWidthBrkpts?: Record<string, number>;
   observe?: Component | Element | React.RefObject<unknown> | string;
   onResize?: (
-    entries: unknown[],
+    entries: ResizeObserverEntry[],
     screenWidth?: string,
     screenHeight?: string,
   ) => void;
@@ -46,15 +46,15 @@ class ResizeHandler extends PureComponent<ResizeHandlerProps> {
   observer: ResizeObserver;
 
   constructor(props: ResizeHandlerProps) {
-    super(props);
-    this.observer = new ResizeObserver((entries) => {
+    super({ ...defaultProps, ...props });
+    this.observer = new ResizeObserver((entries: ResizeObserverEntry[]) => {
       return this.onResize(entries);
     });
     this.nodes = [];
   }
 
   static applyBreakpoints(
-    entry: unknown,
+    entry: ResizeObserverEntry,
     breakpoints: Record<string, number>,
     size: number,
     direction: string,
@@ -131,7 +131,7 @@ class ResizeHandler extends PureComponent<ResizeHandlerProps> {
     }
   }
 
-  onResize(entries: unknown[]) {
+  onResize(entries: ResizeObserverEntry[]) {
     const { maxHeightBrkpts, maxWidthBrkpts, onResize, stylePropHeight } =
       this.props;
 
@@ -180,7 +180,5 @@ class ResizeHandler extends PureComponent<ResizeHandlerProps> {
     return null;
   }
 }
-
-(ResizeHandler as any).defaultProps = defaultProps;
 
 export default ResizeHandler;

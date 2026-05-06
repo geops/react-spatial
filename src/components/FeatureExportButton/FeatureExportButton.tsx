@@ -1,33 +1,29 @@
 import KMLFormat from "ol/format/KML";
 import { PureComponent } from "react";
 
+import type XMLFeature from "ol/format/XMLFeature";
 import type Layer from "ol/layer/Layer";
+import type VectorSource from "ol/source/Vector";
 import type React from "react";
 
-export interface FeatureExportButtonProps {
-  [key: string]: unknown;
-  /**
-   *  Children content of the Feature export button.
-   */
-  children?: React.ReactNode;
+export type FeatureExportButtonProps = {
   /**
    * Format to export features (function).
    * Supported formats: https://openlayers.org/en/latest/apidoc/module-ol_format_Feature-FeatureFormat.html
    */
-  format?: unknown;
+  format?: typeof XMLFeature;
   /**
    * A layer extending an [ol/layer/Layer](https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer.html),
    * using a valid [ol/source/Vector](https://openlayers.org/en/latest/apidoc/module-ol_source_Vector.html)
    */
-  layer: Layer;
+  layer: Layer<VectorSource>;
   /**
    * Map projection.
    */
   projection?: string;
-}
+} & React.HTMLAttributes<HTMLDivElement>;
 
 const defaultProps = {
-  children: null,
   format: KMLFormat,
   projection: "EPSG:3857",
 };
@@ -40,13 +36,21 @@ const defaultProps = {
  * Other formats do not always support style export (See specific format specs).
  */
 class FeatureExportButton extends PureComponent<FeatureExportButtonProps> {
-  static createFeatureString(layer: unknown, projection: string, format: unknown) {
+  static createFeatureString(
+    layer: Layer<VectorSource>,
+    projection: string,
+    format: typeof XMLFeature,
+  ) {
     return new format().writeFeatures(layer.getSource().getFeatures(), {
       featureProjection: projection,
     });
   }
 
-  static exportFeatures(layer: unknown, projection: string, format: unknown) {
+  static exportFeatures(
+    layer: Layer<VectorSource>,
+    projection: string,
+    format: typeof XMLFeature,
+  ) {
     const now = new Date()
       .toJSON()
       .slice(0, 20)
@@ -54,7 +58,7 @@ class FeatureExportButton extends PureComponent<FeatureExportButtonProps> {
     const featString = this.createFeatureString(layer, projection, format);
 
     const formatString = featString
-      ? featString.match(/<(\w+)\s+\w+.*?>/)[1]
+      ? /<(\w+)\s+\w+.*?>/.exec(featString)[1]
       : "xml";
 
     const fileName = `exported_features_${now}.${formatString}`;
@@ -66,12 +70,19 @@ class FeatureExportButton extends PureComponent<FeatureExportButtonProps> {
     };charset=${charset}`;
 
     if (featString) {
-      if ((window.navigator as any).msSaveBlob) {
+      if (
+        (
+          window.navigator as unknown as {
+            msSaveBlob?: (blob: Blob, fileName: string) => void;
+          }
+        ).msSaveBlob
+      ) {
         // ie 11 and higher
-        (window.navigator as any).msSaveBlob(
-          new Blob([featString], { type }),
-          fileName,
-        );
+        (
+          window.navigator as unknown as {
+            msSaveBlob?: (blob: Blob, fileName: string) => void;
+          }
+        ).msSaveBlob(new Blob([featString], { type }), fileName);
       } else {
         const link = document.createElement("a");
         link.download = fileName;
@@ -82,7 +93,13 @@ class FeatureExportButton extends PureComponent<FeatureExportButtonProps> {
   }
 
   render() {
-    const { children, format, layer, projection, ...other } = this.props;
+    const {
+      children,
+      format = defaultProps.format,
+      layer,
+      projection = defaultProps.projection,
+      ...other
+    } = this.props;
 
     return (
       <div
@@ -91,9 +108,15 @@ class FeatureExportButton extends PureComponent<FeatureExportButtonProps> {
         tabIndex={0}
         {...other}
         onClick={() => {
+          if (!layer) {
+            return;
+          }
           return FeatureExportButton.exportFeatures(layer, projection, format);
         }}
         onKeyPress={(evt) => {
+          if (!layer) {
+            return;
+          }
           return (
             evt.which === 13 &&
             FeatureExportButton.exportFeatures(layer, projection, format)
@@ -105,7 +128,5 @@ class FeatureExportButton extends PureComponent<FeatureExportButtonProps> {
     );
   }
 }
-
-(FeatureExportButton as any).defaultProps = defaultProps;
 
 export default FeatureExportButton;

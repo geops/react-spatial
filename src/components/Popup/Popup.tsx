@@ -3,6 +3,7 @@ import { unByKey } from "ol/Observable";
 import { PureComponent } from "react";
 import { MdClose } from "react-icons/md";
 
+import type { EventsKey } from "ol/events";
 import type Feature from "ol/Feature";
 import type OLMap from "ol/Map";
 import type React from "react";
@@ -11,11 +12,7 @@ export interface PopupTitles {
   closeButton?: string;
 }
 
-export interface PopupProps {
-  /**
-   * React Children.
-   */
-  children: React.ReactNode;
+export type PopupProps = {
   /**
    * Class name of the popup.
    */
@@ -62,14 +59,10 @@ export interface PopupProps {
    */
   renderHeader?: (props: PopupProps) => React.ReactNode;
   /**
-   * HTML tabIndex attribute.
-   */
-  tabIndex?: string;
-  /**
    * Title HTML attributes.
    */
   titles?: PopupTitles;
-}
+} & React.HTMLAttributes<HTMLDivElement>;
 
 interface PopupState {
   left: number;
@@ -77,7 +70,7 @@ interface PopupState {
   top: number;
 }
 
-const defaultProps = {
+const defaultProps: Partial<PopupProps> = {
   className: "rs-popup",
   feature: null,
   header: null,
@@ -90,7 +83,6 @@ const defaultProps = {
     return null;
   },
   renderHeader: null,
-  tabIndex: "",
   titles: { closeButton: "Close" },
 };
 
@@ -100,10 +92,10 @@ const defaultProps = {
  * on click.
  */
 class Popup extends PureComponent<PopupProps, PopupState> {
-  postrenderKey: unknown;
+  postrenderKey: EventsKey | null;
 
   constructor(props: PopupProps) {
-    super(props);
+    super({ ...defaultProps, ...props });
     this.state = {
       left: 0,
       popupElement: null,
@@ -210,14 +202,11 @@ class Popup extends PureComponent<PopupProps, PopupState> {
     const {
       children,
       feature,
-      header,
       popupCoordinate,
       renderFooter,
       renderHeader,
-      tabIndex,
-      titles,
       ...other
-    } = this.props as any;
+    } = this.props;
 
     if (!feature && !popupCoordinate) {
       return null;
@@ -250,7 +239,6 @@ class Popup extends PureComponent<PopupProps, PopupState> {
           ref={(popupElement) => {
             this.setState({ popupElement });
           }}
-          tabIndex={tabIndex}
         >
           {(renderHeader || Popup.renderHeader)(this.props)}
           <div className="rs-popup-body">{children}</div>
@@ -280,7 +268,5 @@ class Popup extends PureComponent<PopupProps, PopupState> {
     }
   }
 }
-
-(Popup as any).defaultProps = defaultProps;
 
 export default Popup;

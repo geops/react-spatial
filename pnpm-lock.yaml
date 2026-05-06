@@ -23,6 +23,9 @@ importers:
       '@mui/material':
         specifier: ^9.0.0
         version: 9.0.0(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.5))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.5))(@types/react@19.2.14)(react@19.2.5))(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      '@types/geojson':
+        specifier: ^7946.0.16
+        version: 7946.0.16
       re-resizable:
         specifier: 6.11.2
         version: 6.11.2(react-dom@19.2.5(react@19.2.5))(react@19.2.5)

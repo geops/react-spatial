@@ -1,12 +1,7 @@
 import type OLMap from "ol/Map";
 import type React from "react";
 
-export interface FitExtentProps {
-  [key: string]: unknown;
-  /**
-   * Button content.
-   */
-  children: React.ReactNode;
+export type FitExtentProps = {
   /**
    * CSS class  for the fitExtent button.
    */
@@ -19,7 +14,7 @@ export interface FitExtentProps {
    * An [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
    */
   map: OLMap;
-}
+} & React.HTMLAttributes<HTMLDivElement>;
 
 /**
  * The FitExtent component creates a button that updates the current extent of
@@ -32,8 +27,10 @@ function FitExtent({
   map,
   ...other
 }: FitExtentProps) {
-  const fit = (evt: unknown) => {
-    if (evt.which && evt.which !== 13) {
+  const fit = (
+    evt: React.KeyboardEvent<HTMLDivElement> | React.MouseEvent<HTMLDivElement>,
+  ) => {
+    if ("which" in evt && evt.which !== 13) {
       return;
     }
     map.getView().cancelAnimations();

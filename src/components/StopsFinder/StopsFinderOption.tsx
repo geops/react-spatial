@@ -1,7 +1,12 @@
 import React, { lazy, Suspense } from "react";
 
+import type { StopsFinderOption } from "./StopsFinder";
+
 const ext = "_round-blue-01.svg";
-const iconForMot: Record<string, React.LazyExoticComponent<unknown>> = {};
+const iconForMot: Record<
+  string,
+  React.LazyExoticComponent<React.ComponentType<unknown>>
+> = {};
 [
   "bus",
   "ferry",
@@ -19,7 +24,7 @@ const iconForMot: Record<string, React.LazyExoticComponent<unknown>> = {};
 
 export interface StopsFinderOptionProps {
   loadingComp?: React.ReactElement;
-  option: { properties: { mot: Record<string, string>; name: string } };
+  option: StopsFinderOption;
 }
 
 function StopsFinderOption({

@@ -43,7 +43,7 @@ export interface OverlayProps {
   /**
    * Observed element to define screen size.
    */
-  observe?: Component | React.ReactNode | React.RefObject<unknown> | string;
+  observe?: Component | Element | React.RefObject<unknown> | string;
   /**
    * Callback when start resizing
    * Pass following prop to re-resizable component
@@ -89,7 +89,7 @@ function Overlay({
 }: OverlayProps) {
   const [isMobile, setIsMobile] = useState<boolean>();
 
-  const onResize = (entries: unknown[]) => {
+  const onResize = (entries: ResizeObserverEntry[]) => {
     for (let i = 0; i < entries.length; i += 1) {
       const { width } = entries[i].contentRect;
       setIsMobile(width <= thresholdWidthForMobile);
@@ -103,9 +103,7 @@ function Overlay({
 
   return (
     <>
-      {observe ? (
-        <ResizeHandler observe={observe as any} onResize={onResize} />
-      ) : null}
+      {observe ? <ResizeHandler observe={observe} onResize={onResize} /> : null}
       {isMobile ? (
         <Resizable
           className={`tm-overlay-mobile${className ? ` ${className}` : ""}`}

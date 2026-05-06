@@ -11,6 +11,7 @@ import Style from "ol/style/Style";
 import { PureComponent } from "react";
 import { FaRegDotCircle } from "react-icons/fa";
 
+import type { EventsKey } from "ol/events";
 import type OLMap from "ol/Map";
 import type { StyleFunction } from "ol/style/Style";
 import type React from "react";
@@ -87,8 +88,8 @@ const defaultProps = {
  * [ol/map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html).
  */
 class Geolocation extends PureComponent<GeolocationProps, GeolocationState> {
-  dragListener: unknown;
-  interval: unknown;
+  dragListener: EventsKey;
+  interval: number;
   isRecenteringToPosition: boolean;
   layer: VectorLayer<VectorSource>;
   point: Point | undefined;
@@ -228,14 +229,11 @@ class Geolocation extends PureComponent<GeolocationProps, GeolocationState> {
   render() {
     const { children, className } = this.props;
     // Remove component props from other HTML props.
-    const other = Object.entries(this.props).reduce(
-      (props: unknown, [key, value]) => {
-        return key in defaultProps || key === "map"
-          ? props
-          : { ...props, [key]: value };
-      },
-      {},
-    );
+    const other = Object.entries(this.props).reduce((props, [key, value]) => {
+      return key in defaultProps || key === "map"
+        ? props
+        : { ...props, [key]: value };
+    }, {});
     const { active } = this.state;
 
     return (

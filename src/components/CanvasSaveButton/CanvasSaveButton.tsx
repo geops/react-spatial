@@ -631,7 +631,7 @@ function CanvasSaveButton({
           margin,
           padding,
         )
-          .then((canvas: unknown) => {
+          .then((canvas: HTMLCanvasElement) => {
             if (autoDownload) {
               downloadCanvasImage(canvas, format, getDownloadImageName).then(
                 (blob) => {

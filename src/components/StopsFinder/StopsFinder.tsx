@@ -6,16 +6,15 @@ import {
 } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import { StopsAPI } from "mobility-toolbox-js/ol";
-import { Map } from "ol";
 import React, { useEffect, useMemo, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 
 import StopsFinderOption from "./StopsFinderOption";
 
 import type { TextFieldProps } from "@mui/material";
+import type { Feature, Geometry } from "geojson";
 
-export interface StopsFinderProps {
-  [key: string]: unknown;
+export type StopsFinderProps = {
   /**
    * Array or a comma separated list of agencies which should be available.
    * Order of these agencies chooses which agency will be preferred.
@@ -71,7 +70,7 @@ export interface StopsFinderProps {
    * Url of the geOps StopsFinder service.
    */
   url?: string;
-}
+} & React.HTMLAttributes<HTMLDivElement>;
 
 const StyledAutocomplete = styled(Autocomplete)(() => {
   return {
@@ -79,12 +78,17 @@ const StyledAutocomplete = styled(Autocomplete)(() => {
       transform: "rotate(0)",
     },
   };
-});
+}) as typeof Autocomplete;
 
 const defaultProps = {
   loadingComp: <CircularProgress size={20} />,
   textFieldProps: {},
 };
+
+export type StopsFinderOption = Feature<
+  Geometry,
+  { mot: Record<string, string>; name: string }
+>;
 
 function StopsFinder({
   agencies,
@@ -103,12 +107,12 @@ function StopsFinder({
   ...props
 }: StopsFinderProps) {
   const [inputValue, setInputValue] = useState("");
-  const [suggestions, setSuggestions] = useState<unknown[]>([]);
+  const [suggestions, setSuggestions] = useState<StopsFinderOption[]>([]);
   const [isLoading, setLoading] = useState(false);
   const [isOpen, setOpen] = useState(false);
 
   const api = useMemo(() => {
-    const options: unknown = { apiKey };
+    const options: { apiKey?: string; url?: string } = { apiKey };
     if (url) {
       options.url = url;
     }
@@ -134,9 +138,12 @@ function StopsFinder({
       ref_location: refLocation?.toString(),
     };
     api
+      // @ts-expect-error - stops api params are not typed yet
       .search(apiParams, abortController)
       .then((featureCollection) => {
-        setSuggestions(featureCollection?.features || []);
+        setSuggestions(
+          (featureCollection?.features as StopsFinderOption[]) || [],
+        );
         setLoading(false);
       })
       .catch((error) => {
@@ -173,7 +180,8 @@ function StopsFinder({
     );
   }
   return (
-    <StyledAutocomplete<{ properties: { name: string } }>
+    // @ts-expect-error - MUI Autocomplete types are not compatible with our custom renderOption and renderInput props
+    <StyledAutocomplete<StopsFinderOption>
       autoComplete
       autoHighlight
       fullWidth
