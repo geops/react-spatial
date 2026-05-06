@@ -33,7 +33,6 @@ function StopsFinder({
   field,
   limit,
   loadingComp = defaultProps.loadingComp,
-  map,
   mots,
   onSelect,
   radius,
@@ -161,7 +160,6 @@ function StopsFinder({
       selectOnFocus
       {...props}
       inputValue={inputValue}
-      loading={isLoading}
       onClose={() => {
         setOpen(false);
       }}
@@ -221,12 +219,7 @@ StopsFinder.propTypes = {
   loadingComp: PropTypes.element,
 
   /**
-   * A map.
-   */
-  map: PropTypes.instanceOf(Map).isRequired,
-
-  /**
-   * Array or a comma separated list of mode of transpaorts which should be available.
+   * Array or a comma separated list of mode of transports which should be available.
    * Available values : bus, ferry, gondola, tram, rail, funicular, cable_car, subway
    */
   mots: PropTypes.oneOfType([
