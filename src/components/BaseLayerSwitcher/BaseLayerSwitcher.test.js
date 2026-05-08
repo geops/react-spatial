@@ -42,12 +42,12 @@ describe("BaseLayerSwitcher", () => {
     expect(layers[0].getVisible()).toBe(true);
   });
 
-  test("removes open class and switches layer on click", async () => {
+  test("removes open class and switches layer on click", () => {
     const { container } = render(
       <BaseLayerSwitcher layerImages={layerImages} layers={layers} />,
     );
-    await fireEvent.click(container.querySelector(".rs-opener"));
-    await fireEvent.click(
+    fireEvent.click(container.querySelector(".rs-opener"));
+    fireEvent.click(
       container.querySelectorAll(".rs-base-layer-switcher-button")[3],
     );
     expect(layers[2].getVisible()).toBe(true);
@@ -56,12 +56,12 @@ describe("BaseLayerSwitcher", () => {
     );
   });
 
-  test("toggles base map instead of opening when only two base layers", async () => {
+  test("toggles base map instead of opening when only two base layers", () => {
     const { container } = render(
       <BaseLayerSwitcher layers={layers.slice(0, 2)} />,
     );
     expect(layers[0].getVisible()).toBe(true);
-    await fireEvent.click(container.querySelector(".rs-opener"));
+    fireEvent.click(container.querySelector(".rs-opener"));
     expect(layers[1].getVisible()).toBe(true);
     expect(!!container.querySelector(".rs-base-layer-switcher rs-open")).toBe(
       false,

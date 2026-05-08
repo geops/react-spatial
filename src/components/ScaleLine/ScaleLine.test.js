@@ -1,10 +1,11 @@
 import { render } from "@testing-library/react";
-import "jest-canvas-mock";
 import OLMap from "ol/Map";
 import OLView from "ol/View";
 import React from "react";
 
 import ScaleLine from "./ScaleLine";
+
+import "jest-canvas-mock";
 
 describe("ScaleLine", () => {
   test("matches snapshot", () => {

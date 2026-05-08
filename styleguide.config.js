@@ -1,4 +1,5 @@
 const path = require("path");
+
 const TerserPlugin = require("terser-webpack-plugin");
 
 const { version } = require("./package.json");
@@ -252,6 +253,15 @@ module.exports = {
             loader: "jsx",
           },
         }),
+      ],
+    },
+    watchOptions: {
+      ignored: [
+        "**/.git/**",
+        "**/node_modules/**",
+        "**/build/**",
+        "**/coverage/**",
+        "**/styleguide-build/**",
       ],
     },
   },

@@ -172,7 +172,6 @@ const decreaseFontSize = (destContext, maxWidth, copyright, scale) => {
     sizeMatch = destContext.font.match(/[0-9]+(?:\.[0-9]+)?(px)/i);
     fontSize = parseInt(sizeMatch[0].replace(sizeMatch[1], ""), 10);
 
-    // eslint-disable-next-line no-param-reassign
     destContext.font = destContext.font.replace(fontSize, fontSize - 1);
 
     multilineCopyright = false;
@@ -188,7 +187,6 @@ const decreaseFontSize = (destContext, maxWidth, copyright, scale) => {
   return destContext.font;
 };
 
-// eslint-disable-next-line class-methods-use-this
 const drawTextBackground = (
   destContext,
   x,
@@ -261,7 +259,11 @@ const drawCopyright = (
   const secondLine = copyright.replace(firstLine, "").trim();
 
   // At this point we the number of lines to display.
-  const lines = [firstLine, secondLine].filter((l) => !!l).reverse();
+  const lines = [firstLine, secondLine]
+    .filter((l) => {
+      return !!l;
+    })
+    .reverse();
 
   // We draw from bottom to top because textBaseline is 'bottom
   let lineX = margin;
@@ -416,7 +418,6 @@ const createCanvasImage = (
       for (let i = 0; i < canvases.length; i += 1) {
         const canvas = canvases[i];
         if (!canvas.width || !canvas.height) {
-          // eslint-disable-next-line no-continue
           continue;
         }
         const clip = calculatePixelsToExport(
@@ -455,7 +456,7 @@ const createCanvasImage = (
 
       // Custom info
       let logoPromise = Promise.resolve();
-      if (destContext && extraData && extraData.logo) {
+      if (destContext && extraData?.logo) {
         logoPromise = drawElement(
           extraData.logo,
           destCanvas,
@@ -468,7 +469,7 @@ const createCanvasImage = (
       logoPromise.then((logoSize = [0, 0]) => {
         // North arrow
         let arrowPromise = Promise.resolve();
-        if (destContext && extraData && extraData.northArrow) {
+        if (destContext && extraData?.northArrow) {
           arrowPromise = drawElement(
             {
               src: extraData.northArrow.circled
@@ -487,12 +488,7 @@ const createCanvasImage = (
         // Copyright
         arrowPromise.then((arrowSize = [0, 0]) => {
           const widestElement = Math.max(logoSize[0], arrowSize[0]);
-          if (
-            destContext &&
-            extraData &&
-            extraData.copyright &&
-            extraData.copyright.text
-          ) {
+          if (destContext && extraData?.copyright?.text) {
             const maxWidth =
               extraData.copyright.maxWidth ||
               (widestElement
@@ -509,7 +505,7 @@ const createCanvasImage = (
             );
           }
           let qrCodePromise = Promise.resolve();
-          if (destContext && extraData && extraData.qrCode) {
+          if (destContext && extraData?.qrCode) {
             qrCodePromise = drawElement(
               extraData.qrCode,
               destCanvas,

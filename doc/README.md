@@ -9,7 +9,7 @@ the folder published by netlify is doc/build (netlify.toml).
 ## Commands
 
 Styleguidist documentation is visible (with hot reload) with the cmd:
-'yarn start'
+'pnpm start'
 
 ## Configuration
 

@@ -243,7 +243,6 @@ class Popup extends PureComponent {
           left,
           top,
         }}
-        // eslint-disable-next-line react/jsx-props-no-spreading
         {...other}
       >
         <div
@@ -273,7 +272,7 @@ class Popup extends PureComponent {
     if (coord) {
       const pos = map.getPixelFromCoordinate(coord);
 
-      if (pos && pos.length === 2) {
+      if (pos?.length === 2) {
         this.setState({
           left: pos[0],
           top: pos[1],

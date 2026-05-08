@@ -1,11 +1,11 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { fireEvent, render } from "@testing-library/react";
-import "jest-canvas-mock";
 import OLMousePosition from "ol/control/MousePosition";
 import OLMap from "ol/Map";
 import React from "react";
 
 import MousePosition from "./MousePosition";
+
+import "jest-canvas-mock";
 
 const expectSnapshot = (props) => {
   const map = new OLMap({});

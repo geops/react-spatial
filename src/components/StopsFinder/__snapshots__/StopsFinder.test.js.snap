@@ -1,26 +1,28 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`StopsFinder matches snapshots. 1`] = `
-<div class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-1235akp-MuiAutocomplete-root">
+<div map="[object Object]"
+     class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-1235akp-MuiAutocomplete-root"
+>
   <div class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root">
     <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-19qnlrw-MuiFormLabel-root-MuiInputLabel-root"
            data-shrink="false"
-           for=":r0:"
-           id=":r0:-label"
+           for="_r_0_"
+           id="_r_0_-label"
     >
       Search stops
     </label>
     <div class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-1n04w30-MuiInputBase-root-MuiOutlinedInput-root">
       <input aria-invalid="false"
              autocomplete="off"
-             id=":r0:"
-             type="text"
-             class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-1dune0f-MuiInputBase-input-MuiOutlinedInput-input"
+             id="_r_0_"
+             class="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused css-1dune0f-MuiInputBase-input-MuiOutlinedInput-input"
              aria-autocomplete="both"
              aria-expanded="false"
              autocapitalize="none"
              spellcheck="false"
              role="combobox"
+             type="text"
              value
       >
       <div class="MuiAutocomplete-endAdornment css-1uhhrmm-MuiAutocomplete-endAdornment">

@@ -61,7 +61,6 @@ function NorthArrow({
   return (
     <div
       className="rs-north-arrow"
-      // eslint-disable-next-line react/jsx-props-no-spreading
       {...other}
       style={{ transform: `rotate(${rotation}deg)` }}
     >
