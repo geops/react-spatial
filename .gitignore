@@ -7,3 +7,4 @@ styleguide
 coverage
 doc/build
 styleguide-build
+tsconfig.tsbuildinfo
