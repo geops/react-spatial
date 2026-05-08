@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/geops/react-spatial/compare/v2.0.3...v3.0.0) (2026-05-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* react-spatial now supports only react >= 19 and mui >= 9,
+use version 2.x.x for react 18 support.
+
+### Features
+
+* use react 19 and mui 9 ([#738](https://github.com/geops/react-spatial/issues/738)) ([4718258](https://github.com/geops/react-spatial/commit/47182580883ea0516fce7e038d81f2b3f8801a4f))
+
+
+### Bug Fixes
+
+* **StyleGuide:** remove deprecated public API key fetch, hardcode api key ([911bbff](https://github.com/geops/react-spatial/commit/911bbff9cfd15e15e97b193ed17dd973011932ee))
+
 ### [2.0.3](https://github.com/geops/react-spatial/compare/v2.0.2...v2.0.3) (2026-02-26)
 
 

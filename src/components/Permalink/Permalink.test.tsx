@@ -1,4 +1,7 @@
+<<<<<<< HEAD:src/components/Permalink/Permalink.test.tsx
 // @ts-nocheck
+=======
+>>>>>>> master:src/components/Permalink/Permalink.test.js
 import { act, render } from "@testing-library/react";
 import Layer from "ol/layer/Layer";
 import OLMap from "ol/Map";

@@ -1,5 +1,10 @@
 import { unByKey } from "ol/Observable";
+<<<<<<< HEAD:src/components/BaseLayerSwitcher/BaseLayerSwitcher.tsx
 import { useEffect, useState } from "react";
+=======
+import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
+>>>>>>> master:src/components/BaseLayerSwitcher/BaseLayerSwitcher.js
 import { FaChevronLeft } from "react-icons/fa";
 
 import type Layer from "ol/layer/Layer";
@@ -221,7 +226,11 @@ function BaseLayerSwitcher({
     if (layer.setVisible) {
       layer.setVisible(true);
     } else {
+<<<<<<< HEAD:src/components/BaseLayerSwitcher/BaseLayerSwitcher.tsx
       (layer as unknown as { visible: boolean }).visible = true;
+=======
+      layer.visible = true;
+>>>>>>> master:src/components/BaseLayerSwitcher/BaseLayerSwitcher.js
     }
     layers
       .filter((l) => {
@@ -231,7 +240,11 @@ function BaseLayerSwitcher({
         if (l.setVisible) {
           l.setVisible(false);
         } else {
+<<<<<<< HEAD:src/components/BaseLayerSwitcher/BaseLayerSwitcher.tsx
           (l as unknown as { visible: boolean }).visible = false;
+=======
+          l.visible = false;
+>>>>>>> master:src/components/BaseLayerSwitcher/BaseLayerSwitcher.js
         }
       });
     setSwitcherOpen(false);

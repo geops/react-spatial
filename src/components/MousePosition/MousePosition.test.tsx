@@ -1,4 +1,7 @@
+<<<<<<< HEAD:src/components/MousePosition/MousePosition.test.tsx
 // @ts-nocheck
+=======
+>>>>>>> master:src/components/MousePosition/MousePosition.test.js
 import { fireEvent, render } from "@testing-library/react";
 import OLMousePosition from "ol/control/MousePosition";
 import OLMap from "ol/Map";

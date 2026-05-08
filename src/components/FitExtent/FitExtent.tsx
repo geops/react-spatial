@@ -43,7 +43,11 @@ function FitExtent({
       onClick={fit}
       onKeyPress={fit}
       role="button"
+<<<<<<< HEAD:src/components/FitExtent/FitExtent.tsx
       tabIndex={0}
+=======
+      tabIndex="0"
+>>>>>>> master:src/components/FitExtent/FitExtent.js
       {...other}
     >
       {children}

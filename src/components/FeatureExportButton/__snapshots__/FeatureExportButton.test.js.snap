@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`FeatureExportButton should match snapshot should match snapshot with children passed. 1`] = `
+<div class="rs-feature-export-button"
+     role="button"
+     tabindex="0"
+>
+  <div>
+    Foo
+  </div>
+</div>
+`;
+
+exports[`FeatureExportButton should match snapshot should match snapshot with cutom attributes. 1`] = `
+<div class="foo"
+     role="button"
+     tabindex="2"
+     title="bar"
+>
+</div>
+`;
+
+exports[`FeatureExportButton should match snapshot with default attributes. 1`] = `
+<div class="rs-feature-export-button"
+     role="button"
+     tabindex="0"
+>
+</div>
+`;

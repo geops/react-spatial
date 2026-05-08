@@ -1,4 +1,7 @@
+<<<<<<< HEAD:src/components/Copyright/Copyright.test.tsx
 // @ts-nocheck
+=======
+>>>>>>> master:src/components/Copyright/Copyright.test.js
 import { act, render } from "@testing-library/react";
 import { Map, View } from "ol";
 import TileLayer from "ol/layer/Tile";

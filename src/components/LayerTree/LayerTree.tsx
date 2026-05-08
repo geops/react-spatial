@@ -206,7 +206,11 @@ class LayerTree extends Component<LayerTreeProps, LayerTreeState> {
     this.olKeys = [];
   }
 
+<<<<<<< HEAD:src/components/LayerTree/LayerTree.tsx
   static getChildren = (layer: unknown) => {
+=======
+  static getChildren = (layer) => {
+>>>>>>> master:src/components/LayerTree/LayerTree.js
     return (
       layer?.get("children") ||
       layer?.children ||
@@ -216,7 +220,11 @@ class LayerTree extends Component<LayerTreeProps, LayerTreeState> {
     );
   };
 
+<<<<<<< HEAD:src/components/LayerTree/LayerTree.tsx
   static getVisible = (layer: unknown) => {
+=======
+  static getVisible = (layer) => {
+>>>>>>> master:src/components/LayerTree/LayerTree.js
     return layer.getVisible ? layer.getVisible() : layer.visible;
   };
 

@@ -162,10 +162,14 @@ const decreaseFontSize = (
     sizeMatch = /[0-9]+(?:\.[0-9]+)?(px)/i.exec(destContext.font);
     fontSize = parseInt(sizeMatch[0].replace(sizeMatch[1], ""), 10);
 
+<<<<<<< HEAD:src/components/CanvasSaveButton/CanvasSaveButton.tsx
     destContext.font = destContext.font.replace(
       String(fontSize),
       String(fontSize - 1),
     );
+=======
+    destContext.font = destContext.font.replace(fontSize, fontSize - 1);
+>>>>>>> master:src/components/CanvasSaveButton/CanvasSaveButton.js
 
     multilineCopyright = false;
 
@@ -457,8 +461,12 @@ const createCanvasImage = (
       margin = margin || getMargin(destCanvas);
 
       // Custom info
+<<<<<<< HEAD:src/components/CanvasSaveButton/CanvasSaveButton.tsx
       let logoPromise: Promise<number[] | undefined> =
         Promise.resolve(undefined);
+=======
+      let logoPromise = Promise.resolve();
+>>>>>>> master:src/components/CanvasSaveButton/CanvasSaveButton.js
       if (destContext && extraData?.logo) {
         logoPromise = drawElement(
           extraData.logo,
@@ -471,8 +479,12 @@ const createCanvasImage = (
 
       logoPromise.then((logoSize = [0, 0]) => {
         // North arrow
+<<<<<<< HEAD:src/components/CanvasSaveButton/CanvasSaveButton.tsx
         let arrowPromise: Promise<number[] | undefined> =
           Promise.resolve(undefined);
+=======
+        let arrowPromise = Promise.resolve();
+>>>>>>> master:src/components/CanvasSaveButton/CanvasSaveButton.js
         if (destContext && extraData?.northArrow) {
           arrowPromise = drawElement(
             {
@@ -508,8 +520,12 @@ const createCanvasImage = (
               padding,
             );
           }
+<<<<<<< HEAD:src/components/CanvasSaveButton/CanvasSaveButton.tsx
           let qrCodePromise: Promise<number[] | undefined> =
             Promise.resolve(undefined);
+=======
+          let qrCodePromise = Promise.resolve();
+>>>>>>> master:src/components/CanvasSaveButton/CanvasSaveButton.js
           if (destContext && extraData?.qrCode) {
             qrCodePromise = drawElement(
               extraData.qrCode,

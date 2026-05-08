@@ -78,7 +78,7 @@ const StyledAutocomplete = styled(Autocomplete)(() => {
       transform: "rotate(0)",
     },
   };
-}) as typeof Autocomplete;
+});
 
 const defaultProps = {
   loadingComp: <CircularProgress size={20} />,

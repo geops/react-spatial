@@ -1,4 +1,7 @@
+<<<<<<< HEAD:src/components/CanvasSaveButton/CanvasSaveButton.test.tsx
 // @ts-nocheck
+=======
+>>>>>>> master:src/components/CanvasSaveButton/CanvasSaveButton.test.js
 import { fireEvent, render } from "@testing-library/react";
 import Map from "ol/Map";
 import RenderEvent from "ol/render/Event";

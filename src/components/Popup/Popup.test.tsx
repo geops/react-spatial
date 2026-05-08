@@ -1,4 +1,7 @@
+<<<<<<< HEAD:src/components/Popup/Popup.test.tsx
 // @ts-nocheck
+=======
+>>>>>>> master:src/components/Popup/Popup.test.js
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-base-to-string */
 import { fireEvent, render } from "@testing-library/react";

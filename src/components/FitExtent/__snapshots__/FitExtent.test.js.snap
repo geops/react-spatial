@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`FitExtent Button should match snapshot. 1`] = `
+<div class="rs-fit-extent"
+     role="button"
+     tabindex="0"
+>
+  FitExtent
+</div>
+`;

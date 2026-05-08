@@ -8,3 +8,4 @@ coverage
 doc/build
 styleguide-build
 pnpm-workspace.yaml
+tsconfig.tsbuildinfo

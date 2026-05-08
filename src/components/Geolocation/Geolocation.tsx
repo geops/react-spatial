@@ -246,7 +246,11 @@ class Geolocation extends PureComponent<GeolocationProps, GeolocationState> {
           return e.which === 13 && this.toggle();
         }}
         role="button"
+<<<<<<< HEAD:src/components/Geolocation/Geolocation.tsx
         tabIndex={0}
+=======
+        tabIndex="0"
+>>>>>>> master:src/components/Geolocation/Geolocation.js
         {...other}
       >
         {children}

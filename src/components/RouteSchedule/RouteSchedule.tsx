@@ -1,4 +1,13 @@
+<<<<<<< HEAD:src/components/RouteSchedule/RouteSchedule.tsx
 import { realtimeConfig } from "mobility-toolbox-js/ol";
+=======
+import {
+  realtimeConfig,
+  RealtimeLayer as TrackerLayer,
+} from "mobility-toolbox-js/ol";
+import PropTypes from "prop-types";
+/* eslint-disable react/prop-types */
+>>>>>>> master:src/components/RouteSchedule/RouteSchedule.js
 import React, { useEffect, useState } from "react";
 
 import firstStation from "../../images/RouteSchedule/firstStation.png";

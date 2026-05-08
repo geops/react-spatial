@@ -1,4 +1,7 @@
+<<<<<<< HEAD:src/components/Geolocation/Geolocation.test.tsx
 // @ts-nocheck
+=======
+>>>>>>> master:src/components/Geolocation/Geolocation.test.js
 import { fireEvent, render } from "@testing-library/react";
 import Map from "ol/Map";
 import View from "ol/View";

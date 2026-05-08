@@ -1,10 +1,18 @@
 import KMLFormat from "ol/format/KML";
 import { PureComponent } from "react";
 
+<<<<<<< HEAD:src/components/FeatureExportButton/FeatureExportButton.tsx
 import type XMLFeature from "ol/format/XMLFeature";
 import type Layer from "ol/layer/Layer";
 import type VectorSource from "ol/source/Vector";
 import type React from "react";
+=======
+const propTypes = {
+  /**
+   *  Children content of the Feature export button.
+   */
+  children: PropTypes.node,
+>>>>>>> master:src/components/FeatureExportButton/FeatureExportButton.js
 
 export type FeatureExportButtonProps = {
   /**
@@ -35,12 +43,17 @@ const defaultProps = {
  * The default export format is KML, which supports the features' style export.<br>
  * Other formats do not always support style export (See specific format specs).
  */
+<<<<<<< HEAD:src/components/FeatureExportButton/FeatureExportButton.tsx
 class FeatureExportButton extends PureComponent<FeatureExportButtonProps> {
   static createFeatureString(
     layer: Layer<VectorSource>,
     projection: string,
     format: typeof XMLFeature,
   ) {
+=======
+class FeatureExportButton extends PureComponent {
+  static createFeatureString(layer, projection, format) {
+>>>>>>> master:src/components/FeatureExportButton/FeatureExportButton.js
     return new format().writeFeatures(layer.getSource().getFeatures(), {
       featureProjection: projection,
     });
