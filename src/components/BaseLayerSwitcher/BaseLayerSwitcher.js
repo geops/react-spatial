@@ -229,9 +229,9 @@ function BaseLayerSwitcher({
 
   useEffect(() => {
     /* Ensure correct layer is active on app load */
-    const layer = getVisibleLayer(layers) || layers[0];
-    if (currentLayer !== layer) {
-      setCurrentLayer(layer);
+    const newLayer = getVisibleLayer(layers) || layers[0];
+    if (currentLayer !== newLayer) {
+      setCurrentLayer(newLayer);
     }
   }, [currentLayer, layers]);
 
